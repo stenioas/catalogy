@@ -43,7 +43,7 @@ _HEX = re.compile(r"#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b")
 _REPEAT = re.compile(r"repeat\(\s*(\d+)\s*,", re.IGNORECASE)
 _MIN_WIDTH = re.compile(r"min-width\s*:\s*(\d+)\s*px", re.IGNORECASE)
 _MAX_WIDTH = re.compile(r"max-width\s*:\s*(\d+)\s*px", re.IGNORECASE)
-_BLUR_POSITIVO = re.compile(r"blur\(\s*(?!0+(?:\.0+)?(?:px)?\b)(\d*\.?\d+)px\s*\)", re.IGNORECASE)
+_FILTRO_VIDRO = "saturate(180%) blur(20px)"
 
 
 def _sem_comentarios(css: str) -> str:
@@ -340,10 +340,11 @@ class TestEstilos(unittest.TestCase):
                 seletor,
             )
             self.assertEqual(_valor(self.regras, seletor, "color"), BRANCO, seletor)
-            filtro = _valor(self.regras, seletor, "backdrop-filter")
-            self.assertIsNotNone(filtro, seletor)
-            self.assertIn("saturate(180%)", filtro, seletor)
-            self.assertRegex(filtro, _BLUR_POSITIVO, seletor)
+            self.assertEqual(
+                _valor(self.regras, seletor, "backdrop-filter"),
+                _FILTRO_VIDRO,
+                seletor,
+            )
 
     def test_escuro_linhas_de_borda_usam_branco_translucido(self):
         self.assertEqual(
@@ -391,9 +392,7 @@ class TestEstilos(unittest.TestCase):
             'html[data-tema="escuro"] .barra-fixa',
             "backdrop-filter",
         )
-        self.assertIsNotNone(valor)
-        self.assertNotEqual(valor, "none")
-        self.assertRegex(valor, _BLUR_POSITIVO)
+        self.assertEqual(valor, _FILTRO_VIDRO)
 
     def test_foto_nao_ganha_filtro_nem_inversao(self):
         for seletor in (
@@ -447,6 +446,8 @@ class TestEstilos(unittest.TestCase):
     def test_pular_fora_do_foco_fica_fixo_fora_da_tela(self):
         # VITR-77 / spec P1 Ler e navegar AC 4
         self.assertEqual(_valor(self.regras, ".pular", "position"), "fixed")
+        self.assertEqual(_valor(self.regras, ".pular", "top"), "8px")
+        self.assertEqual(_valor(self.regras, ".pular", "left"), "8px")
         self.assertEqual(
             _valor(self.regras, ".pular", "transform"),
             "translateY(-200%)",

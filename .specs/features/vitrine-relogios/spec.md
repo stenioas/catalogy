@@ -266,7 +266,7 @@ Ficha do Seculus — kit com cantil:
 2. Every page SHALL have, as the first child of `<body>`, a link with the exact text `Pular para o conteúdo` and `href="#conteudo"`.
 3. Every page SHALL give `<main>` the attributes `id="conteudo"` and `tabindex="-1"`.
 4. WHILE the skip link does not have focus, the skip link SHALL use `position: fixed` and sit outside the viewport.
-5. WHILE the skip link has focus, the skip link SHALL show at the top-left corner with background `#0066cc`, text `#ffffff`, corner radius `9999px`, and a `z-index` above the black bar.
+5. WHILE the skip link has focus, the skip link SHALL show at the top-left corner with `top: 8px` and `left: 8px`, background `#0066cc`, text `#ffffff`, corner radius `9999px`, and a `z-index` above the black bar.
 6. WHILE the page has no second bar, `html` SHALL use `scroll-padding-top: 44px`.
 7. WHILE the page has a second bar, `html` SHALL use `scroll-padding-top: 96px`.
 8. WHILE the page has the fixed bar, `html` SHALL use `scroll-padding-bottom: 64px`.
@@ -468,7 +468,7 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-107 | P2: Movimento e tipografia | T28 | ✅ Verified |
 | VITR-108 | P2: Movimento e tipografia | T28 | ✅ Verified |
 
-**Coverage:** 108 total, 108 mapped to tasks in `.specs/features/vitrine-relogios/tasks.md`, 0 unmapped. VITR-48, VITR-49, VITR-64 e VITR-74 a VITR-108 estão em T15 a T28. VITR-98 a VITR-100 verificados: cabeçalho PNG/JPEG (T15), WebP `VP8`/`VP8L`/`VP8X` com `EXIF` (T16), AVIF `ispe`/`irot`/`imir` (T17).
+**Coverage:** 108 total, 108 mapped to tasks in `.specs/features/vitrine-relogios/tasks.md`, 0 unmapped. VITR-48, VITR-49, VITR-64 e VITR-74 a VITR-108 estão em T15 a T28. VITR-78 verificado com `top: 8px` e `left: 8px`. VITR-92 e VITR-93 verificados com `saturate(180%) blur(20px)`. VITR-98 a VITR-100 verificados: cabeçalho PNG/JPEG (T15), WebP `VP8`/`VP8L`/`VP8X` com `EXIF` 5, 6, 7 e 8 (T16), AVIF `ispe`/`irot`/`imir` (T17).
 
 VITR-01 a VITR-19 seguem a ordem dos critérios da geração. VITR-20 a VITR-52 seguem a ordem dos critérios da navegação. VITR-53 a VITR-67 seguem a ordem dos critérios do tema. VITR-68 a VITR-73 seguem a ordem dos critérios do catálogo atual. VITR-74 a VITR-90 seguem a ordem dos critérios de leitura e teclado. VITR-91 a VITR-95 seguem a ordem dos critérios do tema escuro completo. VITR-96 a VITR-103 seguem a ordem dos critérios da foto no quadro. VITR-104 a VITR-108 seguem a ordem dos critérios de movimento e tipografia.
 

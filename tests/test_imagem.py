@@ -89,9 +89,24 @@ class TestWebpDimensoes(unittest.TestCase):
         self._assert_webp(imagens_exemplo.webp_vp8x(400, 300), (400, 300))
 
     # VITR-99 / spec P1 Foto no quadro AC 4 (WebP Exif no VP8X)
+    def test_webp_vp8x_exif_orientacao_5_troca_largura_e_altura(self):
+        self._assert_webp(
+            imagens_exemplo.webp_vp8x(400, 300, orientacao=5), (300, 400)
+        )
+
     def test_webp_vp8x_exif_orientacao_6_troca_largura_e_altura(self):
         self._assert_webp(
             imagens_exemplo.webp_vp8x(400, 300, orientacao=6), (300, 400)
+        )
+
+    def test_webp_vp8x_exif_orientacao_7_troca_largura_e_altura(self):
+        self._assert_webp(
+            imagens_exemplo.webp_vp8x(400, 300, orientacao=7), (300, 400)
+        )
+
+    def test_webp_vp8x_exif_orientacao_8_troca_largura_e_altura(self):
+        self._assert_webp(
+            imagens_exemplo.webp_vp8x(400, 300, orientacao=8), (300, 400)
         )
 
     # VITR-100 / spec P1 Foto no quadro AC 5
