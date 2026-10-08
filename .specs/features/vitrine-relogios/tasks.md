@@ -114,6 +114,8 @@ T14
 
 ### T2: Validar identidade, preço e parcelamento
 
+**Status**: done
+
 **What**: Aceitar ou recusar pasta, `id`, campos obrigatórios, WhatsApp, `valorPix`, `parcelamento` e `observacoes` ausente.
 **Where**: `gerador/validar.py`
 **Depends on**: T1
@@ -128,10 +130,10 @@ T14
 
 **Done when**:
 
-- [ ] A leitura usa o texto do escalar YAML, então `yes` e `12:00` falham
-- [ ] Cada regra acima deixa o erro com pasta e descrição
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 12 tests pass
+- [x] A leitura usa o texto do escalar YAML, então `yes` e `12:00` falham
+- [x] Cada regra acima deixa o erro com pasta e descrição
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 12 tests pass
 
 **Tests**: unit
 **Gate**: quick
