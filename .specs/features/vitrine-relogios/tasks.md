@@ -357,6 +357,8 @@ T14
 
 ### T10: Controlar o carrossel
 
+**Status**: done
+
 **What**: Criar o script que mostra uma foto, marca a bolinha e volta da última para a primeira.
 **Where**: `gerador/carrossel.js`
 **Depends on**: T6
@@ -371,10 +373,10 @@ T14
 
 **Done when**:
 
-- [ ] A próxima depois da última foto é a primeira
-- [ ] A bolinha corrente acompanha o índice
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 3 tests pass
+- [x] A próxima depois da última foto é a primeira
+- [x] A bolinha corrente acompanha o índice
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 3 tests pass
 
 **Tests**: unit
 **Gate**: quick

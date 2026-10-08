@@ -1,0 +1,157 @@
+import json
+import subprocess
+import unittest
+from pathlib import Path
+
+CAMINHO_CARROSSEL = (
+    Path(__file__).resolve().parent.parent / "gerador" / "carrossel.js"
+)
+
+_HARNESS = r"""
+const fs = require("fs");
+const carrosselSource = fs.readFileSync(process.argv[1], "utf8");
+const config = JSON.parse(process.argv[2]);
+
+function criarBolinha(ativa) {
+  const attrs = {};
+  return {
+    className: "bolinha",
+    setAttribute(chave, valor) {
+      attrs[chave] = valor;
+    },
+    removeAttribute(chave) {
+      delete attrs[chave];
+    },
+    getAttribute(chave) {
+      return Object.prototype.hasOwnProperty.call(attrs, chave)
+        ? attrs[chave]
+        : null;
+    },
+    _inicial: ativa,
+  };
+}
+
+function criarFoto(oculta) {
+  return { hidden: oculta, alt: "modelo" };
+}
+
+function criarBotao(classe) {
+  const botao = {
+    className: classe,
+    type: "button",
+    _click: null,
+    addEventListener(evento, fn) {
+      if (evento === "click") this._click = fn;
+    },
+    click() {
+      if (this._click) this._click();
+    },
+  };
+  return botao;
+}
+
+function montarCarrossel(quantidadeFotos) {
+  const fotos = [];
+  for (let i = 0; i < quantidadeFotos; i += 1) {
+    fotos.push(criarFoto(i !== 0));
+  }
+  const bolinhas = fotos.map((_, i) => criarBolinha(i === 0));
+  for (let i = 0; i < bolinhas.length; i += 1) {
+    if (bolinhas[i]._inicial) {
+      bolinhas[i].setAttribute("aria-current", "true");
+    }
+  }
+  const anterior = criarBotao("seta seta-anterior");
+  const proxima = criarBotao("seta seta-proxima");
+  const bolinhasDiv = {
+    className: "bolinhas",
+    querySelectorAll(seletor) {
+      if (seletor === ".bolinha") return bolinhas;
+      return [];
+    },
+  };
+  const carrossel = {
+    className: "carrossel",
+    querySelectorAll(seletor) {
+      if (seletor === "img") return fotos;
+      return [];
+    },
+    querySelector(seletor) {
+      if (seletor === ".seta-anterior") return anterior;
+      if (seletor === ".seta-proxima") return proxima;
+      if (seletor === ".bolinhas") return bolinhasDiv;
+      return null;
+    },
+  };
+  return { carrossel, fotos, bolinhas, anterior, proxima };
+}
+
+function executar() {
+  const montagem = montarCarrossel(config.quantidadeFotos || 2);
+  const ouvintes = { DOMContentLoaded: [] };
+  const document = {
+    readyState: config.readyState || "loading",
+    addEventListener(evento, fn) {
+      if (ouvintes[evento]) ouvintes[evento].push(fn);
+    },
+    querySelectorAll(seletor) {
+      if (seletor === ".carrossel") return [montagem.carrossel];
+      return [];
+    },
+  };
+
+  global.document = document;
+  eval(carrosselSource);
+
+  for (const fn of ouvintes.DOMContentLoaded) fn();
+
+  for (const acao of config.acoes || []) {
+    if (acao === "proxima") montagem.proxima.click();
+    if (acao === "anterior") montagem.anterior.click();
+  }
+
+  const visibilidade = montagem.fotos.map((foto) => !foto.hidden);
+  const bolinhasAtivas = montagem.bolinhas.map(
+    (bolinha) => bolinha.getAttribute("aria-current") === "true"
+  );
+
+  process.stdout.write(
+    JSON.stringify({ visibilidade, bolinhasAtivas })
+  );
+}
+
+executar();
+"""
+
+
+def _rodar_carrossel(**config):
+    resultado = subprocess.run(
+        ["node", "-e", _HARNESS, str(CAMINHO_CARROSSEL), json.dumps(config)],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return json.loads(resultado.stdout)
+
+
+class TestCarrosselFotos(unittest.TestCase):
+    def test_proxima_depois_da_ultima_mostra_a_primeira_foto(self):
+        # VITR-47 / spec P1 Navegar AC 28
+        saida = _rodar_carrossel(quantidadeFotos=2, acoes=["proxima", "proxima"])
+        self.assertEqual(saida["visibilidade"], [True, False])
+
+    def test_bolinha_corrente_acompanha_o_indice_apos_proxima(self):
+        # VITR-46 / spec P1 Navegar AC 27
+        saida = _rodar_carrossel(quantidadeFotos=3, acoes=["proxima"])
+        self.assertEqual(saida["visibilidade"], [False, True, False])
+        self.assertEqual(saida["bolinhasAtivas"], [False, True, False])
+
+    def test_apenas_uma_foto_visivel_por_vez(self):
+        # VITR-46 / spec P1 Navegar AC 27
+        saida = _rodar_carrossel(quantidadeFotos=3, acoes=["proxima", "proxima"])
+        self.assertEqual(saida["visibilidade"].count(True), 1)
+        self.assertEqual(saida["bolinhasAtivas"].count(True), 1)
+
+
+if __name__ == "__main__":
+    unittest.main()

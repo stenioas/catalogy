@@ -292,8 +292,8 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-43 | P1: Navegar | Tasks | Implementing |
 | VITR-44 | P1: Navegar | Tasks | Implementing |
 | VITR-45 | P1: Navegar | Tasks | Implementing |
-| VITR-46 | P1: Navegar | Tasks | Implementing |
-| VITR-47 | P1: Navegar | Tasks | In Tasks |
+| VITR-46 | P1: Navegar | Tasks | done |
+| VITR-47 | P1: Navegar | Tasks | done |
 | VITR-48 | P1: Navegar | Tasks | Implementing |
 | VITR-49 | P1: Navegar | Tasks | Implementing |
 | VITR-50 | P1: Navegar | Tasks | Implementing |
