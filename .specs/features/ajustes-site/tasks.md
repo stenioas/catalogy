@@ -273,6 +273,8 @@ T8
 
 ### T7: Fixar a altura do quadro do carrossel
 
+**Status**: done
+
 **What**: A janela ocupa um quadrado e cada foto preenche esse quadrado sem distorcer.
 **Where**: `gerador/estilos.css`
 **Depends on**: T6
@@ -286,10 +288,10 @@ T8
 
 **Done when**:
 
-- [ ] `.carrossel-janela` tem `width: 100%`, `aspect-ratio: 1 / 1`, `position: relative` e `overflow: hidden`
-- [ ] `.carrossel-janela img` tem `width: 100%`, `height: 100%`, `object-fit: cover` e `object-position: center`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count does not drop
+- [x] `.carrossel-janela` tem `width: 100%`, `aspect-ratio: 1 / 1`, `position: relative` e `overflow: hidden`
+- [x] `.carrossel-janela img` tem `width: 100%`, `height: 100%`, `object-fit: cover` e `object-position: center`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count does not drop
 
 **Tests**: unit
 **Gate**: build

@@ -289,15 +289,27 @@ class TestEstilos(unittest.TestCase):
         # AJST-32 / spec P1 Fotos quadradas da vitrine AC 4
         self.assertIsNone(_valor(self.regras, ".card", "box-shadow"))
 
-    def test_foto_do_carrossel_preenche_quadro_quadrado_sem_raio(self):
-        # VITR-48 / spec P1 Navegar AC 29: quadro quadrado com cover e sem canto arredondado
-        foto = ".carrossel img"
-        proporcao = _valor(self.regras, foto, "aspect-ratio")
+    def test_carrossel_janela_mantem_quadro_quadrado(self):
+        # AJST-37 / spec P1 Quadro do carrossel AC 4
+        janela = ".carrossel-janela"
+        proporcao = _valor(self.regras, janela, "aspect-ratio")
         self.assertIsNotNone(proporcao)
         self.assertEqual(proporcao.replace(" ", ""), "1/1")
+        self.assertEqual(_valor(self.regras, janela, "width"), "100%")
+        self.assertEqual(_valor(self.regras, janela, "position"), "relative")
+        self.assertEqual(_valor(self.regras, janela, "overflow"), "hidden")
+
+    def test_carrossel_janela_foto_preenche_quadro_sem_distorcer(self):
+        # AJST-38 / spec P1 Quadro do carrossel AC 5
+        foto = ".carrossel-janela img"
         self.assertEqual(_valor(self.regras, foto, "width"), "100%")
+        self.assertEqual(_valor(self.regras, foto, "height"), "100%")
         self.assertEqual(_valor(self.regras, foto, "object-fit"), "cover")
         self.assertEqual(_valor(self.regras, foto, "object-position"), "center")
+
+    def test_foto_do_carrossel_preenche_quadro_quadrado_sem_raio(self):
+        # VITR-48 / spec P1 Navegar AC 29: sem canto arredondado na foto
+        foto = ".carrossel-janela img"
         self.assertEqual(_valor(self.regras, foto, "border-radius"), "0")
         self.assertIn(_valor(self.regras, ".carrossel", "overflow"), (None, "visible"))
 
