@@ -100,29 +100,60 @@ def _regras(css: str, media: str | None = None):
         yield media, seletor, _declaracoes(corpo)
 
 
-def _media_aplica(condicao: str | None, largura: int) -> bool:
+def _media_aplica(
+    condicao: str | None,
+    largura: int,
+    *,
+    movimento_reduzido: bool = False,
+) -> bool:
     if condicao is None:
         return True
+    condicao_lower = condicao.lower()
+    if "prefers-reduced-motion" in condicao_lower:
+        quer_reduzido = "reduce" in condicao_lower
+        if quer_reduzido != movimento_reduzido:
+            return False
     minimos = [int(valor) for valor in _MIN_WIDTH.findall(condicao)]
     maximos = [int(valor) for valor in _MAX_WIDTH.findall(condicao)]
     if not minimos and not maximos:
-        return False
+        return "prefers-reduced-motion" in condicao_lower
     return all(largura >= minimo for minimo in minimos) and all(
         largura <= maximo for maximo in maximos
     )
 
 
-def _valor(regras, seletor: str, propriedade: str, largura: int = 800) -> str | None:
+def _valor(
+    regras,
+    seletor: str,
+    propriedade: str,
+    largura: int = 800,
+    *,
+    movimento_reduzido: bool = False,
+) -> str | None:
     achado = None
     for media, bloco, declaracoes in regras:
         alvos = [parte.strip() for parte in bloco.split(",")]
         if seletor not in alvos:
             continue
-        if not _media_aplica(media, largura):
+        if not _media_aplica(media, largura, movimento_reduzido=movimento_reduzido):
             continue
         if propriedade in declaracoes:
             achado = declaracoes[propriedade]
     return achado
+
+
+def _colunas_sao_minmax_zero_um_fr(valor: str) -> bool:
+    valor = " ".join(valor.split())
+    if _REPEAT.match(valor):
+        return (
+            re.fullmatch(
+                r"repeat\(\s*\d+\s*,\s*minmax\(\s*0\s*,\s*1fr\s*\)\s*\)",
+                valor,
+                re.IGNORECASE,
+            )
+            is not None
+        )
+    return valor.replace(" ", "") == "minmax(0,1fr)"
 
 
 def _colunas(valor: str) -> int:
@@ -501,4 +532,60 @@ class TestEstilos(unittest.TestCase):
                 _valor(self.regras, seletor, "outline-offset"),
                 "2px",
                 seletor,
+            )
+
+    def test_leitor_css_aplica_bloco_prefers_reduced_motion(self):
+        css = _sem_comentarios(
+            '@media (prefers-reduced-motion: reduce) { .x:active { color: red; } }'
+        )
+        regras = list(_regras(css))
+        self.assertIsNone(_valor(regras, ".x:active", "color"))
+        self.assertEqual(
+            _valor(regras, ".x:active", "color", movimento_reduzido=True),
+            "red",
+        )
+
+    def test_movimento_reduzido_desliga_scale_no_active(self):
+        # VITR-104 / spec P2 Movimento e tipografia AC 1
+        for seletor in ("#controle-tema:active", ".pilula:active", ".seta:active"):
+            self.assertEqual(
+                _valor(self.regras, seletor, "transform", movimento_reduzido=True),
+                "none",
+                seletor,
+            )
+
+    def test_preco_usa_numeros_tabulares(self):
+        # VITR-105 / spec P2 Movimento e tipografia AC 2
+        self.assertEqual(
+            _valor(self.regras, ".preco", "font-variant-numeric"),
+            "tabular-nums",
+        )
+
+    def test_titulos_usam_text_wrap_balance(self):
+        # VITR-106 / spec P2 Movimento e tipografia AC 3
+        for seletor in ("h1", ".nome-vendedor", ".card .nome"):
+            self.assertEqual(
+                _valor(self.regras, seletor, "text-wrap"),
+                "balance",
+                seletor,
+            )
+
+    def test_nome_no_card_quebra_com_overflow_wrap_anywhere(self):
+        # VITR-107 / spec P2 Movimento e tipografia AC 4
+        self.assertEqual(
+            _valor(self.regras, ".card .nome", "overflow-wrap"),
+            "anywhere",
+        )
+
+    def test_grade_vitrine_colunas_sao_minmax_zero_um_fr(self):
+        # VITR-108 / spec P2 Movimento e tipografia AC 5
+        larguras = [320] + [largura for largura, _colunas in LARGURAS_GRADE]
+        for largura in larguras:
+            valor = _valor(
+                self.regras, ".grade-vitrine", "grid-template-columns", largura
+            )
+            self.assertIsNotNone(valor, f"grade sem colunas em {largura}px")
+            self.assertTrue(
+                _colunas_sao_minmax_zero_um_fr(valor),
+                f"{largura}px: {valor!r}",
             )

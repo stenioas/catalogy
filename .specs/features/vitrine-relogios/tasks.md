@@ -933,7 +933,7 @@ T28
 ---
 ### T28: Respeitar movimento reduzido e acertar a tipografia
 
-**Status**: pending
+**Status**: done
 
 **What**: `prefers-reduced-motion` desliga o `scale(0.95)`. Preço com números tabulares, títulos com `balance`, nome do card quebrando e grade de coluna única em `minmax(0, 1fr)`.
 **Where**: `gerador/estilos.css`
@@ -949,13 +949,13 @@ T28
 
 **Done when**:
 
-- [ ] Dentro de `@media (prefers-reduced-motion: reduce)`, `#controle-tema:active`, `.pilula:active` e `.seta:active` têm `transform: none`
-- [ ] `.preco` tem `font-variant-numeric: tabular-nums`
-- [ ] `h1`, `.nome-vendedor` e `.card .nome` têm `text-wrap: balance`. `.card .nome` tem `overflow-wrap: anywhere`
-- [ ] Toda coluna da grade, em todo intervalo, é `minmax(0, 1fr)`, e a contagem de colunas não muda
-- [ ] O leitor de CSS dos testes lê o bloco `@media (prefers-reduced-motion: reduce)`
-- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 213 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] Dentro de `@media (prefers-reduced-motion: reduce)`, `#controle-tema:active`, `.pilula:active` e `.seta:active` têm `transform: none`
+- [x] `.preco` tem `font-variant-numeric: tabular-nums`
+- [x] `h1`, `.nome-vendedor` e `.card .nome` têm `text-wrap: balance`. `.card .nome` tem `overflow-wrap: anywhere`
+- [x] Toda coluna da grade, em todo intervalo, é `minmax(0, 1fr)`, e a contagem de colunas não muda
+- [x] O leitor de CSS dos testes lê o bloco `@media (prefers-reduced-motion: reduce)`
+- [x] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 213 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: build

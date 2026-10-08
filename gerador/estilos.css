@@ -91,7 +91,7 @@ body {
 
 .grade-vitrine {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
 }
 
@@ -277,6 +277,7 @@ h1,
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: 0;
+  text-wrap: balance;
 }
 
 .barra-negra {
@@ -314,6 +315,18 @@ h1,
 .pilula:active,
 .seta:active {
   transform: scale(0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #controle-tema:active,
+  .pilula:active,
+  .seta:active {
+    transform: none;
+  }
+}
+
+.preco {
+  font-variant-numeric: tabular-nums;
 }
 
 #controle-tema:focus-visible,
@@ -382,6 +395,8 @@ dd a {
   font-weight: 600;
   line-height: 1.24;
   letter-spacing: -0.374px;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .card .preco {

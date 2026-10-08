@@ -462,11 +462,11 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-101 | P1: Foto no quadro | T18 | ✅ Verified |
 | VITR-102 | P1: Foto no quadro | T20 | ✅ Verified |
 | VITR-103 | P1: Foto no quadro | T20 | ✅ Verified |
-| VITR-104 | P2: Movimento e tipografia | Tasks | Pending |
-| VITR-105 | P2: Movimento e tipografia | Tasks | Pending |
-| VITR-106 | P2: Movimento e tipografia | Tasks | Pending |
-| VITR-107 | P2: Movimento e tipografia | Tasks | Pending |
-| VITR-108 | P2: Movimento e tipografia | Tasks | Pending |
+| VITR-104 | P2: Movimento e tipografia | T28 | ✅ Verified |
+| VITR-105 | P2: Movimento e tipografia | T28 | ✅ Verified |
+| VITR-106 | P2: Movimento e tipografia | T28 | ✅ Verified |
+| VITR-107 | P2: Movimento e tipografia | T28 | ✅ Verified |
+| VITR-108 | P2: Movimento e tipografia | T28 | ✅ Verified |
 
 **Coverage:** 108 total, 108 mapped to tasks in `.specs/features/vitrine-relogios/tasks.md`, 0 unmapped. VITR-48, VITR-49, VITR-64 e VITR-74 a VITR-108 estão em T15 a T28. VITR-98 a VITR-100 verificados: cabeçalho PNG/JPEG (T15), WebP `VP8`/`VP8L`/`VP8X` com `EXIF` (T16), AVIF `ispe`/`irot`/`imir` (T17).
 
