@@ -2,10 +2,15 @@ from __future__ import annotations
 
 import html
 import re
+import shutil
 from pathlib import Path
 from urllib.parse import quote
 
 from gerador.modelo import ORDEM_FICHA, Item, Vendedor
+
+_DIRETORIO_GERADOR = Path(__file__).resolve().parent
+_TEXTO_TEMA = (_DIRETORIO_GERADOR / "tema.js").read_text(encoding="utf-8")
+_TEXTO_CARROSSEL = (_DIRETORIO_GERADOR / "carrossel.js").read_text(encoding="utf-8")
 
 
 def formatar_preco(valor: float) -> str:
@@ -24,6 +29,10 @@ def link_whatsapp(digitos: str, nome_modelo: str) -> str:
 
 def escrever(vendedores: list[Vendedor], destino: Path, fontes: Path) -> None:
     destino.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(_DIRETORIO_GERADOR / "estilos.css", destino / "estilos.css")
+    pasta_fontes = destino / "fontes"
+    pasta_fontes.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(fontes / "InterVariable.woff2", pasta_fontes / "InterVariable.woff2")
     (destino / "index.html").write_text(
         _html_raiz(vendedores),
         encoding="utf-8",
@@ -51,7 +60,13 @@ def _html_raiz(vendedores: list[Vendedor]) -> str:
         for vendedor in vendedores
     )
     corpo = f'<ul class="lista-vendedores">{itens_lista}</ul>'
-    return _pagina(TITULO_RAIZ, corpo, link_catalogo="./", segunda_barra=None)
+    return _pagina(
+        TITULO_RAIZ,
+        corpo,
+        link_catalogo="./",
+        segunda_barra=None,
+        css_href="estilos.css",
+    )
 
 
 def _html_vitrine(vendedor: Vendedor) -> str:
@@ -73,6 +88,7 @@ def _html_vitrine(vendedor: Vendedor) -> str:
         corpo,
         link_catalogo="../",
         segunda_barra=vendedor.nome,
+        css_href="../estilos.css",
     )
 
 
@@ -113,6 +129,8 @@ def _html_relogio(vendedor: Vendedor, item: Item) -> str:
         link_segunda_barra="../",
         og_title=item.nome,
         og_image=f"../imagens/{item.imagens[0]}",
+        css_href="../../estilos.css",
+        incluir_carrossel=len(item.imagens) >= 2,
     )
 
 
@@ -198,6 +216,8 @@ def _pagina(
     link_segunda_barra: str | None = None,
     og_title: str | None = None,
     og_image: str | None = None,
+    css_href: str = "estilos.css",
+    incluir_carrossel: bool = False,
 ) -> str:
     barra_vendedor = ""
     if segunda_barra is not None:
@@ -211,13 +231,22 @@ def _pagina(
             f'<meta property="og:title" content="{html.escape(og_title)}">\n'
             f'<meta property="og:image" content="{html.escape(og_image)}">\n'
         )
+    script_tema = f"<script>\n{_TEXTO_TEMA}\n</script>\n"
+    link_css = (
+        f'<link rel="stylesheet" href="{html.escape(css_href)}">\n'
+    )
+    script_carrossel = ""
+    if incluir_carrossel:
+        script_carrossel = f"<script>\n{_TEXTO_CARROSSEL}\n</script>\n"
     return (
         "<!DOCTYPE html>\n"
         '<html lang="pt-BR">\n'
         "<head>\n"
+        f"{script_tema}"
         f"<meta charset=\"utf-8\">\n"
         f"<title>{html.escape(titulo)}</title>\n"
         f"{og}"
+        f"{link_css}"
         "</head>\n"
         "<body>\n"
         f'<header class="barra-negra">'
@@ -226,6 +255,7 @@ def _pagina(
         f"{barra_vendedor}\n"
         f"<main>{corpo}</main>\n"
         f"<footer>{html.escape(_RODAPE)}</footer>\n"
+        f"{script_carrossel}"
         "</body>\n"
         "</html>\n"
     )

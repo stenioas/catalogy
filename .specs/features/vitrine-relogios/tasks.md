@@ -386,6 +386,8 @@ T14
 
 ### T11: Embutir CSS, fonte e scripts nas páginas
 
+**Status**: done
+
 **What**: Copiar o CSS e a fonte para o destino e embutir `tema.js` no início do `<head>` e `carrossel.js` na página do relógio.
 **Where**: `gerador/renderizar.py`
 **Depends on**: T7, T8, T9, T10
@@ -400,11 +402,11 @@ T14
 
 **Done when**:
 
-- [ ] O primeiro nó do `<head>` é o script do tema, antes do CSS
-- [ ] Página com uma foto não inclui o script do carrossel. Página com duas inclui
-- [ ] O destino recebe `estilos.css` e `fontes/InterVariable.woff2`
-- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 28 tests pass
+- [x] O primeiro nó do `<head>` é o script do tema, antes do CSS
+- [x] Página com uma foto não inclui o script do carrossel. Página com duas inclui
+- [x] O destino recebe `estilos.css` e `fontes/InterVariable.woff2`
+- [x] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 28 tests pass
 
 **Tests**: unit
 **Gate**: build

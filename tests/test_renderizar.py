@@ -15,6 +15,11 @@ from gerador.renderizar import (
 )
 from catalogo_exemplo import catalogo_dois_vendedores, vendedor_sem_itens
 
+RAIZ_PROJETO = Path(__file__).resolve().parent.parent
+FONTE_ORIGEM = RAIZ_PROJETO / "fontes"
+CAMINHO_ESTILOS_ORIGEM = RAIZ_PROJETO / "gerador" / "estilos.css"
+CHAVE_TEMA_LOCAL_STORAGE = "tema"
+
 # VITR-32 / spec P1 Navegar AC 13
 FRASE_PIX_369_90 = "R$ 369,90 no Pix"
 FRASE_PIX_1234_50 = "R$ 1.234,50 no Pix"
@@ -103,8 +108,12 @@ def _parse_html(html: str) -> _ExtratorHtml:
 def _escrever_catalogo(vendedores, relativo: str) -> str:
     with tempfile.TemporaryDirectory() as tmp:
         destino = Path(tmp)
-        escrever(vendedores, destino, destino / "fontes")
+        escrever(vendedores, destino, FONTE_ORIGEM)
         return (destino / relativo).read_text(encoding="utf-8")
+
+
+def _quantidade_scripts(html: str) -> int:
+    return len(re.findall(r"<script\b", html))
 
 
 class TestPaginaRaiz(unittest.TestCase):
@@ -486,3 +495,75 @@ class TestPaginaRelogio(unittest.TestCase):
         self.assertEqual(parsed.path, "/5511888888888")
         texto = unquote(parse_qs(parsed.query)["text"][0])
         self.assertEqual(texto, PREFIXO_MENSAGEM_WHATSAPP + "Relógio Primeiro")
+
+
+# VITR-02 / spec P1 Gerar AC 1–2 (ativos estáticos em site/)
+# VITR-53 / spec P1 Tema AC 1
+# VITR-54 / spec P1 Tema AC 2–7 (script no início do head, antes da pintura)
+
+
+class TestEmbutirAssetsNasPaginas(unittest.TestCase):
+    def test_primeiro_no_do_head_e_script_do_tema_antes_do_css(self):
+        html = _escrever_catalogo(catalogo_dois_vendedores(), "index.html")
+        self.assertRegex(html, r"<head>\s*<script>")
+        pos_script = html.index("<script>")
+        pos_css = html.index('rel="stylesheet"')
+        self.assertLess(pos_script, pos_css)
+
+    def test_script_do_tema_usa_local_storage_com_chave_tema(self):
+        html = _escrever_catalogo(catalogo_dois_vendedores(), "bruno/index.html")
+        bloco = re.search(r"<script>(.*?)</script>", html, flags=re.DOTALL)
+        self.assertIsNotNone(bloco)
+        self.assertIn("localStorage", bloco.group(1))
+        self.assertIn(f'"{CHAVE_TEMA_LOCAL_STORAGE}"', bloco.group(1))
+        self.assertIn("data-tema", bloco.group(1))
+
+    def test_raiz_vitrine_e_relogio_incluem_folha_de_estilos_relativa(self):
+        casos = (
+            ("index.html", "estilos.css"),
+            ("bruno/index.html", "../estilos.css"),
+            ("bruno/relogio-primeiro/index.html", "../../estilos.css"),
+        )
+        for relativo, href_css in casos:
+            html = _escrever_catalogo(catalogo_dois_vendedores(), relativo)
+            self.assertIn(f'href="{href_css}"', html)
+            self.assertNotIn('href="/', html)
+
+    def test_relogio_com_uma_foto_nao_inclui_script_do_carrossel(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        self.assertEqual(_quantidade_scripts(html), 1)
+
+    def test_relogio_com_duas_fotos_inclui_script_do_carrossel(self):
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        self.assertEqual(_quantidade_scripts(html), 2)
+        scripts = re.findall(r"<script>(.*?)</script>", html, flags=re.DOTALL)
+        self.assertEqual(len(scripts), 2)
+        self.assertIn(".carrossel", scripts[1])
+
+    def test_vitrine_e_raiz_tem_apenas_script_do_tema(self):
+        for rel in ("index.html", "bruno/index.html", "ana/index.html"):
+            html = _escrever_catalogo(catalogo_dois_vendedores(), rel)
+            self.assertEqual(_quantidade_scripts(html), 1)
+
+    def test_escrever_grava_estilos_css_no_destino(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            destino = Path(tmp)
+            escrever(catalogo_dois_vendedores(), destino, FONTE_ORIGEM)
+            copiado = destino / "estilos.css"
+            self.assertTrue(copiado.is_file())
+            self.assertEqual(
+                copiado.read_text(encoding="utf-8"),
+                CAMINHO_ESTILOS_ORIGEM.read_text(encoding="utf-8"),
+            )
+
+    def test_escrever_grava_inter_variable_woff2_em_fontes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            destino = Path(tmp)
+            escrever(catalogo_dois_vendedores(), destino, FONTE_ORIGEM)
+            copiado = destino / "fontes" / "InterVariable.woff2"
+            origem = FONTE_ORIGEM / "InterVariable.woff2"
+            self.assertTrue(copiado.is_file())
+            self.assertEqual(copiado.read_bytes(), origem.read_bytes())
