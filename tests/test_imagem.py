@@ -1,4 +1,4 @@
-"""VITR-98, VITR-99, VITR-100: ler largura e altura de PNG e JPEG."""
+"""VITR-98, VITR-99, VITR-100: ler largura e altura de PNG, JPEG e WebP."""
 
 from __future__ import annotations
 
@@ -75,6 +75,64 @@ class TestJpegDimensoes(unittest.TestCase):
             caminho = Path(tmp.name)
         self.addCleanup(caminho.unlink, missing_ok=True)
         self.assertEqual(ler_dimensoes(caminho), (400, 300))
+
+
+class TestWebpDimensoes(unittest.TestCase):
+    # VITR-98 / spec assumptions tamanho em WebP
+    def test_webp_vp8_400_por_300_devolve_tamanho_do_quadro_chave(self):
+        self._assert_webp(imagens_exemplo.webp_vp8(400, 300), (400, 300))
+
+    def test_webp_vp8l_400_por_300_devolve_tamanho_do_bitstream(self):
+        self._assert_webp(imagens_exemplo.webp_vp8l(400, 300), (400, 300))
+
+    def test_webp_vp8x_400_por_300_devolve_tamanho_da_tela(self):
+        self._assert_webp(imagens_exemplo.webp_vp8x(400, 300), (400, 300))
+
+    # VITR-99 / spec P1 Foto no quadro AC 4 (WebP Exif no VP8X)
+    def test_webp_vp8x_exif_orientacao_6_troca_largura_e_altura(self):
+        self._assert_webp(
+            imagens_exemplo.webp_vp8x(400, 300, orientacao=6), (300, 400)
+        )
+
+    # VITR-100 / spec P1 Foto no quadro AC 5
+    def test_webp_vp8x_exif_orientacao_3_mantem_largura_e_altura(self):
+        self._assert_webp(
+            imagens_exemplo.webp_vp8x(400, 300, orientacao=3), (400, 300)
+        )
+
+    # design.md WebP: bloco EXIF com ou sem prefixo Exif\0\0
+    def test_webp_vp8x_exif_sem_prefixo_exif_troca_com_orientacao_6(self):
+        self._assert_webp(
+            imagens_exemplo.webp_vp8x(
+                400, 300, orientacao=6, exif_sem_prefixo=True
+            ),
+            (300, 400),
+        )
+
+    def _assert_webp(self, conteudo: bytes, esperado: tuple[int, int]) -> None:
+        with tempfile.NamedTemporaryFile(suffix=".webp", delete=False) as tmp:
+            tmp.write(conteudo)
+            caminho = Path(tmp.name)
+        self.addCleanup(caminho.unlink, missing_ok=True)
+        self.assertEqual(ler_dimensoes(caminho), esperado)
+
+
+class TestWebpIlegivel(unittest.TestCase):
+    def test_webp_truncado_levanta_imagem_ilegivel(self):
+        with tempfile.NamedTemporaryFile(suffix=".webp", delete=False) as tmp:
+            tmp.write(imagens_exemplo.webp_truncado())
+            caminho = Path(tmp.name)
+        self.addCleanup(caminho.unlink, missing_ok=True)
+        with self.assertRaises(ImagemIlegivel):
+            ler_dimensoes(caminho)
+
+    def test_webp_vp8x_sem_bloco_de_imagem_levanta_imagem_ilegivel(self):
+        with tempfile.NamedTemporaryFile(suffix=".webp", delete=False) as tmp:
+            tmp.write(imagens_exemplo.webp_vp8x_sem_imagem(400, 300))
+            caminho = Path(tmp.name)
+        self.addCleanup(caminho.unlink, missing_ok=True)
+        with self.assertRaises(ImagemIlegivel):
+            ler_dimensoes(caminho)
 
 
 class TestDeteccaoPorAssinatura(unittest.TestCase):

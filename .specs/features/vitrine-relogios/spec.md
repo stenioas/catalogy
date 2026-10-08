@@ -468,7 +468,7 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-107 | P2: Movimento e tipografia | Tasks | Pending |
 | VITR-108 | P2: Movimento e tipografia | Tasks | Pending |
 
-**Coverage:** 108 total, 108 mapped to tasks in `.specs/features/vitrine-relogios/tasks.md`, 0 unmapped. VITR-48, VITR-49, VITR-64 e VITR-74 a VITR-108 estão em T15 a T28.
+**Coverage:** 108 total, 108 mapped to tasks in `.specs/features/vitrine-relogios/tasks.md`, 0 unmapped. VITR-48, VITR-49, VITR-64 e VITR-74 a VITR-108 estão em T15 a T28. VITR-98 a VITR-100: cabeçalho PNG/JPEG (T15), WebP `VP8`/`VP8L`/`VP8X` com `EXIF` (T16), AVIF (T17).
 
 VITR-01 a VITR-19 seguem a ordem dos critérios da geração. VITR-20 a VITR-52 seguem a ordem dos critérios da navegação. VITR-53 a VITR-67 seguem a ordem dos critérios do tema. VITR-68 a VITR-73 seguem a ordem dos critérios do catálogo atual. VITR-74 a VITR-90 seguem a ordem dos critérios de leitura e teclado. VITR-91 a VITR-95 seguem a ordem dos critérios do tema escuro completo. VITR-96 a VITR-103 seguem a ordem dos critérios da foto no quadro. VITR-104 a VITR-108 seguem a ordem dos critérios de movimento e tipografia.
 

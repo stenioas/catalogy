@@ -571,7 +571,7 @@ T28
 ---
 ### T16: Ler o tamanho de WebP
 
-**Status**: pending
+**Status**: done
 
 **What**: Acrescentar WebP `VP8 `, `VP8L` e `VP8X` a `ler_dimensoes`, com a orientação do bloco `EXIF` do `VP8X`.
 **Where**: `gerador/imagem.py`
@@ -587,12 +587,12 @@ T28
 
 **Done when**:
 
-- [ ] `VP8 `, `VP8L` e `VP8X` de 400×300 devolvem `(400, 300)`
-- [ ] `VP8X` com `EXIF` de orientação 6 devolve `(300, 400)`. Com orientação 3 devolve `(400, 300)`
-- [ ] O bloco `EXIF` vale com e sem o prefixo `Exif\0\0`
-- [ ] WebP truncado ou sem bloco de imagem levanta `ImagemIlegivel`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 169 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] `VP8 `, `VP8L` e `VP8X` de 400×300 devolvem `(400, 300)`
+- [x] `VP8X` com `EXIF` de orientação 6 devolve `(300, 400)`. Com orientação 3 devolve `(400, 300)`
+- [x] O bloco `EXIF` vale com e sem o prefixo `Exif\0\0`
+- [x] WebP truncado ou sem bloco de imagem levanta `ImagemIlegivel`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 169 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

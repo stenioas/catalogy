@@ -58,3 +58,82 @@ def jpeg_sof(
 
 def jpeg_sem_sof() -> bytes:
     return b"\xFF\xD8" + _segmento_jpeg(0xE0, b"\x00" * 4) + b"\xFF\xD9"
+
+
+def _chunk_webp(fourcc: str, dados: bytes) -> bytes:
+    pad = b"\x00" if len(dados) % 2 else b""
+    return fourcc.encode("ascii") + struct.pack("<I", len(dados)) + dados + pad
+
+
+def _riff_webp(conteudo: bytes) -> bytes:
+    corpo = b"WEBP" + conteudo
+    return b"RIFF" + struct.pack("<I", len(corpo)) + corpo
+
+
+def _vp8_payload(largura: int, altura: int) -> bytes:
+    return (
+        b"\x00\x00\x00"
+        + b"\x9d\x01\x2a"
+        + struct.pack("<HH", largura & 0x3FFF, altura & 0x3FFF)
+        + b"\x00"
+    )
+
+
+def _vp8l_payload(largura: int, altura: int) -> bytes:
+    bits = ((altura - 1) << 14) | (largura - 1)
+    return bytes([0x2F]) + struct.pack("<I", bits)
+
+
+def _vp8x_cabecalho(largura: int, altura: int, *, flags: int = 0) -> bytes:
+    return (
+        bytes([flags, 0, 0, 0])
+        + struct.pack("<I", largura - 1)[:3]
+        + struct.pack("<I", altura - 1)[:3]
+    )
+
+
+def _exif_orientacao(orientacao: int, *, com_prefixo: bool = True) -> bytes:
+    tiff = _tif_orientacao("II", orientacao)
+    if com_prefixo:
+        return b"Exif\x00\x00" + tiff
+    return tiff
+
+
+def webp_vp8(largura: int, altura: int) -> bytes:
+    return _riff_webp(_chunk_webp("VP8 ", _vp8_payload(largura, altura)))
+
+
+def webp_vp8l(largura: int, altura: int) -> bytes:
+    return _riff_webp(_chunk_webp("VP8L", _vp8l_payload(largura, altura)))
+
+
+def webp_vp8x(
+    largura: int,
+    altura: int,
+    *,
+    orientacao: int | None = None,
+    exif_sem_prefixo: bool = False,
+    com_imagem: bool = True,
+) -> bytes:
+    flags = 0x08 if orientacao is not None else 0
+    partes = [_chunk_webp("VP8X", _vp8x_cabecalho(largura, altura, flags=flags))]
+    if orientacao is not None:
+        partes.append(
+            _chunk_webp(
+                "EXIF",
+                _exif_orientacao(
+                    orientacao, com_prefixo=not exif_sem_prefixo
+                ),
+            )
+        )
+    if com_imagem:
+        partes.append(_chunk_webp("VP8L", _vp8l_payload(largura, altura)))
+    return _riff_webp(b"".join(partes))
+
+
+def webp_truncado() -> bytes:
+    return webp_vp8(400, 300)[:20]
+
+
+def webp_vp8x_sem_imagem(largura: int, altura: int) -> bytes:
+    return webp_vp8x(largura, altura, com_imagem=False)

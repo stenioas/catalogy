@@ -14,6 +14,8 @@ def ler_dimensoes(caminho: Path) -> tuple[int, int]:
         return _ler_png(dados)
     if dados.startswith(b"\xff\xd8"):
         return _ler_jpeg(dados)
+    if len(dados) >= 12 and dados[0:4] == b"RIFF" and dados[8:12] == b"WEBP":
+        return _ler_webp(dados)
     raise ImagemIlegivel
 
 
@@ -123,3 +125,59 @@ def _ler_orientacao_exif(tiff: bytes) -> int | None:
     except struct.error:
         return None
     return None
+
+
+def _ler_webp(dados: bytes) -> tuple[int, int]:
+    pos = 12
+    largura: int | None = None
+    altura: int | None = None
+    orientacao: int | None = None
+    tem_vp8 = False
+    tem_vp8l = False
+    tem_vp8x = False
+    while pos + 8 <= len(dados):
+        fourcc = dados[pos : pos + 4]
+        tamanho = struct.unpack("<I", dados[pos + 4 : pos + 8])[0]
+        inicio = pos + 8
+        fim = inicio + tamanho
+        if fim > len(dados):
+            raise ImagemIlegivel
+        bloco = dados[inicio:fim]
+        if fourcc == b"VP8 ":
+            tem_vp8 = True
+            if len(bloco) < 10 or bloco[3:6] != b"\x9d\x01\x2a":
+                raise ImagemIlegivel
+            w, h = struct.unpack("<HH", bloco[6:10])
+            largura, altura = w & 0x3FFF, h & 0x3FFF
+        elif fourcc == b"VP8L":
+            tem_vp8l = True
+            if len(bloco) < 5 or bloco[0] != 0x2F:
+                raise ImagemIlegivel
+            bits = struct.unpack("<I", bloco[1:5])[0]
+            largura = (bits & 0x3FFF) + 1
+            altura = ((bits >> 14) & 0x3FFF) + 1
+        elif fourcc == b"VP8X":
+            tem_vp8x = True
+            if len(bloco) < 10:
+                raise ImagemIlegivel
+            largura = (
+                bloco[4] | (bloco[5] << 8) | (bloco[6] << 16)
+            ) + 1
+            altura = (
+                bloco[7] | (bloco[8] << 8) | (bloco[9] << 16)
+            ) + 1
+        elif fourcc == b"EXIF":
+            tiff = bloco
+            if tiff.startswith(b"Exif\x00\x00"):
+                tiff = tiff[6:]
+            orientacao = _ler_orientacao_exif(tiff)
+        pos = fim + (tamanho & 1)
+    if tem_vp8x and not (tem_vp8 or tem_vp8l):
+        raise ImagemIlegivel
+    if not (tem_vp8 or tem_vp8l or tem_vp8x):
+        raise ImagemIlegivel
+    if largura is None or altura is None:
+        raise ImagemIlegivel
+    if orientacao in (5, 6, 7, 8):
+        largura, altura = altura, largura
+    return _validar(largura, altura)
