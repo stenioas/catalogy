@@ -247,8 +247,8 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| VITR-01 | P1: Gerar o site | Tasks | In Tasks |
-| VITR-02 | P1: Gerar o site | Tasks | In Tasks |
+| VITR-01 | P1: Gerar o site | Tasks | done |
+| VITR-02 | P1: Gerar o site | Tasks | done |
 | VITR-03 | P1: Gerar o site | Tasks | Implementing |
 | VITR-04 | P1: Gerar o site | Tasks | Implementing |
 | VITR-05 | P1: Gerar o site | Tasks | Implementing |
@@ -260,12 +260,12 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-11 | P1: Gerar o site | Tasks | Implementing |
 | VITR-12 | P1: Gerar o site | Tasks | Implementing |
 | VITR-13 | P1: Gerar o site | Tasks | Implementing |
-| VITR-14 | P1: Gerar o site | Tasks | In Tasks |
-| VITR-15 | P1: Gerar o site | Tasks | In Tasks |
+| VITR-14 | P1: Gerar o site | Tasks | done |
+| VITR-15 | P1: Gerar o site | Tasks | done |
 | VITR-16 | P1: Gerar o site | Tasks | In Tasks |
 | VITR-17 | P1: Gerar o site | Tasks | Implementing |
 | VITR-18 | P1: Gerar o site | Tasks | Implementing |
-| VITR-19 | P1: Gerar o site | Tasks | In Tasks |
+| VITR-19 | P1: Gerar o site | Tasks | done |
 | VITR-20 | P1: Navegar | Tasks | Implementing |
 | VITR-21 | P1: Navegar | Tasks | Implementing |
 | VITR-22 | P1: Navegar | Tasks | Implementing |

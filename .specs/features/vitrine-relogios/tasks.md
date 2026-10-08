@@ -418,6 +418,8 @@ T14
 
 ### T12: Substituir site só depois do sucesso
 
+**Status**: done
+
 **What**: Validar, renderizar num diretório temporário e trocar `site/` só quando todos passam.
 **Where**: `gerador/publicar.py`
 **Depends on**: T11
@@ -432,12 +434,12 @@ T14
 
 **Done when**:
 
-- [ ] Sucesso grava raiz, vitrine, relógio e `imagens/` só debaixo de `site/`
-- [ ] Falha com `site/` ausente não cria `site/`. Falha com `site/` presente não muda o conteúdo anterior
-- [ ] Duas execuções iguais produzem o mesmo HTML
-- [ ] O teste usa dois vendedores de exemplo, um sem itens
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 32 tests pass
+- [x] Sucesso grava raiz, vitrine, relógio e `imagens/` só debaixo de `site/`
+- [x] Falha com `site/` ausente não cria `site/`. Falha com `site/` presente não muda o conteúdo anterior
+- [x] Duas execuções iguais produzem o mesmo HTML
+- [x] O teste usa dois vendedores de exemplo, um sem itens
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 32 tests pass
 
 **Tests**: integration
 **Gate**: full
