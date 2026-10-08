@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "promote_threshold": 2,
+  "window_days": 45,
+  "quarantine_threshold": 2,
+  "next_id": 3,
+  "lessons": [
+    {
+      "id": "L-001",
+      "key": "surviving_mutant::assert the exact length the spec names on that element not only a child min height",
+      "text": "Assert the exact length the spec names on that element, not only a child min-height.",
+      "signal": "surviving_mutant",
+      "scope": "css",
+      "status": "candidate",
+      "features": [
+        "vitrine-relogios"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "gerador/estilos.css:22 (css)"
+      ],
+      "created": "2026-10-08T02:44:53Z",
+      "last_seen": "2026-10-08T02:44:53Z"
+    },
+    {
+      "id": "L-002",
+      "key": "ac_gap::assert behavior tests do not open the published catalog file not that an absolute path string is absent from source",
+      "text": "Assert behavior tests do not open the published catalog file, not that an absolute path string is absent from source.",
+      "signal": "ac_gap",
+      "scope": "tests",
+      "status": "candidate",
+      "features": [
+        "vitrine-relogios"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "tests/test_cli.py:89 (tests)"
+      ],
+      "created": "2026-10-08T02:44:53Z",
+      "last_seen": "2026-10-08T02:44:53Z"
+    }
+  ]
+}

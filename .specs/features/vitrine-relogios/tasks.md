@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/vitrine-relogios/design.md`
-**Status**: Draft
+**Status**: Draft (emenda de interface, T15 a T28)
 
 ---
 
@@ -28,6 +28,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 | Publicar | integration | Success writes only `site/`; each failure leaves the previous `site/` | `tests/test_publicar.py` | `python3 -m unittest discover -s tests -q` |
 | CLI | integration | Non-zero exit and stderr `pasta: regra` | `tests/test_cli.py` | `python3 -m unittest discover -s tests -q` |
 | Catálogo publicado | unit | The three watches and the file deletions; this test does not drive the behavioral suite | `tests/test_catalogo_publicado.py` | `python3 -m unittest discover -s tests -q` |
+| Imagem | unit | All branches; 1:1 to VITR-98–VITR-101; every orientation value 1–8, AVIF `irot` 0–3, truncation and unknown signature | `tests/test_imagem.py` | `python3 -m unittest discover -s tests -q` |
 
 ## Gate Check Commands
 
@@ -76,6 +77,31 @@ T12 → T13
 
 ```
 T14
+```
+
+### Phase 6: Tamanho das fotos
+
+```
+T15 → T16 → T17 → T18
+```
+
+### Phase 7: HTML e scripts
+
+```
+T19
+T20
+T21 → T22
+T23
+```
+
+### Phase 8: Visual da emenda
+
+```
+T24
+T25
+T26
+T27
+T28
 ```
 
 ---
@@ -509,10 +535,438 @@ T14
 
 ---
 
+### Phase 6: Tamanho das fotos
+
+### T15: Ler o tamanho de PNG e JPEG
+
+**Status**: pending
+
+**What**: Criar `ler_dimensoes` e `ImagemIlegivel`, com PNG pelo `IHDR` e JPEG pelo primeiro SOF e pela orientação Exif do APP1.
+**Where**: `gerador/imagem.py`
+**Depends on**: None
+**Reuses**: nada. Ajudante de teste novo em `tests/imagens_exemplo.py`
+**Requirement**: VITR-98, VITR-99, VITR-100
+**Complexity**: medium
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] PNG 400×300 devolve `(400, 300)`
+- [ ] JPEG 400×300 sem Exif e com orientação 1, 2, 3 e 4 devolve `(400, 300)`. Com 5, 6, 7 e 8 devolve `(300, 400)`
+- [ ] Exif malformado com SOF válido devolve o tamanho do SOF
+- [ ] Um `.png` com bytes de JPEG devolve o tamanho do JPEG
+- [ ] PNG truncado antes do `IHDR`, JPEG sem SOF, assinatura desconhecida e largura ou altura zero levantam `ImagemIlegivel`
+- [ ] O módulo só importa a biblioteca padrão
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 162 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): read PNG and JPEG sizes from the header`
+
+---
+### T16: Ler o tamanho de WebP
+
+**Status**: pending
+
+**What**: Acrescentar WebP `VP8 `, `VP8L` e `VP8X` a `ler_dimensoes`, com a orientação do bloco `EXIF` do `VP8X`.
+**Where**: `gerador/imagem.py`
+**Depends on**: T15
+**Reuses**: a leitura de Exif de T15
+**Requirement**: VITR-98, VITR-99, VITR-100
+**Complexity**: medium
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] `VP8 `, `VP8L` e `VP8X` de 400×300 devolvem `(400, 300)`
+- [ ] `VP8X` com `EXIF` de orientação 6 devolve `(300, 400)`. Com orientação 3 devolve `(400, 300)`
+- [ ] O bloco `EXIF` vale com e sem o prefixo `Exif\0\0`
+- [ ] WebP truncado ou sem bloco de imagem levanta `ImagemIlegivel`
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 169 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): read WebP sizes from the header`
+
+---
+### T17: Ler o tamanho de AVIF
+
+**Status**: pending
+
+**What**: Acrescentar AVIF a `ler_dimensoes`, seguindo `pitm`, `ipma` e `ipco` até o `ispe` e o `irot` do item primário.
+**Where**: `gerador/imagem.py`
+**Depends on**: T16
+**Reuses**: o percurso de caixas escrito nesta tarefa
+**Requirement**: VITR-98, VITR-99, VITR-100
+**Complexity**: high
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] AVIF 400×300 sem `irot` e com ângulo 0 ou 2 devolve `(400, 300)`. Com ângulo 1 ou 3 devolve `(300, 400)`
+- [ ] Com uma miniatura de 64×48 antes do item primário em `ipco`, devolve o `ispe` do item primário
+- [ ] `imir` sem `irot` mantém `(400, 300)`
+- [ ] Caixa com tamanho de 64 bits é percorrida
+- [ ] AVIF sem `ispe` no item primário ou truncado levanta `ImagemIlegivel`
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 175 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): read AVIF sizes from the header`
+
+---
+### T18: Guardar o tamanho no modelo e recusar imagem ilegível
+
+**Status**: pending
+
+**What**: Criar `Imagem(arquivo, largura, altura)`, trocar `Item.imagens` para `list[Imagem]` e preencher pela validação, com a regra `não foi possível ler a largura e a altura da imagem`. Adaptar `renderizar.py`, `publicar.py`, a fixture e os testes que usavam `list[str]` ou bytes falsos.
+**Where**: `gerador/validar.py`
+**Depends on**: T17
+**Reuses**: `CatalogoErro`, `publicar.substituir`, `scripts/gerar_site.py`
+**Requirement**: VITR-101
+**Complexity**: medium
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] O item válido carrega `Imagem("foto.png", L, A)` com o tamanho do PNG mínimo gravado pelo teste
+- [ ] Imagem ilegível levanta `CatalogoErro` com a regra exata e sem o nome do arquivo
+- [ ] A CLI escreve `alexandre: não foi possível ler a largura e a altura da imagem` e sai com 1
+- [ ] O `site/` anterior fica byte a byte igual depois dessa falha
+- [ ] As regras antigas de imagem continuam passando na mesma ordem
+- [ ] O HTML gerado continua idêntico ao de antes desta tarefa
+- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 179 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: integration
+**Gate**: build
+**Commit**: `feat(vitrine): carry image sizes in the model`
+
+---
+### Phase 7: HTML e scripts
+
+### T19: Declarar viewport, link de pular e alvo do conteúdo
+
+**Status**: pending
+
+**What**: Em `_pagina`, emitir o `viewport`, o link `Pular para o conteúdo` como primeiro filho do `body` e `main` com `id="conteudo"` e `tabindex="-1"`.
+**Where**: `gerador/renderizar.py`
+**Depends on**: None
+**Reuses**: `_pagina`
+**Requirement**: VITR-74, VITR-75, VITR-76
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] Raiz, vitrine e relógio têm `<meta name="viewport" content="width=device-width, initial-scale=1">` dentro do `head`
+- [ ] O primeiro filho do `body` nas três páginas é `<a class="pular" href="#conteudo">Pular para o conteúdo</a>`
+- [ ] O `main` das três páginas tem `id="conteudo"` e `tabindex="-1"`
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 182 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): add viewport and skip link`
+
+---
+### T20: Declarar tamanho e carga das fotos
+
+**Status**: pending
+
+**What**: Emitir `width` e `height` de cada `Imagem` no card e no carrossel, e `loading="lazy"` em todo card e foto depois do primeiro.
+**Where**: `gerador/renderizar.py`
+**Depends on**: T18
+**Reuses**: `_card`, `_carrossel`
+**Requirement**: VITR-97, VITR-102, VITR-103
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] Com `Imagem("capa.png", 400, 300)`, o card e a foto do carrossel têm `width="400"` e `height="300"`
+- [ ] O primeiro card e a primeira foto do carrossel não têm `loading`
+- [ ] O segundo card e a segunda foto do carrossel têm `loading="lazy"`
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 185 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): declare photo size and lazy loading`
+
+---
+### T21: Trocar as bolinhas por botões
+
+**Status**: pending
+
+**What**: Emitir cada bolinha como `<button type="button" class="bolinha" aria-label="Foto N">`, a primeira com `aria-current="true"`.
+**Where**: `gerador/renderizar.py`
+**Depends on**: None
+**Reuses**: `_carrossel`
+**Requirement**: VITR-83
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] Com três fotos, há três `button type="button"` com `aria-label` `Foto 1`, `Foto 2` e `Foto 3`
+- [ ] Só a primeira tem `aria-current="true"`
+- [ ] Com uma foto, não há bolinha nem seta
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 187 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): render carousel dots as buttons`
+
+---
+### T22: Ir para a foto da bolinha
+
+**Status**: pending
+
+**What**: Em `carrossel.js`, o clique numa bolinha mostra a foto daquela posição e move `aria-current` para ela.
+**Where**: `gerador/carrossel.js`
+**Depends on**: T21
+**Reuses**: `irPara`, `atualizarBolinhas`
+**Requirement**: VITR-85
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] No harness com três fotos, clicar a terceira bolinha mostra só a terceira foto e deixa `aria-current` só na terceira
+- [ ] Depois, a próxima volta para a primeira
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 189 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): jump to a photo from its dot`
+
+---
+### T23: Expor o modo atual no botão de tema
+
+**Status**: pending
+
+**What**: Em `tema.js`, gravar o `aria-label` do modo atual junto com o rótulo e atualizar no clique.
+**Where**: `gerador/tema.js`
+**Depends on**: None
+**Reuses**: `atualizarControle`
+**Requirement**: VITR-88, VITR-89, VITR-90
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] No claro, o nome é `Modo claro. Mudar para escuro.` e o texto é `Escuro`
+- [ ] No escuro, o nome é `Modo escuro. Mudar para claro.` e o texto é `Claro`
+- [ ] Depois do clique a partir do claro, o nome é `Modo escuro. Mudar para claro.`
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 192 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): name the current theme for screen readers`
+
+---
+### Phase 8: Visual da emenda
+
+### T24: Encaixar as fotos no quadro quadrado
+
+**Status**: pending
+
+**What**: Foto do card e do carrossel em quadro `1 / 1` com `cover` centrado. Raio de 8px no card e zero no carrossel. O card continua com 18px.
+**Where**: `gerador/estilos.css`
+**Depends on**: None
+**Reuses**: `.card img`, `.carrossel img`
+**Requirement**: VITR-48, VITR-49, VITR-96
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] `.card img` e `.carrossel img` têm `aspect-ratio: 1 / 1`, `width: 100%`, `object-fit: cover` e `object-position: center`
+- [ ] `.card img` tem `border-radius: 8px`, `.carrossel img` tem `0` e `.card` tem `18px`
+- [ ] O teste antigo de foto inteira e de raio 18px na foto passa a afirmar o quadro cheio e os 8px
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 193 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): fill photos into a square frame`
+
+---
+### T25: Completar o tema escuro
+
+**Status**: pending
+
+**What**: `color-scheme: dark`, vidro na segunda barra e na barra fixa, sólido só no rodapé, linhas escuras e fio no botão de tema.
+**Where**: `gerador/estilos.css`
+**Depends on**: None
+**Reuses**: seletores `html[data-tema="escuro"]`
+**Requirement**: VITR-64, VITR-91, VITR-92, VITR-93, VITR-94, VITR-95
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] `html[data-tema="escuro"]` declara `color-scheme: dark`
+- [ ] No escuro, `.barra-vendedor` e `.barra-fixa` têm `rgba(39, 39, 41, 0.8)` e `saturate(180%) blur(20px)`. `footer` tem `#272729`
+- [ ] No escuro, a borda do card, `.ficha-linha` e o separador de `.lista-vendedores a` usam `rgba(255, 255, 255, 0.16)`
+- [ ] `#controle-tema` tem fundo `#1d1d1f` e `border: 1px solid rgba(255, 255, 255, 0.16)`
+- [ ] O teste antigo das três superfícies `#272729` passa a afirmar o sólido só no rodapé
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 198 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): complete the dark theme surfaces`
+
+---
+### T26: Estilizar link de pular, respiro e foco
+
+**Status**: pending
+
+**What**: Link de pular escondido fora do foco e pílula azul com foco, `scroll-padding` da pilha sticky e anel de foco em link de pular, bolinha e seta.
+**Where**: `gerador/estilos.css`
+**Depends on**: T19
+**Reuses**: a regra `:focus-visible` existente
+**Requirement**: VITR-77, VITR-78, VITR-79, VITR-80, VITR-81, VITR-82
+**Complexity**: medium
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] `.pular` fora do foco tem `position: fixed` e `transform: translateY(-200%)`
+- [ ] `.pular:focus` tem `transform: none`, fundo `#0066cc`, texto `#ffffff`, raio `9999px` e `z-index` maior que o da `.barra-negra`
+- [ ] `html` tem `scroll-padding-top: 44px`. `html:has(.barra-vendedor)` tem `96px`. `html:has(.barra-fixa)` tem `scroll-padding-bottom: 64px`
+- [ ] `.pular`, `.bolinha` e `.seta` em `:focus-visible` têm `outline: 2px solid #0071e3` e `outline-offset: 2px`
+- [ ] O leitor de CSS dos testes lê seletores com `:has()`
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 204 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): style skip link, scroll padding, and focus`
+
+---
+### T27: Dimensionar as bolinhas e subir o contraste
+
+**Status**: pending
+
+**What**: Bolinha-botão de 44px com ponto de 8px e 8px entre botões. Texto secundário do claro em `#333333`, sem `#7a7a7a`.
+**Where**: `gerador/estilos.css`
+**Depends on**: T21
+**Reuses**: `.bolinhas`, `.bolinha`, `.parcelamento`, `dt`
+**Requirement**: VITR-84, VITR-86, VITR-87
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] `.bolinha` tem `width` e `height` de pelo menos 44px. `.bolinha::before` tem 8px. `.bolinhas` tem `gap: 8px`
+- [ ] `[aria-current="true"]` pinta o ponto de `#0066cc` no claro e `#2997ff` no escuro
+- [ ] `.parcelamento` e `dt` usam `#333333` no claro
+- [ ] `#7a7a7a` não aparece em `gerador/estilos.css`
+- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 208 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: quick
+**Commit**: `feat(vitrine): size the carousel dots and raise contrast`
+
+---
+### T28: Respeitar movimento reduzido e acertar a tipografia
+
+**Status**: pending
+
+**What**: `prefers-reduced-motion` desliga o `scale(0.95)`. Preço com números tabulares, títulos com `balance`, nome do card quebrando e grade de coluna única em `minmax(0, 1fr)`.
+**Where**: `gerador/estilos.css`
+**Depends on**: None
+**Reuses**: `:active` existente, `.preco`, `.grade-vitrine`
+**Requirement**: VITR-104, VITR-105, VITR-106, VITR-107, VITR-108
+**Complexity**: low
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [ ] Dentro de `@media (prefers-reduced-motion: reduce)`, `#controle-tema:active`, `.pilula:active` e `.seta:active` têm `transform: none`
+- [ ] `.preco` tem `font-variant-numeric: tabular-nums`
+- [ ] `h1`, `.nome-vendedor` e `.card .nome` têm `text-wrap: balance`. `.card .nome` tem `overflow-wrap: anywhere`
+- [ ] Toda coluna da grade, em todo intervalo, é `minmax(0, 1fr)`, e a contagem de colunas não muda
+- [ ] O leitor de CSS dos testes lê o bloco `@media (prefers-reduced-motion: reduce)`
+- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [ ] Test count: at least 213 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+
+**Tests**: unit
+**Gate**: build
+**Commit**: `feat(vitrine): honor reduced motion and tune type`
+
+---
+
 ## Phase Execution Map
 
 ```
-Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5
+Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8
 
 Phase 1: T1 → T2 → T3
 Phase 2: T4 → T5 → T6
@@ -522,6 +976,16 @@ Phase 3: T9 → T11
 Phase 3: T10 → T11
 Phase 4: T12 → T13
 Phase 5: T14
+Phase 6: T15 → T16 → T17 → T18
+Phase 7: T19
+Phase 7: T20
+Phase 7: T21 → T22
+Phase 7: T23
+Phase 8: T24
+Phase 8: T25
+Phase 8: T26
+Phase 8: T27
+Phase 8: T28
 ```
 
 ---
@@ -544,6 +1008,20 @@ Phase 5: T14
 | T12: Substituir site só depois do sucesso | 1 módulo | ✅ Granular |
 | T13: Expor o comando de geração | 1 comando | ✅ Granular |
 | T14: Publicar o YAML do Alexandre | 1 YAML | ✅ Granular |
+| T15: Ler o tamanho de PNG e JPEG | 1 função, 2 formatos | ✅ Granular |
+| T16: Ler o tamanho de WebP | 1 formato | ✅ Granular |
+| T17: Ler o tamanho de AVIF | 1 formato | ✅ Granular |
+| T18: Guardar o tamanho no modelo | 1 regra + troca de tipo propagada | ⚠️ Coeso: a troca de `list[str]` por `list[Imagem]` precisa dos consumidores no mesmo commit para o gate ficar verde |
+| T19: Viewport e link de pular | 1 função (`_pagina`) | ✅ Granular |
+| T20: Tamanho e carga das fotos | 2 funções no mesmo módulo | ✅ Granular |
+| T21: Bolinhas como botões | 1 função | ✅ Granular |
+| T22: Ir para a foto da bolinha | 1 função | ✅ Granular |
+| T23: Nome do modo atual | 1 função | ✅ Granular |
+| T24: Quadro quadrado | 2 regras CSS | ✅ Granular |
+| T25: Tema escuro completo | seletores escuros | ✅ Granular |
+| T26: Link de pular, respiro e foco | 1 preocupação: teclado | ✅ Granular |
+| T27: Bolinhas e contraste | 2 regras CSS | ✅ Granular |
+| T28: Movimento e tipografia | acabamento CSS | ✅ Granular |
 
 ## Diagram-Definition Cross-Check
 
@@ -563,6 +1041,20 @@ Phase 5: T14
 | T12 | T11 | início da fase 4. T11 é da fase 3 | ✅ Match |
 | T13 | T12 | T12 → T13 | ✅ Match |
 | T14 | T13 | fase 5, sem seta interna. T13 é da fase 4 | ✅ Match |
+| T15 | None | início da fase 6 | ✅ Match |
+| T16 | T15 | T15 → T16 | ✅ Match |
+| T17 | T16 | T16 → T17 | ✅ Match |
+| T18 | T17 | T17 → T18 | ✅ Match |
+| T19 | None | fase 7, sem seta | ✅ Match |
+| T20 | T18 | fase 7, sem seta interna. T18 é da fase 6 | ✅ Match |
+| T21 | None | início de T21 → T22 | ✅ Match |
+| T22 | T21 | T21 → T22 | ✅ Match |
+| T23 | None | fase 7, sem seta | ✅ Match |
+| T24 | None | fase 8, sem seta | ✅ Match |
+| T25 | None | fase 8, sem seta | ✅ Match |
+| T26 | T19 | fase 8, sem seta interna. T19 é da fase 7 | ✅ Match |
+| T27 | T21 | fase 8, sem seta interna. T21 é da fase 7 | ✅ Match |
+| T28 | None | fase 8, sem seta | ✅ Match |
 
 ## Test Co-location Validation
 
@@ -582,3 +1074,17 @@ Phase 5: T14
 | T12: Substituir site só depois do sucesso | Publicar | integration | integration | ✅ OK |
 | T13: Expor o comando de geração | CLI | integration | integration | ✅ OK |
 | T14: Publicar o YAML do Alexandre | Catálogo publicado | unit | unit | ✅ OK |
+| T15: Ler o tamanho de PNG e JPEG | Imagem | unit | unit | ✅ OK |
+| T16: Ler o tamanho de WebP | Imagem | unit | unit | ✅ OK |
+| T17: Ler o tamanho de AVIF | Imagem | unit | unit | ✅ OK |
+| T18: Guardar o tamanho no modelo | Validar, Modelo, Publicar, CLI | integration (maior entre unit e integration) | integration | ✅ OK |
+| T19: Viewport e link de pular | Renderizar | unit | unit | ✅ OK |
+| T20: Tamanho e carga das fotos | Renderizar | unit | unit | ✅ OK |
+| T21: Bolinhas como botões | Renderizar | unit | unit | ✅ OK |
+| T22: Ir para a foto da bolinha | Tema e carrossel | unit | unit | ✅ OK |
+| T23: Nome do modo atual | Tema e carrossel | unit | unit | ✅ OK |
+| T24: Quadro quadrado | Estilos | unit | unit | ✅ OK |
+| T25: Tema escuro completo | Estilos | unit | unit | ✅ OK |
+| T26: Link de pular, respiro e foco | Estilos | unit | unit | ✅ OK |
+| T27: Bolinhas e contraste | Estilos | unit | unit | ✅ OK |
+| T28: Movimento e tipografia | Estilos | unit | unit | ✅ OK |

@@ -10,6 +10,7 @@ Quem compra no WhatsApp precisa ver os relógios no celular, com foto e preço, 
 - [ ] O mesmo HTML funciona no celular e no computador, no claro e no escuro, na raiz do domínio e num projeto do GitHub Pages.
 - [ ] Um YAML inválido não substitui o `site/` já publicado.
 - [ ] Os três relógios de `catalogo.md` passam a viver só no YAML do primeiro vendedor.
+- [ ] A foto lidera o card e o carrossel, num quadro quadrado estável, e a página funciona inteira pelo teclado, no celular e no escuro.
 
 ## Out of Scope
 
@@ -20,6 +21,13 @@ Quem compra no WhatsApp precisa ver os relógios no celular, com foto e preço, 
 | PDF | O PDF atual sai do repositório depois que o YAML existe. |
 | Busca e sacola na barra | A barra preta só leva à raiz. |
 | Vínculo entre o mesmo relógio em vendedores diferentes | Itens iguais são blocos copiados. |
+| Nova paleta, novas fontes, gradiente, GSAP e sombra de card | O sistema visual do `DESIGN.md` já está fixado. |
+| Migração para React | O site publicado continua HTML, CSS e JavaScript, gerado em Python. |
+| Mudar colunas da grade, textos literais existentes, alvos mínimos de 44px ou links relativos | O plano de interface mantém esses quatro contratos. |
+| Reordenar o HTML da página do relógio | A ordem da página do relógio continua a do critério 16 da navegação. |
+| Campo novo no YAML, recorte ou regravação do arquivo de imagem, pacote novo para ler a imagem | A largura e a altura saem do cabeçalho, em Python puro. |
+| Feature paralela a `vitrine-relogios` | A emenda de interface vive nesta spec. |
+| Faixa ao redor da foto, preta ou da cor do fundo | O quadro corta o excesso em vez de preencher com faixa. |
 
 ---
 
@@ -40,7 +48,20 @@ Quem compra no WhatsApp precisa ver os relógios no celular, com foto e preço, 
 | Prévia do WhatsApp | `og:title` é o nome do modelo. `og:image` é uma URL relativa que resolve para a primeira foto. | O desenho exige links relativos, sem um domínio canônico. | y |
 | Tema gravado | `localStorage` com a chave `tema` e os valores `claro` ou `escuro`. Um script no início do `<head>` aplica `data-tema` em `<html>` antes da pintura. | O desenho pede memória da escolha e aplicação antes de desenhar, sem nomear a chave. | y |
 | Grade da vitrine | ≤640px: 1 coluna. 641–834px: 2. 835–1068px: 3. 1069–1440px: 4. ≥1441px: 5. | É a cascata de utility grid do `DESIGN.md`: 1 coluna em 640px, 2 em 834px, 3 em 1068px, 4 em 1440px e 5 acima. | y |
-| Barra fixa no escuro | Fundo `#272729`, texto branco, e o vidro fosco continua. | O desenho pede as duas coisas na mesma faixa. | y |
+| Barra fixa no escuro | Fundo `rgba(39, 39, 41, 0.8)`, texto branco, `backdrop-filter: saturate(180%) blur(20px)`. O `#272729` sólido fica só no rodapé. | O plano de interface tira o sólido da barra fixa e da segunda barra. Atrás de um fundo opaco o vidro não aparece. O dono escolheu a versão translúcida. | y |
+| Plano de interface contra a spec | Onde `PLANO-INTERFACE.md` e esta spec discordam, o plano vence e o critério antigo muda. | Decisão do plano. | y |
+| Formato da imagem para ler o tamanho | Detectado pela assinatura dos bytes, não pela extensão. Conteúdo fora de PNG, JPEG, WebP e AVIF falha com a regra de tamanho ilegível. | O navegador também decide pelo conteúdo. A extensão já é validada por outra regra. | y |
+| Tamanho em JPEG | Largura e altura do primeiro marcador SOF (`C0` a `CF`, exceto `C4`, `C8` e `CC`). Orientação da tag Exif `0x0112` no APP1. | São os marcadores que carregam o tamanho do quadro. | y |
+| Tamanho em WebP | `VP8 `: 14 bits de largura e altura do quadro-chave. `VP8L`: 14 bits mais 1. `VP8X`: 24 bits mais 1 da tela. Orientação só do bloco `EXIF` de um `VP8X`. | O formato só admite metadados no `VP8X`. | y |
+| Tamanho em AVIF | `ispe` associado ao item primário (`pitm`) pelo `ipma`. Orientação pelo `irot` do mesmo item: ângulo 1 ou 3 troca largura e altura. `imir` sozinho não troca. | AVIF não usa Exif para girar. `imir` espelha sem girar. | y |
+| Orientação Exif | Valores 5, 6, 7 e 8 trocam largura e altura. Valores 1 a 4 e a ausência mantêm. | 5 e 7 são as espelhadas que giram. 2, 3 e 4 espelham ou giram 180°. | y |
+| Carregar na hora | O primeiro card da vitrine e a primeira foto do carrossel não têm atributo `loading`. | O padrão do navegador é carregar na hora. | y |
+| Texto secundário | `.parcelamento` e o `dt` da ficha. São os dois elementos que usavam `#7a7a7a`. | O plano não nomeia os elementos. | y |
+| Títulos com `text-wrap: balance` | `h1`, `.nome-vendedor` e o nome no card. | São os títulos que aparecem nas três páginas. | y |
+| Nome acessível do controle de tema | `aria-label` no botão. O texto visível continua `Escuro` ou `Claro`. | O nome contém a palavra visível, então o rótulo continua dentro do nome. | y |
+| `viewport` | `<meta name="viewport" content="width=device-width, initial-scale=1">`. | É o valor que faz o aparelho usar a largura real. | y |
+| Link de pular | Primeiro filho do `body`, `href="#conteudo"`. Fora do foco fica fixo e fora da tela. | Primeiro na ordem de tabulação, sem empurrar o layout. | y |
+| Pilha sticky e `scroll-padding` | 44px no topo sem segunda barra, 96px com segunda barra (44 da barra preta e 52 da segunda), 64px embaixo com barra fixa. | São as alturas declaradas no CSS atual. | y |
 | Inter | Arquivos de fonte dentro de `site/`, sem CDN. | A página é estática e o desenho pede Inter fora da Apple. | y |
 | Mensagem de falha | Saída não zero. O stderr cita a pasta do vendedor e a regra violada. | Sem isso a falha não é diagnosticável. Não há métrica nem rastreio. | y |
 | Concorrência | N/A: um processo local por vez. Sem trava. | Não há gerador paralelo neste escopo. | y |
@@ -122,8 +143,8 @@ Quem compra no WhatsApp precisa ver os relógios no celular, com foto e preço, 
 26. WHEN an item has one image THEN the watch page SHALL show that image and SHALL omit carousel dots and arrows.
 27. WHEN an item has two or more images THEN the watch page SHALL show one image at a time, a dot per image marking the current index, and previous and next controls.
 28. WHEN next is used on the last image THEN the carousel SHALL show the first image.
-29. The carousel photo SHALL span the content width, show the whole photo without cropping, and have no rounded corner.
-30. The card photo SHALL be square, show the whole watch without cropping, and use an 18px corner radius.
+29. The carousel photo SHALL span the content width inside a square frame (`aspect-ratio: 1 / 1`), fill it with `object-fit: cover` and `object-position: center`, and have no rounded corner.
+30. The card photo SHALL fill a square frame (`aspect-ratio: 1 / 1`, full card width) with `object-fit: cover` and `object-position: center`, use an 8px corner radius, and sit inside a card that keeps an 18px corner radius.
 31. Every page SHALL show a black bar, 44px tall, with the text `Catálogo` linking to the root, and SHALL omit search and a bag.
 32. WHILE the page is the vitrine or a watch THEN the page SHALL show a second bar with the vendor name.
 33. The footer SHALL contain only the line `Catálogo de relógios`.
@@ -151,7 +172,7 @@ Quem compra no WhatsApp precisa ver os relógios no celular, com foto e preço, 
 9. The interest pill SHALL use background `#0066cc` and white text.
 10. WHILE `data-tema` is `claro` the footer SHALL use `#f5f5f7`.
 11. WHILE `data-tema` is `escuro` the page background SHALL be `#272729`, the card `#2a2a2c`, primary text `#ffffff`, secondary text `#cccccc`, and links `#2997ff`.
-12. WHILE `data-tema` is `escuro` the footer, the second bar, and the fixed bar SHALL use `#272729` with white text.
+12. WHILE `data-tema` is `escuro` the footer SHALL use a solid `#272729` background with white text.
 13. WHILE `data-tema` is `escuro` the fixed bar SHALL keep a frosted backdrop filter.
 14. The watch photo SHALL keep its authored colors in both modes, with no dark overlay and no color inversion.
 15. The page SHALL use only colors defined in `DESIGN.md`.
@@ -233,6 +254,93 @@ Ficha do Seculus — kit com cantil:
 
 ---
 
+### P1: Ler e navegar no celular e pelo teclado
+
+**User Story**: As a buyer on a phone or using a keyboard, I want the page at my real screen width, a way to skip the bars, and visible focus on every control so that I can reach the price and the photos without zooming or getting lost.
+
+**Why P1**: Sem `viewport` o celular não mostra o layout de 320px. Sem foco visível e bolinhas acionáveis, o carrossel não funciona pelo teclado.
+
+**Acceptance Criteria**:
+
+1. Every page SHALL declare `<meta name="viewport" content="width=device-width, initial-scale=1">` inside `<head>`.
+2. Every page SHALL have, as the first child of `<body>`, a link with the exact text `Pular para o conteúdo` and `href="#conteudo"`.
+3. Every page SHALL give `<main>` the attributes `id="conteudo"` and `tabindex="-1"`.
+4. WHILE the skip link does not have focus, the skip link SHALL use `position: fixed` and sit outside the viewport.
+5. WHILE the skip link has focus, the skip link SHALL show at the top-left corner with background `#0066cc`, text `#ffffff`, corner radius `9999px`, and a `z-index` above the black bar.
+6. WHILE the page has no second bar, `html` SHALL use `scroll-padding-top: 44px`.
+7. WHILE the page has a second bar, `html` SHALL use `scroll-padding-top: 96px`.
+8. WHILE the page has the fixed bar, `html` SHALL use `scroll-padding-bottom: 64px`.
+9. WHEN the skip link, a carousel dot, or a carousel arrow receives `:focus-visible` THEN it SHALL show `outline: 2px solid #0071e3` with `outline-offset: 2px`.
+10. WHERE an item has two or more images, each carousel dot SHALL be a `<button type="button">` whose accessible name is `Foto ` plus its 1-based position.
+11. Each carousel dot button SHALL be at least 44px wide and 44px tall, draw an 8px circle, and sit 8px from the next dot.
+12. WHEN a carousel dot is activated THEN the carousel SHALL show the image at that position and SHALL set `aria-current="true"` on that dot only.
+13. WHILE `data-tema` is `claro`, `.parcelamento` and the ficha `dt` SHALL use `#333333`.
+14. The stylesheet SHALL NOT use `#7a7a7a`.
+15. WHILE `data-tema` is `claro` the theme control SHALL have the accessible name `Modo claro. Mudar para escuro.`
+16. WHILE `data-tema` is `escuro` the theme control SHALL have the accessible name `Modo escuro. Mudar para claro.`
+17. WHEN the theme control is activated THEN its accessible name SHALL switch to the name of the new mode.
+
+**Independent Test**: Gerar o catálogo de exemplo, ler `viewport`, o link de pular e o `main` no HTML. Acionar a segunda bolinha no harness do carrossel e ler a foto visível e `aria-current`. Alternar o tema no harness e ler o `aria-label`.
+
+---
+
+### P1: Tema escuro completo
+
+**User Story**: As a buyer in dark mode, I want every bar, border, and control to stay visible so that the page does not lose its structure at night.
+
+**Why P1**: Hoje a segunda barra perde o vidro, as linhas somem e o botão de tema desaparece na barra preta.
+
+**Acceptance Criteria**:
+
+1. WHILE `data-tema` is `escuro`, `html` SHALL set `color-scheme: dark`.
+2. WHILE `data-tema` is `escuro` the second bar SHALL use background `rgba(39, 39, 41, 0.8)` and `backdrop-filter: saturate(180%) blur(20px)`.
+3. WHILE `data-tema` is `escuro` the fixed bar SHALL use background `rgba(39, 39, 41, 0.8)` and `backdrop-filter: saturate(180%) blur(20px)`.
+4. WHILE `data-tema` is `escuro` the card border, the ficha row lines, and the vendor list separator SHALL use `rgba(255, 255, 255, 0.16)`.
+5. The theme control SHALL keep background `#1d1d1f` and SHALL have a border `1px solid rgba(255, 255, 255, 0.16)`.
+
+**Independent Test**: Ler os seletores `html[data-tema="escuro"]` do CSS e o bloco de `#controle-tema`.
+
+---
+
+### P1: Foto no quadro e com tamanho declarado
+
+**User Story**: As a buyer, I want every photo in a stable square frame that loads in the right order so that the page does not jump when photos load or change.
+
+**Why P1**: A altura do carrossel acompanha cada arquivo e as fotos não reservam espaço antes de carregar.
+
+**Acceptance Criteria**:
+
+1. WHEN the visitor moves to another carousel image THEN the carousel height SHALL stay the same, because every carousel image uses the same square frame.
+2. Each published `<img>` SHALL carry `width` and `height` attributes equal to the pixel width and height read from that file's header.
+3. The generator SHALL read width and height from PNG, JPEG, WebP, and AVIF headers using only the Python standard library.
+4. WHEN a JPEG or WebP has Exif orientation 5, 6, 7, or 8, or an AVIF primary item has `irot` angle 1 or 3, THEN the generator SHALL swap the header width and height.
+5. WHEN a JPEG or WebP has Exif orientation 1, 2, 3, or 4 or none, or an AVIF primary item has `irot` angle 0 or 2 or none, THEN the generator SHALL keep the header width and height.
+6. IF an image's width or height is missing, unreadable, zero, or negative THEN the generator SHALL leave any previous `site/` unchanged, exit non-zero, and write exactly `<pasta>: não foi possível ler a largura e a altura da imagem` to stderr, with no file name.
+7. The first card of a vitrine and the first carousel image SHALL have no `loading` attribute.
+8. Every card image after the first and every carousel image after the first SHALL have `loading="lazy"`.
+
+**Independent Test**: Gerar um catálogo com um PNG 400×300, um JPEG com orientação 6, um WebP e um AVIF mínimos, e ler `width`, `height` e `loading` no HTML. Trocar um arquivo por bytes ilegíveis e ver a mensagem e o `site/` anterior intacto.
+
+---
+
+### P2: Movimento e tipografia
+
+**User Story**: As a buyer, I want prices that line up, titles that wrap evenly, and no zoom animation when I asked for reduced motion so that the page reads calmly.
+
+**Why P2**: Acabamento. O fluxo de compra funciona sem ele.
+
+**Acceptance Criteria**:
+
+1. WHILE `prefers-reduced-motion: reduce` matches, the `:active` state of the theme control, the interest pill, and the carousel arrows SHALL use `transform: none`.
+2. Every price element (`.preco`) SHALL use `font-variant-numeric: tabular-nums`.
+3. `h1`, `.nome-vendedor`, and the card name SHALL use `text-wrap: balance`.
+4. The card name SHALL use `overflow-wrap: anywhere`.
+5. The vitrine grid SHALL define every column as `minmax(0, 1fr)` at every breakpoint, including the single column.
+
+**Independent Test**: Ler os blocos do CSS. Um nome de uma palavra só com 80 letras quebra dentro do card.
+
+---
+
 ## Edge Cases
 
 As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada uma deixa o `site/` anterior como estava.
@@ -240,6 +348,10 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 - IF a imagem cita `../outro.png` THEN the generator SHALL reject it as a name with a slash.
 - IF `observacoes` é só espaços THEN the watch page SHALL omit it.
 - IF dois vendedores repetem o mesmo `id` THEN the generator SHALL publish both.
+- IF um PNG termina antes do `IHDR` THEN the generator SHALL fail with `não foi possível ler a largura e a altura da imagem`.
+- IF um arquivo `.png` contém bytes de JPEG THEN the generator SHALL read the JPEG size.
+- IF o arquivo tem extensão aceita mas o conteúdo não é PNG, JPEG, WebP nem AVIF THEN the generator SHALL fail with `não foi possível ler a largura e a altura da imagem`.
+- WHEN a foto já é 1:1 THEN the frame SHALL show it whole, because `cover` has nothing to cut.
 
 ---
 
@@ -247,83 +359,118 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| VITR-01 | P1: Gerar o site | Tasks | done |
-| VITR-02 | P1: Gerar o site | Tasks | done |
-| VITR-03 | P1: Gerar o site | Tasks | Implementing |
-| VITR-04 | P1: Gerar o site | Tasks | Implementing |
-| VITR-05 | P1: Gerar o site | Tasks | Implementing |
-| VITR-06 | P1: Gerar o site | Tasks | Implementing |
-| VITR-07 | P1: Gerar o site | Tasks | Implementing |
-| VITR-08 | P1: Gerar o site | Tasks | Implementing |
-| VITR-09 | P1: Gerar o site | Tasks | Implementing |
-| VITR-10 | P1: Gerar o site | Tasks | Implementing |
-| VITR-11 | P1: Gerar o site | Tasks | Implementing |
-| VITR-12 | P1: Gerar o site | Tasks | Implementing |
-| VITR-13 | P1: Gerar o site | Tasks | Implementing |
-| VITR-14 | P1: Gerar o site | Tasks | done |
-| VITR-15 | P1: Gerar o site | Tasks | done |
-| VITR-16 | P1: Gerar o site | Tasks | done |
-| VITR-17 | P1: Gerar o site | Tasks | Implementing |
-| VITR-18 | P1: Gerar o site | Tasks | Implementing |
-| VITR-19 | P1: Gerar o site | Tasks | done |
-| VITR-20 | P1: Navegar | Tasks | Implementing |
-| VITR-21 | P1: Navegar | Tasks | Implementing |
-| VITR-22 | P1: Navegar | Tasks | Implementing |
-| VITR-23 | P1: Navegar | Tasks | Implementing |
-| VITR-24 | P1: Navegar | Tasks | Implementing |
-| VITR-25 | P1: Navegar | Tasks | Implementing |
-| VITR-26 | P1: Navegar | Tasks | Implementing |
-| VITR-27 | P1: Navegar | Tasks | Implementing |
-| VITR-28 | P1: Navegar | Tasks | Implementing |
-| VITR-29 | P1: Navegar | Tasks | Implementing |
-| VITR-30 | P1: Navegar | Tasks | Implementing |
-| VITR-31 | P1: Navegar | Tasks | Implementing |
-| VITR-32 | P1: Navegar | Tasks | Implementing |
-| VITR-33 | P1: Navegar | Tasks | Implementing |
-| VITR-34 | P1: Navegar | Tasks | Implementing |
-| VITR-35 | P1: Navegar | Tasks | Implementing |
-| VITR-36 | P1: Navegar | Tasks | Implementing |
-| VITR-37 | P1: Navegar | Tasks | Implementing |
-| VITR-38 | P1: Navegar | Tasks | Implementing |
-| VITR-39 | P1: Navegar | Tasks | Implementing |
-| VITR-40 | P1: Navegar | Tasks | Implementing |
-| VITR-41 | P1: Navegar | Tasks | Implementing |
-| VITR-42 | P1: Navegar | Tasks | Implementing |
-| VITR-43 | P1: Navegar | Tasks | Implementing |
-| VITR-44 | P1: Navegar | Tasks | Implementing |
-| VITR-45 | P1: Navegar | Tasks | Implementing |
-| VITR-46 | P1: Navegar | Tasks | done |
-| VITR-47 | P1: Navegar | Tasks | done |
-| VITR-48 | P1: Navegar | Tasks | Implementing |
-| VITR-49 | P1: Navegar | Tasks | Implementing |
-| VITR-50 | P1: Navegar | Tasks | Implementing |
-| VITR-51 | P1: Navegar | Tasks | Implementing |
-| VITR-52 | P1: Navegar | Tasks | Implementing |
-| VITR-53 | P1: Tema | Tasks | done |
-| VITR-54 | P1: Tema | Tasks | done |
-| VITR-55 | P1: Tema | Tasks | Implementing |
-| VITR-56 | P1: Tema | Tasks | Implementing |
-| VITR-57 | P1: Tema | Tasks | Implementing |
-| VITR-58 | P1: Tema | Tasks | Implementing |
-| VITR-59 | P1: Tema | Tasks | Implementing |
-| VITR-60 | P1: Tema | Tasks | Implementing |
-| VITR-61 | P1: Tema | Tasks | Implementing |
-| VITR-62 | P1: Tema | Tasks | Implementing |
-| VITR-63 | P1: Tema | Tasks | Implementing |
-| VITR-64 | P1: Tema | Tasks | Implementing |
-| VITR-65 | P1: Tema | Tasks | Implementing |
-| VITR-66 | P1: Tema | Tasks | Implementing |
-| VITR-67 | P1: Tema | Tasks | Implementing |
-| VITR-68 | P1: Publicar o catálogo atual | Tasks | done |
-| VITR-69 | P1: Publicar o catálogo atual | Tasks | done |
-| VITR-70 | P1: Publicar o catálogo atual | Tasks | done |
-| VITR-71 | P1: Publicar o catálogo atual | Tasks | done |
-| VITR-72 | P1: Publicar o catálogo atual | Tasks | Implementing |
-| VITR-73 | P1: Publicar o catálogo atual | Tasks | Implementing |
+| VITR-01 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-02 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-03 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-04 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-05 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-06 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-07 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-08 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-09 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-10 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-11 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-12 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-13 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-14 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-15 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-16 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-17 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-18 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-19 | P1: Gerar o site | Tasks | ✅ Verified |
+| VITR-20 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-21 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-22 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-23 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-24 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-25 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-26 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-27 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-28 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-29 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-30 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-31 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-32 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-33 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-34 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-35 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-36 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-37 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-38 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-39 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-40 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-41 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-42 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-43 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-44 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-45 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-46 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-47 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-48 | P1: Navegar | Tasks | Pending |
+| VITR-49 | P1: Navegar | Tasks | Pending |
+| VITR-50 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-51 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-52 | P1: Navegar | Tasks | ✅ Verified |
+| VITR-53 | P1: Tema | Tasks | ✅ Verified |
+| VITR-54 | P1: Tema | Tasks | ✅ Verified |
+| VITR-55 | P1: Tema | Tasks | ✅ Verified |
+| VITR-56 | P1: Tema | Tasks | ✅ Verified |
+| VITR-57 | P1: Tema | Tasks | ✅ Verified |
+| VITR-58 | P1: Tema | Tasks | ✅ Verified |
+| VITR-59 | P1: Tema | Tasks | ✅ Verified |
+| VITR-60 | P1: Tema | Tasks | ✅ Verified |
+| VITR-61 | P1: Tema | Tasks | ✅ Verified |
+| VITR-62 | P1: Tema | Tasks | ✅ Verified |
+| VITR-63 | P1: Tema | Tasks | ✅ Verified |
+| VITR-64 | P1: Tema | Tasks | Pending |
+| VITR-65 | P1: Tema | Tasks | ✅ Verified |
+| VITR-66 | P1: Tema | Tasks | ✅ Verified |
+| VITR-67 | P1: Tema | Tasks | ✅ Verified |
+| VITR-68 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
+| VITR-69 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
+| VITR-70 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
+| VITR-71 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
+| VITR-72 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
+| VITR-73 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
+| VITR-74 | P1: Ler e navegar | Tasks | Pending |
+| VITR-75 | P1: Ler e navegar | Tasks | Pending |
+| VITR-76 | P1: Ler e navegar | Tasks | Pending |
+| VITR-77 | P1: Ler e navegar | Tasks | Pending |
+| VITR-78 | P1: Ler e navegar | Tasks | Pending |
+| VITR-79 | P1: Ler e navegar | Tasks | Pending |
+| VITR-80 | P1: Ler e navegar | Tasks | Pending |
+| VITR-81 | P1: Ler e navegar | Tasks | Pending |
+| VITR-82 | P1: Ler e navegar | Tasks | Pending |
+| VITR-83 | P1: Ler e navegar | Tasks | Pending |
+| VITR-84 | P1: Ler e navegar | Tasks | Pending |
+| VITR-85 | P1: Ler e navegar | Tasks | Pending |
+| VITR-86 | P1: Ler e navegar | Tasks | Pending |
+| VITR-87 | P1: Ler e navegar | Tasks | Pending |
+| VITR-88 | P1: Ler e navegar | Tasks | Pending |
+| VITR-89 | P1: Ler e navegar | Tasks | Pending |
+| VITR-90 | P1: Ler e navegar | Tasks | Pending |
+| VITR-91 | P1: Tema escuro completo | Tasks | Pending |
+| VITR-92 | P1: Tema escuro completo | Tasks | Pending |
+| VITR-93 | P1: Tema escuro completo | Tasks | Pending |
+| VITR-94 | P1: Tema escuro completo | Tasks | Pending |
+| VITR-95 | P1: Tema escuro completo | Tasks | Pending |
+| VITR-96 | P1: Foto no quadro | Tasks | Pending |
+| VITR-97 | P1: Foto no quadro | Tasks | Pending |
+| VITR-98 | P1: Foto no quadro | Tasks | Pending |
+| VITR-99 | P1: Foto no quadro | Tasks | Pending |
+| VITR-100 | P1: Foto no quadro | Tasks | Pending |
+| VITR-101 | P1: Foto no quadro | Tasks | Pending |
+| VITR-102 | P1: Foto no quadro | Tasks | Pending |
+| VITR-103 | P1: Foto no quadro | Tasks | Pending |
+| VITR-104 | P2: Movimento e tipografia | Tasks | Pending |
+| VITR-105 | P2: Movimento e tipografia | Tasks | Pending |
+| VITR-106 | P2: Movimento e tipografia | Tasks | Pending |
+| VITR-107 | P2: Movimento e tipografia | Tasks | Pending |
+| VITR-108 | P2: Movimento e tipografia | Tasks | Pending |
 
-**Coverage:** 73 total, 73 mapped to tasks in `.specs/features/vitrine-relogios/tasks.md`, 0 unmapped.
+**Coverage:** 108 total, 108 mapped to tasks in `.specs/features/vitrine-relogios/tasks.md`, 0 unmapped. VITR-48, VITR-49, VITR-64 e VITR-74 a VITR-108 estão em T15 a T28.
 
-VITR-01 a VITR-19 seguem a ordem dos critérios da geração. VITR-20 a VITR-52 seguem a ordem dos critérios da navegação. VITR-53 a VITR-67 seguem a ordem dos critérios do tema. VITR-68 a VITR-73 seguem a ordem dos critérios do catálogo atual.
+VITR-01 a VITR-19 seguem a ordem dos critérios da geração. VITR-20 a VITR-52 seguem a ordem dos critérios da navegação. VITR-53 a VITR-67 seguem a ordem dos critérios do tema. VITR-68 a VITR-73 seguem a ordem dos critérios do catálogo atual. VITR-74 a VITR-90 seguem a ordem dos critérios de leitura e teclado. VITR-91 a VITR-95 seguem a ordem dos critérios do tema escuro completo. VITR-96 a VITR-103 seguem a ordem dos critérios da foto no quadro. VITR-104 a VITR-108 seguem a ordem dos critérios de movimento e tipografia.
 
 ---
 
@@ -333,3 +480,6 @@ VITR-01 a VITR-19 seguem a ordem dos critérios da geração. VITR-20 a VITR-52 
 - [ ] Trocar o tema, recarregar e encontrar a mesma escolha.
 - [ ] Cada falha de YAML listada na primeira história recusa a geração e preserva o `site/` anterior.
 - [ ] Os testes automáticos usam o catálogo de exemplo, não o YAML real.
+- [ ] Só pelo teclado, a pessoa pula as barras, passa as fotos pelas setas e pelas bolinhas e vê o foco em cada controle.
+- [ ] Trocar de foto no carrossel não move o preço nem a ficha.
+- [ ] Uma imagem com cabeçalho ilegível recusa a geração e preserva o `site/` anterior.
