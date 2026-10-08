@@ -456,9 +456,9 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-95 | P1: Tema escuro completo | Tasks | Pending |
 | VITR-96 | P1: Foto no quadro | Tasks | Pending |
 | VITR-97 | P1: Foto no quadro | Tasks | Pending |
-| VITR-98 | P1: Foto no quadro | Tasks | Pending |
-| VITR-99 | P1: Foto no quadro | Tasks | Pending |
-| VITR-100 | P1: Foto no quadro | Tasks | Pending |
+| VITR-98 | P1: Foto no quadro | T15–T17 | Pending |
+| VITR-99 | P1: Foto no quadro | T15–T17 | Pending |
+| VITR-100 | P1: Foto no quadro | T15–T17 | Pending |
 | VITR-101 | P1: Foto no quadro | Tasks | Pending |
 | VITR-102 | P1: Foto no quadro | Tasks | Pending |
 | VITR-103 | P1: Foto no quadro | Tasks | Pending |

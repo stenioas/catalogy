@@ -539,7 +539,7 @@ T28
 
 ### T15: Ler o tamanho de PNG e JPEG
 
-**Status**: pending
+**Status**: done
 
 **What**: Criar `ler_dimensoes` e `ImagemIlegivel`, com PNG pelo `IHDR` e JPEG pelo primeiro SOF e pela orientação Exif do APP1.
 **Where**: `gerador/imagem.py`
@@ -555,14 +555,14 @@ T28
 
 **Done when**:
 
-- [ ] PNG 400×300 devolve `(400, 300)`
-- [ ] JPEG 400×300 sem Exif e com orientação 1, 2, 3 e 4 devolve `(400, 300)`. Com 5, 6, 7 e 8 devolve `(300, 400)`
-- [ ] Exif malformado com SOF válido devolve o tamanho do SOF
-- [ ] Um `.png` com bytes de JPEG devolve o tamanho do JPEG
-- [ ] PNG truncado antes do `IHDR`, JPEG sem SOF, assinatura desconhecida e largura ou altura zero levantam `ImagemIlegivel`
-- [ ] O módulo só importa a biblioteca padrão
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 162 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] PNG 400×300 devolve `(400, 300)`
+- [x] JPEG 400×300 sem Exif e com orientação 1, 2, 3 e 4 devolve `(400, 300)`. Com 5, 6, 7 e 8 devolve `(300, 400)`
+- [x] Exif malformado com SOF válido devolve o tamanho do SOF
+- [x] Um `.png` com bytes de JPEG devolve o tamanho do JPEG
+- [x] PNG truncado antes do `IHDR`, JPEG sem SOF, assinatura desconhecida e largura ou altura zero levantam `ImagemIlegivel`
+- [x] O módulo só importa a biblioteca padrão
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 162 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick
