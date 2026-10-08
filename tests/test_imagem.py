@@ -1,4 +1,4 @@
-"""VITR-98, VITR-99, VITR-100: ler largura e altura de PNG, JPEG e WebP."""
+"""VITR-98, VITR-99, VITR-100: ler largura e altura de PNG, JPEG, WebP e AVIF."""
 
 from __future__ import annotations
 
@@ -129,6 +129,61 @@ class TestWebpIlegivel(unittest.TestCase):
     def test_webp_vp8x_sem_bloco_de_imagem_levanta_imagem_ilegivel(self):
         with tempfile.NamedTemporaryFile(suffix=".webp", delete=False) as tmp:
             tmp.write(imagens_exemplo.webp_vp8x_sem_imagem(400, 300))
+            caminho = Path(tmp.name)
+        self.addCleanup(caminho.unlink, missing_ok=True)
+        with self.assertRaises(ImagemIlegivel):
+            ler_dimensoes(caminho)
+
+
+class TestAvifDimensoes(unittest.TestCase):
+    # VITR-98 / spec P1 Foto no quadro AC 3
+    # VITR-100: irot ausente, 0 ou 2 mantém
+    def test_avif_400_por_300_sem_irot_mantem_largura_e_altura(self):
+        self._assert_avif(imagens_exemplo.avif(400, 300), (400, 300))
+
+    def test_avif_irot_0_mantem_largura_e_altura(self):
+        self._assert_avif(imagens_exemplo.avif(400, 300, angulo=0), (400, 300))
+
+    def test_avif_irot_2_mantem_largura_e_altura(self):
+        self._assert_avif(imagens_exemplo.avif(400, 300, angulo=2), (400, 300))
+
+    # VITR-99: irot 1 ou 3 troca
+    def test_avif_irot_1_troca_largura_e_altura(self):
+        self._assert_avif(imagens_exemplo.avif(400, 300, angulo=1), (300, 400))
+
+    def test_avif_irot_3_troca_largura_e_altura(self):
+        self._assert_avif(imagens_exemplo.avif(400, 300, angulo=3), (300, 400))
+
+    def test_avif_miniatura_antes_do_item_primario_devolve_ispe_primario(self):
+        self._assert_avif(imagens_exemplo.avif_com_miniatura(400, 300), (400, 300))
+
+    # spec: imir sozinho não troca
+    def test_avif_imir_sem_irot_mantem_largura_e_altura(self):
+        self._assert_avif(imagens_exemplo.avif_imir(400, 300), (400, 300))
+
+    def test_avif_caixa_de_64_bits_devolve_tamanho(self):
+        self._assert_avif(imagens_exemplo.avif_caixa_64bits(400, 300), (400, 300))
+
+    def _assert_avif(self, conteudo: bytes, esperado: tuple[int, int]) -> None:
+        with tempfile.NamedTemporaryFile(suffix=".avif", delete=False) as tmp:
+            tmp.write(conteudo)
+            caminho = Path(tmp.name)
+        self.addCleanup(caminho.unlink, missing_ok=True)
+        self.assertEqual(ler_dimensoes(caminho), esperado)
+
+
+class TestAvifIlegivel(unittest.TestCase):
+    def test_avif_sem_ispe_no_item_primario_levanta_imagem_ilegivel(self):
+        with tempfile.NamedTemporaryFile(suffix=".avif", delete=False) as tmp:
+            tmp.write(imagens_exemplo.avif_sem_ispe_primario())
+            caminho = Path(tmp.name)
+        self.addCleanup(caminho.unlink, missing_ok=True)
+        with self.assertRaises(ImagemIlegivel):
+            ler_dimensoes(caminho)
+
+    def test_avif_truncado_levanta_imagem_ilegivel(self):
+        with tempfile.NamedTemporaryFile(suffix=".avif", delete=False) as tmp:
+            tmp.write(imagens_exemplo.avif_truncado())
             caminho = Path(tmp.name)
         self.addCleanup(caminho.unlink, missing_ok=True)
         with self.assertRaises(ImagemIlegivel):

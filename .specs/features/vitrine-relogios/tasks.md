@@ -601,7 +601,7 @@ T28
 ---
 ### T17: Ler o tamanho de AVIF
 
-**Status**: pending
+**Status**: done
 
 **What**: Acrescentar AVIF a `ler_dimensoes`, seguindo `pitm`, `ipma` e `ipco` até o `ispe` e o `irot` do item primário.
 **Where**: `gerador/imagem.py`
@@ -617,13 +617,13 @@ T28
 
 **Done when**:
 
-- [ ] AVIF 400×300 sem `irot` e com ângulo 0 ou 2 devolve `(400, 300)`. Com ângulo 1 ou 3 devolve `(300, 400)`
-- [ ] Com uma miniatura de 64×48 antes do item primário em `ipco`, devolve o `ispe` do item primário
-- [ ] `imir` sem `irot` mantém `(400, 300)`
-- [ ] Caixa com tamanho de 64 bits é percorrida
-- [ ] AVIF sem `ispe` no item primário ou truncado levanta `ImagemIlegivel`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 175 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] AVIF 400×300 sem `irot` e com ângulo 0 ou 2 devolve `(400, 300)`. Com ângulo 1 ou 3 devolve `(300, 400)`
+- [x] Com uma miniatura de 64×48 antes do item primário em `ipco`, devolve o `ispe` do item primário
+- [x] `imir` sem `irot` mantém `(400, 300)`
+- [x] Caixa com tamanho de 64 bits é percorrida
+- [x] AVIF sem `ispe` no item primário ou truncado levanta `ImagemIlegivel`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 175 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

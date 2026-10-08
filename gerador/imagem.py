@@ -16,6 +16,8 @@ def ler_dimensoes(caminho: Path) -> tuple[int, int]:
         return _ler_jpeg(dados)
     if len(dados) >= 12 and dados[0:4] == b"RIFF" and dados[8:12] == b"WEBP":
         return _ler_webp(dados)
+    if _marca_avif(dados):
+        return _ler_avif(dados)
     raise ImagemIlegivel
 
 
@@ -181,3 +183,153 @@ def _ler_webp(dados: bytes) -> tuple[int, int]:
     if orientacao in (5, 6, 7, 8):
         largura, altura = altura, largura
     return _validar(largura, altura)
+
+
+def _marca_avif(dados: bytes) -> bool:
+    if len(dados) < 12 or dados[4:8] != b"ftyp":
+        return False
+    declarado = struct.unpack_from(">I", dados, 0)[0]
+    if declarado == 1:
+        if len(dados) < 16:
+            return False
+        tamanho = struct.unpack_from(">Q", dados, 8)[0]
+        cabeca = 16
+    elif declarado == 0:
+        tamanho = len(dados)
+        cabeca = 8
+    else:
+        tamanho = declarado
+        cabeca = 8
+    if tamanho < cabeca + 8:
+        return False
+    marcas = dados[cabeca : min(tamanho, len(dados))]
+    if len(marcas) < 4:
+        return False
+    encontradas = [marcas[0:4]]
+    pos = 8
+    while pos + 4 <= len(marcas):
+        encontradas.append(marcas[pos : pos + 4])
+        pos += 4
+    return any(marca in (b"avif", b"avis") for marca in encontradas)
+
+
+def _iter_caixas(dados: bytes, inicio: int, fim: int):
+    pos = inicio
+    while pos + 8 <= fim:
+        tipo = dados[pos + 4 : pos + 8]
+        declarado = struct.unpack_from(">I", dados, pos)[0]
+        if declarado == 1:
+            if pos + 16 > fim:
+                raise ImagemIlegivel
+            tamanho = struct.unpack_from(">Q", dados, pos + 8)[0]
+            cabeca = 16
+        elif declarado == 0:
+            tamanho = fim - pos
+            cabeca = 8
+        else:
+            tamanho = declarado
+            cabeca = 8
+        if tamanho < cabeca or pos + tamanho > fim:
+            raise ImagemIlegivel
+        yield tipo, pos + cabeca, pos + tamanho
+        pos += tamanho
+    if pos < fim:
+        raise ImagemIlegivel
+
+
+def _ler_avif(dados: bytes) -> tuple[int, int]:
+    meta = None
+    for tipo, inicio, fim in _iter_caixas(dados, 0, len(dados)):
+        if tipo == b"meta":
+            meta = dados[inicio:fim]
+            break
+    if meta is None or len(meta) < 4:
+        raise ImagemIlegivel
+    item_id = None
+    iprp = None
+    for tipo, inicio, fim in _iter_caixas(meta, 4, len(meta)):
+        if tipo == b"pitm":
+            item_id = _ler_pitm(meta[inicio:fim])
+        elif tipo == b"iprp":
+            iprp = meta[inicio:fim]
+    if item_id is None or iprp is None:
+        raise ImagemIlegivel
+    propriedades: list[tuple[bytes, bytes]] = []
+    indices: list[int] = []
+    for tipo, inicio, fim in _iter_caixas(iprp, 0, len(iprp)):
+        if tipo == b"ipco":
+            propriedades = [
+                (filho, iprp[ini:end])
+                for filho, ini, end in _iter_caixas(iprp, inicio, fim)
+            ]
+        elif tipo == b"ipma":
+            indices = _ler_ipma(iprp[inicio:fim]).get(item_id, [])
+    largura = None
+    altura = None
+    angulo = None
+    for indice in indices:
+        if indice < 1 or indice > len(propriedades):
+            raise ImagemIlegivel
+        tipo, carga = propriedades[indice - 1]
+        if tipo == b"ispe":
+            if len(carga) < 12:
+                raise ImagemIlegivel
+            largura, altura = struct.unpack(">II", carga[4:12])
+        elif tipo == b"irot":
+            if not carga:
+                raise ImagemIlegivel
+            angulo = carga[0] & 3
+    if largura is None or altura is None:
+        raise ImagemIlegivel
+    if angulo in (1, 3):
+        largura, altura = altura, largura
+    return _validar(largura, altura)
+
+
+def _ler_pitm(carga: bytes) -> int:
+    if len(carga) < 6:
+        raise ImagemIlegivel
+    if carga[0] == 0:
+        return struct.unpack(">H", carga[4:6])[0]
+    if len(carga) < 8:
+        raise ImagemIlegivel
+    return struct.unpack(">I", carga[4:8])[0]
+
+
+def _ler_ipma(carga: bytes) -> dict[int, list[int]]:
+    if len(carga) < 8:
+        raise ImagemIlegivel
+    version = carga[0]
+    flags = int.from_bytes(carga[1:4], "big")
+    entrada = struct.unpack(">I", carga[4:8])[0]
+    largo = bool(flags & 1)
+    pos = 8
+    associacoes: dict[int, list[int]] = {}
+    for _ in range(entrada):
+        if version == 0:
+            if pos + 3 > len(carga):
+                raise ImagemIlegivel
+            item_id = struct.unpack(">H", carga[pos : pos + 2])[0]
+            pos += 2
+        else:
+            if pos + 5 > len(carga):
+                raise ImagemIlegivel
+            item_id = struct.unpack(">I", carga[pos : pos + 4])[0]
+            pos += 4
+        quantidade = carga[pos]
+        pos += 1
+        encontrados: list[int] = []
+        for _ in range(quantidade):
+            if largo:
+                if pos + 2 > len(carga):
+                    raise ImagemIlegivel
+                valor = struct.unpack(">H", carga[pos : pos + 2])[0]
+                pos += 2
+                encontrados.append(valor & 0x7FFF)
+            else:
+                if pos >= len(carga):
+                    raise ImagemIlegivel
+                encontrados.append(carga[pos] & 0x7F)
+                pos += 1
+        associacoes.setdefault(item_id, []).extend(encontrados)
+    return associacoes

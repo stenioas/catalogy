@@ -137,3 +137,89 @@ def webp_truncado() -> bytes:
 
 def webp_vp8x_sem_imagem(largura: int, altura: int) -> bytes:
     return webp_vp8x(largura, altura, com_imagem=False)
+
+
+def _caixa(tipo: bytes, carga: bytes, *, bits64: bool = False) -> bytes:
+    if bits64:
+        total = 16 + len(carga)
+        return struct.pack(">I", 1) + tipo + struct.pack(">Q", total) + carga
+    return struct.pack(">I", 8 + len(carga)) + tipo + carga
+
+
+def _caixa_cheia(tipo: bytes, carga: bytes, *, bits64: bool = False) -> bytes:
+    return _caixa(tipo, struct.pack(">I", 0) + carga, bits64=bits64)
+
+
+def _ftyp(marca: bytes = b"avif") -> bytes:
+    return _caixa(b"ftyp", marca + b"\x00\x00\x00\x00" + marca)
+
+
+def _ispe(largura: int, altura: int) -> bytes:
+    return _caixa_cheia(b"ispe", struct.pack(">II", largura, altura))
+
+
+def _irot(angulo: int) -> bytes:
+    return _caixa(b"irot", bytes([angulo & 3]))
+
+
+def _imir() -> bytes:
+    return _caixa(b"imir", b"\x00")
+
+
+def _pitm(item_id: int) -> bytes:
+    return _caixa_cheia(b"pitm", struct.pack(">H", item_id))
+
+
+def _ipma(associacoes: list[tuple[int, list[int]]]) -> bytes:
+    partes = [struct.pack(">I", len(associacoes))]
+    for item_id, indices in associacoes:
+        partes.append(struct.pack(">HB", item_id, len(indices)))
+        for indice in indices:
+            partes.append(bytes([indice & 0x7F]))
+    return _caixa_cheia(b"ipma", b"".join(partes))
+
+
+def _avif(
+    propriedades: list[bytes],
+    associacoes: list[tuple[int, list[int]]],
+    *,
+    item_primario: int = 1,
+    meta_64: bool = False,
+) -> bytes:
+    ipco = _caixa(b"ipco", b"".join(propriedades))
+    iprp = _caixa(b"iprp", ipco + _ipma(associacoes))
+    meta = _caixa_cheia(b"meta", _pitm(item_primario) + iprp, bits64=meta_64)
+    return _ftyp() + meta
+
+
+def avif(largura: int, altura: int, *, angulo: int | None = None) -> bytes:
+    propriedades = [_ispe(largura, altura)]
+    if angulo is not None:
+        propriedades.append(_irot(angulo))
+    indices = list(range(1, len(propriedades) + 1))
+    return _avif(propriedades, [(1, indices)])
+
+
+def avif_com_miniatura(
+    largura: int,
+    altura: int,
+    miniatura: tuple[int, int] = (64, 48),
+) -> bytes:
+    propriedades = [_ispe(*miniatura), _ispe(largura, altura)]
+    return _avif(propriedades, [(2, [1]), (1, [2])])
+
+
+def avif_imir(largura: int, altura: int) -> bytes:
+    return _avif([_ispe(largura, altura), _imir()], [(1, [1, 2])])
+
+
+def avif_caixa_64bits(largura: int, altura: int) -> bytes:
+    return _avif([_ispe(largura, altura)], [(1, [1])], meta_64=True)
+
+
+def avif_sem_ispe_primario() -> bytes:
+    return _avif([_ispe(400, 300)], [(2, [1])], item_primario=1)
+
+
+def avif_truncado() -> bytes:
+    return avif(400, 300)[:24]
