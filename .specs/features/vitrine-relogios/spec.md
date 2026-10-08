@@ -276,7 +276,7 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-27 | P1: Navegar | Tasks | Implementing |
 | VITR-28 | P1: Navegar | Tasks | Implementing |
 | VITR-29 | P1: Navegar | Tasks | Implementing |
-| VITR-30 | P1: Navegar | Tasks | In Tasks |
+| VITR-30 | P1: Navegar | Tasks | Implementing |
 | VITR-31 | P1: Navegar | Tasks | Implementing |
 | VITR-32 | P1: Navegar | Tasks | Implementing |
 | VITR-33 | P1: Navegar | Tasks | Implementing |
@@ -294,8 +294,8 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-45 | P1: Navegar | Tasks | Implementing |
 | VITR-46 | P1: Navegar | Tasks | Implementing |
 | VITR-47 | P1: Navegar | Tasks | In Tasks |
-| VITR-48 | P1: Navegar | Tasks | In Tasks |
-| VITR-49 | P1: Navegar | Tasks | In Tasks |
+| VITR-48 | P1: Navegar | Tasks | Implementing |
+| VITR-49 | P1: Navegar | Tasks | Implementing |
 | VITR-50 | P1: Navegar | Tasks | Implementing |
 | VITR-51 | P1: Navegar | Tasks | Implementing |
 | VITR-52 | P1: Navegar | Tasks | Implementing |
@@ -306,14 +306,14 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-57 | P1: Tema | Tasks | In Tasks |
 | VITR-58 | P1: Tema | Tasks | In Tasks |
 | VITR-59 | P1: Tema | Tasks | In Tasks |
-| VITR-60 | P1: Tema | Tasks | In Tasks |
-| VITR-61 | P1: Tema | Tasks | In Tasks |
-| VITR-62 | P1: Tema | Tasks | In Tasks |
-| VITR-63 | P1: Tema | Tasks | In Tasks |
-| VITR-64 | P1: Tema | Tasks | In Tasks |
-| VITR-65 | P1: Tema | Tasks | In Tasks |
-| VITR-66 | P1: Tema | Tasks | In Tasks |
-| VITR-67 | P1: Tema | Tasks | In Tasks |
+| VITR-60 | P1: Tema | Tasks | Implementing |
+| VITR-61 | P1: Tema | Tasks | Implementing |
+| VITR-62 | P1: Tema | Tasks | Implementing |
+| VITR-63 | P1: Tema | Tasks | Implementing |
+| VITR-64 | P1: Tema | Tasks | Implementing |
+| VITR-65 | P1: Tema | Tasks | Implementing |
+| VITR-66 | P1: Tema | Tasks | Implementing |
+| VITR-67 | P1: Tema | Tasks | Implementing |
 | VITR-68 | P1: Publicar o catálogo atual | Tasks | In Tasks |
 | VITR-69 | P1: Publicar o catálogo atual | Tasks | In Tasks |
 | VITR-70 | P1: Publicar o catálogo atual | Tasks | In Tasks |

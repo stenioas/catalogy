@@ -1,0 +1,212 @@
+@font-face {
+  font-family: "Inter";
+  src: url("fontes/InterVariable.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #ffffff;
+  color: #1d1d1f;
+}
+
+.barra-negra {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 44px;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.barra-negra a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #ffffff;
+}
+
+.barra-vendedor {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  background-color: #f5f5f7;
+  color: #1d1d1f;
+}
+
+.lista-vendedores {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.lista-vendedores a {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  color: #0066cc;
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  color: #0066cc;
+}
+
+.grade-vitrine {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 641px) and (max-width: 834px) {
+  .grade-vitrine {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 835px) and (max-width: 1068px) {
+  .grade-vitrine {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1069px) and (max-width: 1440px) {
+  .grade-vitrine {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1441px) {
+  .grade-vitrine {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.card {
+  display: block;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 18px;
+  color: #1d1d1f;
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 18px;
+  filter: none;
+}
+
+.carrossel {
+  width: 100%;
+  overflow: visible;
+}
+
+.carrossel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;
+  filter: none;
+}
+
+.seta {
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  background-color: #d2d2d7;
+  color: #1d1d1f;
+}
+
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 0 22px;
+  background-color: #0066cc;
+  color: #ffffff;
+  border-radius: 9999px;
+}
+
+.barra-fixa {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  min-height: 44px;
+  background-color: #f5f5f7;
+  color: #1d1d1f;
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+footer {
+  background-color: #f5f5f7;
+  color: #1d1d1f;
+}
+
+html[data-tema="escuro"] body {
+  background-color: #272729;
+  color: #ffffff;
+}
+
+html[data-tema="escuro"] .barra-negra {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+html[data-tema="escuro"] .card {
+  background-color: #2a2a2c;
+  color: #ffffff;
+}
+
+html[data-tema="escuro"] .parcelamento,
+html[data-tema="escuro"] dt {
+  color: #cccccc;
+}
+
+html[data-tema="escuro"] main a {
+  color: #2997ff;
+}
+
+html[data-tema="escuro"] footer,
+html[data-tema="escuro"] .barra-vendedor,
+html[data-tema="escuro"] .barra-fixa {
+  background-color: #272729;
+  color: #ffffff;
+}
+
+html[data-tema="escuro"] .barra-fixa {
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+html[data-tema="escuro"] .pilula {
+  background-color: #0066cc;
+  color: #ffffff;
+}
+
+html[data-tema="escuro"] .card img,
+html[data-tema="escuro"] .carrossel img {
+  filter: none;
+}

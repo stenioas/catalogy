@@ -296,6 +296,8 @@ T14
 
 ### T8: Escrever o CSS da vitrine
 
+**Status**: done
+
 **What**: Criar `estilos.css` com a grade, as superfícies, a barra preta e as cores do `DESIGN.md`.
 **Where**: `gerador/estilos.css`
 **Depends on**: T6
@@ -310,12 +312,12 @@ T14
 
 **Done when**:
 
-- [ ] A grade muda em 640px, 834px, 1068px e 1440px
-- [ ] Card quadrado com raio 18px. Carrossel sem raio e sem corte. Alvos de toque com pelo menos 44px
-- [ ] Claro e escuro usam os hex da spec. A foto não tem filtro. A barra fixa no escuro continua fosca
-- [ ] Nenhum hex do arquivo está fora da paleta do `DESIGN.md`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 8 tests pass
+- [x] A grade muda em 640px, 834px, 1068px e 1440px
+- [x] Card quadrado com raio 18px. Carrossel sem raio e sem corte. Alvos de toque com pelo menos 44px
+- [x] Claro e escuro usam os hex da spec. A foto não tem filtro. A barra fixa no escuro continua fosca
+- [x] Nenhum hex do arquivo está fora da paleta do `DESIGN.md`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
