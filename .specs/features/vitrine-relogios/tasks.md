@@ -711,11 +711,11 @@ T28
 
 **Done when**:
 
-- [ ] Com `Imagem("capa.png", 400, 300)`, o card e a foto do carrossel têm `width="400"` e `height="300"`
-- [ ] O primeiro card e a primeira foto do carrossel não têm `loading`
-- [ ] O segundo card e a segunda foto do carrossel têm `loading="lazy"`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 185 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] Com `Imagem("capa.png", 400, 300)`, o card e a foto do carrossel têm `width="400"` e `height="300"`
+- [x] O primeiro card e a primeira foto do carrossel não têm `loading`
+- [x] O segundo card e a segunda foto do carrossel têm `loading="lazy"`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 185 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick
@@ -724,7 +724,7 @@ T28
 ---
 ### T21: Trocar as bolinhas por botões
 
-**Status**: pending
+**Status**: done
 
 **What**: Emitir cada bolinha como `<button type="button" class="bolinha" aria-label="Foto N">`, a primeira com `aria-current="true"`.
 **Where**: `gerador/renderizar.py`
@@ -740,11 +740,11 @@ T28
 
 **Done when**:
 
-- [ ] Com três fotos, há três `button type="button"` com `aria-label` `Foto 1`, `Foto 2` e `Foto 3`
-- [ ] Só a primeira tem `aria-current="true"`
-- [ ] Com uma foto, não há bolinha nem seta
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 187 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] Com três fotos, há três `button type="button"` com `aria-label` `Foto 1`, `Foto 2` e `Foto 3`
+- [x] Só a primeira tem `aria-current="true"`
+- [x] Com uma foto, não há bolinha nem seta
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 187 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

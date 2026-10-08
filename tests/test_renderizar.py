@@ -272,6 +272,24 @@ def _item_pagina(
     )
 
 
+def _atributos_bolinhas_carrossel(html: str) -> list[dict[str, str | None]]:
+    padrao = re.compile(
+        r'<button\s+type="button"\s+class="bolinha"([^>]*)>',
+        flags=re.IGNORECASE,
+    )
+    bolinhas: list[dict[str, str | None]] = []
+    for trecho in padrao.findall(html):
+        rotulo = re.search(r'aria-label="([^"]*)"', trecho)
+        corrente = re.search(r'aria-current="([^"]*)"', trecho)
+        bolinhas.append(
+            {
+                "aria-label": rotulo.group(1) if rotulo else None,
+                "aria-current": corrente.group(1) if corrente else None,
+            },
+        )
+    return bolinhas
+
+
 def _pagina_relogio(item: Item, whatsapp: str = "5511888888888") -> str:
     vendedor = Vendedor(
         pasta="bruno",
@@ -443,8 +461,15 @@ class TestPaginaRelogio(unittest.TestCase):
         html = _pagina_relogio(_item_ficha_fora_de_ordem())
         self.assertEqual(html.count('class="seta seta-anterior"'), 1)
         self.assertEqual(html.count('class="seta seta-proxima"'), 1)
-        bolinhas = re.findall(r'<span class="bolinha"([^>]*)>', html)
-        self.assertEqual(bolinhas, [' aria-current="true"', ""])
+        bolinhas = _atributos_bolinhas_carrossel(html)
+        self.assertEqual(
+            bolinhas,
+            [
+                {"aria-label": "Foto 1", "aria-current": "true"},
+                {"aria-label": "Foto 2", "aria-current": None},
+            ],
+        )
+        self.assertNotIn('<span class="bolinha"', html)
         imagens = re.findall(r"<img\b[^>]*>", html)
         self.assertEqual(len(imagens), 2)
         self.assertIn('src="../imagens/capa.png"', imagens[0])
@@ -624,6 +649,42 @@ class TestEmbutirAssetsNasPaginas(unittest.TestCase):
             origem = FONTE_ORIGEM / "InterVariable.woff2"
             self.assertTrue(copiado.is_file())
             self.assertEqual(copiado.read_bytes(), origem.read_bytes())
+
+
+# VITR-83 / spec P1 Ler e navegar AC 10
+
+
+class TestBolinhasCarrosselComoBotoes(unittest.TestCase):
+    def test_tres_fotos_geram_tres_botoes_com_nome_foto_1_2_e_3(self):
+        item = _item_pagina(
+            "relogio-tres",
+            "Modelo Tres Fotos",
+            imagens=[
+                _foto("a.png"),
+                _foto("b.png"),
+                _foto("c.png"),
+            ],
+        )
+        html = _pagina_relogio(item)
+        bolinhas = _atributos_bolinhas_carrossel(html)
+        self.assertEqual(len(bolinhas), 3)
+        self.assertEqual(
+            [b["aria-label"] for b in bolinhas],
+            ["Foto 1", "Foto 2", "Foto 3"],
+        )
+
+    def test_so_a_primeira_bolinha_marca_aria_current_com_tres_fotos(self):
+        item = _item_pagina(
+            "relogio-tres-corrente",
+            "Modelo Tres Corrente",
+            imagens=[_foto("a.png"), _foto("b.png"), _foto("c.png")],
+        )
+        html = _pagina_relogio(item)
+        correntes = [
+            b["aria-current"] == "true"
+            for b in _atributos_bolinhas_carrossel(html)
+        ]
+        self.assertEqual(correntes, [True, False, False])
 
 
 # VITR-97 / spec P1 Foto no quadro AC 2

@@ -441,7 +441,7 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-80 | P1: Ler e navegar | Tasks | Pending |
 | VITR-81 | P1: Ler e navegar | Tasks | Pending |
 | VITR-82 | P1: Ler e navegar | Tasks | Pending |
-| VITR-83 | P1: Ler e navegar | Tasks | Pending |
+| VITR-83 | P1: Ler e navegar | T21 | ✅ Verified |
 | VITR-84 | P1: Ler e navegar | Tasks | Pending |
 | VITR-85 | P1: Ler e navegar | Tasks | Pending |
 | VITR-86 | P1: Ler e navegar | Tasks | Pending |
@@ -460,8 +460,8 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-99 | P1: Foto no quadro | T15–T17 | ✅ Verified |
 | VITR-100 | P1: Foto no quadro | T15–T17 | ✅ Verified |
 | VITR-101 | P1: Foto no quadro | T18 | ✅ Verified |
-| VITR-102 | P1: Foto no quadro | Tasks | Pending |
-| VITR-103 | P1: Foto no quadro | Tasks | Pending |
+| VITR-102 | P1: Foto no quadro | T20 | ✅ Verified |
+| VITR-103 | P1: Foto no quadro | T20 | ✅ Verified |
 | VITR-104 | P2: Movimento e tipografia | Tasks | Pending |
 | VITR-105 | P2: Movimento e tipografia | Tasks | Pending |
 | VITR-106 | P2: Movimento e tipografia | Tasks | Pending |

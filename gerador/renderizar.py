@@ -162,9 +162,10 @@ def _carrossel(item: Item) -> str:
     controles = ""
     if len(item.imagens) >= 2:
         bolinhas = "".join(
-            '<span class="bolinha" aria-current="true"></span>'
-            if indice == 0
-            else '<span class="bolinha"></span>'
+            f'<button type="button" class="bolinha" '
+            f'aria-label="Foto {indice + 1}"'
+            + (' aria-current="true"' if indice == 0 else "")
+            + "></button>"
             for indice in range(len(item.imagens))
         )
         controles = (
