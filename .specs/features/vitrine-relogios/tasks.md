@@ -872,7 +872,7 @@ T28
 ---
 ### T26: Estilizar link de pular, respiro e foco
 
-**Status**: pending
+**Status**: done
 
 **What**: Link de pular escondido fora do foco e pílula azul com foco, `scroll-padding` da pilha sticky e anel de foco em link de pular, bolinha e seta.
 **Where**: `gerador/estilos.css`
@@ -888,13 +888,13 @@ T28
 
 **Done when**:
 
-- [ ] `.pular` fora do foco tem `position: fixed` e `transform: translateY(-200%)`
-- [ ] `.pular:focus` tem `transform: none`, fundo `#0066cc`, texto `#ffffff`, raio `9999px` e `z-index` maior que o da `.barra-negra`
-- [ ] `html` tem `scroll-padding-top: 44px`. `html:has(.barra-vendedor)` tem `96px`. `html:has(.barra-fixa)` tem `scroll-padding-bottom: 64px`
-- [ ] `.pular`, `.bolinha` e `.seta` em `:focus-visible` têm `outline: 2px solid #0071e3` e `outline-offset: 2px`
-- [ ] O leitor de CSS dos testes lê seletores com `:has()`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 204 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] `.pular` fora do foco tem `position: fixed` e `transform: translateY(-200%)`
+- [x] `.pular:focus` tem `transform: none`, fundo `#0066cc`, texto `#ffffff`, raio `9999px` e `z-index` maior que o da `.barra-negra`
+- [x] `html` tem `scroll-padding-top: 44px`. `html:has(.barra-vendedor)` tem `96px`. `html:has(.barra-fixa)` tem `scroll-padding-bottom: 64px`
+- [x] `.pular`, `.bolinha` e `.seta` em `:focus-visible` têm `outline: 2px solid #0071e3` e `outline-offset: 2px`
+- [x] O leitor de CSS dos testes lê seletores com `:has()`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 204 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

@@ -23,6 +23,7 @@ LARGURAS_LISTA = (320, 640, 641, 834, 835, 1068, 1069, 1440, 1441, 1920)
 # VITR-60 a VITR-64 / spec P1 Tema AC 8 a AC 12
 PRETO = "#000000"
 AZUL_PILULA = "#0066cc"
+AZUL_FOCO = "#0071e3"
 BRANCO = "#ffffff"
 PERGAMINHO = "#f5f5f7"
 FUNDO_ESCURO = "#272729"
@@ -164,6 +165,16 @@ def _px(valor: str) -> float:
     casado = re.fullmatch(r"(\d+(?:\.\d+)?)px", valor.strip())
     if casado is None:
         raise AssertionError(f"esperado comprimento em px, veio {valor!r}")
+    return float(casado.group(1))
+
+
+def _z(valor: str) -> float:
+    valor = valor.strip()
+    if valor.endswith("px"):
+        return _px(valor)
+    casado = re.fullmatch(r"(\d+(?:\.\d+)?)", valor)
+    if casado is None:
+        raise AssertionError(f"esperado z-index numérico, veio {valor!r}")
     return float(casado.group(1))
 
 
@@ -400,3 +411,58 @@ class TestEstilos(unittest.TestCase):
             self.css,
             r'url\(\s*["\']?fontes/InterVariable\.woff2["\']?\s*\)',
         )
+
+    def test_pular_fora_do_foco_fica_fixo_fora_da_tela(self):
+        # VITR-77 / spec P1 Ler e navegar AC 4
+        self.assertEqual(_valor(self.regras, ".pular", "position"), "fixed")
+        self.assertEqual(
+            _valor(self.regras, ".pular", "transform"),
+            "translateY(-200%)",
+        )
+
+    def test_pular_com_foco_mostra_pilula_azul_acima_da_barra_negra(self):
+        # VITR-78 / spec P1 Ler e navegar AC 5
+        self.assertEqual(_valor(self.regras, ".pular:focus", "transform"), "none")
+        self.assertEqual(
+            _valor(self.regras, ".pular:focus", "background-color"),
+            AZUL_PILULA,
+        )
+        self.assertEqual(_valor(self.regras, ".pular:focus", "color"), BRANCO)
+        self.assertEqual(_valor(self.regras, ".pular:focus", "border-radius"), "9999px")
+        z_pular = _valor(self.regras, ".pular:focus", "z-index")
+        z_barra = _valor(self.regras, ".barra-negra", "z-index")
+        self.assertIsNotNone(z_pular)
+        self.assertIsNotNone(z_barra)
+        self.assertGreater(_z(z_pular), _z(z_barra))
+
+    def test_html_tem_scroll_padding_top_44px(self):
+        # VITR-79 / spec P1 Ler e navegar AC 6
+        self.assertEqual(_valor(self.regras, "html", "scroll-padding-top"), "44px")
+
+    def test_html_com_barra_vendedor_tem_scroll_padding_top_96px(self):
+        # VITR-80 / spec P1 Ler e navegar AC 7
+        self.assertEqual(
+            _valor(self.regras, "html:has(.barra-vendedor)", "scroll-padding-top"),
+            "96px",
+        )
+
+    def test_html_com_barra_fixa_tem_scroll_padding_bottom_64px(self):
+        # VITR-81 / spec P1 Ler e navegar AC 8
+        self.assertEqual(
+            _valor(self.regras, "html:has(.barra-fixa)", "scroll-padding-bottom"),
+            "64px",
+        )
+
+    def test_pular_bolinha_e_seta_tem_anel_focus_visible(self):
+        # VITR-82 / spec P1 Ler e navegar AC 9
+        for seletor in (".pular:focus-visible", ".bolinha:focus-visible", ".seta:focus-visible"):
+            self.assertEqual(
+                _valor(self.regras, seletor, "outline"),
+                f"2px solid {AZUL_FOCO}",
+                seletor,
+            )
+            self.assertEqual(
+                _valor(self.regras, seletor, "outline-offset"),
+                "2px",
+                seletor,
+            )

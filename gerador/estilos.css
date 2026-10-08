@@ -7,6 +7,30 @@
 
 html {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  scroll-padding-top: 44px;
+}
+
+html:has(.barra-vendedor) {
+  scroll-padding-top: 96px;
+}
+
+html:has(.barra-fixa) {
+  scroll-padding-bottom: 64px;
+}
+
+.pular {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  transform: translateY(-200%);
+}
+
+.pular:focus {
+  transform: none;
+  background-color: #0066cc;
+  color: #ffffff;
+  border-radius: 9999px;
+  z-index: 30;
 }
 
 body {
@@ -296,7 +320,10 @@ h1,
 .pilula:focus-visible,
 .voltar:focus-visible,
 .lista-vendedores a:focus-visible,
-.card:focus-visible {
+.card:focus-visible,
+.pular:focus-visible,
+.bolinha:focus-visible,
+.seta:focus-visible {
   outline: 2px solid #0071e3;
   outline-offset: 2px;
 }
