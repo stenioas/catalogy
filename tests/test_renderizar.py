@@ -501,6 +501,59 @@ class TestPaginaRelogio(unittest.TestCase):
         self.assertEqual(texto, PREFIXO_MENSAGEM_WHATSAPP + "Relógio Primeiro")
 
 
+# VITR-74 / spec P1 Ler e navegar AC 1
+# VITR-75 / spec P1 Ler e navegar AC 2
+# VITR-76 / spec P1 Ler e navegar AC 3
+META_VIEWPORT = (
+    '<meta name="viewport" content="width=device-width, initial-scale=1">'
+)
+LINK_PULAR_CONTEUDO = (
+    '<a class="pular" href="#conteudo">Pular para o conteúdo</a>'
+)
+MAIN_CONTEUDO_ABERTURA = '<main id="conteudo" tabindex="-1">'
+PAGINAS_RAIZ_VITRINE_RELOGIO = (
+    "index.html",
+    "bruno/index.html",
+    "bruno/relogio-primeiro/index.html",
+)
+
+
+def _primeiro_filho_do_body(html: str) -> str:
+    corpo = html.split("<body>", 1)[1].split("</body>", 1)[0]
+    inicio = corpo.lstrip()
+    match = re.match(
+        r'(<a class="pular" href="#conteudo">Pular para o conteúdo</a>)',
+        inicio,
+    )
+    if match is None:
+        raise AssertionError("primeiro filho do body não é o link de pular")
+    return match.group(1)
+
+
+def _trecho_head(html: str) -> str:
+    match = re.search(r"<head>(.*?)</head>", html, flags=re.DOTALL)
+    if match is None:
+        raise AssertionError("head ausente")
+    return match.group(1)
+
+
+class TestViewportLinkPularEConteudo(unittest.TestCase):
+    def test_toda_pagina_declara_viewport_dentro_do_head(self):
+        for rel in PAGINAS_RAIZ_VITRINE_RELOGIO:
+            html = _escrever_catalogo(catalogo_dois_vendedores(), rel)
+            self.assertIn(META_VIEWPORT, _trecho_head(html))
+
+    def test_primeiro_filho_do_body_e_link_pular_para_conteudo(self):
+        for rel in PAGINAS_RAIZ_VITRINE_RELOGIO:
+            html = _escrever_catalogo(catalogo_dois_vendedores(), rel)
+            self.assertEqual(_primeiro_filho_do_body(html), LINK_PULAR_CONTEUDO)
+
+    def test_main_tem_id_conteudo_e_tabindex_menos_um(self):
+        for rel in PAGINAS_RAIZ_VITRINE_RELOGIO:
+            html = _escrever_catalogo(catalogo_dois_vendedores(), rel)
+            self.assertIn(MAIN_CONTEUDO_ABERTURA, html)
+
+
 # VITR-02 / spec P1 Gerar AC 1–2 (ativos estáticos em site/)
 # VITR-53 / spec P1 Tema AC 1
 # VITR-54 / spec P1 Tema AC 2–7 (script no início do head, antes da pintura)

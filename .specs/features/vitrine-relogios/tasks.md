@@ -666,7 +666,7 @@ T28
 
 ### T19: Declarar viewport, link de pular e alvo do conteúdo
 
-**Status**: pending
+**Status**: done
 
 **What**: Em `_pagina`, emitir o `viewport`, o link `Pular para o conteúdo` como primeiro filho do `body` e `main` com `id="conteudo"` e `tabindex="-1"`.
 **Where**: `gerador/renderizar.py`
@@ -682,11 +682,11 @@ T28
 
 **Done when**:
 
-- [ ] Raiz, vitrine e relógio têm `<meta name="viewport" content="width=device-width, initial-scale=1">` dentro do `head`
-- [ ] O primeiro filho do `body` nas três páginas é `<a class="pular" href="#conteudo">Pular para o conteúdo</a>`
-- [ ] O `main` das três páginas tem `id="conteudo"` e `tabindex="-1"`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 182 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] Raiz, vitrine e relógio têm `<meta name="viewport" content="width=device-width, initial-scale=1">` dentro do `head`
+- [x] O primeiro filho do `body` nas três páginas é `<a class="pular" href="#conteudo">Pular para o conteúdo</a>`
+- [x] O `main` das três páginas tem `id="conteudo"` e `tabindex="-1"`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 182 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

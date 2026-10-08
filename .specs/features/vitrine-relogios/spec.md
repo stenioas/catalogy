@@ -432,9 +432,9 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-71 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
 | VITR-72 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
 | VITR-73 | P1: Publicar o catálogo atual | Tasks | ✅ Verified |
-| VITR-74 | P1: Ler e navegar | Tasks | Pending |
-| VITR-75 | P1: Ler e navegar | Tasks | Pending |
-| VITR-76 | P1: Ler e navegar | Tasks | Pending |
+| VITR-74 | P1: Ler e navegar | T19 | ✅ Verified |
+| VITR-75 | P1: Ler e navegar | T19 | ✅ Verified |
+| VITR-76 | P1: Ler e navegar | T19 | ✅ Verified |
 | VITR-77 | P1: Ler e navegar | Tasks | Pending |
 | VITR-78 | P1: Ler e navegar | Tasks | Pending |
 | VITR-79 | P1: Ler e navegar | Tasks | Pending |

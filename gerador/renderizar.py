@@ -244,16 +244,18 @@ def _pagina(
         "<head>\n"
         f"{script_tema}"
         f"<meta charset=\"utf-8\">\n"
+        f'<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         f"<title>{html.escape(titulo)}</title>\n"
         f"{og}"
         f"{link_css}"
         "</head>\n"
         "<body>\n"
+        f'<a class="pular" href="#conteudo">Pular para o conteúdo</a>\n'
         f'<header class="barra-negra">'
         f'<a href="{html.escape(link_catalogo)}">{_ROTULO_CATALOGO}</a>'
         f"</header>\n"
         f"{barra_vendedor}\n"
-        f"<main>{corpo}</main>\n"
+        f'<main id="conteudo" tabindex="-1">{corpo}</main>\n'
         f"<footer>{html.escape(_RODAPE)}</footer>\n"
         f"{script_carrossel}"
         "</body>\n"
