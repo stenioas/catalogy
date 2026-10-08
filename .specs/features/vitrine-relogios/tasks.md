@@ -695,7 +695,7 @@ T28
 ---
 ### T20: Declarar tamanho e carga das fotos
 
-**Status**: pending
+**Status**: done
 
 **What**: Emitir `width` e `height` de cada `Imagem` no card e no carrossel, e `loading="lazy"` em todo card e foto depois do primeiro.
 **Where**: `gerador/renderizar.py`

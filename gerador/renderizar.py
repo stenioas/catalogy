@@ -71,7 +71,10 @@ def _html_raiz(vendedores: list[Vendedor]) -> str:
 
 def _html_vitrine(vendedor: Vendedor) -> str:
     if vendedor.itens:
-        cards = "".join(_card(item) for item in vendedor.itens)
+        cards = "".join(
+            _card(item, primeiro=indice == 0)
+            for indice, item in enumerate(vendedor.itens)
+        )
         corpo = (
             f'<p class="nome-vendedor">{html.escape(vendedor.nome)}</p>'
             f'<a class="voltar" href="../">{_ROTULO_VOLTAR}</a>'
@@ -92,14 +95,17 @@ def _html_vitrine(vendedor: Vendedor) -> str:
     )
 
 
-def _card(item: Item) -> str:
-    imagem = html.escape(item.imagens[0].arquivo)
+def _card(item: Item, *, primeiro: bool) -> str:
+    foto = item.imagens[0]
+    imagem = html.escape(foto.arquivo)
     preco = html.escape(formatar_preco(item.valor_pix))
     nome = html.escape(item.nome)
     href = html.escape(item.id) + "/"
+    carga = '' if primeiro else ' loading="lazy"'
     return (
         f'<a class="card" href="{href}">'
-        f'<img src="imagens/{imagem}" alt="{nome}">'
+        f'<img src="imagens/{imagem}" alt="{nome}" '
+        f'width="{foto.largura}" height="{foto.altura}"{carga}>'
         f"<span class=\"nome\">{nome}</span>"
         f'<span class="preco">{preco}</span>'
         f"</a>"
@@ -147,9 +153,11 @@ def _carrossel(item: Item) -> str:
     fotos = []
     for indice, foto in enumerate(item.imagens):
         oculto = " hidden" if indice else ""
+        carga = '' if indice == 0 else ' loading="lazy"'
         fotos.append(
             f'<img src="../imagens/{html.escape(foto.arquivo)}" '
-            f'alt="{html.escape(item.nome)}"{oculto}>'
+            f'alt="{html.escape(item.nome)}" '
+            f'width="{foto.largura}" height="{foto.altura}"{carga}{oculto}>'
         )
     controles = ""
     if len(item.imagens) >= 2:

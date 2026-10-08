@@ -624,3 +624,105 @@ class TestEmbutirAssetsNasPaginas(unittest.TestCase):
             origem = FONTE_ORIGEM / "InterVariable.woff2"
             self.assertTrue(copiado.is_file())
             self.assertEqual(copiado.read_bytes(), origem.read_bytes())
+
+
+# VITR-97 / spec P1 Foto no quadro AC 2
+# VITR-102 / spec P1 Foto no quadro AC 7
+# VITR-103 / spec P1 Foto no quadro AC 8
+
+
+def _bloco_carrossel(html: str) -> str:
+    match = re.search(r'<div class="carrossel">(.*?)</div>', html, flags=re.DOTALL)
+    if match is None:
+        raise AssertionError("carrossel ausente")
+    return match.group(1)
+
+
+def _imagens_no_bloco(bloco: str) -> list[dict[str, str | None]]:
+    imagens: list[dict[str, str | None]] = []
+    for tag in re.findall(r"<img\b[^>]*>", bloco):
+        attrs: dict[str, str | None] = {}
+        for nome, valor in re.findall(r'([\w-]+)(?:="([^"]*)")?', tag):
+            attrs[nome] = valor
+        imagens.append(attrs)
+    return imagens
+
+
+def _imagens_dos_cards(html: str) -> list[dict[str, str | None]]:
+    grade = re.search(
+        r'<div class="grade-vitrine">(.*?)</div>',
+        html,
+        flags=re.DOTALL,
+    )
+    if grade is None:
+        raise AssertionError("grade da vitrine ausente")
+    return _imagens_no_bloco(grade.group(1))
+
+
+def _vendedor_dois_itens_capa_400_por_300() -> Vendedor:
+    return Vendedor(
+        pasta="bruno",
+        nome="bruno",
+        whatsapp="5511888888888",
+        itens=[
+            _item_pagina(
+                "relogio-primeiro",
+                "Relógio Primeiro",
+                imagens=[_foto("capa.png", 400, 300)],
+            ),
+            _item_pagina(
+                "relogio-segundo",
+                "Relógio Segundo",
+                imagens=[_foto("capa.png", 400, 300)],
+            ),
+        ],
+    )
+
+
+class TestTamanhoECargaDasFotos(unittest.TestCase):
+    def test_card_e_foto_do_carrossel_declaram_largura_e_altura(self):
+        vendedor = _vendedor_dois_itens_capa_400_por_300()
+        html_vitrine = _escrever_catalogo([vendedor], "bruno/index.html")
+        for attrs in _imagens_dos_cards(html_vitrine):
+            self.assertEqual(attrs.get("width"), "400")
+            self.assertEqual(attrs.get("height"), "300")
+
+        item = _item_pagina(
+            "relogio-dois-fotos",
+            "Modelo Dois Fotos",
+            imagens=[_foto("capa.png", 400, 300), _foto("verso.png", 400, 300)],
+        )
+        html_relogio = _pagina_relogio(item)
+        for attrs in _imagens_no_bloco(_bloco_carrossel(html_relogio)):
+            self.assertEqual(attrs.get("width"), "400")
+            self.assertEqual(attrs.get("height"), "300")
+
+    def test_primeiro_card_e_primeira_foto_do_carrossel_sem_loading(self):
+        vendedor = _vendedor_dois_itens_capa_400_por_300()
+        html_vitrine = _escrever_catalogo([vendedor], "bruno/index.html")
+        cards = _imagens_dos_cards(html_vitrine)
+        self.assertNotIn("loading", cards[0])
+
+        item = _item_pagina(
+            "relogio-dois-fotos",
+            "Modelo Dois Fotos",
+            imagens=[_foto("capa.png", 400, 300), _foto("verso.png", 400, 300)],
+        )
+        html_relogio = _pagina_relogio(item)
+        fotos = _imagens_no_bloco(_bloco_carrossel(html_relogio))
+        self.assertNotIn("loading", fotos[0])
+
+    def test_segundo_card_e_segunda_foto_do_carrossel_com_lazy(self):
+        vendedor = _vendedor_dois_itens_capa_400_por_300()
+        html_vitrine = _escrever_catalogo([vendedor], "bruno/index.html")
+        cards = _imagens_dos_cards(html_vitrine)
+        self.assertEqual(cards[1].get("loading"), "lazy")
+
+        item = _item_pagina(
+            "relogio-dois-fotos",
+            "Modelo Dois Fotos",
+            imagens=[_foto("capa.png", 400, 300), _foto("verso.png", 400, 300)],
+        )
+        html_relogio = _pagina_relogio(item)
+        fotos = _imagens_no_bloco(_bloco_carrossel(html_relogio))
+        self.assertEqual(fotos[1].get("loading"), "lazy")
