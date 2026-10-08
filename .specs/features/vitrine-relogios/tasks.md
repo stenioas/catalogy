@@ -903,7 +903,7 @@ T28
 ---
 ### T27: Dimensionar as bolinhas e subir o contraste
 
-**Status**: pending
+**Status**: done
 
 **What**: Bolinha-botão de 44px com ponto de 8px e 8px entre botões. Texto secundário do claro em `#333333`, sem `#7a7a7a`.
 **Where**: `gerador/estilos.css`
@@ -919,12 +919,12 @@ T28
 
 **Done when**:
 
-- [ ] `.bolinha` tem `width` e `height` de pelo menos 44px. `.bolinha::before` tem 8px. `.bolinhas` tem `gap: 8px`
-- [ ] `[aria-current="true"]` pinta o ponto de `#0066cc` no claro e `#2997ff` no escuro
-- [ ] `.parcelamento` e `dt` usam `#333333` no claro
-- [ ] `#7a7a7a` não aparece em `gerador/estilos.css`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 208 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] `.bolinha` tem `width` e `height` de pelo menos 44px. `.bolinha::before` tem 8px. `.bolinhas` tem `gap: 8px`
+- [x] `[aria-current="true"]` pinta o ponto de `#0066cc` no claro e `#2997ff` no escuro
+- [x] `.parcelamento` e `dt` usam `#333333` no claro
+- [x] `#7a7a7a` não aparece em `gerador/estilos.css`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 208 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

@@ -24,6 +24,7 @@ LARGURAS_LISTA = (320, 640, 641, 834, 835, 1068, 1069, 1440, 1441, 1920)
 PRETO = "#000000"
 AZUL_PILULA = "#0066cc"
 AZUL_FOCO = "#0071e3"
+TEXTO_SECUNDARIO_CLARO = "#333333"
 BRANCO = "#ffffff"
 PERGAMINHO = "#f5f5f7"
 FUNDO_ESCURO = "#272729"
@@ -452,6 +453,41 @@ class TestEstilos(unittest.TestCase):
             _valor(self.regras, "html:has(.barra-fixa)", "scroll-padding-bottom"),
             "64px",
         )
+
+    def test_bolinha_tem_alvo_44px_ponto_8px_e_gap_8px(self):
+        # VITR-84 / spec P1 Ler e navegar AC 11
+        self.assertGreaterEqual(_px(_valor(self.regras, ".bolinha", "width")), 44)
+        self.assertGreaterEqual(_px(_valor(self.regras, ".bolinha", "height")), 44)
+        self.assertEqual(_valor(self.regras, ".bolinhas", "gap"), "8px")
+        self.assertEqual(_px(_valor(self.regras, ".bolinha::before", "width")), 8)
+        self.assertEqual(_px(_valor(self.regras, ".bolinha::before", "height")), 8)
+
+    def test_bolinha_ativa_pinta_o_ponto_no_claro_e_no_escuro(self):
+        # VITR-84 / spec P1 Ler e navegar AC 11 (cor ativa no ponto)
+        self.assertEqual(
+            _valor(self.regras, '.bolinha[aria-current="true"]::before', "background-color"),
+            AZUL_PILULA,
+        )
+        self.assertEqual(
+            _valor(
+                self.regras,
+                'html[data-tema="escuro"] .bolinha[aria-current="true"]::before',
+                "background-color",
+            ),
+            LINK_ESCURO,
+        )
+
+    def test_parcelamento_e_dt_usam_333333_no_claro(self):
+        # VITR-86 / spec P1 Ler e navegar AC 13
+        self.assertEqual(
+            _valor(self.regras, ".parcelamento", "color"),
+            TEXTO_SECUNDARIO_CLARO,
+        )
+        self.assertEqual(_valor(self.regras, "dt", "color"), TEXTO_SECUNDARIO_CLARO)
+
+    def test_folha_de_estilo_nao_usa_7a7a7a(self):
+        # VITR-87 / spec P1 Ler e navegar AC 14
+        self.assertNotIn("7a7a7a", self.css.lower())
 
     def test_pular_bolinha_e_seta_tem_anel_focus_visible(self):
         # VITR-82 / spec P1 Ler e navegar AC 9

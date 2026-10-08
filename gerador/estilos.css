@@ -440,13 +440,26 @@ dd a {
 }
 
 .bolinha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.bolinha::before {
+  content: "";
   width: 8px;
   height: 8px;
   border-radius: 9999px;
   background-color: #d2d2d7;
 }
 
-.bolinha[aria-current="true"] {
+.bolinha[aria-current="true"]::before {
   background-color: #0066cc;
 }
 
@@ -469,7 +482,7 @@ p.preco {
 }
 
 .parcelamento {
-  color: #7a7a7a;
+  color: #333333;
   font-size: 14px;
   line-height: 1.43;
   letter-spacing: -0.224px;
@@ -494,7 +507,7 @@ dt {
   font-weight: 400;
   line-height: 1.43;
   letter-spacing: -0.224px;
-  color: #7a7a7a;
+  color: #333333;
 }
 
 dd {
@@ -593,6 +606,6 @@ html[data-tema="escuro"] .lista-vendedores a {
   border-bottom-color: rgba(255, 255, 255, 0.16);
 }
 
-html[data-tema="escuro"] .bolinha[aria-current="true"] {
+html[data-tema="escuro"] .bolinha[aria-current="true"]::before {
   background-color: #2997ff;
 }
