@@ -262,7 +262,7 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-13 | P1: Gerar o site | Tasks | Implementing |
 | VITR-14 | P1: Gerar o site | Tasks | done |
 | VITR-15 | P1: Gerar o site | Tasks | done |
-| VITR-16 | P1: Gerar o site | Tasks | In Tasks |
+| VITR-16 | P1: Gerar o site | Tasks | done |
 | VITR-17 | P1: Gerar o site | Tasks | Implementing |
 | VITR-18 | P1: Gerar o site | Tasks | Implementing |
 | VITR-19 | P1: Gerar o site | Tasks | done |
@@ -318,8 +318,8 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-69 | P1: Publicar o catálogo atual | Tasks | In Tasks |
 | VITR-70 | P1: Publicar o catálogo atual | Tasks | In Tasks |
 | VITR-71 | P1: Publicar o catálogo atual | Tasks | In Tasks |
-| VITR-72 | P1: Publicar o catálogo atual | Tasks | In Tasks |
-| VITR-73 | P1: Publicar o catálogo atual | Tasks | In Tasks |
+| VITR-72 | P1: Publicar o catálogo atual | Tasks | Implementing |
+| VITR-73 | P1: Publicar o catálogo atual | Tasks | Implementing |
 
 **Coverage:** 73 total, 73 mapped to tasks in `.specs/features/vitrine-relogios/tasks.md`, 0 unmapped.
 

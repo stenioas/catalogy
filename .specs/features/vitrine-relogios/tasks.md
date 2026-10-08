@@ -449,6 +449,8 @@ T14
 
 ### T13: Expor o comando de geração
 
+**Status**: done
+
 **What**: Criar `scripts/gerar_site.py`, que sai com código 1 e escreve `pasta: regra` no stderr.
 **Where**: `scripts/gerar_site.py`
 **Depends on**: T12
@@ -463,10 +465,10 @@ T14
 
 **Done when**:
 
-- [ ] A falha de um vendedor de exemplo cita a pasta e a regra no stderr
-- [ ] A suíte de comportamento não lê `vendedores/alexandre/vendedor.yaml`
-- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 34 tests pass
+- [x] A falha de um vendedor de exemplo cita a pasta e a regra no stderr
+- [x] A suíte de comportamento não lê `vendedores/alexandre/vendedor.yaml`
+- [x] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 34 tests pass
 
 **Tests**: integration
 **Gate**: build
