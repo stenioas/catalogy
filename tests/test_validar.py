@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 from gerador.modelo import Imagem
-from gerador.validar import CatalogoErro, REGRA_TAMANHO_IMAGEM, carregar
+from gerador.validar import CatalogoErro, carregar
 from tests import imagens_exemplo
 
 # VITR-03: pasta e id só passam em ^[a-z0-9]+(-[a-z0-9]+)*$
@@ -307,11 +307,14 @@ class TestValidarFichaImagensOrdem(_CatalogoTemporario):
         with self.assertRaises(CatalogoErro) as ctx:
             carregar(self.raiz)
         self.assertEqual(ctx.exception.pasta, "alexandre")
-        self.assertEqual(ctx.exception.regra, REGRA_TAMANHO_IMAGEM)
+        self.assertEqual(
+            ctx.exception.regra,
+            "não foi possível ler a largura e a altura da imagem",
+        )
         self.assertNotIn("foto.png", ctx.exception.regra)
         self.assertEqual(
             str(ctx.exception),
-            f"alexandre: {REGRA_TAMANHO_IMAGEM}",
+            "alexandre: não foi possível ler a largura e a altura da imagem",
         )
 
     def test_recusa_item_sem_imagem(self):

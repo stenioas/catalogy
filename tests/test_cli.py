@@ -9,7 +9,6 @@ import unittest
 from contextlib import redirect_stderr
 from pathlib import Path
 
-from gerador.validar import REGRA_TAMANHO_IMAGEM
 from tests import imagens_exemplo
 
 # VITR-72 / spec P1 Publicar AC 5: a suíte de comportamento não lê o YAML publicado
@@ -119,7 +118,7 @@ class TestGerarSite(unittest.TestCase):
         self.assertEqual(codigo, 1)
         self.assertEqual(
             buffer.getvalue().strip(),
-            f"{PASTA_ALEXANDRE}: {REGRA_TAMANHO_IMAGEM}",
+            f"{PASTA_ALEXANDRE}: não foi possível ler a largura e a altura da imagem",
         )
         self.assertNotIn("foto.png", buffer.getvalue())
 

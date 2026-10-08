@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from gerador.publicar import substituir
-from gerador.validar import REGRA_TAMANHO_IMAGEM, CatalogoErro
+from gerador.validar import CatalogoErro
 from tests import imagens_exemplo
 
 RAIZ_PROJETO = Path(__file__).resolve().parent.parent
@@ -154,7 +154,10 @@ class TestPublicar(unittest.TestCase):
         caminho.write_bytes(b"\x00\x01")
         with self.assertRaises(CatalogoErro) as ctx:
             substituir(self.raiz)
-        self.assertEqual(ctx.exception.regra, REGRA_TAMANHO_IMAGEM)
+        self.assertEqual(
+            ctx.exception.regra,
+            "não foi possível ler a largura e a altura da imagem",
+        )
         self.assertEqual(self._bytes_site(), antes)
         self.assertEqual(self._sobras(), [])
 
