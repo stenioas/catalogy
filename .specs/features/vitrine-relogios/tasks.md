@@ -143,6 +143,8 @@ T14
 
 ### T3: Validar ficha, imagens e ordem
 
+**Status**: done
+
 **What**: Recusar imagem, ficha e chave desconhecida, ordenar vendedores e publicar cópias independentes.
 **Where**: `gerador/validar.py`
 **Depends on**: T2
@@ -157,10 +159,10 @@ T14
 
 **Done when**:
 
-- [ ] Extensão em maiúsculas passa. Barra no nome, rótulo fora da lista, rótulo repetido e `id` repetido falham
-- [ ] `Ana` vem antes de `bruno`. O mesmo `id` em dois vendedores passa
-- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 22 tests pass
+- [x] Extensão em maiúsculas passa. Barra no nome, rótulo fora da lista, rótulo repetido e `id` repetido falham
+- [x] `Ana` vem antes de `bruno`. O mesmo `id` em dois vendedores passa
+- [x] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 22 tests pass
 
 **Tests**: unit
 **Gate**: build

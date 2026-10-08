@@ -39,7 +39,7 @@ itens:
 """
 
 
-class TestValidarIdentidadePreco(unittest.TestCase):
+class _CatalogoTemporario(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
         self.raiz = Path(self._tmp.name)
@@ -51,6 +51,7 @@ class TestValidarIdentidadePreco(unittest.TestCase):
         diretorio = self.raiz / "vendedores" / pasta
         diretorio.mkdir(parents=True)
         (diretorio / "vendedor.yaml").write_text(texto, encoding="utf-8")
+        (diretorio / "foto.png").write_bytes(b"img")
 
     def _erro(self, pasta_esperada, regra):
         with self.assertRaises(CatalogoErro) as ctx:
@@ -59,6 +60,8 @@ class TestValidarIdentidadePreco(unittest.TestCase):
         self.assertEqual(ctx.exception.regra, regra)
         self.assertEqual(str(ctx.exception), f"{pasta_esperada}: {regra}")
 
+
+class TestValidarIdentidadePreco(_CatalogoTemporario):
     def test_aceita_pasta_e_id_no_padrao_sem_observacoes(self):
         self._gravar("alexandre", VALIDO)
         vendedores = carregar(self.raiz)
@@ -228,3 +231,188 @@ class TestValidarIdentidadePreco(unittest.TestCase):
         )
         self._gravar("alexandre", texto)
         self.assertIsNone(carregar(self.raiz)[0].itens[0].observacoes)
+
+
+# VITR-09: sem imagem, barra, arquivo ausente ou extensão fora da lista falha.
+# Extensão png, jpg, jpeg, webp ou avif passa em qualquer caixa.
+REGRA_IMAGEM_AUSENTE = "item sem imagem"
+REGRA_IMAGEM_BARRA = "imagem com barra"
+REGRA_ARQUIVO_AUSENTE = "arquivo de imagem ausente"
+REGRA_EXTENSAO = "extensão fora de png, jpg, jpeg, webp e avif"
+# VITR-10: ficha vazia, campo ausente, valor em branco ou rótulo repetido falha.
+REGRA_FICHA_VAZIA = "ficha vazia"
+REGRA_FICHA_CAMPOS = "ficha sem detalhe ou especificacao"
+REGRA_FICHA_BRANCO = "valor de ficha em branco"
+REGRA_ROTULO_REPETIDO = "rótulo de ficha repetido"
+# VITR-11: o mesmo id duas vezes no vendedor falha.
+REGRA_ID_REPETIDO = "id repetido no vendedor"
+# VITR-12: chave fora do formato falha.
+REGRA_CHAVE = "chave desconhecida"
+# VITR-13: rótulo fora dos 13 da spec falha.
+REGRA_ROTULO = "rótulo de ficha fora da lista"
+
+_FICHA = "    ficha:\n      - detalhe: Estado\n        especificacao: Novo\n"
+_SEGUNDO_ITEM = """\
+  - id: addiesdive-my-h3-2qz
+    nome: Outro
+    valorPix: 10
+    parcelamento: 1
+    imagens:
+      - foto.png
+    ficha:
+      - detalhe: Garantia
+        especificacao: 90 dias
+"""
+
+
+class TestValidarFichaImagensOrdem(_CatalogoTemporario):
+    def _aceita_imagem(self, nome):
+        self._gravar("alexandre", VALIDO.replace("foto.png", nome, 1))
+        (self.raiz / "vendedores" / "alexandre" / nome).write_bytes(b"img")
+        self.assertEqual(carregar(self.raiz)[0].itens[0].imagens, [nome])
+
+    def test_aceita_extensao_png_em_maiusculas(self):
+        self._aceita_imagem("FOTO.PNG")
+
+    def test_aceita_extensao_jpg_em_maiusculas(self):
+        self._aceita_imagem("FOTO.JPG")
+
+    def test_aceita_extensao_jpeg_em_maiusculas(self):
+        self._aceita_imagem("FOTO.JPEG")
+
+    def test_aceita_extensao_webp_em_maiusculas(self):
+        self._aceita_imagem("FOTO.WEBP")
+
+    def test_aceita_extensao_avif_em_maiusculas(self):
+        self._aceita_imagem("FOTO.AVIF")
+
+    def test_recusa_item_sem_imagem(self):
+        self._gravar("alexandre", VALIDO.replace(
+            "    imagens:\n      - foto.png\n",
+            "    imagens: []\n",
+            1,
+        ))
+        self._erro("alexandre", REGRA_IMAGEM_AUSENTE)
+
+    def test_recusa_imagem_com_barra(self):
+        self._gravar("alexandre", VALIDO.replace("foto.png", "../outro.png", 1))
+        (self.raiz / "vendedores" / "outro.png").write_bytes(b"img")
+        self._erro("alexandre", REGRA_IMAGEM_BARRA)
+
+    def test_recusa_arquivo_de_imagem_ausente(self):
+        self._gravar("alexandre", VALIDO.replace("foto.png", "ausente.png", 1))
+        self._erro("alexandre", REGRA_ARQUIVO_AUSENTE)
+
+    def test_recusa_extensao_fora_da_lista(self):
+        self._gravar("alexandre", VALIDO.replace("foto.png", "foto.gif", 1))
+        (self.raiz / "vendedores" / "alexandre" / "foto.gif").write_bytes(b"img")
+        self._erro("alexandre", REGRA_EXTENSAO)
+
+    def test_recusa_ficha_vazia(self):
+        self._gravar("alexandre", VALIDO.replace(_FICHA, "    ficha: []\n", 1))
+        self._erro("alexandre", REGRA_FICHA_VAZIA)
+
+    def test_recusa_ficha_sem_detalhe(self):
+        self._gravar("alexandre", VALIDO.replace(
+            _FICHA,
+            "    ficha:\n      - especificacao: Novo\n",
+            1,
+        ))
+        self._erro("alexandre", REGRA_FICHA_CAMPOS)
+
+    def test_recusa_ficha_sem_especificacao(self):
+        self._gravar("alexandre", VALIDO.replace(
+            _FICHA,
+            "    ficha:\n      - detalhe: Estado\n",
+            1,
+        ))
+        self._erro("alexandre", REGRA_FICHA_CAMPOS)
+
+    def test_recusa_detalhe_em_branco(self):
+        self._gravar("alexandre", VALIDO.replace(
+            _FICHA,
+            "    ficha:\n      - detalhe: \"\"\n        especificacao: Novo\n",
+            1,
+        ))
+        self._erro("alexandre", REGRA_FICHA_BRANCO)
+
+    def test_recusa_especificacao_so_com_espacos(self):
+        self._gravar("alexandre", VALIDO.replace(
+            "especificacao: Novo",
+            "especificacao: \"   \"",
+            1,
+        ))
+        self._erro("alexandre", REGRA_FICHA_BRANCO)
+
+    def test_recusa_rotulo_repetido(self):
+        self._gravar("alexandre", VALIDO.replace(
+            _FICHA,
+            "    ficha:\n"
+            "      - detalhe: Estado\n"
+            "        especificacao: Novo\n"
+            "      - detalhe: Estado\n"
+            "        especificacao: Usado\n",
+            1,
+        ))
+        self._erro("alexandre", REGRA_ROTULO_REPETIDO)
+
+    def test_recusa_rotulo_fora_da_lista(self):
+        self._gravar("alexandre", VALIDO.replace("detalhe: Estado", "detalhe: Cor", 1))
+        self._erro("alexandre", REGRA_ROTULO)
+
+    def test_recusa_id_repetido_no_vendedor(self):
+        self._gravar("alexandre", VALIDO + _SEGUNDO_ITEM)
+        self._erro("alexandre", REGRA_ID_REPETIDO)
+
+    def test_recusa_chave_desconhecida_no_vendedor(self):
+        self._gravar("alexandre", "selo: ouro\n" + VALIDO)
+        self._erro("alexandre", REGRA_CHAVE)
+
+    def test_recusa_chave_desconhecida_no_item(self):
+        self._gravar("alexandre", VALIDO.replace(
+            "    nome: Addiesdive\n",
+            "    nome: Addiesdive\n    cor: azul\n",
+            1,
+        ))
+        self._erro("alexandre", REGRA_CHAVE)
+
+    def test_recusa_chave_desconhecida_na_ficha(self):
+        self._gravar("alexandre", VALIDO.replace(
+            "      - detalhe: Estado\n",
+            "      - detalhe: Estado\n        extra: 1\n",
+            1,
+        ))
+        self._erro("alexandre", REGRA_CHAVE)
+
+    def test_ana_vem_antes_de_bruno(self):
+        self._gravar("z-ana", VALIDO.replace("nome: Alexandre", "nome: Ana", 1))
+        self._gravar("a-bruno", VALIDO.replace("nome: Alexandre", "nome: bruno", 1))
+        self.assertEqual(
+            [vendedor.nome for vendedor in carregar(self.raiz)],
+            ["Ana", "bruno"],
+        )
+
+    def test_empate_de_nome_desempata_pela_pasta(self):
+        self._gravar("beta", VALIDO.replace("nome: Alexandre", "nome: Ana", 1))
+        self._gravar("alfa", VALIDO.replace("nome: Alexandre", "nome: Ana", 1))
+        self.assertEqual(
+            [vendedor.pasta for vendedor in carregar(self.raiz)],
+            ["alfa", "beta"],
+        )
+
+    def test_mesmo_id_em_dois_vendedores_sao_copias_independentes(self):
+        self._gravar("ana", VALIDO.replace("nome: Alexandre", "nome: Ana", 1))
+        self._gravar("bruno", VALIDO.replace("nome: Alexandre", "nome: bruno", 1))
+        vendedores = carregar(self.raiz)
+        ana = next(vendedor for vendedor in vendedores if vendedor.nome == "Ana")
+        bruno = next(vendedor for vendedor in vendedores if vendedor.nome == "bruno")
+        item_ana = ana.itens[0]
+        item_bruno = bruno.itens[0]
+        self.assertEqual(item_ana.id, "addiesdive-my-h3-2qz")
+        self.assertEqual(item_bruno.id, "addiesdive-my-h3-2qz")
+        self.assertIsNot(item_ana, item_bruno)
+        self.assertIsNot(item_ana.imagens, item_bruno.imagens)
+        self.assertIsNot(item_ana.ficha, item_bruno.ficha)
+        self.assertIsNot(item_ana.ficha[0], item_bruno.ficha[0])
+        self.assertEqual(item_ana.ficha[0].detalhe, "Estado")
+        self.assertEqual(item_bruno.ficha[0].especificacao, "Novo")
