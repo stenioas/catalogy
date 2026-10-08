@@ -174,6 +174,8 @@ T14
 
 ### T4: Formatar preço, parcelamento e WhatsApp
 
+**Status**: done
+
 **What**: Implementar `formatar_preco`, `formatar_parcelamento` e `link_whatsapp`.
 **Where**: `gerador/renderizar.py`
 **Depends on**: None
@@ -188,11 +190,11 @@ T14
 
 **Done when**:
 
-- [ ] `369.9` vira `R$ 369,90 no Pix` e `1234.5` vira `R$ 1.234,50 no Pix`
-- [ ] `12` vira `em até 12x com acréscimo`
-- [ ] O link decodifica `Olá, tenho interesse no ` mais o nome do modelo
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 4 tests pass
+- [x] `369.9` vira `R$ 369,90 no Pix` e `1234.5` vira `R$ 1.234,50 no Pix`
+- [x] `12` vira `em até 12x com acréscimo`
+- [x] O link decodifica `Olá, tenho interesse no ` mais o nome do modelo
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
