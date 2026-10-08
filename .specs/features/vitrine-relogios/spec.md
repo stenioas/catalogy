@@ -422,7 +422,7 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-61 | P1: Tema | Tasks | ✅ Verified |
 | VITR-62 | P1: Tema | Tasks | ✅ Verified |
 | VITR-63 | P1: Tema | Tasks | ✅ Verified |
-| VITR-64 | P1: Tema | Tasks | Pending |
+| VITR-64 | P1: Tema | T25 | ✅ Verified |
 | VITR-65 | P1: Tema | Tasks | ✅ Verified |
 | VITR-66 | P1: Tema | Tasks | ✅ Verified |
 | VITR-67 | P1: Tema | Tasks | ✅ Verified |
@@ -449,11 +449,11 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-88 | P1: Ler e navegar | T23 | ✅ Verified |
 | VITR-89 | P1: Ler e navegar | T23 | ✅ Verified |
 | VITR-90 | P1: Ler e navegar | T23 | ✅ Verified |
-| VITR-91 | P1: Tema escuro completo | Tasks | Pending |
-| VITR-92 | P1: Tema escuro completo | Tasks | Pending |
-| VITR-93 | P1: Tema escuro completo | Tasks | Pending |
-| VITR-94 | P1: Tema escuro completo | Tasks | Pending |
-| VITR-95 | P1: Tema escuro completo | Tasks | Pending |
+| VITR-91 | P1: Tema escuro completo | T25 | ✅ Verified |
+| VITR-92 | P1: Tema escuro completo | T25 | ✅ Verified |
+| VITR-93 | P1: Tema escuro completo | T25 | ✅ Verified |
+| VITR-94 | P1: Tema escuro completo | T25 | ✅ Verified |
+| VITR-95 | P1: Tema escuro completo | T25 | ✅ Verified |
 | VITR-96 | P1: Foto no quadro | T24 | ✅ Verified |
 | VITR-97 | P1: Foto no quadro | T20 | ✅ Verified |
 | VITR-98 | P1: Foto no quadro | T15–T17 | ✅ Verified |

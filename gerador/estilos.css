@@ -168,6 +168,10 @@ footer {
   color: #1d1d1f;
 }
 
+html[data-tema="escuro"] {
+  color-scheme: dark;
+}
+
 html[data-tema="escuro"] body {
   background-color: #272729;
   color: #ffffff;
@@ -181,6 +185,7 @@ html[data-tema="escuro"] .barra-negra {
 html[data-tema="escuro"] .card {
   background-color: #2a2a2c;
   color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 html[data-tema="escuro"] .parcelamento,
@@ -192,14 +197,15 @@ html[data-tema="escuro"] main a {
   color: #2997ff;
 }
 
-html[data-tema="escuro"] footer,
-html[data-tema="escuro"] .barra-vendedor,
-html[data-tema="escuro"] .barra-fixa {
+html[data-tema="escuro"] footer {
   background-color: #272729;
   color: #ffffff;
 }
 
+html[data-tema="escuro"] .barra-vendedor,
 html[data-tema="escuro"] .barra-fixa {
+  background-color: rgba(39, 39, 41, 0.8);
+  color: #ffffff;
   backdrop-filter: saturate(180%) blur(20px);
 }
 
@@ -267,7 +273,7 @@ h1,
 }
 
 #controle-tema {
-  border: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 8px;
   padding: 8px 15px;
   background-color: #1d1d1f;
@@ -533,8 +539,12 @@ footer {
   }
 }
 
-html[data-tema="escuro"] .barra-vendedor {
-  background-color: #272729;
+html[data-tema="escuro"] .ficha-linha {
+  border-top-color: rgba(255, 255, 255, 0.16);
+}
+
+html[data-tema="escuro"] .ficha-linha:last-child {
+  border-bottom-color: rgba(255, 255, 255, 0.16);
 }
 
 html[data-tema="escuro"] .barra-vendedor a,
@@ -550,6 +560,10 @@ html[data-tema="escuro"] .ficha dt {
 html[data-tema="escuro"] .lista-vendedores a,
 html[data-tema="escuro"] dd a {
   color: #2997ff;
+}
+
+html[data-tema="escuro"] .lista-vendedores a {
+  border-bottom-color: rgba(255, 255, 255, 0.16);
 }
 
 html[data-tema="escuro"] .bolinha[aria-current="true"] {

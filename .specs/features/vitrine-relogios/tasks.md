@@ -841,7 +841,7 @@ T28
 ---
 ### T25: Completar o tema escuro
 
-**Status**: pending
+**Status**: done
 
 **What**: `color-scheme: dark`, vidro na segunda barra e na barra fixa, sólido só no rodapé, linhas escuras e fio no botão de tema.
 **Where**: `gerador/estilos.css`
@@ -857,13 +857,13 @@ T28
 
 **Done when**:
 
-- [ ] `html[data-tema="escuro"]` declara `color-scheme: dark`
-- [ ] No escuro, `.barra-vendedor` e `.barra-fixa` têm `rgba(39, 39, 41, 0.8)` e `saturate(180%) blur(20px)`. `footer` tem `#272729`
-- [ ] No escuro, a borda do card, `.ficha-linha` e o separador de `.lista-vendedores a` usam `rgba(255, 255, 255, 0.16)`
-- [ ] `#controle-tema` tem fundo `#1d1d1f` e `border: 1px solid rgba(255, 255, 255, 0.16)`
-- [ ] O teste antigo das três superfícies `#272729` passa a afirmar o sólido só no rodapé
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 198 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] `html[data-tema="escuro"]` declara `color-scheme: dark`
+- [x] No escuro, `.barra-vendedor` e `.barra-fixa` têm `rgba(39, 39, 41, 0.8)` e `saturate(180%) blur(20px)`. `footer` tem `#272729`
+- [x] No escuro, a borda do card, `.ficha-linha` e o separador de `.lista-vendedores a` usam `rgba(255, 255, 255, 0.16)`
+- [x] `#controle-tema` tem fundo `#1d1d1f` e `border: 1px solid rgba(255, 255, 255, 0.16)`
+- [x] O teste antigo das três superfícies `#272729` passa a afirmar o sólido só no rodapé
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 198 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

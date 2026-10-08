@@ -29,6 +29,9 @@ FUNDO_ESCURO = "#272729"
 CARD_ESCURO = "#2a2a2c"
 TEXTO_SECUNDARIO = "#cccccc"
 LINK_ESCURO = "#2997ff"
+FUNDO_VIDRO_ESCURO = "rgba(39, 39, 41, 0.8)"
+LINHA_ESCURO = "rgba(255, 255, 255, 0.16)"
+FUNDO_CONTROLE_TEMA = "#1d1d1f"
 
 RAIZ = Path(__file__).resolve().parent.parent
 CAMINHO_CSS = RAIZ / "gerador" / "estilos.css"
@@ -269,14 +272,75 @@ class TestEstilos(unittest.TestCase):
             LINK_ESCURO,
         )
 
-    def test_escuro_rodape_segunda_barra_e_barra_fixa_usam_272729_e_branco(self):
+    def test_escuro_declara_color_scheme_dark(self):
+        self.assertEqual(
+            _valor(self.regras, 'html[data-tema="escuro"]', "color-scheme"),
+            "dark",
+        )
+
+    def test_escuro_rodape_solido_272729_e_barras_de_vidro(self):
+        self.assertEqual(
+            _valor(self.regras, 'html[data-tema="escuro"] footer', "background-color"),
+            FUNDO_ESCURO,
+        )
+        self.assertEqual(
+            _valor(self.regras, 'html[data-tema="escuro"] footer', "color"),
+            BRANCO,
+        )
         for seletor in (
-            'html[data-tema="escuro"] footer',
             'html[data-tema="escuro"] .barra-vendedor',
             'html[data-tema="escuro"] .barra-fixa',
         ):
-            self.assertEqual(_valor(self.regras, seletor, "background-color"), FUNDO_ESCURO)
-            self.assertEqual(_valor(self.regras, seletor, "color"), BRANCO)
+            self.assertEqual(
+                _valor(self.regras, seletor, "background-color"),
+                FUNDO_VIDRO_ESCURO,
+                seletor,
+            )
+            self.assertEqual(_valor(self.regras, seletor, "color"), BRANCO, seletor)
+            filtro = _valor(self.regras, seletor, "backdrop-filter")
+            self.assertIsNotNone(filtro, seletor)
+            self.assertIn("saturate(180%)", filtro, seletor)
+            self.assertRegex(filtro, _BLUR_POSITIVO, seletor)
+
+    def test_escuro_linhas_de_borda_usam_branco_translucido(self):
+        self.assertEqual(
+            _valor(self.regras, 'html[data-tema="escuro"] .card', "border-color"),
+            LINHA_ESCURO,
+        )
+        self.assertEqual(
+            _valor(
+                self.regras,
+                'html[data-tema="escuro"] .ficha-linha',
+                "border-top-color",
+            ),
+            LINHA_ESCURO,
+        )
+        self.assertEqual(
+            _valor(
+                self.regras,
+                'html[data-tema="escuro"] .ficha-linha:last-child',
+                "border-bottom-color",
+            ),
+            LINHA_ESCURO,
+        )
+        self.assertEqual(
+            _valor(
+                self.regras,
+                'html[data-tema="escuro"] .lista-vendedores a',
+                "border-bottom-color",
+            ),
+            LINHA_ESCURO,
+        )
+
+    def test_controle_tema_tem_fundo_e_borda_visiveis(self):
+        self.assertEqual(
+            _valor(self.regras, "#controle-tema", "background-color"),
+            FUNDO_CONTROLE_TEMA,
+        )
+        self.assertEqual(
+            _valor(self.regras, "#controle-tema", "border"),
+            f"1px solid {LINHA_ESCURO}",
+        )
 
     def test_barra_fixa_escura_mantem_filtro_fosco(self):
         valor = _valor(
