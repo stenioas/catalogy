@@ -154,15 +154,18 @@ class TestPaginaVitrine(unittest.TestCase):
         html = _escrever_catalogo(catalogo_dois_vendedores(), "bruno/index.html")
         self.assertEqual(_parse_html(html).title, "bruno")
 
-    def test_voltar_aponta_para_a_raiz_com_url_relativa(self):
+    def test_voltar_no_header_aponta_para_a_raiz_sem_texto_visivel(self):
         html = _escrever_catalogo(catalogo_dois_vendedores(), "bruno/index.html")
-        voltar = [
-            (href, texto)
-            for href, texto in _parse_html(html).links
-            if texto == ROTULO_VOLTAR
-        ]
-        self.assertEqual(len(voltar), 1)
-        self.assertEqual(voltar[0][0], "../")
+        header = _trecho_header(html)
+        self.assertIsNotNone(
+            re.search(
+                r'<a class="voltar" href="\.\./" aria-label="Voltar">'
+                r'.*?<svg[^>]*aria-hidden="true"',
+                header,
+                flags=re.DOTALL,
+            ),
+        )
+        self.assertNotIn(f">{ROTULO_VOLTAR}<", header)
 
     def test_vitrine_sem_itens_mostra_mensagem_exata(self):
         html = _escrever_catalogo([vendedor_sem_itens()], "ana/index.html")
@@ -196,24 +199,38 @@ class TestBarrasERodape(unittest.TestCase):
         return _escrever_catalogo(catalogo_dois_vendedores(), "bruno/index.html")
 
     def test_barra_preta_tem_catalogo_sem_busca_nem_sacola(self):
-        for rel in ("index.html", "bruno/index.html", "ana/index.html"):
+        for rel, href_esperado in (
+            ("index.html", "./"),
+            ("bruno/index.html", "../"),
+            ("ana/index.html", "../"),
+        ):
             html = _escrever_catalogo(catalogo_dois_vendedores(), rel)
-            parser = _parse_html(html)
-            catalogo = [
-                (href, texto)
-                for href, texto in parser.links
-                if texto == ROTULO_BARRA_CATALOGO
-            ]
-            self.assertEqual(len(catalogo), 1)
-            self.assertIn(catalogo[0][0], ("./", "../", "../../"))
+            header = _trecho_header(html)
+            self.assertIn(
+                f'<a href="{href_esperado}">{ROTULO_BARRA_CATALOGO}</a>',
+                header,
+            )
             texto_baixo = html.lower()
             self.assertNotIn("busca", texto_baixo)
             self.assertNotIn("sacola", texto_baixo)
 
-    def test_vitrine_tem_segunda_barra_com_nome_do_vendedor(self):
+        html_produto = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        self.assertNotIn(
+            ROTULO_BARRA_CATALOGO,
+            _trecho_header(html_produto),
+        )
+
+    def test_vitrine_nao_tem_segunda_barra_e_nome_fica_no_main(self):
         html = self._html_vitrine()
-        self.assertIn('class="barra-vendedor"', html)
-        self.assertIn(">bruno<", html.replace(" ", ""))
+        self.assertNotIn('class="barra-vendedor"', html)
+        main = _trecho_main(html)
+        self.assertRegex(
+            main,
+            r'^<p class="nome-vendedor">bruno</p>',
+        )
 
     def test_rodape_contem_somente_catalogo_de_relogios(self):
         html = self._html_vitrine()
@@ -325,22 +342,23 @@ class TestPaginaRelogio(unittest.TestCase):
         )
         self.assertEqual(_parse_html(html).title, "Relógio Primeiro")
 
-    def test_voltar_e_nome_do_vendedor_apontam_para_a_vitrine(self):
+    def test_voltar_e_nome_do_vendedor_no_header_apontam_para_a_vitrine(self):
         html = _escrever_catalogo(
             catalogo_dois_vendedores(),
             "bruno/relogio-primeiro/index.html",
         )
-        links = _parse_html(html).links
-        vendedor = [href for href, texto in links if texto == "bruno"]
-        voltar = [href for href, texto in links if texto == ROTULO_VOLTAR]
-        self.assertEqual(vendedor, ["../"])
-        self.assertEqual(voltar, ["../"])
+        header = _trecho_header(html)
+        self.assertRegex(
+            header,
+            r'<a class="voltar" href="\.\./" aria-label="Voltar">',
+        )
+        self.assertIn('<a href="../">bruno</a>', header.replace("\n", ""))
+        self.assertNotIn(f">{ROTULO_VOLTAR}<", header)
+        self.assertNotIn(ROTULO_BARRA_CATALOGO, header)
 
     def test_ordem_nome_carrossel_preco_observacao_ficha_e_barra(self):
         html = _pagina_relogio(_item_ficha_fora_de_ordem())
         marcadores = [
-            '<div class="barra-vendedor"><a href="../">bruno</a></div>',
-            '<a class="voltar" href="../">Voltar</a>',
             "<h1>Modelo Ficha</h1>",
             '<div class="carrossel">',
             FRASE_PIX_369_90,
@@ -560,6 +578,110 @@ def _trecho_head(html: str) -> str:
     if match is None:
         raise AssertionError("head ausente")
     return match.group(1)
+
+
+def _trecho_header(html: str) -> str:
+    match = re.search(
+        r'<header class="barra-negra">(.*?)</header>',
+        html,
+        flags=re.DOTALL,
+    )
+    if match is None:
+        raise AssertionError("header.barra-negra ausente")
+    return match.group(0)
+
+
+def _trecho_main(html: str) -> str:
+    match = re.search(
+        r'<main id="conteudo"[^>]*>(.*?)</main>',
+        html,
+        flags=re.DOTALL,
+    )
+    if match is None:
+        raise AssertionError("main#conteudo ausente")
+    return match.group(1).lstrip()
+
+
+def _links_navegacao_no_header(html: str) -> list[tuple[str, str]]:
+    header = _trecho_header(html)
+    return [
+        (href, texto)
+        for href, texto in _parse_html(header).links
+        if texto != "img"
+    ]
+
+
+class TestBarraNoHeader(unittest.TestCase):
+    """AJST-01–AJST-15 / spec P1 Barra das três páginas."""
+
+    def test_raiz_tem_catalogo_com_href_ponto_barra(self):
+        html = _escrever_catalogo(catalogo_dois_vendedores(), "index.html")
+        header = _trecho_header(html)
+        self.assertIn(f'<a href="./">{ROTULO_BARRA_CATALOGO}</a>', header)
+        self.assertNotIn('class="voltar"', html)
+        self.assertNotIn('class="barra-vendedor"', html)
+
+    def test_vitrine_header_tem_voltar_e_catalogo_ambos_pai(self):
+        html = _escrever_catalogo(catalogo_dois_vendedores(), "bruno/index.html")
+        links = _links_navegacao_no_header(html)
+        self.assertEqual(
+            links,
+            [("../", ""), ("../", ROTULO_BARRA_CATALOGO)],
+        )
+        voltar = re.search(
+            r'<a class="voltar" href="\.\./" aria-label="Voltar">'
+            r'(.*?)</a>',
+            _trecho_header(html),
+            flags=re.DOTALL,
+        )
+        self.assertIsNotNone(voltar)
+        self.assertIn('aria-hidden="true"', voltar.group(1))
+        self.assertNotIn(ROTULO_VOLTAR, voltar.group(1))
+
+    def test_vitrine_sem_itens_mantem_nome_vendedor_e_mensagem_vazia(self):
+        html = _escrever_catalogo([vendedor_sem_itens()], "ana/index.html")
+        main = _trecho_main(html)
+        self.assertRegex(main, r'^<p class="nome-vendedor">Ana</p>')
+        self.assertIn(MENSAGEM_VITRINE_VAZIA, main)
+        self.assertNotIn('class="barra-vendedor"', html)
+
+    def test_vitrine_nome_aparece_somente_uma_vez_no_body(self):
+        html = _escrever_catalogo(catalogo_dois_vendedores(), "bruno/index.html")
+        main = _trecho_main(html)
+        self.assertEqual(main.count('class="nome-vendedor"'), 1)
+        self.assertEqual(main.count("bruno"), 1)
+
+    def test_produto_header_tem_voltar_e_nome_sem_catalogo(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        links = _links_navegacao_no_header(html)
+        self.assertEqual(links, [("../", ""), ("../", "bruno")])
+        self.assertNotIn('class="nome-vendedor"', html)
+        self.assertNotIn('class="barra-vendedor"', html)
+
+    def test_nome_com_menor_e_e_comercial_sai_escapado_no_header_e_no_main(self):
+        vendedor = Vendedor(
+            pasta="especial",
+            nome="A & B <tag>",
+            whatsapp="5511999999999",
+            itens=[
+                _item_pagina("relogio-1", "Modelo"),
+            ],
+        )
+        html_vitrine = _escrever_catalogo([vendedor], "especial/index.html")
+        self.assertIn(
+            '<p class="nome-vendedor">A &amp; B &lt;tag&gt;</p>',
+            html_vitrine,
+        )
+
+        html_produto = _escrever_catalogo([vendedor], "especial/relogio-1/index.html")
+        self.assertIn(
+            '<a href="../">A &amp; B &lt;tag&gt;</a>',
+            _trecho_header(html_produto),
+        )
+        self.assertNotIn('class="nome-vendedor"', html_produto)
 
 
 class TestViewportLinkPularEConteudo(unittest.TestCase):
