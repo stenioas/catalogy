@@ -266,18 +266,18 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-17 | P1: Gerar o site | Tasks | Implementing |
 | VITR-18 | P1: Gerar o site | Tasks | Implementing |
 | VITR-19 | P1: Gerar o site | Tasks | In Tasks |
-| VITR-20 | P1: Navegar | Tasks | In Tasks |
-| VITR-21 | P1: Navegar | Tasks | In Tasks |
-| VITR-22 | P1: Navegar | Tasks | In Tasks |
+| VITR-20 | P1: Navegar | Tasks | Implementing |
+| VITR-21 | P1: Navegar | Tasks | Implementing |
+| VITR-22 | P1: Navegar | Tasks | Implementing |
 | VITR-23 | P1: Navegar | Tasks | Implementing |
-| VITR-24 | P1: Navegar | Tasks | In Tasks |
-| VITR-25 | P1: Navegar | Tasks | In Tasks |
-| VITR-26 | P1: Navegar | Tasks | In Tasks |
-| VITR-27 | P1: Navegar | Tasks | In Tasks |
-| VITR-28 | P1: Navegar | Tasks | In Tasks |
-| VITR-29 | P1: Navegar | Tasks | In Tasks |
+| VITR-24 | P1: Navegar | Tasks | Implementing |
+| VITR-25 | P1: Navegar | Tasks | Implementing |
+| VITR-26 | P1: Navegar | Tasks | Implementing |
+| VITR-27 | P1: Navegar | Tasks | Implementing |
+| VITR-28 | P1: Navegar | Tasks | Implementing |
+| VITR-29 | P1: Navegar | Tasks | Implementing |
 | VITR-30 | P1: Navegar | Tasks | In Tasks |
-| VITR-31 | P1: Navegar | Tasks | In Tasks |
+| VITR-31 | P1: Navegar | Tasks | Implementing |
 | VITR-32 | P1: Navegar | Tasks | Implementing |
 | VITR-33 | P1: Navegar | Tasks | Implementing |
 | VITR-34 | P1: Navegar | Tasks | In Tasks |
@@ -296,9 +296,9 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-47 | P1: Navegar | Tasks | In Tasks |
 | VITR-48 | P1: Navegar | Tasks | In Tasks |
 | VITR-49 | P1: Navegar | Tasks | In Tasks |
-| VITR-50 | P1: Navegar | Tasks | In Tasks |
-| VITR-51 | P1: Navegar | Tasks | In Tasks |
-| VITR-52 | P1: Navegar | Tasks | In Tasks |
+| VITR-50 | P1: Navegar | Tasks | Implementing |
+| VITR-51 | P1: Navegar | Tasks | Implementing |
+| VITR-52 | P1: Navegar | Tasks | Implementing |
 | VITR-53 | P1: Tema | Tasks | In Tasks |
 | VITR-54 | P1: Tema | Tasks | In Tasks |
 | VITR-55 | P1: Tema | Tasks | In Tasks |

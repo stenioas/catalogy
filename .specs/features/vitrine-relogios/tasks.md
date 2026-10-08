@@ -204,6 +204,8 @@ T14
 
 ### T5: Gerar a raiz e a vitrine
 
+**Status**: done
+
 **What**: Escrever `index.html` da raiz e de cada vendedor, com links relativos, card e vitrine vazia.
 **Where**: `gerador/renderizar.py`
 **Depends on**: T3, T4
@@ -218,12 +220,12 @@ T14
 
 **Done when**:
 
-- [ ] O título da raiz é `Catálogo de relógios` e o da vitrine é só o nome do vendedor
-- [ ] Vendedor sem itens aparece na raiz e a vitrine mostra `Esta vitrine ainda não tem relógios.`
-- [ ] O card é um link com a primeira foto, o nome e o preço. `Voltar` aponta para a raiz
-- [ ] A barra tem `Catálogo` e não tem busca nem sacola. O rodapé tem só `Catálogo de relógios`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 14 tests pass
+- [x] O título da raiz é `Catálogo de relógios` e o da vitrine é só o nome do vendedor
+- [x] Vendedor sem itens aparece na raiz e a vitrine mostra `Esta vitrine ainda não tem relógios.`
+- [x] O card é um link com a primeira foto, o nome e o preço. `Voltar` aponta para a raiz
+- [x] A barra tem `Catálogo` e não tem busca nem sacola. O rodapé tem só `Catálogo de relógios`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 14 tests pass
 
 **Tests**: unit
 **Gate**: quick
