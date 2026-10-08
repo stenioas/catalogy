@@ -230,6 +230,37 @@ class TestEstilos(unittest.TestCase):
             self.assertIsNotNone(valor, f"lista sem colunas em {largura}px")
             self.assertEqual(_colunas(valor), 1, f"{largura}px")
 
+    def test_lista_vendedores_centralizada_960px_com_gap_12px(self):
+        # AJST-23 / spec P1 Lista de vendedores em cards AC 1
+        lista = ".lista-vendedores"
+        self.assertEqual(_valor(self.regras, lista, "width"), "min(960px, 100%)")
+        self.assertEqual(_valor(self.regras, lista, "margin-inline"), "auto")
+        self.assertEqual(_valor(self.regras, lista, "gap"), "12px")
+
+    def test_link_vendedor_card_superficie_no_claro(self):
+        # AJST-26 / spec P1 Lista de vendedores em cards AC 4
+        link = ".lista-vendedores a"
+        self.assertEqual(_valor(self.regras, link, "border-radius"), "18px")
+        self.assertEqual(_valor(self.regras, link, "padding"), "16px")
+        self.assertGreaterEqual(_px(_valor(self.regras, link, "min-height")), 44)
+        self.assertEqual(_valor(self.regras, link, "background-color"), BRANCO)
+        self.assertEqual(_valor(self.regras, link, "border"), f"1px solid #e0e0e0")
+
+    def test_link_vendedor_card_superficie_no_escuro(self):
+        # AJST-27 / spec P1 Lista de vendedores em cards AC 5
+        link = 'html[data-tema="escuro"] .lista-vendedores a'
+        self.assertEqual(_valor(self.regras, link, "background-color"), CARD_ESCURO)
+        self.assertEqual(_valor(self.regras, link, "border-color"), LINHA_ESCURO)
+
+    def test_lista_vendedores_focus_visible_mantem_anel_azul(self):
+        # AJST-28 / spec P1 Lista de vendedores em cards AC 6
+        seletor = ".lista-vendedores a:focus-visible"
+        self.assertEqual(
+            _valor(self.regras, seletor, "outline"),
+            f"2px solid {AZUL_FOCO}",
+        )
+        self.assertEqual(_valor(self.regras, seletor, "outline-offset"), "2px")
+
     def test_foto_do_card_preenche_quadro_quadrado_com_raio_8(self):
         # VITR-49 / spec P1 Navegar AC 30: quadro quadrado com cover e 8px na foto
         foto = ".card img"
@@ -371,7 +402,7 @@ class TestEstilos(unittest.TestCase):
             _valor(
                 self.regras,
                 'html[data-tema="escuro"] .lista-vendedores a',
-                "border-bottom-color",
+                "border-color",
             ),
             LINHA_ESCURO,
         )

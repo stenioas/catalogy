@@ -177,6 +177,8 @@ T8
 
 ### T4: Transformar a lista de vendedores em cards
 
+**Status**: done
+
 **What**: A lista da raiz fica centralizada, com no máximo 960 px, e cada vendedor vira um card clicável.
 **Where**: `gerador/estilos.css`
 **Depends on**: None
@@ -190,12 +192,12 @@ T8
 
 **Done when**:
 
-- [ ] `.lista-vendedores` tem `width: min(960px, 100%)`, `margin-inline: auto`, uma coluna e `gap: 12px`
-- [ ] O link do vendedor tem `border-radius: 18px`, `padding: 16px`, `min-height: 44px`, fundo `#ffffff` e borda `#e0e0e0`
-- [ ] No escuro o link usa fundo `#2a2a2c` e borda `rgba(255, 255, 255, 0.16)`
-- [ ] `.lista-vendedores a:focus-visible` mantém `outline: 2px solid #0071e3`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count does not drop
+- [x] `.lista-vendedores` tem `width: min(960px, 100%)`, `margin-inline: auto`, uma coluna e `gap: 12px`
+- [x] O link do vendedor tem `border-radius: 18px`, `padding: 16px`, `min-height: 44px`, fundo `#ffffff` e borda `#e0e0e0`
+- [x] No escuro o link usa fundo `#2a2a2c` e borda `rgba(255, 255, 255, 0.16)`
+- [x] `.lista-vendedores a:focus-visible` mantém `outline: 2px solid #0071e3`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count does not drop
 
 **Tests**: unit
 **Gate**: quick

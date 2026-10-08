@@ -148,6 +148,15 @@ class TestPaginaRaiz(unittest.TestCase):
         self.assertIn('class="lista-vendedores"', html)
         self.assertNotIn('class="grade-vitrine"', html)
 
+    def test_cada_vendedor_na_raiz_e_um_link_unico_dentro_do_li(self):
+        # AJST-25 / spec P1 Lista de vendedores em cards AC 3
+        html = _escrever_catalogo(catalogo_dois_vendedores(), "index.html")
+        itens = re.findall(
+            r'<li><a href="[^"]+/">[^<]+</a></li>',
+            html,
+        )
+        self.assertEqual(len(itens), 2)
+
 
 class TestPaginaVitrine(unittest.TestCase):
     def test_titulo_e_somente_o_nome_do_vendedor(self):

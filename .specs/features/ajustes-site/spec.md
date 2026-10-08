@@ -220,12 +220,12 @@ A barra, o tema, as fotos e a lista de vendedores do site gerado ainda não segu
 | AJST-20 | P1: Tema por ícone | Tasks | Done |
 | AJST-21 | P1: Tema por ícone | Tasks | Done |
 | AJST-22 | P1: Tema por ícone | Tasks | Done |
-| AJST-23 | P1: Lista de vendedores em cards | Tasks | Pending |
-| AJST-24 | P1: Lista de vendedores em cards | Tasks | Pending |
-| AJST-25 | P1: Lista de vendedores em cards | Tasks | Pending |
-| AJST-26 | P1: Lista de vendedores em cards | Tasks | Pending |
-| AJST-27 | P1: Lista de vendedores em cards | Tasks | Pending |
-| AJST-28 | P1: Lista de vendedores em cards | Tasks | Pending |
+| AJST-23 | P1: Lista de vendedores em cards | Tasks | Done |
+| AJST-24 | P1: Lista de vendedores em cards | Tasks | Done |
+| AJST-25 | P1: Lista de vendedores em cards | Tasks | Done |
+| AJST-26 | P1: Lista de vendedores em cards | Tasks | Done |
+| AJST-27 | P1: Lista de vendedores em cards | Tasks | Done |
+| AJST-28 | P1: Lista de vendedores em cards | Tasks | Done |
 | AJST-29 | P1: Fotos quadradas da vitrine | Tasks | Pending |
 | AJST-30 | P1: Fotos quadradas da vitrine | Tasks | Pending |
 | AJST-31 | P1: Fotos quadradas da vitrine | Tasks | Pending |

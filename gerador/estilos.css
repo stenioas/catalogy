@@ -70,6 +70,9 @@ body {
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
+  width: min(960px, 100%);
+  margin-inline: auto;
+  gap: 12px;
 }
 
 .lista-vendedores a {
@@ -78,6 +81,10 @@ body {
   box-sizing: border-box;
   width: 100%;
   min-height: 44px;
+  padding: 16px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 18px;
   color: #0066cc;
 }
 
@@ -371,11 +378,6 @@ dd a {
   text-decoration: none;
 }
 
-.lista-vendedores a {
-  padding: 8px 0;
-  border-bottom: 1px solid #e0e0e0;
-}
-
 .voltar {
   margin-bottom: 8px;
 }
@@ -620,7 +622,8 @@ html[data-tema="escuro"] dd a {
 }
 
 html[data-tema="escuro"] .lista-vendedores a {
-  border-bottom-color: rgba(255, 255, 255, 0.16);
+  background-color: #2a2a2c;
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 html[data-tema="escuro"] .bolinha[aria-current="true"]::before {
