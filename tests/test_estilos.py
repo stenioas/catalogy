@@ -560,6 +560,97 @@ class TestEstilos(unittest.TestCase):
             "64px",
         )
 
+    def test_barra_fixa_empilha_preco_e_interesse_ate_640px(self):
+        # AJST-41 / spec P1 Barra fixa no celular AC 2
+        barra = ".barra-fixa"
+        for largura in (320, 640):
+            self.assertEqual(
+                _valor(self.regras, barra, "flex-direction", largura),
+                "column",
+                largura,
+            )
+            self.assertEqual(
+                _valor(self.regras, barra, "align-items", largura),
+                "stretch",
+                largura,
+            )
+            self.assertEqual(
+                _valor(self.regras, barra, "height", largura),
+                "auto",
+                largura,
+            )
+            self.assertEqual(
+                _valor(self.regras, barra, "gap", largura),
+                "8px",
+                largura,
+            )
+
+    def test_barra_fixa_no_celular_mantem_padding_lateral_e_pilula_larga(self):
+        # AJST-42 / spec P1 Barra fixa no celular AC 3
+        barra = ".barra-fixa"
+        pilula = ".barra-fixa .pilula"
+        for largura in (320, 640):
+            padding = _valor(self.regras, barra, "padding", largura)
+            self.assertIsNotNone(padding, largura)
+            partes = padding.split()
+            if len(partes) == 1:
+                lateral = partes[0]
+            elif len(partes) == 2:
+                lateral = partes[1]
+            elif len(partes) == 3:
+                lateral = partes[1]
+            else:
+                lateral = partes[1]
+            self.assertEqual(lateral, "32px", largura)
+            self.assertEqual(_valor(self.regras, pilula, "width", largura), "100%", largura)
+
+    def test_barra_fixa_no_celular_aumenta_folga_do_miolo_e_do_scroll(self):
+        # AJST-43 / spec P1 Barra fixa no celular AC 4
+        for largura in (320, 640):
+            self.assertEqual(
+                _valor(
+                    self.regras,
+                    "html:has(.barra-fixa)",
+                    "scroll-padding-bottom",
+                    largura,
+                ),
+                "128px",
+                largura,
+            )
+            self.assertEqual(
+                _valor(
+                    self.regras,
+                    "main:has(.barra-fixa)",
+                    "padding-bottom",
+                    largura,
+                ),
+                "160px",
+                largura,
+            )
+
+    def test_barra_fixa_acima_de_640px_fica_em_linha_com_64px(self):
+        # AJST-44 / spec P1 Barra fixa no celular AC 5
+        barra = ".barra-fixa"
+        for largura in (641, 834, 1440):
+            self.assertEqual(
+                _valor(self.regras, barra, "height", largura),
+                "64px",
+                largura,
+            )
+            self.assertNotEqual(
+                _valor(self.regras, barra, "flex-direction", largura),
+                "column",
+                largura,
+            )
+            self.assertIsNone(
+                _valor(self.regras, ".barra-fixa .pilula", "width", largura),
+                largura,
+            )
+
+    def test_pilula_de_interesse_mantem_min_height_44px(self):
+        # AJST-45 / spec P1 Barra fixa no celular AC 6
+        self.assertGreaterEqual(_px(_valor(self.regras, ".pilula", "min-height")), 44)
+
     def test_bolinha_tem_alvo_44px_ponto_8px_e_gap_8px(self):
         # VITR-84 / spec P1 Ler e navegar AC 11
         self.assertGreaterEqual(_px(_valor(self.regras, ".bolinha", "width")), 44)

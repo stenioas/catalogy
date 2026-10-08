@@ -534,6 +534,24 @@ class TestPaginaRelogio(unittest.TestCase):
         self.assertIn(f">{ROTULO_INTERESSE}</a>", barra.group(0))
         self.assertGreaterEqual(html.count(FRASE_PIX_369_90), 2)
 
+    def test_barra_fixa_coloca_preco_antes_do_link_tenho_interesse(self):
+        # AJST-40 / spec P1 Barra fixa no celular AC 1
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        barra = re.search(
+            r'<div class="barra-fixa">.*?</div>',
+            html,
+            flags=re.DOTALL,
+        )
+        self.assertIsNotNone(barra)
+        trecho = barra.group(0)
+        pos_preco = trecho.find('class="preco"')
+        pos_interesse = trecho.find(f">{ROTULO_INTERESSE}</a>")
+        self.assertGreater(pos_preco, -1)
+        self.assertGreater(pos_interesse, pos_preco)
+
     def test_tenho_interesse_abre_whatsapp_com_o_nome_do_modelo(self):
         html = _escrever_catalogo(
             catalogo_dois_vendedores(),

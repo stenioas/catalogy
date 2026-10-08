@@ -304,6 +304,8 @@ T8
 
 ### T8: Empilhar preço e interesse no celular
 
+**Status**: done
+
 **What**: Até 640 px a barra fixa coloca o preço acima de “Tenho interesse”; acima disso os dois continuam lado a lado.
 **Where**: `gerador/estilos.css`
 **Depends on**: T5
@@ -317,14 +319,14 @@ T8
 
 **Done when**:
 
-- [ ] O HTML do produto mantém `.preco` antes do link `Tenho interesse`
-- [ ] Até 640 px, `.barra-fixa` tem `flex-direction: column`, `align-items: stretch`, `height: auto` e `gap: 8px`
-- [ ] Até 640 px o padding horizontal continua 32 px, `.pilula` tem `width: 100%`, `scroll-padding-bottom` é 128 px e o padding inferior de `main:has(.barra-fixa)` é 160 px
-- [ ] A partir de 641 px, preço e botão ficam na mesma linha com `height: 64px`
-- [ ] `.pilula` mantém `min-height: 44px`
-- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
-- [ ] Test count does not drop
-- [ ] `python3 scripts/gerar_site.py` regrava `site/` depois da suíte passar
+- [x] O HTML do produto mantém `.preco` antes do link `Tenho interesse`
+- [x] Até 640 px, `.barra-fixa` tem `flex-direction: column`, `align-items: stretch`, `height: auto` e `gap: 8px`
+- [x] Até 640 px o padding horizontal continua 32 px, `.pilula` tem `width: 100%`, `scroll-padding-bottom` é 128 px e o padding inferior de `main:has(.barra-fixa)` é 160 px
+- [x] A partir de 641 px, preço e botão ficam na mesma linha com `height: 64px`
+- [x] `.pilula` mantém `min-height: 44px`
+- [x] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [x] Test count does not drop
+- [x] `python3 scripts/gerar_site.py` regrava `site/` depois da suíte passar
 
 **Tests**: unit
 **Gate**: build

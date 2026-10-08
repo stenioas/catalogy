@@ -606,6 +606,25 @@ footer {
     padding: 32px 16px 80px;
   }
 
+  html:has(.barra-fixa) {
+    scroll-padding-bottom: 128px;
+  }
+
+  main:has(.barra-fixa) {
+    padding-bottom: 160px;
+  }
+
+  .barra-fixa {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    gap: 8px;
+  }
+
+  .barra-fixa .pilula {
+    width: 100%;
+  }
+
   h1,
   .nome-vendedor {
     font-size: 34px;
