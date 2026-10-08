@@ -208,6 +208,8 @@ T8
 
 ### T5: Centralizar o nome e suavizar a sombra da foto
 
+**Status**: done
+
 **What**: O nome do vendedor fica no centro e a foto do card ganha a sombra mínima, sem elevar o card.
 **Where**: `gerador/estilos.css`
 **Depends on**: T4
@@ -221,12 +223,12 @@ T8
 
 **Done when**:
 
-- [ ] `.nome-vendedor` tem `text-align: center`
-- [ ] `.card img` tem `width: 100%`, `aspect-ratio: 1 / 1`, `object-fit: cover`, `object-position: center` e `box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08)`
-- [ ] `.card` não declara `box-shadow`
-- [ ] A grade continua 1, 2, 3, 4 e 5 colunas nos cortes 640, 834, 1068, 1440 e 1441 px
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count does not drop
+- [x] `.nome-vendedor` tem `text-align: center`
+- [x] `.card img` tem `width: 100%`, `aspect-ratio: 1 / 1`, `object-fit: cover`, `object-position: center` e `box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08)`
+- [x] `.card` não declara `box-shadow`
+- [x] A grade continua 1, 2, 3, 4 e 5 colunas nos cortes 640, 834, 1068, 1440 e 1441 px
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count does not drop
 
 **Tests**: unit
 **Gate**: build

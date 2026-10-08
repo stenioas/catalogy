@@ -226,11 +226,11 @@ A barra, o tema, as fotos e a lista de vendedores do site gerado ainda não segu
 | AJST-26 | P1: Lista de vendedores em cards | Tasks | Done |
 | AJST-27 | P1: Lista de vendedores em cards | Tasks | Done |
 | AJST-28 | P1: Lista de vendedores em cards | Tasks | Done |
-| AJST-29 | P1: Fotos quadradas da vitrine | Tasks | Pending |
-| AJST-30 | P1: Fotos quadradas da vitrine | Tasks | Pending |
-| AJST-31 | P1: Fotos quadradas da vitrine | Tasks | Pending |
-| AJST-32 | P1: Fotos quadradas da vitrine | Tasks | Pending |
-| AJST-33 | P1: Fotos quadradas da vitrine | Tasks | Pending |
+| AJST-29 | P1: Fotos quadradas da vitrine | Tasks | Done |
+| AJST-30 | P1: Fotos quadradas da vitrine | Tasks | Done |
+| AJST-31 | P1: Fotos quadradas da vitrine | Tasks | Done |
+| AJST-32 | P1: Fotos quadradas da vitrine | Tasks | Done |
+| AJST-33 | P1: Fotos quadradas da vitrine | Tasks | Done |
 | AJST-34 | P1: Quadro do carrossel | Tasks | Pending |
 | AJST-35 | P1: Quadro do carrossel | Tasks | Pending |
 | AJST-36 | P1: Quadro do carrossel | Tasks | Pending |

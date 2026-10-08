@@ -142,6 +142,7 @@ body {
   object-fit: cover;
   object-position: center;
   border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   filter: none;
 }
 
@@ -287,6 +288,10 @@ h1,
   text-wrap: balance;
 }
 
+.nome-vendedor {
+  text-align: center;
+}
+
 .barra-negra {
   position: sticky;
   top: 0;
@@ -387,7 +392,6 @@ dd a {
   text-decoration: none;
 }
 
-.card img,
 .carrossel img {
   box-shadow: 3px 5px 30px rgba(0, 0, 0, 0.22);
 }

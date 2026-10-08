@@ -261,8 +261,13 @@ class TestEstilos(unittest.TestCase):
         )
         self.assertEqual(_valor(self.regras, seletor, "outline-offset"), "2px")
 
+    def test_nome_vendedor_centralizado(self):
+        # AJST-29 / spec P1 Fotos quadradas da vitrine AC 1
+        self.assertEqual(_valor(self.regras, ".nome-vendedor", "text-align"), "center")
+
     def test_foto_do_card_preenche_quadro_quadrado_com_raio_8(self):
         # VITR-49 / spec P1 Navegar AC 30: quadro quadrado com cover e 8px na foto
+        # AJST-30 / spec P1 Fotos quadradas da vitrine AC 2
         foto = ".card img"
         proporcao = _valor(self.regras, foto, "aspect-ratio")
         self.assertIsNotNone(proporcao)
@@ -272,6 +277,17 @@ class TestEstilos(unittest.TestCase):
         self.assertEqual(_valor(self.regras, foto, "object-position"), "center")
         self.assertEqual(_valor(self.regras, foto, "border-radius"), "8px")
         self.assertEqual(_valor(self.regras, ".card", "border-radius"), "18px")
+
+    def test_foto_do_card_sombra_minima_na_imagem(self):
+        # AJST-31 / spec P1 Fotos quadradas da vitrine AC 3
+        self.assertEqual(
+            _valor(self.regras, ".card img", "box-shadow"),
+            "0 1px 4px rgba(0, 0, 0, 0.08)",
+        )
+
+    def test_card_sem_box_shadow(self):
+        # AJST-32 / spec P1 Fotos quadradas da vitrine AC 4
+        self.assertIsNone(_valor(self.regras, ".card", "box-shadow"))
 
     def test_foto_do_carrossel_preenche_quadro_quadrado_sem_raio(self):
         # VITR-48 / spec P1 Navegar AC 29: quadro quadrado com cover e sem canto arredondado
