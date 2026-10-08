@@ -823,11 +823,73 @@ class TestBolinhasCarrosselComoBotoes(unittest.TestCase):
 # VITR-103 / spec P1 Foto no quadro AC 8
 
 
+def _extrair_div_fechado(html: str, class_name: str) -> str:
+    marcador = f'<div class="{class_name}">'
+    inicio = html.find(marcador)
+    if inicio == -1:
+        raise AssertionError(f"{class_name} ausente")
+    pos = inicio + len(marcador)
+    profundidade = 1
+    i = pos
+    fim_fecha = -1
+    while profundidade > 0:
+        prox_abre = html.find("<div", i)
+        prox_fecha = html.find("</div>", i)
+        if prox_fecha == -1:
+            raise AssertionError(f"{class_name} malformado")
+        if prox_abre != -1 and prox_abre < prox_fecha:
+            profundidade += 1
+            i = prox_abre + 4
+        else:
+            profundidade -= 1
+            fim_fecha = prox_fecha
+            i = prox_fecha + len("</div>")
+    return html[inicio : fim_fecha + len("</div>")]
+
+
 def _bloco_carrossel(html: str) -> str:
-    match = re.search(r'<div class="carrossel">(.*?)</div>', html, flags=re.DOTALL)
-    if match is None:
-        raise AssertionError("carrossel ausente")
-    return match.group(1)
+    outer = _extrair_div_fechado(html, "carrossel")
+    prefix = '<div class="carrossel">'
+    return outer[len(prefix) : -len("</div>")]
+
+
+class TestQuadroDoCarrossel(unittest.TestCase):
+    """AJST-34–AJST-36, AJST-39 / spec P1 Quadro do carrossel."""
+
+    def test_uma_foto_fica_na_janela_sem_seta_nem_bolinha(self):
+        # AJST-34 / spec P1 Quadro do carrossel AC 1
+        # AJST-36 / spec P1 Quadro do carrossel AC 3
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        carrossel = _bloco_carrossel(html)
+        janela = _extrair_div_fechado(carrossel, "carrossel-janela")
+        self.assertIn('src="../imagens/primeiro.png"', janela)
+        self.assertNotIn("seta", janela)
+        self.assertNotIn("bolinha", janela)
+        self.assertNotIn("bolinhas", carrossel.replace(janela, ""))
+
+    def test_duas_fotos_tem_setas_na_janela_e_bolinhas_irmao(self):
+        # AJST-34 / spec P1 Quadro do carrossel AC 1
+        # AJST-35 / spec P1 Quadro do carrossel AC 2
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        carrossel = _bloco_carrossel(html)
+        janela = _extrair_div_fechado(carrossel, "carrossel-janela")
+        self.assertIn('class="seta seta-anterior"', janela)
+        self.assertIn('class="seta seta-proxima"', janela)
+        self.assertNotIn("bolinha", janela)
+        resto = carrossel[len(janela) :]
+        self.assertRegex(resto.strip(), r'^<div class="bolinhas">')
+
+    def test_controles_continuam_descendentes_de_carrossel(self):
+        # AJST-39 / spec P1 Quadro do carrossel AC 6
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        bloco = _extrair_div_fechado(html, "carrossel")
+        self.assertIn("<img", bloco)
+        self.assertIn('class="bolinhas"', bloco)
+        self.assertIn('class="seta seta-anterior"', bloco)
+        self.assertIn('class="seta seta-proxima"', bloco)
 
 
 def _imagens_no_bloco(bloco: str) -> list[dict[str, str | None]]:

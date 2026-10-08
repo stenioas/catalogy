@@ -156,7 +156,7 @@ def _carrossel(item: Item) -> str:
             f'alt="{html.escape(item.nome)}" '
             f'width="{foto.largura}" height="{foto.altura}"{carga}{oculto}>'
         )
-    controles = ""
+    corpo_fotos = "".join(fotos)
     if len(item.imagens) >= 2:
         bolinhas = "".join(
             f'<button type="button" class="bolinha" '
@@ -165,14 +165,19 @@ def _carrossel(item: Item) -> str:
             + "></button>"
             for indice in range(len(item.imagens))
         )
-        controles = (
+        setas = (
             '<button type="button" class="seta seta-anterior" '
             'aria-label="Anterior"></button>'
             '<button type="button" class="seta seta-proxima" '
             'aria-label="Próximo"></button>'
-            f'<div class="bolinhas">{bolinhas}</div>'
         )
-    return f'<div class="carrossel">{"".join(fotos)}{controles}</div>'
+        janela = f'<div class="carrossel-janela">{corpo_fotos}{setas}</div>'
+        return (
+            f'<div class="carrossel">{janela}'
+            f'<div class="bolinhas">{bolinhas}</div></div>'
+        )
+    janela = f'<div class="carrossel-janela">{corpo_fotos}</div>'
+    return f'<div class="carrossel">{janela}</div>'
 
 
 def _ficha(item: Item) -> str:

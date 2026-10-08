@@ -231,12 +231,12 @@ A barra, o tema, as fotos e a lista de vendedores do site gerado ainda não segu
 | AJST-31 | P1: Fotos quadradas da vitrine | Tasks | Done |
 | AJST-32 | P1: Fotos quadradas da vitrine | Tasks | Done |
 | AJST-33 | P1: Fotos quadradas da vitrine | Tasks | Done |
-| AJST-34 | P1: Quadro do carrossel | Tasks | Pending |
-| AJST-35 | P1: Quadro do carrossel | Tasks | Pending |
-| AJST-36 | P1: Quadro do carrossel | Tasks | Pending |
+| AJST-34 | P1: Quadro do carrossel | Tasks | Done |
+| AJST-35 | P1: Quadro do carrossel | Tasks | Done |
+| AJST-36 | P1: Quadro do carrossel | Tasks | Done |
 | AJST-37 | P1: Quadro do carrossel | Tasks | Pending |
 | AJST-38 | P1: Quadro do carrossel | Tasks | Pending |
-| AJST-39 | P1: Quadro do carrossel | Tasks | Pending |
+| AJST-39 | P1: Quadro do carrossel | Tasks | Done |
 | AJST-40 | P1: Barra fixa no celular | Tasks | Pending |
 | AJST-41 | P1: Barra fixa no celular | Tasks | Pending |
 | AJST-42 | P1: Barra fixa no celular | Tasks | Pending |

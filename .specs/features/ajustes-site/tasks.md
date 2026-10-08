@@ -241,6 +241,8 @@ T8
 
 ### T6: Envolver as fotos do carrossel num quadro
 
+**Status**: done
+
 **What**: Fotos e setas entram em `.carrossel-janela`; as bolinhas ficam logo abaixo, ainda dentro de `.carrossel`.
 **Where**: `gerador/renderizar.py`
 **Depends on**: T1
@@ -254,13 +256,13 @@ T8
 
 **Done when**:
 
-- [ ] Uma ou mais fotos ficam dentro de `.carrossel-janela`
-- [ ] Com duas ou mais fotos, as duas `.seta` ficam dentro da janela e `.bolinhas` é o irmão seguinte
-- [ ] Com uma foto, não há `.seta` nem `.bolinhas`
-- [ ] `img`, `.bolinhas`, `.seta-anterior` e `.seta-proxima` continuam descendentes de `.carrossel`
-- [ ] `gerador/carrossel.js` permanece intocado
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count does not drop
+- [x] Uma ou mais fotos ficam dentro de `.carrossel-janela`
+- [x] Com duas ou mais fotos, as duas `.seta` ficam dentro da janela e `.bolinhas` é o irmão seguinte
+- [x] Com uma foto, não há `.seta` nem `.bolinhas`
+- [x] `img`, `.bolinhas`, `.seta-anterior` e `.seta-proxima` continuam descendentes de `.carrossel`
+- [x] `gerador/carrossel.js` permanece intocado
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count does not drop
 
 **Tests**: unit
 **Gate**: quick

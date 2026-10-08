@@ -79,8 +79,8 @@ function montarCarrossel(quantidadeFotos) {
       return [];
     },
   };
-  const carrossel = {
-    className: "carrossel",
+  const janela = {
+    className: "carrossel-janela",
     querySelectorAll(seletor) {
       if (seletor === "img") return fotos;
       return [];
@@ -88,6 +88,18 @@ function montarCarrossel(quantidadeFotos) {
     querySelector(seletor) {
       if (seletor === ".seta-anterior") return anterior;
       if (seletor === ".seta-proxima") return proxima;
+      return null;
+    },
+  };
+  const carrossel = {
+    className: "carrossel",
+    querySelectorAll(seletor) {
+      if (seletor === "img") return janela.querySelectorAll(seletor);
+      return [];
+    },
+    querySelector(seletor) {
+      if (seletor === ".seta-anterior") return janela.querySelector(seletor);
+      if (seletor === ".seta-proxima") return janela.querySelector(seletor);
       if (seletor === ".bolinhas") return bolinhasDiv;
       return null;
     },
@@ -179,6 +191,12 @@ class TestCarrosselFotos(unittest.TestCase):
         )
         self.assertEqual(saida["visibilidade"], [True, False, False])
         self.assertEqual(saida["bolinhasAtivas"], [True, False, False])
+
+    def test_script_acha_controles_com_janela_aninhada(self):
+        # AJST-39 / spec P1 Quadro do carrossel AC 6
+        saida = _rodar_carrossel(quantidadeFotos=2, acoes=["proxima"])
+        self.assertEqual(saida["visibilidade"], [False, True])
+        self.assertEqual(saida["bolinhasAtivas"], [False, True])
 
 
 if __name__ == "__main__":
