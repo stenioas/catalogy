@@ -406,8 +406,8 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-45 | P1: Navegar | Tasks | ✅ Verified |
 | VITR-46 | P1: Navegar | Tasks | ✅ Verified |
 | VITR-47 | P1: Navegar | Tasks | ✅ Verified |
-| VITR-48 | P1: Navegar | Tasks | Pending |
-| VITR-49 | P1: Navegar | Tasks | Pending |
+| VITR-48 | P1: Navegar | T24 | ✅ Verified |
+| VITR-49 | P1: Navegar | T24 | ✅ Verified |
 | VITR-50 | P1: Navegar | Tasks | ✅ Verified |
 | VITR-51 | P1: Navegar | Tasks | ✅ Verified |
 | VITR-52 | P1: Navegar | Tasks | ✅ Verified |
@@ -454,7 +454,7 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-93 | P1: Tema escuro completo | Tasks | Pending |
 | VITR-94 | P1: Tema escuro completo | Tasks | Pending |
 | VITR-95 | P1: Tema escuro completo | Tasks | Pending |
-| VITR-96 | P1: Foto no quadro | Tasks | Pending |
+| VITR-96 | P1: Foto no quadro | T24 | ✅ Verified |
 | VITR-97 | P1: Foto no quadro | T20 | ✅ Verified |
 | VITR-98 | P1: Foto no quadro | T15–T17 | ✅ Verified |
 | VITR-99 | P1: Foto no quadro | T15–T17 | ✅ Verified |

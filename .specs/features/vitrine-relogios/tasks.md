@@ -812,7 +812,7 @@ T28
 
 ### T24: Encaixar as fotos no quadro quadrado
 
-**Status**: pending
+**Status**: done
 
 **What**: Foto do card e do carrossel em quadro `1 / 1` com `cover` centrado. Raio de 8px no card e zero no carrossel. O card continua com 18px.
 **Where**: `gerador/estilos.css`
@@ -828,11 +828,11 @@ T28
 
 **Done when**:
 
-- [ ] `.card img` e `.carrossel img` têm `aspect-ratio: 1 / 1`, `width: 100%`, `object-fit: cover` e `object-position: center`
-- [ ] `.card img` tem `border-radius: 8px`, `.carrossel img` tem `0` e `.card` tem `18px`
-- [ ] O teste antigo de foto inteira e de raio 18px na foto passa a afirmar o quadro cheio e os 8px
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 193 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] `.card img` e `.carrossel img` têm `aspect-ratio: 1 / 1`, `width: 100%`, `object-fit: cover` e `object-position: center`
+- [x] `.card img` tem `border-radius: 8px`, `.carrossel img` tem `0` e `.card` tem `18px`
+- [x] O teste antigo de foto inteira e de raio 18px na foto passa a afirmar o quadro cheio e os 8px
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 193 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

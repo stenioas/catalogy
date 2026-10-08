@@ -108,8 +108,9 @@ body {
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
-  object-fit: contain;
-  border-radius: 18px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
   filter: none;
 }
 
@@ -121,8 +122,9 @@ body {
 .carrossel img {
   display: block;
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
   border-radius: 0;
   filter: none;
 }

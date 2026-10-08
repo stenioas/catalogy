@@ -184,19 +184,27 @@ class TestEstilos(unittest.TestCase):
             self.assertIsNotNone(valor, f"lista sem colunas em {largura}px")
             self.assertEqual(_colunas(valor), 1, f"{largura}px")
 
-    def test_foto_do_card_e_quadrada_inteira_com_raio_18(self):
+    def test_foto_do_card_preenche_quadro_quadrado_com_raio_8(self):
+        # VITR-49 / spec P1 Navegar AC 30: quadro quadrado com cover e 8px na foto
         foto = ".card img"
         proporcao = _valor(self.regras, foto, "aspect-ratio")
         self.assertIsNotNone(proporcao)
         self.assertEqual(proporcao.replace(" ", ""), "1/1")
-        self.assertEqual(_valor(self.regras, foto, "object-fit"), "contain")
-        self.assertEqual(_valor(self.regras, foto, "border-radius"), "18px")
-
-    def test_foto_do_carrossel_ocupa_a_largura_sem_corte_e_sem_raio(self):
-        foto = ".carrossel img"
         self.assertEqual(_valor(self.regras, foto, "width"), "100%")
-        self.assertEqual(_valor(self.regras, foto, "height"), "auto")
-        self.assertEqual(_valor(self.regras, foto, "object-fit"), "contain")
+        self.assertEqual(_valor(self.regras, foto, "object-fit"), "cover")
+        self.assertEqual(_valor(self.regras, foto, "object-position"), "center")
+        self.assertEqual(_valor(self.regras, foto, "border-radius"), "8px")
+        self.assertEqual(_valor(self.regras, ".card", "border-radius"), "18px")
+
+    def test_foto_do_carrossel_preenche_quadro_quadrado_sem_raio(self):
+        # VITR-48 / spec P1 Navegar AC 29: quadro quadrado com cover e sem canto arredondado
+        foto = ".carrossel img"
+        proporcao = _valor(self.regras, foto, "aspect-ratio")
+        self.assertIsNotNone(proporcao)
+        self.assertEqual(proporcao.replace(" ", ""), "1/1")
+        self.assertEqual(_valor(self.regras, foto, "width"), "100%")
+        self.assertEqual(_valor(self.regras, foto, "object-fit"), "cover")
+        self.assertEqual(_valor(self.regras, foto, "object-position"), "center")
         self.assertEqual(_valor(self.regras, foto, "border-radius"), "0")
         self.assertIn(_valor(self.regras, ".carrossel", "overflow"), (None, "visible"))
 
