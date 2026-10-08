@@ -146,6 +146,8 @@ T8
 
 ### T3: Deixar o controle de tema circular
 
+**Status**: done
+
 **What**: O botão de tema fica com 44 px, círculo e o foco que já existe.
 **Where**: `gerador/estilos.css`
 **Depends on**: None
@@ -159,10 +161,10 @@ T8
 
 **Done when**:
 
-- [ ] `#controle-tema` tem `width: 44px`, `height: 44px` e `border-radius: 50%`
-- [ ] `#controle-tema:focus-visible` mantém `outline: 2px solid #0071e3` e `outline-offset: 2px`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count does not drop
+- [x] `#controle-tema` tem `width: 44px`, `height: 44px` e `border-radius: 50%`
+- [x] `#controle-tema:focus-visible` mantém `outline: 2px solid #0071e3` e `outline-offset: 2px`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count does not drop
 
 **Tests**: unit
 **Gate**: build

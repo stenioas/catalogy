@@ -218,8 +218,8 @@ A barra, o tema, as fotos e a lista de vendedores do site gerado ainda não segu
 | AJST-18 | P1: Tema por ícone | Tasks | Done |
 | AJST-19 | P1: Tema por ícone | Tasks | Done |
 | AJST-20 | P1: Tema por ícone | Tasks | Done |
-| AJST-21 | P1: Tema por ícone | Tasks | Pending |
-| AJST-22 | P1: Tema por ícone | Tasks | Pending |
+| AJST-21 | P1: Tema por ícone | Tasks | Done |
+| AJST-22 | P1: Tema por ícone | Tasks | Done |
 | AJST-23 | P1: Lista de vendedores em cards | Tasks | Pending |
 | AJST-24 | P1: Lista de vendedores em cards | Tasks | Pending |
 | AJST-25 | P1: Lista de vendedores em cards | Tasks | Pending |

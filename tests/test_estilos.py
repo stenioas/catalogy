@@ -386,6 +386,21 @@ class TestEstilos(unittest.TestCase):
             f"1px solid {LINHA_ESCURO}",
         )
 
+    def test_controle_tema_med_44px_e_circulo(self):
+        # AJST-21 / spec P1 Tema por ícone AC 6
+        self.assertEqual(_valor(self.regras, "#controle-tema", "width"), "44px")
+        self.assertEqual(_valor(self.regras, "#controle-tema", "height"), "44px")
+        self.assertEqual(_valor(self.regras, "#controle-tema", "border-radius"), "50%")
+
+    def test_controle_tema_focus_visible_mantem_anel_azul(self):
+        # AJST-22 / spec P1 Tema por ícone AC 7
+        seletor = "#controle-tema:focus-visible"
+        self.assertEqual(
+            _valor(self.regras, seletor, "outline"),
+            f"2px solid {AZUL_FOCO}",
+        )
+        self.assertEqual(_valor(self.regras, seletor, "outline-offset"), "2px")
+
     def test_barra_fixa_escura_mantem_filtro_fosco(self):
         valor = _valor(
             self.regras,
