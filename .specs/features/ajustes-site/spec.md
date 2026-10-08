@@ -213,11 +213,11 @@ A barra, o tema, as fotos e a lista de vendedores do site gerado ainda não segu
 | AJST-13 | P1: Barra das três páginas | Tasks | Done |
 | AJST-14 | P1: Barra das três páginas | Tasks | Done |
 | AJST-15 | P1: Barra das três páginas | Tasks | Done |
-| AJST-16 | P1: Tema por ícone | Tasks | Pending |
-| AJST-17 | P1: Tema por ícone | Tasks | Pending |
-| AJST-18 | P1: Tema por ícone | Tasks | Pending |
-| AJST-19 | P1: Tema por ícone | Tasks | Pending |
-| AJST-20 | P1: Tema por ícone | Tasks | Pending |
+| AJST-16 | P1: Tema por ícone | Tasks | Done |
+| AJST-17 | P1: Tema por ícone | Tasks | Done |
+| AJST-18 | P1: Tema por ícone | Tasks | Done |
+| AJST-19 | P1: Tema por ícone | Tasks | Done |
+| AJST-20 | P1: Tema por ícone | Tasks | Done |
 | AJST-21 | P1: Tema por ícone | Tasks | Pending |
 | AJST-22 | P1: Tema por ícone | Tasks | Pending |
 | AJST-23 | P1: Lista de vendedores em cards | Tasks | Pending |

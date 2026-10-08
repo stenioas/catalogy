@@ -10,6 +10,99 @@ const fs = require("fs");
 const temaSource = fs.readFileSync(process.argv[1], "utf8");
 const config = JSON.parse(process.argv[2]);
 
+function criarNoSvg(tag) {
+  const atributos = {};
+  const filhos = [];
+  return {
+    tagName: tag,
+    namespaceURI: "http://www.w3.org/2000/svg",
+    setAttribute(chave, valor) {
+      atributos[chave] = String(valor);
+    },
+    getAttribute(chave) {
+      return Object.prototype.hasOwnProperty.call(atributos, chave)
+        ? atributos[chave]
+        : null;
+    },
+    appendChild(no) {
+      filhos.push(no);
+      return no;
+    },
+    querySelector(seletor) {
+      if (seletor === "svg.icone-lua" && atributos.class === "icone-lua") {
+        return this;
+      }
+      if (seletor === "svg.icone-sol" && atributos.class === "icone-sol") {
+        return this;
+      }
+      for (const filho of filhos) {
+        const achado = filho.querySelector ? filho.querySelector(seletor) : null;
+        if (achado) return achado;
+      }
+      return null;
+    },
+  };
+}
+
+function criarBotao() {
+  const atributos = {};
+  const filhos = [];
+  const botao = {
+    type: "button",
+    id: "",
+    textContent: "",
+    get firstChild() {
+      return filhos.length ? filhos[0] : null;
+    },
+    setAttribute(chave, valor) {
+      atributos[chave] = String(valor);
+    },
+    getAttribute(chave) {
+      return Object.prototype.hasOwnProperty.call(atributos, chave)
+        ? atributos[chave]
+        : null;
+    },
+    appendChild(no) {
+      filhos.push(no);
+      return no;
+    },
+    removeChild(no) {
+      const indice = filhos.indexOf(no);
+      if (indice === -1) throw new Error("filho ausente");
+      filhos.splice(indice, 1);
+      return no;
+    },
+    querySelector(seletor) {
+      for (const filho of filhos) {
+        const achado = filho.querySelector ? filho.querySelector(seletor) : null;
+        if (achado) return achado;
+      }
+      return null;
+    },
+    addEventListener(evento, fn) {
+      if (evento === "click") this._click = fn;
+    },
+    click() {
+      if (this._click) this._click();
+    },
+  };
+  return botao;
+}
+
+function resumoControle(controle) {
+  if (!controle) return null;
+  const lua = controle.querySelector("svg.icone-lua");
+  const sol = controle.querySelector("svg.icone-sol");
+  return {
+    nomeAcessivel: controle.getAttribute("aria-label"),
+    textoVisivel: controle.textContent.trim(),
+    temLua: !!lua,
+    temSol: !!sol,
+    ariaHiddenLua: lua ? lua.getAttribute("aria-hidden") : null,
+    ariaHiddenSol: sol ? sol.getAttribute("aria-hidden") : null,
+  };
+}
+
 function executar() {
   const storage = { ...(config.storage || {}) };
   const localStorage = {
@@ -62,27 +155,13 @@ function executar() {
     },
     createElement(tag) {
       if (tag !== "button") throw new Error("tag inesperada: " + tag);
-      const atributos = {};
-      const botao = {
-        type: "button",
-        id: "",
-        textContent: "",
-        setAttribute(chave, valor) {
-          atributos[chave] = String(valor);
-        },
-        getAttribute(chave) {
-          return Object.prototype.hasOwnProperty.call(atributos, chave)
-            ? atributos[chave]
-            : null;
-        },
-        addEventListener(evento, fn) {
-          if (evento === "click") this._click = fn;
-        },
-        click() {
-          if (this._click) this._click();
-        },
-      };
-      return botao;
+      return criarBotao();
+    },
+    createElementNS(ns, tag) {
+      if (ns !== "http://www.w3.org/2000/svg") {
+        throw new Error("namespace inesperado: " + ns);
+      }
+      return criarNoSvg(tag);
     },
   };
 
@@ -106,12 +185,9 @@ function executar() {
 
   for (const fn of ouvintes.DOMContentLoaded) fn();
 
-  const depoisDoControle = {
-    dataTema: documentElement.getAttribute("data-tema"),
-    rotulo: controle ? controle.textContent : null,
-    nomeAcessivel: controle ? controle.getAttribute("aria-label") : null,
-    storage: localStorage.dump(),
-  };
+  const depoisDoControle = resumoControle(controle);
+  depoisDoControle.dataTema = documentElement.getAttribute("data-tema");
+  depoisDoControle.storage = localStorage.dump();
 
   if (config.clicar) {
     controle.click();
@@ -120,9 +196,8 @@ function executar() {
   const resultado = {
     antesDoControle,
     depoisDoControle,
+    controle: resumoControle(controle),
     dataTema: documentElement.getAttribute("data-tema"),
-    rotulo: controle ? controle.textContent : null,
-    nomeAcessivel: controle ? controle.getAttribute("aria-label") : null,
     storage: localStorage.dump(),
   };
 
@@ -155,52 +230,76 @@ class TestTemaAntesDaPintura(unittest.TestCase):
         self.assertEqual(saida["antesDoControle"]["dataTema"], "claro")
 
     def test_com_tema_salvo_aplica_antes_do_controle(self):
-        # VITR-59 / spec P1 Tema AC 7
+        # AJST-20 / edge: valor salvo vence a preferência do aparelho
         saida = _rodar_tema(storage={"tema": "escuro"}, prefersDark=False)
         self.assertEqual(saida["antesDoControle"]["dataTema"], "escuro")
         self.assertEqual(saida["antesDoControle"]["storage"], {"tema": "escuro"})
 
-    def test_no_modo_claro_o_controle_mostra_escuro(self):
-        # VITR-56 / spec P1 Tema AC 4
-        saida = _rodar_tema(storage={"tema": "claro"})
-        self.assertEqual(saida["depoisDoControle"]["rotulo"], "Escuro")
+    def test_tema_salvo_claro_vence_aparelho_escuro(self):
+        # AJST-20
+        saida = _rodar_tema(storage={"tema": "claro"}, prefersDark=True)
+        self.assertEqual(saida["antesDoControle"]["dataTema"], "claro")
 
-    def test_no_modo_escuro_o_controle_mostra_claro(self):
-        # VITR-57 / spec P1 Tema AC 5
-        saida = _rodar_tema(storage={"tema": "escuro"})
-        self.assertEqual(saida["depoisDoControle"]["rotulo"], "Claro")
 
-    def test_clique_grava_tema_e_alterna_o_modo(self):
-        # VITR-58 / spec P1 Tema AC 6
+class TestTemaIcone(unittest.TestCase):
+    def test_aparelho_claro_sem_storage_mostra_lua_no_controle(self):
+        # AJST-16 / preferência do aparelho sem valor salvo
+        controle = _rodar_tema(prefersDark=False)["depoisDoControle"]
+        self.assertEqual(controle["dataTema"], "claro")
+        self.assertTrue(controle["temLua"])
+
+    def test_modo_claro_mostra_lua_com_nome_acessivel(self):
+        # AJST-16
+        controle = _rodar_tema(storage={"tema": "claro"})["depoisDoControle"]
+        self.assertTrue(controle["temLua"])
+        self.assertFalse(controle["temSol"])
+        self.assertEqual(controle["ariaHiddenLua"], "true")
+        self.assertEqual(
+            controle["nomeAcessivel"],
+            "Modo claro. Mudar para escuro.",
+        )
+
+    def test_modo_escuro_mostra_sol_com_nome_acessivel(self):
+        # AJST-17
+        controle = _rodar_tema(storage={"tema": "escuro"})["depoisDoControle"]
+        self.assertTrue(controle["temSol"])
+        self.assertFalse(controle["temLua"])
+        self.assertEqual(controle["ariaHiddenSol"], "true")
+        self.assertEqual(
+            controle["nomeAcessivel"],
+            "Modo escuro. Mudar para claro.",
+        )
+
+    def test_botao_nao_mostra_texto_claro_nem_escuro(self):
+        # AJST-18
+        for tema in ("claro", "escuro"):
+            with self.subTest(tema=tema):
+                controle = _rodar_tema(storage={"tema": tema})["depoisDoControle"]
+                self.assertNotIn("Claro", controle["textoVisivel"])
+                self.assertNotIn("Escuro", controle["textoVisivel"])
+
+    def test_clique_no_claro_grava_escuro_e_mostra_sol(self):
+        # AJST-19
         saida = _rodar_tema(storage={"tema": "claro"}, clicar=True)
         self.assertEqual(saida["dataTema"], "escuro")
         self.assertEqual(saida["storage"]["tema"], "escuro")
-        self.assertEqual(saida["rotulo"], "Claro")
-
-    def test_no_modo_claro_o_nome_acessivel_descreve_o_modo_atual(self):
-        # VITR-88 / spec P1 Ler e navegar AC 15
-        saida = _rodar_tema(storage={"tema": "claro"})
+        self.assertTrue(saida["controle"]["temSol"])
+        self.assertFalse(saida["controle"]["temLua"])
         self.assertEqual(
-            saida["depoisDoControle"]["nomeAcessivel"],
+            saida["controle"]["nomeAcessivel"],
+            "Modo escuro. Mudar para claro.",
+        )
+
+    def test_clique_no_escuro_grava_claro_e_mostra_lua(self):
+        # AJST-19
+        saida = _rodar_tema(storage={"tema": "escuro"}, clicar=True)
+        self.assertEqual(saida["dataTema"], "claro")
+        self.assertEqual(saida["storage"]["tema"], "claro")
+        self.assertTrue(saida["controle"]["temLua"])
+        self.assertFalse(saida["controle"]["temSol"])
+        self.assertEqual(
+            saida["controle"]["nomeAcessivel"],
             "Modo claro. Mudar para escuro.",
-        )
-        self.assertEqual(saida["depoisDoControle"]["rotulo"], "Escuro")
-
-    def test_no_modo_escuro_o_nome_acessivel_descreve_o_modo_atual(self):
-        # VITR-89 / spec P1 Ler e navegar AC 16
-        saida = _rodar_tema(storage={"tema": "escuro"})
-        self.assertEqual(
-            saida["depoisDoControle"]["nomeAcessivel"],
-            "Modo escuro. Mudar para claro.",
-        )
-        self.assertEqual(saida["depoisDoControle"]["rotulo"], "Claro")
-
-    def test_apos_clique_a_partir_do_claro_o_nome_acessivel_muda(self):
-        # VITR-90 / spec P1 Ler e navegar AC 17
-        saida = _rodar_tema(storage={"tema": "claro"}, clicar=True)
-        self.assertEqual(
-            saida["nomeAcessivel"],
-            "Modo escuro. Mudar para claro.",
         )
 
 

@@ -115,6 +115,8 @@ T8
 
 ### T2: Trocar o tema pelo estado, com sol e lua
 
+**Status**: done
+
 **What**: O botão deixa de ler o texto visível e passa a desenhar lua no claro e sol no escuro.
 **Where**: `gerador/tema.js`
 **Depends on**: None
@@ -128,12 +130,12 @@ T8
 
 **Done when**:
 
-- [ ] Com `data-tema="claro"`, `#controle-tema` contém `svg.icone-lua` com `aria-hidden="true"` e o nome `Modo claro. Mudar para escuro.`
-- [ ] Com `data-tema="escuro"`, o botão contém `svg.icone-sol` com `aria-hidden="true"` e o nome `Modo escuro. Mudar para claro.`
-- [ ] O botão não tem texto visível `Claro` nem `Escuro`
-- [ ] Um clique no claro grava `escuro`; um clique no escuro grava `claro`; um valor já salvo ainda vence a preferência do aparelho
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count does not drop
+- [x] Com `data-tema="claro"`, `#controle-tema` contém `svg.icone-lua` com `aria-hidden="true"` e o nome `Modo claro. Mudar para escuro.`
+- [x] Com `data-tema="escuro"`, o botão contém `svg.icone-sol` com `aria-hidden="true"` e o nome `Modo escuro. Mudar para claro.`
+- [x] O botão não tem texto visível `Claro` nem `Escuro`
+- [x] Um clique no claro grava `escuro`; um clique no escuro grava `claro`; um valor já salvo ainda vence a preferência do aparelho
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count does not drop
 
 **Tests**: unit
 **Gate**: quick
