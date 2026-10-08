@@ -268,6 +268,8 @@ T14
 
 ### T7: Versionar a fonte Inter
 
+**Status**: done
+
 **What**: Gravar `fontes/InterVariable.woff2` da release oficial, para a geração copiar sem rede.
 **Where**: `fontes/InterVariable.woff2`
 **Depends on**: None
@@ -282,9 +284,9 @@ T14
 
 **Done when**:
 
-- [ ] O arquivo começa com a assinatura woff2 `wOF2`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 1 test passes
+- [x] O arquivo começa com a assinatura woff2 `wOF2`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 1 test passes
 
 **Tests**: unit
 **Gate**: quick
