@@ -327,6 +327,8 @@ T14
 
 ### T9: Aplicar o tema antes da pintura
 
+**Status**: done
+
 **What**: Criar o script que lê `localStorage.tema`, cai no esquema do aparelho e troca o rótulo do controle.
 **Where**: `gerador/tema.js`
 **Depends on**: T6
@@ -341,11 +343,11 @@ T14
 
 **Done when**:
 
-- [ ] Sem chave salva, escuro do aparelho vira `data-tema="escuro"` e claro vira `claro`
-- [ ] No claro o controle mostra `Escuro`. No escuro mostra `Claro`. O clique grava a chave `tema`
-- [ ] Com chave salva, o script aplica esse valor
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 5 tests pass
+- [x] Sem chave salva, escuro do aparelho vira `data-tema="escuro"` e claro vira `claro`
+- [x] No claro o controle mostra `Escuro`. No escuro mostra `Claro`. O clique grava a chave `tema`
+- [x] Com chave salva, o script aplica esse valor
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
