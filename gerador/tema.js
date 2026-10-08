@@ -2,6 +2,10 @@
   var CHAVE = "tema";
   var ROTULO_PARA_MODO = { Escuro: "escuro", Claro: "claro" };
   var ROTULO_DO_MODO = { claro: "Escuro", escuro: "Claro" };
+  var NOME_DO_MODO = {
+    claro: "Modo claro. Mudar para escuro.",
+    escuro: "Modo escuro. Mudar para claro.",
+  };
 
   function preferenciaDoAparelho() {
     return window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -23,6 +27,7 @@
 
   function atualizarControle(controle, tema) {
     controle.textContent = ROTULO_DO_MODO[tema];
+    controle.setAttribute("aria-label", NOME_DO_MODO[tema]);
   }
 
   function alternar(controle) {

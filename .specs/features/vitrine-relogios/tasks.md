@@ -781,7 +781,7 @@ T28
 ---
 ### T23: Expor o modo atual no botão de tema
 
-**Status**: pending
+**Status**: done
 
 **What**: Em `tema.js`, gravar o `aria-label` do modo atual junto com o rótulo e atualizar no clique.
 **Where**: `gerador/tema.js`
@@ -797,11 +797,11 @@ T28
 
 **Done when**:
 
-- [ ] No claro, o nome é `Modo claro. Mudar para escuro.` e o texto é `Escuro`
-- [ ] No escuro, o nome é `Modo escuro. Mudar para claro.` e o texto é `Claro`
-- [ ] Depois do clique a partir do claro, o nome é `Modo escuro. Mudar para claro.`
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 192 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] No claro, o nome é `Modo claro. Mudar para escuro.` e o texto é `Escuro`
+- [x] No escuro, o nome é `Modo escuro. Mudar para claro.` e o texto é `Claro`
+- [x] Depois do clique a partir do claro, o nome é `Modo escuro. Mudar para claro.`
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 192 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

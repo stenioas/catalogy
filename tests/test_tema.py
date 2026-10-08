@@ -62,10 +62,19 @@ function executar() {
     },
     createElement(tag) {
       if (tag !== "button") throw new Error("tag inesperada: " + tag);
+      const atributos = {};
       const botao = {
         type: "button",
         id: "",
         textContent: "",
+        setAttribute(chave, valor) {
+          atributos[chave] = String(valor);
+        },
+        getAttribute(chave) {
+          return Object.prototype.hasOwnProperty.call(atributos, chave)
+            ? atributos[chave]
+            : null;
+        },
         addEventListener(evento, fn) {
           if (evento === "click") this._click = fn;
         },
@@ -100,6 +109,7 @@ function executar() {
   const depoisDoControle = {
     dataTema: documentElement.getAttribute("data-tema"),
     rotulo: controle ? controle.textContent : null,
+    nomeAcessivel: controle ? controle.getAttribute("aria-label") : null,
     storage: localStorage.dump(),
   };
 
@@ -112,6 +122,7 @@ function executar() {
     depoisDoControle,
     dataTema: documentElement.getAttribute("data-tema"),
     rotulo: controle ? controle.textContent : null,
+    nomeAcessivel: controle ? controle.getAttribute("aria-label") : null,
     storage: localStorage.dump(),
   };
 
@@ -165,6 +176,32 @@ class TestTemaAntesDaPintura(unittest.TestCase):
         self.assertEqual(saida["dataTema"], "escuro")
         self.assertEqual(saida["storage"]["tema"], "escuro")
         self.assertEqual(saida["rotulo"], "Claro")
+
+    def test_no_modo_claro_o_nome_acessivel_descreve_o_modo_atual(self):
+        # VITR-88 / spec P1 Ler e navegar AC 15
+        saida = _rodar_tema(storage={"tema": "claro"})
+        self.assertEqual(
+            saida["depoisDoControle"]["nomeAcessivel"],
+            "Modo claro. Mudar para escuro.",
+        )
+        self.assertEqual(saida["depoisDoControle"]["rotulo"], "Escuro")
+
+    def test_no_modo_escuro_o_nome_acessivel_descreve_o_modo_atual(self):
+        # VITR-89 / spec P1 Ler e navegar AC 16
+        saida = _rodar_tema(storage={"tema": "escuro"})
+        self.assertEqual(
+            saida["depoisDoControle"]["nomeAcessivel"],
+            "Modo escuro. Mudar para claro.",
+        )
+        self.assertEqual(saida["depoisDoControle"]["rotulo"], "Claro")
+
+    def test_apos_clique_a_partir_do_claro_o_nome_acessivel_muda(self):
+        # VITR-90 / spec P1 Ler e navegar AC 17
+        saida = _rodar_tema(storage={"tema": "claro"}, clicar=True)
+        self.assertEqual(
+            saida["nomeAcessivel"],
+            "Modo escuro. Mudar para claro.",
+        )
 
 
 if __name__ == "__main__":
