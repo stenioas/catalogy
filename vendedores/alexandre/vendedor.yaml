@@ -1,0 +1,105 @@
+nome: Alexandre
+whatsapp: "5511999999999"
+itens:
+  - id: addiesdive-my-h3-2qz
+    nome: Addiesdive MY-H3-2QZ
+    valorPix: 369.9
+    parcelamento: 12
+    imagens:
+      - addiesdive2.png
+      - addiesdive1.png
+    ficha:
+      - detalhe: Homage de
+        especificacao: Rolex Submariner Date
+      - detalhe: Estado
+        especificacao: Usado 2x
+      - detalhe: Tipo do relógio
+        especificacao: Diver (mergulho)
+      - detalhe: Tipo de movimento
+        especificacao: Quartzo (Miyota 2115)
+      - detalhe: Material da caixa
+        especificacao: Aço inoxidável 316L
+      - detalhe: Material da pulseira
+        especificacao: Aço inoxidável; tipo de aço não informado
+      - detalhe: Material do vidro
+        especificacao: Vidro mineral convexo; também descrito como Hardlex
+      - detalhe: Resistência à água
+        especificacao: 200 m (20 bar)
+      - detalhe: Tamanho da caixa
+        especificacao: 41 mm de diâmetro, sem a coroa
+      - detalhe: Largura da pulseira
+        especificacao: 20 mm no encaixe da caixa
+      - detalhe: Material do bisel
+        especificacao: Cerâmica
+      - detalhe: Link de anúncio similar
+        especificacao: https://www.mercadolivre.com.br/relogio-masculino-addiesdive-divers-200m-de-quartzo-prateado/p/MLB41177166?pdp_filters=item_id%3AMLB5686666970#polycard_client=search-desktop&float_highlight=last_units&be_origin=searchv2&overlay_label=not_apply&search_layout=grid&position=4&type=product&tracking_id=fca32ea7-69b6-4cdf-8831-c1210957c2ef&wid=MLB5686666970&sid=search
+      - detalhe: Garantia
+        especificacao: 90 dias
+  - id: curren-8455
+    nome: CURREN 8455
+    valorPix: 119.9
+    parcelamento: 12
+    imagens:
+      - curren2.png
+      - curren1.png
+    ficha:
+      - detalhe: Homage de
+        especificacao: Não informado
+      - detalhe: Estado
+        especificacao: Novo
+      - detalhe: Tipo do relógio
+        especificacao: Esportivo/casual, com tema de bússola
+      - detalhe: Tipo de movimento
+        especificacao: Quartzo
+      - detalhe: Material da caixa
+        especificacao: Liga metálica
+      - detalhe: Material da pulseira
+        especificacao: Aço inoxidável
+      - detalhe: Material do vidro
+        especificacao: Hardlex
+      - detalhe: Resistência à água
+        especificacao: 30 m (3 bar)
+      - detalhe: Tamanho da caixa
+        especificacao: Diâmetro informado como faixa de 40 a 44 mm
+      - detalhe: Largura da pulseira
+        especificacao: Faixa informada de 20 a 24 mm
+      - detalhe: Material do bisel
+        especificacao: Não informado
+      - detalhe: Link de anúncio similar
+        especificacao: https://www.mercadolivre.com.br/relogio-masculino-de-pulso-analogico-curren-modelo-8455-luxo-prateado/p/MLB74702510?product_trigger_id=MLB55161518&pdp_filters=item_id%3AMLB7070370018&applied_product_filters=MLB74702510&picker=true&quantity=1
+      - detalhe: Garantia
+        especificacao: 90 dias
+  - id: seculus-kit-com-cantil
+    nome: Seculus — kit com cantil
+    valorPix: 299.9
+    parcelamento: 12
+    observacoes: acompanha caixa de metal e cantil
+    imagens:
+      - seculus1.png
+    ficha:
+      - detalhe: Homage de
+        especificacao: Não informado
+      - detalhe: Estado
+        especificacao: Usado 2x
+      - detalhe: Tipo do relógio
+        especificacao: Casual
+      - detalhe: Tipo de movimento
+        especificacao: Não informado
+      - detalhe: Material da caixa
+        especificacao: Aço; tipo não informado
+      - detalhe: Material da pulseira
+        especificacao: Aço; tipo não informado
+      - detalhe: Material do vidro
+        especificacao: Cristal mineral
+      - detalhe: Resistência à água
+        especificacao: 50 m (5 ATM)
+      - detalhe: Tamanho da caixa
+        especificacao: 45 mm
+      - detalhe: Largura da pulseira
+        especificacao: Não informada
+      - detalhe: Material do bisel
+        especificacao: Não informado
+      - detalhe: Link de anúncio similar
+        especificacao: Não informado
+      - detalhe: Garantia
+        especificacao: 1 ano e 10 meses

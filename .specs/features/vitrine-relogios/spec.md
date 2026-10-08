@@ -314,10 +314,10 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-65 | P1: Tema | Tasks | Implementing |
 | VITR-66 | P1: Tema | Tasks | Implementing |
 | VITR-67 | P1: Tema | Tasks | Implementing |
-| VITR-68 | P1: Publicar o catálogo atual | Tasks | In Tasks |
-| VITR-69 | P1: Publicar o catálogo atual | Tasks | In Tasks |
-| VITR-70 | P1: Publicar o catálogo atual | Tasks | In Tasks |
-| VITR-71 | P1: Publicar o catálogo atual | Tasks | In Tasks |
+| VITR-68 | P1: Publicar o catálogo atual | Tasks | done |
+| VITR-69 | P1: Publicar o catálogo atual | Tasks | done |
+| VITR-70 | P1: Publicar o catálogo atual | Tasks | done |
+| VITR-71 | P1: Publicar o catálogo atual | Tasks | done |
 | VITR-72 | P1: Publicar o catálogo atual | Tasks | Implementing |
 | VITR-73 | P1: Publicar o catálogo atual | Tasks | Implementing |
 

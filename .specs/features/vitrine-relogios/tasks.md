@@ -480,6 +480,8 @@ T14
 
 ### T14: Publicar o YAML do Alexandre e apagar a fonte antiga
 
+**Status**: done
+
 **What**: Gravar os três relógios em `vendedores/alexandre/vendedor.yaml` e remover Markdown, PDF, plano e `tmp/`.
 **Where**: `vendedores/alexandre/vendedor.yaml`
 **Depends on**: T13
@@ -494,12 +496,12 @@ T14
 
 **Done when**:
 
-- [ ] O YAML tem `Alexandre`, `5511999999999` e os três itens na ordem e com a ficha da spec
-- [ ] As fotos citadas estão na pasta do vendedor. `images/catalogo/` permanece
-- [ ] `catalogo.md`, `catalogo.pdf`, `template-produto.md`, `detalhes-do-item.md`, `PLANO.md` e `tmp/` não existem
-- [ ] `DESIGN.md`, `2026-10-07-vitrine-relogios-design.md` e as skills permanecem
-- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 36 tests pass
+- [x] O YAML tem `Alexandre`, `5511999999999` e os três itens na ordem e com a ficha da spec
+- [x] As fotos citadas estão na pasta do vendedor. `images/catalogo/` permanece
+- [x] `catalogo.md`, `catalogo.pdf`, `template-produto.md`, `detalhes-do-item.md`, `PLANO.md` e `tmp/` não existem
+- [x] `DESIGN.md`, `2026-10-07-vitrine-relogios-design.md` e as skills permanecem
+- [x] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 36 tests pass
 
 **Tests**: unit
 **Gate**: build
