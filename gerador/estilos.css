@@ -91,8 +91,13 @@ body {
 .voltar {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   min-height: 44px;
+  flex-shrink: 0;
   color: #0066cc;
 }
 

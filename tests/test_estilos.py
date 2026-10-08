@@ -242,7 +242,7 @@ class TestEstilos(unittest.TestCase):
         link = ".lista-vendedores a"
         self.assertEqual(_valor(self.regras, link, "border-radius"), "18px")
         self.assertEqual(_valor(self.regras, link, "padding"), "16px")
-        self.assertGreaterEqual(_px(_valor(self.regras, link, "min-height")), 44)
+        self.assertEqual(_valor(self.regras, link, "min-height"), "44px")
         self.assertEqual(_valor(self.regras, link, "background-color"), BRANCO)
         self.assertEqual(_valor(self.regras, link, "border"), f"1px solid #e0e0e0")
 
@@ -315,9 +315,12 @@ class TestEstilos(unittest.TestCase):
 
     def test_alvos_de_toque_tem_pelo_menos_44px(self):
         link_vendedor = ".lista-vendedores a"
-        self.assertGreaterEqual(_px(_valor(self.regras, link_vendedor, "min-height")), 44)
+        self.assertEqual(_valor(self.regras, link_vendedor, "min-height"), "44px")
         self.assertEqual(_valor(self.regras, link_vendedor, "width"), "100%")
-        for seletor in (".voltar", ".pilula", ".barra-negra a"):
+        self.assertEqual(_valor(self.regras, ".pilula", "min-height"), "44px")
+        self.assertGreaterEqual(_px(_valor(self.regras, ".voltar", "width")), 44)
+        self.assertGreaterEqual(_px(_valor(self.regras, ".voltar", "height")), 44)
+        for seletor in (".voltar", ".barra-negra a"):
             self.assertGreaterEqual(
                 _px(_valor(self.regras, seletor, "min-height")),
                 44,
@@ -649,7 +652,7 @@ class TestEstilos(unittest.TestCase):
 
     def test_pilula_de_interesse_mantem_min_height_44px(self):
         # AJST-45 / spec P1 Barra fixa no celular AC 6
-        self.assertGreaterEqual(_px(_valor(self.regras, ".pilula", "min-height")), 44)
+        self.assertEqual(_valor(self.regras, ".pilula", "min-height"), "44px")
 
     def test_bolinha_tem_alvo_44px_ponto_8px_e_gap_8px(self):
         # VITR-84 / spec P1 Ler e navegar AC 11

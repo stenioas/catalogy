@@ -357,9 +357,13 @@ class TestPaginaRelogio(unittest.TestCase):
             "bruno/relogio-primeiro/index.html",
         )
         header = _trecho_header(html)
-        self.assertRegex(
-            header,
-            r'<a class="voltar" href="\.\./" aria-label="Voltar">',
+        self.assertIsNotNone(
+            re.search(
+                r'<a class="voltar" href="\.\./" aria-label="Voltar">'
+                r'.*?<svg[^>]*aria-hidden="true"',
+                header,
+                flags=re.DOTALL,
+            ),
         )
         self.assertIn('<a href="../">bruno</a>', header.replace("\n", ""))
         self.assertNotIn(f">{ROTULO_VOLTAR}<", header)
@@ -607,6 +611,12 @@ def _trecho_head(html: str) -> str:
     return match.group(1)
 
 
+def _trecho_body(html: str) -> str:
+    if "<body>" not in html or "</body>" not in html:
+        raise AssertionError("body ausente")
+    return html.split("<body>", 1)[1].split("</body>", 1)[0]
+
+
 def _trecho_header(html: str) -> str:
     match = re.search(
         r'<header class="barra-negra">(.*?)</header>',
@@ -674,9 +684,11 @@ class TestBarraNoHeader(unittest.TestCase):
 
     def test_vitrine_nome_aparece_somente_uma_vez_no_body(self):
         html = _escrever_catalogo(catalogo_dois_vendedores(), "bruno/index.html")
+        body = _trecho_body(html)
+        self.assertEqual(len(re.findall(r'<p class="nome-vendedor"', body)), 1)
+        self.assertEqual(body.count("bruno"), 1)
         main = _trecho_main(html)
-        self.assertEqual(main.count('class="nome-vendedor"'), 1)
-        self.assertEqual(main.count("bruno"), 1)
+        self.assertRegex(main, r'^<p class="nome-vendedor">bruno</p>')
 
     def test_produto_header_tem_voltar_e_nome_sem_catalogo(self):
         html = _escrever_catalogo(
@@ -685,6 +697,15 @@ class TestBarraNoHeader(unittest.TestCase):
         )
         links = _links_navegacao_no_header(html)
         self.assertEqual(links, [("../", ""), ("../", "bruno")])
+        header = _trecho_header(html)
+        self.assertIsNotNone(
+            re.search(
+                r'<a class="voltar" href="\.\./" aria-label="Voltar">'
+                r'.*?<svg[^>]*aria-hidden="true"',
+                header,
+                flags=re.DOTALL,
+            ),
+        )
         self.assertNotIn('class="nome-vendedor"', html)
         self.assertNotIn('class="barra-vendedor"', html)
 
