@@ -753,7 +753,7 @@ T28
 ---
 ### T22: Ir para a foto da bolinha
 
-**Status**: pending
+**Status**: done
 
 **What**: Em `carrossel.js`, o clique numa bolinha mostra a foto daquela posição e move `aria-current` para ela.
 **Where**: `gerador/carrossel.js`
@@ -769,10 +769,10 @@ T28
 
 **Done when**:
 
-- [ ] No harness com três fotos, clicar a terceira bolinha mostra só a terceira foto e deixa `aria-current` só na terceira
-- [ ] Depois, a próxima volta para a primeira
-- [ ] Gate check passes: `python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 189 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] No harness com três fotos, clicar a terceira bolinha mostra só a terceira foto e deixa `aria-current` só na terceira
+- [x] Depois, a próxima volta para a primeira
+- [x] Gate check passes: `python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 189 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: unit
 **Gate**: quick

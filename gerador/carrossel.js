@@ -56,6 +56,11 @@
     anterior.addEventListener("click", function () {
       irPara(indice - 1);
     });
+    bolinhas.forEach(function (bolinha, i) {
+      bolinha.addEventListener("click", function () {
+        irPara(i);
+      });
+    });
   }
 
   function preparar() {

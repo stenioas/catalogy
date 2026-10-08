@@ -14,8 +14,10 @@ const config = JSON.parse(process.argv[2]);
 
 function criarBolinha(ativa) {
   const attrs = {};
-  return {
+  const bolinha = {
     className: "bolinha",
+    type: "button",
+    _click: null,
     setAttribute(chave, valor) {
       attrs[chave] = valor;
     },
@@ -27,8 +29,15 @@ function criarBolinha(ativa) {
         ? attrs[chave]
         : null;
     },
+    addEventListener(evento, fn) {
+      if (evento === "click") this._click = fn;
+    },
+    click() {
+      if (this._click) this._click();
+    },
     _inicial: ativa,
   };
+  return bolinha;
 }
 
 function criarFoto(oculta) {
@@ -108,6 +117,9 @@ function executar() {
   for (const acao of config.acoes || []) {
     if (acao === "proxima") montagem.proxima.click();
     if (acao === "anterior") montagem.anterior.click();
+    if (typeof acao === "object" && acao.bolinha != null) {
+      montagem.bolinhas[acao.bolinha].click();
+    }
   }
 
   const visibilidade = montagem.fotos.map((foto) => !foto.hidden);
@@ -151,6 +163,22 @@ class TestCarrosselFotos(unittest.TestCase):
         saida = _rodar_carrossel(quantidadeFotos=3, acoes=["proxima", "proxima"])
         self.assertEqual(saida["visibilidade"].count(True), 1)
         self.assertEqual(saida["bolinhasAtivas"].count(True), 1)
+
+    def test_clicar_terceira_bolinha_mostra_só_a_terceira_foto(self):
+        # VITR-85 / spec P1 Ler e navegar AC 12
+        saida = _rodar_carrossel(
+            quantidadeFotos=3, acoes=[{"bolinha": 2}]
+        )
+        self.assertEqual(saida["visibilidade"], [False, False, True])
+        self.assertEqual(saida["bolinhasAtivas"], [False, False, True])
+
+    def test_depois_da_terceira_bolinha_proxima_volta_para_primeira(self):
+        # VITR-85 / spec P1 Ler e navegar AC 12 + VITR-47 AC 28
+        saida = _rodar_carrossel(
+            quantidadeFotos=3, acoes=[{"bolinha": 2}, "proxima"]
+        )
+        self.assertEqual(saida["visibilidade"], [True, False, False])
+        self.assertEqual(saida["bolinhasAtivas"], [True, False, False])
 
 
 if __name__ == "__main__":
