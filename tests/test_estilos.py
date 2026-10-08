@@ -213,6 +213,13 @@ class TestEstilos(unittest.TestCase):
         self.assertGreaterEqual(_px(_valor(self.regras, ".seta", "width")), 44)
         self.assertGreaterEqual(_px(_valor(self.regras, ".seta", "height")), 44)
 
+    def test_barra_negra_mede_44px_no_claro_e_no_escuro(self):
+        # VITR-50 / spec P1 Navegar AC 31: a barra preta tem 44px
+        claro = _valor(self.regras, ".barra-negra", "height")
+        self.assertEqual(claro, "44px")
+        escuro = _valor(self.regras, 'html[data-tema="escuro"] .barra-negra', "height")
+        self.assertEqual(claro if escuro is None else escuro, "44px")
+
     def test_barra_negra_e_000000_no_claro_e_no_escuro(self):
         self.assertEqual(_valor(self.regras, ".barra-negra", "background-color"), PRETO)
         self.assertEqual(
