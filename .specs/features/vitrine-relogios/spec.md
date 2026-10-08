@@ -280,19 +280,19 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-31 | P1: Navegar | Tasks | Implementing |
 | VITR-32 | P1: Navegar | Tasks | Implementing |
 | VITR-33 | P1: Navegar | Tasks | Implementing |
-| VITR-34 | P1: Navegar | Tasks | In Tasks |
-| VITR-35 | P1: Navegar | Tasks | In Tasks |
-| VITR-36 | P1: Navegar | Tasks | In Tasks |
+| VITR-34 | P1: Navegar | Tasks | Implementing |
+| VITR-35 | P1: Navegar | Tasks | Implementing |
+| VITR-36 | P1: Navegar | Tasks | Implementing |
 | VITR-37 | P1: Navegar | Tasks | Implementing |
-| VITR-38 | P1: Navegar | Tasks | In Tasks |
+| VITR-38 | P1: Navegar | Tasks | Implementing |
 | VITR-39 | P1: Navegar | Tasks | Implementing |
-| VITR-40 | P1: Navegar | Tasks | In Tasks |
-| VITR-41 | P1: Navegar | Tasks | In Tasks |
-| VITR-42 | P1: Navegar | Tasks | In Tasks |
-| VITR-43 | P1: Navegar | Tasks | In Tasks |
-| VITR-44 | P1: Navegar | Tasks | In Tasks |
-| VITR-45 | P1: Navegar | Tasks | In Tasks |
-| VITR-46 | P1: Navegar | Tasks | In Tasks |
+| VITR-40 | P1: Navegar | Tasks | Implementing |
+| VITR-41 | P1: Navegar | Tasks | Implementing |
+| VITR-42 | P1: Navegar | Tasks | Implementing |
+| VITR-43 | P1: Navegar | Tasks | Implementing |
+| VITR-44 | P1: Navegar | Tasks | Implementing |
+| VITR-45 | P1: Navegar | Tasks | Implementing |
+| VITR-46 | P1: Navegar | Tasks | Implementing |
 | VITR-47 | P1: Navegar | Tasks | In Tasks |
 | VITR-48 | P1: Navegar | Tasks | In Tasks |
 | VITR-49 | P1: Navegar | Tasks | In Tasks |

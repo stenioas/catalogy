@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import html
+import re
 from pathlib import Path
 from urllib.parse import quote
 
-from gerador.modelo import Item, Vendedor
+from gerador.modelo import ORDEM_FICHA, Item, Vendedor
 
 
 def formatar_preco(valor: float) -> str:
@@ -34,6 +35,13 @@ def escrever(vendedores: list[Vendedor], destino: Path, fontes: Path) -> None:
             _html_vitrine(vendedor),
             encoding="utf-8",
         )
+        for item in vendedor.itens:
+            pasta_item = pasta_vendedor / item.id
+            pasta_item.mkdir(parents=True, exist_ok=True)
+            (pasta_item / "index.html").write_text(
+                _html_relogio(vendedor, item),
+                encoding="utf-8",
+            )
 
 
 def _html_raiz(vendedores: list[Vendedor]) -> str:
@@ -82,16 +90,126 @@ def _card(item: Item) -> str:
     )
 
 
+def _html_relogio(vendedor: Vendedor, item: Item) -> str:
+    nome = html.escape(item.nome)
+    preco = html.escape(formatar_preco(item.valor_pix))
+    parcelas = html.escape(formatar_parcelamento(item.parcelamento))
+    observacao = _observacao(item)
+    corpo = (
+        f'<a class="voltar" href="../">{_ROTULO_VOLTAR}</a>'
+        f"<h1>{nome}</h1>"
+        f"{_carrossel(item)}"
+        f'<p class="preco">{preco}</p>'
+        f'<p class="parcelamento">{parcelas}</p>'
+        f"{observacao}"
+        f"{_ficha(item)}"
+        f"{_barra_fixa(vendedor, item, preco)}"
+    )
+    return _pagina(
+        item.nome,
+        corpo,
+        link_catalogo="../../",
+        segunda_barra=vendedor.nome,
+        link_segunda_barra="../",
+        og_title=item.nome,
+        og_image=f"../imagens/{item.imagens[0]}",
+    )
+
+
+def _observacao(item: Item) -> str:
+    if item.observacoes is None:
+        return ""
+    texto = item.observacoes.strip()
+    if not texto:
+        return ""
+    return f'<p class="observacoes">{html.escape(texto)}</p>'
+
+
+def _carrossel(item: Item) -> str:
+    fotos = []
+    for indice, arquivo in enumerate(item.imagens):
+        oculto = " hidden" if indice else ""
+        fotos.append(
+            f'<img src="../imagens/{html.escape(arquivo)}" '
+            f'alt="{html.escape(item.nome)}"{oculto}>'
+        )
+    controles = ""
+    if len(item.imagens) >= 2:
+        bolinhas = "".join(
+            '<span class="bolinha" aria-current="true"></span>'
+            if indice == 0
+            else '<span class="bolinha"></span>'
+            for indice in range(len(item.imagens))
+        )
+        controles = (
+            '<button type="button" class="seta seta-anterior" '
+            'aria-label="Anterior"></button>'
+            '<button type="button" class="seta seta-proxima" '
+            'aria-label="Próximo"></button>'
+            f'<div class="bolinhas">{bolinhas}</div>'
+        )
+    return f'<div class="carrossel">{"".join(fotos)}{controles}</div>'
+
+
+def _ficha(item: Item) -> str:
+    por_rotulo = {linha.detalhe: linha.especificacao for linha in item.ficha}
+    linhas = [
+        _linha_ficha(rotulo, por_rotulo[rotulo])
+        for rotulo in ORDEM_FICHA
+        if rotulo in por_rotulo
+    ]
+    return f'<dl class="ficha">{"".join(linhas)}</dl>'
+
+
+def _linha_ficha(rotulo: str, valor: str) -> str:
+    if rotulo == "Link de anúncio similar":
+        texto = valor.strip()
+        if _RE_ANUNCIO.fullmatch(texto):
+            valor_html = (
+                f'<a href="{html.escape(texto)}">{_TEXTO_ANUNCIO}</a>'
+            )
+        else:
+            valor_html = html.escape(texto)
+    else:
+        valor_html = html.escape(valor)
+    return (
+        '<div class="ficha-linha">'
+        f"<dt>{html.escape(rotulo)}</dt>"
+        f"<dd>{valor_html}</dd>"
+        "</div>"
+    )
+
+
+def _barra_fixa(vendedor: Vendedor, item: Item, preco: str) -> str:
+    href = html.escape(link_whatsapp(vendedor.whatsapp, item.nome))
+    return (
+        '<div class="barra-fixa">'
+        f'<span class="preco">{preco}</span>'
+        f'<a class="pilula" href="{href}">{_ROTULO_INTERESSE}</a>'
+        "</div>"
+    )
+
+
 def _pagina(
     titulo: str,
     corpo: str,
     link_catalogo: str,
     segunda_barra: str | None,
+    link_segunda_barra: str | None = None,
+    og_title: str | None = None,
+    og_image: str | None = None,
 ) -> str:
     barra_vendedor = ""
     if segunda_barra is not None:
-        barra_vendedor = (
-            f'<div class="barra-vendedor">{html.escape(segunda_barra)}</div>'
+        nome = html.escape(segunda_barra)
+        if link_segunda_barra is not None:
+            nome = f'<a href="{html.escape(link_segunda_barra)}">{nome}</a>'
+        barra_vendedor = f'<div class="barra-vendedor">{nome}</div>'
+    og = ""
+    if og_title is not None and og_image is not None:
+        og = (
+            f'<meta property="og:title" content="{html.escape(og_title)}">\n'
+            f'<meta property="og:image" content="{html.escape(og_image)}">\n'
         )
     return (
         "<!DOCTYPE html>\n"
@@ -99,6 +217,7 @@ def _pagina(
         "<head>\n"
         f"<meta charset=\"utf-8\">\n"
         f"<title>{html.escape(titulo)}</title>\n"
+        f"{og}"
         "</head>\n"
         "<body>\n"
         f'<header class="barra-negra">'
@@ -117,3 +236,6 @@ _MENSAGEM_VITRINE_VAZIA = "Esta vitrine ainda não tem relógios."
 _RODAPE = "Catálogo de relógios"
 _ROTULO_CATALOGO = "Catálogo"
 _ROTULO_VOLTAR = "Voltar"
+_ROTULO_INTERESSE = "Tenho interesse"
+_TEXTO_ANUNCIO = "Ver anúncio similar"
+_RE_ANUNCIO = re.compile(r"https?://\S+")

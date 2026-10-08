@@ -235,6 +235,8 @@ T14
 
 ### T6: Gerar a página do relógio
 
+**Status**: done
+
 **What**: Escrever a página do item na ordem da spec, com ficha, observações, prévia e marcas do carrossel.
 **Where**: `gerador/renderizar.py`
 **Depends on**: T5
@@ -249,12 +251,12 @@ T14
 
 **Done when**:
 
-- [ ] Título é só o nome do modelo. `Voltar` e o nome do vendedor apontam para a vitrine
-- [ ] A ficha segue `ORDEM_FICHA`, omite rótulo ausente e coloca rótulo acima do valor
-- [ ] URL http(s) vira `Ver anúncio similar`. Outro valor fica texto. Observação em branco some
-- [ ] Uma foto não tem seta nem bolinha. Duas fotos têm. `og:image` resolve a primeira foto
-- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 24 tests pass
+- [x] Título é só o nome do modelo. `Voltar` e o nome do vendedor apontam para a vitrine
+- [x] A ficha segue `ORDEM_FICHA`, omite rótulo ausente e coloca rótulo acima do valor
+- [x] URL http(s) vira `Ver anúncio similar`. Outro valor fica texto. Observação em branco some
+- [x] Uma foto não tem seta nem bolinha. Duas fotos têm. `og:image` resolve a primeira foto
+- [x] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 24 tests pass
 
 **Tests**: unit
 **Gate**: build

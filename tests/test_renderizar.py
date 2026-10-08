@@ -1,3 +1,4 @@
+import posixpath
 import re
 import tempfile
 import unittest
@@ -5,6 +6,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
+from gerador.modelo import FichaLinha, Item, Vendedor
 from gerador.renderizar import (
     escrever,
     formatar_parcelamento,
@@ -207,3 +209,280 @@ class TestBarrasERodape(unittest.TestCase):
     def test_rodape_contem_somente_catalogo_de_relogios(self):
         html = self._html_vitrine()
         self.assertIn(f"<footer>{RODAPE_UNICO}</footer>", html.replace("\n", ""))
+
+
+# VITR-34 / spec P1 Navegar AC 15
+# VITR-35 / spec P1 Navegar AC 16
+# VITR-36 / spec P1 Navegar AC 17
+# VITR-38 / spec P1 Navegar AC 19
+# VITR-39 / spec P1 Navegar AC 20
+# VITR-40 / spec P1 Navegar AC 21
+# VITR-41 / spec P1 Navegar AC 22
+# VITR-42 / spec P1 Navegar AC 23
+# VITR-43 / spec P1 Navegar AC 24
+# VITR-44 / spec P1 Navegar AC 25
+# VITR-45 / spec P1 Navegar AC 26
+# VITR-46 / spec P1 Navegar AC 27
+ROTULOS_FICHA_AUSENTES = (
+    "Estado",
+    "Tipo do relógio",
+    "Tipo de movimento",
+    "Material da caixa",
+    "Material da pulseira",
+    "Material do vidro",
+    "Resistência à água",
+    "Tamanho da caixa",
+    "Largura da pulseira",
+    "Material do bisel",
+)
+TEXTO_ANUNCIO = "Ver anúncio similar"
+ROTULO_INTERESSE = "Tenho interesse"
+
+
+def _item_pagina(
+    id_: str,
+    nome: str,
+    *,
+    valor_pix: float = 369.9,
+    observacoes: str | None = None,
+    imagens: list[str] | None = None,
+    ficha: list[FichaLinha] | None = None,
+) -> Item:
+    return Item(
+        id=id_,
+        nome=nome,
+        valor_pix=valor_pix,
+        parcelamento=12,
+        observacoes=observacoes,
+        imagens=imagens or ["capa.png"],
+        ficha=ficha or [FichaLinha("Estado", "Novo")],
+    )
+
+
+def _pagina_relogio(item: Item, whatsapp: str = "5511888888888") -> str:
+    vendedor = Vendedor(
+        pasta="bruno",
+        nome="bruno",
+        whatsapp=whatsapp,
+        itens=[item],
+    )
+    return _escrever_catalogo([vendedor], f"bruno/{item.id}/index.html")
+
+
+def _item_ficha_fora_de_ordem() -> Item:
+    return _item_pagina(
+        "relogio-ficha",
+        "Modelo Ficha",
+        observacoes="caixa original",
+        imagens=["capa.png", "verso.png"],
+        ficha=[
+            FichaLinha("Garantia", "90 dias"),
+            FichaLinha("Homage de", "Rolex Submariner Date"),
+            FichaLinha(
+                "Link de anúncio similar",
+                "  https://exemplo.test/anuncio?id=1  ",
+            ),
+        ],
+    )
+
+
+class TestPaginaRelogio(unittest.TestCase):
+    def test_titulo_e_somente_o_nome_do_modelo(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        self.assertEqual(_parse_html(html).title, "Relógio Primeiro")
+
+    def test_voltar_e_nome_do_vendedor_apontam_para_a_vitrine(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        links = _parse_html(html).links
+        vendedor = [href for href, texto in links if texto == "bruno"]
+        voltar = [href for href, texto in links if texto == ROTULO_VOLTAR]
+        self.assertEqual(vendedor, ["../"])
+        self.assertEqual(voltar, ["../"])
+
+    def test_ordem_nome_carrossel_preco_observacao_ficha_e_barra(self):
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        marcadores = [
+            '<div class="barra-vendedor"><a href="../">bruno</a></div>',
+            '<a class="voltar" href="../">Voltar</a>',
+            "<h1>Modelo Ficha</h1>",
+            '<div class="carrossel">',
+            FRASE_PIX_369_90,
+            FRASE_PARCELAMENTO_12,
+            '<p class="observacoes">caixa original</p>',
+            '<dl class="ficha">',
+            '<div class="barra-fixa">',
+        ]
+        posicoes = [html.index(marcador) for marcador in marcadores]
+        self.assertEqual(posicoes, sorted(posicoes))
+        self.assertLess(posicoes[-2], html.rindex(FRASE_PIX_369_90))
+
+    def test_ficha_segue_ordem_fixa_e_omite_rotulo_ausente(self):
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        presentes = ("Homage de", "Link de anúncio similar", "Garantia")
+        posicoes = [html.index(rotulo) for rotulo in presentes]
+        self.assertEqual(posicoes, sorted(posicoes))
+        self.assertLess(html.index("Homage de"), html.index("Garantia"))
+        for rotulo in ROTULOS_FICHA_AUSENTES:
+            self.assertNotIn(rotulo, html)
+
+    def test_rotulo_da_ficha_fica_acima_do_valor(self):
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        self.assertIn("<dt>Homage de</dt><dd>Rolex Submariner Date</dd>", html)
+        self.assertIn("<dt>Garantia</dt><dd>90 dias</dd>", html)
+
+    def test_url_https_com_espacos_nas_pontas_vira_ver_anuncio_similar(self):
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        self.assertIn(
+            "<dt>Link de anúncio similar</dt>"
+            '<dd><a href="https://exemplo.test/anuncio?id=1">'
+            f"{TEXTO_ANUNCIO}</a></dd>",
+            html,
+        )
+
+    def test_url_http_vira_ver_anuncio_similar(self):
+        item = _item_pagina(
+            "relogio-http",
+            "Modelo Http",
+            ficha=[FichaLinha("Link de anúncio similar", "http://exemplo.test/outro")],
+        )
+        html = _pagina_relogio(item)
+        self.assertIn(
+            "<dt>Link de anúncio similar</dt>"
+            '<dd><a href="http://exemplo.test/outro">'
+            f"{TEXTO_ANUNCIO}</a></dd>",
+            html,
+        )
+
+    def test_valor_que_nao_casa_url_fica_texto_sem_link(self):
+        item = _item_pagina(
+            "relogio-texto",
+            "Modelo Texto",
+            ficha=[FichaLinha("Link de anúncio similar", "Não informado")],
+        )
+        html = _pagina_relogio(item)
+        self.assertIn(
+            "<dt>Link de anúncio similar</dt><dd>Não informado</dd>",
+            html,
+        )
+        self.assertNotIn(TEXTO_ANUNCIO, html)
+        self.assertNotIn("<dd><a", html)
+
+    def test_url_com_espaco_no_meio_fica_texto(self):
+        item = _item_pagina(
+            "relogio-espaco",
+            "Modelo Espaco",
+            ficha=[
+                FichaLinha("Link de anúncio similar", "https://exemplo.test/a b"),
+            ],
+        )
+        html = _pagina_relogio(item)
+        self.assertIn(
+            "<dt>Link de anúncio similar</dt><dd>https://exemplo.test/a b</dd>",
+            html,
+        )
+        self.assertNotIn(TEXTO_ANUNCIO, html)
+
+    def test_observacao_ausente_nao_aparece(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        self.assertNotIn('class="observacoes"', html)
+        self.assertNotIn("nota de exemplo", html)
+
+    def test_observacao_vazia_some(self):
+        html = _pagina_relogio(
+            _item_pagina("relogio-vazio", "Modelo Vazio", observacoes=""),
+        )
+        self.assertNotIn('class="observacoes"', html)
+
+    def test_observacao_so_com_espacos_some(self):
+        html = _pagina_relogio(
+            _item_pagina("relogio-espacos", "Modelo Espacos", observacoes="   "),
+        )
+        self.assertNotIn('class="observacoes"', html)
+
+    def test_observacao_com_texto_aparece_sem_titulo(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-segundo/index.html",
+        )
+        self.assertIn('<p class="observacoes">nota de exemplo</p>', html)
+        self.assertNotIn("Observações", html)
+        self.assertEqual(re.findall(r"<h[1-6]\b", html), ["<h1"])
+
+    def test_uma_foto_nao_tem_seta_nem_bolinha(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        self.assertIn('src="../imagens/primeiro.png"', html)
+        self.assertNotIn("seta", html)
+        self.assertNotIn("bolinha", html)
+
+    def test_duas_fotos_tem_setas_bolinhas_e_uma_imagem_visivel(self):
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        self.assertEqual(html.count('class="seta seta-anterior"'), 1)
+        self.assertEqual(html.count('class="seta seta-proxima"'), 1)
+        bolinhas = re.findall(r'<span class="bolinha"([^>]*)>', html)
+        self.assertEqual(bolinhas, [' aria-current="true"', ""])
+        imagens = re.findall(r"<img\b[^>]*>", html)
+        self.assertEqual(len(imagens), 2)
+        self.assertIn('src="../imagens/capa.png"', imagens[0])
+        self.assertNotIn("hidden", imagens[0])
+        self.assertIn('src="../imagens/verso.png"', imagens[1])
+        self.assertIn("hidden", imagens[1])
+
+    def test_og_title_e_og_image_da_primeira_foto(self):
+        html = _pagina_relogio(_item_ficha_fora_de_ordem())
+        titulo = re.search(r'<meta property="og:title" content="([^"]*)">', html)
+        imagem = re.search(r'<meta property="og:image" content="([^"]*)">', html)
+        self.assertIsNotNone(titulo)
+        self.assertIsNotNone(imagem)
+        self.assertEqual(titulo.group(1), "Modelo Ficha")
+        conteudo = imagem.group(1)
+        self.assertFalse(conteudo.startswith("/"))
+        self.assertFalse(conteudo.startswith("http"))
+        resolvido = posixpath.normpath(
+            posixpath.join("bruno/relogio-ficha", conteudo),
+        )
+        self.assertEqual(resolvido, "bruno/imagens/capa.png")
+
+    def test_barra_fixa_repete_o_preco_e_a_pilula(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        barra = re.search(
+            r'<div class="barra-fixa">.*?</div>',
+            html,
+            flags=re.DOTALL,
+        )
+        self.assertIsNotNone(barra)
+        self.assertIn(FRASE_PIX_369_90, barra.group(0))
+        self.assertIn(f">{ROTULO_INTERESSE}</a>", barra.group(0))
+        self.assertGreaterEqual(html.count(FRASE_PIX_369_90), 2)
+
+    def test_tenho_interesse_abre_whatsapp_com_o_nome_do_modelo(self):
+        html = _escrever_catalogo(
+            catalogo_dois_vendedores(),
+            "bruno/relogio-primeiro/index.html",
+        )
+        hrefs = [
+            href
+            for href, texto in _parse_html(html).links
+            if texto == ROTULO_INTERESSE
+        ]
+        self.assertEqual(len(hrefs), 1)
+        parsed = urlparse(hrefs[0])
+        self.assertEqual(parsed.scheme, "https")
+        self.assertEqual(parsed.netloc, "wa.me")
+        self.assertEqual(parsed.path, "/5511888888888")
+        texto = unquote(parse_qs(parsed.query)["text"][0])
+        self.assertEqual(texto, PREFIXO_MENSAGEM_WHATSAPP + "Relógio Primeiro")
