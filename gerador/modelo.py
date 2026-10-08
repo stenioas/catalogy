@@ -24,13 +24,20 @@ class FichaLinha:
 
 
 @dataclass
+class Imagem:
+    arquivo: str
+    largura: int
+    altura: int
+
+
+@dataclass
 class Item:
     id: str
     nome: str
     valor_pix: float
     parcelamento: int
     observacoes: str | None
-    imagens: list[str]
+    imagens: list[Imagem]
     ficha: list[FichaLinha]
 
 

@@ -459,7 +459,7 @@ As falhas de geração estão nos critérios 4 a 16 da primeira história. Cada 
 | VITR-98 | P1: Foto no quadro | T15–T17 | ✅ Verified |
 | VITR-99 | P1: Foto no quadro | T15–T17 | ✅ Verified |
 | VITR-100 | P1: Foto no quadro | T15–T17 | ✅ Verified |
-| VITR-101 | P1: Foto no quadro | Tasks | Pending |
+| VITR-101 | P1: Foto no quadro | T18 | ✅ Verified |
 | VITR-102 | P1: Foto no quadro | Tasks | Pending |
 | VITR-103 | P1: Foto no quadro | Tasks | Pending |
 | VITR-104 | P2: Movimento e tipografia | Tasks | Pending |

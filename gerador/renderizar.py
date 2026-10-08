@@ -93,7 +93,7 @@ def _html_vitrine(vendedor: Vendedor) -> str:
 
 
 def _card(item: Item) -> str:
-    imagem = html.escape(item.imagens[0])
+    imagem = html.escape(item.imagens[0].arquivo)
     preco = html.escape(formatar_preco(item.valor_pix))
     nome = html.escape(item.nome)
     href = html.escape(item.id) + "/"
@@ -128,7 +128,7 @@ def _html_relogio(vendedor: Vendedor, item: Item) -> str:
         segunda_barra=vendedor.nome,
         link_segunda_barra="../",
         og_title=item.nome,
-        og_image=f"../imagens/{item.imagens[0]}",
+        og_image=f"../imagens/{item.imagens[0].arquivo}",
         css_href="../../estilos.css",
         incluir_carrossel=len(item.imagens) >= 2,
     )
@@ -145,10 +145,10 @@ def _observacao(item: Item) -> str:
 
 def _carrossel(item: Item) -> str:
     fotos = []
-    for indice, arquivo in enumerate(item.imagens):
+    for indice, foto in enumerate(item.imagens):
         oculto = " hidden" if indice else ""
         fotos.append(
-            f'<img src="../imagens/{html.escape(arquivo)}" '
+            f'<img src="../imagens/{html.escape(foto.arquivo)}" '
             f'alt="{html.escape(item.nome)}"{oculto}>'
         )
     controles = ""

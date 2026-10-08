@@ -49,7 +49,8 @@ def _copiar_imagens(raiz: Path, vendedores: list[Vendedor], destino: Path) -> No
         pasta_imagens = destino / vendedor.pasta / "imagens"
         copiados: set[str] = set()
         for item in vendedor.itens:
-            for arquivo in item.imagens:
+            for foto in item.imagens:
+                arquivo = foto.arquivo
                 if arquivo in copiados:
                     continue
                 copiados.add(arquivo)

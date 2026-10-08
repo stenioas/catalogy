@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from gerador.modelo import ORDEM_FICHA
+from gerador.modelo import Imagem, ORDEM_FICHA
 from gerador.validar import carregar
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -101,19 +101,31 @@ class TestCatalogoPublicadoAlexandre(unittest.TestCase):
     def test_addiesdive_preco_imagens_e_sem_observacoes(self):
         item = self.alexandre.itens[0]
         self.assertEqual(item.valor_pix, 369.9)
-        self.assertEqual(item.imagens, ["addiesdive2.png", "addiesdive1.png"])
+        self.assertEqual(
+            item.imagens,
+            [
+                Imagem("addiesdive2.png", 400, 400),
+                Imagem("addiesdive1.png", 400, 400),
+            ],
+        )
         self.assertIsNone(item.observacoes)
 
     def test_curren_preco_imagens_e_sem_observacoes(self):
         item = self.alexandre.itens[1]
         self.assertEqual(item.valor_pix, 119.9)
-        self.assertEqual(item.imagens, ["curren2.png", "curren1.png"])
+        self.assertEqual(
+            item.imagens,
+            [
+                Imagem("curren2.png", 400, 400),
+                Imagem("curren1.png", 400, 400),
+            ],
+        )
         self.assertIsNone(item.observacoes)
 
     def test_seculus_preco_imagem_e_observacoes(self):
         item = self.alexandre.itens[2]
         self.assertEqual(item.valor_pix, 299.9)
-        self.assertEqual(item.imagens, ["seculus1.png"])
+        self.assertEqual(item.imagens, [Imagem("seculus1.png", 400, 400)])
         self.assertEqual(item.observacoes, "acompanha caixa de metal e cantil")
 
     def test_parcelamento_doze_em_todos_os_itens(self):
@@ -137,10 +149,10 @@ class TestCatalogoPublicadoAlexandre(unittest.TestCase):
 
     def test_fotos_citadas_estao_na_pasta_do_vendedor(self):
         for item in self.alexandre.itens:
-            for nome in item.imagens:
+            for foto in item.imagens:
                 self.assertTrue(
-                    (PASTA_VENDEDOR / nome).is_file(),
-                    f"{nome} ausente em vendedores/alexandre/",
+                    (PASTA_VENDEDOR / foto.arquivo).is_file(),
+                    f"{foto.arquivo} ausente em vendedores/alexandre/",
                 )
 
     def test_pasta_images_catalogo_permanece(self):

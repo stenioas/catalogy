@@ -6,7 +6,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
-from gerador.modelo import FichaLinha, Item, Vendedor
+from gerador.modelo import FichaLinha, Imagem, Item, Vendedor
 from gerador.renderizar import (
     escrever,
     formatar_parcelamento,
@@ -248,13 +248,17 @@ TEXTO_ANUNCIO = "Ver anúncio similar"
 ROTULO_INTERESSE = "Tenho interesse"
 
 
+def _foto(arquivo: str, largura: int = 400, altura: int = 300) -> Imagem:
+    return Imagem(arquivo, largura, altura)
+
+
 def _item_pagina(
     id_: str,
     nome: str,
     *,
     valor_pix: float = 369.9,
     observacoes: str | None = None,
-    imagens: list[str] | None = None,
+    imagens: list[Imagem] | None = None,
     ficha: list[FichaLinha] | None = None,
 ) -> Item:
     return Item(
@@ -263,7 +267,7 @@ def _item_pagina(
         valor_pix=valor_pix,
         parcelamento=12,
         observacoes=observacoes,
-        imagens=imagens or ["capa.png"],
+        imagens=imagens or [_foto("capa.png")],
         ficha=ficha or [FichaLinha("Estado", "Novo")],
     )
 
@@ -283,7 +287,7 @@ def _item_ficha_fora_de_ordem() -> Item:
         "relogio-ficha",
         "Modelo Ficha",
         observacoes="caixa original",
-        imagens=["capa.png", "verso.png"],
+        imagens=[_foto("capa.png"), _foto("verso.png")],
         ficha=[
             FichaLinha("Garantia", "90 dias"),
             FichaLinha("Homage de", "Rolex Submariner Date"),

@@ -4,7 +4,8 @@ import unittest
 from pathlib import Path
 
 from gerador.publicar import substituir
-from gerador.validar import CatalogoErro
+from gerador.validar import REGRA_TAMANHO_IMAGEM, CatalogoErro
+from tests import imagens_exemplo
 
 RAIZ_PROJETO = Path(__file__).resolve().parent.parent
 FONTE_ORIGEM = RAIZ_PROJETO / "fontes" / "InterVariable.woff2"
@@ -13,7 +14,7 @@ FONTE_ORIGEM = RAIZ_PROJETO / "fontes" / "InterVariable.woff2"
 PASTA_ALEXANDRE = "alexandre"
 ID_ADDIE = "addiesdive-my-h3-2qz"
 ARQUIVO_IMAGEM = "addiesdive2.png"
-BYTES_IMAGEM = b"foto-addiesdive"
+BYTES_IMAGEM = imagens_exemplo.png(400, 300)
 
 # VITR-21: título da raiz. Prova que o HTML gerado chegou em site/.
 TITULO_RAIZ = "Catálogo de relógios"
@@ -143,6 +144,17 @@ class TestPublicar(unittest.TestCase):
         self._quebrar_ana()
         with self.assertRaises(CatalogoErro):
             substituir(self.raiz)
+        self.assertEqual(self._bytes_site(), antes)
+        self.assertEqual(self._sobras(), [])
+
+    def test_falha_imagem_ilegivel_preserva_site_anterior(self):
+        substituir(self.raiz)
+        antes = self._bytes_site()
+        caminho = self.raiz / "vendedores" / PASTA_ALEXANDRE / ARQUIVO_IMAGEM
+        caminho.write_bytes(b"\x00\x01")
+        with self.assertRaises(CatalogoErro) as ctx:
+            substituir(self.raiz)
+        self.assertEqual(ctx.exception.regra, REGRA_TAMANHO_IMAGEM)
         self.assertEqual(self._bytes_site(), antes)
         self.assertEqual(self._sobras(), [])
 

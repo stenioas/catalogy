@@ -9,6 +9,9 @@ import unittest
 from contextlib import redirect_stderr
 from pathlib import Path
 
+from gerador.validar import REGRA_TAMANHO_IMAGEM
+from tests import imagens_exemplo
+
 # VITR-72 / spec P1 Publicar AC 5: a suíte de comportamento não lê o YAML publicado
 _PARTES_YAML_PUBLICADO = ("vendedores", "alexandre", "vendedor.yaml")
 _TESTE_GUARDA = "test_nenhum_teste_de_comportamento_le_yaml_publicado_alexandre"
@@ -29,6 +32,22 @@ whatsapp: 5511999999999
 
 YAML_ANA_SEM_NOME = """\
 whatsapp: 5511999999999
+"""
+
+PASTA_ALEXANDRE = "alexandre"
+YAML_ALEXANDRE_IMAGEM = """\
+nome: Alexandre
+whatsapp: 5511999999999
+itens:
+  - id: addiesdive-my-h3-2qz
+    nome: Addiesdive
+    valorPix: 369.9
+    parcelamento: 12
+    imagens:
+      - foto.png
+    ficha:
+      - detalhe: Estado
+        especificacao: Novo
 """
 
 
@@ -82,6 +101,27 @@ class TestGerarSite(unittest.TestCase):
         codigo = main(self.raiz)
         self.assertEqual(codigo, 0)
         self.assertTrue((self.raiz / "site" / "index.html").is_file())
+
+    def _gravar_alexandre(self, bytes_imagem: bytes) -> None:
+        diretorio = self.raiz / "vendedores" / PASTA_ALEXANDRE
+        diretorio.mkdir(parents=True, exist_ok=True)
+        (diretorio / "vendedor.yaml").write_text(
+            YAML_ALEXANDRE_IMAGEM, encoding="utf-8"
+        )
+        (diretorio / "foto.png").write_bytes(bytes_imagem)
+
+    def test_imagem_ilegivel_escreve_pasta_e_regra_no_stderr(self):
+        self._gravar_alexandre(b"\x00\x01")
+        main = self._importar_main()
+        buffer = io.StringIO()
+        with redirect_stderr(buffer):
+            codigo = main(self.raiz)
+        self.assertEqual(codigo, 1)
+        self.assertEqual(
+            buffer.getvalue().strip(),
+            f"{PASTA_ALEXANDRE}: {REGRA_TAMANHO_IMAGEM}",
+        )
+        self.assertNotIn("foto.png", buffer.getvalue())
 
 
 def _partes_de_caminho(no: ast.AST) -> tuple[str, ...] | None:

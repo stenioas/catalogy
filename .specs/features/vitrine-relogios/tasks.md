@@ -632,7 +632,7 @@ T28
 ---
 ### T18: Guardar o tamanho no modelo e recusar imagem ilegível
 
-**Status**: pending
+**Status**: done
 
 **What**: Criar `Imagem(arquivo, largura, altura)`, trocar `Item.imagens` para `list[Imagem]` e preencher pela validação, com a regra `não foi possível ler a largura e a altura da imagem`. Adaptar `renderizar.py`, `publicar.py`, a fixture e os testes que usavam `list[str]` ou bytes falsos.
 **Where**: `gerador/validar.py`
@@ -648,14 +648,14 @@ T28
 
 **Done when**:
 
-- [ ] O item válido carrega `Imagem("foto.png", L, A)` com o tamanho do PNG mínimo gravado pelo teste
-- [ ] Imagem ilegível levanta `CatalogoErro` com a regra exata e sem o nome do arquivo
-- [ ] A CLI escreve `alexandre: não foi possível ler a largura e a altura da imagem` e sai com 1
-- [ ] O `site/` anterior fica byte a byte igual depois dessa falha
-- [ ] As regras antigas de imagem continuam passando na mesma ordem
-- [ ] O HTML gerado continua idêntico ao de antes desta tarefa
-- [ ] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
-- [ ] Test count: at least 179 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
+- [x] O item válido carrega `Imagem("foto.png", L, A)` com o tamanho do PNG mínimo gravado pelo teste
+- [x] Imagem ilegível levanta `CatalogoErro` com a regra exata e sem o nome do arquivo
+- [x] A CLI escreve `alexandre: não foi possível ler a largura e a altura da imagem` e sai com 1
+- [x] O `site/` anterior fica byte a byte igual depois dessa falha
+- [x] As regras antigas de imagem continuam passando na mesma ordem
+- [x] O HTML gerado continua idêntico ao de antes desta tarefa
+- [x] Gate check passes: `python3 -m compileall -q gerador scripts && python3 -m unittest discover -s tests -q`
+- [x] Test count: at least 179 tests pass. Nenhum teste some sem um substituto que afirme o resultado novo da spec
 
 **Tests**: integration
 **Gate**: build

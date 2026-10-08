@@ -1,4 +1,4 @@
-from gerador.modelo import FichaLinha, Item, Vendedor
+from gerador.modelo import FichaLinha, Imagem, Item, Vendedor
 
 
 def _item(
@@ -14,7 +14,7 @@ def _item(
         valor_pix=valor_pix,
         parcelamento=12,
         observacoes=observacoes,
-        imagens=[imagem],
+        imagens=[Imagem(imagem, 400, 400)],
         ficha=[FichaLinha("Estado", "Novo")],
     )
 

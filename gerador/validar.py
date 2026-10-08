@@ -3,7 +3,8 @@ from pathlib import Path
 
 import yaml
 
-from gerador.modelo import ORDEM_FICHA, FichaLinha, Item, Vendedor
+from gerador.imagem import ImagemIlegivel, ler_dimensoes
+from gerador.modelo import ORDEM_FICHA, FichaLinha, Imagem, Item, Vendedor
 
 _PASTA_ID = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 _WHATSAPP = re.compile(r"^[0-9]{12,15}$")
@@ -28,6 +29,7 @@ REGRA_IMAGEM_AUSENTE = "item sem imagem"
 REGRA_IMAGEM_BARRA = "imagem com barra"
 REGRA_ARQUIVO_AUSENTE = "arquivo de imagem ausente"
 REGRA_EXTENSAO = "extensão fora de png, jpg, jpeg, webp e avif"
+REGRA_TAMANHO_IMAGEM = "não foi possível ler a largura e a altura da imagem"
 REGRA_FICHA_VAZIA = "ficha vazia"
 REGRA_FICHA_CAMPOS = "ficha sem detalhe ou especificacao"
 REGRA_FICHA_BRANCO = "valor de ficha em branco"
@@ -152,7 +154,7 @@ def _observacoes(mapa: dict) -> str | None:
     return nodo.value
 
 
-def _imagens(nodo: yaml.Node, pasta: str, pasta_dir: Path) -> list[str]:
+def _imagens(nodo: yaml.Node, pasta: str, pasta_dir: Path) -> list[Imagem]:
     if not isinstance(nodo, yaml.SequenceNode):
         raise CatalogoErro(pasta, REGRA_IMAGENS_AUSENTES)
     nomes = []
@@ -162,14 +164,21 @@ def _imagens(nodo: yaml.Node, pasta: str, pasta_dir: Path) -> list[str]:
         nomes.append(item.value)
     if not nomes:
         raise CatalogoErro(pasta, REGRA_IMAGEM_AUSENTE)
+    imagens = []
     for nome in nomes:
         if "/" in nome:
             raise CatalogoErro(pasta, REGRA_IMAGEM_BARRA)
         if Path(nome).suffix.casefold() not in _EXTENSOES:
             raise CatalogoErro(pasta, REGRA_EXTENSAO)
-        if not (pasta_dir / nome).is_file():
+        caminho = pasta_dir / nome
+        if not caminho.is_file():
             raise CatalogoErro(pasta, REGRA_ARQUIVO_AUSENTE)
-    return nomes
+        try:
+            largura, altura = ler_dimensoes(caminho)
+        except ImagemIlegivel as erro:
+            raise CatalogoErro(pasta, REGRA_TAMANHO_IMAGEM) from erro
+        imagens.append(Imagem(arquivo=nome, largura=largura, altura=altura))
+    return imagens
 
 
 def _ficha(nodo: yaml.Node, pasta: str) -> list[FichaLinha]:

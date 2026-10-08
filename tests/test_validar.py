@@ -2,7 +2,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from gerador.validar import CatalogoErro, carregar
+from gerador.modelo import Imagem
+from gerador.validar import CatalogoErro, REGRA_TAMANHO_IMAGEM, carregar
+from tests import imagens_exemplo
 
 # VITR-03: pasta e id só passam em ^[a-z0-9]+(-[a-z0-9]+)*$
 REGRA_PASTA = "pasta não casa ^[a-z0-9]+(-[a-z0-9]+)*$"
@@ -51,7 +53,7 @@ class _CatalogoTemporario(unittest.TestCase):
         diretorio = self.raiz / "vendedores" / pasta
         diretorio.mkdir(parents=True)
         (diretorio / "vendedor.yaml").write_text(texto, encoding="utf-8")
-        (diretorio / "foto.png").write_bytes(b"img")
+        (diretorio / "foto.png").write_bytes(imagens_exemplo.png(400, 300))
 
     def _erro(self, pasta_esperada, regra):
         with self.assertRaises(CatalogoErro) as ctx:
@@ -79,7 +81,7 @@ class TestValidarIdentidadePreco(_CatalogoTemporario):
         self.assertEqual(item.parcelamento, 12)
         self.assertIsInstance(item.parcelamento, int)
         self.assertIsNone(item.observacoes)
-        self.assertEqual(item.imagens, ["foto.png"])
+        self.assertEqual(item.imagens, [Imagem("foto.png", 400, 300)])
         self.assertEqual(len(item.ficha), 1)
         self.assertEqual(item.ficha[0].detalhe, "Estado")
         self.assertEqual(item.ficha[0].especificacao, "Novo")
@@ -266,25 +268,51 @@ _SEGUNDO_ITEM = """\
 
 
 class TestValidarFichaImagensOrdem(_CatalogoTemporario):
-    def _aceita_imagem(self, nome):
+    def _aceita_imagem(self, nome, bytes_imagem, largura, altura):
         self._gravar("alexandre", VALIDO.replace("foto.png", nome, 1))
-        (self.raiz / "vendedores" / "alexandre" / nome).write_bytes(b"img")
-        self.assertEqual(carregar(self.raiz)[0].itens[0].imagens, [nome])
+        (self.raiz / "vendedores" / "alexandre" / nome).write_bytes(bytes_imagem)
+        self.assertEqual(
+            carregar(self.raiz)[0].itens[0].imagens,
+            [Imagem(nome, largura, altura)],
+        )
 
     def test_aceita_extensao_png_em_maiusculas(self):
-        self._aceita_imagem("FOTO.PNG")
+        self._aceita_imagem("FOTO.PNG", imagens_exemplo.png(400, 300), 400, 300)
 
     def test_aceita_extensao_jpg_em_maiusculas(self):
-        self._aceita_imagem("FOTO.JPG")
+        self._aceita_imagem(
+            "FOTO.JPG", imagens_exemplo.jpeg_sof(400, 300), 400, 300
+        )
 
     def test_aceita_extensao_jpeg_em_maiusculas(self):
-        self._aceita_imagem("FOTO.JPEG")
+        self._aceita_imagem(
+            "FOTO.JPEG", imagens_exemplo.jpeg_sof(400, 300), 400, 300
+        )
 
     def test_aceita_extensao_webp_em_maiusculas(self):
-        self._aceita_imagem("FOTO.WEBP")
+        self._aceita_imagem(
+            "FOTO.WEBP", imagens_exemplo.webp_vp8(400, 300), 400, 300
+        )
 
     def test_aceita_extensao_avif_em_maiusculas(self):
-        self._aceita_imagem("FOTO.AVIF")
+        self._aceita_imagem(
+            "FOTO.AVIF", imagens_exemplo.avif(400, 300), 400, 300
+        )
+
+    def test_recusa_conteudo_ilegivel_com_regra_sem_nome_de_arquivo(self):
+        self._gravar("alexandre", VALIDO)
+        (self.raiz / "vendedores" / "alexandre" / "foto.png").write_bytes(
+            b"\x00\x01\x02"
+        )
+        with self.assertRaises(CatalogoErro) as ctx:
+            carregar(self.raiz)
+        self.assertEqual(ctx.exception.pasta, "alexandre")
+        self.assertEqual(ctx.exception.regra, REGRA_TAMANHO_IMAGEM)
+        self.assertNotIn("foto.png", ctx.exception.regra)
+        self.assertEqual(
+            str(ctx.exception),
+            f"alexandre: {REGRA_TAMANHO_IMAGEM}",
+        )
 
     def test_recusa_item_sem_imagem(self):
         self._gravar("alexandre", VALIDO.replace(
