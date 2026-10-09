@@ -24,6 +24,11 @@ function themeInlineBlock(css: string): string {
   return css.slice(open + 1, close)
 }
 
+function rootBlock(css: string): string {
+  const match = css.match(/:root\s*\{([\s\S]*?)\}\s*\n\s*\.dark/)
+  return match?.[1] ?? ''
+}
+
 function renderPriceBlock(
   props: { price: number; listPrice?: number },
   theme: 'light' | 'dark' = 'light',
@@ -89,8 +94,12 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
 
   it('uses light-theme primary-tint token values from index.css (CAT-106)', () => {
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf-8')
-    expect(css).toMatch(
+    const root = rootBlock(css)
+    expect(root).toMatch(
       /--primary-tint:\s*#0066cc[\s\S]*--primary-tint-background:\s*rgba\(0,\s*102,\s*204,\s*0\.12\)/,
+    )
+    expect(root).toMatch(
+      /^\s*--primary-tint-foreground:\s*var\(--primary-tint\);$/m,
     )
     renderPriceBlock({ price: 369.9, listPrice: 450 }, 'light')
     expect(document.documentElement.classList.contains('dark')).toBe(false)

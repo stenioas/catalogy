@@ -102,6 +102,12 @@ T34 → T35 → T36 → T37
 T38 → T39
 ```
 
+### Phase 10: Alias do selo
+
+```
+T40 → T41
+```
+
 ---
 
 ## Task Breakdown
@@ -1228,10 +1234,57 @@ T38 → T39
 
 ---
 
+### Phase 10: Alias do selo
+
+### T40: Alias do selo no tema claro
+
+**What**: No bloco `:root` de `index.css`, o teste afirma a linha `--primary-tint-foreground: var(--primary-tint);`, ancorada no começo da linha. Um comentário com o mesmo texto não passa.
+**Where**: `client/src/components/catalog/price-block.test.tsx`
+**Depends on**: T39
+**Reuses**: o teste de CAT-106
+**Complexity**: low
+**Status**: done
+**Requirement**: CAT-106
+
+**Done when**:
+
+- [x] Trocar o alias do `:root` para `var(--surface-black)` deixa o teste vermelho
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `test(client): trava o alias do selo no tema claro`
+
+---
+
+### T41: Alias do selo no tema escuro
+
+**What**: No bloco `.dark` de `index.css`, o teste afirma a linha `--primary-tint-foreground: var(--primary-tint);`, ancorada no começo da linha e limitada a esse bloco.
+**Where**: `client/src/components/catalog/price-block.test.tsx`
+**Depends on**: T40
+**Reuses**: o teste de CAT-107
+**Complexity**: low
+**Requirement**: CAT-107
+
+**Done when**:
+
+- [ ] Trocar o alias do `.dark` para `var(--primary)` deixa o teste vermelho
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `test(client): trava o alias do selo no tema escuro`
+
+---
+
 ## Phase Execution Map
 
 ```
-Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8 → Phase 9
+Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8 → Phase 9 → Phase 10
 
 Phase 1:  T1 → T2 → T4 → T5
           T1 → T3 → T5
@@ -1247,6 +1300,7 @@ Phase 6:  T26 → T27
 Phase 7:  T28 → T29 → T30 → T31 → T32 → T33
 Phase 8:  T34 → T35 → T36 → T37
 Phase 9:  T38 → T39
+Phase 10: T40 → T41
 ```
 
 São 27 tarefas. Na execução isso vira cinco lotes, em ordem: fase 1; fase 2; fase 3; fases 4 e 5; fase 6. Cada lote espera o anterior terminar.
