@@ -698,6 +698,7 @@ T26 → T27
 **Depends on**: T19, T20
 **Reuses**: `PriceBlock`, `WantLink`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-28, CAT-52, CAT-53, CAT-54, CAT-55, CAT-56
 
 **Tools**:
@@ -707,12 +708,12 @@ T26 → T27
 
 **Done when**:
 
-- [ ] A imagem usa `object-contain` e a primeira entrada de `images`
-- [ ] O texto do card alinha à esquerda
-- [ ] O link do card é `/relogio/<slug>?seller=alexandre` quando a query é essa
-- [ ] O href da foto é `/catalog/products/<slug>/img/<arquivo>`
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 4 testes neste arquivo, suíte inteira verde
+- [x] A imagem usa `object-contain` e a primeira entrada de `images`
+- [x] O texto do card alinha à esquerda
+- [x] O link do card é `/relogio/<slug>?seller=alexandre` quando a query é essa
+- [x] O href da foto é `/catalog/products/<slug>/img/<arquivo>`
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 4 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

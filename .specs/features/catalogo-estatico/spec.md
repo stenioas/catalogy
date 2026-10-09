@@ -349,7 +349,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-25 | P1: Build | Execute (T7) | Done |
 | CAT-26 | P1: Build | Execute (T7) | Done |
 | CAT-27 | P1: Build | Execute (T7) | Done |
-| CAT-28 | P1: Build | Specify | Pending |
+| CAT-28 | P1: Build | Execute (T21) | Done |
 | CAT-29 | P1: Build | Execute (T17) | Done |
 | CAT-30 | P1: Grade | Execute (T18) | Done |
 | CAT-31 | P1: Grade | Execute (T18) | Done |
@@ -373,11 +373,11 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-49 | P1: Grade | Specify | Pending |
 | CAT-50 | P1: Grade | Specify | Pending |
 | CAT-51 | P1: Grade | Specify | Pending |
-| CAT-52 | P1: Grade | Specify | Pending |
-| CAT-53 | P1: Grade | Specify | Pending |
-| CAT-54 | P1: Grade | Specify | Pending |
-| CAT-55 | P1: Grade | Specify | Pending |
-| CAT-56 | P1: Grade | Specify | Pending |
+| CAT-52 | P1: Grade | Execute (T21) | Done |
+| CAT-53 | P1: Grade | Execute (T21) | Done |
+| CAT-54 | P1: Grade | Execute (T21) | Done |
+| CAT-55 | P1: Grade | Execute (T21) | Done |
+| CAT-56 | P1: Grade | Execute (T21) | Done |
 | CAT-57 | P1: Página do relógio | Execute (T13) | Done |
 | CAT-58 | P1: Página do relógio | Specify | Pending |
 | CAT-59 | P1: Página do relógio | Specify | Pending |
