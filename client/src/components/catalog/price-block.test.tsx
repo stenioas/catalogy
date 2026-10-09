@@ -14,6 +14,16 @@ import { PriceBlock } from './price-block'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 
+function themeInlineBlock(css: string): string {
+  const start = css.indexOf('@theme inline')
+  const open = css.indexOf('{', start)
+  const close = css.indexOf('}', open)
+  if (start < 0 || open < 0 || close < 0) {
+    return ''
+  }
+  return css.slice(open + 1, close)
+}
+
 function renderPriceBlock(
   props: { price: number; listPrice?: number },
   theme: 'light' | 'dark' = 'light',
@@ -84,6 +94,18 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     )
     renderPriceBlock({ price: 369.9, listPrice: 450 }, 'light')
     expect(document.documentElement.classList.contains('dark')).toBe(false)
+  })
+
+  it('maps seal classes to their tokens inside @theme inline (CAT-104, CAT-105)', () => {
+    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf-8')
+    const block = themeInlineBlock(css)
+    expect(block).toContain(
+      '--color-primary-tint-foreground: var(--primary-tint-foreground);',
+    )
+    expect(block).toContain(
+      '--color-primary-tint-background: var(--primary-tint-background);',
+    )
+    expect(block).toContain('--color-ink-muted-48: var(--ink-muted-48);')
   })
 
   it('uses dark-theme primary-tint token values from index.css (CAT-107)', () => {

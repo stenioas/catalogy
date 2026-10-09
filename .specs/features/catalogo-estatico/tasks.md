@@ -96,6 +96,12 @@ T28 → T29 → T30 → T31 → T32 → T33
 T34 → T35 → T36 → T37
 ```
 
+### Phase 9: Cores do selo
+
+```
+T38 → T39
+```
+
 ---
 
 ## Task Breakdown
@@ -1173,10 +1179,58 @@ T34 → T35 → T36 → T37
 
 ---
 
+### Phase 9: Cores do selo
+
+### T38: Ligar classe ao token
+
+**What**: O teste do bloco de preço lê `index.css` e afirma, dentro de `@theme inline`, que `text-primary-tint-foreground`, `bg-primary-tint-background` e `text-ink-muted-48` apontam para os tokens homônimos.
+**Where**: `client/src/components/catalog/price-block.test.tsx`
+**Depends on**: T37
+**Reuses**: `client/src/index.css`
+**Complexity**: medium
+**Status**: done
+**Requirement**: CAT-104, CAT-105, CAT-106, CAT-107
+
+**Done when**:
+
+- [x] As três linhas de `@theme inline` estão afirmadas no valor exato
+- [x] Trocar o destino de uma delas deixa o teste vermelho
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `test(client): liga as classes do selo aos tokens`
+
+---
+
+### T39: Remover o gerador solto
+
+**What**: Apagar `scripts/gerar_site.py`, que ainda importa o pacote `gerador` removido.
+**Where**: `scripts/gerar_site.py`
+**Depends on**: T38
+**Reuses**: a T27
+**Complexity**: low
+**Requirement**: CAT-27
+
+**Done when**:
+
+- [ ] `scripts/gerar_site.py` não está mais no git
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: none
+**Gate**: quick
+
+**Commit**: `chore(catalogo): remove o script do gerador`
+
+---
+
 ## Phase Execution Map
 
 ```
-Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8
+Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8 → Phase 9
 
 Phase 1:  T1 → T2 → T4 → T5
           T1 → T3 → T5
@@ -1191,6 +1245,7 @@ Phase 5:  T23 → T24
 Phase 6:  T26 → T27
 Phase 7:  T28 → T29 → T30 → T31 → T32 → T33
 Phase 8:  T34 → T35 → T36 → T37
+Phase 9:  T38 → T39
 ```
 
 São 27 tarefas. Na execução isso vira cinco lotes, em ordem: fase 1; fase 2; fase 3; fases 4 e 5; fase 6. Cada lote espera o anterior terminar.
