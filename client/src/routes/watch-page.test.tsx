@@ -54,6 +54,29 @@ function renderWatchPage(slug = 'seculus-kit', seller: Seller = alexandre) {
   )
 }
 
+function installObserver(intersectionRatio: number) {
+  class FakeIntersectionObserver {
+    constructor(private readonly callback: IntersectionObserverCallback) {}
+
+    observe() {
+      this.callback(
+        [{ intersectionRatio, isIntersecting: intersectionRatio > 0 } as IntersectionObserverEntry],
+        this as unknown as IntersectionObserver,
+      )
+    }
+
+    unobserve() {}
+
+    disconnect() {}
+
+    takeRecords() {
+      return []
+    }
+  }
+
+  vi.stubGlobal('IntersectionObserver', FakeIntersectionObserver)
+}
+
 function follows(earlier: HTMLElement, later: HTMLElement) {
   return (
     earlier.compareDocumentPosition(later) & Node.DOCUMENT_POSITION_FOLLOWING
@@ -63,11 +86,14 @@ function follows(earlier: HTMLElement, later: HTMLElement) {
 describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   afterEach(() => {
     cleanup()
+    vi.unstubAllGlobals()
     mockProductsRef.current = []
   })
 
   beforeEach(() => {
     mockProductsRef.current = [makeProduct()]
+    // Ratio 1: in-page Eu quero! fully visible, so the sticky bar is absent.
+    installObserver(1)
   })
 
   it('places a back icon named Voltar to the left of Catálogo Alexandre, linking to /?seller=alexandre (CAT-57, CAT-58, CAT-59)', () => {
@@ -204,5 +230,26 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(within(column).getByText('Este relógio não está no catálogo.')).toBeDefined()
     expect(screen.queryByRole('link', { name: 'Eu quero!' })).toBeNull()
     expect(screen.queryByRole('heading', { name: 'Seculus' })).toBeNull()
+  })
+
+  it('shows the sticky bar with the same Eu quero! href as the in-page link at ratio 0.4 (CAT-89, CAT-90, CAT-151)', () => {
+    installObserver(0.4)
+    renderWatchPage()
+    const bar = screen.getByTestId('sticky-bar')
+    const barLink = within(bar).getByRole('link', { name: 'Eu quero!' })
+    const links = screen.getAllByRole('link', { name: 'Eu quero!' })
+    expect(links).toHaveLength(2)
+    const pageLink = links.find((link) => !bar.contains(link))
+    if (!pageLink) throw new Error('in-page Eu quero! link not found')
+    expect(barLink.getAttribute('href')).toBe(pageLink.getAttribute('href'))
+    expect(pageLink.getAttribute('href')).toContain('https://wa.me/5585997689165')
+    expect(within(bar).getByTestId('price-current').textContent).toBe('R$ 369,90')
+  })
+
+  it('hides the sticky bar at ratio 1 (CAT-89)', () => {
+    installObserver(1)
+    renderWatchPage()
+    expect(screen.queryByTestId('sticky-bar')).toBeNull()
+    expect(screen.getAllByRole('link', { name: 'Eu quero!' })).toHaveLength(1)
   })
 })

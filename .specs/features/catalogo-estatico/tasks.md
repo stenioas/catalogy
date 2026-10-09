@@ -982,14 +982,15 @@ T28 → T29 → T30 → T31 → T32 → T33
 **Depends on**: T29
 **Reuses**: `StickyBar`, `WantLink`
 **Complexity**: high
+**Status**: done
 **Requirement**: CAT-89, CAT-90, CAT-151
 
 **Done when**:
 
-- [ ] Interseção 0.4 mostra `sticky-bar` com o mesmo `href` do botão do meio
-- [ ] Interseção 1 esconde a barra
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] Interseção 0.4 mostra `sticky-bar` com o mesmo `href` do botão do meio
+- [x] Interseção 1 esconde a barra
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

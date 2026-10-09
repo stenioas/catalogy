@@ -1,8 +1,11 @@
+import { useRef } from 'react'
+
 import type { Product, Seller } from '@catalogo/shared'
 
 import { products } from '../catalog/products.generated'
 import { Carousel } from '../components/catalog/carousel'
 import { PriceBlock } from '../components/catalog/price-block'
+import { StickyBar } from '../components/catalog/sticky-bar'
 import { TopBar } from '../components/catalog/top-bar'
 import { WantLink } from '../components/catalog/want-link'
 import { productImageSrc } from '../components/catalog/watch-card'
@@ -20,6 +23,7 @@ function hasText(value: string | undefined): value is string {
 
 function WatchColumn({ product, phone }: { product: Product; phone: string }) {
   const specifications = product.specifications ?? []
+  const wantRef = useRef<HTMLAnchorElement>(null)
 
   return (
     <>
@@ -29,7 +33,7 @@ function WatchColumn({ product, phone }: { product: Product; phone: string }) {
       />
       <h1 className="m-0 font-display text-xl font-semibold text-ink">{product.title}</h1>
       <PriceBlock price={product.price} listPrice={product.listPrice} />
-      <WantLink phone={phone} title={product.title} />
+      <WantLink ref={wantRef} phone={phone} title={product.title} />
       {hasText(product.details) ? (
         <section>
           <h2 className="m-0 font-display text-lg font-semibold text-ink">Detalhes</h2>
@@ -57,6 +61,13 @@ function WatchColumn({ product, phone }: { product: Product; phone: string }) {
           <p className="m-0 text-[var(--ink-primary)]">{product.observations}</p>
         </section>
       ) : null}
+      <StickyBar
+        price={product.price}
+        listPrice={product.listPrice}
+        phone={phone}
+        title={product.title}
+        targetRef={wantRef}
+      />
     </>
   )
 }

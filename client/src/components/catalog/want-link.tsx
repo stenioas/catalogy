@@ -1,6 +1,9 @@
+import type { Ref } from 'react'
+
 export type WantLinkProps = {
   phone: string
   title: string
+  ref?: Ref<HTMLAnchorElement>
 }
 
 export function waUrl(phone: string, title: string): string {
@@ -8,9 +11,9 @@ export function waUrl(phone: string, title: string): string {
   return `https://wa.me/${phone}?text=${text}`
 }
 
-export function WantLink({ phone, title }: WantLinkProps) {
+export function WantLink({ phone, title, ref }: WantLinkProps) {
   return (
-    <a href={waUrl(phone, title)} target="_blank" rel="noopener noreferrer">
+    <a ref={ref} href={waUrl(phone, title)} target="_blank" rel="noopener noreferrer">
       Eu quero!
     </a>
   )
