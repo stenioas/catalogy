@@ -309,6 +309,7 @@ T26 → T27
 **Depends on**: T6
 **Reuses**: nada
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-22
 
 **Tools**:
@@ -318,10 +319,10 @@ T26 → T27
 
 **Done when**:
 
-- [ ] O arquivo tem essa linha
-- [ ] Um teste lê o arquivo e exige a linha
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 1 teste novo, suíte inteira verde
+- [x] O arquivo tem essa linha
+- [x] Um teste lê o arquivo e exige a linha
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 1 teste novo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
