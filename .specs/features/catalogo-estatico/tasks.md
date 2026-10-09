@@ -368,6 +368,7 @@ T26 → T27
 **Depends on**: T8, T9
 **Reuses**: `client/scripts/catalog.ts`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-20, CAT-21, CAT-22
 
 **Tools**:
@@ -377,11 +378,11 @@ T26 → T27
 
 **Done when**:
 
-- [ ] `pnpm build` sai com código zero no catálogo vazio de produtos
-- [ ] `client/dist` tem um só `index.html`, o `_redirects` e `catalog/sellers.json`
-- [ ] Não existe `client/dist/relogio/**/index.html`
-- [ ] Gate: `pnpm test && pnpm build`
-- [ ] Test count: pelo menos 3 testes em `client/scripts/dist.test.ts`, suíte inteira verde
+- [x] `pnpm build` sai com código zero no catálogo vazio de produtos
+- [x] `client/dist` tem um só `index.html`, o `_redirects` e `catalog/sellers.json`
+- [x] Não existe `client/dist/relogio/**/index.html`
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: pelo menos 3 testes em `client/scripts/dist.test.ts`, suíte inteira verde
 
 **Tests**: unit
 **Gate**: build
