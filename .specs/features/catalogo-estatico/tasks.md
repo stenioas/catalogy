@@ -829,6 +829,7 @@ T26 → T27
 **Depends on**: T19, T23
 **Reuses**: `floating-sticky-bar` do `DESIGN.md`, `PriceBlock`, `WantLink`
 **Complexity**: high
+**Status**: done
 **Requirement**: CAT-89, CAT-90, CAT-91, CAT-92, CAT-93, CAT-94, CAT-151
 
 **Tools**:
@@ -838,12 +839,12 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Um `IntersectionObserver` falso sem interseção total mostra a barra já na primeira pintura
-- [ ] Interseção total esconde a barra
-- [ ] O teste de largura cobre as duas disposições
-- [ ] O estilo usa `env(safe-area-inset-bottom)` e o blur `saturate(180%) blur(20px)`
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 4 testes neste arquivo, suíte inteira verde
+- [x] Um `IntersectionObserver` falso sem interseção total mostra a barra já na primeira pintura
+- [x] Interseção total esconde a barra
+- [x] O teste de largura cobre as duas disposições
+- [x] O estilo usa `env(safe-area-inset-bottom)` e o blur `saturate(180%) blur(20px)`
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 4 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
