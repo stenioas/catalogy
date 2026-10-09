@@ -515,6 +515,7 @@ T26 → T27
 **Depends on**: T14
 **Reuses**: `client/src/index.css`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-116, CAT-117, CAT-118, CAT-119
 
 **Tools**:
@@ -524,11 +525,11 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Sem chave, a classe segue `prefers-color-scheme`
-- [ ] O controle grava `light` ou `dark` em `theme:v1` e troca a classe
-- [ ] A foto não recebe filtro de tema
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 4 testes neste arquivo, suíte inteira verde
+- [x] Sem chave, a classe segue `prefers-color-scheme`
+- [x] O controle grava `light` ou `dark` em `theme:v1` e troca a classe
+- [x] A foto não recebe filtro de tema
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 4 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

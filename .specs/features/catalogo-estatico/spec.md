@@ -437,10 +437,10 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-113 | P1: Eu quero! | Specify | Pending |
 | CAT-114 | P1: Eu quero! | Specify | Pending |
 | CAT-115 | P1: Eu quero! | Specify | Pending |
-| CAT-116 | P1: Tema | Specify | Pending |
-| CAT-117 | P1: Tema | Specify | Pending |
-| CAT-118 | P1: Tema | Specify | Pending |
-| CAT-119 | P1: Tema | Specify | Pending |
+| CAT-116 | P1: Tema | Execute (T15) | Done |
+| CAT-117 | P1: Tema | Execute (T15) | Done |
+| CAT-118 | P1: Tema | Execute (T15) | Done |
+| CAT-119 | P1: Tema | Execute (T15) | Done |
 | CAT-120 | P1: Tema | Execute (T11) | Done |
 | CAT-121 | P1: Tema | Specify | Pending |
 | CAT-122 | P1: Tema | Specify | Pending |
@@ -474,7 +474,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-150 | Edge | Execute (T4) | Done |
 | CAT-151 | Edge | Specify | Pending |
 
-**Coverage:** 151 total, 37 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2; CAT-16–19, CAT-23, CAT-25–27 → T7; CAT-20 → T6, T10, T14, T27; CAT-22 → T8; CAT-24 → T1, T7; CAT-57 → T13; CAT-123, CAT-124 → T9), 114 unmapped.
+**Coverage:** 151 total, 41 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2; CAT-16–19, CAT-23, CAT-25–27 → T7; CAT-20 → T6, T10, T14, T27; CAT-22 → T8; CAT-24 → T1, T7; CAT-57 → T13; CAT-116–119 → T15; CAT-123, CAT-124 → T9), 110 unmapped.
 
 ---
 
