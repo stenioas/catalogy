@@ -322,10 +322,10 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| CAT-01 | P1: Contratos | Specify | Pending |
-| CAT-02 | P1: Contratos | Specify | Pending |
-| CAT-03 | P1: Contratos | Specify | Pending |
-| CAT-04 | P1: Contratos | Specify | Pending |
+| CAT-01 | P1: Contratos | Execute (T3) | Done |
+| CAT-02 | P1: Contratos | Execute (T3) | Done |
+| CAT-03 | P1: Contratos | Execute (T3) | Done |
+| CAT-04 | P1: Contratos | Execute (T3) | Done |
 | CAT-05 | P1: Contratos | Specify | Pending |
 | CAT-06 | P1: Contratos | Specify | Pending |
 | CAT-07 | P1: Contratos | Specify | Pending |

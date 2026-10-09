@@ -157,6 +157,7 @@ T26 → T27
 **Depends on**: T1
 **Reuses**: `shared/src/money.ts` não entra aqui
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-01, CAT-02, CAT-03, CAT-04
 
 **Tools**:
@@ -166,11 +167,11 @@ T26 → T27
 
 **Done when**:
 
-- [ ] `5511999999999` passa
-- [ ] `+55`, espaço, parêntese, letra, 9 dígitos e 16 dígitos falham
-- [ ] Slug fora de `^[a-z0-9]+(?:-[a-z0-9]+)*$` falha
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 6 testes neste arquivo, suíte inteira verde
+- [x] `5511999999999` passa
+- [x] `+55`, espaço, parêntese, letra, 9 dígitos e 16 dígitos falham
+- [x] Slug fora de `^[a-z0-9]+(?:-[a-z0-9]+)*$` falha
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 6 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
