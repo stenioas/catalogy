@@ -37,6 +37,19 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     vi.unstubAllGlobals()
   })
 
+  it('applies the light and dark theme colors the spec names (CAT-116)', () => {
+    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf-8')
+    const root = css.match(/:root\s*\{([^}]*)\}/)?.[1]
+    const dark = css.match(/\.dark\s*\{([^}]*)\}/)?.[1]
+    expect(root).toBeDefined()
+    expect(dark).toBeDefined()
+    expect(root).toMatch(/--primary-tint:\s*#0066cc\b/)
+    expect(root).toMatch(/--primary-tint-background:\s*rgba\(0,\s*102,\s*204,\s*0\.12\)/)
+    expect(root).toMatch(/--ink-muted-48:\s*#7a7a7a\b/)
+    expect(dark).toMatch(/--primary-tint:\s*#2997ff\b/)
+    expect(dark).toMatch(/--primary-tint-background:\s*rgba\(41,\s*151,\s*255,\s*0\.16\)/)
+  })
+
   it('follows prefers-color-scheme when localStorage has no theme:v1 (CAT-117)', () => {
     mockColorScheme(true)
     expect(readStoredTheme()).toBeNull()

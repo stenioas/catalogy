@@ -83,8 +83,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(catalog.getAttribute('href')).toBe(catalogHref)
   })
 
-  it('does not call history.back when Voltar or Catálogo {name} is activated (CAT-61)', () => {
+  it('does not call history.back or history.go when Voltar is activated (CAT-61)', () => {
     const backSpy = vi.spyOn(window.history, 'back').mockImplementation(() => {})
+    const goSpy = vi.spyOn(window.history, 'go').mockImplementation(() => {})
     const topBarSource = readFileSync(
       join(dirname(fileURLToPath(import.meta.url)), '../components/catalog/top-bar.tsx'),
       'utf8',
@@ -95,11 +96,14 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(back.getAttribute('href')).toBe('/?seller=alexandre')
     expect(catalog.getAttribute('href')).toBe('/?seller=alexandre')
     expect(back.tagName).toBe('A')
-    expect(topBarSource).not.toMatch(/history\s*\.\s*back/)
+    expect(topBarSource).not.toMatch(/history\s*\.\s*back\b/)
+    expect(topBarSource).not.toMatch(/history\s*\.\s*go\b/)
     fireEvent.click(back)
     fireEvent.click(catalog)
     expect(backSpy).not.toHaveBeenCalled()
+    expect(goSpy).not.toHaveBeenCalled()
     backSpy.mockRestore()
+    goSpy.mockRestore()
   })
 
   it('shows carousel, title, price, Eu quero!, then the sections that apply (CAT-62)', () => {

@@ -43,7 +43,11 @@ describe('WatchCard (CAT-28, CAT-52–CAT-56)', () => {
     const img = screen.getByRole('img', { name: 'Seculus' })
     expect(img.className).toMatch(/\bobject-contain\b/)
     const frame = img.parentElement
+    expect(frame).not.toBeNull()
     expect(frame?.className).toMatch(/\baspect-square\b/)
+    const backgroundTokens = frame?.className.match(/\bbg-\S+/g) ?? []
+    expect(backgroundTokens.filter((token) => token !== 'bg-transparent')).toEqual([])
+    expect(frame?.getAttribute('style') ?? '').not.toMatch(/background/i)
     expect(img.getAttribute('src')).toContain('foto-principal.webp')
     expect(img.getAttribute('src')).not.toContain('foto-extra.jpg')
   })

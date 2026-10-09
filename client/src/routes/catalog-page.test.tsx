@@ -138,6 +138,16 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(columnCount(grid.className, 1024)).toBe(3)
   })
 
+  it('paints the page background across the full viewport width (CAT-39)', () => {
+    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
+    const body = css.match(/(?:^|\n)body\s*\{([^}]*)\}/)?.[1]
+    expect(body).toBeDefined()
+    const widths = [...body!.matchAll(/width:\s*([^;]+)/g)].map((match) => match[1].trim())
+    expect(widths.at(-1)).toBe('100vw')
+    expect(body).not.toMatch(/max-width/)
+    expect(body).toMatch(/background-color:\s*var\(--background\)/)
+  })
+
   it('centers a column at most 1120px wide with 24px of horizontal padding (CAT-40, CAT-41, CAT-42)', () => {
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
     const block = css.match(/\.catalog-column\s*\{([^}]*)\}/)?.[1]
