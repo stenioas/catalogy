@@ -1266,13 +1266,14 @@ T40 → T41
 **Depends on**: T40
 **Reuses**: o teste de CAT-107
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-107
 
 **Done when**:
 
-- [ ] Trocar o alias do `.dark` para `var(--primary)` deixa o teste vermelho
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] Trocar o alias do `.dark` para `var(--primary)` deixa o teste vermelho
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

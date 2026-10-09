@@ -29,6 +29,11 @@ function rootBlock(css: string): string {
   return match?.[1] ?? ''
 }
 
+function darkBlock(css: string): string {
+  const match = css.match(/\.dark\s*\{([\s\S]*?)\}\s*\n\s*@theme/)
+  return match?.[1] ?? ''
+}
+
 function renderPriceBlock(
   props: { price: number; listPrice?: number },
   theme: 'light' | 'dark' = 'light',
@@ -119,8 +124,12 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
 
   it('uses dark-theme primary-tint token values from index.css (CAT-107)', () => {
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf-8')
-    expect(css).toMatch(
-      /\.dark[\s\S]*--primary-tint:\s*#2997ff[\s\S]*--primary-tint-background:\s*rgba\(41,\s*151,\s*255,\s*0\.16\)/,
+    const dark = darkBlock(css)
+    expect(dark).toMatch(
+      /--primary-tint:\s*#2997ff[\s\S]*--primary-tint-background:\s*rgba\(41,\s*151,\s*255,\s*0\.16\)/,
+    )
+    expect(dark).toMatch(
+      /^\s*--primary-tint-foreground:\s*var\(--primary-tint\);$/m,
     )
     localStorage.setItem(THEME_STORAGE_KEY, 'dark')
     renderPriceBlock({ price: 369.9, listPrice: 450 }, 'dark')
