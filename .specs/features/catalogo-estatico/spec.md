@@ -360,10 +360,10 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-36 | P1: Grade | Specify | Pending |
 | CAT-37 | P1: Grade | Specify | Pending |
 | CAT-38 | P1: Grade | Specify | Pending |
-| CAT-39 | P1: Grade | Specify | Pending |
-| CAT-40 | P1: Grade | Specify | Pending |
-| CAT-41 | P1: Grade | Specify | Pending |
-| CAT-42 | P1: Grade | Specify | Pending |
+| CAT-39 | P1: Grade | Execute (T12) | Done |
+| CAT-40 | P1: Grade | Execute (T12) | Done |
+| CAT-41 | P1: Grade | Execute (T12) | Done |
+| CAT-42 | P1: Grade | Execute (T12) | Done |
 | CAT-43 | P1: Grade | Specify | Pending |
 | CAT-44 | P1: Grade | Specify | Pending |
 | CAT-45 | P1: Grade | Specify | Pending |

@@ -426,6 +426,7 @@ T26 → T27
 **Depends on**: T11
 **Reuses**: `DESIGN.md`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-39, CAT-40, CAT-41, CAT-42
 
 **Tools**:
@@ -435,10 +436,10 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Existem variáveis do tema claro e do escuro, inclusive `primary-tint` e `ink-muted-48`
-- [ ] A classe da coluna limita a 1120 px e aplica 24 px nas laterais
-- [ ] Gate: `pnpm test && pnpm build`
-- [ ] Test count: a suíte não perde testes
+- [x] Existem variáveis do tema claro e do escuro, inclusive `primary-tint` e `ink-muted-48`
+- [x] A classe da coluna limita a 1120 px e aplica 24 px nas laterais
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: a suíte não perde testes
 
 **Tests**: none
 **Gate**: build
