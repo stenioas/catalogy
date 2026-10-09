@@ -338,6 +338,7 @@ T26 → T27
 **Depends on**: T7
 **Reuses**: `SellerSchema`
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-123, CAT-124
 
 **Tools**:
@@ -347,11 +348,11 @@ T26 → T27
 
 **Done when**:
 
-- [ ] O JSON tem alexandre `5585997689165`, manuela `5585996043447` e ana-claudia `5585992387201`
-- [ ] `validateCatalog` aceita esse diretório
-- [ ] Não há `products/*/product.json`
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 2 testes novos, suíte inteira verde
+- [x] O JSON tem alexandre `5585997689165`, manuela `5585996043447` e ana-claudia `5585992387201`
+- [x] `validateCatalog` aceita esse diretório
+- [x] Não há `products/*/product.json`
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 2 testes novos, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

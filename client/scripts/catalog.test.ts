@@ -2,6 +2,7 @@ import {
   existsSync,
   mkdtempSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   rmSync,
   writeFileSync,
@@ -251,5 +252,41 @@ describe('generated module path', () => {
     expect(gitignore.split('\n')).toContain(
       'client/src/catalog/products.generated.ts',
     )
+  })
+})
+
+describe('initial catalog in public/', () => {
+  const catalogDir = join(
+    dirname(fileURLToPath(import.meta.url)),
+    '..',
+    'public',
+    'catalog',
+  )
+
+  it('lists alexandre, manuela and ana-claudia with the initial phones', () => {
+    const sellers: unknown = JSON.parse(
+      readFileSync(join(catalogDir, 'sellers.json'), 'utf8'),
+    )
+    expect(sellers).toEqual([
+      { slug: 'alexandre', name: 'Alexandre', phone: '5585997689165' },
+      { slug: 'manuela', name: 'Manuela', phone: '5585996043447' },
+      { slug: 'ana-claudia', name: 'Ana Claudia', phone: '5585992387201' },
+    ])
+  })
+
+  it('accepts the public catalog directory with an empty product list', () => {
+    expect(validateCatalog(catalogDir)).toEqual([])
+  })
+
+  it('has no product.json under products/*/', () => {
+    const productsDir = join(catalogDir, 'products')
+    expect(existsSync(productsDir)).toBe(true)
+    for (const entry of readdirSync(productsDir, { withFileTypes: true })) {
+      if (entry.isDirectory()) {
+        expect(
+          existsSync(join(productsDir, entry.name, 'product.json')),
+        ).toBe(false)
+      }
+    }
   })
 })
