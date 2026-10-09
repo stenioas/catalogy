@@ -895,6 +895,7 @@ T26 → T27
 **Depends on**: T25, T26
 **Reuses**: nada do gerador
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-20
 
 **Tools**:
@@ -904,11 +905,11 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Essas cinco pastas não existem
-- [ ] `DESIGN.md` e `STACK-REFERENCIA.md` continuam
-- [ ] `pnpm test` e `pnpm build` passam
-- [ ] Gate: `pnpm test && pnpm build`
-- [ ] Test count: só a suíte Vitest, verde
+- [x] Essas cinco pastas não existem
+- [x] `DESIGN.md` e `STACK-REFERENCIA.md` continuam
+- [x] `pnpm test` e `pnpm build` passam
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: só a suíte Vitest, verde
 
 **Tests**: none
 **Gate**: build

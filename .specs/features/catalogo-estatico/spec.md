@@ -9,7 +9,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 - [ ] `pnpm build` emite `client/dist` pronto para o Cloudflare Pages, com um HTML só e o catálogo validado.
 - [ ] Com `?seller=` válido, a grade e a página do relógio mostram preço, selo e **Eu quero!** para o WhatsApp daquele vendedor.
 - [ ] Uma skill local grava `product.json` e as fotos. Quem commita é a pessoa.
-- [ ] Depois do aceite desta spec, saem o gerador Python, o `site/` gerado, os testes desse gerador e as specs `vitrine-relogios` e `ajustes-site`. Ficam `DESIGN.md` e `STACK-REFERENCIA.md`.
+- [x] Depois do aceite desta spec, saem o gerador Python, o `site/` gerado, os testes desse gerador e as specs `vitrine-relogios` e `ajustes-site`. Ficam `DESIGN.md` e `STACK-REFERENCIA.md`.
 
 ## Out of Scope
 
@@ -341,7 +341,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-17 | P1: Build | Execute (T7) | Done |
 | CAT-18 | P1: Build | Execute (T7) | Done |
 | CAT-19 | P1: Build | Execute (T7) | Done |
-| CAT-20 | P1: Build | Execute (T6, T10, T14, T27) | In progress (T14: entrada montada) |
+| CAT-20 | P1: Build | Execute (T6, T10, T14, T27) | Done |
 | CAT-21 | P1: Build | Execute (T10) | Done |
 | CAT-22 | P1: Build | Execute (T8) | Done |
 | CAT-23 | P1: Build | Execute (T7) | Done |
