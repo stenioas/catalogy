@@ -36,11 +36,17 @@ function frame() {
   return screen.getByTestId('carousel-frame')
 }
 
-function frameHeight(box: HTMLElement): number {
-  const shown = [...box.querySelectorAll('img')].find((img) => img.getAttribute('alt'))
-  const inline = shown?.style.height
-  if (inline) return Number.parseFloat(inline)
-  return box.getBoundingClientRect().height
+function frameBox(box: HTMLElement) {
+  const rect = box.getBoundingClientRect()
+  return {
+    height: box.style.height,
+    width: box.style.width,
+    minHeight: box.style.minHeight,
+    maxHeight: box.style.maxHeight,
+    aspectRatio: box.style.aspectRatio,
+    rectWidth: rect.width,
+    rectHeight: rect.height,
+  }
 }
 
 function follows(earlier: HTMLElement, later: HTMLElement) {
@@ -107,11 +113,11 @@ describe('Carousel (CAT-70–CAT-86)', () => {
   it('keeps the same square frame height when the photo changes (CAT-73)', () => {
     renderCarousel()
     const box = frame()
-    const before = frameHeight(box)
+    const before = frameBox(box)
     fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     expect(frame()).toBe(box)
     expect(box.className).toMatch(/\baspect-square\b/)
-    expect(frameHeight(box)).toBe(before)
+    expect(frameBox(box)).toEqual(before)
     expect(box.contains(screen.getByRole('img', { name: 'Seculus' }))).toBe(true)
     expect(shownSrc()).toBe(photos[1])
   })

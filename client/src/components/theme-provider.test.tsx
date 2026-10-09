@@ -17,6 +17,25 @@ import {
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
+function colorProp(block: string, name: string): string | undefined {
+  const match = block.match(new RegExp(`(?:^|[\\s;{])${name}\\s*:\\s*([^;}]+)`))
+  return match?.[1]?.trim()
+}
+
+function resolvedColor(root: string, dark: string, value: string | undefined): string {
+  const seen = new Set<string>()
+  let current = value?.trim() ?? ''
+  while (true) {
+    const ref = current.match(/^var\(\s*(--[a-z0-9-]+)\s*\)$/)
+    if (!ref) return current
+    if (seen.has(ref[1])) return current
+    seen.add(ref[1])
+    const next = colorProp(dark, ref[1]) ?? colorProp(root, ref[1])
+    if (!next) return current
+    current = next
+  }
+}
+
 function mockColorScheme(dark: boolean) {
   vi.stubGlobal(
     'matchMedia',
@@ -48,6 +67,18 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(root).toMatch(/--ink-muted-48:\s*#7a7a7a\b/)
     expect(dark).toMatch(/--primary-tint:\s*#2997ff\b/)
     expect(dark).toMatch(/--primary-tint-background:\s*rgba\(41,\s*151,\s*255,\s*0\.16\)/)
+    expect(colorProp(root, '--primary')).toBe('#0066cc')
+    expect(colorProp(root, '--canvas')).toBe('#ffffff')
+    expect(colorProp(root, '--canvas-parchment')).toBe('#f5f5f7')
+    expect(colorProp(root, '--ink')).toBe('#1d1d1f')
+    expect(resolvedColor(root, dark, colorProp(dark, '--background'))).toBe('#272729')
+
+    const design = readFileSync(join(clientRoot, '../DESIGN.md'), 'utf-8')
+    expect(design).toContain('{colors.primary}` — #0066cc')
+    expect(design).toContain('{colors.canvas}` — #ffffff')
+    expect(design).toContain('{colors.canvas-parchment}` — #f5f5f7')
+    expect(design).toContain('{colors.ink}` — #1d1d1f')
+    expect(design).toContain('{colors.surface-tile-1}` — #272729')
   })
 
   it('follows prefers-color-scheme when localStorage has no theme:v1 (CAT-117)', () => {
