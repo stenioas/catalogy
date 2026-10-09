@@ -1029,13 +1029,14 @@ T28 → T29 → T30 → T31 → T32 → T33
 **Depends on**: T31
 **Reuses**: `productImageSrc`
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-28
 
 **Done when**:
 
-- [ ] O `src` da imagem `Seculus` é `/catalog/products/seculus-kit/img/foto.webp`
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] O `src` da imagem `Seculus` é `/catalog/products/seculus-kit/img/foto.webp`
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

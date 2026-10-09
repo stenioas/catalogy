@@ -138,6 +138,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   it('shows carousel, title, price, Eu quero!, then the sections that apply (CAT-62)', () => {
     renderWatchPage()
     const carousel = screen.getByTestId('watch-carousel')
+    expect(screen.getByRole('img', { name: 'Seculus' }).getAttribute('src')).toBe(
+      '/catalog/products/seculus-kit/img/foto.webp',
+    )
     const title = screen.getByRole('heading', { name: 'Seculus' })
     const price = screen.getByTestId('price-block')
     const want = screen.getByRole('link', { name: 'Eu quero!' })
