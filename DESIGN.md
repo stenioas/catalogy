@@ -24,6 +24,7 @@ Store and shop surfaces retain the same chassis but switch modes. The product co
 - **Action Blue** (`{colors.primary}` — #0066cc): The single brand-level interactive color. All text links, all blue pill CTAs ("Learn more", "Buy"), and the focus ring root. This is Apple's quiet but universal "click me" signal. Press state shifts to a slightly darker variant via the active scale transform rather than a hex change.
 - **Focus Blue** (`{colors.primary-focus}` — #0071e3): A marginally brighter sibling of Action Blue, reserved for the keyboard focus ring on buttons (`outline: 2px solid`).
 - **Sky Link Blue** (`{colors.primary-on-dark}` — #2997ff): A brighter blue used on dark surfaces for in-copy links and inline callouts, where Action Blue would disappear against the tile background.
+- **Primary Tint** (`{colors.primary-tint}`): Discount badge pill. Light theme: text `#0066cc`, background `rgba(0, 102, 204, 0.12)`. Dark theme: text `#2997ff`, background `rgba(41, 151, 255, 0.16)`.
 
 ### Surface
 - **Pure White** (`{colors.canvas}` — #ffffff): The dominant canvas. Content, utility cards, store tiles, configurator grids.

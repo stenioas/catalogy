@@ -398,6 +398,7 @@ T26 → T27
 **Depends on**: T10
 **Reuses**: as cores já descritas na spec
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-120
 
 **Tools**:
@@ -407,9 +408,9 @@ T26 → T27
 
 **Done when**:
 
-- [ ] O `DESIGN.md` nomeia o token e os quatro valores (texto e fundo, claro e escuro)
-- [ ] Gate: `pnpm test && pnpm build`
-- [ ] Test count: a suíte não perde testes
+- [x] O `DESIGN.md` nomeia o token e os quatro valores (texto e fundo, claro e escuro)
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: a suíte não perde testes
 
 **Tests**: none
 **Gate**: build

@@ -441,7 +441,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-117 | P1: Tema | Specify | Pending |
 | CAT-118 | P1: Tema | Specify | Pending |
 | CAT-119 | P1: Tema | Specify | Pending |
-| CAT-120 | P1: Tema | Specify | Pending |
+| CAT-120 | P1: Tema | Execute (T11) | Done |
 | CAT-121 | P1: Tema | Specify | Pending |
 | CAT-122 | P1: Tema | Specify | Pending |
 | CAT-123 | P1: Tema | Execute (T9) | Done |
