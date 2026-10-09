@@ -90,6 +90,12 @@ T26 → T27
 T28 → T29 → T30 → T31 → T32 → T33
 ```
 
+### Phase 8: Segunda rodada do Verifier
+
+```
+T34 → T35 → T36 → T37
+```
+
 ---
 
 ## Task Breakdown
@@ -1069,10 +1075,105 @@ T28 → T29 → T30 → T31 → T32 → T33
 
 ---
 
+### Phase 8: Segunda rodada do Verifier
+
+### T34: Catálogo vazio não é invariante
+
+**What**: O teste deixa de exigir que `public/catalog/products` nunca tenha `product.json`. `validateCatalog` no diretório público continua sem lançar. O `.gitkeep` permanece. Um relógio temporário não deixa `pnpm test` nem `pnpm build` vermelhos.
+**Where**: `client/scripts/catalog.test.ts`
+**Depends on**: T33
+**Reuses**: o relógio temporário da T29
+**Complexity**: medium
+**Status**: done
+**Requirement**: CAT-124
+
+**Done when**:
+
+- [x] Com um relógio válido temporário, `pnpm test` e `pnpm build` saem 0
+- [x] O relógio temporário não fica no commit
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: build
+
+**Commit**: `test(client): deixa o primeiro relógio passar na suíte`
+
+---
+
+### T35: Autoplay dentro de act
+
+**What**: O teste de CAT-83 avança 10 segundos dentro de `act` e continua esperando a primeira foto.
+**Where**: `client/src/components/catalog/carousel.test.tsx`
+**Depends on**: T34
+**Reuses**: `shownSrc`
+**Complexity**: medium
+**Requirement**: CAT-83
+
+**Done when**:
+
+- [ ] `vi.advanceTimersByTime(10_000)` roda dentro de `act`
+- [ ] A foto visível continua a primeira
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `test(client): avança o autoplay dentro de act`
+
+---
+
+### T36: Slug inválido no relógio
+
+**What**: `ProductSchema` recusa `Seculus`, `seculus-`, `-seculus` e `seculus--kit`, e aceita `seculus-kit`.
+**Where**: `shared/src/schemas/product.test.ts`
+**Depends on**: T35
+**Reuses**: os casos de slug do vendedor
+**Complexity**: low
+**Requirement**: CAT-04
+
+**Done when**:
+
+- [ ] Os quatro slugs inválidos têm `success` falso
+- [ ] `seculus-kit` tem `success` verdadeiro
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `test(shared): recusa slug inválido no relógio`
+
+---
+
+### T37: Ordem que separa português de code point
+
+**What**: `compareTitles` e a grade ordenam `Zeta`, `addiesdive`, `Épico` como `addiesdive`, `Épico`, `Zeta`.
+**Where**: `shared/src/money.test.ts`
+**Depends on**: T36
+**Reuses**: `compareTitles`, a grade
+**Complexity**: medium
+**Requirement**: CAT-46
+
+**Done when**:
+
+- [ ] `compareTitles` devolve essa ordem
+- [ ] A grade devolve a mesma ordem
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `test(client): separa a ordem pt-BR do code point`
+
+---
+
 ## Phase Execution Map
 
 ```
-Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7
+Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8
 
 Phase 1:  T1 → T2 → T4 → T5
           T1 → T3 → T5
@@ -1086,6 +1187,7 @@ Phase 5:  T23 → T24
           T23 → T25
 Phase 6:  T26 → T27
 Phase 7:  T28 → T29 → T30 → T31 → T32 → T33
+Phase 8:  T34 → T35 → T36 → T37
 ```
 
 São 27 tarefas. Na execução isso vira cinco lotes, em ordem: fase 1; fase 2; fase 3; fases 4 e 5; fase 6. Cada lote espera o anterior terminar.

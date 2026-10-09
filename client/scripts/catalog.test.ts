@@ -2,7 +2,6 @@ import {
   existsSync,
   mkdtempSync,
   mkdirSync,
-  readdirSync,
   readFileSync,
   rmSync,
   writeFileSync,
@@ -319,17 +318,5 @@ describe('initial catalog in public/', () => {
     expect(
       existsSync(join(oneWatchDir, 'products', 'seculus-kit', 'img', 'frente.png')),
     ).toBe(true)
-  })
-
-  it('has no product.json under products/*/', () => {
-    const productsDir = join(catalogDir, 'products')
-    expect(existsSync(productsDir)).toBe(true)
-    for (const entry of readdirSync(productsDir, { withFileTypes: true })) {
-      if (entry.isDirectory()) {
-        expect(
-          existsSync(join(productsDir, entry.name, 'product.json')),
-        ).toBe(false)
-      }
-    }
   })
 })
