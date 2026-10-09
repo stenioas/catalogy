@@ -604,6 +604,7 @@ T26 → T27
 **Depends on**: T16, T17
 **Reuses**: `client/src/catalog/sellers.ts`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-30, CAT-31, CAT-32, CAT-33, CAT-34, CAT-35, CAT-149
 
 **Tools**:
@@ -613,11 +614,11 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Sem query o texto é `Este link está incompleto ou o vendedor não existe.`
-- [ ] `seller=Alexandre` cai no mesmo erro
-- [ ] Não há lista de relógios nem **Eu quero!**
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 3 testes neste arquivo, suíte inteira verde
+- [x] Sem query o texto é `Este link está incompleto ou o vendedor não existe.`
+- [x] `seller=Alexandre` cai no mesmo erro
+- [x] Não há lista de relógios nem **Eu quero!**
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 3 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

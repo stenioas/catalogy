@@ -351,12 +351,12 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-27 | P1: Build | Execute (T7) | Done |
 | CAT-28 | P1: Build | Specify | Pending |
 | CAT-29 | P1: Build | Execute (T17) | Done |
-| CAT-30 | P1: Grade | Specify | Pending |
-| CAT-31 | P1: Grade | Specify | Pending |
-| CAT-32 | P1: Grade | Specify | Pending |
-| CAT-33 | P1: Grade | Specify | Pending |
-| CAT-34 | P1: Grade | Specify | Pending |
-| CAT-35 | P1: Grade | Specify | Pending |
+| CAT-30 | P1: Grade | Execute (T18) | Done |
+| CAT-31 | P1: Grade | Execute (T18) | Done |
+| CAT-32 | P1: Grade | Execute (T18) | Done |
+| CAT-33 | P1: Grade | Execute (T18) | Done |
+| CAT-34 | P1: Grade | Execute (T18) | Done |
+| CAT-35 | P1: Grade | Execute (T18) | Done |
 | CAT-36 | P1: Grade | Execute (T16) | Done |
 | CAT-37 | P1: Grade | Execute (T16) | Done |
 | CAT-38 | P1: Grade | Execute (T16) | Done |
@@ -470,7 +470,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-146 | P1: Skill | Specify | Pending |
 | CAT-147 | P1: Skill | Specify | Pending |
 | CAT-148 | P1: Skill | Specify | Pending |
-| CAT-149 | Edge | Specify | Pending |
+| CAT-149 | Edge | Execute (T18) | Done |
 | CAT-150 | Edge | Execute (T4) | Done |
 | CAT-151 | Edge | Specify | Pending |
 
