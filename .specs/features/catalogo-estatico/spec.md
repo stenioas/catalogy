@@ -420,17 +420,17 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-96 | P1: Preço | Execute (T2) | Done |
 | CAT-97 | P1: Preço | Execute (T2) | Done |
 | CAT-98 | P1: Preço | Execute (T2) | Done |
-| CAT-99 | P1: Preço | Specify | Pending |
-| CAT-100 | P1: Preço | Specify | Pending |
-| CAT-101 | P1: Preço | Specify | Pending |
-| CAT-102 | P1: Preço | Specify | Pending |
-| CAT-103 | P1: Preço | Specify | Pending |
-| CAT-104 | P1: Preço | Specify | Pending |
-| CAT-105 | P1: Preço | Specify | Pending |
-| CAT-106 | P1: Preço | Specify | Pending |
-| CAT-107 | P1: Preço | Specify | Pending |
-| CAT-108 | P1: Preço | Specify | Pending |
-| CAT-109 | P1: Preço | Specify | Pending |
+| CAT-99 | P1: Preço | Execute (T19) | Done |
+| CAT-100 | P1: Preço | Execute (T19) | Done |
+| CAT-101 | P1: Preço | Execute (T19) | Done |
+| CAT-102 | P1: Preço | Execute (T19) | Done |
+| CAT-103 | P1: Preço | Execute (T19) | Done |
+| CAT-104 | P1: Preço | Execute (T19) | Done |
+| CAT-105 | P1: Preço | Execute (T19) | Done |
+| CAT-106 | P1: Preço | Execute (T19) | Done |
+| CAT-107 | P1: Preço | Execute (T19) | Done |
+| CAT-108 | P1: Preço | Execute (T19) | Done |
+| CAT-109 | P1: Preço | Execute (T19) | Done |
 | CAT-110 | P1: Eu quero! | Specify | Pending |
 | CAT-111 | P1: Eu quero! | Specify | Pending |
 | CAT-112 | P1: Eu quero! | Specify | Pending |
@@ -474,7 +474,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-150 | Edge | Execute (T4) | Done |
 | CAT-151 | Edge | Specify | Pending |
 
-**Coverage:** 151 total, 46 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2; CAT-16–19, CAT-23, CAT-25–27 → T7; CAT-20 → T6, T10, T14, T27; CAT-22 → T8; CAT-24 → T1, T7; CAT-36–38, CAT-44–45 → T16; CAT-57 → T13; CAT-116–119 → T15; CAT-123, CAT-124 → T9), 105 unmapped.
+**Coverage:** 151 total, 57 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2; CAT-16–19, CAT-23, CAT-25–27 → T7; CAT-20 → T6, T10, T14, T27; CAT-22 → T8; CAT-24 → T1, T7; CAT-36–38, CAT-44–45 → T16; CAT-57 → T13; CAT-99–109 → T19; CAT-116–119 → T15; CAT-123, CAT-124 → T9), 94 unmapped.
 
 ---
 

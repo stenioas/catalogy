@@ -636,6 +636,7 @@ T26 → T27
 **Depends on**: T2
 **Reuses**: `formatBrl`, `discountPercent`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-95, CAT-96, CAT-97, CAT-98, CAT-99, CAT-100, CAT-101, CAT-102, CAT-103, CAT-104, CAT-105, CAT-106, CAT-107, CAT-108, CAT-109
 
 **Tools**:
@@ -645,13 +646,13 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Sem `listPrice`, só `R$ 369,90` para `369.9`
-- [ ] Com `450` e `369.90`, o texto riscado é `De R$ 450,00` e o selo é `−17%`
-- [ ] Desconto abaixo de 1% não renderiza o selo
-- [ ] O selo usa as cores do tema claro e do escuro, sem verde e sem vermelho
-- [ ] O riscado usa `ink-muted-48`
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 6 testes neste arquivo, suíte inteira verde
+- [x] Sem `listPrice`, só `R$ 369,90` para `369.9`
+- [x] Com `450` e `369.90`, o texto riscado é `De R$ 450,00` e o selo é `−17%`
+- [x] Desconto abaixo de 1% não renderiza o selo
+- [x] O selo usa as cores do tema claro e do escuro, sem verde e sem vermelho
+- [x] O riscado usa `ink-muted-48`
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 6 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

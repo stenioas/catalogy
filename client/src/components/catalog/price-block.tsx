@@ -1,0 +1,43 @@
+import { discountPercent, formatBrl } from '@catalogo/shared'
+
+export type PriceBlockProps = {
+  price: number
+  listPrice?: number
+}
+
+export function PriceBlock({ price, listPrice }: PriceBlockProps) {
+  const currentLabel = formatBrl(price)
+
+  if (listPrice === undefined) {
+    return (
+      <div data-testid="price-block">
+        <span data-testid="price-current">{currentLabel}</span>
+      </div>
+    )
+  }
+
+  const percent = discountPercent(price, listPrice)
+  const showBadge = percent >= 1
+
+  return (
+    <div data-testid="price-block" className="flex flex-col items-start gap-0.5">
+      <span
+        data-testid="price-list"
+        className="text-ink-muted-48 line-through"
+      >
+        De {formatBrl(listPrice)}
+      </span>
+      <div className="flex flex-wrap items-center gap-2">
+        <span data-testid="price-current">{currentLabel}</span>
+        {showBadge ? (
+          <span
+            data-testid="price-badge"
+            className="rounded-full bg-primary-tint-background px-2 py-0.5 text-sm font-medium text-primary-tint-foreground"
+          >
+            −{percent}%
+          </span>
+        ) : null}
+      </div>
+    </div>
+  )
+}
