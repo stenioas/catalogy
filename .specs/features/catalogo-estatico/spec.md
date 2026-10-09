@@ -378,7 +378,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-54 | P1: Grade | Specify | Pending |
 | CAT-55 | P1: Grade | Specify | Pending |
 | CAT-56 | P1: Grade | Specify | Pending |
-| CAT-57 | P1: Página do relógio | Specify | Pending |
+| CAT-57 | P1: Página do relógio | Execute (T13) | Done |
 | CAT-58 | P1: Página do relógio | Specify | Pending |
 | CAT-59 | P1: Página do relógio | Specify | Pending |
 | CAT-60 | P1: Página do relógio | Specify | Pending |
@@ -474,7 +474,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-150 | Edge | Execute (T4) | Done |
 | CAT-151 | Edge | Specify | Pending |
 
-**Coverage:** 151 total, 36 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2; CAT-16–19, CAT-23, CAT-25–27 → T7; CAT-20 → T6, T10, T14, T27; CAT-22 → T8; CAT-24 → T1, T7; CAT-123, CAT-124 → T9), 115 unmapped.
+**Coverage:** 151 total, 37 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2; CAT-16–19, CAT-23, CAT-25–27 → T7; CAT-20 → T6, T10, T14, T27; CAT-22 → T8; CAT-24 → T1, T7; CAT-57 → T13; CAT-123, CAT-124 → T9), 114 unmapped.
 
 ---
 

@@ -457,6 +457,7 @@ T26 → T27
 **Depends on**: T10
 **Reuses**: o router do `STACK-REFERENCIA.md`
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-57
 
 **Tools**:
@@ -466,10 +467,10 @@ T26 → T27
 
 **Done when**:
 
-- [ ] As duas rotas resolvem
-- [ ] A search string `seller` chega ao loader
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 2 testes neste arquivo, suíte inteira verde
+- [x] As duas rotas resolvem
+- [x] A search string `seller` chega ao loader
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 2 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
