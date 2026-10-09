@@ -762,6 +762,7 @@ T26 → T27
 **Depends on**: T20, T21, T22
 **Reuses**: `TopBar`, `PriceBlock`, `WantLink`
 **Complexity**: high
+**Status**: done
 **Requirement**: CAT-57, CAT-58, CAT-59, CAT-60, CAT-61, CAT-62, CAT-63, CAT-64, CAT-65, CAT-66, CAT-67, CAT-68, CAT-69, CAT-87, CAT-88
 
 **Tools**:
@@ -771,14 +772,14 @@ T26 → T27
 
 **Done when**:
 
-- [ ] O ícone tem nome acessível `Voltar` e o href é `/?seller=alexandre`
-- [ ] `Catálogo {name}` aponta para o mesmo href
-- [ ] O teste não encontra chamada a `history.back`
-- [ ] `Detalhes`, `Especificações` e `Observações` somem quando o campo falta, é `""` ou a lista é vazia
-- [ ] A tabela não tem cabeçalho e o texto alinha à esquerda
-- [ ] Slug ausente mostra `Este relógio não está no catálogo.` e não mostra **Eu quero!**
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 8 testes neste arquivo, suíte inteira verde
+- [x] O ícone tem nome acessível `Voltar` e o href é `/?seller=alexandre`
+- [x] `Catálogo {name}` aponta para o mesmo href
+- [x] O teste não encontra chamada a `history.back`
+- [x] `Detalhes`, `Especificações` e `Observações` somem quando o campo falta, é `""` ou a lista é vazia
+- [x] A tabela não tem cabeçalho e o texto alinha à esquerda
+- [x] Slug ausente mostra `Este relógio não está no catálogo.` e não mostra **Eu quero!**
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 8 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
