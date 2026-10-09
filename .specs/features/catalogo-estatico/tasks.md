@@ -575,6 +575,7 @@ T26 → T27
 **Depends on**: T13
 **Reuses**: `SellerSchema`
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-29
 
 **Tools**:
@@ -584,10 +585,10 @@ T26 → T27
 
 **Done when**:
 
-- [ ] A função pede exatamente `/catalog/sellers.json`
-- [ ] Resposta inválida rejeita
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 2 testes neste arquivo, suíte inteira verde
+- [x] A função pede exatamente `/catalog/sellers.json`
+- [x] Resposta inválida rejeita
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 2 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

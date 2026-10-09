@@ -350,7 +350,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-26 | P1: Build | Execute (T7) | Done |
 | CAT-27 | P1: Build | Execute (T7) | Done |
 | CAT-28 | P1: Build | Specify | Pending |
-| CAT-29 | P1: Build | Specify | Pending |
+| CAT-29 | P1: Build | Execute (T17) | Done |
 | CAT-30 | P1: Grade | Specify | Pending |
 | CAT-31 | P1: Grade | Specify | Pending |
 | CAT-32 | P1: Grade | Specify | Pending |
