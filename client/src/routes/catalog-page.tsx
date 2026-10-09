@@ -4,7 +4,6 @@ import { compareTitles } from '@catalogo/shared'
 import { products } from '../catalog/products.generated'
 import { TopBar } from '../components/catalog/top-bar'
 import { WatchCard } from '../components/catalog/watch-card'
-import { ThemeProvider } from '../components/theme-provider'
 
 export const EMPTY_VITRINE_MESSAGE = 'A vitrine ainda não tem relógios.'
 
@@ -18,7 +17,7 @@ export function CatalogPage({ seller }: CatalogPageProps) {
   )
 
   return (
-    <ThemeProvider>
+    <>
       <TopBar sellerName={seller.name} />
       <div data-testid="catalog-page-column" className="catalog-column py-8">
         {sortedProducts.length === 0 ? (
@@ -40,6 +39,6 @@ export function CatalogPage({ seller }: CatalogPageProps) {
           </ul>
         )}
       </div>
-    </ThemeProvider>
+    </>
   )
 }

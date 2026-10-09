@@ -131,6 +131,17 @@ describe('pnpm build emitindo dist estático', () => {
     expect(output).toMatch(/failed the shared contract/)
   }, 120_000)
 
+  it('empacota o texto Eu quero no dist (CAT-30)', () => {
+    const files = listRelativeFiles(distDir).filter((file) =>
+      /\.(js|html)$/.test(file),
+    )
+    expect(files.length).toBeGreaterThan(0)
+    const found = files.some((file) =>
+      readFileSync(join(distDir, file), 'utf-8').includes('Eu quero'),
+    )
+    expect(found).toBe(true)
+  })
+
   it('inclui CSS e JS empacotados e não gera HTML por relógio em relogio/', () => {
     expect(distAssetExtensions('.css').length).toBeGreaterThan(0)
     expect(distAssetExtensions('.js').length).toBeGreaterThan(0)

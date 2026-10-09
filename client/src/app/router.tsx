@@ -1,8 +1,13 @@
 import {
   createBrowserRouter,
+  useLoaderData,
   type LoaderFunctionArgs,
   type RouteObject,
 } from 'react-router-dom'
+
+import { CatalogPage } from '../routes/catalog-page'
+import { SellerGate } from '../routes/seller-gate'
+import { WatchPage } from '../routes/watch-page'
 
 export type CatalogLoaderData = {
   seller: string | null
@@ -34,11 +39,21 @@ export async function watchLoader({
 }
 
 function CatalogRoute() {
-  return <div data-testid="catalog-route" />
+  const { seller } = useLoaderData() as CatalogLoaderData
+  return (
+    <SellerGate sellerQuery={seller}>
+      {(resolved) => <CatalogPage seller={resolved} />}
+    </SellerGate>
+  )
 }
 
 function WatchRoute() {
-  return <div data-testid="watch-route" />
+  const { seller, slug } = useLoaderData() as WatchLoaderData
+  return (
+    <SellerGate sellerQuery={seller}>
+      {(resolved) => <WatchPage seller={resolved} slug={slug} />}
+    </SellerGate>
+  )
 }
 
 export const appRoutes: RouteObject[] = [

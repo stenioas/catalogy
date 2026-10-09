@@ -6,7 +6,6 @@ import { PriceBlock } from '../components/catalog/price-block'
 import { TopBar } from '../components/catalog/top-bar'
 import { WantLink } from '../components/catalog/want-link'
 import { productImageSrc } from '../components/catalog/watch-card'
-import { ThemeProvider } from '../components/theme-provider'
 
 export const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
 
@@ -67,7 +66,7 @@ export function WatchPage({ seller, slug }: WatchPageProps) {
   const catalogHref = `/?seller=${seller.slug}`
 
   return (
-    <ThemeProvider>
+    <>
       <TopBar sellerName={seller.name} catalogHref={catalogHref} />
       <div data-testid="watch-page-column" className="catalog-column flex flex-col items-start gap-4 py-8 text-left">
         {product ? (
@@ -76,6 +75,6 @@ export function WatchPage({ seller, slug }: WatchPageProps) {
           <p className="m-0 text-[var(--ink-primary)]">{MISSING_WATCH_MESSAGE}</p>
         )}
       </div>
-    </ThemeProvider>
+    </>
   )
 }

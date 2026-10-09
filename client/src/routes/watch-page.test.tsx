@@ -7,6 +7,7 @@ import { cleanup, fireEvent, render, screen, within } from '@testing-library/rea
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
+import { ThemeProvider } from '../components/theme-provider'
 import { WatchPage } from './watch-page'
 
 const alexandre: Seller = {
@@ -45,9 +46,11 @@ vi.mock('../catalog/products.generated', () => ({
 
 function renderWatchPage(slug = 'seculus-kit', seller: Seller = alexandre) {
   return render(
-    <MemoryRouter initialEntries={[`/relogio/${slug}?seller=${seller.slug}`]}>
-      <WatchPage seller={seller} slug={slug} />
-    </MemoryRouter>,
+    <ThemeProvider>
+      <MemoryRouter initialEntries={[`/relogio/${slug}?seller=${seller.slug}`]}>
+        <WatchPage seller={seller} slug={slug} />
+      </MemoryRouter>
+    </ThemeProvider>,
   )
 }
 

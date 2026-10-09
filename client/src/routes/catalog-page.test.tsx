@@ -9,6 +9,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
 import { writeProductsModule } from '../../scripts/catalog'
+import { ThemeProvider } from '../components/theme-provider'
 import { CatalogPage } from './catalog-page'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
@@ -90,9 +91,11 @@ function productsFromModule(source: string): Product[] {
 
 function renderCatalogPage(seller: Seller = alexandre) {
   return render(
-    <MemoryRouter initialEntries={[`/?seller=${seller.slug}`]}>
-      <CatalogPage seller={seller} />
-    </MemoryRouter>,
+    <ThemeProvider>
+      <MemoryRouter initialEntries={[`/?seller=${seller.slug}`]}>
+        <CatalogPage seller={seller} />
+      </MemoryRouter>
+    </ThemeProvider>,
   )
 }
 

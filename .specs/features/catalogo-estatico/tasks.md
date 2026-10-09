@@ -84,6 +84,12 @@ T23 → T25
 T26 → T27
 ```
 
+### Phase 7: Correções do Verifier
+
+```
+T28 → T29 → T30 → T31 → T32 → T33
+```
+
 ---
 
 ## Task Breakdown
@@ -918,10 +924,150 @@ T26 → T27
 
 ---
 
+### Phase 7: Correções do Verifier
+
+### T28: Ligar as páginas ao router
+
+**What**: As rotas deixam de renderizar `div`s vazias. Cada elemento lê `useLoaderData()`, passa por `SellerGate` e renderiza `CatalogPage` em `/` e `WatchPage` em `/relogio/:slug`. O `ThemeProvider` fica só em `main.tsx`.
+**Where**: `client/src/app/router.tsx`
+**Depends on**: T27
+**Reuses**: `SellerGate`, `CatalogPage`, `WatchPage`
+**Complexity**: high
+**Status**: done
+**Requirement**: CAT-30, CAT-36, CAT-57
+
+**Done when**:
+
+- [x] `AppRoot` em `/?seller=alexandre` mostra `Catálogo Alexandre`
+- [x] `/` sem query mostra `Este link está incompleto ou o vendedor não existe.`
+- [x] Depois do build, `dist` contém `Eu quero`
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: build
+
+**Commit**: `fix(client): liga as páginas ao router`
+
+---
+
+### T29: Build com o primeiro relógio
+
+**What**: O prebuild deixa de exigir `products` igual a `[]`. Afirma que `validateCatalog` não lança e que o módulo foi escrito. O teste de catálogo vazio que roda no build sai do caminho do `pnpm build`.
+**Where**: `client/scripts/prebuild-catalog.test.ts`
+**Depends on**: T28
+**Reuses**: `client/scripts/catalog.test.ts`
+**Complexity**: medium
+**Requirement**: CAT-17, CAT-20, CAT-27
+
+**Done when**:
+
+- [ ] Um catálogo com um relógio válido termina `pnpm build` com código 0
+- [ ] A foto desse relógio existe em `dist/catalog/products/<slug>/img/`
+- [ ] Gate: `pnpm test && pnpm build`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: build
+
+**Commit**: `fix(client): aceita o primeiro relógio no build`
+
+---
+
+### T30: Montar a barra de baixo
+
+**What**: `WantLink` aceita `ref`. `WatchColumn` observa esse botão e renderiza `StickyBar` com o mesmo preço, telefone e título.
+**Where**: `client/src/routes/watch-page.tsx`
+**Depends on**: T29
+**Reuses**: `StickyBar`, `WantLink`
+**Complexity**: high
+**Requirement**: CAT-89, CAT-90, CAT-151
+
+**Done when**:
+
+- [ ] Interseção 0.4 mostra `sticky-bar` com o mesmo `href` do botão do meio
+- [ ] Interseção 1 esconde a barra
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `fix(client): monta a barra de baixo na página`
+
+---
+
+### T31: Teste sem o módulo gerado
+
+**What**: `pnpm test` passa num checkout limpo, sem `pnpm build` antes. O mock de `products.generated` não exige o arquivo gitignored no disco, ou o script de teste gera o módulo antes.
+**Where**: `client/package.json`
+**Depends on**: T30
+**Reuses**: `catalog-page.test.tsx`, `watch-page.test.tsx`
+**Complexity**: medium
+**Requirement**: CAT-24
+
+**Done when**:
+
+- [ ] Worktree limpo com `pnpm install` e `pnpm test`, sem `pnpm build`, fica verde
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `fix(client): testa sem o módulo gerado`
+
+---
+
+### T32: URL da foto na página do relógio
+
+**What**: O teste da página afirma que a foto visível aponta para `/catalog/products/seculus-kit/img/foto.webp`.
+**Where**: `client/src/routes/watch-page.test.tsx`
+**Depends on**: T31
+**Reuses**: `productImageSrc`
+**Complexity**: low
+**Requirement**: CAT-28
+
+**Done when**:
+
+- [ ] O `src` da imagem `Seculus` é `/catalog/products/seculus-kit/img/foto.webp`
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `test(client): afirma a url da foto na página`
+
+---
+
+### T33: Foto sem tratamento de cor
+
+**What**: A spec passa a exigir que a foto do relógio não use `filter`, `opacity` nem `mix-blend-mode` nos dois temas. O teste lê o CSS e as classes reais. A constante morta `watchPhotoImgClassName` sai.
+**Where**: `client/src/components/theme-provider.test.tsx`
+**Depends on**: T32
+**Reuses**: `client/src/index.css`
+**Complexity**: high
+**Requirement**: CAT-119
+
+**Done when**:
+
+- [ ] O teste falha se um `img` ganhar `filter`, `opacity` ou `mix-blend-mode`
+- [ ] A constante morta não existe
+- [ ] Gate: `pnpm test`
+- [ ] Test count: suíte inteira verde
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `test(client): trava a foto sem tratamento de cor`
+
+---
+
 ## Phase Execution Map
 
 ```
-Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6
+Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7
 
 Phase 1:  T1 → T2 → T4 → T5
           T1 → T3 → T5
@@ -934,6 +1080,7 @@ Phase 4:  T19 → T21 → T22
 Phase 5:  T23 → T24
           T23 → T25
 Phase 6:  T26 → T27
+Phase 7:  T28 → T29 → T30 → T31 → T32 → T33
 ```
 
 São 27 tarefas. Na execução isso vira cinco lotes, em ordem: fase 1; fase 2; fase 3; fases 4 e 5; fase 6. Cada lote espera o anterior terminar.
