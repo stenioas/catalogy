@@ -341,7 +341,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-17 | P1: Build | Execute (T7) | Done |
 | CAT-18 | P1: Build | Execute (T7) | Done |
 | CAT-19 | P1: Build | Execute (T7) | Done |
-| CAT-20 | P1: Build | Execute (T6, T10, T14, T27) | In progress |
+| CAT-20 | P1: Build | Execute (T6, T10, T14, T27) | In progress (T14: entrada montada) |
 | CAT-21 | P1: Build | Execute (T10) | Done |
 | CAT-22 | P1: Build | Execute (T8) | Done |
 | CAT-23 | P1: Build | Execute (T7) | Done |

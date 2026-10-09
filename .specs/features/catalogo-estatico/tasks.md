@@ -486,6 +486,7 @@ T26 → T27
 **Depends on**: T12, T13
 **Reuses**: `client/src/app/router.tsx`
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-20
 
 **Tools**:
@@ -495,10 +496,10 @@ T26 → T27
 
 **Done when**:
 
-- [ ] `client/index.html` aponta para `main.tsx`
-- [ ] `pnpm build` continua verde
-- [ ] Gate: `pnpm test && pnpm build`
-- [ ] Test count: a suíte não perde testes
+- [x] `client/index.html` aponta para `main.tsx`
+- [x] `pnpm build` continua verde
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: a suíte não perde testes
 
 **Tests**: unit
 **Gate**: build
