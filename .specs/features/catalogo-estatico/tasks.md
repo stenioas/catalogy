@@ -545,6 +545,7 @@ T26 → T27
 **Depends on**: T15
 **Reuses**: `client/src/components/theme-provider.tsx`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-36, CAT-37, CAT-38, CAT-44, CAT-45
 
 **Tools**:
@@ -554,11 +555,11 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Com seller Alexandre o texto é `Catálogo Alexandre`
-- [ ] Na grade não existe botão com nome acessível `Voltar`
-- [ ] O controle de tema fica à direita
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 3 testes neste arquivo, suíte inteira verde
+- [x] Com seller Alexandre o texto é `Catálogo Alexandre`
+- [x] Na grade não existe botão com nome acessível `Voltar`
+- [x] O controle de tema fica à direita
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 3 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
