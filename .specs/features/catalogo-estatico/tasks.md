@@ -1212,13 +1212,14 @@ T38 → T39
 **Depends on**: T38
 **Reuses**: a T27
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-27
 
 **Done when**:
 
-- [ ] `scripts/gerar_site.py` não está mais no git
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] `scripts/gerar_site.py` não está mais no git
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: none
 **Gate**: quick
