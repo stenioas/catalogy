@@ -126,6 +126,7 @@ T26 → T27
 **Depends on**: T1
 **Reuses**: `shared/src/sentinel.test.ts`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-08, CAT-09, CAT-46, CAT-47, CAT-48, CAT-95, CAT-96, CAT-97, CAT-98
 
 **Tools**:
@@ -135,12 +136,12 @@ T26 → T27
 
 **Done when**:
 
-- [ ] `369.999` vira `369.99` sem arredondar, e `369.9` continua aceitável para quem formatar
-- [ ] `formatBrl(369.9)` é `R$ 369,90` e `formatBrl(1234.5)` é `R$ 1.234,50`
-- [ ] `discountPercent(369.9, 450)` é `17`
-- [ ] `compareTitles` ordena Addiesdive, CURREN, Seculus e é estável
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 8 testes neste arquivo, suíte inteira verde
+- [x] `369.999` vira `369.99` sem arredondar, e `369.9` continua aceitável para quem formatar
+- [x] `formatBrl(369.9)` é `R$ 369,90` e `formatBrl(1234.5)` é `R$ 1.234,50`
+- [x] `discountPercent(369.9, 450)` é `17`
+- [x] `compareTitles` ordena Addiesdive, CURREN, Seculus e é estável
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 8 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

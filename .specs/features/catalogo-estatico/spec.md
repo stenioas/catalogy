@@ -329,8 +329,8 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-05 | P1: Contratos | Specify | Pending |
 | CAT-06 | P1: Contratos | Specify | Pending |
 | CAT-07 | P1: Contratos | Specify | Pending |
-| CAT-08 | P1: Contratos | Specify | Pending |
-| CAT-09 | P1: Contratos | Specify | Pending |
+| CAT-08 | P1: Contratos | Execute (T2) | Done |
+| CAT-09 | P1: Contratos | Execute (T2) | Done |
 | CAT-10 | P1: Contratos | Specify | Pending |
 | CAT-11 | P1: Contratos | Specify | Pending |
 | CAT-12 | P1: Contratos | Specify | Pending |
@@ -367,9 +367,9 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-43 | P1: Grade | Specify | Pending |
 | CAT-44 | P1: Grade | Specify | Pending |
 | CAT-45 | P1: Grade | Specify | Pending |
-| CAT-46 | P1: Grade | Specify | Pending |
-| CAT-47 | P1: Grade | Specify | Pending |
-| CAT-48 | P1: Grade | Specify | Pending |
+| CAT-46 | P1: Grade | Execute (T2) | Done |
+| CAT-47 | P1: Grade | Execute (T2) | Done |
+| CAT-48 | P1: Grade | Execute (T2) | Done |
 | CAT-49 | P1: Grade | Specify | Pending |
 | CAT-50 | P1: Grade | Specify | Pending |
 | CAT-51 | P1: Grade | Specify | Pending |
@@ -416,10 +416,10 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-92 | P1: Página do relógio | Specify | Pending |
 | CAT-93 | P1: Página do relógio | Specify | Pending |
 | CAT-94 | P1: Página do relógio | Specify | Pending |
-| CAT-95 | P1: Preço | Specify | Pending |
-| CAT-96 | P1: Preço | Specify | Pending |
-| CAT-97 | P1: Preço | Specify | Pending |
-| CAT-98 | P1: Preço | Specify | Pending |
+| CAT-95 | P1: Preço | Execute (T2) | Done |
+| CAT-96 | P1: Preço | Execute (T2) | Done |
+| CAT-97 | P1: Preço | Execute (T2) | Done |
+| CAT-98 | P1: Preço | Execute (T2) | Done |
 | CAT-99 | P1: Preço | Specify | Pending |
 | CAT-100 | P1: Preço | Specify | Pending |
 | CAT-101 | P1: Preço | Specify | Pending |
@@ -474,7 +474,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-150 | Edge | Specify | Pending |
 | CAT-151 | Edge | Specify | Pending |
 
-**Coverage:** 151 total, 1 mapped to tasks (CAT-24 → T1), 150 unmapped.
+**Coverage:** 151 total, 10 mapped to tasks (CAT-24 → T1; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2), 141 unmapped.
 
 ---
 
