@@ -958,14 +958,15 @@ T28 → T29 → T30 → T31 → T32 → T33
 **Depends on**: T28
 **Reuses**: `client/scripts/catalog.test.ts`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-17, CAT-20, CAT-27
 
 **Done when**:
 
-- [ ] Um catálogo com um relógio válido termina `pnpm build` com código 0
-- [ ] A foto desse relógio existe em `dist/catalog/products/<slug>/img/`
-- [ ] Gate: `pnpm test && pnpm build`
-- [ ] Test count: suíte inteira verde
+- [x] Um catálogo com um relógio válido termina `pnpm build` com código 0
+- [x] A foto desse relógio existe em `dist/catalog/products/<slug>/img/`
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: build

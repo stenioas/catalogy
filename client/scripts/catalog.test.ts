@@ -274,8 +274,51 @@ describe('initial catalog in public/', () => {
     ])
   })
 
-  it('accepts the public catalog directory with an empty product list', () => {
-    expect(validateCatalog(catalogDir)).toEqual([])
+  it('validates the committed public catalog', () => {
+    expect(() => validateCatalog(catalogDir)).not.toThrow()
+    expect(Array.isArray(validateCatalog(catalogDir))).toBe(true)
+  })
+
+  it('writes the products module for one valid watch', () => {
+    const oneWatchDir = tempDir()
+    writeFileSync(
+      join(oneWatchDir, 'sellers.json'),
+      JSON.stringify([
+        {
+          slug: 'alexandre',
+          name: 'Alexandre',
+          phone: '5585997689165',
+        },
+      ]),
+    )
+    writeProduct(
+      oneWatchDir,
+      'seculus-kit',
+      {
+        slug: 'seculus-kit',
+        title: 'Seculus',
+        price: 369.9,
+        images: ['frente.png'],
+      },
+      { 'frente.png': photoBytes },
+    )
+
+    const products = validateCatalog(oneWatchDir)
+    expect(products).toEqual([
+      {
+        slug: 'seculus-kit',
+        title: 'Seculus',
+        price: 369.9,
+        images: ['frente.png'],
+      },
+    ])
+    const outFile = join(tempDir(), 'products.generated.ts')
+    writeProductsModule(products, outFile)
+    expect(existsSync(outFile)).toBe(true)
+    expect(readFileSync(outFile, 'utf8')).toContain('export const products')
+    expect(
+      existsSync(join(oneWatchDir, 'products', 'seculus-kit', 'img', 'frente.png')),
+    ).toBe(true)
   })
 
   it('has no product.json under products/*/', () => {
