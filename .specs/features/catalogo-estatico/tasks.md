@@ -1132,14 +1132,15 @@ T34 → T35 → T36 → T37
 **Depends on**: T35
 **Reuses**: os casos de slug do vendedor
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-04
 
 **Done when**:
 
-- [ ] Os quatro slugs inválidos têm `success` falso
-- [ ] `seculus-kit` tem `success` verdadeiro
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] Os quatro slugs inválidos têm `success` falso
+- [x] `seculus-kit` tem `success` verdadeiro
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

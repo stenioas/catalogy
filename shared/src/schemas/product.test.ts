@@ -152,3 +152,27 @@ describe('ProductSchema optional fields (CAT-13)', () => {
     expect(result.success).toBe(true)
   })
 })
+
+describe('ProductSchema slug (CAT-04)', () => {
+  it('rejects a slug outside lowercase letters, digits, and single hyphens', () => {
+    expect(
+      ProductSchema.safeParse({ ...baseProduct, slug: 'Seculus' }).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse({ ...baseProduct, slug: 'seculus-' }).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse({ ...baseProduct, slug: '-seculus' }).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse({ ...baseProduct, slug: 'seculus--kit' }).success,
+    ).toBe(false)
+  })
+
+  it('accepts a slug matching the contract pattern', () => {
+    expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
+    expect(
+      ProductSchema.safeParse({ ...baseProduct, slug: 'seculus-kit' }).success,
+    ).toBe(true)
+  })
+})
