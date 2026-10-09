@@ -100,6 +100,11 @@ describe('StickyBar (CAT-89–CAT-94, CAT-151)', () => {
     expect(link.getAttribute('target')).toBe('_blank')
     expect(link.getAttribute('rel')).toBe('noopener noreferrer')
     expect(bar.contains(link)).toBe(true)
+    expect(bar.className).toMatch(/\bfixed\b/)
+    expect(bar.className).toMatch(/\binset-x-0\b/)
+    expect(bar.classList.contains('catalog-column')).toBe(false)
+    const row = screen.getByTestId('sticky-bar-row')
+    expect(row.classList.contains('catalog-column')).toBe(true)
   })
 
   it('hides the bar on first paint when the button is fully inside the viewport (CAT-90, CAT-151)', () => {

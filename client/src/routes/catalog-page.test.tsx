@@ -1,9 +1,17 @@
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import type { Product, Seller } from '@catalogo/shared'
 import { cleanup, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
+import { writeProductsModule } from '../../scripts/catalog'
 import { CatalogPage } from './catalog-page'
+
+const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
 const alexandre: Seller = {
   slug: 'alexandre',
@@ -35,6 +43,50 @@ vi.mock('../catalog/products.generated', () => ({
     return mockProductsRef.current
   },
 }))
+
+function lengthToPx(token: string): number {
+  const value = token.trim()
+  if (value.endsWith('px')) return Number.parseFloat(value)
+  if (value.endsWith('rem')) return Number.parseFloat(value) * 16
+  throw new Error(`unsupported length ${value}`)
+}
+
+function breakpointToken(name: 'md' | 'lg'): string {
+  const appCss = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
+  const override = appCss.match(
+    new RegExp(`--breakpoint-${name}:\\s*([^;]+)`),
+  )
+  if (override?.[1]) return override[1]
+  const theme = readFileSync(
+    join(clientRoot, 'node_modules/tailwindcss/theme.css'),
+    'utf8',
+  )
+  const fallback = theme.match(new RegExp(`--breakpoint-${name}:\\s*([^;]+)`))
+  if (!fallback?.[1]) throw new Error(`missing breakpoint ${name}`)
+  return fallback[1]
+}
+
+function columnCount(className: string, width: number): number {
+  const md = lengthToPx(breakpointToken('md'))
+  const lg = lengthToPx(breakpointToken('lg'))
+  const base = className.match(/(?:^|\s)grid-cols-(\d+)\b/)
+  let cols = base?.[1] ? Number(base[1]) : 0
+  const rules = [...className.matchAll(/\b(md|lg):grid-cols-(\d+)\b/g)]
+    .map((match) => ({
+      min: match[1] === 'md' ? md : lg,
+      cols: Number(match[2]),
+    }))
+    .sort((a, b) => a.min - b.min)
+  for (const rule of rules) {
+    if (width >= rule.min) cols = rule.cols
+  }
+  return cols
+}
+
+function productsFromModule(source: string): Product[] {
+  const prefix = 'export const products = '
+  return JSON.parse(source.slice(prefix.length)) as Product[]
+}
 
 function renderCatalogPage(seller: Seller = alexandre) {
   return render(
@@ -76,6 +128,23 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(grid.className).toMatch(/\bgrid-cols-1\b/)
     expect(grid.className).toMatch(/\bmd:grid-cols-2\b/)
     expect(grid.className).toMatch(/\blg:grid-cols-3\b/)
+    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
+    expect(css).not.toMatch(/html\s*\{[^}]*font-size/)
+    expect(lengthToPx(breakpointToken('md'))).toBe(768)
+    expect(lengthToPx(breakpointToken('lg'))).toBe(1024)
+    expect(columnCount(grid.className, 767)).toBe(1)
+    expect(columnCount(grid.className, 768)).toBe(2)
+    expect(columnCount(grid.className, 1023)).toBe(2)
+    expect(columnCount(grid.className, 1024)).toBe(3)
+  })
+
+  it('centers a column at most 1120px wide with 24px of horizontal padding (CAT-40, CAT-41, CAT-42)', () => {
+    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
+    const block = css.match(/\.catalog-column\s*\{([^}]*)\}/)?.[1]
+    expect(block).toBeDefined()
+    expect(block).toMatch(/max-width:\s*1120px/)
+    expect(block).toMatch(/margin-inline:\s*auto/)
+    expect(block).toMatch(/padding-inline:\s*24px/)
   })
 
   it('shows the empty vitrine copy and keeps Catálogo {name} in the top bar (CAT-121, CAT-122, AC6–7)', () => {
@@ -120,5 +189,38 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     const secondPass = screen.getAllByRole('heading', { level: 2 }).map((n) => n.textContent)
     expect(secondPass).toEqual(firstPass)
     expect(secondPass).toEqual(['Addiesdive', 'CURREN', 'Seculus'])
+  })
+
+  it('keeps the same title order across two generated product modules (CAT-47, AC18)', () => {
+    const shuffled = [
+      makeProduct('seculus-watch', 'Seculus'),
+      makeProduct('addiesdive-watch', 'Addiesdive'),
+      makeProduct('curren-watch', 'CURREN'),
+    ]
+    const dir = mkdtempSync(join(tmpdir(), 'catalog-order-'))
+    try {
+      const firstFile = join(dir, 'first.ts')
+      const secondFile = join(dir, 'second.ts')
+      writeProductsModule(shuffled, firstFile)
+      writeProductsModule([...shuffled].reverse(), secondFile)
+
+      mockProductsRef.current = productsFromModule(readFileSync(firstFile, 'utf8'))
+      renderCatalogPage()
+      const firstBuild = screen
+        .getAllByRole('heading', { level: 2 })
+        .map((node) => node.textContent)
+      cleanup()
+
+      mockProductsRef.current = productsFromModule(readFileSync(secondFile, 'utf8'))
+      renderCatalogPage()
+      const secondBuild = screen
+        .getAllByRole('heading', { level: 2 })
+        .map((node) => node.textContent)
+
+      expect(firstBuild).toEqual(['Addiesdive', 'CURREN', 'Seculus'])
+      expect(secondBuild).toEqual(firstBuild)
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
   })
 })

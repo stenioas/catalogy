@@ -4,10 +4,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Seller } from '@catalogo/shared'
 
 import { loadSellers } from '../catalog/sellers'
-import {
-  SELLER_GATE_ERROR_MESSAGE,
-  SellerGate,
-} from './seller-gate'
+import { SellerGate } from './seller-gate'
+
+const SELLER_ERROR = 'Este link está incompleto ou o vendedor não existe.'
 
 vi.mock('../catalog/sellers', () => ({
   loadSellers: vi.fn(),
@@ -52,21 +51,23 @@ describe('SellerGate (CAT-30–CAT-35, CAT-149)', () => {
 
   it('shows the seller error when the URL has no seller query (CAT-30)', async () => {
     renderGate(null)
-    expect(
-      await screen.findByText(SELLER_GATE_ERROR_MESSAGE),
-    ).toBeDefined()
+    const message = await screen.findByText(SELLER_ERROR)
+    expect(message.textContent).toBe(SELLER_ERROR)
+    expect(message.closest('.catalog-column')).not.toBeNull()
   })
 
-  it('shows the seller error when seller is Alexandre with wrong slug casing (CAT-149, CAT-33)', async () => {
+  it('shows the seller error when seller is Alexandre with wrong slug casing (CAT-149, CAT-33, CAT-34, CAT-35)', async () => {
     renderGate('Alexandre')
-    expect(
-      await screen.findByText(SELLER_GATE_ERROR_MESSAGE),
-    ).toBeDefined()
+    const message = await screen.findByText(SELLER_ERROR)
+    expect(message.textContent).toBe(SELLER_ERROR)
+    expect(message.closest('.catalog-column')).not.toBeNull()
+    expect(screen.queryByTestId('watch-grid')).toBeNull()
+    expect(screen.queryByRole('link', { name: 'Eu quero!' })).toBeNull()
   })
 
   it('does not list watches or show Eu quero! in the error state (CAT-31, CAT-32, CAT-34, CAT-35)', async () => {
     renderGate(null)
-    await screen.findByText(SELLER_GATE_ERROR_MESSAGE)
+    await screen.findByText(SELLER_ERROR)
     expect(screen.queryByTestId('watch-grid')).toBeNull()
     expect(screen.queryByRole('link', { name: 'Eu quero!' })).toBeNull()
   })
@@ -74,9 +75,7 @@ describe('SellerGate (CAT-30–CAT-35, CAT-149)', () => {
   it('shows the seller error when sellers.json cannot be loaded (design: fetch failure)', async () => {
     vi.mocked(loadSellers).mockRejectedValue(new Error('network'))
     renderGate('alexandre')
-    expect(
-      await screen.findByText(SELLER_GATE_ERROR_MESSAGE),
-    ).toBeDefined()
+    expect(await screen.findByText(SELLER_ERROR)).toBeDefined()
     expect(screen.queryByTestId('watch-grid')).toBeNull()
   })
 })

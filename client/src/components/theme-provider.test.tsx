@@ -82,6 +82,18 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(css).not.toMatch(/\.dark\s+img\s*\{[^}]*filter:/)
   })
 
+  it('defines {colors.primary-tint} with the light and dark badge colors (CAT-120)', () => {
+    const design = readFileSync(join(clientRoot, '../DESIGN.md'), 'utf-8')
+    const line = design
+      .split('\n')
+      .find((row) => row.includes('{colors.primary-tint}'))
+    expect(line).toBeDefined()
+    expect(line).toContain('#0066cc')
+    expect(line).toContain('rgba(0, 102, 204, 0.12)')
+    expect(line).toContain('#2997ff')
+    expect(line).toContain('rgba(41, 151, 255, 0.16)')
+  })
+
   it('applies theme:v1 from an inline script in index.html before React loads (CAT-117, CAT-118)', () => {
     const html = readFileSync(join(clientRoot, 'index.html'), 'utf-8')
     expect(html).toContain('theme:v1')

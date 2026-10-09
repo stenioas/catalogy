@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import type { Product, Seller } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -81,9 +85,19 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('does not call history.back when Voltar or Catálogo {name} is activated (CAT-61)', () => {
     const backSpy = vi.spyOn(window.history, 'back').mockImplementation(() => {})
+    const topBarSource = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), '../components/catalog/top-bar.tsx'),
+      'utf8',
+    )
     renderWatchPage()
-    fireEvent.click(screen.getByRole('link', { name: 'Voltar' }))
-    fireEvent.click(screen.getByRole('link', { name: 'Catálogo Alexandre' }))
+    const back = screen.getByRole('link', { name: 'Voltar' })
+    const catalog = screen.getByRole('link', { name: 'Catálogo Alexandre' })
+    expect(back.getAttribute('href')).toBe('/?seller=alexandre')
+    expect(catalog.getAttribute('href')).toBe('/?seller=alexandre')
+    expect(back.tagName).toBe('A')
+    expect(topBarSource).not.toMatch(/history\s*\.\s*back/)
+    fireEvent.click(back)
+    fireEvent.click(catalog)
     expect(backSpy).not.toHaveBeenCalled()
     backSpy.mockRestore()
   })
@@ -104,6 +118,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(follows(details, specs)).toBe(true)
     expect(follows(specs, notes)).toBe(true)
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
+    const column = screen.getByTestId('watch-page-column')
+    expect(column.classList.contains('catalog-column')).toBe(true)
+    expect(within(column).getByTestId('watch-carousel')).toBeDefined()
   })
 
   it('shows Detalhes when details is a non-empty string, including whitespace (CAT-63)', () => {
@@ -175,7 +192,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('shows the missing-watch message and hides Eu quero! when the slug is absent (CAT-87, CAT-88)', () => {
     renderWatchPage('slug-ausente')
-    expect(screen.getByText('Este relógio não está no catálogo.')).toBeDefined()
+    const column = screen.getByTestId('watch-page-column')
+    expect(column.classList.contains('catalog-column')).toBe(true)
+    expect(within(column).getByText('Este relógio não está no catálogo.')).toBeDefined()
     expect(screen.queryByRole('link', { name: 'Eu quero!' })).toBeNull()
     expect(screen.queryByRole('heading', { name: 'Seculus' })).toBeNull()
   })
