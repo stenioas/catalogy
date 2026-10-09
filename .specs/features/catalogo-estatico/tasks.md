@@ -795,6 +795,7 @@ T26 → T27
 **Depends on**: T23
 **Reuses**: nada de biblioteca de carrossel
 **Complexity**: high
+**Status**: done
 **Requirement**: CAT-70, CAT-71, CAT-72, CAT-73, CAT-74, CAT-75, CAT-76, CAT-77, CAT-78, CAT-79, CAT-80, CAT-81, CAT-82, CAT-83, CAT-84, CAT-85, CAT-86
 
 **Tools**:
@@ -804,15 +805,15 @@ T26 → T27
 
 **Done when**:
 
-- [ ] A ordem é a de `images` e a caixa tem `aspect-square`
-- [ ] Próxima na última volta para a primeira; anterior na primeira volta para a última
-- [ ] Cada bolinha escolhe a foto
-- [ ] Arraste horizontal dá a volta nos dois sentidos
-- [ ] A transição é 300 ms e 0 ms com `prefers-reduced-motion: reduce`
-- [ ] Com uma foto não há seta, bolinha nem gesto
-- [ ] ArrowRight e ArrowLeft com foco seguem a mesma volta
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 8 testes neste arquivo, suíte inteira verde
+- [x] A ordem é a de `images` e a caixa tem `aspect-square`
+- [x] Próxima na última volta para a primeira; anterior na primeira volta para a última
+- [x] Cada bolinha escolhe a foto
+- [x] Arraste horizontal dá a volta nos dois sentidos
+- [x] A transição é 300 ms e 0 ms com `prefers-reduced-motion: reduce`
+- [x] Com uma foto não há seta, bolinha nem gesto
+- [x] ArrowRight e ArrowLeft com foco seguem a mesma volta
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 8 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

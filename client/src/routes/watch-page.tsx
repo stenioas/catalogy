@@ -1,6 +1,7 @@
 import type { Product, Seller } from '@catalogo/shared'
 
 import { products } from '../catalog/products.generated'
+import { Carousel } from '../components/catalog/carousel'
 import { PriceBlock } from '../components/catalog/price-block'
 import { TopBar } from '../components/catalog/top-bar'
 import { WantLink } from '../components/catalog/want-link'
@@ -23,13 +24,10 @@ function WatchColumn({ product, phone }: { product: Product; phone: string }) {
 
   return (
     <>
-      <div data-testid="watch-carousel">
-        <img
-          src={productImageSrc(product.slug, product.images[0])}
-          alt={product.title}
-          className="h-full w-full object-contain"
-        />
-      </div>
+      <Carousel
+        images={product.images.map((file) => productImageSrc(product.slug, file))}
+        alt={product.title}
+      />
       <h1 className="m-0 font-display text-xl font-semibold text-ink">{product.title}</h1>
       <PriceBlock price={product.price} listPrice={product.listPrice} />
       <WantLink phone={phone} title={product.title} />

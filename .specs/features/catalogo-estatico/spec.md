@@ -391,23 +391,23 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-67 | P1: Página do relógio | Execute (T23) | Done |
 | CAT-68 | P1: Página do relógio | Execute (T23) | Done |
 | CAT-69 | P1: Página do relógio | Execute (T23) | Done |
-| CAT-70 | P1: Página do relógio | Specify | Pending |
-| CAT-71 | P1: Página do relógio | Specify | Pending |
-| CAT-72 | P1: Página do relógio | Specify | Pending |
-| CAT-73 | P1: Página do relógio | Specify | Pending |
-| CAT-74 | P1: Página do relógio | Specify | Pending |
-| CAT-75 | P1: Página do relógio | Specify | Pending |
-| CAT-76 | P1: Página do relógio | Specify | Pending |
-| CAT-77 | P1: Página do relógio | Specify | Pending |
-| CAT-78 | P1: Página do relógio | Specify | Pending |
-| CAT-79 | P1: Página do relógio | Specify | Pending |
-| CAT-80 | P1: Página do relógio | Specify | Pending |
-| CAT-81 | P1: Página do relógio | Specify | Pending |
-| CAT-82 | P1: Página do relógio | Specify | Pending |
-| CAT-83 | P1: Página do relógio | Specify | Pending |
-| CAT-84 | P1: Página do relógio | Specify | Pending |
-| CAT-85 | P1: Página do relógio | Specify | Pending |
-| CAT-86 | P1: Página do relógio | Specify | Pending |
+| CAT-70 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-71 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-72 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-73 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-74 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-75 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-76 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-77 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-78 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-79 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-80 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-81 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-82 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-83 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-84 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-85 | P1: Página do relógio | Execute (T24) | Done |
+| CAT-86 | P1: Página do relógio | Execute (T24) | Done |
 | CAT-87 | P1: Página do relógio | Execute (T23) | Done |
 | CAT-88 | P1: Página do relógio | Execute (T23) | Done |
 | CAT-89 | P1: Página do relógio | Specify | Pending |
