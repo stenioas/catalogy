@@ -1156,14 +1156,15 @@ T34 → T35 → T36 → T37
 **Depends on**: T36
 **Reuses**: `compareTitles`, a grade
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-46
 
 **Done when**:
 
-- [ ] `compareTitles` devolve essa ordem
-- [ ] A grade devolve a mesma ordem
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] `compareTitles` devolve essa ordem
+- [x] A grade devolve a mesma ordem
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

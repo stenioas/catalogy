@@ -54,6 +54,15 @@ describe('compareTitles (CAT-46, CAT-47, CAT-48)', () => {
     ])
   })
 
+  it('orders Zeta, addiesdive and Épico by Portuguese collation, not code point (CAT-46)', () => {
+    const titles = ['Zeta', 'addiesdive', 'Épico']
+    expect(titles.toSorted(compareTitles)).toEqual([
+      'addiesdive',
+      'Épico',
+      'Zeta',
+    ])
+  })
+
   it('sorts stably when titles compare equal', () => {
     const first = { id: 'a', title: 'Omega' }
     const second = { id: 'b', title: 'Omega' }

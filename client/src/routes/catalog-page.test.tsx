@@ -124,6 +124,21 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     ])
   })
 
+  it('lists addiesdive, then Épico, then Zeta by Portuguese title order (CAT-46)', () => {
+    mockProductsRef.current = [
+      makeProduct('zeta-watch', 'Zeta'),
+      makeProduct('addiesdive-watch', 'addiesdive'),
+      makeProduct('epico-watch', 'Épico'),
+    ]
+    renderCatalogPage()
+    const headings = screen.getAllByRole('heading', { level: 2 })
+    expect(headings.map((node) => node.textContent)).toEqual([
+      'addiesdive',
+      'Épico',
+      'Zeta',
+    ])
+  })
+
   it('uses one, two, and three grid columns at the md and lg breakpoints (CAT-49–CAT-51, AC20–22)', () => {
     mockProductsRef.current = [makeProduct('only-one', 'Only')]
     renderCatalogPage()
