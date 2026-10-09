@@ -668,6 +668,7 @@ T26 → T27
 **Depends on**: T3
 **Reuses**: o telefone do `SellerSchema`
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-110, CAT-111, CAT-112, CAT-113, CAT-114, CAT-115
 
 **Tools**:
@@ -677,11 +678,11 @@ T26 → T27
 
 **Done when**:
 
-- [ ] O href é `https://wa.me/5585997689165?text=` mais `Olá, tenho interesse no Seculus.` codificado
-- [ ] Não usa `whatsapp://`
-- [ ] O clique não tira a aba do catálogo (`target="_blank"`)
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 3 testes neste arquivo, suíte inteira verde
+- [x] O href é `https://wa.me/5585997689165?text=` mais `Olá, tenho interesse no Seculus.` codificado
+- [x] Não usa `whatsapp://`
+- [x] O clique não tira a aba do catálogo (`target="_blank"`)
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 3 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

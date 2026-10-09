@@ -431,12 +431,12 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-107 | P1: Preço | Execute (T19) | Done |
 | CAT-108 | P1: Preço | Execute (T19) | Done |
 | CAT-109 | P1: Preço | Execute (T19) | Done |
-| CAT-110 | P1: Eu quero! | Specify | Pending |
-| CAT-111 | P1: Eu quero! | Specify | Pending |
-| CAT-112 | P1: Eu quero! | Specify | Pending |
-| CAT-113 | P1: Eu quero! | Specify | Pending |
-| CAT-114 | P1: Eu quero! | Specify | Pending |
-| CAT-115 | P1: Eu quero! | Specify | Pending |
+| CAT-110 | P1: Eu quero! | Execute (T20) | Done |
+| CAT-111 | P1: Eu quero! | Execute (T20) | Done |
+| CAT-112 | P1: Eu quero! | Execute (T20) | Done |
+| CAT-113 | P1: Eu quero! | Execute (T20) | Done |
+| CAT-114 | P1: Eu quero! | Execute (T20) | Done |
+| CAT-115 | P1: Eu quero! | Execute (T20) | Done |
 | CAT-116 | P1: Tema | Execute (T15) | Done |
 | CAT-117 | P1: Tema | Execute (T15) | Done |
 | CAT-118 | P1: Tema | Execute (T15) | Done |
