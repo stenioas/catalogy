@@ -113,10 +113,11 @@ describe('Carousel (CAT-70–CAT-86)', () => {
   it('keeps the same square frame height when the photo changes (CAT-73)', () => {
     renderCarousel()
     const box = frame()
+    const beforeClass = box.className
     const before = frameBox(box)
     fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     expect(frame()).toBe(box)
-    expect(box.className).toMatch(/\baspect-square\b/)
+    expect(box.className).toBe(beforeClass)
     expect(frameBox(box)).toEqual(before)
     expect(box.contains(screen.getByRole('img', { name: 'Seculus' }))).toBe(true)
     expect(shownSrc()).toBe(photos[1])
