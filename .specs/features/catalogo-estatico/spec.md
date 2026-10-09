@@ -337,18 +337,18 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-13 | P1: Contratos | Execute (T4) | Done |
 | CAT-14 | P1: Contratos | Execute (T4) | Done |
 | CAT-15 | P1: Contratos | Execute (T4) | Done |
-| CAT-16 | P1: Build | Specify | Pending |
-| CAT-17 | P1: Build | Specify | Pending |
-| CAT-18 | P1: Build | Specify | Pending |
-| CAT-19 | P1: Build | Specify | Pending |
+| CAT-16 | P1: Build | Execute (T7) | Done |
+| CAT-17 | P1: Build | Execute (T7) | Done |
+| CAT-18 | P1: Build | Execute (T7) | Done |
+| CAT-19 | P1: Build | Execute (T7) | Done |
 | CAT-20 | P1: Build | Execute (T6, T10, T14, T27) | In progress |
 | CAT-21 | P1: Build | Specify | Pending |
 | CAT-22 | P1: Build | Specify | Pending |
-| CAT-23 | P1: Build | Specify | Pending |
-| CAT-24 | P1: Build | Execute (T1) | In progress |
-| CAT-25 | P1: Build | Specify | Pending |
-| CAT-26 | P1: Build | Specify | Pending |
-| CAT-27 | P1: Build | Specify | Pending |
+| CAT-23 | P1: Build | Execute (T7) | Done |
+| CAT-24 | P1: Build | Execute (T1, T7) | Done |
+| CAT-25 | P1: Build | Execute (T7) | Done |
+| CAT-26 | P1: Build | Execute (T7) | Done |
+| CAT-27 | P1: Build | Execute (T7) | Done |
 | CAT-28 | P1: Build | Specify | Pending |
 | CAT-29 | P1: Build | Specify | Pending |
 | CAT-30 | P1: Grade | Specify | Pending |
@@ -474,7 +474,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-150 | Edge | Execute (T4) | Done |
 | CAT-151 | Edge | Specify | Pending |
 
-**Coverage:** 151 total, 23 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-24 → T1; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2; CAT-20 → T6, T10, T14, T27), 128 unmapped.
+**Coverage:** 151 total, 33 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2; CAT-16–19, CAT-23, CAT-25–27 → T7; CAT-20 → T6, T10, T14, T27; CAT-24 → T1, T7), 118 unmapped.
 
 ---
 

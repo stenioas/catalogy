@@ -278,6 +278,7 @@ T26 → T27
 **Depends on**: T4, T6
 **Reuses**: `@catalogo/shared`
 **Complexity**: high
+**Status**: done
 **Requirement**: CAT-16, CAT-17, CAT-18, CAT-19, CAT-23, CAT-24, CAT-25, CAT-26, CAT-27
 
 **Tools**:
@@ -287,12 +288,12 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Diretório temporário válido devolve a lista de produtos
-- [ ] JSON inválido e conjunto de fotos diferente lançam erro
-- [ ] O arquivo gerado contém o nome da foto e não contém base64 nem o byte da imagem
-- [ ] O caminho do módulo está no `.gitignore`
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 6 testes neste arquivo, suíte inteira verde
+- [x] Diretório temporário válido devolve a lista de produtos
+- [x] JSON inválido e conjunto de fotos diferente lançam erro
+- [x] O arquivo gerado contém o nome da foto e não contém base64 nem o byte da imagem
+- [x] O caminho do módulo está no `.gitignore`
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 6 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
