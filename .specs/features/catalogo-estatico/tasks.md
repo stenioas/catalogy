@@ -1006,13 +1006,14 @@ T28 → T29 → T30 → T31 → T32 → T33
 **Depends on**: T30
 **Reuses**: `catalog-page.test.tsx`, `watch-page.test.tsx`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-24
 
 **Done when**:
 
-- [ ] Worktree limpo com `pnpm install` e `pnpm test`, sem `pnpm build`, fica verde
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] Worktree limpo com `pnpm install` e `pnpm test`, sem `pnpm build`, fica verde
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

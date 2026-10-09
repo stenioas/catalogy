@@ -35,7 +35,9 @@ describe('client package (CAT-20 toolchain)', () => {
   it('names the package client and runs Vitest on test', () => {
     const pkg = readClientPackage()
     expect(pkg.name).toBe('client')
-    expect(pkg.scripts?.test).toBe('vitest run')
+    expect(pkg.scripts?.test).toBe(
+      'vitest run scripts/prebuild-catalog.test.ts && vitest run',
+    )
   })
 
   it('links @catalogo/shared through the workspace protocol', () => {
