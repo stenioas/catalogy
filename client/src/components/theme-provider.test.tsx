@@ -12,10 +12,48 @@ import {
   applyThemeClass,
   readStoredTheme,
   resolveTheme,
-  watchPhotoImgClassName,
 } from './theme-provider'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
+
+const FORBIDDEN_PHOTO_PROPERTY = /(?:^|[\s;{])(filter|opacity|mix-blend-mode)\s*:/
+const FORBIDDEN_PHOTO_CLASS =
+  /^(?:filter|opacity-|mix-blend-|blur|brightness-|contrast-|grayscale|hue-rotate-|invert|saturate-|sepia|drop-shadow|\[(?:filter|opacity|mix-blend-mode):)/
+
+function imgElements(source: string): string[] {
+  return source.match(/<img\b[\s\S]*?\/>/g) ?? []
+}
+
+/** Returns the reasons an `<img>` element source breaks CAT-119 (empty when it is fine). */
+function imgViolations(element: string): string[] {
+  const violations: string[] = []
+  const classNames = [...element.matchAll(/className=(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g)]
+  for (const match of classNames) {
+    const value = match[1] ?? match[2] ?? match[3] ?? ''
+    for (const token of value.split(/\s+/).filter(Boolean)) {
+      const utility = token.replace(/^(?:[^[\]:]|\[[^\]]*\])+:/, '').replace(/^!/, '').replace(/^-/, '')
+      if (FORBIDDEN_PHOTO_CLASS.test(utility)) violations.push(`class ${token}`)
+    }
+  }
+  if (/className=\{(?!`[^`]*`\}|'[^']*'\})/.test(element)) violations.push('className not static')
+  const style = element.match(/style=\{\{([\s\S]*?)\}\}/)?.[1] ?? ''
+  if (/\b(filter|opacity|mixBlendMode)\s*:/.test(style)) violations.push('inline style')
+  return violations
+}
+
+/** Returns the stylesheet rules that put filter, opacity or mix-blend-mode on images. */
+function cssImgViolations(css: string): string[] {
+  const violations: string[] = []
+  for (const rule of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const selector = rule[1].trim()
+    const body = rule[2]
+    const targetsImages = /(^|[\s,>+~])(img|picture|\*)(?=$|[\s,.:[#>+~])/.test(selector)
+    if (!targetsImages) continue
+    if (FORBIDDEN_PHOTO_PROPERTY.test(body)) violations.push(`${selector} { ${body.trim()} }`)
+    if (/@apply[^;]*\b(?:filter|opacity-|mix-blend-)/.test(body)) violations.push(`${selector} @apply`)
+  }
+  return violations
+}
 
 function colorProp(block: string, name: string): string | undefined {
   const match = block.match(new RegExp(`(?:^|[\\s;{])${name}\\s*:\\s*([^;}]+)`))
@@ -119,11 +157,38 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(resolveTheme()).toBe('light')
   })
 
-  it('does not put theme filters on watch photos (CAT-119)', () => {
-    expect(watchPhotoImgClassName).toBe('object-contain')
-    expect(watchPhotoImgClassName).not.toMatch(/filter|invert|dark:/)
+  it('does not put filter, opacity or mix-blend-mode on the watch photos in either theme (CAT-119)', () => {
+    const catalogDir = join(clientRoot, 'src/components', 'catalog')
+    for (const file of ['carousel.tsx', 'watch-card.tsx']) {
+      const images = imgElements(readFileSync(join(catalogDir, file), 'utf-8'))
+      expect(images, file).toHaveLength(1)
+      expect(imgViolations(images[0]), file).toEqual([])
+      expect(images[0]).toContain('object-contain')
+    }
+
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf-8')
-    expect(css).not.toMatch(/\.dark\s+img\s*\{[^}]*filter:/)
+    expect(css).toMatch(/\.dark\s*\{/)
+    expect(cssImgViolations(css)).toEqual([])
+  })
+
+  it('detects filter, opacity and mix-blend-mode on a watch photo (CAT-119)', () => {
+    const img = (props: string) => `<img src={src} ${props} />`
+    expect(imgViolations(img('className="h-full w-full object-contain"'))).toEqual([])
+    expect(imgViolations(img('className="object-contain opacity-80"'))).not.toEqual([])
+    expect(imgViolations(img('className="object-contain dark:opacity-50"'))).not.toEqual([])
+    expect(imgViolations(img('className="object-contain mix-blend-multiply"'))).not.toEqual([])
+    expect(imgViolations(img('className="object-contain dark:invert"'))).not.toEqual([])
+    expect(imgViolations(img('className="object-contain grayscale"'))).not.toEqual([])
+    expect(imgViolations(img('className="object-contain [filter:blur(2px)]"'))).not.toEqual([])
+    expect(imgViolations(img('className="object-contain" style={{ opacity: 0.5 }}'))).not.toEqual([])
+    expect(imgViolations(img('className={cn(x)}'))).not.toEqual([])
+
+    expect(cssImgViolations('.dark { --a: #000; }\nimg { object-fit: contain; }')).toEqual([])
+    expect(cssImgViolations('.dark img { filter: invert(1); }')).not.toEqual([])
+    expect(cssImgViolations('img { opacity: 0.8; }')).not.toEqual([])
+    expect(cssImgViolations('.dark img { mix-blend-mode: multiply; }')).not.toEqual([])
+    expect(cssImgViolations('* { filter: brightness(0.9); }')).not.toEqual([])
+    expect(cssImgViolations('img { @apply opacity-50; }')).not.toEqual([])
   })
 
   it('defines {colors.primary-tint} with the light and dark badge colors (CAT-120)', () => {

@@ -1052,14 +1052,15 @@ T28 → T29 → T30 → T31 → T32 → T33
 **Depends on**: T32
 **Reuses**: `client/src/index.css`
 **Complexity**: high
+**Status**: done
 **Requirement**: CAT-119
 
 **Done when**:
 
-- [ ] O teste falha se um `img` ganhar `filter`, `opacity` ou `mix-blend-mode`
-- [ ] A constante morta não existe
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] O teste falha se um `img` ganhar `filter`, `opacity` ou `mix-blend-mode`
+- [x] A constante morta não existe
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

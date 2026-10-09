@@ -260,7 +260,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 1. The app SHALL offer the light theme and the dark theme with the colors in `DESIGN.md`.
 2. WHEN `localStorage` has no theme choice THEN the theme SHALL follow the visitor's system preference.
 3. WHEN the visitor uses the theme control THEN the app SHALL save the choice in `localStorage`.
-4. The watch photo SHALL stay in the foreground in the light theme and in the dark theme.
+4. The watch photo SHALL NOT use `filter`, `opacity`, or `mix-blend-mode` in the light theme or in the dark theme.
 5. `DESIGN.md` SHALL define `{colors.primary-tint}` with the light and dark badge colors from this spec.
 6. WHEN `seller` is valid and the catalog has no products THEN the top bar SHALL show `Catálogo {name}`.
 7. WHEN `seller` is valid and the catalog has no products THEN the grid SHALL show `A vitrine ainda não tem relógios.`

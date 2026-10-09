@@ -10,9 +10,6 @@ export const THEME_STORAGE_KEY = 'theme:v1'
 
 export type ThemeChoice = 'light' | 'dark'
 
-/** Card and watch photos use object-fit only; no theme-driven filters (CAT-119). */
-export const watchPhotoImgClassName = 'object-contain'
-
 export function readStoredTheme(): ThemeChoice | null {
   try {
     const value = localStorage.getItem(THEME_STORAGE_KEY)
