@@ -729,6 +729,7 @@ T26 → T27
 **Depends on**: T18, T21
 **Reuses**: `compareTitles`, `WatchCard`, `TopBar`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-43, CAT-46, CAT-47, CAT-48, CAT-49, CAT-50, CAT-51, CAT-121, CAT-122
 
 **Tools**:
@@ -738,12 +739,12 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Addiesdive, CURREN e Seculus aparecem nessa ordem
-- [ ] Abaixo de 768 px uma coluna; de 768 a 1023 duas; de 1024 em diante três
-- [ ] Sem produtos, o texto é `A vitrine ainda não tem relógios.` e a barra segue `Catálogo {name}`
-- [ ] Grade, erro e vazio ficam na coluna
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 5 testes neste arquivo, suíte inteira verde
+- [x] Addiesdive, CURREN e Seculus aparecem nessa ordem
+- [x] Abaixo de 768 px uma coluna; de 768 a 1023 duas; de 1024 em diante três
+- [x] Sem produtos, o texto é `A vitrine ainda não tem relógios.` e a barra segue `Catálogo {name}`
+- [x] Grade, erro e vazio ficam na coluna
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 5 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

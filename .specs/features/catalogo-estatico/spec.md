@@ -364,15 +364,15 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-40 | P1: Grade | Execute (T12) | Done |
 | CAT-41 | P1: Grade | Execute (T12) | Done |
 | CAT-42 | P1: Grade | Execute (T12) | Done |
-| CAT-43 | P1: Grade | Specify | Pending |
+| CAT-43 | P1: Grade | Execute (T22) | Done |
 | CAT-44 | P1: Grade | Execute (T16) | Done |
 | CAT-45 | P1: Grade | Execute (T16) | Done |
 | CAT-46 | P1: Grade | Execute (T2) | Done |
 | CAT-47 | P1: Grade | Execute (T2) | Done |
 | CAT-48 | P1: Grade | Execute (T2) | Done |
-| CAT-49 | P1: Grade | Specify | Pending |
-| CAT-50 | P1: Grade | Specify | Pending |
-| CAT-51 | P1: Grade | Specify | Pending |
+| CAT-49 | P1: Grade | Execute (T22) | Done |
+| CAT-50 | P1: Grade | Execute (T22) | Done |
+| CAT-51 | P1: Grade | Execute (T22) | Done |
 | CAT-52 | P1: Grade | Execute (T21) | Done |
 | CAT-53 | P1: Grade | Execute (T21) | Done |
 | CAT-54 | P1: Grade | Execute (T21) | Done |
@@ -442,8 +442,8 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-118 | P1: Tema | Execute (T15) | Done |
 | CAT-119 | P1: Tema | Execute (T15) | Done |
 | CAT-120 | P1: Tema | Execute (T11) | Done |
-| CAT-121 | P1: Tema | Specify | Pending |
-| CAT-122 | P1: Tema | Specify | Pending |
+| CAT-121 | P1: Tema | Execute (T22) | Done |
+| CAT-122 | P1: Tema | Execute (T22) | Done |
 | CAT-123 | P1: Tema | Execute (T9) | Done |
 | CAT-124 | P1: Tema | Execute (T9) | Done |
 | CAT-125 | P1: Skill | Specify | Pending |
