@@ -862,6 +862,7 @@ T26 → T27
 **Depends on**: T4
 **Reuses**: o contrato de `ProductSchema`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-125, CAT-126, CAT-127, CAT-128, CAT-129, CAT-130, CAT-131, CAT-132, CAT-133, CAT-134, CAT-135, CAT-136, CAT-137, CAT-138, CAT-139, CAT-140, CAT-141, CAT-142, CAT-143, CAT-144, CAT-145, CAT-146, CAT-147, CAT-148
 
 **Tools**:
@@ -871,14 +872,14 @@ T26 → T27
 
 **Done when**:
 
-- [ ] A skill exige título, preço e ao menos uma foto, mostra o slug e só grava com `sim` sozinho
-- [ ] `Seculus — kit com cantil` vira `seculus-kit-com-cantil`
-- [ ] Diretório numerado ordena `foto2` antes de `foto10`; nome sem número pede a ordem
-- [ ] Pasta existente pede outro slug e não sobrescreve
-- [ ] A skill não altera `sellers.json`, não commita e não migra o catálogo antigo
-- [ ] A skill declara que não entra na suíte
-- [ ] Gate: `pnpm test && pnpm build`
-- [ ] Test count: a suíte não ganha teste da skill e não perde os que já passam
+- [x] A skill exige título, preço e ao menos uma foto, mostra o slug e só grava com `sim` sozinho
+- [x] `Seculus — kit com cantil` vira `seculus-kit-com-cantil`
+- [x] Diretório numerado ordena `foto2` antes de `foto10`; nome sem número pede a ordem
+- [x] Pasta existente pede outro slug e não sobrescreve
+- [x] A skill não altera `sellers.json`, não commita e não migra o catálogo antigo
+- [x] A skill declara que não entra na suíte
+- [x] Gate: `pnpm test && pnpm build`
+- [x] Test count: a suíte não ganha teste da skill e não perde os que já passam
 
 **Tests**: none
 **Gate**: build

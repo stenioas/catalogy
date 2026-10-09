@@ -446,30 +446,30 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-122 | P1: Tema | Execute (T22) | Done |
 | CAT-123 | P1: Tema | Execute (T9) | Done |
 | CAT-124 | P1: Tema | Execute (T9) | Done |
-| CAT-125 | P1: Skill | Specify | Pending |
-| CAT-126 | P1: Skill | Specify | Pending |
-| CAT-127 | P1: Skill | Specify | Pending |
-| CAT-128 | P1: Skill | Specify | Pending |
-| CAT-129 | P1: Skill | Specify | Pending |
-| CAT-130 | P1: Skill | Specify | Pending |
-| CAT-131 | P1: Skill | Specify | Pending |
-| CAT-132 | P1: Skill | Specify | Pending |
-| CAT-133 | P1: Skill | Specify | Pending |
-| CAT-134 | P1: Skill | Specify | Pending |
-| CAT-135 | P1: Skill | Specify | Pending |
-| CAT-136 | P1: Skill | Specify | Pending |
-| CAT-137 | P1: Skill | Specify | Pending |
-| CAT-138 | P1: Skill | Specify | Pending |
-| CAT-139 | P1: Skill | Specify | Pending |
-| CAT-140 | P1: Skill | Specify | Pending |
-| CAT-141 | P1: Skill | Specify | Pending |
-| CAT-142 | P1: Skill | Specify | Pending |
-| CAT-143 | P1: Skill | Specify | Pending |
-| CAT-144 | P1: Skill | Specify | Pending |
-| CAT-145 | P1: Skill | Specify | Pending |
-| CAT-146 | P1: Skill | Specify | Pending |
-| CAT-147 | P1: Skill | Specify | Pending |
-| CAT-148 | P1: Skill | Specify | Pending |
+| CAT-125 | P1: Skill | Execute (T26) | Done |
+| CAT-126 | P1: Skill | Execute (T26) | Done |
+| CAT-127 | P1: Skill | Execute (T26) | Done |
+| CAT-128 | P1: Skill | Execute (T26) | Done |
+| CAT-129 | P1: Skill | Execute (T26) | Done |
+| CAT-130 | P1: Skill | Execute (T26) | Done |
+| CAT-131 | P1: Skill | Execute (T26) | Done |
+| CAT-132 | P1: Skill | Execute (T26) | Done |
+| CAT-133 | P1: Skill | Execute (T26) | Done |
+| CAT-134 | P1: Skill | Execute (T26) | Done |
+| CAT-135 | P1: Skill | Execute (T26) | Done |
+| CAT-136 | P1: Skill | Execute (T26) | Done |
+| CAT-137 | P1: Skill | Execute (T26) | Done |
+| CAT-138 | P1: Skill | Execute (T26) | Done |
+| CAT-139 | P1: Skill | Execute (T26) | Done |
+| CAT-140 | P1: Skill | Execute (T26) | Done |
+| CAT-141 | P1: Skill | Execute (T26) | Done |
+| CAT-142 | P1: Skill | Execute (T26) | Done |
+| CAT-143 | P1: Skill | Execute (T26) | Done |
+| CAT-144 | P1: Skill | Execute (T26) | Done |
+| CAT-145 | P1: Skill | Execute (T26) | Done |
+| CAT-146 | P1: Skill | Execute (T26) | Done |
+| CAT-147 | P1: Skill | Execute (T26) | Done |
+| CAT-148 | P1: Skill | Execute (T26) | Done |
 | CAT-149 | Edge | Execute (T18) | Done |
 | CAT-150 | Edge | Execute (T4) | Done |
 | CAT-151 | Edge | Execute (T25) | Done |
