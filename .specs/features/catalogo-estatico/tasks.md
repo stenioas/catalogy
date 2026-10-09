@@ -1108,14 +1108,15 @@ T34 → T35 → T36 → T37
 **Depends on**: T34
 **Reuses**: `shownSrc`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-83
 
 **Done when**:
 
-- [ ] `vi.advanceTimersByTime(10_000)` roda dentro de `act`
-- [ ] A foto visível continua a primeira
-- [ ] Gate: `pnpm test`
-- [ ] Test count: suíte inteira verde
+- [x] `vi.advanceTimersByTime(10_000)` roda dentro de `act`
+- [x] A foto visível continua a primeira
+- [x] Gate: `pnpm test`
+- [x] Test count: suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

@@ -2,6 +2,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { act } from 'react'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 
@@ -205,7 +206,9 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     vi.useFakeTimers()
     renderCarousel()
     expect(shownSrc()).toBe(photos[0])
-    vi.advanceTimersByTime(10_000)
+    act(() => {
+      vi.advanceTimersByTime(10_000)
+    })
     expect(shownSrc()).toBe(photos[0])
   })
 
