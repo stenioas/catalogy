@@ -326,17 +326,17 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-02 | P1: Contratos | Execute (T3) | Done |
 | CAT-03 | P1: Contratos | Execute (T3) | Done |
 | CAT-04 | P1: Contratos | Execute (T3) | Done |
-| CAT-05 | P1: Contratos | Specify | Pending |
-| CAT-06 | P1: Contratos | Specify | Pending |
-| CAT-07 | P1: Contratos | Specify | Pending |
+| CAT-05 | P1: Contratos | Execute (T4) | Done |
+| CAT-06 | P1: Contratos | Execute (T4) | Done |
+| CAT-07 | P1: Contratos | Execute (T4) | Done |
 | CAT-08 | P1: Contratos | Execute (T2) | Done |
 | CAT-09 | P1: Contratos | Execute (T2) | Done |
-| CAT-10 | P1: Contratos | Specify | Pending |
-| CAT-11 | P1: Contratos | Specify | Pending |
-| CAT-12 | P1: Contratos | Specify | Pending |
-| CAT-13 | P1: Contratos | Specify | Pending |
-| CAT-14 | P1: Contratos | Specify | Pending |
-| CAT-15 | P1: Contratos | Specify | Pending |
+| CAT-10 | P1: Contratos | Execute (T4) | Done |
+| CAT-11 | P1: Contratos | Execute (T4) | Done |
+| CAT-12 | P1: Contratos | Execute (T4) | Done |
+| CAT-13 | P1: Contratos | Execute (T4) | Done |
+| CAT-14 | P1: Contratos | Execute (T4) | Done |
+| CAT-15 | P1: Contratos | Execute (T4) | Done |
 | CAT-16 | P1: Build | Specify | Pending |
 | CAT-17 | P1: Build | Specify | Pending |
 | CAT-18 | P1: Build | Specify | Pending |
@@ -471,10 +471,10 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-147 | P1: Skill | Specify | Pending |
 | CAT-148 | P1: Skill | Specify | Pending |
 | CAT-149 | Edge | Specify | Pending |
-| CAT-150 | Edge | Specify | Pending |
+| CAT-150 | Edge | Execute (T4) | Done |
 | CAT-151 | Edge | Specify | Pending |
 
-**Coverage:** 151 total, 10 mapped to tasks (CAT-24 → T1; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2), 141 unmapped.
+**Coverage:** 151 total, 21 mapped to tasks (CAT-01–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-24 → T1; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2), 130 unmapped.
 
 ---
 

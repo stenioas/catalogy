@@ -187,6 +187,7 @@ T26 → T27
 **Depends on**: T2
 **Reuses**: `shared/src/money.ts`
 **Complexity**: medium
+**Status**: done
 **Requirement**: CAT-04, CAT-05, CAT-06, CAT-07, CAT-10, CAT-11, CAT-12, CAT-13, CAT-14, CAT-15, CAT-150
 
 **Tools**:
@@ -196,13 +197,13 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Zero, negativo e `listPrice` menor ou igual ao `price` depois do corte falham
-- [ ] `369.9` passa e `369.999` fica `369.99` antes da comparação
-- [ ] Lista de fotos vazia falha; nome com `/` ou `\` falha
-- [ ] Extensão `jpg`, `jpeg`, `png`, `webp` ou `avif` em qualquer caixa passa, e o nome guardado é o do JSON
-- [ ] `listPrice`, `details`, `specifications` e `observations` podem faltar
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 10 testes neste arquivo, suíte inteira verde
+- [x] Zero, negativo e `listPrice` menor ou igual ao `price` depois do corte falham
+- [x] `369.9` passa e `369.999` fica `369.99` antes da comparação
+- [x] Lista de fotos vazia falha; nome com `/` ou `\` falha
+- [x] Extensão `jpg`, `jpeg`, `png`, `webp` ou `avif` em qualquer caixa passa, e o nome guardado é o do JSON
+- [x] `listPrice`, `details`, `specifications` e `observations` podem faltar
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 10 testes neste arquivo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
