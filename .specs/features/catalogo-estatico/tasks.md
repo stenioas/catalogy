@@ -249,6 +249,7 @@ T26 → T27
 **Depends on**: T1
 **Reuses**: `STACK-REFERENCIA.md` seção do client, sem o pacote `server`
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-20
 
 **Tools**:
@@ -258,10 +259,10 @@ T26 → T27
 
 **Done when**:
 
-- [ ] `pnpm install` resolve o workspace
-- [ ] O client tem um teste sentinela verde
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 1 teste no client, suíte inteira verde
+- [x] `pnpm install` resolve o workspace
+- [x] O client tem um teste sentinela verde
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 1 teste no client, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick
