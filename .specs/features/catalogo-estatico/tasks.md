@@ -219,6 +219,7 @@ T26 → T27
 **Depends on**: T3, T4
 **Reuses**: `shared/src/schemas/seller.ts`, `shared/src/schemas/product.ts`
 **Complexity**: low
+**Status**: done
 **Requirement**: CAT-01
 
 **Tools**:
@@ -228,9 +229,9 @@ T26 → T27
 
 **Done when**:
 
-- [ ] Um teste importa `SellerSchema`, `ProductSchema`, `formatBrl` e `truncateReais` do barril
-- [ ] Gate: `pnpm test`
-- [ ] Test count: pelo menos 1 teste novo, suíte inteira verde
+- [x] Um teste importa `SellerSchema`, `ProductSchema`, `formatBrl` e `truncateReais` do barril
+- [x] Gate: `pnpm test`
+- [x] Test count: pelo menos 1 teste novo, suíte inteira verde
 
 **Tests**: unit
 **Gate**: quick

@@ -322,7 +322,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| CAT-01 | P1: Contratos | Execute (T3) | Done |
+| CAT-01 | P1: Contratos | Execute (T3, T5) | Done |
 | CAT-02 | P1: Contratos | Execute (T3) | Done |
 | CAT-03 | P1: Contratos | Execute (T3) | Done |
 | CAT-04 | P1: Contratos | Execute (T3) | Done |
@@ -474,7 +474,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 | CAT-150 | Edge | Execute (T4) | Done |
 | CAT-151 | Edge | Specify | Pending |
 
-**Coverage:** 151 total, 21 mapped to tasks (CAT-01–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-24 → T1; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2), 130 unmapped.
+**Coverage:** 151 total, 22 mapped to tasks (CAT-01 → T3, T5; CAT-02–04 → T3; CAT-05–07, CAT-10–15, CAT-150 → T4; CAT-24 → T1; CAT-08, CAT-09, CAT-46–48, CAT-95–98 → T2), 129 unmapped.
 
 ---
 
