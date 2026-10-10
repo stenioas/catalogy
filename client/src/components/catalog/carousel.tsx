@@ -199,8 +199,8 @@ export function Carousel({ images, alt }: CarouselProps) {
                   aria-current={current ? 'true' : undefined}
                   className={
                     current
-                      ? 'size-[10px] rounded-full bg-[#0066cc] p-0'
-                      : 'size-[10px] rounded-full bg-current/35 p-0'
+                      ? 'size-[10px] cursor-pointer rounded-full bg-[#0066cc] p-0 hover:bg-[#0066cc]'
+                      : 'size-[10px] cursor-pointer rounded-full bg-current/35 p-0 hover:bg-[#6e6e73]'
                   }
                   onClick={() => setIndex(imageIndex)}
                 />

@@ -392,14 +392,18 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(dot('Foto 1').getAttribute('data-slot')).toBe('button')
     expect(dot('Foto 1').getAttribute('aria-current')).toBe('true')
     expect(dot('Foto 1').className.split(/\s+/)).toContain('size-[10px]')
+    expect(dot('Foto 1').className.split(/\s+/)).toContain('cursor-pointer')
     expect(dot('Foto 1').className.split(/\s+/)).toContain('bg-[#0066cc]')
+    expect(dot('Foto 1').className).toMatch(/hover:bg-\[#0066cc\]/)
     expect(dot('Foto 1').className).not.toMatch(/\bbg-current\/35\b/)
 
     for (const name of ['Foto 2', 'Foto 3']) {
       expect(dot(name).getAttribute('data-slot')).toBe('button')
       expect(dot(name).hasAttribute('aria-current')).toBe(false)
       expect(dot(name).className.split(/\s+/)).toContain('size-[10px]')
+      expect(dot(name).className.split(/\s+/)).toContain('cursor-pointer')
       expect(dot(name).className.split(/\s+/)).toContain('bg-current/35')
+      expect(dot(name).className).toMatch(/hover:bg-\[#6e6e73\]/)
       expect(dot(name).className).not.toMatch(/\bbg-\[#0066cc\]\b/)
     }
 
