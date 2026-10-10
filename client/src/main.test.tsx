@@ -56,6 +56,9 @@ describe('entrada da aplicação sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11
     expect(html).toMatch(
       /<script[^>]+type="module"[^>]+src="\/src\/main\.tsx"/,
     )
+    expect(html).toMatch(
+      /<link[^>]+rel="icon"[^>]+href="\/favicon\.svg"[^>]+type="image\/svg\+xml"/,
+    )
   })
 
   it('abre / com a vitrine e sem buscar sellers.json (SV-05)', async () => {
