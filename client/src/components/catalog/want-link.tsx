@@ -18,7 +18,7 @@ export function waUrl(slug: string, title: string): string {
 
 export function WantLink({ slug, title, ref }: WantLinkProps) {
   return (
-    <Button asChild className="min-h-11 w-full rounded-full">
+    <Button asChild className="min-h-11 w-full rounded-full text-lg md:text-sm">
       <a ref={ref} href={waUrl(slug, title)} target="_blank" rel="noopener noreferrer">
         {WHATSAPP_LABEL}
       </a>
