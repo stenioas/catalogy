@@ -55,7 +55,7 @@ export function StickyBar({
         <PriceBlock price={price} listPrice={listPrice} />
         <div
           data-testid="sticky-bar-action"
-          className="w-full md:w-auto [&>a]:block [&>a]:w-full md:[&>a]:w-auto"
+          className="w-full md:w-auto [&>a]:flex [&>a]:w-full [&>a]:justify-center md:[&>a]:w-auto"
         >
           <WantLink slug={slug} title={title} />
         </div>
