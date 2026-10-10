@@ -1,4 +1,3 @@
-export { SellerSchema, type Seller } from './schemas/seller'
 export {
   ProductSchema,
   type Product,

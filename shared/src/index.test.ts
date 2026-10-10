@@ -1,21 +1,18 @@
 import { describe, expect, it } from 'vitest'
+import * as barrel from './index'
 import {
   ProductSchema,
-  SellerSchema,
   formatBrl,
   truncateReais,
 } from './index'
 
-describe('@catalogo/shared barrel (CAT-01, CAT-07, CAT-09, CAT-95)', () => {
-  it('exports schemas and money helpers with spec-defined behavior', () => {
-    expect(
-      SellerSchema.safeParse({
-        slug: 'alexandre',
-        name: 'Alexandre',
-        phone: '5511999999999',
-      }).success,
-    ).toBe(true)
+describe('@catalogo/shared barrel (CAT-07, CAT-09, CAT-95, SV-09)', () => {
+  it('does not export SellerSchema (SV-09)', () => {
+    expect(Object.hasOwn(barrel, 'SellerSchema')).toBe(false)
+    expect(barrel.SellerSchema).toBeUndefined()
+  })
 
+  it('exports ProductSchema and money helpers with spec-defined behavior', () => {
     expect(
       ProductSchema.safeParse({
         slug: 'seculus',

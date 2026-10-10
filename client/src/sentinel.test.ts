@@ -60,9 +60,10 @@ describe('client package (CAT-20 toolchain)', () => {
 })
 
 describe('@catalogo/shared resolution', () => {
-  it('imports the shared barrel from the workspace', async () => {
+  it('imports the shared barrel from the workspace without SellerSchema (SV-09)', async () => {
     const shared = await import('@catalogo/shared')
-    expect(shared.SellerSchema).toBeDefined()
+    expect(Object.hasOwn(shared, 'SellerSchema')).toBe(false)
+    expect(shared.SellerSchema).toBeUndefined()
     expect(shared.ProductSchema).toBeDefined()
   })
 })
