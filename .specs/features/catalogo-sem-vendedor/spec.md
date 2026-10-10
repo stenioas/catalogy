@@ -228,12 +228,12 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-26 | P1: Build sem telefone publicado | Phase 1 | Done |
 | SV-27 | P1: Build sem telefone publicado | Phase 1 | Done |
 | SV-28 | P1: Visual dos controles | Tasks | Done |
-| SV-29 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-29 | P1: Visual dos controles | Tasks | Done |
 | SV-30 | P1: Visual dos controles | Tasks | Done |
 | SV-31 | P1: Visual dos controles | Tasks | Done |
 | SV-32 | P1: Visual dos controles | Tasks | Done |
 | SV-33 | P1: Visual dos controles | Tasks | Done |
-| SV-34 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-34 | P1: Visual dos controles | Tasks | Done |
 | SV-35 | P1: Visual dos controles | Tasks | Done |
 | SV-36 | P1: Visual dos controles | Tasks | Done |
 | SV-37 | P1: Visual dos controles | Tasks | Done |
@@ -243,7 +243,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-41 | P1: Visual dos controles | Tasks | Done |
 | SV-42 | P1: Visual dos controles | Tasks | Done |
 | SV-43 | P1: Visual dos controles | Tasks | Done |
-| SV-44 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
+| SV-44 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-45 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-46 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-47 | P1: Ficha, foto e carrossel | Tasks | Done |
@@ -252,14 +252,14 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-50 | P1: Ficha, foto e carrossel | Phase 4 | Done |
 | SV-51 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
 | SV-52 | P1: Ficha, foto e carrossel | Tasks | Done |
-| SV-53 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-54 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-55 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-56 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-57 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-58 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-59 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-60 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
+| SV-53 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-54 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-55 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-56 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-57 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-58 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-59 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-60 | P1: Ficha, foto e carrossel | Tasks | Done |
 
 **Coverage:** 60 total, 60 mapped to tasks, 0 unmapped.
 

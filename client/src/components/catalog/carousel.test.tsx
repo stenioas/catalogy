@@ -212,7 +212,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(shownSrc()).toBe(photos[0])
   })
 
-  it('hides the arrow row, the dots, and the drag gesture when there is one photo (CAT-84)', () => {
+  it('hides the arrow row, the dots, and the drag gesture when there is one photo (CAT-84, SV-56, SV-57)', () => {
     renderCarousel(['somente.webp'])
     expect(screen.queryByRole('button', { name: 'Anterior' })).toBeNull()
     expect(screen.queryByRole('button', { name: 'Seguinte' })).toBeNull()
@@ -234,7 +234,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(track.style.transitionDuration).toBe('0ms')
   })
 
-  it('wraps ArrowRight and ArrowLeft when the carousel is focused (CAT-86)', () => {
+  it('wraps ArrowRight and ArrowLeft when the carousel is focused (CAT-86, SV-58)', () => {
     renderCarousel()
     const box = frame()
     box.focus()
@@ -248,5 +248,95 @@ describe('Carousel (CAT-70–CAT-86)', () => {
 
     fireEvent.keyDown(box, { key: 'ArrowRight' })
     expect(shownSrc()).toBe(photos[1])
+  })
+
+  it('keeps the frame centered, square, and at most 320px, with the photo contained (SV-44)', () => {
+    renderCarousel()
+    const box = frame()
+    const classes = box.className.split(/\s+/)
+    expect(classes).toContain('max-w-[320px]')
+    expect(classes).toContain('mx-auto')
+    expect(classes).toContain('aspect-square')
+    for (const img of box.querySelectorAll('img')) {
+      expect(img.className.split(/\s+/)).toContain('object-contain')
+    }
+  })
+
+  it('sets draggable false on each photo and touch-action pan-y on the frame (SV-53)', () => {
+    renderCarousel()
+    const box = frame()
+    expect(box.className.split(/\s+/)).toContain('touch-pan-y')
+    const images = box.querySelectorAll('img')
+    expect(images.length).toBeGreaterThan(1)
+    for (const img of images) {
+      expect(img.getAttribute('draggable')).toBe('false')
+    }
+  })
+
+  it('changes the photo only after a horizontal drag of more than 40px when there are two or more photos (SV-54)', () => {
+    renderCarousel()
+    drag(frame(), 100, 60)
+    expect(shownSrc()).toBe(photos[0])
+    drag(frame(), 100, 59)
+    expect(shownSrc()).toBe(photos[1])
+    drag(frame(), 59, 99)
+    expect(shownSrc()).toBe(photos[1])
+    drag(frame(), 59, 100)
+    expect(shownSrc()).toBe(photos[0])
+  })
+
+  it('does not change the photo when the gesture is cancelled (SV-55)', () => {
+    renderCarousel()
+    const box = frame()
+    fireEvent.pointerDown(box, { clientX: 200, pointerId: 1 })
+    fireEvent.pointerCancel(box, { pointerId: 1 })
+    fireEvent.pointerUp(box, { clientX: 100, pointerId: 1 })
+    expect(shownSrc()).toBe(photos[0])
+  })
+
+  it('uses ghost 44×44 Buttons with ChevronLeft and ChevronRight and no pill background (SV-29, SV-33, SV-34)', () => {
+    renderCarousel()
+    const previous = screen.getByRole('button', { name: 'Anterior' })
+    const next = screen.getByRole('button', { name: 'Seguinte' })
+
+    for (const button of [previous, next]) {
+      expect(button.getAttribute('data-slot')).toBe('button')
+      expect(button.getAttribute('data-variant')).toBe('ghost')
+      expect(button.className.split(/\s+/)).toContain('size-11')
+      expect(button.className.split(/\s+/)).toContain('text-inherit')
+      expect(button.className).not.toMatch(/\bbg-primary\b/)
+      expect(button.className).not.toMatch(/\bbg-\[#0066cc\]\b/)
+    }
+
+    expect(previous.querySelector('svg.lucide-chevron-left')).not.toBeNull()
+    expect(next.querySelector('svg.lucide-chevron-right')).not.toBeNull()
+  })
+
+  it('paints the current 10px dot #0066cc with aria-current and the others in the text color at 0.35 opacity (SV-59, SV-60)', () => {
+    renderCarousel()
+
+    function dot(name: string) {
+      return screen.getByRole('button', { name })
+    }
+
+    expect(dot('Foto 1').getAttribute('data-slot')).toBe('button')
+    expect(dot('Foto 1').getAttribute('aria-current')).toBe('true')
+    expect(dot('Foto 1').className.split(/\s+/)).toContain('size-[10px]')
+    expect(dot('Foto 1').className.split(/\s+/)).toContain('bg-[#0066cc]')
+    expect(dot('Foto 1').className).not.toMatch(/\bbg-current\/35\b/)
+
+    for (const name of ['Foto 2', 'Foto 3']) {
+      expect(dot(name).getAttribute('data-slot')).toBe('button')
+      expect(dot(name).hasAttribute('aria-current')).toBe(false)
+      expect(dot(name).className.split(/\s+/)).toContain('size-[10px]')
+      expect(dot(name).className.split(/\s+/)).toContain('bg-current/35')
+      expect(dot(name).className).not.toMatch(/\bbg-\[#0066cc\]\b/)
+    }
+
+    fireEvent.click(dot('Foto 2'))
+    expect(dot('Foto 2').getAttribute('aria-current')).toBe('true')
+    expect(dot('Foto 2').className.split(/\s+/)).toContain('bg-[#0066cc]')
+    expect(dot('Foto 1').hasAttribute('aria-current')).toBe(false)
+    expect(dot('Foto 1').className.split(/\s+/)).toContain('bg-current/35')
   })
 })

@@ -647,6 +647,8 @@ T18 → T19 → T20
 
 ### T19: Carrossel de 320px
 
+**Status**: done
+
 **What**: O quadro tem no máximo 320px, centrado e quadrado. Setas são `Button` 44×44 sem fundo, com `ChevronLeft` e `ChevronRight`. Bolinhas são `Button` de 10px. A atual é `#0066cc` com `aria-current="true"`. As outras usam a cor do texto com opacidade 0.35. O gesto de mais de 40px só troca foto com duas ou mais. Gesto cancelado não troca. Uma foto esconde setas e bolinhas. Teclado, `draggable={false}` e `touch-action: pan-y` permanecem.
 **Where**: `client/src/components/catalog/carousel.tsx`
 **Depends on**: T18
@@ -661,9 +663,9 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `carousel.test.tsx` cobre gesto, cancelamento, uma foto, teclado, bolinhas e os 320px
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `carousel.test.tsx` cobre gesto, cancelamento, uma foto, teclado, bolinhas e os 320px
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

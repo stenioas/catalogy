@@ -1,4 +1,7 @@
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
 
 export type CarouselProps = {
   images: string[]
@@ -50,19 +53,24 @@ export function Carousel({ images, alt }: CarouselProps) {
     dragStartX.current = null
     if (start === null) return
     const delta = event.clientX - start
-    if (delta <= -DRAG_THRESHOLD_PX) step(1)
-    else if (delta >= DRAG_THRESHOLD_PX) step(-1)
+    if (delta < -DRAG_THRESHOLD_PX) step(1)
+    else if (delta > DRAG_THRESHOLD_PX) step(-1)
+  }
+
+  function onPointerCancel() {
+    dragStartX.current = null
   }
 
   return (
     <div data-testid="watch-carousel" className="w-full">
       <div
         data-testid="carousel-frame"
-        className="aspect-square w-full overflow-hidden"
+        className="mx-auto aspect-square w-full max-w-[320px] touch-pan-y overflow-hidden"
         tabIndex={multi ? 0 : undefined}
         onKeyDown={multi ? onKeyDown : undefined}
         onPointerDown={multi ? onPointerDown : undefined}
         onPointerUp={multi ? onPointerUp : undefined}
+        onPointerCancel={multi ? onPointerCancel : undefined}
       >
         <div
           data-testid="carousel-track"
@@ -78,6 +86,7 @@ export function Carousel({ images, alt }: CarouselProps) {
               key={`${src}:${imageIndex}`}
               src={src}
               alt={imageIndex === index ? alt : ''}
+              draggable={false}
               className="h-full w-full shrink-0 object-contain"
             />
           ))}
@@ -85,50 +94,44 @@ export function Carousel({ images, alt }: CarouselProps) {
       </div>
       {multi ? (
         <div data-testid="carousel-controls" className="mt-3 flex items-center">
-          <button
+          <Button
             type="button"
+            variant="ghost"
             aria-label="Anterior"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+            className="size-11 shrink-0 text-inherit"
             onClick={() => step(-1)}
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-              <path
-                d="M15 6 L9 12 L15 18"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+            <ChevronLeft aria-hidden="true" />
+          </Button>
           <div data-testid="carousel-dots" className="flex flex-1 justify-center gap-2">
-            {images.map((src, imageIndex) => (
-              <button
-                key={`${src}:${imageIndex}`}
-                type="button"
-                aria-label={`Foto ${imageIndex + 1}`}
-                aria-current={imageIndex === index ? 'true' : undefined}
-                className="h-2.5 w-2.5 rounded-full bg-current"
-                onClick={() => setIndex(imageIndex)}
-              />
-            ))}
+            {images.map((src, imageIndex) => {
+              const current = imageIndex === index
+              return (
+                <Button
+                  key={`${src}:${imageIndex}`}
+                  type="button"
+                  variant="ghost"
+                  aria-label={`Foto ${imageIndex + 1}`}
+                  aria-current={current ? 'true' : undefined}
+                  className={
+                    current
+                      ? 'size-[10px] rounded-full bg-[#0066cc] p-0'
+                      : 'size-[10px] rounded-full bg-current/35 p-0'
+                  }
+                  onClick={() => setIndex(imageIndex)}
+                />
+              )
+            })}
           </div>
-          <button
+          <Button
             type="button"
+            variant="ghost"
             aria-label="Seguinte"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+            className="size-11 shrink-0 text-inherit"
             onClick={() => step(1)}
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-              <path
-                d="M9 6 L15 12 L9 18"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+            <ChevronRight aria-hidden="true" />
+          </Button>
         </div>
       ) : null}
     </div>
