@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 import { discountPercent, formatBrl } from '@catalogo/shared'
 
 import { Badge } from '@/components/ui/badge'
@@ -5,15 +7,21 @@ import { Badge } from '@/components/ui/badge'
 export type PriceBlockProps = {
   price: number
   listPrice?: number
+  children?: ReactNode
 }
 
-export function PriceBlock({ price, listPrice }: PriceBlockProps) {
+export function PriceBlock({ price, listPrice, children }: PriceBlockProps) {
   const currentLabel = formatBrl(price)
+  const current = <span data-testid="price-current">{currentLabel}</span>
 
   if (listPrice === undefined) {
     return (
-      <div data-testid="price-block">
-        <span data-testid="price-current">{currentLabel}</span>
+      <div
+        data-testid="price-block"
+        className={children ? 'flex flex-wrap items-center gap-2' : undefined}
+      >
+        {current}
+        {children}
       </div>
     )
   }
@@ -30,7 +38,8 @@ export function PriceBlock({ price, listPrice }: PriceBlockProps) {
         De {formatBrl(listPrice)}
       </span>
       <div className="flex flex-wrap items-center gap-2">
-        <span data-testid="price-current">{currentLabel}</span>
+        {current}
+        {children}
         {showBadge ? (
           <Badge
             data-testid="price-badge"
