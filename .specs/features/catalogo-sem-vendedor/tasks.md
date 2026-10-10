@@ -402,6 +402,8 @@ T18 → T19 → T20
 
 ### T11: Rotas sem gate
 
+**Status**: done
+
 **What**: `/` renderiza `CatalogPage` sem loader. `/relogio/:slug` lê o slug com `useParams`. `SellerGate` sai. `?seller=` não muda a página e não busca `sellers.json`.
 **Where**: `client/src/app/router.tsx`
 **Depends on**: T10
@@ -416,10 +418,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `seller-gate.tsx`, `seller-gate.test.tsx`, `sellers.ts` e `sellers.test.ts` não existem
-- [ ] `router.test.tsx` e `main.test.tsx` cobrem `/`, `/?seller=alexandre`, `/?seller=ninguem` e `/relogio/{slug}?seller=alexandre`
-- [ ] Gate sai 0: `pnpm test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `seller-gate.tsx`, `seller-gate.test.tsx`, `sellers.ts` e `sellers.test.ts` não existem
+- [x] `router.test.tsx` e `main.test.tsx` cobrem `/`, `/?seller=alexandre`, `/?seller=ninguem` e `/relogio/{slug}?seller=alexandre`
+- [x] Gate sai 0: `pnpm test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: integration
 **Gate**: full

@@ -5,24 +5,44 @@ import { fileURLToPath } from 'node:url'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { products } from './catalog/products.generated'
+
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 
-const sellers = [
-  { slug: 'alexandre', name: 'Alexandre', phone: '5585997689165' },
-  { slug: 'manuela', name: 'Manuela', phone: '5585996043447' },
-  { slug: 'priscila', name: 'Priscila', phone: '5585999999999' },
-]
+const INCOMPLETE_LINK_MESSAGE =
+  'Este link está incompleto ou o vendedor não existe.'
+const SELLERS_URL = '/catalog/sellers.json'
+const TOP_BAR_TITLE = 'Catálogo'
 
-function mockSellersFetch() {
-  vi.stubGlobal(
-    'fetch',
-    vi.fn(async (input: RequestInfo | URL) => {
-      if (String(input) === '/catalog/sellers.json') {
-        return new Response(JSON.stringify(sellers))
-      }
-      return new Response('not found', { status: 404 })
-    }),
-  )
+function watchTitle(): string {
+  const product = products[0]
+  if (!product) throw new Error('catalog fixture has no watch')
+  return product.title
+}
+
+function watchSlug(): string {
+  const product = products[0]
+  if (!product) throw new Error('catalog fixture has no watch')
+  return product.slug
+}
+
+function installFetchSpy() {
+  const fetchMock = vi.fn(async () => new Response('not found', { status: 404 }))
+  vi.stubGlobal('fetch', fetchMock)
+  return fetchMock
+}
+
+function didRequestSellers(fetchMock: ReturnType<typeof vi.fn>) {
+  return fetchMock.mock.calls.some((call) => String(call[0]).includes(SELLERS_URL))
+}
+
+async function renderApp(path: string) {
+  window.history.replaceState({}, '', path)
+  vi.resetModules()
+  const fetchMock = installFetchSpy()
+  const { AppRoot } = await import('./main')
+  render(<AppRoot />)
+  return fetchMock
 }
 
 afterEach(() => {
@@ -30,51 +50,67 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-describe('app entry (CAT-20)', () => {
-  it('loads main.tsx from index.html as the Vite module entry', () => {
+describe('entrada da aplicação sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {
+  it('carrega main.tsx a partir do index.html como módulo do Vite', () => {
     const html = readFileSync(join(clientRoot, 'index.html'), 'utf-8')
     expect(html).toMatch(
       /<script[^>]+type="module"[^>]+src="\/src\/main\.tsx"/,
     )
   })
 
-  it('shows Catálogo Alexandre through StrictMode and RouterProvider at /?seller=alexandre', async () => {
-    mockSellersFetch()
-    window.history.replaceState({}, '', '/?seller=alexandre')
-    vi.resetModules()
-    const { AppRoot } = await import('./main')
-    render(<AppRoot />)
-    expect(await screen.findByText('Catálogo')).toBeDefined()
+  it('abre / com a vitrine e sem buscar sellers.json (SV-05)', async () => {
+    const fetchMock = await renderApp('/')
+    expect(await screen.findByText(watchTitle())).toBeDefined()
+    expect(screen.getByTestId('top-bar').textContent).toContain(TOP_BAR_TITLE)
+    expect(screen.getByTestId('top-bar').textContent).not.toContain('Alexandre')
+    expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
+    expect(didRequestSellers(fetchMock)).toBe(false)
   })
 
-  it('shows the incomplete-link sentence at / without a seller', async () => {
-    mockSellersFetch()
-    window.history.replaceState({}, '', '/')
-    vi.resetModules()
-    const { AppRoot } = await import('./main')
-    render(<AppRoot />)
-    expect(
-      await screen.findByText('Este link está incompleto ou o vendedor não existe.'),
-    ).toBeDefined()
+  it('mostra em /?seller=alexandre o mesmo catálogo de / (SV-02, SV-04)', async () => {
+    await renderApp('/')
+    expect(await screen.findByText(watchTitle())).toBeDefined()
+    const catalogAtRoot = document.body.textContent
+
+    cleanup()
+    const fetchMock = await renderApp('/?seller=alexandre')
+    expect(await screen.findByText(watchTitle())).toBeDefined()
+    expect(document.body.textContent).toBe(catalogAtRoot)
+    expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
+    expect(didRequestSellers(fetchMock)).toBe(false)
   })
 
-  it('renders the watch page top bar at /relogio/:slug', async () => {
-    mockSellersFetch()
-    window.history.replaceState({}, '', '/relogio/seculus-kit?seller=alexandre')
-    vi.resetModules()
-    const { AppRoot } = await import('./main')
-    render(<AppRoot />)
-    expect(await screen.findByText('Catálogo')).toBeDefined()
-    expect(screen.getByRole('link', { name: 'Voltar' })).toBeDefined()
+  it('trata /?seller=ninguem como a vitrine normal (SV-03, SV-04)', async () => {
+    await renderApp('/')
+    expect(await screen.findByText(watchTitle())).toBeDefined()
+    const catalogAtRoot = document.body.textContent
+
+    cleanup()
+    const fetchMock = await renderApp('/?seller=ninguem')
+    expect(await screen.findByText(watchTitle())).toBeDefined()
+    expect(document.body.textContent).toBe(catalogAtRoot)
+    expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
+    expect(didRequestSellers(fetchMock)).toBe(false)
   })
 
-  it('switches the theme from the page top bar using the single ThemeProvider in AppRoot', async () => {
-    mockSellersFetch()
-    window.history.replaceState({}, '', '/?seller=alexandre')
-    vi.resetModules()
-    const { AppRoot } = await import('./main')
-    render(<AppRoot />)
-    expect(await screen.findByText('Catálogo')).toBeDefined()
+  it('mostra o mesmo relógio em /relogio/{slug}?seller=alexandre (SV-11)', async () => {
+    const slug = watchSlug()
+    await renderApp(`/relogio/${slug}`)
+    expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
+    const watchAtPath = document.body.textContent
+
+    cleanup()
+    const fetchMock = await renderApp(`/relogio/${slug}?seller=alexandre`)
+    expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
+    expect(document.body.textContent).toBe(watchAtPath)
+    expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
+    expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/')
+    expect(didRequestSellers(fetchMock)).toBe(false)
+  })
+
+  it('alterna o tema pela barra com um único ThemeProvider em /?seller=alexandre', async () => {
+    await renderApp('/?seller=alexandre')
+    expect(await screen.findByText(watchTitle())).toBeDefined()
     expect(screen.getAllByRole('button', { name: /Usar tema/ })).toHaveLength(1)
   })
 })

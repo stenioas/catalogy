@@ -1,70 +1,20 @@
-import {
-  createBrowserRouter,
-  useLoaderData,
-  type LoaderFunctionArgs,
-  type RouteObject,
-} from 'react-router-dom'
+import { createBrowserRouter, useParams, type RouteObject } from 'react-router-dom'
 
 import { CatalogPage } from '../routes/catalog-page'
-import { SellerGate } from '../routes/seller-gate'
 import { WatchPage } from '../routes/watch-page'
 
-export type CatalogLoaderData = {
-  seller: string | null
-}
-
-export type WatchLoaderData = {
-  seller: string | null
-  slug: string
-}
-
-function sellerFromRequest(request: Request): string | null {
-  return new URL(request.url).searchParams.get('seller')
-}
-
-export async function catalogLoader({
-  request,
-}: LoaderFunctionArgs): Promise<CatalogLoaderData> {
-  return { seller: sellerFromRequest(request) }
-}
-
-export async function watchLoader({
-  request,
-  params,
-}: LoaderFunctionArgs): Promise<WatchLoaderData> {
-  return {
-    seller: sellerFromRequest(request),
-    slug: params.slug ?? '',
-  }
-}
-
-function CatalogRoute() {
-  const { seller } = useLoaderData() as CatalogLoaderData
-  return (
-    <SellerGate sellerQuery={seller}>
-      {() => <CatalogPage />}
-    </SellerGate>
-  )
-}
-
 function WatchRoute() {
-  const { seller, slug } = useLoaderData() as WatchLoaderData
-  return (
-    <SellerGate sellerQuery={seller}>
-      {(resolved) => <WatchPage seller={resolved} slug={slug} />}
-    </SellerGate>
-  )
+  const { slug } = useParams()
+  return <WatchPage slug={slug ?? ''} />
 }
 
 export const appRoutes: RouteObject[] = [
   {
     path: '/',
-    loader: catalogLoader,
-    element: <CatalogRoute />,
+    element: <CatalogPage />,
   },
   {
     path: '/relogio/:slug',
-    loader: watchLoader,
     element: <WatchRoute />,
   },
 ]
