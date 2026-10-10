@@ -65,7 +65,11 @@ export function TopBar({ catalogHref }: TopBarProps) {
         >
           <div className="justify-self-start">
             {catalogHref ? (
-              <Button asChild variant="ghost" className="size-11 shrink-0 text-inherit">
+              <Button
+                asChild
+                variant="ghost"
+                className="size-11 shrink-0 rounded-full text-inherit hover:bg-[#3a3a3c]"
+              >
                 <Link to={catalogHref} aria-label="Voltar">
                   <ChevronLeft aria-hidden="true" />
                 </Link>
