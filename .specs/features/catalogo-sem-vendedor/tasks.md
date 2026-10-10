@@ -676,6 +676,8 @@ T18 → T19 → T20
 
 ### T20: Miolo da vitrine
 
+**Status**: done
+
 **What**: A vitrine usa o mesmo `main` com `max-width: 100%`, `min-width: 0` e `overflow-x: clip`.
 **Where**: `client/src/routes/catalog-page.tsx`
 **Depends on**: T9, T19
@@ -690,9 +692,9 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `catalog-page.test.tsx` espera esse `main`
-- [ ] Gate sai 0: `pnpm test && pnpm build`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `catalog-page.test.tsx` espera esse `main`
+- [x] Gate sai 0: `pnpm test && pnpm build`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: integration
 **Gate**: build

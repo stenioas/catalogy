@@ -199,6 +199,17 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(within(column).getByTestId('catalog-grid')).toBeDefined()
   })
 
+  it('gives the catalog main max-width 100%, min-width 0 and overflow-x clip (SV-51)', () => {
+    mockProductsRef.current = [makeProduct('one', 'One')]
+    renderCatalogPage()
+    const main = screen.getByRole('main')
+    const tokens = main.className.split(/\s+/)
+    expect(tokens).toContain('max-w-full')
+    expect(tokens).toContain('min-w-0')
+    expect(tokens).toContain('overflow-x-clip')
+    expect(main.contains(screen.getByTestId('catalog-page-column'))).toBe(true)
+  })
+
   it('preserves stable title order when the source list is already sorted (CAT-47, AC18)', () => {
     mockProductsRef.current = [
       makeProduct('a', 'Addiesdive'),

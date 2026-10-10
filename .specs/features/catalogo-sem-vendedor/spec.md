@@ -250,7 +250,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-48 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-49 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-50 | P1: Ficha, foto e carrossel | Phase 4 | Done |
-| SV-51 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
+| SV-51 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-52 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-53 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-54 | P1: Ficha, foto e carrossel | Tasks | Done |

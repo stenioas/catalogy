@@ -14,22 +14,24 @@ export function CatalogPage() {
   return (
     <>
       <TopBar />
-      <div data-testid="catalog-page-column" className="catalog-column py-8">
-        {sortedProducts.length === 0 ? (
-          <p className="m-0 text-[var(--ink-primary)]">{EMPTY_VITRINE_MESSAGE}</p>
-        ) : (
-          <ul
-            data-testid="catalog-grid"
-            className="m-0 grid list-none grid-cols-1 gap-6 p-0 md:grid-cols-2 lg:grid-cols-3"
-          >
-            {sortedProducts.map((product) => (
-              <li key={product.slug}>
-                <WatchCard product={product} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <main className="max-w-full min-w-0 overflow-x-clip">
+        <div data-testid="catalog-page-column" className="catalog-column py-8">
+          {sortedProducts.length === 0 ? (
+            <p className="m-0 text-[var(--ink-primary)]">{EMPTY_VITRINE_MESSAGE}</p>
+          ) : (
+            <ul
+              data-testid="catalog-grid"
+              className="m-0 grid list-none grid-cols-1 gap-6 p-0 md:grid-cols-2 lg:grid-cols-3"
+            >
+              {sortedProducts.map((product) => (
+                <li key={product.slug}>
+                  <WatchCard product={product} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </main>
     </>
   )
 }
