@@ -109,6 +109,7 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     expect(back.className).toMatch(/\bsize-11\b/)
     expect(back.className).toMatch(/\brounded-full\b/)
     expect(back.className).toMatch(/hover:bg-\[#3a3a3c\]/)
+    expect(back.className).toMatch(/hover:text-inherit/)
     expect(back.className).not.toMatch(/\bbg-primary\b/)
   })
 

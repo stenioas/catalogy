@@ -68,7 +68,7 @@ export function TopBar({ catalogHref }: TopBarProps) {
               <Button
                 asChild
                 variant="ghost"
-                className="size-11 shrink-0 rounded-full text-inherit hover:bg-[#3a3a3c]"
+                className="size-11 shrink-0 rounded-full text-inherit hover:bg-[#3a3a3c] hover:text-inherit"
               >
                 <Link to={catalogHref} aria-label="Voltar">
                   <ChevronLeft aria-hidden="true" />
