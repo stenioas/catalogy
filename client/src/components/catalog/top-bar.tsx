@@ -25,7 +25,7 @@ function useHideOnScrollDown() {
     const onScroll = () => {
       const y = window.scrollY
       const delta = y - lastY.current
-      if (y < 48) {
+      if (y < 64) {
         setHidden(false)
       } else if (delta > SCROLL_DELTA) {
         setHidden(true)
@@ -47,11 +47,11 @@ export function TopBar({ catalogHref }: TopBarProps) {
 
   return (
     <>
-      <div aria-hidden="true" className="h-11 w-full" data-testid="top-bar-spacer" />
+      <div aria-hidden="true" className="h-16 w-full" data-testid="top-bar-spacer" />
       <header
         data-testid="top-bar"
         inert={hidden}
-        className={`fixed inset-x-0 top-0 z-20 h-11 w-full bg-[var(--surface-black)] text-[var(--on-primary)] motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
+        className={`fixed inset-x-0 top-0 z-20 h-16 w-full bg-[var(--surface-black)] text-[var(--on-primary)] motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
       >
         <div
           data-testid="top-bar-inner"

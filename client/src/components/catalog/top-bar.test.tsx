@@ -67,7 +67,7 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     cleanup()
   })
 
-  it('is 44px tall on the catalog grade without Voltar (SV-43)', () => {
+  it('is 64px tall on the catalog grade without Voltar (SV-43)', () => {
     const { container } = renderTopBar()
     const header = container.querySelector(
       '[data-testid="top-bar"]',
@@ -75,7 +75,7 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     const inner = container.querySelector(
       '[data-testid="top-bar-inner"]',
     ) as HTMLElement
-    expect(header.className).toMatch(/\bh-11\b/)
+    expect(header.className).toMatch(/\bh-16\b/)
     expect(header.className).toMatch(/\bfixed\b/)
     expect(inner.className).toMatch(/\bh-full\b/)
     expect(inner.className).not.toMatch(/\bpy-2\.5\b/)
@@ -85,7 +85,7 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     expect(header.className).toMatch(/on-primary/)
   })
 
-  it('is 44px tall on the watch route with Voltar (SV-43)', () => {
+  it('is 64px tall on the watch route with Voltar (SV-43)', () => {
     const { container } = renderTopBar('/')
     const header = container.querySelector(
       '[data-testid="top-bar"]',
@@ -93,7 +93,7 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     const inner = container.querySelector(
       '[data-testid="top-bar-inner"]',
     ) as HTMLElement
-    expect(header.className).toMatch(/\bh-11\b/)
+    expect(header.className).toMatch(/\bh-16\b/)
     expect(inner.className).toMatch(/\bh-full\b/)
     expect(inner.className).not.toMatch(/\bpy-2\.5\b/)
   })
@@ -124,7 +124,7 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     renderTopBar()
     const header = screen.getByTestId('top-bar')
     expect(header.className).toMatch(/translate-y-0/)
-    expect(screen.getByTestId('top-bar-spacer').className).toMatch(/\bh-11\b/)
+    expect(screen.getByTestId('top-bar-spacer').className).toMatch(/\bh-16\b/)
 
     setScrollY(160)
     fireEvent.scroll(window)
