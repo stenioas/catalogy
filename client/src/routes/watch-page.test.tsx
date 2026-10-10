@@ -239,6 +239,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/')
   })
 
+  it('shows the missing-watch message when enabled is false', () => {
+    mockProductsRef.current = [makeProduct({ enabled: false })]
+    renderWatchPage()
+    expect(screen.getByText('Este relógio não está no catálogo.')).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Seculus' })).toBeNull()
+  })
+
   it('shows the missing-watch message and hides Eu quero! when the slug is absent (SV-15, CAT-87, CAT-88)', () => {
     renderWatchPage('slug-ausente')
     const column = screen.getByTestId('watch-page-column')

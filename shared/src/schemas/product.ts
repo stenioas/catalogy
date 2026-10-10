@@ -43,6 +43,7 @@ export const ProductSchema = z
       ),
     description: z.string().optional(),
     new: z.boolean().optional(),
+    enabled: z.boolean().optional(),
     specifications: z.array(SpecificationSchema).optional(),
     observations: z.string().optional(),
   })
@@ -61,3 +62,7 @@ export const ProductSchema = z
 
 export type Product = z.infer<typeof ProductSchema>
 export type Specification = z.infer<typeof SpecificationSchema>
+
+export function isProductListed(product: { enabled?: boolean }): boolean {
+  return product.enabled !== false
+}

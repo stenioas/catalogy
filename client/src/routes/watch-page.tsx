@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import type { Product } from '@catalogo/shared'
+import { isProductListed, type Product } from '@catalogo/shared'
 
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
@@ -105,7 +105,8 @@ function WatchColumn({ product }: { product: Product }) {
 }
 
 export function WatchPage({ slug }: WatchPageProps) {
-  const product = products.find((item) => item.slug === slug) ?? null
+  const product =
+    products.find((item) => item.slug === slug && isProductListed(item)) ?? null
   const catalogHref = '/'
 
   return (

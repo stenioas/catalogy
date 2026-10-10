@@ -1,4 +1,4 @@
-import { compareTitles } from '@catalogo/shared'
+import { compareTitles, isProductListed } from '@catalogo/shared'
 
 import { products } from '../catalog/products.generated'
 import { TopBar } from '../components/catalog/top-bar'
@@ -7,7 +7,7 @@ import { WatchCard } from '../components/catalog/watch-card'
 export const EMPTY_VITRINE_MESSAGE = 'A vitrine ainda não tem relógios.'
 
 export function CatalogPage() {
-  const sortedProducts = [...products].sort((a, b) =>
+  const sortedProducts = products.filter(isProductListed).sort((a, b) =>
     compareTitles(a.title, b.title),
   )
 

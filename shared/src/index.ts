@@ -1,5 +1,6 @@
 export {
   ProductSchema,
+  isProductListed,
   type Product,
   type Specification,
 } from './schemas/product'

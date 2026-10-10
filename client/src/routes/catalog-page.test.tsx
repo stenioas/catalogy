@@ -112,6 +112,18 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     ])
   })
 
+  it('hides a product with enabled false and keeps omitted or true', () => {
+    mockProductsRef.current = [
+      makeProduct('addiesdive-watch', 'Addiesdive'),
+      { ...makeProduct('curren-watch', 'CURREN'), enabled: false },
+      { ...makeProduct('seculus-watch', 'Seculus'), enabled: true },
+    ]
+    renderCatalogPage()
+    expect(screen.queryByRole('heading', { name: 'CURREN' })).toBeNull()
+    expect(screen.getByRole('heading', { name: 'Addiesdive' })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Seculus' })).toBeDefined()
+  })
+
   it('lists addiesdive, then Épico, then Zeta by Portuguese title order (CAT-46)', () => {
     mockProductsRef.current = [
       makeProduct('zeta-watch', 'Zeta'),

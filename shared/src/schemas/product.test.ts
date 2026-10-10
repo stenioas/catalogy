@@ -160,6 +160,16 @@ describe('ProductSchema optional fields (CAT-13)', () => {
     expect(ProductSchema.safeParse({ ...baseProduct, new: false }).success).toBe(true)
     expect(ProductSchema.safeParse({ ...baseProduct, new: 'true' }).success).toBe(false)
   })
+
+  it('keeps a product listed when enabled is omitted or true, and stores false', () => {
+    const omitted = ProductSchema.safeParse(baseProduct)
+    const turnedOn = ProductSchema.safeParse({ ...baseProduct, enabled: true })
+    const turnedOff = ProductSchema.safeParse({ ...baseProduct, enabled: false })
+    expect(omitted.success && omitted.data.enabled).toBeUndefined()
+    expect(turnedOn.success && turnedOn.data.enabled).toBe(true)
+    expect(turnedOff.success && turnedOff.data.enabled).toBe(false)
+    expect(ProductSchema.safeParse({ ...baseProduct, enabled: 'false' }).success).toBe(false)
+  })
 })
 
 describe('ProductSchema slug (CAT-04)', () => {
