@@ -60,14 +60,16 @@ function WatchColumn({ product }: { product: Product }) {
         </section>
       ) : null}
       {specifications.length > 0 ? (
-        <section>
+        <section className="w-full min-w-0">
           <h2 className="m-0 font-display text-lg font-semibold text-foreground">Especificações</h2>
-          <Table className="text-left">
+          <Table className="table-fixed text-left">
             <TableBody>
               {specifications.map((row) => (
                 <TableRow key={`${row.label}:${row.value}`}>
-                  <TableCell>{row.label}</TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal break-words align-top">
+                    {row.label}
+                  </TableCell>
+                  <TableCell className="whitespace-normal break-words align-top">
                     <SpecificationValue value={row.value} />
                   </TableCell>
                 </TableRow>

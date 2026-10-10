@@ -282,6 +282,15 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       'Pulseira',
       'Aço',
     ])
+    expect(table.className.split(/\s+/)).toContain('table-fixed')
+    const section = heading.parentElement
+    expect(section?.className.split(/\s+/)).toEqual(expect.arrayContaining(['w-full', 'min-w-0']))
+    for (const cell of within(table).getAllByRole('cell')) {
+      const tokens = cell.className.split(/\s+/)
+      expect(tokens).toContain('whitespace-normal')
+      expect(tokens).toContain('break-words')
+      expect(tokens).not.toContain('whitespace-nowrap')
+    }
   })
 
   it('turns http and https specification values into Ver anúncio similar (SV-46, SV-49)', () => {
