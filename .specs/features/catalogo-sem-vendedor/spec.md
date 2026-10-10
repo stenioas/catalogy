@@ -232,7 +232,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-30 | P1: Visual dos controles | Tasks | Done |
 | SV-31 | P1: Visual dos controles | Tasks | Done |
 | SV-32 | P1: Visual dos controles | Tasks | Done |
-| SV-33 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-33 | P1: Visual dos controles | Tasks | Done |
 | SV-34 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-35 | P1: Visual dos controles | Tasks | Done |
 | SV-36 | P1: Visual dos controles | Tasks | In Tasks |
@@ -242,7 +242,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-40 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-41 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-42 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-43 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-43 | P1: Visual dos controles | Tasks | Done |
 | SV-44 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
 | SV-45 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
 | SV-46 | P1: Ficha, foto e carrossel | Tasks | In Tasks |

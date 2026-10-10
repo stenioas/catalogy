@@ -527,6 +527,8 @@ T18 → T19 → T20
 
 ### T15: Barra de 44px
 
+**Status**: done
+
 **What**: As duas barras pretas medem 44px. O `py-2.5` sai. Voltar é `Button` com `ChevronLeft`, sem fundo, 44×44.
 **Where**: `client/src/components/catalog/top-bar.tsx`
 **Depends on**: T8, T14
@@ -541,10 +543,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `top-bar.test.tsx` mede 44px na barra com e sem Voltar
-- [ ] Voltar usa `ChevronLeft` e não tem fundo azul
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `top-bar.test.tsx` mede 44px na barra com e sem Voltar
+- [x] Voltar usa `ChevronLeft` e não tem fundo azul
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

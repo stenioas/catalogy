@@ -64,3 +64,45 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
     expect((inner as HTMLElement).classList.contains('catalog-column')).toBe(true)
   })
 })
+
+describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('is 44px tall on the catalog grade without Voltar (SV-43)', () => {
+    const { container } = renderTopBar()
+    const header = container.querySelector(
+      '[data-testid="top-bar"]',
+    ) as HTMLElement
+    const inner = container.querySelector(
+      '[data-testid="top-bar-inner"]',
+    ) as HTMLElement
+    expect(header.className).toMatch(/\bh-11\b/)
+    expect(inner.className).toMatch(/\bh-full\b/)
+    expect(inner.className).not.toMatch(/\bpy-2\.5\b/)
+  })
+
+  it('is 44px tall on the watch route with Voltar (SV-43)', () => {
+    const { container } = renderTopBar('/')
+    const header = container.querySelector(
+      '[data-testid="top-bar"]',
+    ) as HTMLElement
+    const inner = container.querySelector(
+      '[data-testid="top-bar-inner"]',
+    ) as HTMLElement
+    expect(header.className).toMatch(/\bh-11\b/)
+    expect(inner.className).toMatch(/\bh-full\b/)
+    expect(inner.className).not.toMatch(/\bpy-2\.5\b/)
+  })
+
+  it('uses ChevronLeft on a ghost 44×44 Voltar without the WhatsApp pill background (SV-29, SV-33)', () => {
+    renderTopBar('/')
+    const back = screen.getByRole('link', { name: 'Voltar' })
+    expect(back.querySelector('svg.lucide-chevron-left')).not.toBeNull()
+    expect(back.getAttribute('data-slot')).toBe('button')
+    expect(back.getAttribute('data-variant')).toBe('ghost')
+    expect(back.className).toMatch(/\bsize-11\b/)
+    expect(back.className).not.toMatch(/\bbg-primary\b/)
+  })
+})
