@@ -79,11 +79,9 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     expect(header.className).toMatch(/\bfixed\b/)
     expect(inner.className).toMatch(/\bh-full\b/)
     expect(inner.className).not.toMatch(/\bpy-2\.5\b/)
-    const style = header.getAttribute('style') ?? ''
-    expect(style).toContain('saturate(180%) blur(20px)')
-    expect(style).toContain('var(--surface-black)')
-    expect(style).toContain('80%')
-    expect(style).not.toContain('canvas-parchment')
+    expect(header.className).toContain('bg-[var(--surface-black)]')
+    expect(header.getAttribute('style') ?? '').not.toContain('blur')
+    expect(header.className).not.toContain('backdrop-filter')
     expect(header.className).toMatch(/on-primary/)
   })
 

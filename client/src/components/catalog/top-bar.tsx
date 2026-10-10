@@ -13,9 +13,6 @@ export type TopBarProps = {
 const titleClassName =
   'm-0 min-w-0 truncate font-[family-name:var(--font-sans)] text-base font-normal tracking-[-0.12px] text-inherit'
 
-const frostedBarStyle =
-  'background-color: color-mix(in srgb, var(--surface-black) 80%, transparent); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);'
-
 const SCROLL_DELTA = 8
 
 function useHideOnScrollDown() {
@@ -54,10 +51,7 @@ export function TopBar({ catalogHref }: TopBarProps) {
       <header
         data-testid="top-bar"
         inert={hidden}
-        className={`fixed inset-x-0 top-0 z-20 h-11 w-full text-[var(--on-primary)] motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
-        ref={(node) => {
-          node?.setAttribute('style', frostedBarStyle)
-        }}
+        className={`fixed inset-x-0 top-0 z-20 h-11 w-full bg-[var(--surface-black)] text-[var(--on-primary)] motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
       >
         <div
           data-testid="top-bar-inner"
