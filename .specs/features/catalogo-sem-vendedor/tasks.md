@@ -342,6 +342,8 @@ T18 → T19 → T20
 
 ### T9: Vitrine sem prop de vendedor
 
+**Status**: done
+
 **What**: `CatalogPage` não recebe `seller`. A grade lista os relógios. A vitrine vazia mostra a frase combinada.
 **Where**: `client/src/routes/catalog-page.tsx`
 **Depends on**: T8
@@ -356,10 +358,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] A página não importa `Seller`
-- [ ] `catalog-page.test.tsx` cobre a grade e a frase de vitrine vazia
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] A página não importa `Seller`
+- [x] `catalog-page.test.tsx` cobre a grade e a frase de vitrine vazia
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: integration
 **Gate**: full

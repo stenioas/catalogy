@@ -42,7 +42,7 @@ function CatalogRoute() {
   const { seller } = useLoaderData() as CatalogLoaderData
   return (
     <SellerGate sellerQuery={seller}>
-      {(resolved) => <CatalogPage seller={resolved} />}
+      {() => <CatalogPage />}
     </SellerGate>
   )
 }

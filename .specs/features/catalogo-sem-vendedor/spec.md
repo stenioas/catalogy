@@ -200,12 +200,12 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| SV-01 | P1: Vitrine sem vendedor | Phase 3 | In Tasks |
+| SV-01 | P1: Vitrine sem vendedor | Phase 3 | Done |
 | SV-02 | P1: Vitrine sem vendedor | Tasks | In Tasks |
 | SV-03 | P1: Vitrine sem vendedor | Tasks | In Tasks |
 | SV-04 | P1: Vitrine sem vendedor | Tasks | In Tasks |
 | SV-05 | P1: Vitrine sem vendedor | Tasks | In Tasks |
-| SV-06 | P1: Vitrine sem vendedor | Tasks | In Tasks |
+| SV-06 | P1: Vitrine sem vendedor | Tasks | Done |
 | SV-07 | P1: Vitrine sem vendedor | Phase 1 | Done |
 | SV-08 | P1: Vitrine sem vendedor | Phase 1 | Done |
 | SV-09 | P1: Vitrine sem vendedor | Phase 1 | Done |

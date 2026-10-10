@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import type { Product, Seller } from '@catalogo/shared'
+import type { Product } from '@catalogo/shared'
 import { cleanup, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
@@ -13,18 +13,6 @@ import { ThemeProvider } from '../components/theme-provider'
 import { CatalogPage } from './catalog-page'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
-
-const alexandre: Seller = {
-  slug: 'alexandre',
-  name: 'Alexandre',
-  phone: '5585997689165',
-}
-
-const manuela: Seller = {
-  slug: 'manuela',
-  name: 'Manuela',
-  phone: '5585996043447',
-}
 
 function makeProduct(slug: string, title: string): Product {
   return {
@@ -89,11 +77,11 @@ function productsFromModule(source: string): Product[] {
   return JSON.parse(source.slice(prefix.length)) as Product[]
 }
 
-function renderCatalogPage(seller: Seller = alexandre) {
+function renderCatalogPage() {
   return render(
     <ThemeProvider>
-      <MemoryRouter initialEntries={[`/?seller=${seller.slug}`]}>
-        <CatalogPage seller={seller} />
+      <MemoryRouter initialEntries={['/']}>
+        <CatalogPage />
       </MemoryRouter>
     </ThemeProvider>,
   )
@@ -175,9 +163,20 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(block).toMatch(/padding-inline:\s*24px/)
   })
 
-  it('shows the empty vitrine copy and keeps Catálogo in the top bar (SV-01, CAT-121, CAT-122, AC6–7)', () => {
+  it('lists each watch in the product grid (SV-01, AC1)', () => {
+    mockProductsRef.current = [
+      makeProduct('alpha', 'Alpha'),
+      makeProduct('beta', 'Beta'),
+    ]
+    renderCatalogPage()
+    const grid = screen.getByTestId('catalog-grid')
+    expect(within(grid).getAllByRole('heading', { level: 2 })).toHaveLength(2)
+    expect(screen.getByText('Catálogo')).toBeDefined()
+  })
+
+  it('shows the empty vitrine copy and keeps Catálogo in the top bar (SV-06, CAT-121, CAT-122, AC6–7)', () => {
     mockProductsRef.current = []
-    renderCatalogPage(manuela)
+    renderCatalogPage()
     expect(screen.getByText('Catálogo')).toBeDefined()
     expect(screen.getByText('A vitrine ainda não tem relógios.')).toBeDefined()
     expect(screen.queryByTestId('catalog-grid')).toBeNull()
