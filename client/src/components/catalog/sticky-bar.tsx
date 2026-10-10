@@ -3,6 +3,9 @@ import { useLayoutEffect, useState, type RefObject } from 'react'
 import { PriceBlock } from './price-block'
 import { WantLink } from './want-link'
 
+const frostedBarStyle =
+  'background-color: color-mix(in srgb, var(--canvas-parchment) 80%, transparent); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);'
+
 export type StickyBarProps = {
   price: number
   listPrice?: number
@@ -44,7 +47,7 @@ export function StickyBar({
       ref={(node) => {
         node?.setAttribute(
           'style',
-          'padding-bottom: env(safe-area-inset-bottom); background-color: color-mix(in srgb, var(--canvas-parchment) 80%, transparent); backdrop-filter: saturate(180%) blur(20px);',
+          `padding-bottom: env(safe-area-inset-bottom); ${frostedBarStyle}`,
         )
       }}
     >
