@@ -215,11 +215,11 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-13 | P1: Página do relógio sem vendedor | Tasks | In Tasks |
 | SV-14 | P1: Página do relógio sem vendedor | Tasks | In Tasks |
 | SV-15 | P1: Página do relógio sem vendedor | Tasks | In Tasks |
-| SV-16 | P1: Página do relógio sem vendedor | Tasks | In Tasks |
+| SV-16 | P1: Página do relógio sem vendedor | Phase 2 | Done |
 | SV-17 | P1: WhatsApp sem telefone | Phase 2 | Done |
 | SV-18 | P1: WhatsApp sem telefone | Phase 2 | Done |
 | SV-19 | P1: WhatsApp sem telefone | Phase 2 | Done |
-| SV-20 | P1: WhatsApp sem telefone | Tasks | In Tasks |
+| SV-20 | P1: WhatsApp sem telefone | Phase 2 | Done |
 | SV-21 | P1: WhatsApp sem telefone | Phase 2 | Done |
 | SV-22 | P1: WhatsApp sem telefone | Phase 2 | Done |
 | SV-23 | P1: Build sem telefone publicado | Phase 1 | Done |

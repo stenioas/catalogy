@@ -6,7 +6,6 @@ import { WantLink } from './want-link'
 export type StickyBarProps = {
   price: number
   listPrice?: number
-  phone: string
   slug: string
   title: string
   targetRef: RefObject<Element | null>
@@ -15,7 +14,6 @@ export type StickyBarProps = {
 export function StickyBar({
   price,
   listPrice,
-  phone,
   slug,
   title,
   targetRef,

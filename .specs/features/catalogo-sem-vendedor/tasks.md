@@ -250,6 +250,8 @@ T18 → T19 → T20
 
 ### T6: Repassar slug e título à barra fixa
 
+**Status**: done
+
 **What**: A barra fixa deixa de receber telefone e usa o mesmo href da página. Ela continua ausente quando o botão da página está inteiro na viewport.
 **Where**: `client/src/components/catalog/sticky-bar.tsx`
 **Depends on**: T5
@@ -264,10 +266,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] As props são `slug` e `title`, sem `phone`
-- [ ] `sticky-bar.test.tsx` confere o href igual e a barra escondida com ratio 1
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] As props são `slug` e `title`, sem `phone`
+- [x] `sticky-bar.test.tsx` confere o href igual e a barra escondida com ratio 1
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

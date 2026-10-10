@@ -6,7 +6,6 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { waUrl } from './want-link'
 import { StickyBar } from './sticky-bar'
 
-const phone = '5585997689165'
 const slug = 'seculus'
 const title = 'Seculus'
 const whatsappLinkName = 'Enviar no WhatsApp'
@@ -57,7 +56,6 @@ function Harness({
   return (
     <StickyBar
       price={369.9}
-      phone={phone}
       slug={slug}
       title={title}
       targetRef={targetRef}
@@ -81,13 +79,13 @@ function renderBar() {
   return render(<Fixture />)
 }
 
-describe('StickyBar (CAT-89–CAT-94, CAT-151)', () => {
+describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
   afterEach(() => {
     cleanup()
     vi.unstubAllGlobals()
   })
 
-  it('shows the price and the same Eu quero! on first paint without full intersection (CAT-89)', () => {
+  it('shows the price and the same WhatsApp href as the page button on first paint without full intersection (SV-20, CAT-89)', () => {
     const observer = installObserver(0.4, true)
     renderBar()
 
@@ -108,7 +106,7 @@ describe('StickyBar (CAT-89–CAT-94, CAT-151)', () => {
     expect(row.classList.contains('catalog-column')).toBe(true)
   })
 
-  it('hides the bar on first paint when the button is fully inside the viewport (CAT-90, CAT-151)', () => {
+  it('hides the bar on first paint when the button is fully inside the viewport (SV-16, CAT-90, CAT-151)', () => {
     installObserver(1, true)
     renderBar()
 
