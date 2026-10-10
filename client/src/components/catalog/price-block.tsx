@@ -1,5 +1,7 @@
 import { discountPercent, formatBrl } from '@catalogo/shared'
 
+import { Badge } from '@/components/ui/badge'
+
 export type PriceBlockProps = {
   price: number
   listPrice?: number
@@ -30,12 +32,12 @@ export function PriceBlock({ price, listPrice }: PriceBlockProps) {
       <div className="flex flex-wrap items-center gap-2">
         <span data-testid="price-current">{currentLabel}</span>
         {showBadge ? (
-          <span
+          <Badge
             data-testid="price-badge"
-            className="rounded-full bg-primary-tint-background px-2 py-0.5 text-sm font-medium text-primary-tint-foreground"
+            className="rounded-full bg-primary-tint-background text-sm font-medium text-primary-tint-foreground"
           >
             −{percent}%
-          </span>
+          </Badge>
         ) : null}
       </div>
     </div>

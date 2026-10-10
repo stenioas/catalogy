@@ -88,13 +88,19 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(struck.className).toMatch(/\bline-through\b/)
   })
 
-  it('styles the discount badge as a primary-tint pill without green or red (CAT-105, CAT-108, CAT-109)', () => {
+  it('renders the discount seal as Badge with primary-tint when discount is at least 1% (SV-41, CAT-105, CAT-108, CAT-109)', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450 })
     const badge = screen.getByTestId('price-badge')
-    expect(badge.className).toMatch(/\brounded-full\b/)
+    expect(badge.getAttribute('data-slot')).toBe('badge')
     expect(badge.className).toMatch(/\btext-primary-tint-foreground\b/)
     expect(badge.className).toMatch(/\bbg-primary-tint-background\b/)
     expect(badge.className).not.toMatch(/green|red|emerald|rose/i)
+  })
+
+  it('does not render a discount seal when listPrice is absent (SV-41)', () => {
+    const { container } = renderPriceBlock({ price: 369.9 })
+    expect(screen.queryByTestId('price-badge')).toBeNull()
+    expect(container.querySelector('[data-slot="badge"]')).toBeNull()
   })
 
   it('uses light-theme primary-tint token values from index.css (CAT-106)', () => {

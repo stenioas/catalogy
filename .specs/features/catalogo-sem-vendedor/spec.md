@@ -240,7 +240,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-38 | P1: Visual dos controles | Tasks | Done |
 | SV-39 | P1: Visual dos controles | Tasks | Done |
 | SV-40 | P1: Visual dos controles | Tasks | Done |
-| SV-41 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-41 | P1: Visual dos controles | Tasks | Done |
 | SV-42 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-43 | P1: Visual dos controles | Tasks | Done |
 | SV-44 | P1: Ficha, foto e carrossel | Tasks | In Tasks |

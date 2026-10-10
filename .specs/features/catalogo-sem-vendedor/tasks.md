@@ -586,6 +586,8 @@ T18 → T19 → T20
 
 ### T17: Selo de desconto
 
+**Status**: done
+
 **What**: O selo passa a ser `Badge` com as cores `primary-tint`.
 **Where**: `client/src/components/catalog/price-block.tsx`
 **Depends on**: T16
@@ -600,10 +602,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `price-block.test.tsx` espera `Badge` e as classes `primary-tint` quando há desconto
-- [ ] Sem desconto, o selo não aparece
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `price-block.test.tsx` espera `Badge` e as classes `primary-tint` quando há desconto
+- [x] Sem desconto, o selo não aparece
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick
