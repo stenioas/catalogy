@@ -72,6 +72,7 @@ Monte um objeto compatível com `ProductSchema` (`@catalogo/shared`):
 | `description` | Opcional | **Omita** se `""` ou ausente |
 | `specifications` | Opcional | **Omita** se ausente ou lista vazia |
 | `observations` | Opcional | **Omita** se `""` ou ausente |
+| `new` | Opcional | **Omita** se ausente ou `false`. `true` mostra a badge Novo! no card |
 
 String só com espaços **não** conta como vazio para omitir; só `""` ou campo omitido.
 
@@ -103,7 +104,7 @@ Entrada (modo A ou B)
 
 Inclua sempre, em texto claro para o operador:
 
-- `slug`, `title`, `price`, `listPrice` (se houver), `description`, `specifications`, `observations`
+- `slug`, `title`, `price`, `listPrice` (se houver), `description`, `specifications`, `observations`, `new` (se `true`)
 - Lista ordenada de nomes de arquivo em `images`
 - Destino: `client/public/catalog/products/<slug>/product.json` e `.../img/`
 

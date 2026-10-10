@@ -1,6 +1,7 @@
 import type { Product } from '@catalogo/shared'
 import { Link } from 'react-router-dom'
 
+import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 
 import { PriceBlock } from './price-block'
@@ -21,12 +22,20 @@ export function WatchCard({ product }: WatchCardProps) {
   return (
     <Card className="gap-0 overflow-hidden rounded-[12px] border-[1px] bg-card p-0 py-0 shadow-none ring-0">
       <Link to={watchPath} data-testid="watch-card-link" className="block text-left">
-        <div className="aspect-square w-full">
+        <div className="relative aspect-square w-full">
           <img
             src={productImageSrc(product.slug, firstImage)}
             alt={product.title}
             className="h-full w-full object-contain"
           />
+          {product.new === true ? (
+            <Badge
+              data-testid="new-badge"
+              className="absolute top-3 left-3 h-auto rounded-full bg-primary-tint-background px-2.5 py-0.5 text-sm font-medium text-primary-tint-foreground"
+            >
+              Novo!
+            </Badge>
+          ) : null}
         </div>
         <div
           data-testid="watch-card-body"

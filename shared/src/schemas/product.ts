@@ -42,6 +42,7 @@ export const ProductSchema = z
         'Each image file name must use an allowed extension and must not contain path separators',
       ),
     description: z.string().optional(),
+    new: z.boolean().optional(),
     specifications: z.array(SpecificationSchema).optional(),
     observations: z.string().optional(),
   })

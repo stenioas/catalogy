@@ -76,7 +76,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 10. IF `listPrice` is present and, after that truncation, is less than or equal to `price` THEN the shared contract SHALL reject the product.
 11. The shared contract SHALL reject a product whose `images` list is empty.
 12. The shared contract SHALL reject an image file name that contains `/` or `\`.
-13. WHERE `listPrice`, `description`, `specifications`, or `observations` is omitted THEN the shared contract SHALL accept the product.
+13. WHERE `listPrice`, `description`, `specifications`, `observations`, or `new` is omitted THEN the shared contract SHALL accept the product.
 14. The shared contract SHALL accept an image file name whose extension is `jpg`, `jpeg`, `png`, `webp`, or `avif`, in any letter case.
 15. The shared contract SHALL keep the image file name as written in `images`.
 
@@ -293,7 +293,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 12. The skill SHALL build the slug from the title by stripping accents, lowercasing, replacing each run of non-letters and non-digits with one hyphen, and removing a leading or trailing hyphen.
 13. WHEN the title is `Seculus — kit com cantil` THEN the skill SHALL use the slug `seculus-kit-com-cantil`.
 14. IF the reading has no title, no price, or no photo THEN the skill SHALL NOT write.
-15. WHERE `description`, `specifications`, `observations`, or `listPrice` is empty THEN the skill SHALL omit that field from `product.json`.
+15. WHERE `description`, `specifications`, `observations`, or `listPrice` is empty, or `new` is false, THEN the skill SHALL omit that field from `product.json`.
 16. WHEN a field is uncertain in the single-text input THEN the skill SHALL show that field empty in the reading.
 17. IF that slug's product folder already exists THEN the skill SHALL ask for another slug.
 18. IF that slug's product folder already exists THEN the skill SHALL NOT overwrite it.

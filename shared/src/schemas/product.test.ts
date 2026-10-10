@@ -137,7 +137,7 @@ describe('ProductSchema images (CAT-11, CAT-12, CAT-14, CAT-15)', () => {
 })
 
 describe('ProductSchema optional fields (CAT-13)', () => {
-  it('accepts a product when listPrice, description, specifications, and observations are omitted', () => {
+  it('accepts a product when listPrice, description, specifications, observations, and new are omitted', () => {
     expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
   })
 
@@ -148,8 +148,17 @@ describe('ProductSchema optional fields (CAT-13)', () => {
       description: 'Descrição do relógio.',
       specifications: [{ label: 'Marca', value: 'Seculus' }],
       observations: 'Observação.',
+      new: true,
     })
     expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.new).toBe(true)
+    }
+  })
+
+  it('accepts new: false and rejects a non-boolean new', () => {
+    expect(ProductSchema.safeParse({ ...baseProduct, new: false }).success).toBe(true)
+    expect(ProductSchema.safeParse({ ...baseProduct, new: 'true' }).success).toBe(false)
   })
 })
 

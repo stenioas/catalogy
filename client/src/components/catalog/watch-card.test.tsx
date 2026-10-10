@@ -67,6 +67,21 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
+  it('shows Novo! only when new is true', () => {
+    renderWatchCard()
+    expect(screen.queryByTestId('new-badge')).toBeNull()
+
+    cleanup()
+    renderWatchCard({ ...sampleProduct, new: false })
+    expect(screen.queryByTestId('new-badge')).toBeNull()
+
+    cleanup()
+    renderWatchCard({ ...sampleProduct, new: true })
+    const badge = screen.getByTestId('new-badge')
+    expect(badge.textContent).toBe('Novo!')
+    expect(screen.getByTestId('watch-card-link').contains(badge)).toBe(true)
+  })
+
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {
     renderWatchCard()
     expect(screen.getByRole('heading', { name: 'Seculus' })).toBeTruthy()
