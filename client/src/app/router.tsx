@@ -1,4 +1,12 @@
-import { createBrowserRouter, useParams, type RouteObject } from 'react-router-dom'
+import { useLayoutEffect } from 'react'
+import {
+  createBrowserRouter,
+  Outlet,
+  useLocation,
+  useNavigationType,
+  useParams,
+  type RouteObject,
+} from 'react-router-dom'
 
 import { CatalogPage } from '../routes/catalog-page'
 import { WatchPage } from '../routes/watch-page'
@@ -19,8 +27,34 @@ export const appRoutes: RouteObject[] = [
   },
 ]
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  const navigationType = useNavigationType()
+
+  useLayoutEffect(() => {
+    if (navigationType === 'POP') return
+    window.scrollTo(0, 0)
+  }, [pathname, navigationType])
+
+  return null
+}
+
+function AppShell() {
+  return (
+    <>
+      <ScrollToTop />
+      <Outlet />
+    </>
+  )
+}
+
 export function createAppRouter() {
-  return createBrowserRouter(appRoutes)
+  return createBrowserRouter([
+    {
+      element: <AppShell />,
+      children: appRoutes,
+    },
+  ])
 }
 
 export const router = createAppRouter()
