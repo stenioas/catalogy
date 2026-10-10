@@ -347,7 +347,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     ]
     renderWatchPage()
     const link = screen.getByRole('link', { name: 'Ver anúncio similar' })
-    expect(document.documentElement.classList.contains('dark')).toBe(true)
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
     expect(link.className.split(/\s+/)).toContain('dark:text-[#2997ff]')
   })
 

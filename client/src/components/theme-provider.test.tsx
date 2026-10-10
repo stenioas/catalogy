@@ -10,7 +10,6 @@ import {
   ThemeProvider,
   ThemeToggle,
   applyThemeClass,
-  readStoredTheme,
   resolveTheme,
 } from './theme-provider'
 
@@ -119,12 +118,20 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(design).toContain('{colors.surface-tile-1}` — #272729')
   })
 
-  it('follows prefers-color-scheme when localStorage has no theme:v1 (CAT-117)', () => {
+  it('stays on light when the system prefers dark and does not read theme:v1 (CAT-117)', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'dark')
+    const getItem = vi.spyOn(Storage.prototype, 'getItem')
     mockColorScheme(true)
-    expect(readStoredTheme()).toBeNull()
-    expect(resolveTheme()).toBe('dark')
-    applyThemeClass(resolveTheme())
-    expect(document.documentElement.classList.contains('dark')).toBe(true)
+    applyThemeClass('dark')
+    render(
+      <ThemeProvider>
+        <span>claro</span>
+      </ThemeProvider>,
+    )
+    expect(resolveTheme()).toBe('light')
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
+    expect(getItem).not.toHaveBeenCalled()
+    getItem.mockRestore()
   })
 
   it('uses light when the system prefers light and there is no stored choice (CAT-117)', () => {
@@ -134,8 +141,9 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
 
-  it('stores light or dark in theme:v1 and updates the html class when toggling (CAT-118)', () => {
+  it('keeps light when the toggle is activated and does not write theme:v1 (CAT-118)', () => {
     mockColorScheme(false)
+    const setItem = vi.spyOn(Storage.prototype, 'setItem')
     render(
       <ThemeProvider>
         <ThemeToggle />
@@ -143,16 +151,14 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     )
 
     fireEvent.click(screen.getByRole('button', { name: 'Usar tema escuro' }))
-    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('dark')
-    expect(document.documentElement.classList.contains('dark')).toBe(true)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Usar tema claro' }))
-    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('light')
     expect(document.documentElement.classList.contains('dark')).toBe(false)
+    expect(setItem).not.toHaveBeenCalled()
+    expect(screen.getByRole('button', { name: 'Usar tema escuro' })).toBeDefined()
+    setItem.mockRestore()
   })
 
-  it('honours a stored theme:v1 over the system preference (CAT-118)', () => {
-    localStorage.setItem(THEME_STORAGE_KEY, 'light')
+  it('ignores a stored theme:v1 and stays on light (CAT-118)', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'dark')
     mockColorScheme(true)
     expect(resolveTheme()).toBe('light')
   })
@@ -203,11 +209,11 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(line).toContain('rgba(41, 151, 255, 0.16)')
   })
 
-  it('applies theme:v1 from an inline script in index.html before React loads (CAT-117, CAT-118)', () => {
+  it('clears the dark class in index.html without reading theme:v1 (CAT-117, CAT-118)', () => {
     const html = readFileSync(join(clientRoot, 'index.html'), 'utf-8')
-    expect(html).toContain('theme:v1')
-    expect(html).toMatch(/prefers-color-scheme:\s*dark/)
-    expect(html).toMatch(/document\.documentElement\.classList/)
+    expect(html).not.toContain('theme:v1')
+    expect(html).not.toContain('localStorage')
+    expect(html).toMatch(/classList\.remove\(\s*'dark'\s*\)/)
   })
 })
 
@@ -224,15 +230,18 @@ describe('ThemeToggle (SV-29–SV-32, SV-35)', () => {
     mockColorScheme(false)
   })
 
-  it('persists the choice under the theme:v1 storage key (SV-35)', () => {
+  it('does not persist a theme choice while dark mode is disabled (SV-35)', () => {
     expect(THEME_STORAGE_KEY).toBe('theme:v1')
+    const setItem = vi.spyOn(Storage.prototype, 'setItem')
     render(
       <ThemeProvider>
         <ThemeToggle />
       </ThemeProvider>,
     )
     fireEvent.click(screen.getByRole('button', { name: 'Usar tema escuro' }))
-    expect(localStorage.getItem('theme:v1')).toBe('dark')
+    expect(setItem).not.toHaveBeenCalled()
+    expect(localStorage.getItem('theme:v1')).toBeNull()
+    setItem.mockRestore()
   })
 
   it('is a 44×44 ghost Button without the WhatsApp pill background (SV-29)', () => {
@@ -270,7 +279,7 @@ describe('ThemeToggle (SV-29–SV-32, SV-35)', () => {
     expect(button.querySelector('svg.lucide-sun')).toBeNull()
   })
 
-  it('shows Sun and aria-label Usar tema claro while the theme is dark (SV-32)', () => {
+  it('stays on the light control when theme:v1 is dark (SV-32)', () => {
     localStorage.setItem(THEME_STORAGE_KEY, 'dark')
     applyThemeClass('dark')
     render(
@@ -278,8 +287,9 @@ describe('ThemeToggle (SV-29–SV-32, SV-35)', () => {
         <ThemeToggle />
       </ThemeProvider>,
     )
-    const button = screen.getByRole('button', { name: 'Usar tema claro' })
-    expect(button.querySelector('svg.lucide-sun')).not.toBeNull()
-    expect(button.querySelector('svg.lucide-moon')).toBeNull()
+    const button = screen.getByRole('button', { name: 'Usar tema escuro' })
+    expect(button.querySelector('svg.lucide-moon')).not.toBeNull()
+    expect(button.querySelector('svg.lucide-sun')).toBeNull()
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
 })

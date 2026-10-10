@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 
-import { ThemeToggle } from '../theme-provider'
-
 export const TOP_BAR_TITLE = 'Catálogo'
 
 export type TopBarProps = {
@@ -40,9 +38,7 @@ export function TopBar({ catalogHref }: TopBarProps) {
         ) : (
           <p className={`${titleClassName} justify-self-center text-center`}>{TOP_BAR_TITLE}</p>
         )}
-        <div className="justify-self-end">
-          <ThemeToggle />
-        </div>
+        <div className="justify-self-end" />
       </div>
     </header>
   )

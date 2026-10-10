@@ -139,6 +139,6 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     )
     localStorage.setItem(THEME_STORAGE_KEY, 'dark')
     renderPriceBlock({ price: 369.9, listPrice: 450 }, 'dark')
-    expect(document.documentElement.classList.contains('dark')).toBe(true)
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
 })

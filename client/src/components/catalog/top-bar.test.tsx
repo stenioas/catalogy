@@ -37,7 +37,7 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
     expect(screen.queryByRole('button', { name: 'Voltar' })).toBeNull()
   })
 
-  it('places the theme control on the right of the bar (CAT-38)', () => {
+  it('keeps Catálogo centered and hides the theme control (CAT-38)', () => {
     const { container } = renderTopBar()
     const row = container.querySelector(
       '[data-testid="top-bar-inner"]',
@@ -45,10 +45,8 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
     expect(row).not.toBeNull()
     expect(row.className).toMatch(/grid-cols-\[1fr_auto_1fr\]/)
     expect(row.children[1]?.textContent).toContain('Catálogo')
-    expect(row.lastElementChild?.querySelector('button')).not.toBeNull()
-    expect(
-      within(row).getByRole('button', { name: /Usar tema/ }),
-    ).toBeDefined()
+    expect(row.lastElementChild?.querySelector('button')).toBeNull()
+    expect(within(row).queryByRole('button', { name: /Usar tema/ })).toBeNull()
   })
 
   it('paints the bar across the full viewport width (CAT-44)', () => {

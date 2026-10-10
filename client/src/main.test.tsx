@@ -108,9 +108,11 @@ describe('entrada da aplicação sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11
     expect(didRequestSellers(fetchMock)).toBe(false)
   })
 
-  it('alterna o tema pela barra com um único ThemeProvider em /?seller=alexandre', async () => {
+  it('não mostra o botão de tema e permanece no claro em /?seller=alexandre', async () => {
+    localStorage.setItem('theme:v1', 'dark')
     await renderApp('/?seller=alexandre')
     expect(await screen.findByText(watchTitle())).toBeDefined()
-    expect(screen.getAllByRole('button', { name: /Usar tema/ })).toHaveLength(1)
+    expect(screen.queryByRole('button', { name: /Usar tema/ })).toBeNull()
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
 })
