@@ -9,6 +9,7 @@ export type CarouselProps = {
 }
 
 const DRAG_THRESHOLD_PX = 40
+const RUBBER_MAX_PX = 56
 
 function prefersReducedMotion(): boolean {
   if (typeof window.matchMedia !== 'function') return false
@@ -19,15 +20,34 @@ function slideDuration(): string {
   return prefersReducedMotion() ? '0ms' : '300ms'
 }
 
+function rubberBand(delta: number): number {
+  const distance = Math.min(Math.abs(delta), 280)
+  return Math.sign(delta) * RUBBER_MAX_PX * (1 - Math.exp(-distance / 160))
+}
+
 export function Carousel({ images, alt }: CarouselProps) {
   const [index, setIndex] = useState(0)
+  const [pullPx, setPullPx] = useState(0)
+  const [dragging, setDragging] = useState(false)
   const dragStartX = useRef<number | null>(null)
   const count = images.length
   const multi = count > 1
   const duration = slideDuration()
+  const atStart = index === 0
+  const atEnd = index === count - 1
 
   function step(delta: number) {
-    setIndex((current) => (current + delta + count) % count)
+    setIndex((current) => {
+      const next = current + delta
+      if (next < 0 || next >= count) return current
+      return next
+    })
+  }
+
+  function edgePull(delta: number): number {
+    if (atStart && delta > 0) return rubberBand(delta)
+    if (atEnd && delta < 0) return rubberBand(delta)
+    return 0
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -43,22 +63,39 @@ export function Carousel({ images, alt }: CarouselProps) {
 
   function onPointerDown(event: PointerEvent<HTMLDivElement>) {
     if (typeof event.currentTarget.setPointerCapture === 'function') {
-      event.currentTarget.setPointerCapture(event.pointerId)
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId)
+      } catch {
+        // The pointer is no longer active. The drag still follows the coordinates.
+      }
     }
     dragStartX.current = event.clientX
+    setDragging(true)
   }
 
-  function onPointerUp(event: PointerEvent<HTMLDivElement>) {
+  function onPointerMove(event: PointerEvent<HTMLDivElement>) {
+    const start = dragStartX.current
+    if (start === null) return
+    setPullPx(edgePull(event.clientX - start))
+  }
+
+  function releaseDrag(event: PointerEvent<HTMLDivElement>) {
     const start = dragStartX.current
     dragStartX.current = null
+    setDragging(false)
+    setPullPx(0)
     if (start === null) return
     const delta = event.clientX - start
+    if (atStart && delta > 0) return
+    if (atEnd && delta < 0) return
     if (delta < -DRAG_THRESHOLD_PX) step(1)
     else if (delta > DRAG_THRESHOLD_PX) step(-1)
   }
 
   function onPointerCancel() {
     dragStartX.current = null
+    setDragging(false)
+    setPullPx(0)
   }
 
   return (
@@ -69,7 +106,8 @@ export function Carousel({ images, alt }: CarouselProps) {
         tabIndex={multi ? 0 : undefined}
         onKeyDown={multi ? onKeyDown : undefined}
         onPointerDown={multi ? onPointerDown : undefined}
-        onPointerUp={multi ? onPointerUp : undefined}
+        onPointerMove={multi ? onPointerMove : undefined}
+        onPointerUp={multi ? releaseDrag : undefined}
         onPointerCancel={multi ? onPointerCancel : undefined}
       >
         <div
@@ -81,15 +119,29 @@ export function Carousel({ images, alt }: CarouselProps) {
             transitionDuration: duration,
           }}
         >
-          {images.map((src, imageIndex) => (
-            <img
-              key={`${src}:${imageIndex}`}
-              src={src}
-              alt={imageIndex === index ? alt : ''}
-              draggable={false}
-              className="h-full w-full shrink-0 object-contain"
-            />
-          ))}
+          {images.map((src, imageIndex) => {
+            const current = imageIndex === index
+            const stretch = current ? 1 + (Math.abs(pullPx) / RUBBER_MAX_PX) * 0.08 : 1
+            return (
+              <img
+                key={`${src}:${imageIndex}`}
+                src={src}
+                alt={current ? alt : ''}
+                draggable={false}
+                className="h-full w-full shrink-0 object-contain"
+                style={
+                  current
+                    ? {
+                        transform: `translateX(${pullPx}px) scaleX(${stretch})`,
+                        transformOrigin: pullPx >= 0 ? 'left center' : 'right center',
+                        transitionProperty: 'transform',
+                        transitionDuration: dragging ? '0ms' : duration,
+                      }
+                    : undefined
+                }
+              />
+            )
+          })}
         </div>
       </div>
       {multi ? (
@@ -98,6 +150,7 @@ export function Carousel({ images, alt }: CarouselProps) {
             type="button"
             variant="ghost"
             aria-label="Anterior"
+            disabled={atStart}
             className="hidden size-11 shrink-0 text-inherit md:inline-flex"
             onClick={() => step(-1)}
           >
@@ -127,6 +180,7 @@ export function Carousel({ images, alt }: CarouselProps) {
             type="button"
             variant="ghost"
             aria-label="Seguinte"
+            disabled={atEnd}
             className="hidden size-11 shrink-0 text-inherit md:inline-flex"
             onClick={() => step(1)}
           >

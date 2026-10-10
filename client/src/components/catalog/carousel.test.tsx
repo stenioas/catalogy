@@ -145,6 +145,8 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(dots.className).toMatch(/\bjustify-center\b/)
     expect(previous.hasAttribute('hidden')).toBe(false)
     expect(next.hasAttribute('hidden')).toBe(false)
+    expect(previous).toHaveProperty('disabled', true)
+    expect(next).toHaveProperty('disabled', false)
 
     fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
     expect(shownSrc()).toBe(photos[2])
@@ -154,19 +156,25 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(screen.getByRole('button', { name: 'Seguinte' }).hasAttribute('hidden')).toBe(
       false,
     )
+    expect(screen.getByRole('button', { name: 'Anterior' })).toHaveProperty('disabled', false)
+    expect(screen.getByRole('button', { name: 'Seguinte' })).toHaveProperty('disabled', true)
   })
 
-  it('wraps next on the last photo back to the first (CAT-77)', () => {
+  it('stays on the last photo when next is pressed (CAT-77)', () => {
     renderCarousel()
     fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
-    expect(shownSrc()).toBe(photos[0])
+    const next = screen.getByRole('button', { name: 'Seguinte' })
+    expect(next).toHaveProperty('disabled', true)
+    fireEvent.click(next)
+    expect(shownSrc()).toBe(photos[2])
   })
 
-  it('wraps previous on the first photo to the last (CAT-78)', () => {
+  it('stays on the first photo when previous is pressed (CAT-78)', () => {
     renderCarousel()
-    fireEvent.click(screen.getByRole('button', { name: 'Anterior' }))
-    expect(shownSrc()).toBe(photos[2])
+    const previous = screen.getByRole('button', { name: 'Anterior' })
+    expect(previous).toHaveProperty('disabled', true)
+    fireEvent.click(previous)
+    expect(shownSrc()).toBe(photos[0])
   })
 
   it('shows the photo for each dot (CAT-79)', () => {
@@ -185,14 +193,34 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(shownSrc()).toBe(photos[1])
   })
 
-  it('wraps a horizontal drag past the last photo and past the first photo (CAT-81)', () => {
+  it('stretches the photo without leaving it when a drag passes the first or the last (CAT-81)', () => {
     renderCarousel()
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
-    drag(frame(), 180, 40)
-    expect(shownSrc()).toBe(photos[0])
+    const box = frame()
 
-    drag(frame(), 40, 180)
+    fireEvent.pointerDown(box, { clientX: 40, pointerId: 1 })
+    fireEvent.pointerMove(box, { clientX: 200, pointerId: 1 })
+    const first = screen.getByRole('img', { name: 'Seculus' })
+    expect(shownSrc()).toBe(photos[0])
+    expect(first.style.transitionDuration).toBe('0ms')
+    expect(first.style.transform).toMatch(/translateX\([1-9]/)
+    expect(first.style.transform).toMatch(/scaleX\(1\./)
+    expect(first.style.transformOrigin).toBe('left center')
+    fireEvent.pointerUp(box, { clientX: 200, pointerId: 1 })
+    expect(shownSrc()).toBe(photos[0])
+    expect(first.style.transform).toBe('translateX(0px) scaleX(1)')
+    expect(first.style.transitionDuration).toBe('300ms')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    fireEvent.pointerDown(box, { clientX: 200, pointerId: 1 })
+    fireEvent.pointerMove(box, { clientX: 40, pointerId: 1 })
+    const last = screen.getByRole('img', { name: 'Seculus' })
     expect(shownSrc()).toBe(photos[2])
+    expect(last.style.transform).toMatch(/translateX\(-/)
+    expect(last.style.transform).toMatch(/scaleX\(1\./)
+    expect(last.style.transformOrigin).toBe('right center')
+    fireEvent.pointerUp(box, { clientX: 40, pointerId: 1 })
+    expect(shownSrc()).toBe(photos[2])
+    expect(last.style.transform).toBe('translateX(0px) scaleX(1)')
   })
 
   it('changes photos over 300 ms (CAT-82)', () => {
@@ -235,20 +263,23 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(track.style.transitionDuration).toBe('0ms')
   })
 
-  it('wraps ArrowRight and ArrowLeft when the carousel is focused (CAT-86, SV-58)', () => {
+  it('moves with ArrowRight and ArrowLeft and stops at the ends (CAT-86, SV-58)', () => {
     renderCarousel()
     const box = frame()
     box.focus()
     expect(document.activeElement).toBe(box)
 
     fireEvent.keyDown(box, { key: 'ArrowLeft' })
-    expect(shownSrc()).toBe(photos[2])
-
-    fireEvent.keyDown(box, { key: 'ArrowRight' })
     expect(shownSrc()).toBe(photos[0])
 
     fireEvent.keyDown(box, { key: 'ArrowRight' })
     expect(shownSrc()).toBe(photos[1])
+
+    fireEvent.keyDown(box, { key: 'ArrowRight' })
+    expect(shownSrc()).toBe(photos[2])
+
+    fireEvent.keyDown(box, { key: 'ArrowRight' })
+    expect(shownSrc()).toBe(photos[2])
   })
 
   it('keeps the frame centered, square, and at most 480px, with the photo contained (SV-44)', () => {
