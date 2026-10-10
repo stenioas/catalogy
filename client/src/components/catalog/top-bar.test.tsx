@@ -1,4 +1,4 @@
-import { cleanup, render, screen, within } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it } from 'vitest'
 
@@ -76,7 +76,7 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
       '[data-testid="top-bar-inner"]',
     ) as HTMLElement
     expect(header.className).toMatch(/\bh-11\b/)
-    expect(header.className).toMatch(/\bsticky\b/)
+    expect(header.className).toMatch(/\bfixed\b/)
     expect(inner.className).toMatch(/\bh-full\b/)
     expect(inner.className).not.toMatch(/\bpy-2\.5\b/)
     const style = header.getAttribute('style') ?? ''
@@ -108,5 +108,31 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     expect(back.getAttribute('data-variant')).toBe('ghost')
     expect(back.className).toMatch(/\bsize-11\b/)
     expect(back.className).not.toMatch(/\bbg-primary\b/)
+  })
+
+  it('hides when the page scrolls down and returns when it scrolls up', () => {
+    const setScrollY = (y: number) => {
+      Object.defineProperty(window, 'scrollY', {
+        value: y,
+        writable: true,
+        configurable: true,
+      })
+    }
+
+    setScrollY(0)
+    renderTopBar()
+    const header = screen.getByTestId('top-bar')
+    expect(header.className).toMatch(/translate-y-0/)
+    expect(screen.getByTestId('top-bar-spacer').className).toMatch(/\bh-11\b/)
+
+    setScrollY(160)
+    fireEvent.scroll(window)
+    expect(header.className).toMatch(/-translate-y-full/)
+    expect(header.hasAttribute('inert')).toBe(true)
+
+    setScrollY(80)
+    fireEvent.scroll(window)
+    expect(header.className).not.toMatch(/-translate-y-full/)
+    expect(header.hasAttribute('inert')).toBe(false)
   })
 })
