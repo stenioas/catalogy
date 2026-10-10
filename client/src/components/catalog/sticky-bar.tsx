@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, type RefObject } from 'react'
+import { useLayoutEffect, useRef, useState, type RefObject } from 'react'
 
 import { PriceBlock } from './price-block'
 import { WantLink } from './want-link'
@@ -22,6 +22,8 @@ export function StickyBar({
   targetRef,
 }: StickyBarProps) {
   const [fullyVisible, setFullyVisible] = useState(false)
+  const [barHeight, setBarHeight] = useState(0)
+  const barRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     const target = targetRef.current
@@ -38,33 +40,53 @@ export function StickyBar({
     return () => observer.disconnect()
   }, [targetRef])
 
+  useLayoutEffect(() => {
+    const node = barRef.current
+    if (!node) return
+
+    const measure = () => {
+      const next = node.getBoundingClientRect().height
+      setBarHeight((current) => (current === next ? current : next))
+    }
+    measure()
+    if (typeof ResizeObserver !== 'function') return
+
+    const observer = new ResizeObserver(measure)
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [fullyVisible])
+
   if (fullyVisible) return null
 
   return (
-    <div
-      data-testid="sticky-bar"
-      className="fixed inset-x-0 bottom-0 z-10"
-      ref={(node) => {
-        node?.setAttribute(
-          'style',
-          `padding-bottom: env(safe-area-inset-bottom); ${frostedBarStyle}`,
-        )
-      }}
-    >
+    <>
+      <div aria-hidden="true" data-testid="sticky-bar-spacer" style={{ height: barHeight }} />
       <div
-        data-testid="sticky-bar-row"
-        className="catalog-column flex flex-col items-stretch gap-3 py-3 md:flex-row md:items-center"
+        data-testid="sticky-bar"
+        className="fixed inset-x-0 bottom-0 z-10"
+        ref={(node) => {
+          barRef.current = node
+          node?.setAttribute(
+            'style',
+            `padding-bottom: env(safe-area-inset-bottom); ${frostedBarStyle}`,
+          )
+        }}
       >
-        <div className="min-w-0 md:flex-1">
-          <PriceBlock price={price} listPrice={listPrice} />
-        </div>
         <div
-          data-testid="sticky-bar-action"
-          className="w-full min-w-0 md:flex-1 [&>a]:flex [&>a]:w-full [&>a]:justify-center"
+          data-testid="sticky-bar-row"
+          className="catalog-column flex flex-col items-stretch gap-3 py-3 md:flex-row md:items-center"
         >
-          <WantLink slug={slug} title={title} />
+          <div className="min-w-0 md:flex-1">
+            <PriceBlock price={price} listPrice={listPrice} />
+          </div>
+          <div
+            data-testid="sticky-bar-action"
+            className="w-full min-w-0 md:flex-1 [&>a]:flex [&>a]:w-full [&>a]:justify-center"
+          >
+            <WantLink slug={slug} title={title} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

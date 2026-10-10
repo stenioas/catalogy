@@ -99,6 +99,9 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(link.getAttribute('target')).toBe('_blank')
     expect(link.getAttribute('rel')).toBe('noopener noreferrer')
     expect(bar.contains(link)).toBe(true)
+    const spacer = screen.getByTestId('sticky-bar-spacer')
+    expect(spacer.getAttribute('aria-hidden')).toBe('true')
+    expect(bar.contains(spacer)).toBe(false)
     expect(bar.className).toMatch(/\bfixed\b/)
     expect(bar.className).toMatch(/\binset-x-0\b/)
     expect(bar.classList.contains('catalog-column')).toBe(false)
@@ -111,6 +114,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     renderBar()
 
     expect(screen.queryByTestId('sticky-bar')).toBeNull()
+    expect(screen.queryByTestId('sticky-bar-spacer')).toBeNull()
     expect(screen.queryByRole('link', { name: whatsappLinkName })).toBeNull()
     expect(screen.queryByTestId('price-current')).toBeNull()
   })
