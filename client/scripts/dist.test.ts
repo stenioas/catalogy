@@ -1,6 +1,7 @@
 import { execSync } from 'node:child_process'
 import {
   existsSync,
+  mkdirSync,
   mkdtempSync,
   readdirSync,
   readFileSync,
@@ -101,12 +102,18 @@ describe('pnpm build emitindo dist estático', () => {
 
   it('sai com erro quando um arquivo do catálogo fura o contrato (CAT-18)', () => {
     const catalogDir = mkdtempSync(join(tmpdir(), 'catalog-invalid-'))
+    const productDir = join(catalogDir, 'products', 'seculus-kit')
+    mkdirSync(join(productDir, 'img'), { recursive: true })
     writeFileSync(
-      join(catalogDir, 'sellers.json'),
-      JSON.stringify([
-        { slug: 'alexandre', name: 'Alexandre', phone: 'abc' },
-      ]),
+      join(productDir, 'product.json'),
+      JSON.stringify({
+        slug: 'seculus-kit',
+        title: 'Seculus',
+        price: 0,
+        images: ['frente.png'],
+      }),
     )
+    writeFileSync(join(productDir, 'img', 'frente.png'), 'not-a-real-png')
     let status = 0
     let output = ''
     try {

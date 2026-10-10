@@ -54,16 +54,6 @@ function writeProduct(
 
 function writeValidCatalog(): string {
   const catalogDir = tempDir()
-  writeFileSync(
-    join(catalogDir, 'sellers.json'),
-    JSON.stringify([
-      {
-        slug: 'alexandre',
-        name: 'Alexandre',
-        phone: '5585997689165',
-      },
-    ]),
-  )
   writeProduct(
     catalogDir,
     'seculus-kit',
@@ -114,33 +104,21 @@ describe('validateCatalog', () => {
     })
   })
 
-  it('throws when a catalog file is not valid JSON', () => {
-    const catalogDir = tempDir()
-    writeFileSync(join(catalogDir, 'sellers.json'), '{')
-
-    expect(() => validateCatalog(catalogDir)).toThrow()
+  it('validates without sellers.json on disk', () => {
+    const catalogDir = writeValidCatalog()
+    expect(existsSync(join(catalogDir, 'sellers.json'))).toBe(false)
+    expect(() => validateCatalog(catalogDir)).not.toThrow()
   })
 
-  it('throws when sellers.json fails the shared contract', () => {
+  it('throws when product.json is not valid JSON', () => {
     const catalogDir = tempDir()
-    writeFileSync(
-      join(catalogDir, 'sellers.json'),
-      JSON.stringify([
-        { slug: 'alexandre', name: 'Alexandre', phone: 'abc' },
-      ]),
-    )
+    writeProduct(catalogDir, 'seculus-kit', '{', { 'frente.png': photoBytes })
 
     expect(() => validateCatalog(catalogDir)).toThrow()
   })
 
   it('throws when product.json fails the shared contract', () => {
     const catalogDir = tempDir()
-    writeFileSync(
-      join(catalogDir, 'sellers.json'),
-      JSON.stringify([
-        { slug: 'alexandre', name: 'Alexandre', phone: '5585997689165' },
-      ]),
-    )
     writeProduct(
       catalogDir,
       'seculus-kit',
@@ -158,12 +136,6 @@ describe('validateCatalog', () => {
 
   it('throws when an images name is missing from img/', () => {
     const catalogDir = tempDir()
-    writeFileSync(
-      join(catalogDir, 'sellers.json'),
-      JSON.stringify([
-        { slug: 'alexandre', name: 'Alexandre', phone: '5585997689165' },
-      ]),
-    )
     writeProduct(
       catalogDir,
       'seculus-kit',
@@ -181,12 +153,6 @@ describe('validateCatalog', () => {
 
   it('throws when an image file in img/ is missing from images', () => {
     const catalogDir = tempDir()
-    writeFileSync(
-      join(catalogDir, 'sellers.json'),
-      JSON.stringify([
-        { slug: 'alexandre', name: 'Alexandre', phone: '5585997689165' },
-      ]),
-    )
     writeProduct(
       catalogDir,
       'seculus-kit',
@@ -280,16 +246,6 @@ describe('initial catalog in public/', () => {
 
   it('writes the products module for one valid watch', () => {
     const oneWatchDir = tempDir()
-    writeFileSync(
-      join(oneWatchDir, 'sellers.json'),
-      JSON.stringify([
-        {
-          slug: 'alexandre',
-          name: 'Alexandre',
-          phone: '5585997689165',
-        },
-      ]),
-    )
     writeProduct(
       oneWatchDir,
       'seculus-kit',

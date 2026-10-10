@@ -127,6 +127,8 @@ T18 → T19 → T20
 
 ### T2: Validar só os relógios
 
+**Status**: done
+
 **What**: `validateCatalog` deixa de ler `sellers.json` e continua falhando quando um `product.json` fura o contrato.
 **Where**: `client/scripts/catalog.ts`
 **Depends on**: T1
@@ -141,10 +143,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `client/scripts/catalog.test.ts` cobre produtos válidos e um `product.json` inválido
-- [ ] O teste não exige `sellers.json`
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `client/scripts/catalog.test.ts` cobre produtos válidos e um `product.json` inválido
+- [x] O teste não exige `sellers.json`
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

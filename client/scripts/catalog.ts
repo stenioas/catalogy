@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
-import { ProductSchema, SellerSchema, type Product } from '@catalogo/shared'
+import { ProductSchema, type Product } from '@catalogo/shared'
 
 const imageExtensions = new Set(['jpg', 'jpeg', 'png', 'webp', 'avif'])
 
@@ -25,17 +25,6 @@ function sameNameSet(left: string[], right: string[]): boolean {
 }
 
 export function validateCatalog(catalogDir: string): Product[] {
-  const sellers: unknown = readJson(join(catalogDir, 'sellers.json'))
-  if (!Array.isArray(sellers)) {
-    throw new Error('sellers.json failed the shared contract')
-  }
-  for (const seller of sellers) {
-    const parsed = SellerSchema.safeParse(seller)
-    if (!parsed.success) {
-      throw new Error('sellers.json failed the shared contract')
-    }
-  }
-
   const productsDir = join(catalogDir, 'products')
   if (!existsSync(productsDir)) {
     return []

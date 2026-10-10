@@ -224,7 +224,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-22 | P1: WhatsApp sem telefone | Tasks | In Tasks |
 | SV-23 | P1: Build sem telefone publicado | Tasks | In Tasks |
 | SV-24 | P1: Build sem telefone publicado | Tasks | In Tasks |
-| SV-25 | P1: Build sem telefone publicado | Tasks | In Tasks |
+| SV-25 | P1: Build sem telefone publicado | Phase 1 | Done |
 | SV-26 | P1: Build sem telefone publicado | Tasks | In Tasks |
 | SV-27 | P1: Build sem telefone publicado | Tasks | In Tasks |
 | SV-28 | P1: Visual dos controles | Tasks | In Tasks |
