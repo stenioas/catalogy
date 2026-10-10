@@ -78,12 +78,16 @@ describe('WatchCard (SV-13, SV-14)', () => {
     cleanup()
     renderWatchCard({ ...sampleProduct, new: true })
     const badge = screen.getByTestId('new-badge')
-    const price = screen.getByTestId('price-current')
+    const price = screen.getByTestId('price-block')
+    const row = badge.parentElement
     expect(badge.textContent).toBe('Novo!')
-    expect(badge.parentElement).toBe(price.parentElement)
+    expect(row).toBe(price.parentElement)
+    expect(row?.className).toContain('justify-between')
     expect(price.compareDocumentPosition(badge) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(price.contains(badge)).toBe(false)
     expect(badge.className).toContain('rotate-[-8deg]')
-    expect(badge.className).toContain('text-base')
+    expect(badge.className).toContain('bg-[#ff6a00]')
+    expect(badge.className).not.toMatch(/primary-tint/)
   })
 
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {

@@ -36,16 +36,17 @@ export function WatchCard({ product }: WatchCardProps) {
           <h2 className="m-0 font-display text-xl font-semibold text-foreground">
             {product.title}
           </h2>
-          <PriceBlock price={product.price} listPrice={product.listPrice}>
+          <div className="flex w-full items-center justify-between gap-3">
+            <PriceBlock price={product.price} listPrice={product.listPrice} />
             {product.new === true ? (
               <Badge
                 data-testid="new-badge"
-                className="h-auto rotate-[-8deg] rounded-full bg-primary-tint-background px-3 py-1 text-base font-semibold text-primary-tint-foreground"
+                className="h-auto shrink-0 rotate-[-8deg] rounded-full bg-[#ff6a00] px-3 py-1 text-base font-semibold text-white"
               >
                 Novo!
               </Badge>
             ) : null}
-          </PriceBlock>
+          </div>
         </div>
       </Link>
       <div data-testid="watch-card-actions" className="px-[24px] pb-[24px]">
