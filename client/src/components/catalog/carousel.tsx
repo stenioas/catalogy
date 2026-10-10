@@ -65,7 +65,7 @@ export function Carousel({ images, alt }: CarouselProps) {
     <div data-testid="watch-carousel" className="w-full">
       <div
         data-testid="carousel-frame"
-        className="mx-auto aspect-square w-full max-w-[320px] touch-pan-y overflow-hidden"
+        className="mx-auto aspect-square w-full max-w-[480px] touch-pan-y overflow-hidden"
         tabIndex={multi ? 0 : undefined}
         onKeyDown={multi ? onKeyDown : undefined}
         onPointerDown={multi ? onPointerDown : undefined}
