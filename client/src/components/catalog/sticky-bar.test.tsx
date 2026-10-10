@@ -126,16 +126,18 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
 
     expect(row.className).toMatch(/\bflex-col\b/)
     expect(row.className).toMatch(/\bmd:flex-row\b/)
-    expect(row.className).toMatch(/\bmd:justify-between\b/)
+    expect(row.className).not.toMatch(/\bmd:justify-between\b/)
     expect(
       price.compareDocumentPosition(action) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).not.toBe(0)
+    expect(price.parentElement?.className).toMatch(/\bmd:flex-1\b/)
     expect(action.className).toMatch(/\bw-full\b/)
-    expect(action.className).toMatch(/\bmd:w-auto\b/)
+    expect(action.className).toMatch(/\bmd:flex-1\b/)
+    expect(action.className).not.toMatch(/\bmd:w-auto\b/)
     expect(action.className).toMatch(/\[&>a\]:flex/)
     expect(action.className).toMatch(/\[&>a\]:w-full/)
     expect(action.className).toMatch(/\[&>a\]:justify-center/)
-    expect(action.className).toMatch(/md:\[&>a\]:w-auto/)
+    expect(action.className).not.toMatch(/md:\[&>a\]:w-auto/)
     expect(action.className).not.toMatch(/\[&>a\]:block/)
     expect(action.contains(link)).toBe(true)
   })

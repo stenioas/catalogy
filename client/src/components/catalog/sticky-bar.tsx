@@ -53,12 +53,14 @@ export function StickyBar({
     >
       <div
         data-testid="sticky-bar-row"
-        className="catalog-column flex flex-col items-stretch gap-3 py-3 md:flex-row md:items-center md:justify-between"
+        className="catalog-column flex flex-col items-stretch gap-3 py-3 md:flex-row md:items-center"
       >
-        <PriceBlock price={price} listPrice={listPrice} />
+        <div className="min-w-0 md:flex-1">
+          <PriceBlock price={price} listPrice={listPrice} />
+        </div>
         <div
           data-testid="sticky-bar-action"
-          className="w-full md:w-auto [&>a]:flex [&>a]:w-full [&>a]:justify-center md:[&>a]:w-auto"
+          className="w-full min-w-0 md:flex-1 [&>a]:flex [&>a]:w-full [&>a]:justify-center"
         >
           <WantLink slug={slug} title={title} />
         </div>

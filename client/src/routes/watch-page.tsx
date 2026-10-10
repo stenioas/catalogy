@@ -51,8 +51,17 @@ function WatchColumn({ product }: { product: Product }) {
         alt={product.title}
       />
       <h1 className="m-0 font-display text-xl font-semibold text-foreground">{product.title}</h1>
-      <PriceBlock price={product.price} listPrice={product.listPrice} />
-      <WantLink ref={wantRef} slug={product.slug} title={product.title} />
+      <div
+        data-testid="watch-offer"
+        className="flex w-full flex-col gap-4 md:flex-row md:items-center"
+      >
+        <div className="min-w-0 md:flex-1">
+          <PriceBlock price={product.price} listPrice={product.listPrice} />
+        </div>
+        <div className="w-full min-w-0 md:flex-1">
+          <WantLink ref={wantRef} slug={product.slug} title={product.title} />
+        </div>
+      </div>
       {hasText(product.details) ? (
         <section>
           <h2 className="m-0 font-display text-lg font-semibold text-foreground">Detalhes</h2>
