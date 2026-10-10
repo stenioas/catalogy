@@ -372,6 +372,8 @@ T18 → T19 → T20
 
 ### T10: Página do relógio sem vendedor
 
+**Status**: done
+
 **What**: `WatchPage` recebe só `slug`. Voltar e Catálogo apontam para `/`. Slug ausente mostra a frase e esconde o botão.
 **Where**: `client/src/routes/watch-page.tsx`
 **Depends on**: T6, T9
@@ -386,10 +388,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] Não há prop `seller`
-- [ ] `watch-page.test.tsx` cobre o relógio, os links para `/` e o slug ausente
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] Não há prop `seller`
+- [x] `watch-page.test.tsx` cobre o relógio, os links para `/` e o slug ausente
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: integration
 **Gate**: full

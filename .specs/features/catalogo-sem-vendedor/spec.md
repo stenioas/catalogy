@@ -209,12 +209,12 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-07 | P1: Vitrine sem vendedor | Phase 1 | Done |
 | SV-08 | P1: Vitrine sem vendedor | Phase 1 | Done |
 | SV-09 | P1: Vitrine sem vendedor | Phase 1 | Done |
-| SV-10 | P1: Página do relógio sem vendedor | Tasks | In Tasks |
+| SV-10 | P1: Página do relógio sem vendedor | Tasks | Done |
 | SV-11 | P1: Página do relógio sem vendedor | Tasks | In Tasks |
-| SV-12 | P1: Página do relógio sem vendedor | Phase 3 | In Tasks |
+| SV-12 | P1: Página do relógio sem vendedor | Phase 3 | Done |
 | SV-13 | P1: Página do relógio sem vendedor | Phase 3 | Done |
 | SV-14 | P1: Página do relógio sem vendedor | Phase 3 | Done |
-| SV-15 | P1: Página do relógio sem vendedor | Tasks | In Tasks |
+| SV-15 | P1: Página do relógio sem vendedor | Tasks | Done |
 | SV-16 | P1: Página do relógio sem vendedor | Phase 2 | Done |
 | SV-17 | P1: WhatsApp sem telefone | Phase 2 | Done |
 | SV-18 | P1: WhatsApp sem telefone | Phase 2 | Done |

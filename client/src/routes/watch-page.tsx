@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import type { Product, Seller } from '@catalogo/shared'
+import type { Product } from '@catalogo/shared'
 
 import { products } from '../catalog/products.generated'
 import { Carousel } from '../components/catalog/carousel'
@@ -13,7 +13,6 @@ import { productImageSrc } from '../components/catalog/watch-card'
 export const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
 
 export type WatchPageProps = {
-  seller: Seller
   slug: string
 }
 
@@ -21,7 +20,7 @@ function hasText(value: string | undefined): value is string {
   return value !== undefined && value !== ''
 }
 
-function WatchColumn({ product, phone }: { product: Product; phone: string }) {
+function WatchColumn({ product }: { product: Product }) {
   const specifications = product.specifications ?? []
   const wantRef = useRef<HTMLAnchorElement>(null)
 
@@ -64,7 +63,6 @@ function WatchColumn({ product, phone }: { product: Product; phone: string }) {
       <StickyBar
         price={product.price}
         listPrice={product.listPrice}
-        phone={phone}
         slug={product.slug}
         title={product.title}
         targetRef={wantRef}
@@ -73,16 +71,16 @@ function WatchColumn({ product, phone }: { product: Product; phone: string }) {
   )
 }
 
-export function WatchPage({ seller, slug }: WatchPageProps) {
+export function WatchPage({ slug }: WatchPageProps) {
   const product = products.find((item) => item.slug === slug) ?? null
-  const catalogHref = `/?seller=${seller.slug}`
+  const catalogHref = '/'
 
   return (
     <>
       <TopBar catalogHref={catalogHref} />
       <div data-testid="watch-page-column" className="catalog-column flex flex-col items-start gap-4 py-8 text-left">
         {product ? (
-          <WatchColumn product={product} phone={seller.phone} />
+          <WatchColumn product={product} />
         ) : (
           <p className="m-0 text-[var(--ink-primary)]">{MISSING_WATCH_MESSAGE}</p>
         )}

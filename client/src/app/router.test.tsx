@@ -93,7 +93,7 @@ describe('app routes (CAT-57)', () => {
     expect(await screen.findByText(SELLER_GATE_ERROR_MESSAGE)).toBeDefined()
   })
 
-  it('shows the seller top bar with a back link at /relogio/:slug (CAT-57)', async () => {
+  it('shows the top bar with Voltar linking to / at /relogio/:slug (SV-12, CAT-57)', async () => {
     mockSellersFetch()
     const router = createMemoryRouter(appRoutes, {
       initialEntries: ['/relogio/seculus?seller=alexandre'],
@@ -101,7 +101,7 @@ describe('app routes (CAT-57)', () => {
     renderWithTheme(<RouterProvider router={router} />)
     expect(await screen.findByText('Catálogo')).toBeDefined()
     const back = screen.getByRole('link', { name: 'Voltar' })
-    expect(back.getAttribute('href')).toBe('/?seller=alexandre')
+    expect(back.getAttribute('href')).toBe('/')
   })
 
   it('shows the incomplete-link sentence at /relogio/:slug without a seller', async () => {

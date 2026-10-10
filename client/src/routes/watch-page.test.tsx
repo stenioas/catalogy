@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import type { Product, Seller } from '@catalogo/shared'
+import type { Product } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
@@ -10,13 +10,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from '../components/theme-provider'
 import { WatchPage } from './watch-page'
 
-const alexandre: Seller = {
-  slug: 'alexandre',
-  name: 'Alexandre',
-  phone: '5585997689165',
-}
-
-const catalogHref = '/?seller=alexandre'
+const catalogHref = '/'
 
 function makeProduct(overrides: Partial<Product> = {}): Product {
   return {
@@ -44,11 +38,12 @@ vi.mock('../catalog/products.generated', () => ({
   },
 }))
 
-function renderWatchPage(slug = 'seculus-kit', seller: Seller = alexandre) {
+function renderWatchPage(slug = 'seculus-kit', withSellerQuery = false) {
+  const path = withSellerQuery ? `/relogio/${slug}?seller=alexandre` : `/relogio/${slug}`
   return render(
     <ThemeProvider>
-      <MemoryRouter initialEntries={[`/relogio/${slug}?seller=${seller.slug}`]}>
-        <WatchPage seller={seller} slug={slug} />
+      <MemoryRouter initialEntries={[path]}>
+        <WatchPage slug={slug} />
       </MemoryRouter>
     </ThemeProvider>,
   )
@@ -96,7 +91,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     installObserver(1)
   })
 
-  it('places a back icon named Voltar to the left of Catálogo Alexandre, linking to /?seller=alexandre (CAT-57, CAT-58, CAT-59)', () => {
+  it('places a back icon named Voltar to the left of Catálogo, linking to / (SV-12, CAT-57, CAT-58, CAT-59)', () => {
     renderWatchPage()
     const bar = screen.getByTestId('top-bar')
     const back = within(bar).getByRole('link', { name: 'Voltar' })
@@ -106,7 +101,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(follows(back, catalog)).toBe(true)
   })
 
-  it('links Catálogo {name} to the same /?seller= href (CAT-60)', () => {
+  it('links Catálogo to the same / href as Voltar (SV-12, CAT-60)', () => {
     renderWatchPage()
     const catalog = screen.getByRole('link', { name: 'Catálogo' })
     expect(catalog.getAttribute('href')).toBe(catalogHref)
@@ -122,8 +117,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     renderWatchPage()
     const back = screen.getByRole('link', { name: 'Voltar' })
     const catalog = screen.getByRole('link', { name: 'Catálogo' })
-    expect(back.getAttribute('href')).toBe('/?seller=alexandre')
-    expect(catalog.getAttribute('href')).toBe('/?seller=alexandre')
+    expect(back.getAttribute('href')).toBe('/')
+    expect(catalog.getAttribute('href')).toBe('/')
     expect(back.tagName).toBe('A')
     expect(topBarSource).not.toMatch(/history\s*\.\s*back\b/)
     expect(topBarSource).not.toMatch(/history\s*\.\s*go\b/)
@@ -135,7 +130,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     goSpy.mockRestore()
   })
 
-  it('shows carousel, title, price, Eu quero!, then the sections that apply (CAT-62)', () => {
+  it('shows carousel, title, price, Eu quero!, then the sections that apply (SV-10, CAT-62)', () => {
     renderWatchPage()
     const carousel = screen.getByTestId('watch-carousel')
     expect(screen.getByRole('img', { name: 'Seculus' }).getAttribute('src')).toBe(
@@ -226,7 +221,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(table.className).toMatch(/\btext-left\b/)
   })
 
-  it('shows the missing-watch message and hides Eu quero! when the slug is absent (CAT-87, CAT-88)', () => {
+  it('shows the same watch when the URL has ?seller= (SV-10, AC2)', () => {
+    renderWatchPage('seculus-kit', true)
+    expect(screen.getByRole('heading', { name: 'Seculus' })).toBeDefined()
+    expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/')
+  })
+
+  it('shows the missing-watch message and hides Eu quero! when the slug is absent (SV-15, CAT-87, CAT-88)', () => {
     renderWatchPage('slug-ausente')
     const column = screen.getByTestId('watch-page-column')
     expect(column.classList.contains('catalog-column')).toBe(true)
