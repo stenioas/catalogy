@@ -83,9 +83,10 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     expect(inner.className).not.toMatch(/\bpy-2\.5\b/)
     const style = header.getAttribute('style') ?? ''
     expect(style).toContain('saturate(180%) blur(20px)')
-    expect(style).toContain('var(--canvas-parchment)')
+    expect(style).toContain('var(--surface-black)')
     expect(style).toContain('80%')
-    expect(header.className).not.toMatch(/surface-black/)
+    expect(style).not.toContain('canvas-parchment')
+    expect(header.className).toMatch(/on-primary/)
   })
 
   it('is 44px tall on the watch route with Voltar (SV-43)', () => {
