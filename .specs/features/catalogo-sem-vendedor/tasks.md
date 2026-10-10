@@ -557,6 +557,8 @@ T18 → T19 → T20
 
 ### T16: Card do relógio
 
+**Status**: done
+
 **What**: O item da grade é um `Card` com borda de 1px, raio de 18px e sem sombra. Fundo `--canvas` no claro e `--surface-tile-2` no escuro. A foto ocupa a largura. Título, preço e botão têm 24px nas laterais e embaixo. O título usa `foreground`.
 **Where**: `client/src/components/catalog/watch-card.tsx`
 **Depends on**: T7, T15
@@ -571,9 +573,9 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `watch-card.test.tsx` cobre raio, borda, fundos dos dois temas, largura da foto e os 24px
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `watch-card.test.tsx` cobre raio, borda, fundos dos dois temas, largura da foto e os 24px
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

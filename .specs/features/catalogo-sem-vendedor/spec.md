@@ -235,11 +235,11 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-33 | P1: Visual dos controles | Tasks | Done |
 | SV-34 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-35 | P1: Visual dos controles | Tasks | Done |
-| SV-36 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-37 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-38 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-39 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-40 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-36 | P1: Visual dos controles | Tasks | Done |
+| SV-37 | P1: Visual dos controles | Tasks | Done |
+| SV-38 | P1: Visual dos controles | Tasks | Done |
+| SV-39 | P1: Visual dos controles | Tasks | Done |
+| SV-40 | P1: Visual dos controles | Tasks | Done |
 | SV-41 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-42 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-43 | P1: Visual dos controles | Tasks | Done |
