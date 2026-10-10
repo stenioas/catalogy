@@ -29,11 +29,7 @@ export function CatalogPage({ seller }: CatalogPageProps) {
           >
             {sortedProducts.map((product) => (
               <li key={product.slug}>
-                <WatchCard
-                  product={product}
-                  phone={seller.phone}
-                  sellerSlug={seller.slug}
-                />
+                <WatchCard product={product} />
               </li>
             ))}
           </ul>

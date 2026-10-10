@@ -13,19 +13,15 @@ const sampleProduct: Product = {
   images: ['foto-principal.webp', 'foto-extra.jpg'],
 }
 
-function renderWatchCard(
-  product: Product = sampleProduct,
-  sellerSlug = 'alexandre',
-  phone = '5585997689165',
-) {
+function renderWatchCard(product: Product = sampleProduct) {
   return render(
-    <MemoryRouter initialEntries={[`/?seller=${sellerSlug}`]}>
-      <WatchCard product={product} phone={phone} sellerSlug={sellerSlug} />
+    <MemoryRouter>
+      <WatchCard product={product} />
     </MemoryRouter>,
   )
 }
 
-describe('WatchCard (CAT-28, CAT-52–CAT-56)', () => {
+describe('WatchCard (SV-13, SV-14)', () => {
   afterEach(() => {
     cleanup()
   })
@@ -58,15 +54,14 @@ describe('WatchCard (CAT-28, CAT-52–CAT-56)', () => {
     expect(textBlock.className).toMatch(/\btext-left\b/)
   })
 
-  it('links the card body to /relogio/<slug> preserving seller=alexandre (CAT-55, CAT-56)', () => {
+  it('links photo, title and price to /relogio/<slug> without seller query (SV-13)', () => {
     renderWatchCard()
     const cardLink = screen.getByTestId('watch-card-link')
-    expect(cardLink.getAttribute('href')).toBe(
-      '/relogio/seculus-kit-com-cantil?seller=alexandre',
-    )
+    expect(cardLink.getAttribute('href')).toBe('/relogio/seculus-kit-com-cantil')
+    expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
-  it('shows title, price block, and Eu quero! outside the card navigation link (CAT-52)', () => {
+  it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {
     renderWatchCard()
     expect(screen.getByRole('heading', { name: 'Seculus' })).toBeTruthy()
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')

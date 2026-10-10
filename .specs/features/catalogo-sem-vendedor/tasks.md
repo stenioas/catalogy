@@ -282,6 +282,8 @@ T18 → T19 → T20
 
 ### T7: Card sem vendedor
 
+**Status**: done
+
 **What**: O card recebe só o produto. Foto, título e preço apontam para `/relogio/{slug}`. O WhatsApp fica fora do link.
 **Where**: `client/src/components/catalog/watch-card.tsx`
 **Depends on**: T5
@@ -296,10 +298,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] Não há props `phone` nem `sellerSlug`
-- [ ] `watch-card.test.tsx` cobre o href sem `seller` e o botão fora do link
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] Não há props `phone` nem `sellerSlug`
+- [x] `watch-card.test.tsx` cobre o href sem `seller` e o botão fora do link
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

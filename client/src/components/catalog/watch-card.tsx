@@ -6,17 +6,15 @@ import { WantLink } from './want-link'
 
 export type WatchCardProps = {
   product: Product
-  phone: string
-  sellerSlug: string
 }
 
 export function productImageSrc(slug: string, fileName: string): string {
   return `/catalog/products/${slug}/img/${fileName}`
 }
 
-export function WatchCard({ product, phone, sellerSlug }: WatchCardProps) {
+export function WatchCard({ product }: WatchCardProps) {
   const firstImage = product.images[0]
-  const watchPath = `/relogio/${product.slug}?seller=${encodeURIComponent(sellerSlug)}`
+  const watchPath = `/relogio/${product.slug}`
 
   return (
     <article className="flex flex-col text-left">
