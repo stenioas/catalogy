@@ -4,6 +4,7 @@
 node_modules/
 dist/
 coverage/
+.vitest/
 client/src/catalog/products.generated.ts
 
 __pycache__/
