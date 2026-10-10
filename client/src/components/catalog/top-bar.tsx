@@ -10,7 +10,7 @@ export type TopBarProps = {
 }
 
 const titleClassName =
-  'm-0 min-w-0 truncate font-[family-name:var(--font-sans)] text-base font-normal tracking-[-0.12px] text-inherit md:text-xs'
+  'm-0 min-w-0 truncate font-[family-name:var(--font-sans)] text-base font-normal tracking-[-0.12px] text-inherit'
 
 const frostedBarStyle =
   'background-color: color-mix(in srgb, var(--surface-black) 80%, transparent); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);'

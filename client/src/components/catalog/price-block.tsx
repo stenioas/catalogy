@@ -7,7 +7,7 @@ export type PriceBlockProps = {
   listPrice?: number
 }
 
-const currentPriceClassName = 'max-md:text-xl max-md:font-semibold'
+const currentPriceClassName = 'text-xl font-semibold'
 
 export function PriceBlock({ price, listPrice }: PriceBlockProps) {
   const currentLabel = formatBrl(price)
@@ -29,7 +29,7 @@ export function PriceBlock({ price, listPrice }: PriceBlockProps) {
     <div data-testid="price-block" className="flex flex-col items-start gap-0.5">
       <span
         data-testid="price-list"
-        className="text-ink-muted-48 line-through max-md:text-base"
+        className="text-base text-ink-muted-48 line-through"
       >
         De {formatBrl(listPrice)}
       </span>
