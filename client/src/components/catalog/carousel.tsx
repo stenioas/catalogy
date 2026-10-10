@@ -98,7 +98,7 @@ export function Carousel({ images, alt }: CarouselProps) {
             type="button"
             variant="ghost"
             aria-label="Anterior"
-            className="size-11 shrink-0 text-inherit"
+            className="hidden size-11 shrink-0 text-inherit md:inline-flex"
             onClick={() => step(-1)}
           >
             <ChevronLeft aria-hidden="true" />
@@ -127,7 +127,7 @@ export function Carousel({ images, alt }: CarouselProps) {
             type="button"
             variant="ghost"
             aria-label="Seguinte"
-            className="size-11 shrink-0 text-inherit"
+            className="hidden size-11 shrink-0 text-inherit md:inline-flex"
             onClick={() => step(1)}
           >
             <ChevronRight aria-hidden="true" />

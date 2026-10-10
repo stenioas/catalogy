@@ -303,6 +303,8 @@ describe('Carousel (CAT-70–CAT-86)', () => {
       expect(button.getAttribute('data-slot')).toBe('button')
       expect(button.getAttribute('data-variant')).toBe('ghost')
       expect(button.className.split(/\s+/)).toContain('size-11')
+      expect(button.className.split(/\s+/)).toContain('hidden')
+      expect(button.className.split(/\s+/)).toContain('md:inline-flex')
       expect(button.className.split(/\s+/)).toContain('text-inherit')
       expect(button.className).not.toMatch(/\bbg-primary\b/)
       expect(button.className).not.toMatch(/\bbg-\[#0066cc\]\b/)
