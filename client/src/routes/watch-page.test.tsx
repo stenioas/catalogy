@@ -7,7 +7,11 @@ import { cleanup, fireEvent, render, screen, within } from '@testing-library/rea
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 
-import { ThemeProvider } from '../components/theme-provider'
+import {
+  applyThemeClass,
+  THEME_STORAGE_KEY,
+  ThemeProvider,
+} from '../components/theme-provider'
 import { WatchPage } from './watch-page'
 
 const catalogHref = '/'
@@ -83,6 +87,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     cleanup()
     vi.unstubAllGlobals()
     mockProductsRef.current = []
+    localStorage.removeItem(THEME_STORAGE_KEY)
+    document.documentElement.classList.remove('dark')
   })
 
   beforeEach(() => {
@@ -255,5 +261,121 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     renderWatchPage()
     expect(screen.queryByTestId('sticky-bar')).toBeNull()
     expect(screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })).toHaveLength(1)
+  })
+
+  it('shows specifications in the shadcn Table under Especificações (SV-45)', () => {
+    renderWatchPage()
+    const heading = screen.getByRole('heading', { name: 'Especificações' })
+    const table = screen.getByRole('table')
+    expect(table.getAttribute('data-slot')).toBe('table')
+    expect(follows(heading, table)).toBe(true)
+    const rows = within(table).getAllByRole('row')
+    expect(rows).toHaveLength(2)
+    for (const row of rows) {
+      expect(within(row).getAllByRole('cell')).toHaveLength(2)
+    }
+    expect(within(rows[0]).getAllByRole('cell').map((cell) => cell.textContent)).toEqual([
+      'Marca',
+      'Seculus',
+    ])
+    expect(within(rows[1]).getAllByRole('cell').map((cell) => cell.textContent)).toEqual([
+      'Pulseira',
+      'Aço',
+    ])
+  })
+
+  it('turns http and https specification values into Ver anúncio similar (SV-46, SV-49)', () => {
+    const httpsUrl = `https://example.com/anuncio/${'a'.repeat(180)}`
+    const httpUrl = 'http://example.com/espelho'
+    mockProductsRef.current = [
+      makeProduct({
+        specifications: [
+          { label: 'Anúncio', value: httpsUrl },
+          { label: 'Espelho', value: httpUrl },
+          { label: 'Marca', value: 'Seculus' },
+        ],
+      }),
+    ]
+    renderWatchPage()
+    const links = screen.getAllByRole('link', { name: 'Ver anúncio similar' })
+    expect(links).toHaveLength(2)
+    expect(links[0].getAttribute('href')).toBe(httpsUrl)
+    expect(links[0].getAttribute('target')).toBe('_blank')
+    expect(links[0].getAttribute('rel')).toBe('noopener noreferrer')
+    expect(links[0].textContent).toBe('Ver anúncio similar')
+    expect(links[1].getAttribute('href')).toBe(httpUrl)
+    expect(links[1].getAttribute('target')).toBe('_blank')
+    expect(links[1].getAttribute('rel')).toBe('noopener noreferrer')
+    expect(links[1].textContent).toBe('Ver anúncio similar')
+    const table = screen.getByRole('table')
+    expect(table.textContent).not.toContain(httpsUrl)
+    expect(table.textContent).not.toContain(httpUrl)
+    expect(table.textContent).toContain('Seculus')
+    expect(within(table).queryByRole('link', { name: 'Seculus' })).toBeNull()
+  })
+
+  it('paints Ver anúncio similar #0066cc while the theme is light (SV-47)', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'light')
+    applyThemeClass('light')
+    mockProductsRef.current = [
+      makeProduct({
+        specifications: [{ label: 'Anúncio', value: 'https://example.com/claro' }],
+      }),
+    ]
+    renderWatchPage()
+    const link = screen.getByRole('link', { name: 'Ver anúncio similar' })
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
+    expect(link.className.split(/\s+/)).toContain('text-[#0066cc]')
+  })
+
+  it('paints Ver anúncio similar #2997ff while the theme is dark (SV-48)', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'dark')
+    applyThemeClass('dark')
+    mockProductsRef.current = [
+      makeProduct({
+        specifications: [{ label: 'Anúncio', value: 'https://example.com/escuro' }],
+      }),
+    ]
+    renderWatchPage()
+    const link = screen.getByRole('link', { name: 'Ver anúncio similar' })
+    expect(document.documentElement.classList.contains('dark')).toBe(true)
+    expect(link.className.split(/\s+/)).toContain('dark:text-[#2997ff]')
+  })
+
+  it('paints the page title and section titles with foreground (SV-42)', () => {
+    renderWatchPage()
+    for (const name of ['Seculus', 'Detalhes', 'Especificações', 'Observações']) {
+      const heading = screen.getByRole('heading', { name })
+      expect(heading.className.split(/\s+/)).toContain('text-foreground')
+    }
+  })
+
+  it('gives the watch page main max-width 100%, min-width 0 and overflow-x clip (SV-51)', () => {
+    renderWatchPage()
+    const main = screen.getByRole('main')
+    const tokens = main.className.split(/\s+/)
+    expect(tokens).toContain('max-w-full')
+    expect(tokens).toContain('min-w-0')
+    expect(tokens).toContain('overflow-x-clip')
+    expect(main.contains(screen.getByTestId('watch-page-column'))).toBe(true)
+  })
+
+  it('does not add horizontal document scroll when a specification URL is long (SV-52)', () => {
+    const longUrl = `https://example.com/${'segmento-longo-'.repeat(40)}`
+    mockProductsRef.current = [
+      makeProduct({
+        specifications: [{ label: 'Link', value: longUrl }],
+      }),
+    ]
+    renderWatchPage()
+    const root = document.documentElement
+    expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth)
+    expect(document.body.scrollWidth).toBeLessThanOrEqual(document.body.clientWidth)
+    const main = screen.getByRole('main')
+    expect(main.scrollWidth).toBeLessThanOrEqual(main.clientWidth)
+    expect(main.textContent).not.toContain(longUrl)
+    expect(screen.getByRole('link', { name: 'Ver anúncio similar' }).textContent).toBe(
+      'Ver anúncio similar',
+    )
   })
 })

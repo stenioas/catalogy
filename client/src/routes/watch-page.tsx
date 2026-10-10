@@ -2,6 +2,8 @@ import { useRef } from 'react'
 
 import type { Product } from '@catalogo/shared'
 
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
+
 import { products } from '../catalog/products.generated'
 import { Carousel } from '../components/catalog/carousel'
 import { PriceBlock } from '../components/catalog/price-block'
@@ -20,6 +22,24 @@ function hasText(value: string | undefined): value is string {
   return value !== undefined && value !== ''
 }
 
+function isSimilarAdUrl(value: string): boolean {
+  return value.startsWith('http://') || value.startsWith('https://')
+}
+
+function SpecificationValue({ value }: { value: string }) {
+  if (!isSimilarAdUrl(value)) return value
+  return (
+    <a
+      href={value}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[#0066cc] dark:text-[#2997ff]"
+    >
+      Ver anúncio similar
+    </a>
+  )
+}
+
 function WatchColumn({ product }: { product: Product }) {
   const specifications = product.specifications ?? []
   const wantRef = useRef<HTMLAnchorElement>(null)
@@ -30,33 +50,35 @@ function WatchColumn({ product }: { product: Product }) {
         images={product.images.map((file) => productImageSrc(product.slug, file))}
         alt={product.title}
       />
-      <h1 className="m-0 font-display text-xl font-semibold text-ink">{product.title}</h1>
+      <h1 className="m-0 font-display text-xl font-semibold text-foreground">{product.title}</h1>
       <PriceBlock price={product.price} listPrice={product.listPrice} />
       <WantLink ref={wantRef} slug={product.slug} title={product.title} />
       {hasText(product.details) ? (
         <section>
-          <h2 className="m-0 font-display text-lg font-semibold text-ink">Detalhes</h2>
+          <h2 className="m-0 font-display text-lg font-semibold text-foreground">Detalhes</h2>
           <p className="m-0 text-[var(--ink-primary)]">{product.details}</p>
         </section>
       ) : null}
       {specifications.length > 0 ? (
         <section>
-          <h2 className="m-0 font-display text-lg font-semibold text-ink">Especificações</h2>
-          <table className="w-full text-left">
-            <tbody>
+          <h2 className="m-0 font-display text-lg font-semibold text-foreground">Especificações</h2>
+          <Table className="text-left">
+            <TableBody>
               {specifications.map((row) => (
-                <tr key={`${row.label}:${row.value}`}>
-                  <td>{row.label}</td>
-                  <td>{row.value}</td>
-                </tr>
+                <TableRow key={`${row.label}:${row.value}`}>
+                  <TableCell>{row.label}</TableCell>
+                  <TableCell>
+                    <SpecificationValue value={row.value} />
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </section>
       ) : null}
       {hasText(product.observations) ? (
         <section>
-          <h2 className="m-0 font-display text-lg font-semibold text-ink">Observações</h2>
+          <h2 className="m-0 font-display text-lg font-semibold text-foreground">Observações</h2>
           <p className="m-0 text-[var(--ink-primary)]">{product.observations}</p>
         </section>
       ) : null}
@@ -78,13 +100,15 @@ export function WatchPage({ slug }: WatchPageProps) {
   return (
     <>
       <TopBar catalogHref={catalogHref} />
-      <div data-testid="watch-page-column" className="catalog-column flex flex-col items-start gap-4 py-8 text-left">
-        {product ? (
-          <WatchColumn product={product} />
-        ) : (
-          <p className="m-0 text-[var(--ink-primary)]">{MISSING_WATCH_MESSAGE}</p>
-        )}
-      </div>
+      <main className="max-w-full min-w-0 overflow-x-clip">
+        <div data-testid="watch-page-column" className="catalog-column flex flex-col items-start gap-4 py-8 text-left">
+          {product ? (
+            <WatchColumn product={product} />
+          ) : (
+            <p className="m-0 text-[var(--ink-primary)]">{MISSING_WATCH_MESSAGE}</p>
+          )}
+        </div>
+      </main>
     </>
   )
 }

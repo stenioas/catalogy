@@ -241,17 +241,17 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-39 | P1: Visual dos controles | Tasks | Done |
 | SV-40 | P1: Visual dos controles | Tasks | Done |
 | SV-41 | P1: Visual dos controles | Tasks | Done |
-| SV-42 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-42 | P1: Visual dos controles | Tasks | Done |
 | SV-43 | P1: Visual dos controles | Tasks | Done |
 | SV-44 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-45 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-46 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-47 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-48 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-49 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
+| SV-45 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-46 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-47 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-48 | P1: Ficha, foto e carrossel | Tasks | Done |
+| SV-49 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-50 | P1: Ficha, foto e carrossel | Phase 4 | Done |
 | SV-51 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
-| SV-52 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
+| SV-52 | P1: Ficha, foto e carrossel | Tasks | Done |
 | SV-53 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
 | SV-54 | P1: Ficha, foto e carrossel | Tasks | In Tasks |
 | SV-55 | P1: Ficha, foto e carrossel | Tasks | In Tasks |

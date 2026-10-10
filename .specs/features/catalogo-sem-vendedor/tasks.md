@@ -618,6 +618,8 @@ T18 → T19 → T20
 
 ### T18: Ficha e miolo da página
 
+**Status**: done
+
 **What**: A ficha usa `Table`. URL http(s) vira **Ver anúncio similar**, `#0066cc` no claro e `#2997ff` no escuro, sem a URL crua no texto. Os títulos usam `foreground`. O miolo fica num `main` com `max-width: 100%`, `min-width: 0` e `overflow-x: clip`. Uma URL longa não cria rolagem horizontal.
 **Where**: `client/src/routes/watch-page.tsx`
 **Depends on**: T10, T12
@@ -632,9 +634,9 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `watch-page.test.tsx` cobre a tabela, o link, as duas cores e a ausência de rolagem horizontal
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `watch-page.test.tsx` cobre a tabela, o link, as duas cores e a ausência de rolagem horizontal
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: integration
 **Gate**: full
