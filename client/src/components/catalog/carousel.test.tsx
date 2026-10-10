@@ -139,6 +139,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     const next = screen.getByRole('button', { name: 'Seguinte' })
 
     expect(follows(frame(), controls)).toBe(true)
+    expect(controls.className.split(/\s+/)).toContain('mt-6')
     expect(follows(previous, dots)).toBe(true)
     expect(follows(dots, next)).toBe(true)
     expect(dots.className).toMatch(/\bjustify-center\b/)
@@ -257,6 +258,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(classes).toContain('max-w-[480px]')
     expect(classes).toContain('mx-auto')
     expect(classes).toContain('aspect-square')
+    expect(classes).toContain('rounded-[18px]')
     for (const img of box.querySelectorAll('img')) {
       expect(img.className.split(/\s+/)).toContain('object-contain')
     }

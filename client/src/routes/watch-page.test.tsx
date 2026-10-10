@@ -162,6 +162,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
     const column = screen.getByTestId('watch-page-column')
     expect(column.classList.contains('catalog-column')).toBe(true)
+    expect(column.className.split(/\s+/)).toContain('gap-8')
     expect(within(column).getByTestId('watch-carousel')).toBeDefined()
   })
 

@@ -112,7 +112,7 @@ export function WatchPage({ slug }: WatchPageProps) {
     <>
       <TopBar catalogHref={catalogHref} />
       <main className="max-w-full min-w-0 overflow-x-clip">
-        <div data-testid="watch-page-column" className="catalog-column flex flex-col items-start gap-4 py-8 text-left">
+        <div data-testid="watch-page-column" className="catalog-column flex flex-col items-start gap-8 py-8 text-left">
           {product ? (
             <WatchColumn product={product} />
           ) : (
