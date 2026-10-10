@@ -3,10 +3,13 @@ import { useRef, type RefObject } from 'react'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { waUrl } from './want-link'
 import { StickyBar } from './sticky-bar'
 
 const phone = '5585997689165'
+const slug = 'seculus'
 const title = 'Seculus'
+const whatsappLinkName = 'Enviar no WhatsApp'
 
 function installObserver(intersectionRatio: number, isIntersecting: boolean) {
   let threshold: number | number[] | undefined
@@ -55,6 +58,7 @@ function Harness({
     <StickyBar
       price={369.9}
       phone={phone}
+      slug={slug}
       title={title}
       targetRef={targetRef}
     />
@@ -92,11 +96,8 @@ describe('StickyBar (CAT-89–CAT-94, CAT-151)', () => {
     expect(bar).toBeTruthy()
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
 
-    const link = screen.getByRole('link', { name: 'Eu quero!' })
-    const message = encodeURIComponent('Olá, tenho interesse no Seculus.')
-    expect(link.getAttribute('href')).toBe(
-      `https://wa.me/${phone}?text=${message}`,
-    )
+    const link = screen.getByRole('link', { name: whatsappLinkName })
+    expect(link.getAttribute('href')).toBe(waUrl(slug, title))
     expect(link.getAttribute('target')).toBe('_blank')
     expect(link.getAttribute('rel')).toBe('noopener noreferrer')
     expect(bar.contains(link)).toBe(true)
@@ -112,7 +113,7 @@ describe('StickyBar (CAT-89–CAT-94, CAT-151)', () => {
     renderBar()
 
     expect(screen.queryByTestId('sticky-bar')).toBeNull()
-    expect(screen.queryByRole('link', { name: 'Eu quero!' })).toBeNull()
+    expect(screen.queryByRole('link', { name: whatsappLinkName })).toBeNull()
     expect(screen.queryByTestId('price-current')).toBeNull()
   })
 
@@ -123,7 +124,7 @@ describe('StickyBar (CAT-89–CAT-94, CAT-151)', () => {
     const row = screen.getByTestId('sticky-bar-row')
     const price = screen.getByTestId('price-block')
     const action = screen.getByTestId('sticky-bar-action')
-    const link = screen.getByRole('link', { name: 'Eu quero!' })
+    const link = screen.getByRole('link', { name: whatsappLinkName })
 
     expect(row.className).toMatch(/\bflex-col\b/)
     expect(row.className).toMatch(/\bmd:flex-row\b/)

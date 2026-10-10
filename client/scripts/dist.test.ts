@@ -149,13 +149,13 @@ describe('pnpm build emitindo dist estático', () => {
     expect(output).toMatch(/failed the shared contract/)
   }, 120_000)
 
-  it('empacota o texto Eu quero no dist (CAT-30)', () => {
+  it('empacota o texto Enviar no WhatsApp no dist (CAT-30, SV-17)', () => {
     const files = listRelativeFiles(distDir).filter((file) =>
       /\.(js|html)$/.test(file),
     )
     expect(files.length).toBeGreaterThan(0)
     const found = files.some((file) =>
-      readFileSync(join(distDir, file), 'utf-8').includes('Eu quero'),
+      readFileSync(join(distDir, file), 'utf-8').includes('Enviar no WhatsApp'),
     )
     expect(found).toBe(true)
   })

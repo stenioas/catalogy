@@ -7,6 +7,7 @@ export type StickyBarProps = {
   price: number
   listPrice?: number
   phone: string
+  slug: string
   title: string
   targetRef: RefObject<Element | null>
 }
@@ -15,6 +16,7 @@ export function StickyBar({
   price,
   listPrice,
   phone,
+  slug,
   title,
   targetRef,
 }: StickyBarProps) {
@@ -57,7 +59,7 @@ export function StickyBar({
           data-testid="sticky-bar-action"
           className="w-full md:w-auto [&>a]:block [&>a]:w-full md:[&>a]:w-auto"
         >
-          <WantLink phone={phone} title={title} />
+          <WantLink slug={slug} title={title} />
         </div>
       </div>
     </div>

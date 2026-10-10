@@ -3,32 +3,55 @@ import { afterEach, describe, expect, it } from 'vitest'
 
 import { waUrl, WantLink } from './want-link'
 
-describe('WantLink (CAT-110–CAT-115)', () => {
+const LINK_NAME = 'Enviar no WhatsApp'
+
+function decodeWaText(href: string): string {
+  const url = new URL(href)
+  const text = url.searchParams.get('text')
+  if (text === null) throw new Error('missing text query param')
+  return decodeURIComponent(text)
+}
+
+describe('WantLink (SV-17–SV-22)', () => {
   afterEach(() => {
     cleanup()
   })
 
-  it('links to wa.me with the seller phone and URL-encoded watch title (CAT-110, CAT-111)', () => {
-    render(<WantLink phone="5585997689165" title="Seculus" />)
-    const link = screen.getByRole('link', { name: 'Eu quero!' })
-    const message = encodeURIComponent('Olá, tenho interesse no Seculus.')
-    expect(link.getAttribute('href')).toBe(
-      `https://wa.me/5585997689165?text=${message}`,
-    )
+  it('uses Enviar no WhatsApp as the visible and accessible link name (SV-17)', () => {
+    render(<WantLink slug="seculus" title="Seculus" />)
+    expect(screen.getByRole('link', { name: LINK_NAME }).textContent).toBe(LINK_NAME)
   })
 
-  it('opens in a new tab with noopener noreferrer (CAT-112, CAT-113, CAT-114)', () => {
-    render(<WantLink phone="5585996043447" title="Addiesdive" />)
-    const link = screen.getByRole('link', { name: 'Eu quero!' })
+  it('builds wa.me/?text= without a phone number in the path (SV-17, SV-21)', () => {
+    const href = waUrl('addiesdive', 'Addiesdive')
+    expect(href).toMatch(/^https:\/\/wa\.me\/\?text=/)
+    expect(href).not.toMatch(/^https:\/\/wa\.me\/\d/)
+    render(<WantLink slug="addiesdive" title="Addiesdive" />)
+    const linkHref = screen.getByRole('link', { name: LINK_NAME }).getAttribute('href')
+    expect(linkHref).toMatch(/^https:\/\/wa\.me\/\?text=/)
+    expect(linkHref).not.toMatch(/^https:\/\/wa\.me\/\d/)
+  })
+
+  it('encodes Olá, tenho interesse no {title}. {absolute watch url without query} (SV-18, SV-19)', () => {
+    const slug = 'curren-8363'
+    const title = 'CURREN 8363'
+    const watchUrl = `${window.location.origin}/relogio/${slug}`
+    const href = waUrl(slug, title)
+    expect(decodeWaText(href)).toBe(`Olá, tenho interesse no ${title}. ${watchUrl}`)
+    expect(watchUrl).not.toContain('?')
+  })
+
+  it('opens in a new tab with noopener noreferrer (SV-22)', () => {
+    render(<WantLink slug="seculus" title="Seculus" />)
+    const link = screen.getByRole('link', { name: LINK_NAME })
     expect(link.getAttribute('target')).toBe('_blank')
     expect(link.getAttribute('rel')).toBe('noopener noreferrer')
   })
 
-  it('does not use the whatsapp:// scheme (CAT-115)', () => {
-    expect(waUrl('5585992387201', 'CURREN')).not.toMatch(/^whatsapp:\/\//)
-    render(<WantLink phone="5585992387201" title="CURREN" />)
-    const href = screen.getByRole('link', { name: 'Eu quero!' }).getAttribute('href')
-    expect(href).toMatch(/^https:\/\/wa\.me\//)
+  it('does not use the whatsapp:// scheme (SV-21)', () => {
+    expect(waUrl('seculus', 'Seculus')).not.toMatch(/^whatsapp:\/\//)
+    render(<WantLink slug="seculus" title="Seculus" />)
+    const href = screen.getByRole('link', { name: LINK_NAME }).getAttribute('href')
     expect(href).not.toMatch(/whatsapp:\/\//)
   })
 })

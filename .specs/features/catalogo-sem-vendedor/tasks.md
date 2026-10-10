@@ -219,6 +219,8 @@ T18 → T19 → T20
 
 ### T5: Montar o WhatsApp sem número
 
+**Status**: done
+
 **What**: `waUrl(slug, title)` monta `https://wa.me/?text=` com a frase e a URL absoluta do relógio, sem query e sem telefone.
 **Where**: `client/src/components/catalog/want-link.tsx`
 **Depends on**: T4
@@ -233,11 +235,11 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] O rótulo visível e o nome acessível são Enviar no WhatsApp
-- [ ] O href não tem número e não usa `whatsapp://`
-- [ ] `want-link.test.tsx` cobre a frase, a URL e os atributos do link
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] O rótulo visível e o nome acessível são Enviar no WhatsApp
+- [x] O href não tem número e não usa `whatsapp://`
+- [x] `want-link.test.tsx` cobre a frase, a URL e os atributos do link
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

@@ -33,7 +33,7 @@ function WatchColumn({ product, phone }: { product: Product; phone: string }) {
       />
       <h1 className="m-0 font-display text-xl font-semibold text-ink">{product.title}</h1>
       <PriceBlock price={product.price} listPrice={product.listPrice} />
-      <WantLink ref={wantRef} phone={phone} title={product.title} />
+      <WantLink ref={wantRef} slug={product.slug} title={product.title} />
       {hasText(product.details) ? (
         <section>
           <h2 className="m-0 font-display text-lg font-semibold text-ink">Detalhes</h2>
@@ -65,6 +65,7 @@ function WatchColumn({ product, phone }: { product: Product; phone: string }) {
         price={product.price}
         listPrice={product.listPrice}
         phone={phone}
+        slug={product.slug}
         title={product.title}
         targetRef={wantRef}
       />

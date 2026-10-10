@@ -1,20 +1,23 @@
 import type { Ref } from 'react'
 
 export type WantLinkProps = {
-  phone: string
+  slug: string
   title: string
   ref?: Ref<HTMLAnchorElement>
 }
 
-export function waUrl(phone: string, title: string): string {
-  const text = encodeURIComponent(`Olá, tenho interesse no ${title}.`)
-  return `https://wa.me/${phone}?text=${text}`
+const WHATSAPP_LABEL = 'Enviar no WhatsApp'
+
+export function waUrl(slug: string, title: string): string {
+  const watchUrl = `${window.location.origin}/relogio/${slug}`
+  const message = `Olá, tenho interesse no ${title}. ${watchUrl}`
+  return `https://wa.me/?text=${encodeURIComponent(message)}`
 }
 
-export function WantLink({ phone, title, ref }: WantLinkProps) {
+export function WantLink({ slug, title, ref }: WantLinkProps) {
   return (
-    <a ref={ref} href={waUrl(phone, title)} target="_blank" rel="noopener noreferrer">
-      Eu quero!
+    <a ref={ref} href={waUrl(slug, title)} target="_blank" rel="noopener noreferrer">
+      {WHATSAPP_LABEL}
     </a>
   )
 }

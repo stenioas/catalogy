@@ -34,7 +34,7 @@ export function WatchCard({ product, phone, sellerSlug }: WatchCardProps) {
         </div>
       </Link>
       <div className="mt-2">
-        <WantLink phone={phone} title={product.title} />
+        <WantLink slug={product.slug} title={product.title} />
       </div>
     </article>
   )
