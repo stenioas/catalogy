@@ -229,12 +229,12 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 | SV-27 | P1: Build sem telefone publicado | Phase 1 | Done |
 | SV-28 | P1: Visual dos controles | Tasks | Done |
 | SV-29 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-30 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-31 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-32 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-30 | P1: Visual dos controles | Tasks | Done |
+| SV-31 | P1: Visual dos controles | Tasks | Done |
+| SV-32 | P1: Visual dos controles | Tasks | Done |
 | SV-33 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-34 | P1: Visual dos controles | Tasks | In Tasks |
-| SV-35 | P1: Visual dos controles | Tasks | In Tasks |
+| SV-35 | P1: Visual dos controles | Tasks | Done |
 | SV-36 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-37 | P1: Visual dos controles | Tasks | In Tasks |
 | SV-38 | P1: Visual dos controles | Tasks | In Tasks |

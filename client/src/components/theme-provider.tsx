@@ -5,6 +5,9 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { Moon, Sun } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
 
 export const THEME_STORAGE_KEY = 'theme:v1'
 
@@ -101,8 +104,18 @@ export function ThemeToggle() {
     theme === 'dark' ? 'Usar tema claro' : 'Usar tema escuro'
 
   return (
-    <button type="button" onClick={toggleTheme} aria-label={label}>
-      {label}
-    </button>
+    <Button
+      type="button"
+      variant="ghost"
+      onClick={toggleTheme}
+      aria-label={label}
+      className="size-11 shrink-0 text-inherit"
+    >
+      {theme === 'dark' ? (
+        <Sun aria-hidden="true" />
+      ) : (
+        <Moon aria-hidden="true" />
+      )}
+    </Button>
   )
 }

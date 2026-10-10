@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   THEME_STORAGE_KEY,
@@ -208,5 +208,78 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(html).toContain('theme:v1')
     expect(html).toMatch(/prefers-color-scheme:\s*dark/)
     expect(html).toMatch(/document\.documentElement\.classList/)
+  })
+})
+
+describe('ThemeToggle (SV-29–SV-32, SV-35)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  beforeEach(() => {
+    cleanup()
+    localStorage.clear()
+    document.documentElement.classList.remove('dark')
+    vi.unstubAllGlobals()
+    mockColorScheme(false)
+  })
+
+  it('persists the choice under the theme:v1 storage key (SV-35)', () => {
+    expect(THEME_STORAGE_KEY).toBe('theme:v1')
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Usar tema escuro' }))
+    expect(localStorage.getItem('theme:v1')).toBe('dark')
+  })
+
+  it('is a 44×44 ghost Button without the WhatsApp pill background (SV-29)', () => {
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>,
+    )
+    const button = screen.getByRole('button', { name: 'Usar tema escuro' })
+    expect(button.getAttribute('data-slot')).toBe('button')
+    expect(button.getAttribute('data-variant')).toBe('ghost')
+    expect(button.className).toMatch(/\bsize-11\b/)
+    expect(button.className).not.toMatch(/\bbg-primary\b/)
+    expect(button.className).not.toMatch(/\bmin-h-11\b.*\bw-full\b|\bw-full\b.*\bmin-h-11\b/)
+  })
+
+  it('has no visible label text; only the accessible name from aria-label (SV-30)', () => {
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>,
+    )
+    const button = screen.getByRole('button', { name: 'Usar tema escuro' })
+    expect(button.textContent?.replace(/\s/g, '')).toBe('')
+  })
+
+  it('shows Moon and aria-label Usar tema escuro while the theme is light (SV-31)', () => {
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>,
+    )
+    const button = screen.getByRole('button', { name: 'Usar tema escuro' })
+    expect(button.querySelector('svg.lucide-moon')).not.toBeNull()
+    expect(button.querySelector('svg.lucide-sun')).toBeNull()
+  })
+
+  it('shows Sun and aria-label Usar tema claro while the theme is dark (SV-32)', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'dark')
+    applyThemeClass('dark')
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>,
+    )
+    const button = screen.getByRole('button', { name: 'Usar tema claro' })
+    expect(button.querySelector('svg.lucide-sun')).not.toBeNull()
+    expect(button.querySelector('svg.lucide-moon')).toBeNull()
   })
 })

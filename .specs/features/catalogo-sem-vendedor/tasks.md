@@ -497,6 +497,8 @@ T18 → T19 → T20
 
 ### T14: Ícone de tema
 
+**Status**: done
+
 **What**: O controle de tema é um `Button` 44×44, sem fundo e sem texto visível. No claro mostra `Moon`. No escuro mostra `Sun`. O `aria-label` e a chave `theme:v1` permanecem.
 **Where**: `client/src/components/theme-provider.tsx`
 **Depends on**: T13
@@ -511,10 +513,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `theme-provider.test.tsx` cobre ícone, rótulo acessível e a chave `theme:v1`
-- [ ] O botão não tem fundo `#0066cc`
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `theme-provider.test.tsx` cobre ícone, rótulo acessível e a chave `theme:v1`
+- [x] O botão não tem fundo `#0066cc`
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick
