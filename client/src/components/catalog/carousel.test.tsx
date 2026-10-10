@@ -247,10 +247,31 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(screen.queryByRole('button', { name: 'Seguinte' })).toBeNull()
     expect(screen.queryByTestId('carousel-dots')).toBeNull()
     expect(screen.queryByTestId('carousel-controls')).toBeNull()
+    expect(screen.queryByTestId('carousel-count')).toBeNull()
     expect(frame().className).toMatch(/\baspect-square\b/)
     drag(frame(), 180, 40)
     expect(shownSrc()).toBe('somente.webp')
     expect(screen.queryAllByRole('button')).toHaveLength(0)
+  })
+
+  it('shows the current photo and the total on a lighter parchment badge', () => {
+    renderCarousel()
+    const badge = screen.getByTestId('carousel-count')
+    expect(frame().contains(badge)).toBe(true)
+    expect(badge.textContent).toBe('1/3')
+    expect(badge.getAttribute('aria-hidden')).toBe('true')
+    const classes = badge.className.split(/\s+/)
+    expect(classes).toContain(
+      'bg-[color-mix(in_srgb,var(--canvas-parchment)_52%,transparent)]',
+    )
+    expect(classes).toContain('[backdrop-filter:saturate(140%)_blur(8px)]')
+    expect(classes).not.toContain('[backdrop-filter:saturate(180%)_blur(20px)]')
+    expect(classes).toContain('pointer-events-none')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+    expect(badge.textContent).toBe('2/3')
+    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    expect(badge.textContent).toBe('3/3')
   })
 
   it('changes photos with no duration when reduced motion is requested (CAT-85)', () => {

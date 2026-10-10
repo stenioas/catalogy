@@ -102,7 +102,7 @@ export function Carousel({ images, alt }: CarouselProps) {
     <div data-testid="watch-carousel" className="w-full">
       <div
         data-testid="carousel-frame"
-        className="mx-auto aspect-square w-full max-w-[480px] touch-pan-y overflow-hidden rounded-[12px]"
+        className="relative mx-auto aspect-square w-full max-w-[480px] touch-pan-y overflow-hidden rounded-[12px]"
         tabIndex={multi ? 0 : undefined}
         onKeyDown={multi ? onKeyDown : undefined}
         onPointerDown={multi ? onPointerDown : undefined}
@@ -143,6 +143,15 @@ export function Carousel({ images, alt }: CarouselProps) {
             )
           })}
         </div>
+        {multi ? (
+          <p
+            data-testid="carousel-count"
+            aria-hidden="true"
+            className="pointer-events-none absolute right-3 bottom-3 m-0 rounded-full bg-[color-mix(in_srgb,var(--canvas-parchment)_52%,transparent)] px-2.5 py-1 text-sm font-medium text-[var(--ink)] tabular-nums [-webkit-backdrop-filter:saturate(140%)_blur(8px)] [backdrop-filter:saturate(140%)_blur(8px)]"
+          >
+            {index + 1}/{count}
+          </p>
+        ) : null}
       </div>
       {multi ? (
         <div data-testid="carousel-controls" className="mt-6 flex items-center">
