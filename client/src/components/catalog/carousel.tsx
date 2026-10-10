@@ -98,11 +98,15 @@ export function Carousel({ images, alt }: CarouselProps) {
     setPullPx(0)
   }
 
+  const arrowClassName =
+    'absolute top-1/2 z-10 hidden size-11 -translate-y-1/2 cursor-pointer rounded-full text-inherit hover:bg-[#e5e5ea] md:inline-flex'
+
   return (
     <div data-testid="watch-carousel" className="w-full">
-      <div
-        data-testid="carousel-frame"
-        className="relative mx-auto aspect-square w-full max-w-[480px] touch-pan-y overflow-hidden rounded-[12px]"
+      <div data-testid="carousel-stage" className="relative mx-auto w-full max-w-[480px]">
+        <div
+          data-testid="carousel-frame"
+          className="relative mx-auto aspect-square w-full max-w-[480px] touch-pan-y overflow-hidden rounded-[12px]"
         tabIndex={multi ? 0 : undefined}
         onKeyDown={multi ? onKeyDown : undefined}
         onPointerDown={multi ? onPointerDown : undefined}
@@ -153,19 +157,34 @@ export function Carousel({ images, alt }: CarouselProps) {
           </p>
         ) : null}
       </div>
-      {multi ? (
-        <div data-testid="carousel-controls" className="mt-6 flex items-center">
+        {multi ? (
           <Button
             type="button"
             variant="ghost"
             aria-label="Anterior"
             disabled={atStart}
-            className="hidden size-11 shrink-0 text-inherit md:inline-flex"
+            className={`${arrowClassName} left-2`}
             onClick={() => step(-1)}
           >
             <ChevronLeft aria-hidden="true" />
           </Button>
-          <div data-testid="carousel-dots" className="flex flex-1 justify-center gap-2">
+        ) : null}
+        {multi ? (
+          <Button
+            type="button"
+            variant="ghost"
+            aria-label="Seguinte"
+            disabled={atEnd}
+            className={`${arrowClassName} right-2`}
+            onClick={() => step(1)}
+          >
+            <ChevronRight aria-hidden="true" />
+          </Button>
+        ) : null}
+      </div>
+      {multi ? (
+        <div data-testid="carousel-controls" className="mt-6 flex items-center justify-center">
+          <div data-testid="carousel-dots" className="flex justify-center gap-2">
             {images.map((src, imageIndex) => {
               const current = imageIndex === index
               return (
@@ -185,16 +204,6 @@ export function Carousel({ images, alt }: CarouselProps) {
               )
             })}
           </div>
-          <Button
-            type="button"
-            variant="ghost"
-            aria-label="Seguinte"
-            disabled={atEnd}
-            className="hidden size-11 shrink-0 text-inherit md:inline-flex"
-            onClick={() => step(1)}
-          >
-            <ChevronRight aria-hidden="true" />
-          </Button>
         </div>
       ) : null}
     </div>

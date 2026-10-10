@@ -131,18 +131,32 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     }
   })
 
-  it('places previous, centered dots, and next under the image, still visible on the first and last photos (CAT-75, CAT-76)', () => {
+  it('places previous and next on the photo line and keeps the dots centered underneath (CAT-75, CAT-76)', () => {
     renderCarousel()
+    const stage = screen.getByTestId('carousel-stage')
     const controls = screen.getByTestId('carousel-controls')
     const previous = screen.getByRole('button', { name: 'Anterior' })
     const dots = screen.getByTestId('carousel-dots')
     const next = screen.getByRole('button', { name: 'Seguinte' })
 
+    expect(stage.contains(frame())).toBe(true)
+    expect(stage.contains(previous)).toBe(true)
+    expect(stage.contains(next)).toBe(true)
     expect(follows(frame(), controls)).toBe(true)
     expect(controls.className.split(/\s+/)).toContain('mt-6')
     expect(follows(previous, dots)).toBe(true)
-    expect(follows(dots, next)).toBe(true)
+    expect(follows(next, dots)).toBe(true)
     expect(dots.className).toMatch(/\bjustify-center\b/)
+    for (const arrow of [previous, next]) {
+      expect(arrow.className).toMatch(/\babsolute\b/)
+      expect(arrow.className).toMatch(/\btop-1\/2\b/)
+      expect(arrow.className).toMatch(/-translate-y-1\/2/)
+      expect(arrow.className).toMatch(/\bcursor-pointer\b/)
+      expect(arrow.className).toMatch(/\brounded-full\b/)
+      expect(arrow.className).toMatch(/hover:bg-\[#e5e5ea\]/)
+    }
+    expect(previous.className).toMatch(/\bleft-2\b/)
+    expect(next.className).toMatch(/\bright-2\b/)
     expect(previous.hasAttribute('hidden')).toBe(false)
     expect(next.hasAttribute('hidden')).toBe(false)
     expect(previous).toHaveProperty('disabled', true)
