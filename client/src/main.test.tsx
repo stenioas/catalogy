@@ -12,7 +12,7 @@ const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 const INCOMPLETE_LINK_MESSAGE =
   'Este link está incompleto ou o vendedor não existe.'
 const SELLERS_URL = '/catalog/sellers.json'
-const TOP_BAR_TITLE = 'Catálogo'
+const TOP_BAR_TITLE = 'Catálogo de Produtos'
 
 function watchTitle(): string {
   const product = products[0]

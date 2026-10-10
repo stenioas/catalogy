@@ -13,7 +13,7 @@ const INCOMPLETE_LINK_MESSAGE =
 const EMPTY_VITRINE_MESSAGE = 'A vitrine ainda não tem relógios.'
 const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
 const SELLERS_URL = '/catalog/sellers.json'
-const TOP_BAR_TITLE = 'Catálogo'
+const TOP_BAR_TITLE = 'Catálogo de Produtos'
 
 const { mockProductsRef } = vi.hoisted(() => ({
   mockProductsRef: { current: null as Product[] | null },

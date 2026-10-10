@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 
-export const TOP_BAR_TITLE = 'Catálogo'
+export const TOP_BAR_TITLE = 'Catálogo de Produtos'
 
 export type TopBarProps = {
   catalogHref?: string

@@ -21,14 +21,12 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
 
   it('shows the fixed title Catálogo on the catalog route (SV-01)', () => {
     renderTopBar()
-    expect(screen.getByText('Catálogo')).toBeDefined()
-    expect(screen.queryByText(/Catálogo /)).toBeNull()
+    expect(screen.getByText('Catálogo de Produtos')).toBeDefined()
   })
 
   it('shows Catálogo on the watch route when catalogHref is set (SV-12)', () => {
     renderTopBar('/')
-    expect(screen.getByRole('link', { name: 'Catálogo' })).toBeDefined()
-    expect(screen.queryByText(/Catálogo /)).toBeNull()
+    expect(screen.getByRole('link', { name: 'Catálogo de Produtos' })).toBeDefined()
   })
 
   it('does not show an accessible back control on the catalog grade route (CAT-37)', () => {
@@ -44,7 +42,7 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
     ) as HTMLElement
     expect(row).not.toBeNull()
     expect(row.className).toMatch(/grid-cols-\[1fr_auto_1fr\]/)
-    expect(row.children[1]?.textContent).toContain('Catálogo')
+    expect(row.children[1]?.textContent).toContain('Catálogo de Produtos')
     expect(row.lastElementChild?.querySelector('button')).toBeNull()
     expect(within(row).queryByRole('button', { name: /Usar tema/ })).toBeNull()
   })
