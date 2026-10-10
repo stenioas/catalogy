@@ -157,6 +157,8 @@ T18 → T19 → T20
 
 ### T3: Apagar o telefone publicado
 
+**Status**: done
+
 **What**: `client/public/catalog/sellers.json` sai. O teste de `dist` exige a ausência de `catalog/sellers.json`. `vendedores/` e `relogios-alexandre.md` ficam no disco.
 **Where**: `client/scripts/dist.test.ts`
 **Depends on**: T2
@@ -171,11 +173,11 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] `client/public/catalog/sellers.json` não existe
-- [ ] O teste de `dist` falha se `catalog/sellers.json` aparecer
-- [ ] `vendedores/` e `relogios-alexandre.md` continuam no disco
-- [ ] Gate sai 0: `pnpm test && pnpm build`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] `client/public/catalog/sellers.json` não existe
+- [x] O teste de `dist` falha se `catalog/sellers.json` aparecer
+- [x] `vendedores/` e `relogios-alexandre.md` continuam no disco
+- [x] Gate sai 0: `pnpm test && pnpm build`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: build

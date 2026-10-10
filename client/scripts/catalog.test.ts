@@ -228,15 +228,8 @@ describe('initial catalog in public/', () => {
     'catalog',
   )
 
-  it('lists alexandre, manuela and ana-claudia with the initial phones', () => {
-    const sellers: unknown = JSON.parse(
-      readFileSync(join(catalogDir, 'sellers.json'), 'utf8'),
-    )
-    expect(sellers).toEqual([
-      { slug: 'alexandre', name: 'Alexandre', phone: '5585997689165' },
-      { slug: 'manuela', name: 'Manuela', phone: '5585996043447' },
-      { slug: 'ana-claudia', name: 'Ana Claudia', phone: '5585992387201' },
-    ])
+  it('does not keep sellers.json in the public catalog', () => {
+    expect(existsSync(join(catalogDir, 'sellers.json'))).toBe(false)
   })
 
   it('validates the committed public catalog', () => {

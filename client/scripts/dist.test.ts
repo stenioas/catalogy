@@ -79,16 +79,21 @@ describe('pnpm build emitindo dist estático', () => {
     ).not.toThrow()
   }, 120_000)
 
-  it('copia catalog/sellers.json, _redirects e um único index.html na raiz do dist', () => {
+  it('publica o catálogo sem catalog/sellers.json, com _redirects e um único index.html na raiz do dist', () => {
     const indexFiles = collectIndexHtmlFiles(distDir)
     expect(indexFiles).toEqual([join(distDir, 'index.html')])
 
-    expect(existsSync(join(distDir, 'catalog', 'sellers.json'))).toBe(true)
+    const publicSellers = join(clientRoot, 'public', 'catalog', 'sellers.json')
+    const distSellers = join(distDir, 'catalog', 'sellers.json')
+    expect(existsSync(publicSellers)).toBe(false)
+    expect(existsSync(distSellers)).toBe(false)
 
     const publicCatalog = join(clientRoot, 'public', 'catalog')
     const distCatalog = join(distDir, 'catalog')
     const sourceFiles = listRelativeFiles(publicCatalog)
     const copiedFiles = listRelativeFiles(distCatalog)
+    expect(sourceFiles).not.toContain('sellers.json')
+    expect(copiedFiles).not.toContain('sellers.json')
     expect(copiedFiles).toEqual(sourceFiles)
     for (const file of sourceFiles) {
       expect(readFileSync(join(distCatalog, file))).toEqual(
@@ -98,6 +103,12 @@ describe('pnpm build emitindo dist estático', () => {
 
     const redirects = readFileSync(join(distDir, '_redirects'), 'utf-8')
     expect(redirects).toContain('/* /index.html 200')
+  })
+
+  it('mantém vendedores/ e relogios-alexandre.md no disco', () => {
+    const repoRoot = join(clientRoot, '..')
+    expect(statSync(join(repoRoot, 'vendedores')).isDirectory()).toBe(true)
+    expect(statSync(join(repoRoot, 'relogios-alexandre.md')).isFile()).toBe(true)
   })
 
   it('sai com erro quando um arquivo do catálogo fura o contrato (CAT-18)', () => {
