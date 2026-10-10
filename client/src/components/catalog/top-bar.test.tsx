@@ -43,8 +43,9 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
       '[data-testid="top-bar-inner"]',
     ) as HTMLElement
     expect(row).not.toBeNull()
-    expect(row.firstElementChild?.textContent).toContain('Catálogo')
-    expect(row.lastElementChild?.tagName).toBe('BUTTON')
+    expect(row.className).toMatch(/grid-cols-\[1fr_auto_1fr\]/)
+    expect(row.children[1]?.textContent).toContain('Catálogo')
+    expect(row.lastElementChild?.querySelector('button')).not.toBeNull()
     expect(
       within(row).getByRole('button', { name: /Usar tema/ }),
     ).toBeDefined()

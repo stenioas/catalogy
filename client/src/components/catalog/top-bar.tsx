@@ -22,9 +22,9 @@ export function TopBar({ catalogHref }: TopBarProps) {
     >
       <div
         data-testid="top-bar-inner"
-        className="catalog-column flex h-full items-center justify-between gap-4"
+        className="catalog-column grid h-full grid-cols-[1fr_auto_1fr] items-center"
       >
-        <div className="flex min-w-0 items-center gap-1">
+        <div className="justify-self-start">
           {catalogHref ? (
             <Button asChild variant="ghost" className="size-11 shrink-0 text-inherit">
               <Link to={catalogHref} aria-label="Voltar">
@@ -32,15 +32,17 @@ export function TopBar({ catalogHref }: TopBarProps) {
               </Link>
             </Button>
           ) : null}
-          {catalogHref ? (
-            <Link to={catalogHref} className={titleClassName}>
-              {TOP_BAR_TITLE}
-            </Link>
-          ) : (
-            <p className={titleClassName}>{TOP_BAR_TITLE}</p>
-          )}
         </div>
-        <ThemeToggle />
+        {catalogHref ? (
+          <Link to={catalogHref} className={`${titleClassName} justify-self-center text-center`}>
+            {TOP_BAR_TITLE}
+          </Link>
+        ) : (
+          <p className={`${titleClassName} justify-self-center text-center`}>{TOP_BAR_TITLE}</p>
+        )}
+        <div className="justify-self-end">
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )
