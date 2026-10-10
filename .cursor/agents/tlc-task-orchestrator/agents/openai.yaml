@@ -1,4 +1,0 @@
-interface:
-  display_name: "TLC Task Orchestrator"
-  short_description: "Run tlc-spec-driven tasks one at a time"
-  default_prompt: "Use $tlc-task-orchestrator with TASK_FILE to run the tlc-spec-driven tasks serially, with local commits only."
