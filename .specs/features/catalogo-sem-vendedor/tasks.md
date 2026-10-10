@@ -434,6 +434,8 @@ T18 → T19 → T20
 
 ### T12: Instalar button, badge, card e table
 
+**Status**: done
+
 **What**: O init do shadcn no `client` usa Vite e base Radix, sem `-d` e sem preset. Entram `button`, `badge`, `card` e `table`. As variáveis semânticas apontam para os tokens atuais. O `body` fica com `width: 100%`.
 **Where**: `client/src/index.css`
 **Depends on**: T11
@@ -448,12 +450,12 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] Existem `button`, `badge`, `card` e `table` em `client/src/components/ui/`
-- [ ] `--primary` continua `#0066cc`. `--card` é `--canvas` no claro e `--surface-tile-2` no escuro
-- [ ] O `body` não declara `width: 100vw`
-- [ ] Um teste de componente lê essas variáveis no CSS
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] Existem `button`, `badge`, `card` e `table` em `client/src/components/ui/`
+- [x] `--primary` continua `#0066cc`. `--card` é `--canvas` no claro e `--surface-tile-2` no escuro
+- [x] O `body` não declara `width: 100vw`
+- [x] Um teste de componente lê essas variáveis no CSS
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

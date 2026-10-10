@@ -149,7 +149,8 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     const body = css.match(/(?:^|\n)body\s*\{([^}]*)\}/)?.[1]
     expect(body).toBeDefined()
     const widths = [...body!.matchAll(/width:\s*([^;]+)/g)].map((match) => match[1].trim())
-    expect(widths.at(-1)).toBe('100vw')
+    expect(widths.at(-1)).toBe('100%')
+    expect(body).not.toMatch(/100vw/)
     expect(body).not.toMatch(/max-width/)
     expect(body).toMatch(/background-color:\s*var\(--background\)/)
   })

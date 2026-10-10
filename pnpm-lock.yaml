@@ -120,6 +120,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      cn:
+        specifier: ^0.4.0
+        version: 0.4.0
       lucide-react:
         specifier: ^1.43.0
         version: 1.52.0(@types/react@19.3.0)(react@19.3.0)
@@ -167,7 +170,7 @@ importers:
         specifier: ^25.0.1
         version: 25.0.1
       shadcn:
-        specifier: ^4.21.0
+        specifier: ^4.21.4
         version: 4.21.4
       tailwindcss:
         specifier: ^4.3.3
@@ -1557,6 +1560,11 @@ packages:
 
   cn@0.2.6:
     resolution: {integrity: sha512-+i4L0zUGgRcEnhsxueVrP7iBGxBx5iD0WOTYg1MwFEu2ZyCmH5Ov2V1cul2Ht5UchRQQgftCf4be/RxspuW6QQ==, tarball: https://artifactory.softplan.com.br:443/artifactory/api/npm/npm-v-repo/cn/-/cn-0.2.6.tgz}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  cn@0.4.0:
+    resolution: {integrity: sha512-qOAeUhPwPzBxx6jaeQdo646XIKliKHc2j1ZF7Ngb1o0pJZKH5gq8FkA0aVdUdPFUDXNXyUCXpCtoJISo6dhizg==, tarball: https://artifactory.softplan.com.br:443/artifactory/api/npm/npm-v-repo/cn/-/cn-0.4.0.tgz}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -4518,6 +4526,8 @@ snapshots:
   clsx@2.1.1: {}
 
   cn@0.2.6: {}
+
+  cn@0.4.0: {}
 
   code-block-writer@13.0.3: {}
 
