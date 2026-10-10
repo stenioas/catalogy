@@ -5,13 +5,13 @@ description: Cadastra um relógio em client/public/catalog/products/<slug>/ com 
 
 # Cadastrar relógio
 
-Esta skill grava **somente relógios** no catálogo estático. Ela **não** cadastra vendedores, **não** edita `client/public/catalog/sellers.json`, **não** faz `git commit` dos arquivos gravados, **não** migra relógios do catálogo antigo (gerador Python / `site/`) e **não** faz parte da suíte automatizada (`pnpm test`). Quem barra JSON inválido é `pnpm build`, via `ProductSchema` em `@catalogo/shared`.
+Esta skill grava **somente relógios** no catálogo estático. Ela **não** cadastra vendedores, **não** faz `git commit` dos arquivos gravados, **não** migra relógios do catálogo antigo (gerador Python / `site/`) e **não** faz parte da suíte automatizada (`pnpm test`). Quem barra JSON inválido é `pnpm build`, via `ProductSchema` em `@catalogo/shared`.
 
 ## Escopo
 
 | Faz | Não faz |
 | --- | --- |
-| Cria `client/public/catalog/products/<slug>/product.json` | Altera `client/public/catalog/sellers.json` |
+| Cria `client/public/catalog/products/<slug>/product.json` | Cadastra ou edita vendedores |
 | Copia fotos para `.../img/` | Sobrescreve pasta de slug existente |
 | Valida o objeto com `ProductSchema` antes de gravar | Commita no git |
 | Pede confirmação com leitura completa | Roda testes Vitest desta skill |

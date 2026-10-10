@@ -188,6 +188,8 @@ T18 → T19 → T20
 
 ### T4: Ajustar a skill de cadastro
 
+**Status**: done
+
 **What**: A skill deixa de mencionar editar `sellers.json`.
 **Where**: `.agents/skills/cadastrar-relogio/SKILL.md`
 **Depends on**: T3
@@ -202,9 +204,9 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] O arquivo não cita `sellers.json`
-- [ ] A skill continua sem commit e sem Vitest próprio
-- [ ] Gate sai 0: `pnpm test && pnpm build`
+- [x] O arquivo não cita `sellers.json`
+- [x] A skill continua sem commit e sem Vitest próprio
+- [x] Gate sai 0: `pnpm test && pnpm build`
 
 **Tests**: none
 **Gate**: build
