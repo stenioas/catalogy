@@ -60,10 +60,10 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(textBlock.className).toMatch(/\btext-left\b/)
   })
 
-  it('links photo, title and price to /relogio/<slug> without seller query (SV-13)', () => {
+  it('links photo, title and price to /product/<slug> without seller query (SV-13)', () => {
     renderWatchCard()
     const cardLink = screen.getByTestId('watch-card-link')
-    expect(cardLink.getAttribute('href')).toBe('/relogio/seculus-kit-com-cantil')
+    expect(cardLink.getAttribute('href')).toBe('/product/seculus-kit-com-cantil')
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 

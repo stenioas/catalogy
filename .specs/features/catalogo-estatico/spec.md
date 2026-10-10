@@ -97,7 +97,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 3. IF a catalog file fails the contract THEN the build SHALL exit with an error.
 4. IF an `images` name is missing from `img/`, or an image file in `img/` is missing from `images` THEN the build SHALL exit with an error.
 5. WHEN `pnpm build` succeeds THEN `client/dist` SHALL contain one `index.html`, the CSS, the JS, and a copy of `client/public/catalog/**`.
-6. WHEN `pnpm build` succeeds THEN the build SHALL NOT emit an HTML file per `/relogio/<slug>`.
+6. WHEN `pnpm build` succeeds THEN the build SHALL NOT emit an HTML file per `/product/<slug>`.
 7. WHEN `pnpm build` succeeds THEN `client/dist` SHALL contain `_redirects` with the line `/* /index.html 200`.
 8. The product list SHALL come from a module generated at build time.
 9. The generated product-list module SHALL NOT be a committed file.
@@ -144,7 +144,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 23. The watch card SHALL show the first image in a 1:1 frame, the title, the price, and **Eu quero!**.
 24. The card image SHALL fit entirely inside the frame, without crop and without distortion, on the page background.
 25. The card text SHALL be left-aligned.
-26. WHEN the visitor activates the card outside **Eu quero!** THEN the app SHALL open `/relogio/<slug>`.
+26. WHEN the visitor activates the card outside **Eu quero!** THEN the app SHALL open `/product/<slug>`.
 27. WHEN the visitor activates the card outside **Eu quero!** THEN the app SHALL keep the current `seller` query.
 
 **Independent Test**: Abrir `/?seller=alexandre` e ver a grade, o nome Alexandre e o link do card com `seller=alexandre`.
@@ -159,7 +159,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 
 **Acceptance Criteria**:
 
-1. WHEN the route is `/relogio/<slug>` and `seller` is valid THEN the top bar SHALL show a back icon to the left of `Catálogo {name}`.
+1. WHEN the route is `/product/<slug>` and `seller` is valid THEN the top bar SHALL show a back icon to the left of `Catálogo {name}`.
 2. The back icon SHALL have the accessible name `Voltar`.
 3. WHEN the visitor activates the back icon THEN the app SHALL go to `/?seller=` of the current seller.
 4. WHEN the visitor activates `Catálogo {name}` THEN the app SHALL go to `/?seller=` of the current seller.
@@ -198,7 +198,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 37. WHILE the viewport width is below 768 px the bottom-bar button SHALL span the bar content width.
 38. The bottom bar SHALL respect the device safe area.
 
-**Independent Test**: Abrir `/relogio/<slug>?seller=alexandre`, voltar para `/?seller=alexandre` sem usar o histórico, e ver a barra de baixo quando o botão do meio sai da tela.
+**Independent Test**: Abrir `/product/<slug>?seller=alexandre`, voltar para `/?seller=alexandre` sem usar o histórico, e ver a barra de baixo quando o botão do meio sai da tela.
 
 ---
 
@@ -481,7 +481,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 ## Success Criteria
 
 - [ ] `/?seller=alexandre` mostra `Catálogo Alexandre` e a grade ordenada por título.
-- [ ] `/relogio/<slug>?seller=alexandre` conserva o vendedor, volta para `/?seller=alexandre` e abre `https://wa.me/5585997689165`.
+- [ ] `/product/<slug>?seller=alexandre` conserva o vendedor, volta para `/?seller=alexandre` e abre `https://wa.me/5585997689165`.
 - [ ] Sem `seller`, ou com slug desconhecido, não há grade nem **Eu quero!**.
 - [ ] Um JSON inválido faz o build terminar com erro.
 - [ ] A skill só grava depois de `sim` sozinho e não mexe em `sellers.json`.

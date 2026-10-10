@@ -43,7 +43,7 @@ vi.mock('../catalog/products.generated', () => ({
 }))
 
 function renderWatchPage(slug = 'seculus-kit', withSellerQuery = false) {
-  const path = withSellerQuery ? `/relogio/${slug}?seller=alexandre` : `/relogio/${slug}`
+  const path = withSellerQuery ? `/product/${slug}?seller=alexandre` : `/product/${slug}`
   return render(
     <ThemeProvider>
       <MemoryRouter initialEntries={[path]}>

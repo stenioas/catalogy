@@ -11,7 +11,7 @@ export type WantLinkProps = {
 const WHATSAPP_LABEL = 'Enviar no WhatsApp'
 
 export function waUrl(slug: string, title: string): string {
-  const watchUrl = `${window.location.origin}/relogio/${slug}`
+  const watchUrl = `${window.location.origin}/product/${slug}`
   const message = `Olá, tenho interesse no ${title}. ${watchUrl}`
   return `https://wa.me/?text=${encodeURIComponent(message)}`
 }

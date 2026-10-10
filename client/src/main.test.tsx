@@ -93,14 +93,14 @@ describe('entrada da aplicação sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11
     expect(didRequestSellers(fetchMock)).toBe(false)
   })
 
-  it('mostra o mesmo relógio em /relogio/{slug}?seller=alexandre (SV-11)', async () => {
+  it('mostra o mesmo relógio em /product/{slug}?seller=alexandre (SV-11)', async () => {
     const slug = watchSlug()
-    await renderApp(`/relogio/${slug}`)
+    await renderApp(`/product/${slug}`)
     expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
     const watchAtPath = document.body.textContent
 
     cleanup()
-    const fetchMock = await renderApp(`/relogio/${slug}?seller=alexandre`)
+    const fetchMock = await renderApp(`/product/${slug}?seller=alexandre`)
     expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
     expect(document.body.textContent).toBe(watchAtPath)
     expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()

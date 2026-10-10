@@ -14,7 +14,7 @@ export const appRoutes: RouteObject[] = [
     element: <CatalogPage />,
   },
   {
-    path: '/relogio/:slug',
+    path: '/product/:slug',
     element: <WatchRoute />,
   },
 ]

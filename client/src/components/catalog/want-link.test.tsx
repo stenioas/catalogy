@@ -41,7 +41,7 @@ describe('WantLink (SV-17–SV-22)', () => {
   it('encodes Olá, tenho interesse no {title}. {absolute watch url without query} (SV-18, SV-19)', () => {
     const slug = 'curren-8363'
     const title = 'CURREN 8363'
-    const watchUrl = `${window.location.origin}/relogio/${slug}`
+    const watchUrl = `${window.location.origin}/product/${slug}`
     const href = waUrl(slug, title)
     expect(decodeWaText(href)).toBe(`Olá, tenho interesse no ${title}. ${watchUrl}`)
     expect(watchUrl).not.toContain('?')

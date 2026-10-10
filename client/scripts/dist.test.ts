@@ -160,16 +160,16 @@ describe('pnpm build emitindo dist estático', () => {
     expect(found).toBe(true)
   })
 
-  it('inclui CSS e JS empacotados e não gera HTML por relógio em relogio/', () => {
+  it('inclui CSS e JS empacotados e não gera HTML por produto em product/', () => {
     expect(distAssetExtensions('.css').length).toBeGreaterThan(0)
     expect(distAssetExtensions('.js').length).toBeGreaterThan(0)
 
-    const relogioDir = join(distDir, 'relogio')
-    if (existsSync(relogioDir)) {
-      const underRelogio = collectIndexHtmlFiles(relogioDir).map((path) =>
+    const productDir = join(distDir, 'product')
+    if (existsSync(productDir)) {
+      const underProduct = collectIndexHtmlFiles(productDir).map((path) =>
         relative(distDir, path),
       )
-      expect(underRelogio).toEqual([])
+      expect(underProduct).toEqual([])
     } else {
       expect(statSync(distDir).isDirectory()).toBe(true)
     }

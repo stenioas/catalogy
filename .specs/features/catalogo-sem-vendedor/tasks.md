@@ -22,7 +22,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 | Contrato `shared` | unit | 1:1 com o AC do barril; `SellerSchema` ausente | `shared/src/**/*.test.ts` | `pnpm --filter @catalogo/shared test` |
 | Script de catálogo | unit | Produtos válidos passam; `product.json` inválido falha; sem leitura de `sellers.json` | `client/scripts/**/*.test.ts` | `pnpm --filter client test` |
 | Componente de UI | unit | Cada AC visual do componente, nos dois temas quando o AC cita claro e escuro | `client/src/**/*.test.tsx` | `pnpm --filter client test` |
-| Rota | integration | `/` e `/relogio/:slug`, com e sem `seller`, slug ausente e vitrine vazia | `client/src/app/router.test.tsx`, `client/src/main.test.tsx`, `client/src/routes/*.test.tsx` | `pnpm --filter client test` |
+| Rota | integration | `/` e `/product/:slug`, com e sem `seller`, slug ausente e vitrine vazia | `client/src/app/router.test.tsx`, `client/src/main.test.tsx`, `client/src/routes/*.test.tsx` | `pnpm --filter client test` |
 | Skill de cadastro | none | O texto deixa de citar `sellers.json` | `.agents/skills/cadastrar-relogio/SKILL.md` | build gate only |
 
 ## Gate Check Commands
@@ -284,7 +284,7 @@ T18 → T19 → T20
 
 **Status**: done
 
-**What**: O card recebe só o produto. Foto, título e preço apontam para `/relogio/{slug}`. O WhatsApp fica fora do link.
+**What**: O card recebe só o produto. Foto, título e preço apontam para `/product/{slug}`. O WhatsApp fica fora do link.
 **Where**: `client/src/components/catalog/watch-card.tsx`
 **Depends on**: T5
 **Reuses**: `productImageSrc`
@@ -404,10 +404,10 @@ T18 → T19 → T20
 
 **Status**: done
 
-**What**: `/` renderiza `CatalogPage` sem loader. `/relogio/:slug` lê o slug com `useParams`. `SellerGate` sai. `?seller=` não muda a página e não busca `sellers.json`.
+**What**: `/` renderiza `CatalogPage` sem loader. `/product/:slug` lê o slug com `useParams`. `SellerGate` sai. `?seller=` não muda a página e não busca `sellers.json`.
 **Where**: `client/src/app/router.tsx`
 **Depends on**: T10
-**Reuses**: os paths `/` e `/relogio/:slug`
+**Reuses**: os paths `/` e `/product/:slug`
 **Requirement**: SV-02, SV-03, SV-04, SV-05, SV-07, SV-11
 **Complexity**: high
 
@@ -419,7 +419,7 @@ T18 → T19 → T20
 **Done when**:
 
 - [x] `seller-gate.tsx`, `seller-gate.test.tsx`, `sellers.ts` e `sellers.test.ts` não existem
-- [x] `router.test.tsx` e `main.test.tsx` cobrem `/`, `/?seller=alexandre`, `/?seller=ninguem` e `/relogio/{slug}?seller=alexandre`
+- [x] `router.test.tsx` e `main.test.tsx` cobrem `/`, `/?seller=alexandre`, `/?seller=ninguem` e `/product/{slug}?seller=alexandre`
 - [x] Gate sai 0: `pnpm test`
 - [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 

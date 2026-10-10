@@ -6,7 +6,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 
 ## Goals
 
-- [ ] `/` e `/relogio/{slug}` abrem sem vendedor, e um `?seller=` antigo não muda a página.
+- [ ] `/` e `/product/{slug}` abrem sem vendedor, e um `?seller=` antigo não muda a página.
 - [ ] O botão **Enviar no WhatsApp** usa `https://wa.me/?text=` sem número, com o título e a URL absoluta do relógio.
 - [ ] O `dist` não contém `catalog/sellers.json`.
 - [ ] Card, ficha, tema, carrossel e barras seguem o visual combinado em `plano-sem-vendedor.md`.
@@ -78,10 +78,10 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 
 **Acceptance Criteria**:
 
-1. WHEN o visitante abre `/relogio/{slug}` de um relógio existente THEN o sistema SHALL mostrar esse relógio.
-2. WHEN a URL é `/relogio/{slug}?seller=alexandre` THEN o sistema SHALL mostrar o mesmo relógio.
+1. WHEN o visitante abre `/product/{slug}` de um relógio existente THEN o sistema SHALL mostrar esse relógio.
+2. WHEN a URL é `/product/{slug}?seller=alexandre` THEN o sistema SHALL mostrar o mesmo relógio.
 3. WHEN a página do relógio está visível THEN o Voltar e o texto Catálogo SHALL apontar para `/`.
-4. WHEN um card é mostrado THEN o link de foto, título e preço SHALL apontar para `/relogio/{slug}` sem `seller`.
+4. WHEN um card é mostrado THEN o link de foto, título e preço SHALL apontar para `/product/{slug}` sem `seller`.
 5. The controle Enviar no WhatsApp do card SHALL ficar fora do link que abre o relógio.
 6. IF o slug não existe THEN o sistema SHALL mostrar a frase Este relógio não está no catálogo. e SHALL omitir Enviar no WhatsApp.
 7. WHILE o Enviar no WhatsApp da página está inteiro na viewport o sistema SHALL omitir a barra fixa.
@@ -100,7 +100,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 
 1. The href de Enviar no WhatsApp SHALL ser `https://wa.me/?text=` mais o texto codificado, sem número de telefone.
 2. The texto decodificado SHALL ser `Olá, tenho interesse no {título}. {url}`.
-3. The URL do relógio nesse texto SHALL ser a origem atual mais `/relogio/{slug}`, sem query string.
+3. The URL do relógio nesse texto SHALL ser a origem atual mais `/product/{slug}`, sem query string.
 4. WHEN o botão da página e o da barra fixa estão visíveis THEN os dois SHALL ter o mesmo href.
 5. The link Enviar no WhatsApp SHALL usar `target="_blank"` e `rel="noopener noreferrer"`.
 6. The sistema SHALL não emitir URL com o esquema `whatsapp://`.
@@ -267,7 +267,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 
 ## Success Criteria
 
-- [ ] `/` e `/relogio/{slug}` funcionam com e sem `?seller=`, sem nome e sem telefone.
+- [ ] `/` e `/product/{slug}` funcionam com e sem `?seller=`, sem nome e sem telefone.
 - [ ] **Enviar no WhatsApp** abre `https://wa.me/?text=` com a frase e a URL do relógio.
 - [ ] `pnpm build` conclui sem `sellers.json` e o `dist` não leva esse arquivo.
 - [ ] `pnpm test` cobre os critérios desta spec.

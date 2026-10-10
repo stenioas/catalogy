@@ -404,7 +404,7 @@ T40 → T41
 
 - [x] `pnpm build` sai com código zero no catálogo vazio de produtos
 - [x] `client/dist` tem um só `index.html`, o `_redirects` e `catalog/sellers.json`
-- [x] Não existe `client/dist/relogio/**/index.html`
+- [x] Não existe `client/dist/product/**/index.html`
 - [x] Gate: `pnpm test && pnpm build`
 - [x] Test count: pelo menos 3 testes em `client/scripts/dist.test.ts`, suíte inteira verde
 
@@ -476,7 +476,7 @@ T40 → T41
 
 ### T13: Rotas
 
-**What**: Declarar `/` e `/relogio/:slug` com `createBrowserRouter`, lendo `seller` da query.
+**What**: Declarar `/` e `/product/:slug` com `createBrowserRouter`, lendo `seller` da query.
 **Where**: `client/src/app/router.tsx`
 **Depends on**: T10
 **Reuses**: o router do `STACK-REFERENCIA.md`
@@ -717,7 +717,7 @@ T40 → T41
 
 ### T21: Card do relógio
 
-**What**: Card com a primeira foto em moldura 1:1, título, preço e **Eu quero!**. O resto do card abre `/relogio/<slug>` e conserva `seller`. A foto aponta para `/catalog/products/<slug>/img/<arquivo>`.
+**What**: Card com a primeira foto em moldura 1:1, título, preço e **Eu quero!**. O resto do card abre `/product/<slug>` e conserva `seller`. A foto aponta para `/catalog/products/<slug>/img/<arquivo>`.
 **Where**: `client/src/components/catalog/watch-card.tsx`
 **Depends on**: T19, T20
 **Reuses**: `PriceBlock`, `WantLink`
@@ -734,7 +734,7 @@ T40 → T41
 
 - [x] A imagem usa `object-contain` e a primeira entrada de `images`
 - [x] O texto do card alinha à esquerda
-- [x] O link do card é `/relogio/<slug>?seller=alexandre` quando a query é essa
+- [x] O link do card é `/product/<slug>?seller=alexandre` quando a query é essa
 - [x] O href da foto é `/catalog/products/<slug>/img/<arquivo>`
 - [x] Gate: `pnpm test`
 - [x] Test count: pelo menos 4 testes neste arquivo, suíte inteira verde
@@ -946,7 +946,7 @@ T40 → T41
 
 ### T28: Ligar as páginas ao router
 
-**What**: As rotas deixam de renderizar `div`s vazias. Cada elemento lê `useLoaderData()`, passa por `SellerGate` e renderiza `CatalogPage` em `/` e `WatchPage` em `/relogio/:slug`. O `ThemeProvider` fica só em `main.tsx`.
+**What**: As rotas deixam de renderizar `div`s vazias. Cada elemento lê `useLoaderData()`, passa por `SellerGate` e renderiza `CatalogPage` em `/` e `WatchPage` em `/product/:slug`. O `ThemeProvider` fica só em `main.tsx`.
 **Where**: `client/src/app/router.tsx`
 **Depends on**: T27
 **Reuses**: `SellerGate`, `CatalogPage`, `WatchPage`

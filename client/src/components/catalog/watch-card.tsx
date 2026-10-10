@@ -16,7 +16,7 @@ export function productImageSrc(slug: string, fileName: string): string {
 
 export function WatchCard({ product }: WatchCardProps) {
   const firstImage = product.images[0]
-  const watchPath = `/relogio/${product.slug}`
+  const watchPath = `/product/${product.slug}`
 
   return (
     <Card className="gap-0 overflow-hidden rounded-[12px] border-[1px] bg-card p-0 py-0 shadow-none ring-0">

@@ -114,28 +114,28 @@ describe('rotas sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {
     expect(didRequestSellers(fetchMock)).toBe(false)
   })
 
-  it('abre /relogio/:slug pelo slug da URL, sem loader', async () => {
+  it('abre /product/:slug pelo slug da URL, sem loader', async () => {
     const slug = watchSlug()
-    const matches = matchRoutes(appRoutes, `/relogio/${slug}`)
+    const matches = matchRoutes(appRoutes, `/product/${slug}`)
     expect(matches).toHaveLength(1)
-    expect(matches![0].route.path).toBe('/relogio/:slug')
+    expect(matches![0].route.path).toBe('/product/:slug')
     expect(matches![0].params.slug).toBe(slug)
     expect(matches![0].route.loader).toBeUndefined()
 
-    const fetchMock = renderAt(`/relogio/${slug}`)
+    const fetchMock = renderAt(`/product/${slug}`)
     expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
     expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
     expect(didRequestSellers(fetchMock)).toBe(false)
   })
 
-  it('mostra o mesmo relógio em /relogio/{slug}?seller=alexandre (SV-11, SV-04)', async () => {
+  it('mostra o mesmo relógio em /product/{slug}?seller=alexandre (SV-11, SV-04)', async () => {
     const slug = watchSlug()
-    renderAt(`/relogio/${slug}`)
+    renderAt(`/product/${slug}`)
     expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
     const watchAtPath = document.body.textContent
 
     cleanup()
-    const fetchMock = renderAt(`/relogio/${slug}?seller=alexandre`)
+    const fetchMock = renderAt(`/product/${slug}?seller=alexandre`)
     expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
     expect(document.body.textContent).toBe(watchAtPath)
     expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
@@ -143,7 +143,7 @@ describe('rotas sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {
   })
 
   it('mostra a frase de relógio ausente e omite o WhatsApp quando o slug não existe', async () => {
-    const fetchMock = renderAt('/relogio/slug-ausente')
+    const fetchMock = renderAt('/product/slug-ausente')
     expect(await screen.findByText(MISSING_WATCH_MESSAGE)).toBeDefined()
     expect(screen.queryByRole('link', { name: 'Enviar no WhatsApp' })).toBeNull()
     expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
