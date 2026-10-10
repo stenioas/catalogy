@@ -19,7 +19,7 @@ export function WatchCard({ product }: WatchCardProps) {
   const watchPath = `/relogio/${product.slug}`
 
   return (
-    <Card className="gap-0 overflow-hidden rounded-[18px] border-[1px] bg-card p-0 py-0 shadow-none ring-0">
+    <Card className="gap-0 overflow-hidden rounded-[12px] border-[1px] bg-card p-0 py-0 shadow-none ring-0">
       <Link to={watchPath} data-testid="watch-card-link" className="block text-left">
         <div className="aspect-square w-full">
           <img

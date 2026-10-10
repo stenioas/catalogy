@@ -112,7 +112,7 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     const card = container.querySelector('[data-slot="card"]')
     expect(card).not.toBeNull()
     const tokens = classTokens((card as HTMLElement).className)
-    expect(tokens).toContain('rounded-[18px]')
+    expect(tokens).toContain('rounded-[12px]')
     expect(tokens).toContain('border-[1px]')
     expect(tokens).toContain('shadow-none')
     expect(tokens.some((token) => /^shadow-(?!none$)/.test(token))).toBe(false)
