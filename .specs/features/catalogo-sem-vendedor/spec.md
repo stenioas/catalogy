@@ -149,7 +149,7 @@ O site publicado ainda exige `?seller=` e leva o telefone do vendedor no `seller
 12. The foto do card SHALL ocupar a largura inteira do card.
 13. The região de título, preço e botão do card SHALL ter 24px de padding nas laterais e embaixo.
 14. WHERE o relógio mostra desconto o selo SHALL ser o Badge com as cores `primary-tint`.
-15. The título do card, o título da página e os títulos Detalhes, Especificações e Observações SHALL usar a cor `foreground`.
+15. The título do card, o título da página e os títulos Descrição, Especificações e Observações SHALL usar a cor `foreground`.
 16. The barra preta da vitrine e a barra preta da página do relógio SHALL ter 44px de altura.
 
 **Independent Test**: Ver a pílula, os ícones de 44px, o card no claro e no escuro, e a altura das duas barras.

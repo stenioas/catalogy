@@ -22,7 +22,7 @@ function makeProduct(overrides: Partial<Product> = {}): Product {
     title: 'Seculus',
     price: 369.9,
     images: ['foto.webp'],
-    details: 'Caixa de aço.',
+    description: 'Caixa de aço.',
     observations: 'Entrega em mãos.',
     specifications: [
       { label: 'Marca', value: 'Seculus' },
@@ -145,7 +145,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const title = screen.getByRole('heading', { name: 'Seculus' })
     const price = screen.getByTestId('price-block')
     const want = screen.getByRole('link', { name: 'Enviar no WhatsApp' })
-    const details = screen.getByRole('heading', { name: 'Detalhes' })
+    const description = screen.getByRole('heading', { name: 'Descrição' })
     const specs = screen.getByRole('heading', { name: 'Especificações' })
     const notes = screen.getByRole('heading', { name: 'Observações' })
     expect(follows(carousel, title)).toBe(true)
@@ -156,8 +156,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(offer.className).toMatch(/\bmd:flex-row\b/)
     expect(price.parentElement?.className).toMatch(/\bmd:flex-1\b/)
     expect(want.parentElement?.className).toMatch(/\bmd:flex-1\b/)
-    expect(follows(want, details)).toBe(true)
-    expect(follows(details, specs)).toBe(true)
+    expect(follows(want, description)).toBe(true)
+    expect(follows(description, specs)).toBe(true)
     expect(follows(specs, notes)).toBe(true)
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
     const column = screen.getByTestId('watch-page-column')
@@ -166,21 +166,21 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(within(column).getByTestId('watch-carousel')).toBeDefined()
   })
 
-  it('shows Detalhes when details is a non-empty string, including whitespace (CAT-63)', () => {
-    mockProductsRef.current = [makeProduct({ details: '   ' })]
+  it('shows Descrição when description is a non-empty string, including whitespace (CAT-63)', () => {
+    mockProductsRef.current = [makeProduct({ description: '   ' })]
     renderWatchPage()
-    const heading = screen.getByRole('heading', { name: 'Detalhes' })
+    const heading = screen.getByRole('heading', { name: 'Descrição' })
     expect(heading.parentElement?.querySelector('p')?.textContent).toBe('   ')
   })
 
-  it('hides Detalhes when details is missing or "" (CAT-64)', () => {
-    mockProductsRef.current = [makeProduct({ details: undefined })]
+  it('hides Descrição when description is missing or "" (CAT-64)', () => {
+    mockProductsRef.current = [makeProduct({ description: undefined })]
     renderWatchPage()
-    expect(screen.queryByRole('heading', { name: 'Detalhes' })).toBeNull()
+    expect(screen.queryByRole('heading', { name: 'Descrição' })).toBeNull()
     cleanup()
-    mockProductsRef.current = [makeProduct({ details: '' })]
+    mockProductsRef.current = [makeProduct({ description: '' })]
     renderWatchPage()
-    expect(screen.queryByRole('heading', { name: 'Detalhes' })).toBeNull()
+    expect(screen.queryByRole('heading', { name: 'Descrição' })).toBeNull()
   })
 
   it('shows Observações when observations is a non-empty string (CAT-65)', () => {
@@ -359,7 +359,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('paints the page title and section titles with foreground (SV-42)', () => {
     renderWatchPage()
-    for (const name of ['Seculus', 'Detalhes', 'Especificações', 'Observações']) {
+    for (const name of ['Seculus', 'Descrição', 'Especificações', 'Observações']) {
       const heading = screen.getByRole('heading', { name })
       expect(heading.className.split(/\s+/)).toContain('text-foreground')
     }

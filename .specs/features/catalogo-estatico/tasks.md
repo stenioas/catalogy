@@ -225,7 +225,7 @@ T40 → T41
 - [x] `369.9` passa e `369.999` fica `369.99` antes da comparação
 - [x] Lista de fotos vazia falha; nome com `/` ou `\` falha
 - [x] Extensão `jpg`, `jpeg`, `png`, `webp` ou `avif` em qualquer caixa passa, e o nome guardado é o do JSON
-- [x] `listPrice`, `details`, `specifications` e `observations` podem faltar
+- [x] `listPrice`, `description`, `specifications` e `observations` podem faltar
 - [x] Gate: `pnpm test`
 - [x] Test count: pelo menos 10 testes neste arquivo, suíte inteira verde
 
@@ -799,7 +799,7 @@ T40 → T41
 - [x] O ícone tem nome acessível `Voltar` e o href é `/?seller=alexandre`
 - [x] `Catálogo {name}` aponta para o mesmo href
 - [x] O teste não encontra chamada a `history.back`
-- [x] `Detalhes`, `Especificações` e `Observações` somem quando o campo falta, é `""` ou a lista é vazia
+- [x] `Descrição`, `Especificações` e `Observações` somem quando o campo falta, é `""` ou a lista é vazia
 - [x] A tabela não tem cabeçalho e o texto alinha à esquerda
 - [x] Slug ausente mostra `Este relógio não está no catálogo.` e não mostra **Eu quero!**
 - [x] Gate: `pnpm test`

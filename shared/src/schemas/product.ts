@@ -41,7 +41,7 @@ export const ProductSchema = z
         (names) => names.every(imageFileNameIsValid),
         'Each image file name must use an allowed extension and must not contain path separators',
       ),
-    details: z.string().optional(),
+    description: z.string().optional(),
     specifications: z.array(SpecificationSchema).optional(),
     observations: z.string().optional(),
   })

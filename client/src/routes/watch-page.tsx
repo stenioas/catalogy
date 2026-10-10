@@ -62,10 +62,10 @@ function WatchColumn({ product }: { product: Product }) {
           <WantLink ref={wantRef} slug={product.slug} title={product.title} />
         </div>
       </div>
-      {hasText(product.details) ? (
+      {hasText(product.description) ? (
         <section>
-          <h2 className="m-0 font-display text-lg font-semibold text-foreground">Detalhes</h2>
-          <p className="m-0 text-[var(--ink-primary)]">{product.details}</p>
+          <h2 className="m-0 font-display text-lg font-semibold text-foreground">Descrição</h2>
+          <p className="m-0 text-[var(--ink-primary)]">{product.description}</p>
         </section>
       ) : null}
       {specifications.length > 0 ? (

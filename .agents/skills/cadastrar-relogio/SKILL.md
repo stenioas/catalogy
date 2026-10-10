@@ -69,7 +69,7 @@ Monte um objeto compatível com `ProductSchema` (`@catalogo/shared`):
 | `images` | Ao menos uma foto | Array com ≥1 basename |
 | `slug` | Sim (derivado do título, salvo conflito) | Sempre |
 | `listPrice` | Opcional | **Omita** se vazio |
-| `details` | Opcional | **Omita** se `""` ou ausente |
+| `description` | Opcional | **Omita** se `""` ou ausente |
 | `specifications` | Opcional | **Omita** se ausente ou lista vazia |
 | `observations` | Opcional | **Omita** se `""` ou ausente |
 
@@ -103,7 +103,7 @@ Entrada (modo A ou B)
 
 Inclua sempre, em texto claro para o operador:
 
-- `slug`, `title`, `price`, `listPrice` (se houver), `details`, `specifications`, `observations`
+- `slug`, `title`, `price`, `listPrice` (se houver), `description`, `specifications`, `observations`
 - Lista ordenada de nomes de arquivo em `images`
 - Destino: `client/public/catalog/products/<slug>/product.json` e `.../img/`
 

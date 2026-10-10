@@ -623,7 +623,7 @@ T18 → T19 → T20
 **What**: A ficha usa `Table`. URL http(s) vira **Ver anúncio similar**, `#0066cc` no claro e `#2997ff` no escuro, sem a URL crua no texto. Os títulos usam `foreground`. O miolo fica num `main` com `max-width: 100%`, `min-width: 0` e `overflow-x: clip`. Uma URL longa não cria rolagem horizontal.
 **Where**: `client/src/routes/watch-page.tsx`
 **Depends on**: T10, T12
-**Reuses**: as seções Detalhes, Especificações e Observações
+**Reuses**: as seções Descrição, Especificações e Observações
 **Requirement**: SV-42, SV-45, SV-46, SV-47, SV-48, SV-49, SV-51, SV-52
 **Complexity**: high
 

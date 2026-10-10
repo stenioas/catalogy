@@ -76,7 +76,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 10. IF `listPrice` is present and, after that truncation, is less than or equal to `price` THEN the shared contract SHALL reject the product.
 11. The shared contract SHALL reject a product whose `images` list is empty.
 12. The shared contract SHALL reject an image file name that contains `/` or `\`.
-13. WHERE `listPrice`, `details`, `specifications`, or `observations` is omitted THEN the shared contract SHALL accept the product.
+13. WHERE `listPrice`, `description`, `specifications`, or `observations` is omitted THEN the shared contract SHALL accept the product.
 14. The shared contract SHALL accept an image file name whose extension is `jpg`, `jpeg`, `png`, `webp`, or `avif`, in any letter case.
 15. The shared contract SHALL keep the image file name as written in `images`.
 
@@ -153,7 +153,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 
 ### P1: Página do relógio ⭐ MVP
 
-**User Story**: As a visitor, I want one watch page with photos, details, and a way back to that seller's catalog so that I can decide before calling.
+**User Story**: As a visitor, I want one watch page with photos, a description, and a way back to that seller's catalog so that I can decide before calling.
 
 **Why P1**: O card leva para esta página.
 
@@ -165,8 +165,8 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 4. WHEN the visitor activates `Catálogo {name}` THEN the app SHALL go to `/?seller=` of the current seller.
 5. The back icon SHALL NOT call the browser history API.
 6. The watch column SHALL show the carousel, then the title, then the price block, then **Eu quero!**, then the optional sections that apply.
-7. WHERE `details` is a non-empty string the page SHALL show the heading `Detalhes`.
-8. IF `details` is missing or `""` THEN the page SHALL NOT show `Detalhes`.
+7. WHERE `description` is a non-empty string the page SHALL show the heading `Descrição`.
+8. IF `description` is missing or `""` THEN the page SHALL NOT show `Descrição`.
 9. WHERE `observations` is a non-empty string the page SHALL show the heading `Observações`.
 10. IF `observations` is missing or `""` THEN the page SHALL NOT show `Observações`.
 11. WHERE `specifications` is a non-empty list the page SHALL show the heading `Especificações` and a two-column table of label and value, with no header row.
@@ -293,7 +293,7 @@ O visitante precisa ver o mesmo estoque de relógios e falar com o vendedor do l
 12. The skill SHALL build the slug from the title by stripping accents, lowercasing, replacing each run of non-letters and non-digits with one hyphen, and removing a leading or trailing hyphen.
 13. WHEN the title is `Seculus — kit com cantil` THEN the skill SHALL use the slug `seculus-kit-com-cantil`.
 14. IF the reading has no title, no price, or no photo THEN the skill SHALL NOT write.
-15. WHERE `details`, `specifications`, `observations`, or `listPrice` is empty THEN the skill SHALL omit that field from `product.json`.
+15. WHERE `description`, `specifications`, `observations`, or `listPrice` is empty THEN the skill SHALL omit that field from `product.json`.
 16. WHEN a field is uncertain in the single-text input THEN the skill SHALL show that field empty in the reading.
 17. IF that slug's product folder already exists THEN the skill SHALL ask for another slug.
 18. IF that slug's product folder already exists THEN the skill SHALL NOT overwrite it.

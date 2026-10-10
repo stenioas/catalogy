@@ -137,7 +137,7 @@ describe('ProductSchema images (CAT-11, CAT-12, CAT-14, CAT-15)', () => {
 })
 
 describe('ProductSchema optional fields (CAT-13)', () => {
-  it('accepts a product when listPrice, details, specifications, and observations are omitted', () => {
+  it('accepts a product when listPrice, description, specifications, and observations are omitted', () => {
     expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
   })
 
@@ -145,7 +145,7 @@ describe('ProductSchema optional fields (CAT-13)', () => {
     const result = ProductSchema.safeParse({
       ...baseProduct,
       listPrice: 450,
-      details: 'Detalhes do relógio.',
+      description: 'Descrição do relógio.',
       specifications: [{ label: 'Marca', value: 'Seculus' }],
       observations: 'Observação.',
     })
