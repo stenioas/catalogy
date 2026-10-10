@@ -44,7 +44,7 @@ describe('app entry (CAT-20)', () => {
     vi.resetModules()
     const { AppRoot } = await import('./main')
     render(<AppRoot />)
-    expect(await screen.findByText('Catálogo Alexandre')).toBeDefined()
+    expect(await screen.findByText('Catálogo')).toBeDefined()
   })
 
   it('shows the incomplete-link sentence at / without a seller', async () => {
@@ -64,7 +64,7 @@ describe('app entry (CAT-20)', () => {
     vi.resetModules()
     const { AppRoot } = await import('./main')
     render(<AppRoot />)
-    expect(await screen.findByText('Catálogo Alexandre')).toBeDefined()
+    expect(await screen.findByText('Catálogo')).toBeDefined()
     expect(screen.getByRole('link', { name: 'Voltar' })).toBeDefined()
   })
 
@@ -74,7 +74,7 @@ describe('app entry (CAT-20)', () => {
     vi.resetModules()
     const { AppRoot } = await import('./main')
     render(<AppRoot />)
-    expect(await screen.findByText('Catálogo Alexandre')).toBeDefined()
+    expect(await screen.findByText('Catálogo')).toBeDefined()
     expect(screen.getAllByRole('button', { name: /Usar tema/ })).toHaveLength(1)
   })
 })

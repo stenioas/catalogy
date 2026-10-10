@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom'
 
 import { ThemeToggle } from '../theme-provider'
 
+export const TOP_BAR_TITLE = 'Catálogo'
+
 export type TopBarProps = {
-  sellerName: string
   catalogHref?: string
 }
 
@@ -24,9 +25,7 @@ function BackIcon() {
   )
 }
 
-export function TopBar({ sellerName, catalogHref }: TopBarProps) {
-  const label = `Catálogo ${sellerName}`
-
+export function TopBar({ catalogHref }: TopBarProps) {
   return (
     <header data-testid="top-bar" className="w-full bg-[var(--surface-black)] text-[var(--on-primary)]">
       <div
@@ -45,10 +44,10 @@ export function TopBar({ sellerName, catalogHref }: TopBarProps) {
           ) : null}
           {catalogHref ? (
             <Link to={catalogHref} className={titleClassName}>
-              {label}
+              {TOP_BAR_TITLE}
             </Link>
           ) : (
-            <p className={titleClassName}>{label}</p>
+            <p className={titleClassName}>{TOP_BAR_TITLE}</p>
           )}
         </div>
         <ThemeToggle />

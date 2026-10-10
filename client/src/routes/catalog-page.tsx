@@ -18,7 +18,7 @@ export function CatalogPage({ seller }: CatalogPageProps) {
 
   return (
     <>
-      <TopBar sellerName={seller.name} />
+      <TopBar />
       <div data-testid="catalog-page-column" className="catalog-column py-8">
         {sortedProducts.length === 0 ? (
           <p className="m-0 text-[var(--ink-primary)]">{EMPTY_VITRINE_MESSAGE}</p>

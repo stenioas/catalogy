@@ -312,6 +312,8 @@ T18 → T19 → T20
 
 ### T8: Barra com o título Catálogo
 
+**Status**: done
+
 **What**: A barra deixa de receber `sellerName`. O texto é a constante Catálogo.
 **Where**: `client/src/components/catalog/top-bar.tsx`
 **Depends on**: T7
@@ -326,10 +328,10 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] A prop `sellerName` não existe
-- [ ] `top-bar.test.tsx` espera o texto Catálogo
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] A prop `sellerName` não existe
+- [x] `top-bar.test.tsx` espera o texto Catálogo
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

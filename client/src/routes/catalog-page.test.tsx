@@ -175,10 +175,10 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(block).toMatch(/padding-inline:\s*24px/)
   })
 
-  it('shows the empty vitrine copy and keeps Catálogo {name} in the top bar (CAT-121, CAT-122, AC6–7)', () => {
+  it('shows the empty vitrine copy and keeps Catálogo in the top bar (SV-01, CAT-121, CAT-122, AC6–7)', () => {
     mockProductsRef.current = []
     renderCatalogPage(manuela)
-    expect(screen.getByText('Catálogo Manuela')).toBeDefined()
+    expect(screen.getByText('Catálogo')).toBeDefined()
     expect(screen.getByText('A vitrine ainda não tem relógios.')).toBeDefined()
     expect(screen.queryByTestId('catalog-grid')).toBeNull()
   })

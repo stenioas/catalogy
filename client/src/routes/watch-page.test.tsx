@@ -100,7 +100,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     renderWatchPage()
     const bar = screen.getByTestId('top-bar')
     const back = within(bar).getByRole('link', { name: 'Voltar' })
-    const catalog = within(bar).getByRole('link', { name: 'Catálogo Alexandre' })
+    const catalog = within(bar).getByRole('link', { name: 'Catálogo' })
     expect(back.getAttribute('href')).toBe(catalogHref)
     expect(back.querySelector('svg')).not.toBeNull()
     expect(follows(back, catalog)).toBe(true)
@@ -108,7 +108,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('links Catálogo {name} to the same /?seller= href (CAT-60)', () => {
     renderWatchPage()
-    const catalog = screen.getByRole('link', { name: 'Catálogo Alexandre' })
+    const catalog = screen.getByRole('link', { name: 'Catálogo' })
     expect(catalog.getAttribute('href')).toBe(catalogHref)
   })
 
@@ -121,7 +121,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     )
     renderWatchPage()
     const back = screen.getByRole('link', { name: 'Voltar' })
-    const catalog = screen.getByRole('link', { name: 'Catálogo Alexandre' })
+    const catalog = screen.getByRole('link', { name: 'Catálogo' })
     expect(back.getAttribute('href')).toBe('/?seller=alexandre')
     expect(catalog.getAttribute('href')).toBe('/?seller=alexandre')
     expect(back.tagName).toBe('A')

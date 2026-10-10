@@ -73,7 +73,7 @@ describe('app routes (CAT-57)', () => {
       initialEntries: ['/?seller=alexandre'],
     })
     renderWithTheme(<RouterProvider router={router} />)
-    expect(await screen.findByText('Catálogo Alexandre')).toBeDefined()
+    expect(await screen.findByText('Catálogo')).toBeDefined()
   })
 
   it('shows the incomplete-link sentence at / without a seller (CAT-36)', async () => {
@@ -99,7 +99,7 @@ describe('app routes (CAT-57)', () => {
       initialEntries: ['/relogio/seculus?seller=alexandre'],
     })
     renderWithTheme(<RouterProvider router={router} />)
-    expect(await screen.findByText('Catálogo Alexandre')).toBeDefined()
+    expect(await screen.findByText('Catálogo')).toBeDefined()
     const back = screen.getByRole('link', { name: 'Voltar' })
     expect(back.getAttribute('href')).toBe('/?seller=alexandre')
   })

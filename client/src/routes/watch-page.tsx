@@ -79,7 +79,7 @@ export function WatchPage({ seller, slug }: WatchPageProps) {
 
   return (
     <>
-      <TopBar sellerName={seller.name} catalogHref={catalogHref} />
+      <TopBar catalogHref={catalogHref} />
       <div data-testid="watch-page-column" className="catalog-column flex flex-col items-start gap-4 py-8 text-left">
         {product ? (
           <WatchColumn product={product} phone={seller.phone} />
