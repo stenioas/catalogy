@@ -1,7 +1,13 @@
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { waUrl, WantLink } from './want-link'
+
+const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 
 const LINK_NAME = 'Enviar no WhatsApp'
 
@@ -53,5 +59,28 @@ describe('WantLink (SV-17–SV-22)', () => {
     render(<WantLink slug="seculus" title="Seculus" />)
     const href = screen.getByRole('link', { name: LINK_NAME }).getAttribute('href')
     expect(href).not.toMatch(/whatsapp:\/\//)
+  })
+})
+
+describe('WantLink pill (SV-28)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('is a full-width Button pill with 44px min height, centered white text on #0066cc', () => {
+    render(<WantLink slug="seculus" title="Seculus" />)
+    const link = screen.getByRole('link', { name: LINK_NAME })
+
+    expect(link.getAttribute('data-slot')).toBe('button')
+    expect(link.className).toMatch(/\bw-full\b/)
+    expect(link.className).toMatch(/\bmin-h-11\b/)
+    expect(link.className).toMatch(/\brounded-full\b/)
+    expect(link.className).toMatch(/\bjustify-center\b/)
+    expect(link.className).toMatch(/\bitems-center\b/)
+    expect(link.className).toMatch(/\btext-primary-foreground\b/)
+    expect(link.className).toMatch(/\bbg-primary\b/)
+
+    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
+    expect(css).toMatch(/--primary:\s*#0066cc/)
   })
 })

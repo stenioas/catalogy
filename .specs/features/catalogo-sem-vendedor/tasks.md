@@ -468,6 +468,8 @@ T18 → T19 → T20
 
 ### T13: Pílula do WhatsApp
 
+**Status**: done
+
 **What**: Enviar no WhatsApp usa `Button` como `asChild`: pílula `#0066cc`, texto branco centralizado, largura cheia, altura mínima de 44px.
 **Where**: `client/src/components/catalog/want-link.tsx`
 **Depends on**: T5, T12
@@ -482,9 +484,9 @@ T18 → T19 → T20
 
 **Done when**:
 
-- [ ] O teste mede altura mínima de 44px, texto centralizado e fundo `#0066cc`
-- [ ] Gate sai 0: `pnpm --filter client test`
-- [ ] Nenhum teste é apagado ou marcado com skip para a suíte passar
+- [x] O teste mede altura mínima de 44px, texto centralizado e fundo `#0066cc`
+- [x] Gate sai 0: `pnpm --filter client test`
+- [x] Nenhum teste é apagado ou marcado com skip para a suíte passar
 
 **Tests**: unit
 **Gate**: quick

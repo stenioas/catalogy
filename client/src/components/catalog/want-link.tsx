@@ -1,5 +1,7 @@
 import type { Ref } from 'react'
 
+import { Button } from '../ui/button'
+
 export type WantLinkProps = {
   slug: string
   title: string
@@ -16,8 +18,10 @@ export function waUrl(slug: string, title: string): string {
 
 export function WantLink({ slug, title, ref }: WantLinkProps) {
   return (
-    <a ref={ref} href={waUrl(slug, title)} target="_blank" rel="noopener noreferrer">
-      {WHATSAPP_LABEL}
-    </a>
+    <Button asChild className="min-h-11 w-full rounded-full">
+      <a ref={ref} href={waUrl(slug, title)} target="_blank" rel="noopener noreferrer">
+        {WHATSAPP_LABEL}
+      </a>
+    </Button>
   )
 }
