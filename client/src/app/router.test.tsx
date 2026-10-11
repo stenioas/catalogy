@@ -90,16 +90,20 @@ describe('loading ao navegar entre vitrine e produto', () => {
     await act(async () => { await vi.advanceTimersByTimeAsync(ms) })
   }
 
-  function expectLoading() {
+  function expectLoading(currentPage: 'catalog' | 'watch' = 'catalog') {
     const spinner = screen.getByRole('status', { name: 'Carregando' })
     expect(spinner.getAttribute('data-slot')).toBe('spinner')
     expect(spinner.classList.contains('text-primary')).toBe(true)
     const overlay = screen.getByTestId('route-loading')
-    for (const className of ['fixed', 'inset-0', 'items-center', 'justify-center']) {
+    for (const className of ['fixed', 'inset-x-0', 'top-16', 'bottom-0', 'items-center', 'justify-center', 'bg-background/30', 'backdrop-blur-sm']) {
       expect(overlay.classList.contains(className)).toBe(true)
     }
-    expect(screen.queryByTestId('catalog-page-column')).toBeNull()
-    expect(screen.queryByTestId('watch-page-column')).toBeNull()
+    expect(overlay.classList.contains('bg-background')).toBe(false)
+    expect(overlay.contains(screen.getByTestId('top-bar'))).toBe(false)
+    expect(screen.getByTestId('top-bar').classList.contains('z-20')).toBe(true)
+    expect(overlay.classList.contains('z-10')).toBe(true)
+    expect(screen.getByTestId(`${currentPage}-page-column`)).toBeDefined()
+    expect(screen.queryByTestId(`${currentPage === 'catalog' ? 'watch' : 'catalog'}-page-column`)).toBeNull()
   }
 
   it('exibe o spinner por 1 segundo ao abrir o produto e ao voltar pelo botão', async () => {
@@ -109,16 +113,19 @@ describe('loading ao navegar entre vitrine e produto', () => {
     const title = card.querySelector('h2')!.textContent!
     fireEvent.click(card)
     expectLoading()
+    expect(window.scrollTo).not.toHaveBeenCalled()
     await advance(999)
     expectLoading()
+    expect(window.scrollTo).not.toHaveBeenCalled()
     await advance(1)
     expect(screen.getByRole('heading', { name: title })).toBeDefined()
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0)
     expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
 
     fireEvent.click(screen.getByRole('link', { name: 'Voltar' }))
-    expectLoading()
+    expectLoading('watch')
     await advance(999)
-    expectLoading()
+    expectLoading('watch')
     await advance(1)
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
   })
@@ -128,9 +135,9 @@ describe('loading ao navegar entre vitrine e produto', () => {
     await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
     await advance(1000)
     await act(async () => { await router.navigate(-1) })
-    expectLoading()
+    expectLoading('watch')
     await advance(999)
-    expectLoading()
+    expectLoading('watch')
     await advance(1)
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
 
@@ -142,9 +149,9 @@ describe('loading ao navegar entre vitrine e produto', () => {
 
   it('exibe o loading ao abrir diretamente a URL do produto', async () => {
     setup(`/product/${watchSlug()}`)
-    expectLoading()
+    expectLoading('watch')
     await advance(999)
-    expectLoading()
+    expectLoading('watch')
     await advance(1)
     expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
   })

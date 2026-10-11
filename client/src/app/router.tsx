@@ -1,10 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import {
   createBrowserRouter,
-  Outlet,
   useLocation,
   useNavigationType,
   useParams,
+  useRoutes,
+  type NavigationType,
   type RouteObject,
 } from 'react-router-dom'
 
@@ -28,10 +29,7 @@ export const appRoutes: RouteObject[] = [
   },
 ]
 
-function ScrollToTop() {
-  const { pathname } = useLocation()
-  const navigationType = useNavigationType()
-
+function ScrollToTop({ pathname, navigationType }: { pathname: string; navigationType: NavigationType }) {
   useLayoutEffect(() => {
     if (navigationType === 'POP') return
     window.scrollTo(0, 0)
@@ -40,44 +38,35 @@ function ScrollToTop() {
   return null
 }
 
-function RouteContent({ delay }: { delay: boolean }) {
-  const [ready, setReady] = useState(!delay)
-
-  useEffect(() => {
-    if (!delay) return
-    const timer = window.setTimeout(() => setReady(true), 1000)
-    return () => window.clearTimeout(timer)
-  }, [delay])
-
-  if (!ready) {
-    return (
-      <div
-        data-testid="route-loading"
-        className="fixed inset-0 z-40 flex items-center justify-center bg-background"
-      >
-        <Spinner aria-label="Carregando" className="size-8 text-primary" />
-      </div>
-    )
-  }
-
-  return <Outlet />
-}
-
 export function AppShell() {
   const location = useLocation()
-  const initialKey = useRef(location.key)
-  const [hasNavigated, setHasNavigated] = useState(false)
+  const navigationType = useNavigationType()
+  const [displayed, setDisplayed] = useState({ location, navigationType })
+  const [initialReady, setInitialReady] = useState(!location.pathname.startsWith('/product/'))
+  const loading = !initialReady || location !== displayed.location
+  const page = useRoutes(appRoutes, displayed.location)
 
   useEffect(() => {
-    if (location.key !== initialKey.current) setHasNavigated(true)
-  }, [location.key])
-
-  const delay = hasNavigated || location.pathname.startsWith('/product/') || location.key !== initialKey.current
+    if (!loading) return
+    const timer = window.setTimeout(() => {
+      setDisplayed({ location, navigationType })
+      setInitialReady(true)
+    }, 1000)
+    return () => window.clearTimeout(timer)
+  }, [location, navigationType, loading])
 
   return (
     <>
-      <ScrollToTop />
-      <RouteContent key={location.key} delay={delay} />
+      <ScrollToTop pathname={displayed.location.pathname} navigationType={displayed.navigationType} />
+      <div aria-busy={loading}>{page}</div>
+      {loading ? (
+        <div
+          data-testid="route-loading"
+          className="fixed inset-x-0 top-16 bottom-0 z-10 flex items-center justify-center bg-background/30 backdrop-blur-sm"
+        >
+          <Spinner aria-label="Carregando" className="size-8 text-primary" />
+        </div>
+      ) : null}
     </>
   )
 }
