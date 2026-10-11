@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { useState } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { Gallery } from './gallery'
@@ -14,6 +15,20 @@ function renderGallery(onClose = vi.fn()) {
       onIndexChange={vi.fn()}
       onClose={onClose}
     />,
+  )
+}
+
+function InteractiveGallery({ images = photos, initialIndex = 0 }: { images?: string[]; initialIndex?: number }) {
+  const [index, setIndex] = useState(initialIndex)
+
+  return (
+    <Gallery
+      images={images}
+      alt="Relógio Seculus"
+      index={index}
+      onIndexChange={setIndex}
+      onClose={vi.fn()}
+    />
   )
 }
 
@@ -111,5 +126,82 @@ describe('Gallery modal (GAL-03–GAL-07, GAL-10, GAL-12, GAL-13, GAL-15–GAL-1
     expect(document.body.style.overflow).toBe(previousOverflow)
     expect(window.history.length).toBe(previousLength)
     expect(window.location.href).toBe(previousUrl)
+  })
+})
+
+describe('Gallery navigation and photo status (GAL-19–GAL-31)', () => {
+  it('renders 44px circular responsive arrow buttons and disables them at the ends', () => {
+    render(<InteractiveGallery />)
+
+    const previous = screen.getByRole('button', { name: 'Anterior' })
+    const next = screen.getByRole('button', { name: 'Seguinte' })
+    for (const button of [previous, next]) {
+      const classes = button.className.split(/\s+/)
+      expect(classes).toContain('size-11')
+      expect(classes).toContain('rounded-full')
+      expect(classes).toContain('hidden')
+      expect(classes).toContain('md:inline-flex')
+      expect(classes).toContain(
+        'bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)]',
+      )
+    }
+    expect(previous.disabled).toBe(true)
+    expect(next.disabled).toBe(false)
+
+    fireEvent.click(next)
+    expect(screen.getByRole('img', { name: 'Relógio Seculus' }).getAttribute('src')).toBe(photos[1])
+    expect(screen.getByRole('button', { name: 'Anterior' }).disabled).toBe(false)
+    expect(screen.getByRole('button', { name: 'Seguinte' }).disabled).toBe(true)
+
+  })
+
+  it.each([375, 768])('changes photos with keyboard at %i px without wrapping', (width) => {
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: width })
+    render(<InteractiveGallery />)
+
+    fireEvent.keyDown(document, { key: 'ArrowRight' })
+    expect(screen.getByRole('img', { name: 'Relógio Seculus' }).getAttribute('src')).toBe(photos[1])
+
+    fireEvent.keyDown(document, { key: 'ArrowRight' })
+    expect(screen.getByRole('img', { name: 'Relógio Seculus' }).getAttribute('src')).toBe(photos[1])
+
+    fireEvent.keyDown(document, { key: 'ArrowLeft' })
+    expect(screen.getByRole('img', { name: 'Relógio Seculus' }).getAttribute('src')).toBe(photos[0])
+
+    fireEvent.keyDown(document, { key: 'ArrowLeft' })
+    expect(screen.getByRole('img', { name: 'Relógio Seculus' }).getAttribute('src')).toBe(photos[0])
+  })
+
+  it('shows an aria-hidden current/total badge and announces each current photo', () => {
+    render(<InteractiveGallery />)
+
+    const badge = screen.getByText('1/2')
+    expect(badge.getAttribute('aria-hidden')).toBe('true')
+    expect(badge.className.split(/\s+/)).toContain('right-3')
+    expect(badge.className.split(/\s+/)).toContain('bottom-3')
+    expect(badge.className.split(/\s+/)).toContain('text-[var(--body-on-dark)]')
+    expect(badge.className.split(/\s+/)).toContain(
+      'bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)]',
+    )
+    expect(screen.getByText('Foto 1 de 2').getAttribute('aria-live')).toBe('polite')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+
+    expect(screen.getByText('2/2').getAttribute('aria-hidden')).toBe('true')
+    expect(screen.getByText('Foto 2 de 2').getAttribute('aria-live')).toBe('polite')
+    expect(screen.getByRole('img', { name: 'Relógio Seculus' }).getAttribute('alt')).toBe('Relógio Seculus')
+  })
+
+  it('keeps the 1/1 status and photo unchanged without rendering arrows', () => {
+    render(<InteractiveGallery images={['foto-unica.webp']} />)
+
+    expect(screen.queryByRole('button', { name: 'Anterior' })).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Seguinte' })).toBeNull()
+    expect(screen.getByText('1/1').getAttribute('aria-hidden')).toBe('true')
+    expect(screen.getByText('Foto 1 de 1').getAttribute('aria-live')).toBe('polite')
+
+    fireEvent.keyDown(document, { key: 'ArrowRight' })
+    fireEvent.keyDown(document, { key: 'ArrowLeft' })
+    expect(screen.getByRole('img', { name: 'Relógio Seculus' }).getAttribute('src')).toBe('foto-unica.webp')
   })
 })

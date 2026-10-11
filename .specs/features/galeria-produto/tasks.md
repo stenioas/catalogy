@@ -221,17 +221,19 @@ T6 → T7 → T8
 
 **Done when**:
 
-- [ ] Anterior e Seguinte têm `hidden` e `md:inline-flex`, somem com uma foto e desabilitam nas pontas
-- [ ] ArrowLeft e ArrowRight trocam a foto em qualquer largura, sem volta e sem efeito numa foto só
-- [ ] O badge mostra `atual/total`, inclusive `1/1`, só visual
-- [ ] A região ao vivo escreve `Foto {n} de {total}` e a imagem atual usa o alt do produto
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] A suíte do client passa sem apagar teste
+- [x] Anterior e Seguinte têm `hidden` e `md:inline-flex`, somem com uma foto e desabilitam nas pontas
+- [x] ArrowLeft e ArrowRight trocam a foto em qualquer largura, sem volta e sem efeito numa foto só
+- [x] O badge mostra `atual/total`, inclusive `1/1`, só visual
+- [x] A região ao vivo escreve `Foto {n} de {total}` e a imagem atual usa o alt do produto
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] A suíte do client passa sem apagar teste
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(catalog): step through gallery photos`
+
+**Status**: done
 
 ---
 

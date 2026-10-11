@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 
@@ -12,7 +12,7 @@ export type GalleryProps = {
   onClose: () => void
 }
 
-export function Gallery({ images, alt, index, onClose }: GalleryProps) {
+export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryProps) {
   const dialogRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -28,15 +28,21 @@ export function Gallery({ images, alt, index, onClose }: GalleryProps) {
   }, [])
 
   useEffect(() => {
-    function closeOnEscape(event: KeyboardEvent) {
+    function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') onClose()
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault()
+        const nextIndex = index + (event.key === 'ArrowRight' ? 1 : -1)
+        if (nextIndex >= 0 && nextIndex < images.length) onIndexChange(nextIndex)
+      }
     }
 
-    document.addEventListener('keydown', closeOnEscape)
-    return () => document.removeEventListener('keydown', closeOnEscape)
-  }, [onClose])
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [images.length, index, onClose, onIndexChange])
 
   const image = images[index]
+  const count = images.length
 
   return createPortal(
     <div
@@ -64,12 +70,45 @@ export function Gallery({ images, alt, index, onClose }: GalleryProps) {
       >
         <X aria-hidden="true" />
       </Button>
+      {count > 1 ? (
+        <>
+          <Button
+            type="button"
+            variant="ghost"
+            aria-label="Anterior"
+            disabled={index === 0}
+            className="absolute top-1/2 left-3 hidden size-11 -translate-y-1/2 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-on-dark)] md:inline-flex"
+            onClick={() => onIndexChange(index - 1)}
+          >
+            <ChevronLeft aria-hidden="true" />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            aria-label="Seguinte"
+            disabled={index === count - 1}
+            className="absolute top-1/2 right-3 hidden size-11 -translate-y-1/2 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-on-dark)] md:inline-flex"
+            onClick={() => onIndexChange(index + 1)}
+          >
+            <ChevronRight aria-hidden="true" />
+          </Button>
+        </>
+      ) : null}
       <div
         data-testid="watch-gallery-frame"
         className="relative flex aspect-square w-[min(calc(100vw-2rem),calc(100dvh-4.5rem))] items-center justify-center md:w-[min(calc(100vw-8.5rem),calc(100dvh-4.5rem))]"
       >
         {image ? <img src={image} alt={alt} className="h-full w-full object-contain" /> : null}
+        <span
+          aria-hidden="true"
+          className="absolute right-3 bottom-3 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] px-3 py-1 text-[var(--body-on-dark)]"
+        >
+          {index + 1}/{count}
+        </span>
       </div>
+      <span className="sr-only" aria-live="polite">
+        Foto {index + 1} de {count}
+      </span>
     </div>,
     document.body,
   )

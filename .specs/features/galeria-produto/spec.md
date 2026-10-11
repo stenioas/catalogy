@@ -200,19 +200,19 @@ A foto do carrossel cabe num quadrado pequeno. Quem quer ver o relógio de perto
 | GAL-16 | P1: Cromo, badge e anúncio | Tasks (T3) | Done |
 | GAL-17 | P1: Cromo, badge e anúncio | Tasks (T3) | Done |
 | GAL-18 | P1: Cromo, badge e anúncio | Tasks (T3) | Done |
-| GAL-19 | P1: Cromo, badge e anúncio | Tasks (T5) | In Tasks |
-| GAL-20 | P1: Cromo, badge e anúncio | Tasks (T5) | In Tasks |
-| GAL-21 | P1: Cromo, badge e anúncio | Tasks (T5) | In Tasks |
-| GAL-22 | P1: Cromo, badge e anúncio | Tasks (T5) | In Tasks |
+| GAL-19 | P1: Cromo, badge e anúncio | Tasks (T5) | Done |
+| GAL-20 | P1: Cromo, badge e anúncio | Tasks (T5) | Done |
+| GAL-21 | P1: Cromo, badge e anúncio | Tasks (T5) | Done |
+| GAL-22 | P1: Cromo, badge e anúncio | Tasks (T5) | Done |
 | GAL-23 | P1: Cromo, badge e anúncio | Tasks (T3) | Done |
-| GAL-24 | P1: Cromo, badge e anúncio | Tasks (T5) | In Tasks |
-| GAL-25 | P1: Cromo, badge e anúncio | Tasks (T5) | In Tasks |
-| GAL-26 | P1: Cromo, badge e anúncio | Tasks (T5) | In Tasks |
-| GAL-27 | P1: Trocar a foto | Tasks (T5) | In Tasks |
-| GAL-28 | P1: Trocar a foto | Tasks (T5) | In Tasks |
-| GAL-29 | P1: Trocar a foto | Tasks (T5) | In Tasks |
-| GAL-30 | P1: Trocar a foto | Tasks (T5) | In Tasks |
-| GAL-31 | P1: Trocar a foto | Tasks (T5) | In Tasks |
+| GAL-24 | P1: Cromo, badge e anúncio | Tasks (T5) | Done |
+| GAL-25 | P1: Cromo, badge e anúncio | Tasks (T5) | Done |
+| GAL-26 | P1: Cromo, badge e anúncio | Tasks (T5) | Done |
+| GAL-27 | P1: Trocar a foto | Tasks (T5) | Done |
+| GAL-28 | P1: Trocar a foto | Tasks (T5) | Done |
+| GAL-29 | P1: Trocar a foto | Tasks (T5) | Done |
+| GAL-30 | P1: Trocar a foto | Tasks (T5) | Done |
+| GAL-31 | P1: Trocar a foto | Tasks (T5) | Done |
 | GAL-32 | P1: Trocar a foto | Tasks (T7) | In Tasks |
 | GAL-33 | P1: Trocar a foto | Tasks (T1, T7) | T1 done; T7 pending |
 | GAL-34 | P1: Trocar a foto | Tasks (T7) | In Tasks |
