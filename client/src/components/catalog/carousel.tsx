@@ -167,7 +167,7 @@ export function Carousel({ images, alt }: CarouselProps) {
                 src={src}
                 alt={current ? alt : ''}
                 draggable={false}
-                className="h-full w-full shrink-0 object-contain"
+                className="h-full w-full shrink-0 cursor-zoom-in object-contain"
                 style={
                   current
                     ? {
