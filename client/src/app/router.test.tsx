@@ -1,12 +1,12 @@
 import type { Product } from '@catalogo/shared'
-import { cleanup, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import { createMemoryRouter, matchRoutes, RouterProvider } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { ThemeProvider } from '../components/theme-provider'
 import { products as catalogProducts } from '../catalog/products.generated'
-import { appRoutes } from './router'
+import { AppShell, appRoutes } from './router'
 
 const INCOMPLETE_LINK_MESSAGE =
   'Este link está incompleto ou o vendedor não existe.'
@@ -70,6 +70,96 @@ beforeEach(() => {
 afterEach(() => {
   cleanup()
   vi.unstubAllGlobals()
+  vi.restoreAllMocks()
+  vi.useRealTimers()
+})
+
+describe('loading ao navegar entre vitrine e produto', () => {
+  function setup(path = '/') {
+    vi.useFakeTimers()
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+    const router = createMemoryRouter(
+      [{ element: <AppShell />, children: appRoutes }],
+      { initialEntries: [path] },
+    )
+    renderWithTheme(<RouterProvider router={router} />)
+    return router
+  }
+
+  async function advance(ms: number) {
+    await act(async () => { await vi.advanceTimersByTimeAsync(ms) })
+  }
+
+  function expectLoading() {
+    const spinner = screen.getByRole('status', { name: 'Carregando' })
+    expect(spinner.getAttribute('data-slot')).toBe('spinner')
+    expect(spinner.classList.contains('text-primary')).toBe(true)
+    const overlay = screen.getByTestId('route-loading')
+    for (const className of ['fixed', 'inset-0', 'items-center', 'justify-center']) {
+      expect(overlay.classList.contains(className)).toBe(true)
+    }
+    expect(screen.queryByTestId('catalog-page-column')).toBeNull()
+    expect(screen.queryByTestId('watch-page-column')).toBeNull()
+  }
+
+  it('exibe o spinner por 1 segundo ao abrir o produto e ao voltar pelo botão', async () => {
+    setup()
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+    const card = screen.getAllByTestId('watch-card-link')[0]
+    const title = card.querySelector('h2')!.textContent!
+    fireEvent.click(card)
+    expectLoading()
+    await advance(999)
+    expectLoading()
+    await advance(1)
+    expect(screen.getByRole('heading', { name: title })).toBeDefined()
+    expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
+
+    fireEvent.click(screen.getByRole('link', { name: 'Voltar' }))
+    expectLoading()
+    await advance(999)
+    expectLoading()
+    await advance(1)
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+  })
+
+  it('mantém o mínimo de 1 segundo também no voltar e avançar do navegador', async () => {
+    const router = setup()
+    await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
+    await advance(1000)
+    await act(async () => { await router.navigate(-1) })
+    expectLoading()
+    await advance(999)
+    expectLoading()
+    await advance(1)
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+
+    await act(async () => { await router.navigate(1) })
+    expectLoading()
+    await advance(1000)
+    expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
+  })
+
+  it('exibe o loading ao abrir diretamente a URL do produto', async () => {
+    setup(`/product/${watchSlug()}`)
+    expectLoading()
+    await advance(999)
+    expectLoading()
+    await advance(1)
+    expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
+  })
+
+  it('reinicia o segundo mínimo quando o destino muda durante o loading', async () => {
+    const router = setup()
+    await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
+    await advance(500)
+    await act(async () => { await router.navigate('/') })
+    await advance(999)
+    expectLoading()
+    await advance(1)
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+    expect(screen.queryByTestId('watch-page-column')).toBeNull()
+  })
 })
 
 describe('rotas sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {

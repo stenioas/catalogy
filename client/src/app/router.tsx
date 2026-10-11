@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
   createBrowserRouter,
   Outlet,
@@ -10,6 +10,7 @@ import {
 
 import { CatalogPage } from '../routes/catalog-page'
 import { WatchPage } from '../routes/watch-page'
+import { Spinner } from '../components/ui/spinner'
 
 function WatchRoute() {
   const { slug } = useParams()
@@ -39,11 +40,44 @@ function ScrollToTop() {
   return null
 }
 
-function AppShell() {
+function RouteContent({ delay }: { delay: boolean }) {
+  const [ready, setReady] = useState(!delay)
+
+  useEffect(() => {
+    if (!delay) return
+    const timer = window.setTimeout(() => setReady(true), 1000)
+    return () => window.clearTimeout(timer)
+  }, [delay])
+
+  if (!ready) {
+    return (
+      <div
+        data-testid="route-loading"
+        className="fixed inset-0 z-40 flex items-center justify-center bg-background"
+      >
+        <Spinner aria-label="Carregando" className="size-8 text-primary" />
+      </div>
+    )
+  }
+
+  return <Outlet />
+}
+
+export function AppShell() {
+  const location = useLocation()
+  const initialKey = useRef(location.key)
+  const [hasNavigated, setHasNavigated] = useState(false)
+
+  useEffect(() => {
+    if (location.key !== initialKey.current) setHasNavigated(true)
+  }, [location.key])
+
+  const delay = hasNavigated || location.pathname.startsWith('/product/') || location.key !== initialKey.current
+
   return (
     <>
       <ScrollToTop />
-      <Outlet />
+      <RouteContent key={location.key} delay={delay} />
     </>
   )
 }
