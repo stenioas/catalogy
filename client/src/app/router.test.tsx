@@ -77,6 +77,7 @@ afterEach(() => {
 describe('loading ao navegar entre vitrine e produto', () => {
   function setup(path = '/') {
     vi.useFakeTimers()
+    vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0)
     vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
     const router = createMemoryRouter(
       [{ element: <AppShell />, children: appRoutes }],
@@ -166,6 +167,32 @@ describe('loading ao navegar entre vitrine e produto', () => {
     await advance(1)
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
     expect(screen.queryByTestId('watch-page-column')).toBeNull()
+  })
+
+  it('cobre a faixa superior quando a appbar está escondida e acompanha seu retorno', async () => {
+    setup()
+    const scrollY = vi.spyOn(window, 'scrollY', 'get')
+    scrollY.mockReturnValue(160)
+    fireEvent.scroll(window)
+    const bar = screen.getByTestId('top-bar')
+    expect(bar.hasAttribute('inert')).toBe(true)
+
+    fireEvent.click(screen.getAllByTestId('watch-card-link')[0])
+    expectLoading()
+    const overlay = screen.getByTestId('route-loading')
+    expect(overlay.closest('.group\\/route')?.contains(bar)).toBe(true)
+    expect(overlay.classList.contains('group-has-[header[inert]]/route:top-0')).toBe(true)
+    expect(bar.hasAttribute('inert')).toBe(true)
+
+    scrollY.mockReturnValue(80)
+    fireEvent.scroll(window)
+    expect(bar.hasAttribute('inert')).toBe(false)
+    expect(overlay.classList.contains('top-16')).toBe(true)
+    await advance(999)
+    expect(screen.getByRole('status', { name: 'Carregando' })).toBeDefined()
+    await advance(1)
+    expect(screen.queryByTestId('route-loading')).toBeNull()
+    expect(screen.getByTestId('watch-page-column')).toBeDefined()
   })
 })
 

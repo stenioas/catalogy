@@ -56,18 +56,18 @@ export function AppShell() {
   }, [location, navigationType, loading])
 
   return (
-    <>
+    <div className="group/route">
       <ScrollToTop pathname={displayed.location.pathname} navigationType={displayed.navigationType} />
       <div aria-busy={loading}>{page}</div>
       {loading ? (
         <div
           data-testid="route-loading"
-          className="fixed inset-x-0 top-16 bottom-0 z-10 flex items-center justify-center bg-background/30 backdrop-blur-sm"
+          className="fixed inset-x-0 top-16 bottom-0 z-10 flex items-center justify-center bg-background/30 backdrop-blur-sm group-has-[header[inert]]/route:top-0"
         >
           <Spinner aria-label="Carregando" className="size-8 text-primary" />
         </div>
       ) : null}
-    </>
+    </div>
   )
 }
 
