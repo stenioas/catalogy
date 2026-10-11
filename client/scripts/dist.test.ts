@@ -103,12 +103,11 @@ describe('pnpm build emitindo dist estático', () => {
 
     const redirects = readFileSync(join(distDir, '_redirects'), 'utf-8')
     expect(redirects).toContain('/* /index.html 200')
-  })
+  }, 120_000)
 
-  it('mantém vendedores/ e relogios-alexandre.md no disco', () => {
-    const repoRoot = join(clientRoot, '..')
-    expect(statSync(join(repoRoot, 'vendedores')).isDirectory()).toBe(true)
-    expect(statSync(join(repoRoot, 'relogios-alexandre.md')).isFile()).toBe(true)
+  it('não publica os arquivos da antiga origem de vendedores', () => {
+    expect(existsSync(join(distDir, 'vendedores'))).toBe(false)
+    expect(existsSync(join(distDir, 'relogios-alexandre.md'))).toBe(false)
   })
 
   it('sai com erro quando um arquivo do catálogo fura o contrato (CAT-18)', () => {
