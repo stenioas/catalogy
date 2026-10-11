@@ -107,7 +107,7 @@ describe('loading ao navegar entre vitrine e produto', () => {
     expect(screen.queryByTestId(`${currentPage === 'catalog' ? 'watch' : 'catalog'}-page-column`)).toBeNull()
   }
 
-  it('exibe o spinner por 1 segundo ao abrir o produto e ao voltar pelo botão', async () => {
+  it('exibe o spinner por 500ms ao abrir o produto e ao voltar pelo botão', async () => {
     setup()
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
     const card = screen.getAllByTestId('watch-card-link')[0]
@@ -115,7 +115,7 @@ describe('loading ao navegar entre vitrine e produto', () => {
     fireEvent.click(card)
     expectLoading()
     expect(window.scrollTo).not.toHaveBeenCalled()
-    await advance(999)
+    await advance(499)
     expectLoading()
     expect(window.scrollTo).not.toHaveBeenCalled()
     await advance(1)
@@ -125,44 +125,44 @@ describe('loading ao navegar entre vitrine e produto', () => {
 
     fireEvent.click(screen.getByRole('link', { name: 'Voltar' }))
     expectLoading('watch')
-    await advance(999)
+    await advance(499)
     expectLoading('watch')
     await advance(1)
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
   })
 
-  it('mantém o mínimo de 1 segundo também no voltar e avançar do navegador', async () => {
+  it('mantém o mínimo de 500ms também no voltar e avançar do navegador', async () => {
     const router = setup()
     await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
-    await advance(1000)
+    await advance(500)
     await act(async () => { await router.navigate(-1) })
     expectLoading('watch')
-    await advance(999)
+    await advance(499)
     expectLoading('watch')
     await advance(1)
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
 
     await act(async () => { await router.navigate(1) })
     expectLoading()
-    await advance(1000)
+    await advance(500)
     expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
   })
 
   it('exibe o loading ao abrir diretamente a URL do produto', async () => {
     setup(`/product/${watchSlug()}`)
     expectLoading('watch')
-    await advance(999)
+    await advance(499)
     expectLoading('watch')
     await advance(1)
     expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
   })
 
-  it('reinicia o segundo mínimo quando o destino muda durante o loading', async () => {
+  it('reinicia os 500ms mínimos quando o destino muda durante o loading', async () => {
     const router = setup()
     await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
-    await advance(500)
+    await advance(250)
     await act(async () => { await router.navigate('/') })
-    await advance(999)
+    await advance(499)
     expectLoading()
     await advance(1)
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
@@ -188,7 +188,7 @@ describe('loading ao navegar entre vitrine e produto', () => {
     fireEvent.scroll(window)
     expect(bar.hasAttribute('inert')).toBe(false)
     expect(overlay.classList.contains('top-16')).toBe(true)
-    await advance(999)
+    await advance(499)
     expect(screen.getByRole('status', { name: 'Carregando' })).toBeDefined()
     await advance(1)
     expect(screen.queryByTestId('route-loading')).toBeNull()

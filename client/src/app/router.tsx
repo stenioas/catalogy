@@ -51,7 +51,7 @@ export function AppShell() {
     const timer = window.setTimeout(() => {
       setDisplayed({ location, navigationType })
       setInitialReady(true)
-    }, 1000)
+    }, 500)
     return () => window.clearTimeout(timer)
   }, [location, navigationType, loading])
 
