@@ -156,18 +156,20 @@ T6 → T7 → T8
 
 **Done when**:
 
-- [ ] O diálogo se chama Galeria de fotos, recebe o foco e cobre a página com o preto a 80% e o desfoque da spec
-- [ ] Fechar, fundo e Escape chamam `onClose`. Clique na foto não chama
-- [ ] O X tem 44px, o chip escuro e troca de canto em `md`
-- [ ] A foto é `object-contain` num quadro quadrado
-- [ ] `document.body` não rola, o overlay tem duração 0ms e o histórico não muda
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] `gallery.test.tsx` cobre esses critérios e a suíte do client passa
+- [x] O diálogo se chama Galeria de fotos, recebe o foco e cobre a página com o preto a 80% e o desfoque da spec
+- [x] Fechar, fundo e Escape chamam `onClose`. Clique na foto não chama
+- [x] O X tem 44px, o chip escuro e troca de canto em `md`
+- [x] A foto é `object-contain` num quadro quadrado
+- [x] `document.body` não rola, o overlay tem duração 0ms e o histórico não muda
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] `gallery.test.tsx` cobre esses critérios e a suíte do client passa
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(catalog): open the product photo gallery`
+
+**Status**: done
 
 ---
 
