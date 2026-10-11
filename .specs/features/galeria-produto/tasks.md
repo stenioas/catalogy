@@ -253,15 +253,17 @@ T6 → T7 → T8
 
 **Done when**:
 
-- [ ] Depois da troca, a foto visível do carrossel é a mesma da galeria
-- [ ] A trilha do carrossel está em `transition-duration: 0ms` enquanto a galeria está aberta
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] A suíte do client passa sem apagar teste
+- [x] Depois da troca, a foto visível do carrossel é a mesma da galeria
+- [x] A trilha do carrossel está em `transition-duration: 0ms` enquanto a galeria está aberta
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] A suíte do client passa sem apagar teste
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(catalog): keep the carousel on the gallery photo`
+
+**Status**: done
 
 ---
 

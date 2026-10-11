@@ -26,6 +26,7 @@ export function Carousel({ images, alt }: CarouselProps) {
   const count = images.length
   const multi = count > 1
   const duration = slideDuration(prefersReducedMotion())
+  const trackDuration = galleryOpen ? '0ms' : duration
   const atStart = index === 0
   const atEnd = index === count - 1
 
@@ -154,7 +155,7 @@ export function Carousel({ images, alt }: CarouselProps) {
           style={{
             transform: `translateX(-${index * 100}%)`,
             transitionProperty: 'transform',
-            transitionDuration: duration,
+            transitionDuration: trackDuration,
           }}
         >
           {images.map((src, imageIndex) => {

@@ -3,7 +3,7 @@ import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { act } from 'react'
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 
 import { Carousel } from './carousel'
@@ -379,6 +379,26 @@ describe('Carousel (CAT-70–CAT-86)', () => {
 
     view.unmount()
     root.remove()
+  })
+
+  it('keeps the carousel on the gallery photo without a track transition while open (GAL-38)', () => {
+    renderCarousel()
+
+    drag(frame(), 100, 100)
+
+    const dialog = screen.getByRole('dialog', { name: 'Galeria de fotos' })
+    const track = screen.getByTestId('carousel-track')
+    expect(track.style.transitionDuration).toBe('0ms')
+
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Seguinte' }))
+
+    const galleryImage = within(dialog).getByRole('img', { name: 'Seculus' })
+    const carouselImage = within(screen.getByTestId('watch-carousel')).getByRole('img', {
+      name: 'Seculus',
+    })
+    expect(galleryImage.getAttribute('src')).toBe(photos[1])
+    expect(carouselImage.getAttribute('src')).toBe(photos[1])
+    expect(track.style.transitionDuration).toBe('0ms')
   })
 
   it('does not open after a release at or beyond 40px (GAL-02)', () => {
