@@ -122,7 +122,10 @@ describe('Gallery modal (GAL-03–GAL-07, GAL-10, GAL-12, GAL-13, GAL-15–GAL-1
     expect(classes).toContain(
       'bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)]',
     )
-    expect(classes).toContain('text-[var(--body-on-dark)]')
+    expect(classes).toContain('cursor-pointer')
+    expect(classes).toContain('text-[var(--body-muted)]')
+    expect(classes).toContain('hover:text-[var(--body-muted)]')
+    expect(classes).toContain('hover:bg-[var(--surface-tile-2)]')
     expect(close.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true')
   })
 
@@ -168,6 +171,10 @@ describe('Gallery navigation and photo status (GAL-19–GAL-31)', () => {
       expect(classes).toContain('rounded-full')
       expect(classes).toContain('hidden')
       expect(classes).toContain('md:inline-flex')
+      expect(classes).toContain('cursor-pointer')
+      expect(classes).toContain('text-[var(--body-muted)]')
+      expect(classes).toContain('hover:text-[var(--body-muted)]')
+      expect(classes).toContain('hover:bg-[var(--surface-tile-2)]')
       expect(classes).toContain(
         'bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)]',
       )

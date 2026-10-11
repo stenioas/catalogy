@@ -216,7 +216,7 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
         type="button"
         variant="ghost"
         aria-label="Fechar"
-        className="absolute top-3 left-3 size-11 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-on-dark)] md:left-auto md:right-3"
+        className="absolute top-3 left-3 size-11 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[var(--surface-tile-2)] hover:text-[var(--body-muted)] md:left-auto md:right-3"
         onClick={onClose}
       >
         <X aria-hidden="true" />
@@ -228,7 +228,7 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
             variant="ghost"
             aria-label="Anterior"
             disabled={index === 0}
-            className="absolute top-1/2 left-3 hidden size-11 -translate-y-1/2 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-on-dark)] md:inline-flex"
+            className="absolute top-1/2 left-3 hidden size-11 -translate-y-1/2 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[var(--surface-tile-2)] hover:text-[var(--body-muted)] md:inline-flex"
             onClick={() => onIndexChange(index - 1)}
           >
             <ChevronLeft aria-hidden="true" />
@@ -238,7 +238,7 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
             variant="ghost"
             aria-label="Seguinte"
             disabled={index === count - 1}
-            className="absolute top-1/2 right-3 hidden size-11 -translate-y-1/2 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-on-dark)] md:inline-flex"
+            className="absolute top-1/2 right-3 hidden size-11 -translate-y-1/2 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[var(--surface-tile-2)] hover:text-[var(--body-muted)] md:inline-flex"
             onClick={() => onIndexChange(index + 1)}
           >
             <ChevronRight aria-hidden="true" />
