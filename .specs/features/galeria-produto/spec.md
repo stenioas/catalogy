@@ -182,20 +182,20 @@ A foto do carrossel cabe num quadrado pequeno. Quem quer ver o relógio de perto
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| GAL-01 | P1: Abrir e fechar | Tasks (T4) | In Tasks |
-| GAL-02 | P1: Abrir e fechar | Tasks (T4) | In Tasks |
+| GAL-01 | P1: Abrir e fechar | Tasks (T4) | Done |
+| GAL-02 | P1: Abrir e fechar | Tasks (T4) | Done |
 | GAL-03 | P1: Abrir e fechar | Tasks (T3) | Done |
 | GAL-04 | P1: Abrir e fechar | Tasks (T3) | Done |
 | GAL-05 | P1: Abrir e fechar | Tasks (T3) | Done |
 | GAL-06 | P1: Abrir e fechar | Tasks (T3) | Done |
 | GAL-07 | P1: Abrir e fechar | Tasks (T3) | Done |
-| GAL-08 | P1: Abrir e fechar | Tasks (T4) | In Tasks |
+| GAL-08 | P1: Abrir e fechar | Tasks (T4) | Done |
 | GAL-09 | P1: Abrir e fechar | Tasks (T2) | Done |
 | GAL-10 | P1: Abrir e fechar | Tasks (T3) | Done |
-| GAL-11 | P1: Abrir e fechar | Tasks (T4) | In Tasks |
+| GAL-11 | P1: Abrir e fechar | Tasks (T4) | Done |
 | GAL-12 | P1: Abrir e fechar | Tasks (T3) | Done |
 | GAL-13 | P1: Abrir e fechar | Tasks (T3) | Done |
-| GAL-14 | P1: Abrir e fechar | Tasks (T4) | In Tasks |
+| GAL-14 | P1: Abrir e fechar | Tasks (T4) | Done |
 | GAL-15 | P1: Cromo, badge e anúncio | Tasks (T3) | Done |
 | GAL-16 | P1: Cromo, badge e anúncio | Tasks (T3) | Done |
 | GAL-17 | P1: Cromo, badge e anúncio | Tasks (T3) | Done |

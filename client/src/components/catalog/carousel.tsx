@@ -1,7 +1,8 @@
-import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { Gallery } from './gallery'
 import { DRAG_THRESHOLD_PX, rubberBand, rubberStretch, slideDuration } from './motion'
 
 export type CarouselProps = {
@@ -16,14 +17,38 @@ function prefersReducedMotion(): boolean {
 
 export function Carousel({ images, alt }: CarouselProps) {
   const [index, setIndex] = useState(0)
+  const [galleryOpen, setGalleryOpen] = useState(false)
   const [pullPx, setPullPx] = useState(0)
   const [dragging, setDragging] = useState(false)
   const dragStartX = useRef<number | null>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
+  const wasGalleryOpen = useRef(false)
   const count = images.length
   const multi = count > 1
   const duration = slideDuration(prefersReducedMotion())
   const atStart = index === 0
   const atEnd = index === count - 1
+
+  useEffect(() => {
+    const root = document.getElementById('root')
+    if (!galleryOpen || !root) return
+    const wasInert = root.hasAttribute('inert')
+    root.setAttribute('inert', '')
+    return () => {
+      if (!wasInert) root.removeAttribute('inert')
+    }
+  }, [galleryOpen])
+
+  useEffect(() => {
+    if (galleryOpen) {
+      wasGalleryOpen.current = true
+      return
+    }
+    if (wasGalleryOpen.current) {
+      frameRef.current?.focus()
+      wasGalleryOpen.current = false
+    }
+  }, [galleryOpen])
 
   function step(delta: number) {
     setIndex((current) => {
@@ -75,6 +100,10 @@ export function Carousel({ images, alt }: CarouselProps) {
     setPullPx(0)
     if (start === null) return
     const delta = event.clientX - start
+    if (Math.abs(delta) < DRAG_THRESHOLD_PX) {
+      setGalleryOpen(true)
+      return
+    }
     if (atStart && delta > 0) return
     if (atEnd && delta < 0) return
     if (delta < -DRAG_THRESHOLD_PX) step(1)
@@ -91,7 +120,7 @@ export function Carousel({ images, alt }: CarouselProps) {
     'hidden size-11 shrink-0 cursor-pointer rounded-full text-inherit hover:bg-[#e5e5ea] md:inline-flex'
 
   return (
-    <div data-testid="watch-carousel" className="w-full">
+    <div data-testid="watch-carousel" className="w-full" inert={galleryOpen}>
       <div
         data-testid="carousel-stage"
         className="relative mx-auto flex w-full max-w-[480px] items-center justify-center md:max-w-[600px] md:gap-4"
@@ -109,13 +138,14 @@ export function Carousel({ images, alt }: CarouselProps) {
           </Button>
         ) : null}
         <div
+          ref={frameRef}
           data-testid="carousel-frame"
           className="relative mx-auto aspect-square w-full min-w-0 max-w-[480px] flex-1 touch-pan-y overflow-hidden rounded-[12px]"
           tabIndex={multi ? 0 : -1}
           onKeyDown={multi ? onKeyDown : undefined}
-          onPointerDown={multi ? onPointerDown : undefined}
+          onPointerDown={onPointerDown}
           onPointerMove={multi ? onPointerMove : undefined}
-          onPointerUp={multi ? releaseDrag : undefined}
+          onPointerUp={releaseDrag}
           onPointerCancel={multi ? onPointerCancel : undefined}
         >
         <div
@@ -197,6 +227,15 @@ export function Carousel({ images, alt }: CarouselProps) {
             })}
           </div>
         </div>
+      ) : null}
+      {galleryOpen ? (
+        <Gallery
+          images={images}
+          alt={alt}
+          index={index}
+          onIndexChange={setIndex}
+          onClose={() => setGalleryOpen(false)}
+        />
       ) : null}
     </div>
   )

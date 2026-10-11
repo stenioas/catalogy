@@ -354,6 +354,59 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(shownSrc()).toBe(photos[0])
   })
 
+  it('opens the current photo after a pointer release under 40px and restores focus on close (GAL-01, GAL-08, GAL-11)', () => {
+    const root = document.createElement('div')
+    root.id = 'root'
+    document.body.appendChild(root)
+    const view = render(<Carousel images={photos} alt="Seculus" />, { container: root })
+    fireEvent.click(screen.getByRole('button', { name: 'Foto 2' }))
+
+    fireEvent.pointerDown(frame(), { clientX: 100, pointerId: 1 })
+    fireEvent.pointerUp(frame(), { clientX: 61, pointerId: 1 })
+
+    const dialog = screen.getByRole('dialog', { name: 'Galeria de fotos' })
+    expect(dialog.querySelector('img')?.getAttribute('src')).toBe(photos[1])
+    expect(document.activeElement).toBe(dialog)
+    expect(screen.getByTestId('watch-carousel').hasAttribute('inert')).toBe(true)
+    expect(root.hasAttribute('inert')).toBe(true)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Fechar' }))
+
+    expect(screen.queryByRole('dialog', { name: 'Galeria de fotos' })).toBeNull()
+    expect(document.activeElement).toBe(frame())
+    expect(screen.getByTestId('watch-carousel').hasAttribute('inert')).toBe(false)
+    expect(root.hasAttribute('inert')).toBe(false)
+
+    view.unmount()
+    root.remove()
+  })
+
+  it('does not open after a release at or beyond 40px (GAL-02)', () => {
+    renderCarousel()
+
+    drag(frame(), 100, 60)
+    expect(screen.queryByRole('dialog', { name: 'Galeria de fotos' })).toBeNull()
+    expect(shownSrc()).toBe(photos[0])
+
+    drag(frame(), 100, 59)
+    expect(screen.queryByRole('dialog', { name: 'Galeria de fotos' })).toBeNull()
+    expect(shownSrc()).toBe(photos[1])
+  })
+
+  it('opens and returns focus to the single-photo frame with tabindex -1 (GAL-01, GAL-08, GAL-14)', () => {
+    renderCarousel(['somente.webp'])
+
+    drag(frame(), 100, 99)
+
+    expect(screen.getByRole('dialog', { name: 'Galeria de fotos' })).toBeTruthy()
+    expect(frame().getAttribute('tabindex')).toBe('-1')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Fechar' }))
+
+    expect(document.activeElement).toBe(frame())
+    expect(frame().getAttribute('tabindex')).toBe('-1')
+  })
+
   it('does not change the photo when the gesture is cancelled (SV-55)', () => {
     renderCarousel()
     const box = frame()

@@ -189,17 +189,19 @@ T6 → T7 → T8
 
 **Done when**:
 
-- [ ] Deslocamento menor que 40px abre a galeria nessa foto
-- [ ] Deslocamento de 40px não abre
-- [ ] Com a galeria aberta, `watch-carousel` está `inert` e `#root` também, se existir
-- [ ] Fechar devolve o foco ao quadro, com uma ou com várias fotos
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] A suíte do client passa sem apagar teste
+- [x] Deslocamento menor que 40px abre a galeria nessa foto
+- [x] Deslocamento de 40px não abre
+- [x] Com a galeria aberta, `watch-carousel` está `inert` e `#root` também, se existir
+- [x] Fechar devolve o foco ao quadro, com uma ou com várias fotos
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] A suíte do client passa sem apagar teste
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(catalog): open the gallery from the carousel`
+
+**Status**: done
 
 ---
 
