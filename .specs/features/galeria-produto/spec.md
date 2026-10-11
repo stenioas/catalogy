@@ -220,20 +220,20 @@ A foto do carrossel cabe num quadrado pequeno. Quem quer ver o relógio de perto
 | GAL-36 | P1: Trocar a foto | Tasks (T7) | Done |
 | GAL-37 | P1: Trocar a foto | Tasks (T7) | Done |
 | GAL-38 | P1: Trocar a foto | Tasks (T6) | Done |
-| GAL-39 | P1: Zoom | Tasks (T1, T8) | T1 done; T8 pending |
-| GAL-40 | P1: Zoom | Tasks (T1, T8) | T1 done; T8 pending |
-| GAL-41 | P1: Zoom | Tasks (T1, T8) | T1 done; T8 pending |
-| GAL-42 | P1: Zoom | Tasks (T8) | In Tasks |
-| GAL-43 | P1: Zoom | Tasks (T8) | In Tasks |
-| GAL-44 | P1: Zoom | Tasks (T8) | In Tasks |
-| GAL-45 | P1: Zoom | Tasks (T8) | In Tasks |
-| GAL-46 | P1: Zoom | Tasks (T8) | In Tasks |
-| GAL-47 | P1: Zoom | Tasks (T8) | In Tasks |
-| GAL-48 | P1: Zoom | Tasks (T8) | In Tasks |
+| GAL-39 | P1: Zoom | Tasks (T1, T8) | Done |
+| GAL-40 | P1: Zoom | Tasks (T1, T8) | Done |
+| GAL-41 | P1: Zoom | Tasks (T1, T8) | Done |
+| GAL-42 | P1: Zoom | Tasks (T8) | Done |
+| GAL-43 | P1: Zoom | Tasks (T8) | Done |
+| GAL-44 | P1: Zoom | Tasks (T8) | Done |
+| GAL-45 | P1: Zoom | Tasks (T8) | Done |
+| GAL-46 | P1: Zoom | Tasks (T8) | Done |
+| GAL-47 | P1: Zoom | Tasks (T8) | Done |
+| GAL-48 | P1: Zoom | Tasks (T8) | Done |
 | GAL-49 | P1: Duração de 200ms | Tasks (T2) | Done |
 | GAL-50 | P1: Duração de 200ms | Tasks (T2) | Done |
 | GAL-51 | P1: Duração de 200ms | Tasks (T7) | Done |
-| GAL-52 | P1: Duração de 200ms | Tasks (T8) | In Tasks |
+| GAL-52 | P1: Duração de 200ms | Tasks (T8) | Done |
 
 **Coverage:** 52 total, 52 mapped to tasks, 0 unmapped
 

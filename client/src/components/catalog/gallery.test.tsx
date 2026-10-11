@@ -302,3 +302,151 @@ describe('Gallery drag (GAL-32–GAL-37, GAL-51)', () => {
     expect(shownPhoto().getAttribute('src')).toBe(photos[1])
   })
 })
+
+
+describe('Gallery zoom (GAL-39–GAL-48, GAL-52)', () => {
+  beforeAll(() => {
+    window.PointerEvent = class extends MouseEvent {
+      readonly pointerId: number
+      readonly pointerType: string
+      constructor(type: string, init: PointerEventInit = {}) {
+        super(type, init)
+        this.pointerId = init.pointerId ?? 1
+        this.pointerType = init.pointerType ?? 'touch'
+      }
+    } as typeof PointerEvent
+  })
+
+  afterEach(() => vi.restoreAllMocks())
+
+  function setup() {
+    render(<InteractiveGallery />)
+    const frame = screen.getByTestId('watch-gallery-frame')
+    vi.spyOn(frame, 'getBoundingClientRect').mockReturnValue({
+      left: 100, top: 50, width: 400, height: 400,
+    } as DOMRect)
+    return frame
+  }
+
+  function photo() {
+    return screen.getByRole('img', { name: 'Relógio Seculus' }) as HTMLImageElement
+  }
+
+  function tap(frame: HTMLElement, x = 350, y = 275, pointerType = 'touch') {
+    const point = { clientX: x, clientY: y, pointerId: 1, pointerType }
+    fireEvent.pointerDown(frame, point)
+    fireEvent.pointerUp(frame, point)
+  }
+
+  it('uses deltaY / 400 toward the Ctrl-wheel pointer and clamps repeated requests to 1 and 3', () => {
+    const frame = setup()
+    fireEvent.wheel(frame, { ctrlKey: true, deltaY: -100, clientX: 350, clientY: 275 })
+    expect(photo().style.transform).toBe('translate(-12.5px, -6.25px) scale(1.25) scaleX(1)')
+    fireEvent.wheel(frame, { ctrlKey: true, deltaY: -10000, clientX: 350, clientY: 275 })
+    expect(photo().style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
+    fireEvent.wheel(frame, { ctrlKey: true, deltaY: -400, clientX: 350, clientY: 275 })
+    expect(photo().style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
+    fireEvent.wheel(frame, { ctrlKey: true, deltaY: 10000, clientX: 350, clientY: 275 })
+    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    fireEvent.wheel(frame, { ctrlKey: true, deltaY: 400, clientX: 350, clientY: 275 })
+    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+  })
+
+  it.each([1, 2])('ignores wheel without Ctrl at scale %i and keeps the photo', (scale) => {
+    const frame = setup()
+    if (scale === 2) fireEvent.wheel(frame, { ctrlKey: true, deltaY: -400, clientX: 300, clientY: 250 })
+    fireEvent.wheel(frame, { deltaY: -1000, clientX: 350, clientY: 275 })
+    expect(photo().style.transform).toBe(`translate(0px, 0px) scale(${scale}) scaleX(1)`)
+    expect(photo().getAttribute('src')).toBe(photos[0])
+  })
+
+  it('uses the initial scale and pointer distance ratio toward the pinch midpoint', () => {
+    const frame = setup()
+    fireEvent.wheel(frame, { ctrlKey: true, deltaY: -400, clientX: 300, clientY: 250 })
+    fireEvent.pointerDown(frame, { pointerId: 1, clientX: 300, clientY: 250 })
+    fireEvent.pointerDown(frame, { pointerId: 2, clientX: 400, clientY: 250 })
+    fireEvent.pointerMove(frame, { pointerId: 2, clientX: 425, clientY: 250 })
+    expect(photo().style.transform).toBe('translate(-15.625px, 0px) scale(2.5) scaleX(1)')
+    fireEvent.pointerMove(frame, { pointerId: 2, clientX: 450, clientY: 250 })
+    expect(photo().style.transform).toBe('translate(-37.5px, 0px) scale(3) scaleX(1)')
+    expect(photo().getAttribute('src')).toBe(photos[0])
+  })
+
+  it('clamps pinch requests at both bounds and never turns the two-pointer release into a swipe', () => {
+    const frame = setup()
+    fireEvent.pointerDown(frame, { pointerId: 1, clientX: 250, clientY: 250 })
+    fireEvent.pointerDown(frame, { pointerId: 2, clientX: 350, clientY: 250 })
+    fireEvent.pointerMove(frame, { pointerId: 2, clientX: 750, clientY: 250 })
+    expect(photo().style.transform).toBe('translate(-400px, 0px) scale(3) scaleX(1)')
+    fireEvent.pointerMove(frame, { pointerId: 2, clientX: 850, clientY: 250 })
+    expect(photo().style.transform).toBe('translate(-400px, 0px) scale(3) scaleX(1)')
+    fireEvent.pointerMove(frame, { pointerId: 2, clientX: 275, clientY: 250 })
+    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    fireEvent.pointerMove(frame, { pointerId: 2, clientX: 260, clientY: 250 })
+    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    fireEvent.pointerUp(frame, { pointerId: 2, clientX: 260, clientY: 250 })
+    fireEvent.pointerMove(frame, { pointerId: 1, clientX: 150, clientY: 250 })
+    fireEvent.pointerUp(frame, { pointerId: 1, clientX: 150, clientY: 250 })
+    expect(photo().getAttribute('src')).toBe(photos[0])
+    expect(screen.getByText('Foto 1 de 2')).toBeTruthy()
+    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+  })
+
+  it.each(['touch', 'mouse'])('toggles 1 to 3 toward the second %s point and back to zero translation', (pointerType) => {
+    const frame = setup()
+    const now = vi.spyOn(Date, 'now').mockReturnValue(1000)
+    tap(frame, 340, 270, pointerType)
+    now.mockReturnValue(1200)
+    tap(frame, 350, 275, pointerType)
+    expect(photo().style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
+    now.mockReturnValue(2000)
+    tap(frame, 350, 275, pointerType)
+    now.mockReturnValue(2100)
+    tap(frame, 350, 275, pointerType)
+    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+  })
+
+  it.each([
+    [300, 39, 0, true],
+    [301, 0, 0, false],
+    [200, 40, 0, false],
+    [200, 41, 0, false],
+    [200, 30, 30, false],
+  ])('accepts only <=300ms and <40px (time %i, x %i, y %i)', (elapsed, dx, dy, accepted) => {
+    const frame = setup()
+    const now = vi.spyOn(Date, 'now').mockReturnValue(1000)
+    tap(frame, 300, 250)
+    now.mockReturnValue(1000 + elapsed)
+    tap(frame, 300 + dx, 250 + dy)
+    expect(photo().style.transform).toBe(accepted
+      ? 'translate(-78px, 0px) scale(3) scaleX(1)'
+      : 'translate(0px, 0px) scale(1) scaleX(1)')
+  })
+
+  it('limits the double-tap translation to the frame edges', () => {
+    const frame = setup()
+    vi.spyOn(Date, 'now').mockReturnValue(1000)
+    tap(frame, 550, 500)
+    tap(frame, 550, 500)
+    expect(photo().style.transform).toBe('translate(-400px, -400px) scale(3) scaleX(1)')
+  })
+
+  it('renders only the closing and navigation controls, without zoom buttons', () => {
+    setup()
+    expect(screen.getAllByRole('button').map((button) => button.getAttribute('aria-label')))
+      .toEqual(['Fechar', 'Anterior', 'Seguinte'])
+  })
+
+  it.each([[false, '200ms'], [true, '0ms']])('uses the specified zoom duration with reduced motion %s', (reduce, duration) => {
+    vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: reduce })))
+    const frame = setup()
+    fireEvent.wheel(frame, { ctrlKey: true, deltaY: -400, clientX: 300, clientY: 250 })
+    expect(photo().style.transform).toBe('translate(0px, 0px) scale(2) scaleX(1)')
+    expect(photo().style.transitionDuration).toBe(duration)
+    vi.spyOn(Date, 'now').mockReturnValue(1000)
+    tap(frame, 300, 250)
+    tap(frame, 300, 250)
+    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(photo().style.transitionDuration).toBe(duration)
+  })
+})

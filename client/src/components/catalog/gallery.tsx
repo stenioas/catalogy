@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { DRAG_THRESHOLD_PX, panWithin, rubberBand, rubberStretch, slideDuration, type Zoom } from './motion'
+import { DOUBLE_TAP_MS, DRAG_THRESHOLD_PX, panWithin, pinchScale, rubberBand, rubberStretch, slideDuration, wheelScale, zoomToward, type Zoom } from './motion'
 
 export type GalleryProps = {
   images: string[]
@@ -20,6 +20,10 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
   const [pullPx, setPullPx] = useState(0)
   const [dragging, setDragging] = useState(false)
   const dragStart = useRef<{ x: number; y: number; zoom: Zoom } | null>(null)
+  const pointers = useRef(new Map<number, { x: number; y: number }>())
+  const pinchStart = useRef<{ distance: number; zoom: Zoom } | null>(null)
+  const pinching = useRef(false)
+  const lastTap = useRef<{ time: number; x: number; y: number } | null>(null)
   const previousIndex = useRef(index)
   const reduce = typeof window.matchMedia === 'function'
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -32,7 +36,31 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
     setPullPx(0)
     setDragging(false)
     dragStart.current = null
+    pointers.current.clear()
+    pinchStart.current = null
+    pinching.current = false
+    lastTap.current = null
   }, [index])
+
+  function zoomAt(current: Zoom, scale: number, x: number, y: number) {
+    const frame = frameRef.current?.getBoundingClientRect()
+    if (!frame) return current
+    return zoomToward(current, scale,
+      x - frame.left - frame.width / 2,
+      y - frame.top - frame.height / 2, frame.width)
+  }
+
+  useEffect(() => {
+    const frame = frameRef.current
+    function onWheel(event: WheelEvent) {
+      if (!event.ctrlKey) return
+      event.preventDefault()
+      lastTap.current = null
+      setZoom(zoomAt(zoom, wheelScale(zoom.scale, event.deltaY), event.clientX, event.clientY))
+    }
+    frame?.addEventListener('wheel', onWheel, { passive: false })
+    return () => frame?.removeEventListener('wheel', onWheel)
+  }, [zoom])
 
   function onPointerDown(event: PointerEvent<HTMLDivElement>) {
     if (typeof event.currentTarget.setPointerCapture === 'function') {
@@ -42,6 +70,21 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
         // The pointer is no longer active. Coordinates still drive the gesture.
       }
     }
+    pointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
+    if (pointers.current.size === 2) {
+      const [first, second] = [...pointers.current.values()]
+      pinchStart.current = {
+        distance: Math.hypot(second.x - first.x, second.y - first.y),
+        zoom,
+      }
+      pinching.current = true
+      dragStart.current = null
+      lastTap.current = null
+      setPullPx(0)
+      setDragging(true)
+      return
+    }
+    if (pinching.current) return
     dragStart.current = { x: event.clientX, y: event.clientY, zoom }
     setDragging(true)
   }
@@ -55,6 +98,17 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
   }
 
   function onPointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (!pointers.current.has(event.pointerId)) return
+    pointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
+    if (pinching.current) {
+      const start = pinchStart.current
+      if (pointers.current.size !== 2 || !start) return
+      const [first, second] = [...pointers.current.values()]
+      const distance = Math.hypot(second.x - first.x, second.y - first.y)
+      setZoom(zoomAt(start.zoom, pinchScale(start.zoom.scale, start.distance, distance),
+        (first.x + second.x) / 2, (first.y + second.y) / 2))
+      return
+    }
     const start = dragStart.current
     if (!start) return
     if (start.zoom.scale > 1) {
@@ -67,12 +121,35 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
   }
 
   function onPointerUp(event: PointerEvent<HTMLDivElement>) {
+    pointers.current.delete(event.pointerId)
+    if (pinching.current) {
+      if (pointers.current.size === 0) {
+        pinching.current = false
+        pinchStart.current = null
+        setDragging(false)
+      }
+      return
+    }
     const start = dragStart.current
     if (!start) return
     if (start.zoom.scale > 1) pan(event)
     dragStart.current = null
     setDragging(false)
     setPullPx(0)
+    const movement = Math.hypot(event.clientX - start.x, event.clientY - start.y)
+    if (movement < DRAG_THRESHOLD_PX) {
+      const time = Date.now()
+      const previous = lastTap.current
+      const close = previous && Math.hypot(event.clientX - previous.x, event.clientY - previous.y) < DRAG_THRESHOLD_PX
+      if (previous && time - previous.time <= DOUBLE_TAP_MS && close) {
+        setZoom(zoomAt(zoom, zoom.scale === 1 ? 3 : 1, event.clientX, event.clientY))
+        lastTap.current = null
+      } else {
+        lastTap.current = { time, x: event.clientX, y: event.clientY }
+      }
+      return
+    }
+    lastTap.current = null
     if (start.zoom.scale > 1) return
     const delta = event.clientX - start.x
     if (Math.abs(delta) <= DRAG_THRESHOLD_PX) return
@@ -80,7 +157,11 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
     if (next >= 0 && next < images.length) onIndexChange(next)
   }
 
-  function onPointerCancel() {
+  function onPointerCancel(event: PointerEvent<HTMLDivElement>) {
+    pointers.current.delete(event.pointerId)
+    pinchStart.current = null
+    pinching.current = pointers.current.size > 0
+    lastTap.current = null
     dragStart.current = null
     setDragging(false)
     setPullPx(0)

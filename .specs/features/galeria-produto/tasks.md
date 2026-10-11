@@ -316,20 +316,22 @@ T6 → T7 → T8
 
 **Done when**:
 
-- [ ] Pinça e roda com Ctrl ficam entre 1 e 3 e miram o ponteiro
-- [ ] Roda sem Ctrl não muda escala nem foto
-- [ ] Duplo toque em até 300ms e a menos de 40px alterna 1× e 3×. Fora da janela, a escala fica
-- [ ] 300ms exatos conta. 40px exatos entre os toques não conta
-- [ ] O toque de abertura não arma o cronômetro. A pinça não troca a foto
-- [ ] Não há botão de aumentar ou diminuir zoom
-- [ ] O zoom usa 200ms, e 0ms com movimento reduzido
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] A suíte do client passa sem apagar teste
+- [x] Pinça e roda com Ctrl ficam entre 1 e 3 e miram o ponteiro
+- [x] Roda sem Ctrl não muda escala nem foto
+- [x] Duplo toque em até 300ms e a menos de 40px alterna 1× e 3×. Fora da janela, a escala fica
+- [x] 300ms exatos conta. 40px exatos entre os toques não conta
+- [x] O toque de abertura não arma o cronômetro. A pinça não troca a foto
+- [x] Não há botão de aumentar ou diminuir zoom
+- [x] O zoom usa 200ms, e 0ms com movimento reduzido
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] A suíte do client passa sem apagar teste
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(catalog): zoom gallery photos`
+
+**Status**: done
 
 ---
 
