@@ -33,6 +33,17 @@ function shownSrc() {
   return screen.getByRole('img', { name: 'Seculus' }).getAttribute('src')
 }
 
+function visibleGallerySrc(dialog: HTMLElement) {
+  const track = within(dialog).getByTestId('watch-gallery-track')
+  const offset = /^translateX\(-(\d+)%\)$/.exec(track.style.transform)
+  expect(offset).not.toBeNull()
+  const slot = Number(offset?.[1]) / 100
+  const images = [...track.querySelectorAll('img')]
+    .map((image, domIndex) => ({ image, domIndex, order: Number(image.style.order || 0) }))
+    .sort((left, right) => left.order - right.order || left.domIndex - right.domIndex)
+  return images[slot]?.image.getAttribute('src')
+}
+
 function frame() {
   return screen.getByTestId('carousel-frame')
 }
@@ -366,6 +377,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
 
     const dialog = screen.getByRole('dialog', { name: 'Galeria de fotos' })
     expect(dialog.querySelector('img')?.getAttribute('src')).toBe(photos[1])
+    expect(visibleGallerySrc(dialog)).toBe(photos[1])
     expect(document.activeElement).toBe(dialog)
     expect(screen.getByTestId('watch-carousel').hasAttribute('inert')).toBe(true)
     expect(root.hasAttribute('inert')).toBe(true)
@@ -411,6 +423,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
       name: 'Seculus',
     })
     expect(galleryImage.getAttribute('src')).toBe(photos[1])
+    expect(visibleGallerySrc(dialog)).toBe(photos[1])
     expect(carouselImage.getAttribute('src')).toBe(photos[1])
     expect(track.style.transitionDuration).toBe('0ms')
   })

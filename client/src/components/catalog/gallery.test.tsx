@@ -20,6 +20,17 @@ vi.mock('react', async (importOriginal) => {
 
 const photos = ['foto-1.webp', 'foto-2.webp']
 
+function visiblePhotoSrc() {
+  const track = screen.getByTestId('watch-gallery-track')
+  const offset = /^translateX\(-(\d+)%\)$/.exec(track.style.transform)
+  expect(offset).not.toBeNull()
+  const slot = Number(offset?.[1]) / 100
+  const images = [...track.querySelectorAll('img')]
+    .map((image, domIndex) => ({ image, domIndex, order: Number(image.style.order || 0) }))
+    .sort((left, right) => left.order - right.order || left.domIndex - right.domIndex)
+  return images[slot]?.image.getAttribute('src')
+}
+
 function renderGallery(onClose = vi.fn()) {
   return render(
     <Gallery
@@ -227,6 +238,22 @@ describe('Gallery drag (GAL-32–GAL-37, GAL-51)', () => {
   beforeAll(() => {
     if (typeof window.PointerEvent === 'function') return
     window.PointerEvent = class PointerEvent extends MouseEvent {} as typeof PointerEvent
+  })
+
+  it('keeps the visible flex slot on the selected photo through arrows, keyboard and drag', () => {
+    render(<InteractiveGallery images={[...photos, 'foto-3.webp']} />)
+    expect(visiblePhotoSrc()).toBe(photos[0])
+
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+    expect(visiblePhotoSrc()).toBe(photos[1])
+
+    fireEvent.keyDown(document, { key: 'ArrowRight' })
+    expect(visiblePhotoSrc()).toBe('foto-3.webp')
+
+    const frame = screen.getByTestId('watch-gallery-frame')
+    fireEvent.pointerDown(frame, { clientX: 100, clientY: 100, pointerId: 1 })
+    fireEvent.pointerUp(frame, { clientX: 141, clientY: 100, pointerId: 1 })
+    expect(visiblePhotoSrc()).toBe(photos[1])
   })
 
   function shownPhoto() {
