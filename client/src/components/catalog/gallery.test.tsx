@@ -108,7 +108,7 @@ describe('Gallery modal (GAL-03–GAL-07, GAL-10, GAL-12, GAL-13, GAL-15–GAL-1
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
-  it('uses a 44px circular close button with a dark chip and responsive corners', () => {
+  it('uses a 44px circular close button with a dark chip, soft red hover, and a fixed top-left corner', () => {
     renderGallery()
 
     const close = screen.getByRole('button', { name: 'Fechar' })
@@ -117,15 +117,15 @@ describe('Gallery modal (GAL-03–GAL-07, GAL-10, GAL-12, GAL-13, GAL-15–GAL-1
     expect(classes).toContain('rounded-full')
     expect(classes).toContain('top-3')
     expect(classes).toContain('left-3')
-    expect(classes).toContain('md:left-auto')
-    expect(classes).toContain('md:right-3')
+    expect(classes).not.toContain('md:left-auto')
+    expect(classes).not.toContain('md:right-3')
     expect(classes).toContain(
       'bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)]',
     )
     expect(classes).toContain('cursor-pointer')
     expect(classes).toContain('text-[var(--body-muted)]')
-    expect(classes).toContain('hover:text-[var(--body-muted)]')
-    expect(classes).toContain('hover:bg-[var(--surface-tile-2)]')
+    expect(classes).toContain('hover:text-[var(--body-on-dark)]')
+    expect(classes).toContain('hover:bg-[color-mix(in_srgb,var(--destructive)_25%,var(--surface-black))]')
     expect(close.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true')
   })
 
@@ -135,6 +135,7 @@ describe('Gallery modal (GAL-03–GAL-07, GAL-10, GAL-12, GAL-13, GAL-15–GAL-1
     const frame = screen.getByTestId('watch-gallery-frame')
     const photo = screen.getByRole('img', { name: 'Relógio Seculus' })
     expect(frame.className.split(/\s+/)).toContain('aspect-square')
+    expect(frame.className.split(/\s+/)).not.toContain('overflow-hidden')
     expect(photo.className.split(/\s+/)).toContain('object-contain')
     expect(photo.getAttribute('src')).toBe(photos[0])
   })
@@ -211,6 +212,7 @@ describe('Gallery navigation and photo status (GAL-19–GAL-31)', () => {
 
     const badge = screen.getByText('1/2')
     expect(badge.getAttribute('aria-hidden')).toBe('true')
+    expect(badge.parentElement).toBe(screen.getByRole('dialog'))
     expect(badge.className.split(/\s+/)).toContain('right-3')
     expect(badge.className.split(/\s+/)).toContain('bottom-3')
     expect(badge.className.split(/\s+/)).toContain('text-[var(--body-on-dark)]')
@@ -295,11 +297,11 @@ describe('Gallery drag (GAL-32–GAL-37, GAL-51)', () => {
     fireEvent.pointerMove(frame, { clientX: 200 + dx, pointerId: 1 })
     const pull = Math.sign(dx) * 56 * (1 - Math.exp(-100 / 160))
     const stretch = 1 + Math.abs(pull) / 56 * 0.08
-    expect(shownPhoto().style.transform).toBe(`translate(${pull}px, 0px) scale(1) scaleX(${stretch})`)
-    expect(shownPhoto().style.transitionDuration).toBe('0ms')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe(`translate(${pull}px, 0px) scale(1) scaleX(${stretch})`)
+    expect(screen.getByTestId('watch-gallery-viewport').style.transitionDuration).toBe('0ms')
     fireEvent.pointerUp(frame, { clientX: 200 + dx, pointerId: 1 })
     expect(shownPhoto().getAttribute('src')).toBe(photos[initialIndex])
-    expect(shownPhoto().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
   })
 
   it.each([[-500, -400, -200], [500, 400, 200]])('pans a zoomed photo within its frame without changing the index (%i)', (dx, dy, limit) => {
@@ -308,7 +310,7 @@ describe('Gallery drag (GAL-32–GAL-37, GAL-51)', () => {
     const frame = screen.getByTestId('watch-gallery-frame')
     vi.spyOn(frame, 'getBoundingClientRect').mockReturnValue({ width: 400 } as DOMRect)
     drag(dx, dy)
-    expect(shownPhoto().style.transform).toBe(`translate(${limit}px, ${limit}px) scale(2) scaleX(1)`)
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe(`translate(${limit}px, ${limit}px) scale(2) scaleX(1)`)
     expect(shownPhoto().getAttribute('src')).toBe(photos[0])
     expect(screen.getByText('Foto 1 de 2')).toBeTruthy()
   })
@@ -319,12 +321,12 @@ describe('Gallery drag (GAL-32–GAL-37, GAL-51)', () => {
     const view = method === 'controlled'
       ? render(<Gallery images={photos} alt="Relógio Seculus" index={0} onIndexChange={onIndexChange} onClose={vi.fn()} />)
       : render(<InteractiveGallery />)
-    expect(shownPhoto().style.transform).toBe('translate(75px, -50px) scale(3) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(75px, -50px) scale(3) scaleX(1)')
     if (method === 'button') fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     else if (method === 'keyboard') fireEvent.keyDown(document, { key: 'ArrowRight' })
     else view.rerender(<Gallery images={photos} alt="Relógio Seculus" index={1} onIndexChange={onIndexChange} onClose={vi.fn()} />)
     expect(shownPhoto().getAttribute('src')).toBe(photos[1])
-    expect(shownPhoto().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
   })
 
   it.each([[false, '200ms'], [true, '0ms']])('uses the required slide duration with reduced motion %s', (reduce, duration) => {
@@ -375,22 +377,22 @@ describe('Gallery zoom (GAL-39–GAL-48, GAL-52)', () => {
   it('uses deltaY / 400 toward the Ctrl-wheel pointer and clamps repeated requests to 1 and 3', () => {
     const frame = setup()
     fireEvent.wheel(frame, { ctrlKey: true, deltaY: -100, clientX: 350, clientY: 275 })
-    expect(photo().style.transform).toBe('translate(-12.5px, -6.25px) scale(1.25) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-12.5px, -6.25px) scale(1.25) scaleX(1)')
     fireEvent.wheel(frame, { ctrlKey: true, deltaY: -10000, clientX: 350, clientY: 275 })
-    expect(photo().style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
     fireEvent.wheel(frame, { ctrlKey: true, deltaY: -400, clientX: 350, clientY: 275 })
-    expect(photo().style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
     fireEvent.wheel(frame, { ctrlKey: true, deltaY: 10000, clientX: 350, clientY: 275 })
-    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
     fireEvent.wheel(frame, { ctrlKey: true, deltaY: 400, clientX: 350, clientY: 275 })
-    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
   })
 
   it.each([1, 2])('ignores wheel without Ctrl at scale %i and keeps the photo', (scale) => {
     const frame = setup()
     if (scale === 2) fireEvent.wheel(frame, { ctrlKey: true, deltaY: -400, clientX: 300, clientY: 250 })
     fireEvent.wheel(frame, { deltaY: -1000, clientX: 350, clientY: 275 })
-    expect(photo().style.transform).toBe(`translate(0px, 0px) scale(${scale}) scaleX(1)`)
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe(`translate(0px, 0px) scale(${scale}) scaleX(1)`)
     expect(photo().getAttribute('src')).toBe(photos[0])
   })
 
@@ -400,9 +402,9 @@ describe('Gallery zoom (GAL-39–GAL-48, GAL-52)', () => {
     fireEvent.pointerDown(frame, { pointerId: 1, clientX: 300, clientY: 250 })
     fireEvent.pointerDown(frame, { pointerId: 2, clientX: 400, clientY: 250 })
     fireEvent.pointerMove(frame, { pointerId: 2, clientX: 425, clientY: 250 })
-    expect(photo().style.transform).toBe('translate(-15.625px, 0px) scale(2.5) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-15.625px, 0px) scale(2.5) scaleX(1)')
     fireEvent.pointerMove(frame, { pointerId: 2, clientX: 450, clientY: 250 })
-    expect(photo().style.transform).toBe('translate(-37.5px, 0px) scale(3) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-37.5px, 0px) scale(3) scaleX(1)')
     expect(photo().getAttribute('src')).toBe(photos[0])
   })
 
@@ -411,19 +413,19 @@ describe('Gallery zoom (GAL-39–GAL-48, GAL-52)', () => {
     fireEvent.pointerDown(frame, { pointerId: 1, clientX: 250, clientY: 250 })
     fireEvent.pointerDown(frame, { pointerId: 2, clientX: 350, clientY: 250 })
     fireEvent.pointerMove(frame, { pointerId: 2, clientX: 750, clientY: 250 })
-    expect(photo().style.transform).toBe('translate(-400px, 0px) scale(3) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-400px, 0px) scale(3) scaleX(1)')
     fireEvent.pointerMove(frame, { pointerId: 2, clientX: 850, clientY: 250 })
-    expect(photo().style.transform).toBe('translate(-400px, 0px) scale(3) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-400px, 0px) scale(3) scaleX(1)')
     fireEvent.pointerMove(frame, { pointerId: 2, clientX: 275, clientY: 250 })
-    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
     fireEvent.pointerMove(frame, { pointerId: 2, clientX: 260, clientY: 250 })
-    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
     fireEvent.pointerUp(frame, { pointerId: 2, clientX: 260, clientY: 250 })
     fireEvent.pointerMove(frame, { pointerId: 1, clientX: 150, clientY: 250 })
     fireEvent.pointerUp(frame, { pointerId: 1, clientX: 150, clientY: 250 })
     expect(photo().getAttribute('src')).toBe(photos[0])
     expect(screen.getByText('Foto 1 de 2')).toBeTruthy()
-    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
   })
 
   it.each(['touch', 'mouse'])('toggles 1 to 3 toward the second %s point and back to zero translation', (pointerType) => {
@@ -432,12 +434,12 @@ describe('Gallery zoom (GAL-39–GAL-48, GAL-52)', () => {
     tap(frame, 340, 270, pointerType)
     now.mockReturnValue(1200)
     tap(frame, 350, 275, pointerType)
-    expect(photo().style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')
     now.mockReturnValue(2000)
     tap(frame, 350, 275, pointerType)
     now.mockReturnValue(2100)
     tap(frame, 350, 275, pointerType)
-    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
   })
 
   it.each([
@@ -452,7 +454,7 @@ describe('Gallery zoom (GAL-39–GAL-48, GAL-52)', () => {
     tap(frame, 300, 250)
     now.mockReturnValue(1000 + elapsed)
     tap(frame, 300 + dx, 250 + dy)
-    expect(photo().style.transform).toBe(accepted
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe(accepted
       ? 'translate(-78px, 0px) scale(3) scaleX(1)'
       : 'translate(0px, 0px) scale(1) scaleX(1)')
   })
@@ -462,7 +464,7 @@ describe('Gallery zoom (GAL-39–GAL-48, GAL-52)', () => {
     vi.spyOn(Date, 'now').mockReturnValue(1000)
     tap(frame, 550, 500)
     tap(frame, 550, 500)
-    expect(photo().style.transform).toBe('translate(-400px, -400px) scale(3) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-400px, -400px) scale(3) scaleX(1)')
   })
 
   it('renders only the closing and navigation controls, without zoom buttons', () => {
@@ -475,12 +477,12 @@ describe('Gallery zoom (GAL-39–GAL-48, GAL-52)', () => {
     vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: reduce })))
     const frame = setup()
     fireEvent.wheel(frame, { ctrlKey: true, deltaY: -400, clientX: 300, clientY: 250 })
-    expect(photo().style.transform).toBe('translate(0px, 0px) scale(2) scaleX(1)')
-    expect(photo().style.transitionDuration).toBe(duration)
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(2) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transitionDuration).toBe(duration)
     vi.spyOn(Date, 'now').mockReturnValue(1000)
     tap(frame, 300, 250)
     tap(frame, 300, 250)
-    expect(photo().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
-    expect(photo().style.transitionDuration).toBe(duration)
+    expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(screen.getByTestId('watch-gallery-viewport').style.transitionDuration).toBe(duration)
   })
 })

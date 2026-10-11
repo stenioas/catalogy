@@ -203,7 +203,7 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
       aria-label="Galeria de fotos"
       data-testid="watch-gallery"
       tabIndex={-1}
-      className="fixed inset-0 z-30 flex items-center justify-center bg-[rgb(0_0_0/80%)]"
+      className="fixed inset-0 z-30 flex overflow-hidden items-center justify-center bg-[rgb(0_0_0/80%)]"
       style={{
         backdropFilter: 'saturate(180%) blur(20px)',
         transitionDuration: '0ms',
@@ -216,7 +216,7 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
         type="button"
         variant="ghost"
         aria-label="Fechar"
-        className="absolute top-3 left-3 size-11 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[var(--surface-tile-2)] hover:text-[var(--body-muted)] md:left-auto md:right-3"
+        className="absolute top-3 left-3 z-20 size-11 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[color-mix(in_srgb,var(--destructive)_25%,var(--surface-black))] hover:text-[var(--body-on-dark)]"
         onClick={onClose}
       >
         <X aria-hidden="true" />
@@ -228,7 +228,7 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
             variant="ghost"
             aria-label="Anterior"
             disabled={index === 0}
-            className="absolute top-1/2 left-3 hidden size-11 -translate-y-1/2 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[var(--surface-tile-2)] hover:text-[var(--body-muted)] md:inline-flex"
+            className="absolute z-20 top-1/2 left-3 hidden size-11 -translate-y-1/2 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[var(--surface-tile-2)] hover:text-[var(--body-muted)] md:inline-flex"
             onClick={() => onIndexChange(index - 1)}
           >
             <ChevronLeft aria-hidden="true" />
@@ -238,7 +238,7 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
             variant="ghost"
             aria-label="Seguinte"
             disabled={index === count - 1}
-            className="absolute top-1/2 right-3 hidden size-11 -translate-y-1/2 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[var(--surface-tile-2)] hover:text-[var(--body-muted)] md:inline-flex"
+            className="absolute z-20 top-1/2 right-3 hidden size-11 -translate-y-1/2 cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] text-[var(--body-muted)] hover:bg-[var(--surface-tile-2)] hover:text-[var(--body-muted)] md:inline-flex"
             onClick={() => onIndexChange(index + 1)}
           >
             <ChevronRight aria-hidden="true" />
@@ -252,41 +252,46 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerCancel}
-        className="relative flex touch-none overflow-hidden aspect-square w-[min(calc(100vw-2rem),calc(100dvh-4.5rem))] items-center justify-center md:w-[min(calc(100vw-8.5rem),calc(100dvh-4.5rem))]"
+        className="relative z-10 flex touch-none aspect-square w-[min(calc(100vw-2rem),calc(100dvh-4.5rem))] items-center justify-center md:w-[min(calc(100vw-8.5rem),calc(100dvh-4.5rem))]"
       >
         <div
-          data-testid="watch-gallery-track"
-          className="flex h-full w-full"
+          data-testid="watch-gallery-viewport"
+          className="h-full w-full overflow-hidden"
           style={{
-            transform: `translateX(-${index * 100}%)`,
+            transform: `translate(${zoom.tx + pullPx}px, ${zoom.ty}px) scale(${zoom.scale}) scaleX(${rubberStretch(pullPx)})`,
+            transformOrigin: pullPx ? (pullPx > 0 ? 'left center' : 'right center') : 'center',
             transitionProperty: 'transform',
             transitionDuration: dragging ? '0ms' : duration,
           }}
         >
-          {[index, ...images.map((_, imageIndex) => imageIndex).filter((imageIndex) => imageIndex !== index)].map((imageIndex) => (
-            <img
-              key={`${images[imageIndex]}:${imageIndex}`}
-              src={images[imageIndex]}
-              alt={imageIndex === index ? alt : ''}
-              draggable={false}
-              className="h-full w-full shrink-0 object-contain"
-              style={imageIndex === index ? {
-                order: imageIndex,
-                transform: `translate(${zoom.tx + pullPx}px, ${zoom.ty}px) scale(${zoom.scale}) scaleX(${rubberStretch(pullPx)})`,
-                transformOrigin: pullPx ? (pullPx > 0 ? 'left center' : 'right center') : 'center',
-                transitionProperty: 'transform',
-                transitionDuration: dragging ? '0ms' : duration,
-              } : { order: imageIndex }}
-            />
-          ))}
+          <div
+            data-testid="watch-gallery-track"
+            className="flex h-full w-full"
+            style={{
+              transform: `translateX(-${index * 100}%)`,
+              transitionProperty: 'transform',
+              transitionDuration: dragging ? '0ms' : duration,
+            }}
+          >
+            {[index, ...images.map((_, imageIndex) => imageIndex).filter((imageIndex) => imageIndex !== index)].map((imageIndex) => (
+              <img
+                key={`${images[imageIndex]}:${imageIndex}`}
+                src={images[imageIndex]}
+                alt={imageIndex === index ? alt : ''}
+                draggable={false}
+                className="h-full w-full shrink-0 object-contain"
+                style={{ order: imageIndex }}
+              />
+            ))}
+          </div>
         </div>
-        <span
-          aria-hidden="true"
-          className="absolute right-3 bottom-3 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] px-3 py-1 text-[var(--body-on-dark)]"
-        >
-          {index + 1}/{count}
-        </span>
       </div>
+      <span
+        aria-hidden="true"
+        className="absolute z-20 right-3 bottom-3 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] px-3 py-1 text-[var(--body-on-dark)]"
+      >
+        {index + 1}/{count}
+      </span>
       <span className="sr-only" aria-live="polite">
         Foto {index + 1} de {count}
       </span>
