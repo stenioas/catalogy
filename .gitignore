@@ -1,6 +1,8 @@
 .agents/
 .cursor/
 .specs/
+plans/
+.plans/
 node_modules/
 dist/
 coverage/
