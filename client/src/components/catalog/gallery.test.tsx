@@ -1,8 +1,22 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { useState } from 'react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 
 import { Gallery } from './gallery'
+
+const zoomFixture = vi.hoisted(() => ({ value: null as null | { scale: number; tx: number; ty: number } }))
+
+// T7 prepares an existing zoom; the public gestures that create it belong to T8.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('react')>()
+  return {
+    ...actual,
+    useState: ((initial: unknown) => {
+      const isZoom = typeof initial === 'object' && initial !== null && 'scale' in initial
+      return actual.useState(isZoom && zoomFixture.value ? zoomFixture.value : initial)
+    }) as typeof actual.useState,
+  }
+})
 
 const photos = ['foto-1.webp', 'foto-2.webp']
 
@@ -34,6 +48,8 @@ function InteractiveGallery({ images = photos, initialIndex = 0 }: { images?: st
 
 afterEach(() => {
   cleanup()
+  zoomFixture.value = null
+  vi.unstubAllGlobals()
 })
 
 describe('Gallery modal (GAL-03–GAL-07, GAL-10, GAL-12, GAL-13, GAL-15–GAL-18, GAL-23)', () => {
@@ -203,5 +219,86 @@ describe('Gallery navigation and photo status (GAL-19–GAL-31)', () => {
     fireEvent.keyDown(document, { key: 'ArrowRight' })
     fireEvent.keyDown(document, { key: 'ArrowLeft' })
     expect(screen.getByRole('img', { name: 'Relógio Seculus' }).getAttribute('src')).toBe('foto-unica.webp')
+  })
+})
+
+
+describe('Gallery drag (GAL-32–GAL-37, GAL-51)', () => {
+  beforeAll(() => {
+    if (typeof window.PointerEvent === 'function') return
+    window.PointerEvent = class PointerEvent extends MouseEvent {} as typeof PointerEvent
+  })
+
+  function shownPhoto() {
+    return screen.getByRole('img', { name: 'Relógio Seculus' }) as HTMLImageElement
+  }
+
+  function drag(dx: number, dy = 0) {
+    const frame = screen.getByTestId('watch-gallery-frame')
+    fireEvent.pointerDown(frame, { clientX: 200, clientY: 200, pointerId: 1 })
+    fireEvent.pointerMove(frame, { clientX: 200 + dx, clientY: 200 + dy, pointerId: 1 })
+    fireEvent.pointerUp(frame, { clientX: 200 + dx, clientY: 200 + dy, pointerId: 1 })
+  }
+
+  it.each([[-41, 0, 1], [41, 1, 0]])('changes in the drag direction beyond 40px (%i)', (dx, initialIndex, expectedIndex) => {
+    render(<InteractiveGallery initialIndex={initialIndex} />)
+    drag(dx)
+    expect(shownPhoto().getAttribute('src')).toBe(photos[expectedIndex])
+    expect(screen.getByText(`Foto ${expectedIndex + 1} de 2`)).toBeTruthy()
+  })
+
+  it.each([-40, -39, 0, 39, 40])('keeps the photo and modal open at %ipx', (dx) => {
+    render(<InteractiveGallery />)
+    drag(dx, 100)
+    expect(shownPhoto().getAttribute('src')).toBe(photos[0])
+    expect(screen.getByRole('dialog', { name: 'Galeria de fotos' })).toBeTruthy()
+  })
+
+  it.each([[0, 100], [1, -100]])('shows the specified rubber at edge %i and restores it on release', (initialIndex, dx) => {
+    render(<InteractiveGallery initialIndex={initialIndex} />)
+    const frame = screen.getByTestId('watch-gallery-frame')
+    fireEvent.pointerDown(frame, { clientX: 200, pointerId: 1 })
+    fireEvent.pointerMove(frame, { clientX: 200 + dx, pointerId: 1 })
+    const pull = Math.sign(dx) * 56 * (1 - Math.exp(-100 / 160))
+    const stretch = 1 + Math.abs(pull) / 56 * 0.08
+    expect(shownPhoto().style.transform).toBe(`translate(${pull}px, 0px) scale(1) scaleX(${stretch})`)
+    expect(shownPhoto().style.transitionDuration).toBe('0ms')
+    fireEvent.pointerUp(frame, { clientX: 200 + dx, pointerId: 1 })
+    expect(shownPhoto().getAttribute('src')).toBe(photos[initialIndex])
+    expect(shownPhoto().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+  })
+
+  it.each([[-500, -400, -200], [500, 400, 200]])('pans a zoomed photo within its frame without changing the index (%i)', (dx, dy, limit) => {
+    zoomFixture.value = { scale: 2, tx: 0, ty: 0 }
+    render(<InteractiveGallery />)
+    const frame = screen.getByTestId('watch-gallery-frame')
+    vi.spyOn(frame, 'getBoundingClientRect').mockReturnValue({ width: 400 } as DOMRect)
+    drag(dx, dy)
+    expect(shownPhoto().style.transform).toBe(`translate(${limit}px, ${limit}px) scale(2) scaleX(1)`)
+    expect(shownPhoto().getAttribute('src')).toBe(photos[0])
+    expect(screen.getByText('Foto 1 de 2')).toBeTruthy()
+  })
+
+  it.each(['button', 'keyboard', 'controlled'])('resets zoom and translation when a photo changes by %s', (method) => {
+    zoomFixture.value = { scale: 3, tx: 75, ty: -50 }
+    const onIndexChange = vi.fn()
+    const view = method === 'controlled'
+      ? render(<Gallery images={photos} alt="Relógio Seculus" index={0} onIndexChange={onIndexChange} onClose={vi.fn()} />)
+      : render(<InteractiveGallery />)
+    expect(shownPhoto().style.transform).toBe('translate(75px, -50px) scale(3) scaleX(1)')
+    if (method === 'button') fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+    else if (method === 'keyboard') fireEvent.keyDown(document, { key: 'ArrowRight' })
+    else view.rerender(<Gallery images={photos} alt="Relógio Seculus" index={1} onIndexChange={onIndexChange} onClose={vi.fn()} />)
+    expect(shownPhoto().getAttribute('src')).toBe(photos[1])
+    expect(shownPhoto().style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+  })
+
+  it.each([[false, '200ms'], [true, '0ms']])('uses the required slide duration with reduced motion %s', (reduce, duration) => {
+    vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: reduce })))
+    render(<InteractiveGallery />)
+    drag(-41)
+    expect(screen.getByTestId('watch-gallery-track').style.transitionDuration).toBe(duration)
+    expect(screen.getByTestId('watch-gallery-track').style.transform).toBe('translateX(-100%)')
+    expect(shownPhoto().getAttribute('src')).toBe(photos[1])
   })
 })

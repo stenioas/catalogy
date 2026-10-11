@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, type PointerEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { DRAG_THRESHOLD_PX, panWithin, rubberBand, rubberStretch, slideDuration, type Zoom } from './motion'
 
 export type GalleryProps = {
   images: string[]
@@ -14,6 +15,76 @@ export type GalleryProps = {
 
 export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryProps) {
   const dialogRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
+  const [zoom, setZoom] = useState<Zoom>({ scale: 1, tx: 0, ty: 0 })
+  const [pullPx, setPullPx] = useState(0)
+  const [dragging, setDragging] = useState(false)
+  const dragStart = useRef<{ x: number; y: number; zoom: Zoom } | null>(null)
+  const previousIndex = useRef(index)
+  const reduce = typeof window.matchMedia === 'function'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const duration = slideDuration(reduce)
+
+  useEffect(() => {
+    if (previousIndex.current === index) return
+    previousIndex.current = index
+    setZoom({ scale: 1, tx: 0, ty: 0 })
+    setPullPx(0)
+    setDragging(false)
+    dragStart.current = null
+  }, [index])
+
+  function onPointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (typeof event.currentTarget.setPointerCapture === 'function') {
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId)
+      } catch {
+        // The pointer is no longer active. Coordinates still drive the gesture.
+      }
+    }
+    dragStart.current = { x: event.clientX, y: event.clientY, zoom }
+    setDragging(true)
+  }
+
+  function pan(event: PointerEvent<HTMLDivElement>) {
+    const start = dragStart.current
+    if (!start) return
+    setZoom(panWithin(start.zoom.tx, start.zoom.ty,
+      event.clientX - start.x, event.clientY - start.y, start.zoom.scale,
+      frameRef.current?.getBoundingClientRect().width ?? 0))
+  }
+
+  function onPointerMove(event: PointerEvent<HTMLDivElement>) {
+    const start = dragStart.current
+    if (!start) return
+    if (start.zoom.scale > 1) {
+      pan(event)
+      return
+    }
+    const delta = event.clientX - start.x
+    const atEdge = (index === 0 && delta > 0) || (index === images.length - 1 && delta < 0)
+    setPullPx(atEdge ? rubberBand(delta) : 0)
+  }
+
+  function onPointerUp(event: PointerEvent<HTMLDivElement>) {
+    const start = dragStart.current
+    if (!start) return
+    if (start.zoom.scale > 1) pan(event)
+    dragStart.current = null
+    setDragging(false)
+    setPullPx(0)
+    if (start.zoom.scale > 1) return
+    const delta = event.clientX - start.x
+    if (Math.abs(delta) <= DRAG_THRESHOLD_PX) return
+    const next = index + (delta < 0 ? 1 : -1)
+    if (next >= 0 && next < images.length) onIndexChange(next)
+  }
+
+  function onPointerCancel() {
+    dragStart.current = null
+    setDragging(false)
+    setPullPx(0)
+  }
 
   useEffect(() => {
     dialogRef.current?.focus()
@@ -41,7 +112,6 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [images.length, index, onClose, onIndexChange])
 
-  const image = images[index]
   const count = images.length
 
   return createPortal(
@@ -95,10 +165,40 @@ export function Gallery({ images, alt, index, onIndexChange, onClose }: GalleryP
         </>
       ) : null}
       <div
+        ref={frameRef}
         data-testid="watch-gallery-frame"
-        className="relative flex aspect-square w-[min(calc(100vw-2rem),calc(100dvh-4.5rem))] items-center justify-center md:w-[min(calc(100vw-8.5rem),calc(100dvh-4.5rem))]"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerCancel}
+        className="relative flex touch-none overflow-hidden aspect-square w-[min(calc(100vw-2rem),calc(100dvh-4.5rem))] items-center justify-center md:w-[min(calc(100vw-8.5rem),calc(100dvh-4.5rem))]"
       >
-        {image ? <img src={image} alt={alt} className="h-full w-full object-contain" /> : null}
+        <div
+          data-testid="watch-gallery-track"
+          className="flex h-full w-full"
+          style={{
+            transform: `translateX(-${index * 100}%)`,
+            transitionProperty: 'transform',
+            transitionDuration: dragging ? '0ms' : duration,
+          }}
+        >
+          {[index, ...images.map((_, imageIndex) => imageIndex).filter((imageIndex) => imageIndex !== index)].map((imageIndex) => (
+            <img
+              key={`${images[imageIndex]}:${imageIndex}`}
+              src={images[imageIndex]}
+              alt={imageIndex === index ? alt : ''}
+              draggable={false}
+              className="h-full w-full shrink-0 object-contain"
+              style={imageIndex === index ? {
+                order: imageIndex,
+                transform: `translate(${zoom.tx + pullPx}px, ${zoom.ty}px) scale(${zoom.scale}) scaleX(${rubberStretch(pullPx)})`,
+                transformOrigin: pullPx ? (pullPx > 0 ? 'left center' : 'right center') : 'center',
+                transitionProperty: 'transform',
+                transitionDuration: dragging ? '0ms' : duration,
+              } : { order: imageIndex }}
+            />
+          ))}
+        </div>
         <span
           aria-hidden="true"
           className="absolute right-3 bottom-3 rounded-full bg-[color-mix(in_srgb,var(--surface-black)_64%,transparent)] px-3 py-1 text-[var(--body-on-dark)]"

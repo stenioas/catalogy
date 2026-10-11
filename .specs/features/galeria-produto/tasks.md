@@ -283,18 +283,20 @@ T6 → T7 → T8
 
 **Done when**:
 
-- [ ] Arraste horizontal além de 40px troca a foto. Abaixo disso não troca e não fecha
-- [ ] Na ponta, a borracha aparece e a foto não muda
-- [ ] Com zoom, o arraste desloca dentro do quadro e o índice fica
-- [ ] Trocar a foto volta a escala 1 e translação 0
-- [ ] A troca usa 200ms, e 0ms com movimento reduzido
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] A suíte do client passa sem apagar teste
+- [x] Arraste horizontal além de 40px troca a foto. Abaixo disso não troca e não fecha
+- [x] Na ponta, a borracha aparece e a foto não muda
+- [x] Com zoom, o arraste desloca dentro do quadro e o índice fica
+- [x] Trocar a foto volta a escala 1 e translação 0
+- [x] A troca usa 200ms, e 0ms com movimento reduzido
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] A suíte do client passa sem apagar teste
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(catalog): drag photos inside the gallery`
+
+**Status**: done
 
 ---
 

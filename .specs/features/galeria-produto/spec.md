@@ -213,12 +213,12 @@ A foto do carrossel cabe num quadrado pequeno. Quem quer ver o relógio de perto
 | GAL-29 | P1: Trocar a foto | Tasks (T5) | Done |
 | GAL-30 | P1: Trocar a foto | Tasks (T5) | Done |
 | GAL-31 | P1: Trocar a foto | Tasks (T5) | Done |
-| GAL-32 | P1: Trocar a foto | Tasks (T7) | In Tasks |
-| GAL-33 | P1: Trocar a foto | Tasks (T1, T7) | T1 done; T7 pending |
-| GAL-34 | P1: Trocar a foto | Tasks (T7) | In Tasks |
-| GAL-35 | P1: Trocar a foto | Tasks (T7) | In Tasks |
-| GAL-36 | P1: Trocar a foto | Tasks (T7) | In Tasks |
-| GAL-37 | P1: Trocar a foto | Tasks (T7) | In Tasks |
+| GAL-32 | P1: Trocar a foto | Tasks (T7) | Done |
+| GAL-33 | P1: Trocar a foto | Tasks (T1, T7) | Done |
+| GAL-34 | P1: Trocar a foto | Tasks (T7) | Done |
+| GAL-35 | P1: Trocar a foto | Tasks (T7) | Done |
+| GAL-36 | P1: Trocar a foto | Tasks (T7) | Done |
+| GAL-37 | P1: Trocar a foto | Tasks (T7) | Done |
 | GAL-38 | P1: Trocar a foto | Tasks (T6) | Done |
 | GAL-39 | P1: Zoom | Tasks (T1, T8) | T1 done; T8 pending |
 | GAL-40 | P1: Zoom | Tasks (T1, T8) | T1 done; T8 pending |
@@ -232,7 +232,7 @@ A foto do carrossel cabe num quadrado pequeno. Quem quer ver o relógio de perto
 | GAL-48 | P1: Zoom | Tasks (T8) | In Tasks |
 | GAL-49 | P1: Duração de 200ms | Tasks (T2) | Done |
 | GAL-50 | P1: Duração de 200ms | Tasks (T2) | Done |
-| GAL-51 | P1: Duração de 200ms | Tasks (T7) | In Tasks |
+| GAL-51 | P1: Duração de 200ms | Tasks (T7) | Done |
 | GAL-52 | P1: Duração de 200ms | Tasks (T8) | In Tasks |
 
 **Coverage:** 52 total, 52 mapped to tasks, 0 unmapped
