@@ -124,17 +124,19 @@ T6 → T7 → T8
 
 **Done when**:
 
-- [ ] A trilha usa `200ms` sem movimento reduzido e `0ms` com `prefers-reduced-motion: reduce`
-- [ ] As asserções de `carousel.test.tsx` que esperavam `300ms` esperam `200ms`
-- [ ] Uma foto só deixa o quadro com `tabindex="-1"`
-- [ ] O gesto de 40px e a borracha do carrossel continuam iguais
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] A suíte do client passa sem apagar teste
+- [x] A trilha usa `200ms` sem movimento reduzido e `0ms` com `prefers-reduced-motion: reduce`
+- [x] As asserções de `carousel.test.tsx` que esperavam `300ms` esperam `200ms`
+- [x] Uma foto só deixa o quadro com `tabindex="-1"`
+- [x] O gesto de 40px e a borracha do carrossel continuam iguais
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] A suíte do client passa sem apagar teste
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(catalog): shorten carousel slide to 200ms`
+
+**Status**: done
 
 ---
 

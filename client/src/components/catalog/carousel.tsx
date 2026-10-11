@@ -2,27 +2,16 @@ import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { DRAG_THRESHOLD_PX, rubberBand, rubberStretch, slideDuration } from './motion'
 
 export type CarouselProps = {
   images: string[]
   alt: string
 }
 
-const DRAG_THRESHOLD_PX = 40
-const RUBBER_MAX_PX = 56
-
 function prefersReducedMotion(): boolean {
   if (typeof window.matchMedia !== 'function') return false
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
-function slideDuration(): string {
-  return prefersReducedMotion() ? '0ms' : '300ms'
-}
-
-function rubberBand(delta: number): number {
-  const distance = Math.min(Math.abs(delta), 280)
-  return Math.sign(delta) * RUBBER_MAX_PX * (1 - Math.exp(-distance / 160))
 }
 
 export function Carousel({ images, alt }: CarouselProps) {
@@ -32,7 +21,7 @@ export function Carousel({ images, alt }: CarouselProps) {
   const dragStartX = useRef<number | null>(null)
   const count = images.length
   const multi = count > 1
-  const duration = slideDuration()
+  const duration = slideDuration(prefersReducedMotion())
   const atStart = index === 0
   const atEnd = index === count - 1
 
@@ -122,7 +111,7 @@ export function Carousel({ images, alt }: CarouselProps) {
         <div
           data-testid="carousel-frame"
           className="relative mx-auto aspect-square w-full min-w-0 max-w-[480px] flex-1 touch-pan-y overflow-hidden rounded-[12px]"
-          tabIndex={multi ? 0 : undefined}
+          tabIndex={multi ? 0 : -1}
           onKeyDown={multi ? onKeyDown : undefined}
           onPointerDown={multi ? onPointerDown : undefined}
           onPointerMove={multi ? onPointerMove : undefined}
@@ -140,7 +129,7 @@ export function Carousel({ images, alt }: CarouselProps) {
         >
           {images.map((src, imageIndex) => {
             const current = imageIndex === index
-            const stretch = current ? 1 + (Math.abs(pullPx) / RUBBER_MAX_PX) * 0.08 : 1
+            const stretch = current ? rubberStretch(pullPx) : 1
             return (
               <img
                 key={`${src}:${imageIndex}`}

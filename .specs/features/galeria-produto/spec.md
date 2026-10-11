@@ -190,7 +190,7 @@ A foto do carrossel cabe num quadrado pequeno. Quem quer ver o relógio de perto
 | GAL-06 | P1: Abrir e fechar | Tasks (T3) | In Tasks |
 | GAL-07 | P1: Abrir e fechar | Tasks (T3) | In Tasks |
 | GAL-08 | P1: Abrir e fechar | Tasks (T4) | In Tasks |
-| GAL-09 | P1: Abrir e fechar | Tasks (T2) | In Tasks |
+| GAL-09 | P1: Abrir e fechar | Tasks (T2) | Done |
 | GAL-10 | P1: Abrir e fechar | Tasks (T3) | In Tasks |
 | GAL-11 | P1: Abrir e fechar | Tasks (T4) | In Tasks |
 | GAL-12 | P1: Abrir e fechar | Tasks (T3) | In Tasks |
@@ -230,8 +230,8 @@ A foto do carrossel cabe num quadrado pequeno. Quem quer ver o relógio de perto
 | GAL-46 | P1: Zoom | Tasks (T8) | In Tasks |
 | GAL-47 | P1: Zoom | Tasks (T8) | In Tasks |
 | GAL-48 | P1: Zoom | Tasks (T8) | In Tasks |
-| GAL-49 | P1: Duração de 200ms | Tasks (T2) | In Tasks |
-| GAL-50 | P1: Duração de 200ms | Tasks (T2) | In Tasks |
+| GAL-49 | P1: Duração de 200ms | Tasks (T2) | Done |
+| GAL-50 | P1: Duração de 200ms | Tasks (T2) | Done |
 | GAL-51 | P1: Duração de 200ms | Tasks (T7) | In Tasks |
 | GAL-52 | P1: Duração de 200ms | Tasks (T8) | In Tasks |
 

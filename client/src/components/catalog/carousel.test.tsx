@@ -222,7 +222,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     fireEvent.pointerUp(box, { clientX: 200, pointerId: 1 })
     expect(shownSrc()).toBe(photos[0])
     expect(first.style.transform).toBe('translateX(0px) scaleX(1)')
-    expect(first.style.transitionDuration).toBe('300ms')
+    expect(first.style.transitionDuration).toBe('200ms')
 
     fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
     fireEvent.pointerDown(box, { clientX: 200, pointerId: 1 })
@@ -237,12 +237,12 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(last.style.transform).toBe('translateX(0px) scaleX(1)')
   })
 
-  it('changes photos over 300 ms (CAT-82)', () => {
+  it('changes photos over 200 ms (GAL-49)', () => {
     mockReducedMotion(false)
     renderCarousel()
     const track = screen.getByTestId('carousel-track')
     expect(track.style.transitionProperty).toBe('transform')
-    expect(track.style.transitionDuration).toBe('300ms')
+    expect(track.style.transitionDuration).toBe('200ms')
   })
 
   it('does not autoplay (CAT-83)', () => {
@@ -263,6 +263,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(screen.queryByTestId('carousel-controls')).toBeNull()
     expect(screen.queryByTestId('carousel-count')).toBeNull()
     expect(frame().className).toMatch(/\baspect-square\b/)
+    expect(frame().getAttribute('tabindex')).toBe('-1')
     drag(frame(), 180, 40)
     expect(shownSrc()).toBe('somente.webp')
     expect(screen.queryAllByRole('button')).toHaveLength(0)
@@ -288,7 +289,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(badge.textContent).toBe('3/3')
   })
 
-  it('changes photos with no duration when reduced motion is requested (CAT-85)', () => {
+  it('changes photos with no duration when reduced motion is requested (GAL-50)', () => {
     mockReducedMotion(true)
     renderCarousel()
     const track = screen.getByTestId('carousel-track')
