@@ -23,7 +23,7 @@
   --primary-tint-foreground: var(--primary-tint);
   --primary-tint-background: rgba(0, 102, 204, 0.12);
 
-  --product-state-new: #15803d;
+  --product-state-new: #ff6a00;
   --product-state-new-foreground: #ffffff;
   --product-state-neutral: #f9fafb;
   --product-state-neutral-foreground: #6b7280;
