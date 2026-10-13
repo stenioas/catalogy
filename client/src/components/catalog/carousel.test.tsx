@@ -400,11 +400,11 @@ describe('Carousel (CAT-70–CAT-86)', () => {
 
     const dialog = screen.getByRole('dialog', { name: 'Galeria de fotos' })
     const galleryFrame = within(dialog).getByTestId('watch-gallery-frame')
-    const galleryPhoto = within(dialog).getByRole('img', { name: 'Seculus' }) as HTMLImageElement
+    const galleryViewport = within(dialog).getByTestId('watch-gallery-viewport')
     drag(galleryFrame, 200, 200)
-    expect(galleryPhoto.style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
+    expect(galleryViewport.style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')
     drag(galleryFrame, 200, 200)
-    expect(galleryPhoto.style.transform).toBe('translate(0px, 0px) scale(3) scaleX(1)')
+    expect(galleryViewport.style.transform).toBe('translate(0px, 0px) scale(3) scaleX(1)')
   })
 
   it('keeps the carousel on the gallery photo without a track transition while open (GAL-38)', () => {
