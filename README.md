@@ -49,3 +49,5 @@ O `slug` da pasta e o `slug` do JSON são o mesmo, em minúsculas, com hífens. 
 **Novo**: produto novo, lacrado e nunca usado. **Openbox**: caixa aberta, sem uso ou com uso muito breve. **Usado**: produto que foi usado. A badge é laranja para Novo e cinza claro para Openbox e Usado.
 
 Ao salvar um `product.json` com o servidor de desenvolvimento aberto, a lista do catálogo é atualizada. O build recusa um JSON que fure esse contrato ou uma foto citada que não esteja em `img/`.
+
+O preço na vitrine, na página do produto e na barra fixa inclui a mensagem padrão “ou até 12x c/juros”, definida no componente compartilhado de preço.

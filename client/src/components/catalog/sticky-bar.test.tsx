@@ -93,6 +93,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const bar = screen.getByTestId('sticky-bar')
     expect(bar).toBeTruthy()
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
+    expect(screen.getByTestId('price-installments').textContent).toBe('ou até 12x c/juros')
 
     const link = screen.getByRole('link', { name: whatsappLinkName })
     expect(link.getAttribute('href')).toBe(waUrl(slug, title))

@@ -98,6 +98,12 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     installObserver(1)
   })
 
+  it('shows installment terms below the in-page price', () => {
+    renderWatchPage()
+    const offer = screen.getByTestId('watch-offer')
+    expect(within(offer).getByTestId('price-installments').textContent).toBe('ou até 12x c/juros')
+  })
+
   it('places a back icon named Voltar to the left of Catálogo, linking to / (SV-12, CAT-57, CAT-58, CAT-59)', () => {
     renderWatchPage()
     const bar = screen.getByTestId('top-bar')

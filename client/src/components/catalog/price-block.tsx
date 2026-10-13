@@ -12,27 +12,19 @@ const currentPriceClassName = 'text-xl font-semibold'
 export function PriceBlock({ price, listPrice }: PriceBlockProps) {
   const currentLabel = formatBrl(price)
 
-  if (listPrice === undefined) {
-    return (
-      <div data-testid="price-block">
-        <span data-testid="price-current" className={currentPriceClassName}>
-          {currentLabel}
-        </span>
-      </div>
-    )
-  }
-
-  const percent = discountPercent(price, listPrice)
+  const percent = listPrice === undefined ? 0 : discountPercent(price, listPrice)
   const showBadge = percent >= 1
 
   return (
     <div data-testid="price-block" className="flex flex-col items-start gap-0.5">
-      <span
-        data-testid="price-list"
-        className="text-base text-ink-muted-48 line-through"
-      >
-        De {formatBrl(listPrice)}
-      </span>
+      {listPrice !== undefined ? (
+        <span
+          data-testid="price-list"
+          className="text-base text-ink-muted-48 line-through"
+        >
+          De {formatBrl(listPrice)}
+        </span>
+      ) : null}
       <div className="flex flex-wrap items-center gap-2">
         <span data-testid="price-current" className={currentPriceClassName}>
           {currentLabel}
@@ -46,6 +38,9 @@ export function PriceBlock({ price, listPrice }: PriceBlockProps) {
           </Badge>
         ) : null}
       </div>
+      <span data-testid="price-installments" className="text-sm text-muted-foreground">
+        ou até 12x c/juros
+      </span>
     </div>
   )
 }

@@ -56,11 +56,20 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     document.documentElement.classList.remove('dark')
   })
 
-  it('shows only the current price when listPrice is absent (CAT-99)', () => {
+  it('shows the current price without a reference price when listPrice is absent (CAT-99)', () => {
     renderPriceBlock({ price: 369.9 })
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
     expect(screen.queryByTestId('price-list')).toBeNull()
     expect(screen.queryByTestId('price-badge')).toBeNull()
+  })
+
+  it.each([undefined, 450, 370])('shows the shared installment message below the price with listPrice %s', (listPrice) => {
+    renderPriceBlock({ price: 369.9, listPrice })
+    const current = screen.getByTestId('price-current')
+    const installments = screen.getByTestId('price-installments')
+    expect(installments.textContent).toBe('ou até 12x c/juros')
+    expect(screen.getByTestId('price-block').contains(installments)).toBe(true)
+    expect(current.compareDocumentPosition(installments) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
   })
 
   it('shows De R$ 450,00 struck and −17% for list 450 and price 369.9 (CAT-100, CAT-101)', () => {
