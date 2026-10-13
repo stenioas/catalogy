@@ -40,7 +40,7 @@ export function WatchCard({ product }: WatchCardProps) {
             <PriceBlock price={product.price} listPrice={product.listPrice} />
             <Badge
               data-testid="state-badge"
-              className={`h-auto shrink-0 rounded-full px-3 py-1 text-base font-semibold ${
+              className={`h-auto shrink-0 rounded-full px-2.5 py-0.5 text-sm font-semibold ${
                 product.state === 'Novo'
                   ? 'bg-product-state-new text-product-state-new-foreground'
                   : 'bg-product-state-neutral text-product-state-neutral-foreground'
