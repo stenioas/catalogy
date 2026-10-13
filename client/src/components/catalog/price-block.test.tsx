@@ -67,7 +67,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     renderPriceBlock({ price: 369.9, listPrice })
     const current = screen.getByTestId('price-current')
     const installments = screen.getByTestId('price-installments')
-    expect(installments.textContent).toBe('ou até 12x c/juros')
+    expect(installments.textContent).toBe('ou em até 12x com juros')
     expect(screen.getByTestId('price-block').contains(installments)).toBe(true)
     expect(current.compareDocumentPosition(installments) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
   })

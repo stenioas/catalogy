@@ -39,7 +39,7 @@ export function PriceBlock({ price, listPrice }: PriceBlockProps) {
         ) : null}
       </div>
       <span data-testid="price-installments" className="text-sm text-muted-foreground">
-        ou até 12x c/juros
+        ou em até 12x com juros
       </span>
     </div>
   )

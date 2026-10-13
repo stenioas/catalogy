@@ -89,7 +89,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     renderWatchCard()
     expect(screen.getByRole('heading', { name: 'Seculus' })).toBeTruthy()
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
-    expect(screen.getByTestId('price-installments').textContent).toBe('ou até 12x c/juros')
+    expect(screen.getByTestId('price-installments').textContent).toBe('ou em até 12x com juros')
     const wantLink = screen.getByRole('link', { name: 'Enviar no WhatsApp' })
     expect(wantLink.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/\?text=/)
     expect(screen.getByTestId('watch-card-link').contains(wantLink)).toBe(false)
