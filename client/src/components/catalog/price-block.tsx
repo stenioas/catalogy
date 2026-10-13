@@ -18,25 +18,30 @@ export function PriceBlock({ price, listPrice }: PriceBlockProps) {
   return (
     <div data-testid="price-block" className="flex flex-col items-start gap-0.5">
       {listPrice !== undefined ? (
-        <span
-          data-testid="price-list"
-          className="text-base text-ink-muted-48 line-through"
-        >
-          De {formatBrl(listPrice)}
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span
+            data-testid="price-list"
+            className="text-base text-ink-muted-48 line-through"
+          >
+            De {formatBrl(listPrice)}
+          </span>
+          {showBadge ? (
+            <Badge
+              data-testid="price-badge"
+              className="-rotate-[8deg] rounded-full bg-primary-tint-background text-sm font-medium text-primary-tint-foreground"
+            >
+              −{percent}%
+            </Badge>
+          ) : null}
+        </div>
       ) : null}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-baseline gap-x-1.5">
         <span data-testid="price-current" className={currentPriceClassName}>
           {currentLabel}
         </span>
-        {showBadge ? (
-          <Badge
-            data-testid="price-badge"
-            className="rounded-full bg-primary-tint-background text-sm font-medium text-primary-tint-foreground"
-          >
-            −{percent}%
-          </Badge>
-        ) : null}
+        <span data-testid="price-pix" className="text-sm text-muted-foreground">
+          no pix
+        </span>
       </div>
       <span data-testid="price-installments" className="text-sm text-muted-foreground">
         ou em até 12x com juros

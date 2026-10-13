@@ -72,6 +72,26 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(current.compareDocumentPosition(installments) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
   })
 
+  it.each([undefined, 450])('labels the current price as no pix with listPrice %s', (listPrice) => {
+    renderPriceBlock({ price: 369.9, listPrice })
+    const current = screen.getByTestId('price-current')
+    const pix = screen.getByTestId('price-pix')
+    expect(pix.textContent).toBe('no pix')
+    expect(pix.parentElement).toBe(current.parentElement)
+    expect(current.compareDocumentPosition(pix) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(pix.compareDocumentPosition(screen.getByTestId('price-installments')) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+  })
+
+  it('places the tilted discount badge beside the reference price above the current price', () => {
+    renderPriceBlock({ price: 369.9, listPrice: 450 })
+    const badge = screen.getByTestId('price-badge')
+    const reference = screen.getByTestId('price-list')
+    const current = screen.getByTestId('price-current')
+    expect(badge.parentElement).toBe(reference.parentElement)
+    expect(badge.compareDocumentPosition(current) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(badge.className.split(/\s+/)).toContain('-rotate-[8deg]')
+  })
+
   it('shows De R$ 450,00 struck and −17% for list 450 and price 369.9 (CAT-100, CAT-101)', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450 })
     expect(screen.getByTestId('price-list').textContent).toBe('De R$ 450,00')
