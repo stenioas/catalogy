@@ -23,7 +23,7 @@ function syncCatalogFromJson(): void {
   mkdirSync(dirname(outFile), { recursive: true })
   writeFileSync(
     outFile,
-    `export const products = ${JSON.stringify(products, null, 2)}\n`,
+    `import type { Product } from '@catalogo/shared'\n\nexport const products: Product[] = ${JSON.stringify(products, null, 2)}\n`,
   )
 }
 

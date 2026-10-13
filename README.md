@@ -43,7 +43,9 @@ O `slug` da pasta e o `slug` do JSON são o mesmo, em minúsculas, com hífens. 
 | `description` | não | Texto da página |
 | `specifications` | não | Lista de `{ "label", "value" }` |
 | `observations` | não | Nota no fim da página |
-| `new` | não | Selo de novidade quando `true` |
+| `state` | sim | `"Novo"`, `"Usado"` ou `"Openbox"`; badge sempre visível e alinhada à direita na vitrine |
 | `enabled` | não | Ausente ou `true` mostra o produto; `false` esconde da vitrine e do link direto |
+
+**Novo**: produto novo, lacrado e nunca usado. **Openbox**: caixa aberta, sem uso ou com uso muito breve. **Usado**: produto que foi usado. A badge é verde claro para Novo e cinza para Openbox e Usado.
 
 Ao salvar um `product.json` com o servidor de desenvolvimento aberto, a lista do catálogo é atualizada. O build recusa um JSON que fure esse contrato ou uma foto citada que não esteja em `img/`.

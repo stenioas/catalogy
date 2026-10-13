@@ -20,6 +20,7 @@ function makeProduct(overrides: Partial<Product> = {}): Product {
   return {
     slug: 'seculus-kit',
     title: 'Seculus',
+    state: 'Novo',
     price: 369.9,
     images: ['foto.webp'],
     description: 'Caixa de aço.',

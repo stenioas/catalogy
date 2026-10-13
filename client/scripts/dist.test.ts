@@ -119,6 +119,7 @@ describe('pnpm build emitindo dist estático', () => {
       JSON.stringify({
         slug: 'seculus-kit',
         title: 'Seculus',
+        state: 'Novo',
         price: 0,
         images: ['frente.png'],
       }),

@@ -14,6 +14,7 @@ const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 const sampleProduct: Product = {
   slug: 'seculus-kit-com-cantil',
   title: 'Seculus',
+  state: 'Novo',
   price: 369.9,
   listPrice: 450,
   images: ['foto-principal.webp', 'foto-extra.jpg'],
@@ -67,27 +68,21 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
-  it('shows Novo! only when new is true', () => {
-    renderWatchCard()
-    expect(screen.queryByTestId('new-badge')).toBeNull()
-
-    cleanup()
-    renderWatchCard({ ...sampleProduct, new: false })
-    expect(screen.queryByTestId('new-badge')).toBeNull()
-
-    cleanup()
-    renderWatchCard({ ...sampleProduct, new: true })
-    const badge = screen.getByTestId('new-badge')
+  it.each(['Novo', 'Usado', 'Openbox'] as const)('always shows %s aligned to the right without rotation', (state) => {
+    renderWatchCard({ ...sampleProduct, state })
+    const badge = screen.getByTestId('state-badge')
     const price = screen.getByTestId('price-block')
     const row = badge.parentElement
-    expect(badge.textContent).toBe('Novo!')
+    expect(badge.textContent).toBe(state)
     expect(row).toBe(price.parentElement)
+    expect(row?.className).toContain('w-full')
     expect(row?.className).toContain('justify-between')
     expect(price.compareDocumentPosition(badge) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(price.contains(badge)).toBe(false)
-    expect(badge.className).toContain('rotate-[-8deg]')
-    expect(badge.className).toContain('bg-[#ff6a00]')
-    expect(badge.className).not.toMatch(/primary-tint/)
+    expect(badge.className).not.toMatch(/rotate/)
+    const palette = state === 'Novo' ? 'new' : 'neutral'
+    expect(badge.className.split(/\s+/)).toContain(`bg-product-state-${palette}`)
+    expect(badge.className.split(/\s+/)).toContain(`text-product-state-${palette}-foreground`)
   })
 
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {

@@ -4,6 +4,7 @@ import { ProductSchema } from './product'
 const baseProduct = {
   slug: 'seculus-kit',
   title: 'Seculus',
+  state: 'Novo',
   price: 369.9,
   images: ['foto1.jpg'],
 }
@@ -137,7 +138,7 @@ describe('ProductSchema images (CAT-11, CAT-12, CAT-14, CAT-15)', () => {
 })
 
 describe('ProductSchema optional fields (CAT-13)', () => {
-  it('accepts a product when listPrice, description, specifications, observations, and new are omitted', () => {
+  it('accepts a product when listPrice, description, specifications, and observations are omitted', () => {
     expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
   })
 
@@ -148,17 +149,11 @@ describe('ProductSchema optional fields (CAT-13)', () => {
       description: 'Descrição do relógio.',
       specifications: [{ label: 'Marca', value: 'Seculus' }],
       observations: 'Observação.',
-      new: true,
     })
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.new).toBe(true)
+      expect(result.data.observations).toBe('Observação.')
     }
-  })
-
-  it('accepts new: false and rejects a non-boolean new', () => {
-    expect(ProductSchema.safeParse({ ...baseProduct, new: false }).success).toBe(true)
-    expect(ProductSchema.safeParse({ ...baseProduct, new: 'true' }).success).toBe(false)
   })
 
   it('keeps a product listed when enabled is omitted or true, and stores false', () => {
@@ -193,5 +188,21 @@ describe('ProductSchema slug (CAT-04)', () => {
     expect(
       ProductSchema.safeParse({ ...baseProduct, slug: 'seculus-kit' }).success,
     ).toBe(true)
+  })
+})
+
+describe('ProductSchema state', () => {
+  it.each(['Novo', 'Usado', 'Openbox'])('accepts state %s', (state) => {
+    const result = ProductSchema.parse({ ...baseProduct, state })
+    expect(result.state).toBe(state)
+  })
+
+  it.each([undefined, null, '', 'novo', 'Lacrado', true])('rejects missing or invalid state %s', (state) => {
+    expect(ProductSchema.safeParse({ ...baseProduct, state }).success).toBe(false)
+  })
+
+  it('does not use the legacy new flag as a replacement for state', () => {
+    expect(ProductSchema.safeParse({ ...baseProduct, state: undefined, new: true }).success).toBe(false)
+    expect(ProductSchema.parse({ ...baseProduct, new: true })).not.toHaveProperty('new')
   })
 })

@@ -23,6 +23,11 @@
   --primary-tint-foreground: var(--primary-tint);
   --primary-tint-background: rgba(0, 102, 204, 0.12);
 
+  --product-state-new: #dcfce7;
+  --product-state-new-foreground: #166534;
+  --product-state-neutral: #e5e7eb;
+  --product-state-neutral-foreground: #374151;
+
   --canvas: #ffffff;
   --canvas-parchment: #f5f5f7;
   --surface-pearl: #fafafc;
@@ -117,6 +122,10 @@
 }
 
 @theme inline {
+  --color-product-state-new: var(--product-state-new);
+  --color-product-state-new-foreground: var(--product-state-new-foreground);
+  --color-product-state-neutral: var(--product-state-neutral);
+  --color-product-state-neutral-foreground: var(--product-state-neutral-foreground);
   --color-primary: var(--primary);
   --color-primary-focus: var(--primary-focus);
   --color-primary-on-dark: var(--primary-on-dark);

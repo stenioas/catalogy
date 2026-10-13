@@ -38,14 +38,16 @@ export function WatchCard({ product }: WatchCardProps) {
           </h2>
           <div className="flex w-full items-center justify-between gap-3">
             <PriceBlock price={product.price} listPrice={product.listPrice} />
-            {product.new === true ? (
-              <Badge
-                data-testid="new-badge"
-                className="h-auto shrink-0 rotate-[-8deg] rounded-full bg-[#ff6a00] px-3 py-1 text-base font-semibold text-white"
-              >
-                Novo!
-              </Badge>
-            ) : null}
+            <Badge
+              data-testid="state-badge"
+              className={`h-auto shrink-0 rounded-full px-3 py-1 text-base font-semibold ${
+                product.state === 'Novo'
+                  ? 'bg-product-state-new text-product-state-new-foreground'
+                  : 'bg-product-state-neutral text-product-state-neutral-foreground'
+              }`}
+            >
+              {product.state}
+            </Badge>
           </div>
         </div>
       </Link>

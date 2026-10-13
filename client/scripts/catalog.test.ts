@@ -60,6 +60,7 @@ function writeValidCatalog(): string {
     {
       slug: 'seculus-kit',
       title: 'Seculus',
+      state: 'Novo',
       price: 369.9,
       images: ['frente.png'],
     },
@@ -74,6 +75,7 @@ function writeValidCatalog(): string {
     {
       slug: 'curren-gold',
       title: 'CURREN',
+      state: 'Novo',
       price: 199,
       images: ['pulseira.jpg'],
     },
@@ -93,12 +95,14 @@ describe('validateCatalog', () => {
     expect(bySlug['seculus-kit']).toEqual({
       slug: 'seculus-kit',
       title: 'Seculus',
+      state: 'Novo',
       price: 369.9,
       images: ['frente.png'],
     })
     expect(bySlug['curren-gold']).toEqual({
       slug: 'curren-gold',
       title: 'CURREN',
+      state: 'Novo',
       price: 199,
       images: ['pulseira.jpg'],
     })
@@ -125,6 +129,7 @@ describe('validateCatalog', () => {
       {
         slug: 'seculus-kit',
         title: 'Seculus',
+        state: 'Novo',
         price: 0,
         images: ['frente.png'],
       },
@@ -142,6 +147,7 @@ describe('validateCatalog', () => {
       {
         slug: 'seculus-kit',
         title: 'Seculus',
+        state: 'Novo',
         price: 369.9,
         images: ['frente.png', 'verso.png'],
       },
@@ -159,6 +165,7 @@ describe('validateCatalog', () => {
       {
         slug: 'seculus-kit',
         title: 'Seculus',
+        state: 'Novo',
         price: 369.9,
         images: ['frente.png'],
       },
@@ -182,9 +189,10 @@ describe('writeProductsModule', () => {
 
     const written = readFileSync(outFile)
     const source = written.toString('utf8')
-    expect(source.startsWith('export const products = ')).toBe(true)
+    expect(source.startsWith("import type { Product } from '@catalogo/shared'")).toBe(true)
+    expect(source).toContain('export const products: Product[] = ')
     const parsed: unknown = JSON.parse(
-      source.slice('export const products = '.length),
+      source.split('export const products: Product[] = ')[1],
     )
     expect(parsed).toEqual(products)
     expect(parsed).toEqual(
@@ -245,6 +253,7 @@ describe('initial catalog in public/', () => {
       {
         slug: 'seculus-kit',
         title: 'Seculus',
+        state: 'Novo',
         price: 369.9,
         images: ['frente.png'],
       },
@@ -256,6 +265,7 @@ describe('initial catalog in public/', () => {
       {
         slug: 'seculus-kit',
         title: 'Seculus',
+        state: 'Novo',
         price: 369.9,
         images: ['frente.png'],
       },

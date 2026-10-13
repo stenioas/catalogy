@@ -18,6 +18,7 @@ function makeProduct(slug: string, title: string): Product {
   return {
     slug,
     title,
+    state: 'Novo',
     price: 100,
     images: ['foto.webp'],
   }
@@ -73,8 +74,8 @@ function columnCount(className: string, width: number): number {
 }
 
 function productsFromModule(source: string): Product[] {
-  const prefix = 'export const products = '
-  return JSON.parse(source.slice(prefix.length)) as Product[]
+  const prefix = 'export const products: Product[] = '
+  return JSON.parse(source.split(prefix)[1]) as Product[]
 }
 
 function renderCatalogPage() {
