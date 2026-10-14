@@ -4,6 +4,7 @@
   "state": "Novo",
   "price": 89.9,
   "listPrice": 99.9,
+  "enabled": false,
   "images": [
     "skmei-2126-1.png",
     "skmei-2126-2.png",
@@ -52,10 +53,6 @@
     {
       "label": "Material do bisel",
       "value": "Plástico"
-    },
-    {
-      "label": "Link de anúncio similar",
-      "value": "https://www.mercadolivre.com.br/relogio-black-skmei-digital-dual-time-sk40290-masculino/up/MLBU4112143202?pdp_filters=item_id%3AMLB4782757905#polycard_client=search-desktop&be_origin=searchv2&overlay_label=not_apply&search_layout=grid&position=2&type=product&tracking_id=75633e94-60a4-4562-b054-6763363cd82d&wid=MLB4782757905&sid=search"
     },
     {
       "label": "Garantia",

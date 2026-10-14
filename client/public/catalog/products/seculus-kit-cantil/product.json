@@ -11,11 +11,11 @@
     "seculus-4.png",
     "seculus-5.png"
   ],
-  "description": "O Seculus Navy é um relógio analógico casual da linha Navy, com movimento de quartzo alimentado por bateria e calendário. A caixa é de aço inoxidável, com 45 mm de diâmetro, e a pulseira também é de aço inoxidável. O vidro é de cristal mineral, o bisel possui detalhes em alumínio e a resistência à água é de 50 m (5 ATM). O fabricante e o calibre do movimento não são informados.",
+  "description": "O Seculus Navy é um relógio analógico casual da linha Navy, com movimento de quartzo alimentado por bateria e calendário. A caixa é de aço inoxidável, com 45 mm de diâmetro, e a pulseira também é de aço inoxidável. O vidro é de cristal mineral, o bisel possui detalhes em alumínio e a resistência à água é de 50 m (5 ATM).",
   "specifications": [
     {
       "label": "Estado",
-      "value": "Usado 2x"
+      "value": "Embalagem foi aberta"
     },
     {
       "label": "Tipo do relógio",
@@ -23,15 +23,15 @@
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo, alimentado por bateria; fabricante e calibre não informados"
+      "value": "Quartzo, alimentado por bateria"
     },
     {
       "label": "Material da caixa",
-      "value": "Aço inoxidável; tipo de aço não informado"
+      "value": "Aço inoxidável"
     },
     {
       "label": "Material da pulseira",
-      "value": "Aço inoxidável; tipo de aço não informado"
+      "value": "Aço inoxidável"
     },
     {
       "label": "Material do vidro",
@@ -46,20 +46,13 @@
       "value": "45 mm de diâmetro"
     },
     {
-      "label": "Largura da pulseira",
-      "value": "Não informado."
-    },
-    {
       "label": "Material do bisel",
-      "value": "Detalhes em alumínio; material da estrutura não informado"
-    },
-    {
-      "label": "Link de anúncio similar",
-      "value": "https://www.riachuelo.com.br/kit-relogio-analogico-masculino-44204g0svna2kc-cantil-prata-seculus-15556107_sku_sku"
+      "value": "Detalhes em alumínio"
     },
     {
       "label": "Garantia",
       "value": "1 ano e 6 meses."
     }
-  ]
+  ],
+  "observations": "Acompanha caixa de metal e cantil"
 }
