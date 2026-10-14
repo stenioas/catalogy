@@ -120,6 +120,7 @@ describe('pnpm build emitindo dist estático', () => {
         slug: 'seculus-kit',
         title: 'Seculus',
         state: 'Novo',
+        availability: 'Em estoque',
         price: 0,
         images: ['frente.png'],
       }),

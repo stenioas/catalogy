@@ -21,6 +21,7 @@ function makeProduct(overrides: Partial<Product> = {}): Product {
     slug: 'seculus-kit',
     title: 'Seculus',
     state: 'Novo',
+    availability: 'Em estoque',
     price: 369.9,
     images: ['foto.webp'],
     description: 'Caixa de aço.',
@@ -96,6 +97,25 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     mockProductsRef.current = [makeProduct()]
     // Ratio 1: in-page Eu quero! fully visible, so the sticky bar is absent.
     installObserver(1)
+  })
+
+  it.each(['Novo', 'Openbox', 'Usado'] as const)('shows state %s near the product title', (state) => {
+    mockProductsRef.current = [makeProduct({ state })]
+    renderWatchPage()
+    const heading = screen.getByRole('heading', { level: 1, name: 'Seculus' })
+    const badge = screen.getByTestId('state-badge')
+    expect(badge.textContent).toBe(state)
+    expect(heading.parentElement?.contains(badge)).toBe(true)
+  })
+
+  it.each(['Em estoque', 'Sob encomenda'] as const)('shows availability %s below the state', (availability) => {
+    mockProductsRef.current = [makeProduct({ availability })]
+    renderWatchPage()
+    const state = screen.getByTestId('state-badge')
+    const badge = screen.getByTestId('availability-badge')
+    expect(badge.textContent).toBe(availability)
+    expect(state.nextElementSibling).toBe(badge)
+    expect(state.parentElement?.className).toContain('flex-col')
   })
 
   it('shows installment terms below the in-page price', () => {

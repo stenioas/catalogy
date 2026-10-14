@@ -5,6 +5,7 @@ const baseProduct = {
   slug: 'seculus-kit',
   title: 'Seculus',
   state: 'Novo',
+  availability: 'Em estoque',
   price: 369.9,
   images: ['foto1.jpg'],
 }
@@ -204,5 +205,15 @@ describe('ProductSchema state', () => {
   it('does not use the legacy new flag as a replacement for state', () => {
     expect(ProductSchema.safeParse({ ...baseProduct, state: undefined, new: true }).success).toBe(false)
     expect(ProductSchema.parse({ ...baseProduct, new: true })).not.toHaveProperty('new')
+  })
+})
+
+describe('ProductSchema availability', () => {
+  it.each(['Em estoque', 'Sob encomenda'])('accepts availability %s', (availability) => {
+    expect(ProductSchema.parse({ ...baseProduct, availability }).availability).toBe(availability)
+  })
+
+  it.each([undefined, null, '', 'Disponível', true])('rejects missing or invalid availability %s', (availability) => {
+    expect(ProductSchema.safeParse({ ...baseProduct, availability }).success).toBe(false)
   })
 })

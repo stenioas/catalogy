@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { products } from '../catalog/products.generated'
 import { Carousel } from '../components/catalog/carousel'
 import { PriceBlock } from '../components/catalog/price-block'
+import { ProductBadges } from '../components/catalog/product-badges'
 import { StickyBar } from '../components/catalog/sticky-bar'
 import { TopBar } from '../components/catalog/top-bar'
 import { WantLink } from '../components/catalog/want-link'
@@ -50,7 +51,10 @@ function WatchColumn({ product }: { product: Product }) {
         images={product.images.map((file) => productImageSrc(product.slug, file))}
         alt={product.title}
       />
-      <h1 className="m-0 font-display text-xl font-semibold text-foreground">{product.title}</h1>
+      <div className="flex w-full flex-wrap items-start justify-between gap-3">
+        <h1 className="m-0 min-w-0 font-display text-xl font-semibold text-foreground">{product.title}</h1>
+        <ProductBadges product={product} />
+      </div>
       <div
         data-testid="watch-offer"
         className="flex w-full flex-col gap-4 md:flex-row md:items-center"

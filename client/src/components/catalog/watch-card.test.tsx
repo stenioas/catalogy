@@ -15,6 +15,7 @@ const sampleProduct: Product = {
   slug: 'seculus-kit-com-cantil',
   title: 'Seculus',
   state: 'Novo',
+  availability: 'Em estoque',
   price: 369.9,
   listPrice: 450,
   images: ['foto-principal.webp', 'foto-extra.jpg'],
@@ -72,7 +73,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     renderWatchCard({ ...sampleProduct, state })
     const badge = screen.getByTestId('state-badge')
     const price = screen.getByTestId('price-block')
-    const row = badge.parentElement
+    const row = badge.parentElement?.parentElement
     expect(badge.textContent).toBe(state)
     expect(row).toBe(price.parentElement)
     expect(row?.className).toContain('w-full')
@@ -83,6 +84,15 @@ describe('WatchCard (SV-13, SV-14)', () => {
     const palette = state === 'Novo' ? 'new' : 'neutral'
     expect(badge.className.split(/\s+/)).toContain(`bg-product-state-${palette}`)
     expect(badge.className.split(/\s+/)).toContain(`text-product-state-${palette}-foreground`)
+  })
+
+  it.each(['Em estoque', 'Sob encomenda'] as const)('shows availability %s below the state', (availability) => {
+    renderWatchCard({ ...sampleProduct, availability })
+    const state = screen.getByTestId('state-badge')
+    const badge = screen.getByTestId('availability-badge')
+    expect(badge.textContent).toBe(availability)
+    expect(state.nextElementSibling).toBe(badge)
+    expect(state.parentElement?.className).toContain('flex-col')
   })
 
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {

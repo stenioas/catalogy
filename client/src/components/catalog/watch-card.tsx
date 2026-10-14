@@ -1,10 +1,10 @@
 import type { Product } from '@catalogo/shared'
 import { Link } from 'react-router-dom'
 
-import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 
 import { PriceBlock } from './price-block'
+import { ProductBadges } from './product-badges'
 import { WantLink } from './want-link'
 
 export type WatchCardProps = {
@@ -36,18 +36,9 @@ export function WatchCard({ product }: WatchCardProps) {
           <h2 className="m-0 font-display text-xl font-semibold text-foreground">
             {product.title}
           </h2>
-          <div className="flex w-full items-center justify-between gap-3">
+          <div className="flex w-full items-start justify-between gap-3">
             <PriceBlock price={product.price} listPrice={product.listPrice} />
-            <Badge
-              data-testid="state-badge"
-              className={`h-auto shrink-0 rounded-full px-2.5 py-0.5 text-sm font-semibold ${
-                product.state === 'Novo'
-                  ? 'bg-product-state-new text-product-state-new-foreground'
-                  : 'bg-product-state-neutral text-product-state-neutral-foreground'
-              }`}
-            >
-              {product.state}
-            </Badge>
+            <ProductBadges product={product} />
           </div>
         </div>
       </Link>
