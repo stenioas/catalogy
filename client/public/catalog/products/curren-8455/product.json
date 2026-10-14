@@ -58,5 +58,5 @@
       "value": "90 dias."
     }
   ],
-  "availability": "Em estoque"
+  "availabilityStatus": "available"
 }

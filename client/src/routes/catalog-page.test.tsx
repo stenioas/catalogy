@@ -19,7 +19,7 @@ function makeProduct(slug: string, title: string): Product {
     slug,
     title,
     state: 'Novo',
-    availability: 'Em estoque',
+    availabilityStatus: 'available',
     price: 100,
     images: ['foto.webp'],
   }

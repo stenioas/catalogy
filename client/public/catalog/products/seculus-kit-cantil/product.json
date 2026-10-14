@@ -55,5 +55,5 @@
     }
   ],
   "observations": "Acompanha caixa de metal e cantil",
-  "availability": "Em estoque"
+  "availabilityStatus": "available"
 }

@@ -37,9 +37,9 @@ export function WatchCard({ product }: WatchCardProps) {
           <h2 className="m-0 font-display text-xl font-semibold text-foreground">
             {product.title}
           </h2>
-          <div className="flex w-full items-start justify-between gap-3">
+          <div className="flex w-full flex-col items-start gap-2">
             <PriceBlock price={product.price} listPrice={product.listPrice} />
-            <ProductAvailabilityBadge availability={product.availability} />
+            <ProductAvailabilityBadge availabilityStatus={product.availabilityStatus} className="text-xs" />
           </div>
         </div>
       </Link>

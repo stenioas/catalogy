@@ -5,7 +5,7 @@ const baseProduct = {
   slug: 'seculus-kit',
   title: 'Seculus',
   state: 'Novo',
-  availability: 'Em estoque',
+  availabilityStatus: 'available',
   price: 369.9,
   images: ['foto1.jpg'],
 }
@@ -208,12 +208,16 @@ describe('ProductSchema state', () => {
   })
 })
 
-describe('ProductSchema availability', () => {
-  it.each(['Em estoque', 'Sob encomenda'])('accepts availability %s', (availability) => {
-    expect(ProductSchema.parse({ ...baseProduct, availability }).availability).toBe(availability)
+describe('ProductSchema availabilityStatus', () => {
+  it.each(['available', 'on_order', 'unavailable', 'sold_out'])('accepts availabilityStatus %s', (availabilityStatus) => {
+    expect(ProductSchema.parse({ ...baseProduct, availabilityStatus }).availabilityStatus).toBe(availabilityStatus)
   })
 
-  it.each([undefined, null, '', 'Disponível', true])('rejects missing or invalid availability %s', (availability) => {
-    expect(ProductSchema.safeParse({ ...baseProduct, availability }).success).toBe(false)
+  it.each([undefined, null, '', 'Em estoque', 'Sob encomenda', 'unknown', true])('rejects missing or invalid availabilityStatus %s', (availabilityStatus) => {
+    expect(ProductSchema.safeParse({ ...baseProduct, availabilityStatus }).success).toBe(false)
+  })
+
+  it('requires availabilityStatus even when the old availability field is supplied', () => {
+    expect(ProductSchema.safeParse({ ...baseProduct, availabilityStatus: undefined, availability: 'Em estoque' }).success).toBe(false)
   })
 })

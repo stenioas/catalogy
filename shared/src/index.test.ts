@@ -18,7 +18,7 @@ describe('@catalogo/shared barrel (CAT-07, CAT-09, CAT-95, SV-09)', () => {
         slug: 'seculus',
         title: 'Seculus',
         state: 'Novo',
-        availability: 'Em estoque',
+        availabilityStatus: 'available',
         price: 369.9,
         images: ['foto.jpg'],
       }).success,

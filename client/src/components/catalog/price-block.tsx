@@ -18,7 +18,7 @@ export function PriceBlock({ price, listPrice }: PriceBlockProps) {
   return (
     <div data-testid="price-block" className="flex flex-col items-start gap-0.5">
       {listPrice !== undefined ? (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-nowrap items-center gap-2 whitespace-nowrap">
           <span
             data-testid="price-list"
             className="text-base text-ink-muted-48 line-through"

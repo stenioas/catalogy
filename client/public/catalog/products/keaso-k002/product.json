@@ -1,0 +1,72 @@
+{
+  "slug": "keaso-k002",
+  "state": "Novo",
+  "title": "KEASO K002",
+  "price": 719.9,
+  "listPrice": 799.9,
+  "images": [
+    "keaso-1.png",
+    "keaso-2.png",
+    "keaso-3.png",
+    "keaso-4.png",
+    "keaso-5.png",
+    "keaso-6.png",
+    "keaso-7.png",
+    "keaso-8.png",
+    "keaso-9.png",
+    "keaso-10.png",
+    "keaso-11.png"
+  ],
+  "description": "O KEASO K002 é um homage do Seiko SKX 5 Sports, do tipo diver (mergulho), com movimento de quartzo Miyota 2035 de origem japonesa. A caixa é de aço inoxidável 316L, com 13 mm de espessura, e a pulseira é de aço inoxidável com fecho dobrável com segurança. Possui vidro de safira, luminosidade C3 e resistência à água de 200 m (20 bar).",
+  "specifications": [
+    {
+      "label": "Homage de",
+      "value": "Seiko SKX 5 Sports"
+    },
+    {
+      "label": "Estado",
+      "value": "Novo"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Diver (mergulho)"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo (Miyota 2035)"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Safira"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "200 m (20 bar)"
+    },
+    {
+      "label": "Tamanho da caixa",
+      "value": "40 a 44 mm de diâmetro; 13 mm de espessura"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Material do bisel",
+      "value": ""
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "availabilityStatus": "on_order"
+}

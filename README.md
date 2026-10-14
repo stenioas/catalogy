@@ -44,9 +44,12 @@ O `slug` da pasta e o `slug` do JSON são o mesmo, em minúsculas, com hífens. 
 | `specifications` | não | Lista de `{ "label", "value" }` |
 | `observations` | não | Nota no fim da página |
 | `state` | sim | `"Novo"`, `"Usado"` ou `"Openbox"`; badge sempre visível e alinhada à direita na vitrine |
+| `availabilityStatus` | sim | `"available"`, `"on_order"`, `"unavailable"` ou `"sold_out"`; define o texto e a cor da disponibilidade |
 | `enabled` | não | Ausente ou `true` mostra o produto; `false` esconde da vitrine e do link direto |
 
 **Novo**: produto novo, lacrado e nunca usado. **Openbox**: caixa aberta, sem uso ou com uso muito breve. **Usado**: produto que foi usado. A badge é laranja para Novo e cinza claro para Openbox e Usado.
+
+Disponibilidade: `available` mostra **Em estoque** em verde; `on_order`, **Sob encomenda** em âmbar; `unavailable`, **Indisponível** em cinza; `sold_out`, **Esgotado** em vermelho. As badges usam fundos suaves, com cores ajustadas para os temas claro e escuro. No card, ficam abaixo do parcelamento, com fonte de 12px. O campo `availability` foi substituído por `availabilityStatus`; o texto é gerado pela interface.
 
 Ao salvar um `product.json` com o servidor de desenvolvimento aberto, a lista do catálogo é atualizada. O build recusa um JSON que fure esse contrato ou uma foto citada que não esteja em `img/`.
 

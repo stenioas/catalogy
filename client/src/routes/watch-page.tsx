@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { products } from '../catalog/products.generated'
 import { Carousel } from '../components/catalog/carousel'
 import { PriceBlock } from '../components/catalog/price-block'
-import { ProductBadges } from '../components/catalog/product-badges'
+import { ProductAvailabilityBadge, ProductStateBadge } from '../components/catalog/product-badges'
 import { StickyBar } from '../components/catalog/sticky-bar'
 import { TopBar } from '../components/catalog/top-bar'
 import { WantLink } from '../components/catalog/want-link'
@@ -53,14 +53,15 @@ function WatchColumn({ product }: { product: Product }) {
       />
       <div className="flex w-full flex-wrap items-start justify-between gap-3">
         <h1 className="m-0 min-w-0 font-display text-xl font-semibold text-foreground">{product.title}</h1>
-        <ProductBadges product={product} />
+        <ProductStateBadge state={product.state} />
       </div>
       <div
         data-testid="watch-offer"
         className="flex w-full flex-col gap-4 md:flex-row md:items-center"
       >
-        <div className="min-w-0 md:flex-1">
+        <div className="flex min-w-0 flex-col items-start gap-2 md:flex-1">
           <PriceBlock price={product.price} listPrice={product.listPrice} />
+          <ProductAvailabilityBadge availabilityStatus={product.availabilityStatus} className="text-xs" />
         </div>
         <div className="w-full min-w-0 md:flex-1">
           <WantLink ref={wantRef} slug={product.slug} title={product.title} />

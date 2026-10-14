@@ -43,7 +43,7 @@ export const ProductSchema = z
       ),
     description: z.string().optional(),
     state: z.enum(['Novo', 'Usado', 'Openbox']),
-    availability: z.enum(['Em estoque', 'Sob encomenda']),
+    availabilityStatus: z.enum(['available', 'on_order', 'unavailable', 'sold_out']),
     enabled: z.boolean().optional(),
     specifications: z.array(SpecificationSchema).optional(),
     observations: z.string().optional(),

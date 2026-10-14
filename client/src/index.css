@@ -28,6 +28,19 @@
   --product-state-neutral: #f9fafb;
   --product-state-neutral-foreground: #6b7280;
 
+  --availability-available: #f0fdf4;
+  --availability-available-foreground: #166534;
+  --availability-available-border: #bbf7d0;
+  --availability-on-order: #fffbeb;
+  --availability-on-order-foreground: #92400e;
+  --availability-on-order-border: #fde68a;
+  --availability-unavailable: #f9fafb;
+  --availability-unavailable-foreground: #4b5563;
+  --availability-unavailable-border: #e5e7eb;
+  --availability-sold-out: #fef2f2;
+  --availability-sold-out-foreground: #991b1b;
+  --availability-sold-out-border: #fecaca;
+
   --canvas: #ffffff;
   --canvas-parchment: #f5f5f7;
   --surface-pearl: #fafafc;
@@ -85,6 +98,19 @@
 .dark {
   color-scheme: dark;
 
+  --availability-available: #1c3025;
+  --availability-available-foreground: #a7d8b6;
+  --availability-available-border: #385541;
+  --availability-on-order: #332b1e;
+  --availability-on-order-foreground: #e6c58b;
+  --availability-on-order-border: #5c4b30;
+  --availability-unavailable: #303036;
+  --availability-unavailable-foreground: #c4c4cc;
+  --availability-unavailable-border: #4a4a52;
+  --availability-sold-out: #362427;
+  --availability-sold-out-foreground: #e6b0b6;
+  --availability-sold-out-border: #604046;
+
   --primary-tint: #2997ff;
   --primary-tint-foreground: var(--primary-tint);
   --primary-tint-background: rgba(41, 151, 255, 0.16);
@@ -122,6 +148,18 @@
 }
 
 @theme inline {
+  --color-availability-available: var(--availability-available);
+  --color-availability-available-foreground: var(--availability-available-foreground);
+  --color-availability-available-border: var(--availability-available-border);
+  --color-availability-on-order: var(--availability-on-order);
+  --color-availability-on-order-foreground: var(--availability-on-order-foreground);
+  --color-availability-on-order-border: var(--availability-on-order-border);
+  --color-availability-unavailable: var(--availability-unavailable);
+  --color-availability-unavailable-foreground: var(--availability-unavailable-foreground);
+  --color-availability-unavailable-border: var(--availability-unavailable-border);
+  --color-availability-sold-out: var(--availability-sold-out);
+  --color-availability-sold-out-foreground: var(--availability-sold-out-foreground);
+  --color-availability-sold-out-border: var(--availability-sold-out-border);
   --color-product-state-new: var(--product-state-new);
   --color-product-state-new-foreground: var(--product-state-new-foreground);
   --color-product-state-neutral: var(--product-state-neutral);

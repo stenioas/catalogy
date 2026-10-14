@@ -21,7 +21,7 @@ function makeProduct(overrides: Partial<Product> = {}): Product {
     slug: 'seculus-kit',
     title: 'Seculus',
     state: 'Novo',
-    availability: 'Em estoque',
+    availabilityStatus: 'available',
     price: 369.9,
     images: ['foto.webp'],
     description: 'Caixa de aço.',
@@ -108,14 +108,23 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(heading.parentElement?.contains(badge)).toBe(true)
   })
 
-  it.each(['Em estoque', 'Sob encomenda'] as const)('shows availability %s below the state', (availability) => {
-    mockProductsRef.current = [makeProduct({ availability })]
+  it.each([
+    ['available', 'Em estoque'],
+    ['on_order', 'Sob encomenda'],
+    ['unavailable', 'Indisponível'],
+    ['sold_out', 'Esgotado'],
+  ] as const)('shows availability %s below installments', (availabilityStatus, label) => {
+    mockProductsRef.current = [makeProduct({ availabilityStatus })]
     renderWatchPage()
-    const state = screen.getByTestId('state-badge')
+    const heading = screen.getByRole('heading', { level: 1, name: 'Seculus' })
+    const installments = screen.getByTestId('price-installments')
     const badge = screen.getByTestId('availability-badge')
-    expect(badge.textContent).toBe(availability)
-    expect(state.nextElementSibling).toBe(badge)
-    expect(state.parentElement?.className).toContain('flex-col')
+    expect(badge.textContent).toBe(label)
+    expect(within(screen.getByTestId('watch-offer')).getByTestId('availability-badge')).toBe(badge)
+    expect(screen.getByTestId('price-block').nextElementSibling).toBe(badge)
+    expect(follows(installments, badge)).toBe(true)
+    expect(heading.parentElement?.contains(badge)).toBe(false)
+    expect(badge.className.split(/\s+/)).toContain('text-xs')
   })
 
   it('shows installment terms below the in-page price', () => {

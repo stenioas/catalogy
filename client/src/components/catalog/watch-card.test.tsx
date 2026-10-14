@@ -15,7 +15,7 @@ const sampleProduct: Product = {
   slug: 'seculus-kit-com-cantil',
   title: 'Seculus',
   state: 'Novo',
-  availability: 'Em estoque',
+  availabilityStatus: 'available',
   price: 369.9,
   listPrice: 450,
   images: ['foto-principal.webp', 'foto-extra.jpg'],
@@ -85,11 +85,22 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(badge.className.split(/\s+/)).toContain(`text-product-state-${palette}-foreground`)
   })
 
-  it.each(['Em estoque', 'Sob encomenda'] as const)('keeps availability %s beside the price', (availability) => {
-    renderWatchCard({ ...sampleProduct, availability })
+  it.each([
+    ['available', 'Em estoque', 'available'],
+    ['on_order', 'Sob encomenda', 'on-order'],
+    ['unavailable', 'Indisponível', 'unavailable'],
+    ['sold_out', 'Esgotado', 'sold-out'],
+  ] as const)('keeps availability %s below the price block', (availabilityStatus, label, palette) => {
+    renderWatchCard({ ...sampleProduct, availabilityStatus })
     const price = screen.getByTestId('price-block')
     const badge = screen.getByTestId('availability-badge')
-    expect(badge.textContent).toBe(availability)
+    expect(badge.textContent).toBe(label)
+    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining([
+      `bg-availability-${palette}`,
+      `text-availability-${palette}-foreground`,
+      `border-availability-${palette}-border`,
+      'text-xs',
+    ]))
     expect(price.nextElementSibling).toBe(badge)
     expect(badge.parentElement).toBe(price.parentElement)
   })
