@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Card } from '@/components/ui/card'
 
 import { PriceBlock } from './price-block'
-import { ProductBadges } from './product-badges'
+import { ProductAvailabilityBadge, ProductStateBadge } from './product-badges'
 import { WantLink } from './want-link'
 
 export type WatchCardProps = {
@@ -22,12 +22,13 @@ export function WatchCard({ product }: WatchCardProps) {
   return (
     <Card className="gap-0 overflow-hidden rounded-[12px] border-[1px] bg-card p-0 py-0 shadow-none ring-0">
       <Link to={watchPath} data-testid="watch-card-link" className="block text-left">
-        <div className="aspect-square w-full">
+        <div className="relative aspect-square w-full">
           <img
             src={productImageSrc(product.slug, firstImage)}
             alt={product.title}
             className="h-full w-full object-contain"
           />
+          <ProductStateBadge state={product.state} className="absolute right-3 bottom-3" />
         </div>
         <div
           data-testid="watch-card-body"
@@ -38,7 +39,7 @@ export function WatchCard({ product }: WatchCardProps) {
           </h2>
           <div className="flex w-full items-start justify-between gap-3">
             <PriceBlock price={product.price} listPrice={product.listPrice} />
-            <ProductBadges product={product} />
+            <ProductAvailabilityBadge availability={product.availability} />
           </div>
         </div>
       </Link>

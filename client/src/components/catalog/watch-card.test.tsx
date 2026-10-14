@@ -69,16 +69,15 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
-  it.each(['Novo', 'Usado', 'Openbox'] as const)('always shows %s aligned to the right without rotation', (state) => {
+  it.each(['Novo', 'Usado', 'Openbox'] as const)('shows %s inside the bottom right of the photo', (state) => {
     renderWatchCard({ ...sampleProduct, state })
     const badge = screen.getByTestId('state-badge')
     const price = screen.getByTestId('price-block')
-    const row = badge.parentElement?.parentElement
+    const frame = screen.getByRole('img', { name: 'Seculus' }).parentElement
     expect(badge.textContent).toBe(state)
-    expect(row).toBe(price.parentElement)
-    expect(row?.className).toContain('w-full')
-    expect(row?.className).toContain('justify-between')
-    expect(price.compareDocumentPosition(badge) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(badge.parentElement).toBe(frame)
+    expect(frame?.className).toContain('relative')
+    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['absolute', 'right-3', 'bottom-3']))
     expect(price.contains(badge)).toBe(false)
     expect(badge.className).not.toMatch(/rotate/)
     const palette = state === 'Novo' ? 'new' : 'neutral'
@@ -86,13 +85,13 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(badge.className.split(/\s+/)).toContain(`text-product-state-${palette}-foreground`)
   })
 
-  it.each(['Em estoque', 'Sob encomenda'] as const)('shows availability %s below the state', (availability) => {
+  it.each(['Em estoque', 'Sob encomenda'] as const)('keeps availability %s beside the price', (availability) => {
     renderWatchCard({ ...sampleProduct, availability })
-    const state = screen.getByTestId('state-badge')
+    const price = screen.getByTestId('price-block')
     const badge = screen.getByTestId('availability-badge')
     expect(badge.textContent).toBe(availability)
-    expect(state.nextElementSibling).toBe(badge)
-    expect(state.parentElement?.className).toContain('flex-col')
+    expect(price.nextElementSibling).toBe(badge)
+    expect(badge.parentElement).toBe(price.parentElement)
   })
 
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {
