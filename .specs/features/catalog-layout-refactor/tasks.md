@@ -382,16 +382,46 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Implementar foto de 96 px à esquerda, informações à direita, título de duas linhas, condição fora da foto e WhatsApp compacto sobre a foto abaixo de 768 px; preservar desktop.
-- [ ] Testar navegação independente, dados comerciais completos, ausência de descrição/características, condições e disponibilidade; navegador em 320/390/767/768 px verifica reticências, altura variável, foco e vitrine desktop. CatalogPage mantém filtro e ordenação; rodar suas regressões.
-- [ ] Pelo menos 10 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Implementar foto de 96 px à esquerda, informações à direita, título de duas linhas, condição fora da foto e WhatsApp compacto sobre a foto abaixo de 768 px; preservar desktop.
+- [x] Testar navegação independente, dados comerciais completos, ausência de descrição/características, condições e disponibilidade; navegador em 320/390/767/768 px verifica reticências, altura variável, foco e vitrine desktop. CatalogPage mantém filtro e ordenação; rodar suas regressões.
+- [x] Pelo menos 10 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration + browser
 
 **Gate**: Full
 
 **Commit**: `feat(catalog): show compact horizontal mobile product rows`
+
+**Status**: done
+
+#### T6 execution record
+
+- **Implementation**: `client/src/components/catalog/watch-card.tsx:23-73` renders the compact horizontal card below `md`, with a fixed 96 × 96 px photo, two-line title, state and commercial details in the information column, and an independent 44 × 44 px WhatsApp icon over the photo. At `md` the existing stacked desktop card, photo state badge, and textual WhatsApp action return.
+- **Scenario count**: 8 new WatchCard scenarios in `client/src/components/catalog/watch-card.test.tsx:251-362`, plus 5 revalidated CatalogPage filtering and Portuguese-order scenarios in `client/src/routes/catalog-page.test.tsx:102-142,227-265`; 13 new or revalidated scenarios total. The full suite grew by 8 tests from T5's 318 to 326.
+- **Visual evidence**: screenshots shown in the conversation at 320, 390, 767, and 768 px, with desktop comparison at 1024 and 1440 px against [baseline.md](baseline.md). At 320 px, the photo measured 96 × 96 px, the text column began 12 px later, the first title measured 56 px/two lines, and the WhatsApp target measured 44 × 44 px entirely over the photo. At 390 px, card heights varied from 176 to 204 px while photos remained 96 × 96 px. At 767 px the compact row remained; at 768 px the 2-column desktop card and textual action returned. At 1024 and 1440 px, the baseline's 3-column desktop presentation remained. Page `scrollWidth` equaled `clientWidth` at all six widths. Tab focus reached the mobile WhatsApp link with `:focus-visible`, measuring 44 × 44 px. The effective theme was light, matching the pre-existing limitation recorded in `baseline.md`; screenshots were not saved locally.
+- **Browser-data limitation**: current catalog titles reached two lines at narrow widths but none overflowed the two-line clamp, so visible ellipsis glyphs could not be demonstrated with live catalog data. The long-title test fixture asserts the two-line clamp contract and retains full text; no product data or DOM was mutated.
+- **Gate**: `pnpm test` passed 326 tests, 0 failed, 0 skipped (64 shared + 1 prebuild + 261 client); `pnpm build` passed (1 prebuild test and Vite transformed 2,126 modules). Impeccable detector returned `[]` for the changed UI component.
+
+**Test Adequacy Review**
+
+| Requirement / criterion | Evidence (`file:line` + assertion expression) | Spec-defined outcome | Covered? |
+| --- | --- | --- | --- |
+| CATREF-01/02/12: horizontal mobile row, no mobile card border, desktop presentation | `watch-card.test.tsx:251-264` — `toMatch(/\bflex\b/)`, `toMatch(/\bmd:block\b/)`; `:169-180` — `border-0`, `md:border-[1px]`, `shadow-none`; browser measurements at all six widths | Horizontal below 768 px; desktop layout resumes at 768 px; observed desktop matches baseline | Yes |
+| CATREF-03/06: two-line title and variable card heights with a consistent image | `watch-card.test.tsx:266-274` — full title remains and `line-clamp-2`; `:348-362` — both short/long-title frames contain `size-24`; browser reports 96 × 96 px photos and 176–204 px card heights at 390 px | Title contract is two lines; photo size is consistent while cards may vary in height | Yes; visible ellipsis glyph is limited by current live data as recorded above |
+| CATREF-04/05/62: commercial content and project tokens retained; no description/specifications | `watch-card.test.tsx:276-285` — description/specification text absent; `:334-345` — exact old/current prices, discount, Pix, installments, availability, and wrapping classes; existing palette assertions at `:183-195` | Existing commercial values remain in the information column, omitted prose stays absent, project tokens remain applied | Yes |
+| CATREF-07: state displayed in information column | `watch-card.test.tsx:78-101` — all three states are inside `watch-card-body` and outside the image; browser confirmed state location in the row | Novo, Usado, and Openbox are shown with state palette in the information column | Yes |
+| CATREF-08/09/11/67: independent accessible WhatsApp action over photo | `watch-card.test.tsx:287-302` — absolute top/right-of-photo wrapper, `size-11`, icon-only link and accessible name; `:124-136` — mobile and desktop `href` equality and action outside product link; `:316-331` — product link changes route and WhatsApp click leaves it unchanged; browser confirms target size/focus | Icon is in the photo's top-right, is 44 × 44 px with accessible name, and does not activate product navigation | Yes for WatchCard; CATREF-67 remains partial for other product-page actions |
+| CATREF-10: product content navigates to its product page | `watch-card.test.tsx:316-331` — after `fireEvent.click(watch-card-link)`, current path is `/product/seculus-kit-com-cantil` | Photo/content open the selected product independently of WhatsApp | Yes |
+| CATREF-64: filtering and Portuguese title ordering are preserved | `client/src/routes/catalog-page.test.tsx:102-142` — exact expected heading sequences and disabled product exclusion; `:227-278` — stable order across repeated/source permutations | Disabled products remain hidden; enabled products retain the established Portuguese ordering | Yes |
+| CATREF-71/72: focus and no horizontal overflow | Browser read-only evidence at 320/390/767/768/1024/1440 px: `:focus-visible` on WhatsApp, 44 × 44 px target, and `scrollWidth === clientWidth` at each viewport | Mobile WatchCard action is keyboard reachable and the catalog row creates no horizontal scroll | Yes for the T6 WatchCard; overall requirements remain partial for other surfaces |
+
+- Check A: every T6 criterion has an assertion, relevant route regression, browser measurement, or an explicitly recorded live-data limitation.
+- Check B: assertions verify rendered product text, independent navigation, accessible target, responsive placement, and CatalogPage ordering/filtering; no assertion merely mirrors a class name without a corresponding outcome.
+- Check C: each new and revalidated scenario maps to CATREF-01–12 or the named preservation requirements; unrelated tests and product data were untouched.
+- Check D: used `pnpm test`, `pnpm build`, and the required browser viewports from the Test Coverage Matrix; no extra test gate was introduced.
+
+**Verdict**: Adequate for T6. All gates passed. The current product set cannot visibly produce an ellipsis beyond two title lines, and that visual-data limitation is explicitly documented.
 
 ### Phase 2: Geometria e apresentações de mídia
 

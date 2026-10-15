@@ -233,18 +233,18 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 
 | Requirement ID | Story | Phase | Status | Tasks |
 | --- | --- | --- | --- | --- |
-| CATREF-01 | US1: Vitrine compacta / AC1 | Tasks | In Tasks | T6, T16 |
-| CATREF-02 | US1: Vitrine compacta / AC2 | Tasks | In Tasks | T6, T16 |
-| CATREF-03 | US1: Vitrine compacta / AC3 | Tasks | In Tasks | T6, T16 |
-| CATREF-04 | US1: Vitrine compacta / AC4 | Execute | Partial: T5 habilita quebra compacta; integração completa no WatchCard em T6 | T5, T6, T16 |
-| CATREF-05 | US1: Vitrine compacta / AC5 | Tasks | In Tasks | T6, T16 |
-| CATREF-06 | US1: Vitrine compacta / AC6 | Tasks | In Tasks | T6, T16 |
-| CATREF-07 | US1: Vitrine compacta / AC7 | Tasks | In Tasks | T6, T16 |
-| CATREF-08 | US1: Vitrine compacta / AC8 | Execute | Partial: action component in T4; placement in T6 | T4, T6, T16 |
-| CATREF-09 | US1: Vitrine compacta / AC9 | Execute | Partial: T4 component; integration in T6 | T4, T6, T16 |
-| CATREF-10 | US1: Vitrine compacta / AC10 | Tasks | In Tasks | T6, T16 |
-| CATREF-11 | US1: Vitrine compacta / AC11 | Execute | Partial: T4 component; integration in T6 | T4, T6, T16 |
-| CATREF-12 | US1: Vitrine compacta / AC12 | Tasks | In Tasks | T6, T16 |
+| CATREF-01 | US1: Vitrine compacta / AC1 | Execute | Implemented — T6 | T6, T16 |
+| CATREF-02 | US1: Vitrine compacta / AC2 | Execute | Implemented — T6 | T6, T16 |
+| CATREF-03 | US1: Vitrine compacta / AC3 | Execute | Implemented — T6; live title set does not visibly exceed two lines | T6, T16 |
+| CATREF-04 | US1: Vitrine compacta / AC4 | Execute | Implemented — T5 PriceBlock + T6 WatchCard | T5, T6, T16 |
+| CATREF-05 | US1: Vitrine compacta / AC5 | Execute | Implemented — T6 | T6, T16 |
+| CATREF-06 | US1: Vitrine compacta / AC6 | Execute | Implemented — T6 | T6, T16 |
+| CATREF-07 | US1: Vitrine compacta / AC7 | Execute | Implemented — T6 | T6, T16 |
+| CATREF-08 | US1: Vitrine compacta / AC8 | Execute | Implemented — T4 action integrated by T6 | T4, T6, T16 |
+| CATREF-09 | US1: Vitrine compacta / AC9 | Execute | Implemented — T4 accessible action integrated by T6 | T4, T6, T16 |
+| CATREF-10 | US1: Vitrine compacta / AC10 | Execute | Implemented — T6 | T6, T16 |
+| CATREF-11 | US1: Vitrine compacta / AC11 | Execute | Implemented — T4 action integrated by T6 | T4, T6, T16 |
+| CATREF-12 | US1: Vitrine compacta / AC12 | Execute | Implemented — T6; desktop compared at 768/1024/1440 px | T6, T16 |
 | CATREF-13 | US2: Composição responsiva do produto / AC1 | Tasks | In Tasks | T13, T16 |
 | CATREF-14 | US2: Composição responsiva do produto / AC2 | Tasks | In Tasks | T13, T16 |
 | CATREF-15 | US2: Composição responsiva do produto / AC3 | Tasks | In Tasks | T13, T16 |
@@ -294,20 +294,20 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-59 | US6: Cor opcional e conteúdo preenchido / AC8 | Tasks | In Tasks | T13, T16 |
 | CATREF-60 | US6: Cor opcional e conteúdo preenchido / AC9 | Execute | Implemented — T2 README e T3 skill concluídos | T2, T3, T16 |
 | CATREF-61 | US6: Cor opcional e conteúdo preenchido / AC10 | Execute | Implemented | T1, T2, T3, T13, T16 |
-| CATREF-62 | US7: Identidade, acessibilidade e regras comerciais / AC1 | Tasks | In Tasks | T6, T8, T13, T16 |
+| CATREF-62 | US7: Identidade, acessibilidade e regras comerciais / AC1 | Execute | Partial: WatchCard uses project tokens and matches T6 desktop baseline; other surfaces in T8/T13/T16 | T6, T8, T13, T16 |
 | CATREF-63 | US7: Identidade, acessibilidade e regras comerciais / AC2 | Execute | Partial: T5 preserva regras e conteúdo do PriceBlock; integrações restantes em T13/T16 | T5, T13, T16 |
-| CATREF-64 | US7: Identidade, acessibilidade e regras comerciais / AC3 | Tasks | In Tasks | T6, T16 |
+| CATREF-64 | US7: Identidade, acessibilidade e regras comerciais / AC3 | Execute | Implemented — CatalogPage filter and Portuguese ordering regressions revalidated in T6 | T6, T16 |
 | CATREF-65 | US7: Identidade, acessibilidade e regras comerciais / AC4 | Tasks | In Tasks | T13, T16 |
 | CATREF-66 | US7: Identidade, acessibilidade e regras comerciais / AC5 | Tasks | In Tasks | T13, T16 |
-| CATREF-67 | US7: Identidade, acessibilidade e regras comerciais / AC6 | Execute | Partial: shared URL in T4; integrations in T6/T13 | T4, T6, T13, T16 |
+| CATREF-67 | US7: Identidade, acessibilidade e regras comerciais / AC6 | Execute | Partial: WatchCard actions share URL in T4/T6; Product page integration in T13 | T4, T6, T13, T16 |
 | CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Tasks | In Tasks | T12, T13, T15, T16 |
-| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial: T4 action; remaining controls in T6/T9/T10/T11/T13/T14 | T4, T6, T9, T10, T11, T13, T14, T16 |
-| CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Partial: T5 permite quebra compacta; verificação de overflow e layout em T6/T8/T9/T13 | T5, T6, T8, T9, T13, T16 |
+| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial: T4/T6 WhatsApp has accessible name and visible keyboard focus; remaining controls in T9/T10/T11/T13/T14 | T4, T6, T9, T10, T11, T13, T14, T16 |
+| CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Partial: T6 verifies no overflow in CatalogPage; other media/product surfaces in T8/T9/T13 | T5, T6, T8, T9, T13, T16 |
 | CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Tasks | In Tasks | T10, T11, T14, T16 |
 
-**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T5 concluídas e T6–T16 pendentes.
+**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T6 concluídas e T7–T16 pendentes.
 
 ### T5 execution evidence
 
@@ -318,6 +318,19 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-72 | Partial. Default callers retain nowrap (`price-block.test.tsx:149` — `expect(row?.className).toMatch(/\bflex-nowrap\b/)`; `:151` — `expect(row?.className).not.toMatch(/\bflex-wrap\b/)`). Browser verification of overflow is assigned to T6. |
 
 Full gate `pnpm test`: **318 passed, 0 failed, 0 skipped** (64 shared, 1 prebuild, 253 client), four above the 314-test baseline. T5 adds four explicit scenarios in `client/src/components/catalog/price-block.test.tsx`; the focused PriceBlock run passed 20 tests.
+
+### T6 execution evidence
+
+| Requirement | Evidence and status |
+| --- | --- |
+| CATREF-01–12 | Implemented and verified in WatchCard. Detailed AC-to-assertion mapping, browser measurements, screenshot viewports, and the live-title limitation are in [tasks.md — T6 execution record](tasks.md). |
+| CATREF-62 | Partial. WatchCard preserves project tokens and desktop appearance against baseline; remaining product/media surfaces belong to T8/T13/T16. |
+| CATREF-64 | Implemented. Five existing CatalogPage scenarios revalidated Portuguese ordering, disabled-product filtering, stable order, and generated-source order in `client/src/routes/catalog-page.test.tsx:102-142,227-278`. |
+| CATREF-67 | Partial. T4/T6 WatchCard actions use an identical WhatsApp destination and remain independent of product navigation; the product page integration is assigned to T13. |
+| CATREF-71 | Partial. T6 mobile WhatsApp action has an accessible name and visible keyboard focus; remaining gallery/product controls are assigned to later tasks. |
+| CATREF-72 | Partial. T6 measured no horizontal overflow at 320/390/767/768/1024/1440 px; other media/product surfaces are assigned to T8/T9/T13. |
+
+`pnpm test`: **326 passed, 0 failed, 0 skipped** (64 shared, 1 prebuild, 261 client), 8 above T5. `pnpm build` passed; Vite transformed 2,126 modules. Effective browser theme was light, as noted in [baseline.md](baseline.md); no product data changed and screenshots were shown in the conversation without local PNG files.
 
 ## Success Criteria
 

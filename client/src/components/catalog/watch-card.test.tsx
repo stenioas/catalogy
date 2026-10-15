@@ -3,9 +3,9 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import type { Product } from '@catalogo/shared'
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, useLocation } from 'react-router-dom'
 
 import { WatchCard } from './watch-card'
 
@@ -29,6 +29,11 @@ function renderWatchCard(product: Product = sampleProduct) {
   )
 }
 
+function CurrentPath() {
+  const { pathname } = useLocation()
+  return <output data-testid="current-path">{pathname}</output>
+}
+
 describe('WatchCard (SV-13, SV-14)', () => {
   afterEach(() => {
     cleanup()
@@ -48,7 +53,8 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(img.className).toMatch(/\bobject-contain\b/)
     const frame = img.parentElement
     expect(frame).not.toBeNull()
-    expect(frame?.className).toMatch(/\baspect-square\b/)
+    expect(frame?.className).toMatch(/\bmd:aspect-square\b/)
+    expect(frame?.className).toMatch(/\bsize-24\b/)
     const backgroundTokens = frame?.className.match(/\bbg-\S+/g) ?? []
     expect(backgroundTokens.filter((token) => token !== 'bg-transparent')).toEqual([])
     expect(frame?.getAttribute('style') ?? '').not.toMatch(/background/i)
@@ -69,20 +75,29 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
-  it.each(['Novo', 'Usado', 'Openbox'] as const)('shows %s inside the bottom right of the photo', (state) => {
+  it.each(['Novo', 'Usado', 'Openbox'] as const)('keeps %s in the mobile info column and desktop photo', (state) => {
     renderWatchCard({ ...sampleProduct, state })
-    const badge = screen.getByTestId('state-badge')
+    const badges = screen.getAllByTestId('state-badge')
     const price = screen.getByTestId('price-block')
-    const frame = screen.getByRole('img', { name: 'Seculus' }).parentElement
-    expect(badge.textContent).toBe(state)
-    expect(badge.parentElement).toBe(frame)
-    expect(frame?.className).toContain('relative')
-    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['absolute', 'right-3', 'bottom-3']))
-    expect(price.contains(badge)).toBe(false)
-    expect(badge.className).not.toMatch(/rotate/)
+    const photoBadge = badges.find((badge) => badge.className.includes('md:block'))
+    const infoBadge = badges.find((badge) => badge.className.includes('md:hidden'))
+    const frame = screen.getByTestId('watch-card-image')
+    const body = screen.getByTestId('watch-card-body')
+    expect(badges).toHaveLength(2)
+    expect(photoBadge?.textContent).toBe(state)
+    expect(photoBadge?.parentElement).toBe(frame)
+    expect(photoBadge?.className.split(/\s+/)).toEqual(expect.arrayContaining(['absolute', 'right-3', 'bottom-3']))
+    expect(infoBadge?.textContent).toBe(state)
+    expect(body.contains(infoBadge as Node)).toBe(true)
+    expect(frame.contains(infoBadge as Node)).toBe(false)
+    expect(price.contains(infoBadge as Node)).toBe(false)
+    expect(photoBadge?.className).not.toMatch(/rotate/)
+    expect(infoBadge?.className).not.toMatch(/rotate/)
     const palette = state === 'Novo' ? 'new' : 'neutral'
-    expect(badge.className.split(/\s+/)).toContain(`bg-product-state-${palette}`)
-    expect(badge.className.split(/\s+/)).toContain(`text-product-state-${palette}-foreground`)
+    for (const badge of badges) {
+      expect(badge.className.split(/\s+/)).toContain(`bg-product-state-${palette}`)
+      expect(badge.className.split(/\s+/)).toContain(`text-product-state-${palette}-foreground`)
+    }
   })
 
   it.each([
@@ -103,6 +118,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     ]))
     expect(price.nextElementSibling).toBe(badge)
     expect(badge.parentElement).toBe(price.parentElement)
+    expect(screen.getByTestId('watch-card-body').contains(badge)).toBe(true)
   })
 
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {
@@ -111,9 +127,12 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
     expect(screen.getByTestId('price-installments').textContent).toBe('ou em até 12x com juros')
     expect(screen.getByTestId('price-pix').textContent).toBe('no pix')
-    const wantLink = screen.getByRole('link', { name: 'Enviar no WhatsApp' })
-    expect(wantLink.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/\?text=/)
-    expect(screen.getByTestId('watch-card-link').contains(wantLink)).toBe(false)
+    const mobileWantLink = within(screen.getByTestId('watch-card-mobile-action')).getByRole('link', { name: 'Enviar no WhatsApp' })
+    const desktopWantLink = within(screen.getByTestId('watch-card-actions')).getByRole('link', { name: 'Enviar no WhatsApp' })
+    expect(mobileWantLink.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/\?text=/)
+    expect(desktopWantLink.getAttribute('href')).toBe(mobileWantLink.getAttribute('href'))
+    expect(screen.getByTestId('watch-card-link').contains(mobileWantLink)).toBe(false)
+    expect(screen.getByTestId('watch-card-link').contains(desktopWantLink)).toBe(false)
   })
 })
 
@@ -153,7 +172,8 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     expect(card).not.toBeNull()
     const tokens = classTokens((card as HTMLElement).className)
     expect(tokens).toContain('rounded-[12px]')
-    expect(tokens).toContain('border-[1px]')
+    expect(tokens).toContain('border-0')
+    expect(tokens).toContain('md:border-[1px]')
     expect(tokens).toContain('shadow-none')
     expect(tokens.some((token) => /^shadow-(?!none$)/.test(token))).toBe(false)
     expect(tokens).not.toContain('ring-1')
@@ -174,20 +194,21 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     expect(decl(root, '--surface-tile-2')).toBe('#2a2a2c')
   })
 
-  it('lets the photo use the full width of the card (SV-39)', () => {
+  it('uses a fixed compact photo and a full-width square desktop photo (SV-39)', () => {
     const { container } = renderWatchCard()
     const card = container.querySelector('[data-slot="card"]') as HTMLElement
     const img = screen.getByRole('img', { name: 'Seculus' })
     const frame = img.parentElement as HTMLElement
-    expect(classTokens(frame.className)).toContain('w-full')
+    expect(classTokens(frame.className)).toContain('size-24')
+    expect(classTokens(frame.className)).toContain('md:w-full')
+    expect(classTokens(frame.className)).toContain('md:aspect-square')
     expect(classTokens(img.className)).toContain('w-full')
     expect(classTokens(card.className)).toContain('p-0')
 
     let node: HTMLElement | null = frame
     while (node && node !== card) {
       const tokens = classTokens(node.className)
-      expect(tokens.some((token) => /^(?:[\w-]+:)?px-/.test(token))).toBe(false)
-      expect(tokens.some((token) => /^(?:[\w-]+:)?px-\[/.test(token))).toBe(false)
+      expect(tokens.some((token) => /^(?:[\w-]+:)?px-/.test(token) && !token.startsWith('md:'))).toBe(false)
       expect(tokens.some((token) => /^(?:[\w-]+:)?p-\[/.test(token))).toBe(false)
       node = node.parentElement
     }
@@ -199,10 +220,10 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     const actions = screen.getByTestId('watch-card-actions')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
     const price = screen.getByTestId('price-current')
-    const button = screen.getByRole('link', { name: 'Enviar no WhatsApp' })
+    const button = within(actions).getByRole('link', { name: 'Enviar no WhatsApp' })
     const img = screen.getByRole('img', { name: 'Seculus' })
 
-    expect(classTokens(body.className)).toContain('px-[24px]')
+    expect(classTokens(body.className)).toContain('md:px-[24px]')
     expect(body.contains(heading)).toBe(true)
     expect(body.contains(price)).toBe(true)
     expect(body.contains(img)).toBe(false)
@@ -219,5 +240,124 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     const heading = screen.getByRole('heading', { name: 'Seculus' })
     expect(classTokens(heading.className)).toContain('text-foreground')
     expect(classTokens(heading.className)).not.toContain('text-ink')
+  })
+})
+
+describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATREF-64, CATREF-67, CATREF-71, CATREF-72)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('places the fixed photo beside a flexible text column below md and restores the card stack at md', () => {
+    renderWatchCard()
+    const link = screen.getByTestId('watch-card-link')
+    const image = screen.getByTestId('watch-card-image')
+    const body = screen.getByTestId('watch-card-body')
+
+    expect(link.className).toMatch(/\bflex\b/)
+    expect(link.className).toMatch(/\bitems-start\b/)
+    expect(link.className).toMatch(/\bgap-3\b/)
+    expect(link.className).toMatch(/\bmd:block\b/)
+    expect(image.className).toMatch(/\bsize-24\b/)
+    expect(body.className).toMatch(/\bmin-w-0\b/)
+    expect(body.className).toMatch(/\bflex-1\b/)
+  })
+
+  it('clamps a long title to two compact lines while keeping its full text available', () => {
+    const title = 'Relógio masculino automático de aço com mostrador azul e calendário'
+    renderWatchCard({ ...sampleProduct, title })
+    const heading = screen.getByRole('heading', { name: title })
+
+    expect(heading.textContent).toBe(title)
+    expect(heading.className).toMatch(/\bline-clamp-2\b/)
+    expect(heading.className).toMatch(/\bmd:line-clamp-none\b/)
+  })
+
+  it('keeps description and specifications out of the catalog row', () => {
+    renderWatchCard({
+      ...sampleProduct,
+      description: 'Descrição longa do relógio',
+      specifications: [{ label: 'Movimento', value: 'Automático' }],
+    })
+
+    expect(screen.queryByText('Descrição longa do relógio')).toBeNull()
+    expect(screen.queryByText('Automático')).toBeNull()
+  })
+
+  it('places an icon-only WhatsApp action over the photo with its accessible name and 44px target', () => {
+    renderWatchCard()
+    const action = screen.getByTestId('watch-card-mobile-action')
+    const link = within(action).getByRole('link', { name: 'Enviar no WhatsApp' })
+    const icon = link.querySelector('svg')
+
+    expect(action.className).toMatch(/\babsolute\b/)
+    expect(action.className).toMatch(/\btop-0\b/)
+    expect(action.className).toMatch(/\bleft-0\b/)
+    expect(action.className).toMatch(/\bw-24\b/)
+    expect(action.className).toMatch(/\bjustify-end\b/)
+    expect(action.className).toMatch(/\bmd:hidden\b/)
+    expect(link.className).toMatch(/\bsize-11\b/)
+    expect(link.textContent).toBe('')
+    expect(icon?.getAttribute('aria-hidden')).toBe('true')
+  })
+
+  it('keeps the textual WhatsApp action for desktop at the existing md breakpoint', () => {
+    renderWatchCard()
+    const action = screen.getByTestId('watch-card-actions')
+    const link = within(action).getByRole('link', { name: 'Enviar no WhatsApp' })
+
+    expect(action.className).toMatch(/\bmd:block\b/)
+    expect(action.className).toMatch(/\bhidden\b/)
+    expect(link.textContent).toBe('Enviar no WhatsApp')
+    expect(link.getAttribute('target')).toBe('_blank')
+    expect(link.getAttribute('rel')).toBe('noopener noreferrer')
+  })
+
+  it('navigates through product content while the WhatsApp action remains an independent share link', () => {
+    render(
+      <MemoryRouter initialEntries={['/catalog']}>
+        <WatchCard product={sampleProduct} />
+        <CurrentPath />
+      </MemoryRouter>,
+    )
+
+    fireEvent.click(screen.getByTestId('watch-card-link'))
+    expect(screen.getByTestId('current-path').textContent).toBe('/product/seculus-kit-com-cantil')
+    const share = within(screen.getByTestId('watch-card-mobile-action')).getByRole('link', {
+      name: 'Enviar no WhatsApp',
+    })
+    fireEvent.click(share)
+    expect(screen.getByTestId('current-path').textContent).toBe('/product/seculus-kit-com-cantil')
+    expect(share.getAttribute('href')).toContain(encodeURIComponent('Olá, tenho interesse no Seculus.'))
+  })
+
+  it('retains current price, discount, Pix, installment and availability text in the info column', () => {
+    renderWatchCard()
+    const body = screen.getByTestId('watch-card-body')
+
+    expect(within(body).getByText('De R$ 450,00')).toBeDefined()
+    expect(within(body).getByText('−17%')).toBeDefined()
+    expect(within(body).getByText('R$ 369,90')).toBeDefined()
+    expect(within(body).getByText('no pix')).toBeDefined()
+    expect(within(body).getByText('ou em até 12x com juros')).toBeDefined()
+    expect(within(body).getByText('Em estoque')).toBeDefined()
+    expect(screen.getByTestId('price-list')?.parentElement?.className).toMatch(/\bflex-wrap\b/)
+    expect(screen.getByTestId('price-list')?.parentElement?.className).toMatch(/\bmd:flex-nowrap\b/)
+  })
+
+  it('renders the same 96px image frame with short and long product titles', () => {
+    const { container } = render(
+      <MemoryRouter>
+        <WatchCard product={sampleProduct} />
+        <WatchCard product={{ ...sampleProduct, slug: 'seculus-longo', title: 'Relógio Seculus automático masculino em aço inoxidável com mostrador azul' }} />
+      </MemoryRouter>,
+    )
+    const frames = container.querySelectorAll('[data-testid="watch-card-image"]')
+
+    expect(frames).toHaveLength(2)
+    expect(Array.from(frames, (frame) => frame.className)).toEqual([
+      expect.stringContaining('size-24'),
+      expect.stringContaining('size-24'),
+    ])
   })
 })
