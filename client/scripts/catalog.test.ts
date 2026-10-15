@@ -112,6 +112,36 @@ describe('validateCatalog', () => {
     })
   })
 
+  it('preserves the optional color through validation and generated output', () => {
+    const catalogDir = tempDir()
+    const color = '  Azul petróleo  '
+    writeProduct(
+      catalogDir,
+      'seculus-kit',
+      {
+        slug: 'seculus-kit',
+        title: 'Seculus',
+        state: 'Novo',
+        availabilityStatus: 'available',
+        price: 369.9,
+        images: ['frente.png'],
+        color,
+      },
+      { 'frente.png': photoBytes },
+    )
+
+    const products = validateCatalog(catalogDir)
+    expect(products[0].color).toBe(color)
+
+    const outFile = join(tempDir(), 'products.generated.ts')
+    writeProductsModule(products, outFile)
+    const source = readFileSync(outFile, 'utf8')
+    const emittedProducts = JSON.parse(
+      source.split('export const products: Product[] = ')[1],
+    ) as Array<{ color?: string }>
+    expect(emittedProducts[0].color).toBe(color)
+  })
+
   it('validates without sellers.json on disk', () => {
     const catalogDir = writeValidCatalog()
     expect(existsSync(join(catalogDir, 'sellers.json'))).toBe(false)

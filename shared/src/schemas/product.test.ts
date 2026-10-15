@@ -168,6 +168,41 @@ describe('ProductSchema optional fields (CAT-13)', () => {
   })
 })
 
+describe('ProductSchema color (CATREF-52, CATREF-53, CATREF-61)', () => {
+  it('accepts a product without color and leaves the property omitted', () => {
+    const result = ProductSchema.safeParse(baseProduct)
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data).not.toHaveProperty('color')
+    }
+  })
+
+  it.each(['Azul petróleo', '', '  '])(
+    'preserves color string %j without transformation',
+    (color) => {
+      const result = ProductSchema.safeParse({ ...baseProduct, color })
+
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.color).toBe(color)
+      }
+    },
+  )
+
+  it.each([
+    { label: 'null', color: null },
+    { label: 'number', color: 42 },
+    { label: 'boolean', color: true },
+    { label: 'array', color: [] },
+    { label: 'object', color: {} },
+  ])('rejects color with a $label value', ({ color }) => {
+    expect(ProductSchema.safeParse({ ...baseProduct, color }).success).toBe(
+      false,
+    )
+  })
+})
+
 describe('ProductSchema slug (CAT-04)', () => {
   it('rejects a slug outside lowercase letters, digits, and single hyphens', () => {
     expect(

@@ -42,6 +42,7 @@ export const ProductSchema = z
         'Each image file name must use an allowed extension and must not contain path separators',
       ),
     description: z.string().optional(),
+    color: z.string().optional(),
     state: z.enum(['Novo', 'Usado', 'Openbox']),
     availabilityStatus: z.enum(['available', 'on_order', 'unavailable', 'sold_out']),
     enabled: z.boolean().optional(),
