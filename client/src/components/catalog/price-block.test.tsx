@@ -35,7 +35,7 @@ function darkBlock(css: string): string {
 }
 
 function renderPriceBlock(
-  props: { price: number; listPrice?: number },
+  props: { price: number; listPrice?: number; wrapListPriceOnMobile?: boolean },
   theme: 'light' | 'dark' = 'light',
 ) {
   applyThemeClass(theme)
@@ -130,6 +130,47 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     const { container } = renderPriceBlock({ price: 369.9 })
     expect(screen.queryByTestId('price-badge')).toBeNull()
     expect(container.querySelector('[data-slot="badge"]')).toBeNull()
+  })
+
+  it('allows the reference price and discount to wrap only when compact behavior is enabled', () => {
+    renderPriceBlock({ price: 369.9, listPrice: 450, wrapListPriceOnMobile: true })
+    const row = screen.getByTestId('price-list').parentElement
+
+    expect(row?.className).toMatch(/\bflex-wrap\b/)
+    expect(row?.className).toMatch(/\bwhitespace-normal\b/)
+    expect(row?.className).toMatch(/\bmd:flex-nowrap\b/)
+    expect(row?.className).toMatch(/\bmd:whitespace-nowrap\b/)
+  })
+
+  it('keeps the default reference row unchanged outside the compact card', () => {
+    renderPriceBlock({ price: 369.9, listPrice: 450 })
+    const row = screen.getByTestId('price-list').parentElement
+
+    expect(row?.className).toMatch(/\bflex-nowrap\b/)
+    expect(row?.className).toMatch(/\bwhitespace-nowrap\b/)
+    expect(row?.className).not.toMatch(/\bflex-wrap\b/)
+  })
+
+  it('preserves the full long reference price and discount in compact mode', () => {
+    renderPriceBlock({
+      price: 123_456.78,
+      listPrice: 123_456_789.99,
+      wrapListPriceOnMobile: true,
+    })
+
+    expect(screen.getByTestId('price-list').textContent).toBe('De R$ 123.456.789,99')
+    expect(screen.getByTestId('price-badge').textContent).toBe('−99%')
+  })
+
+  it('preserves the full long reference price when no discount seal is due in compact mode', () => {
+    renderPriceBlock({
+      price: 123_456_789.98,
+      listPrice: 123_456_789.99,
+      wrapListPriceOnMobile: true,
+    })
+
+    expect(screen.getByTestId('price-list').textContent).toBe('De R$ 123.456.789,99')
+    expect(screen.queryByTestId('price-badge')).toBeNull()
   })
 
   it('uses light-theme primary-tint token values from index.css (CAT-106)', () => {

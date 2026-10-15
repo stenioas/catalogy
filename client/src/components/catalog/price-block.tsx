@@ -5,11 +5,16 @@ import { Badge } from '@/components/ui/badge'
 export type PriceBlockProps = {
   price: number
   listPrice?: number
+  wrapListPriceOnMobile?: boolean
 }
 
 const currentPriceClassName = 'text-xl font-semibold'
 
-export function PriceBlock({ price, listPrice }: PriceBlockProps) {
+export function PriceBlock({
+  price,
+  listPrice,
+  wrapListPriceOnMobile = false,
+}: PriceBlockProps) {
   const currentLabel = formatBrl(price)
 
   const percent = listPrice === undefined ? 0 : discountPercent(price, listPrice)
@@ -18,7 +23,13 @@ export function PriceBlock({ price, listPrice }: PriceBlockProps) {
   return (
     <div data-testid="price-block" className="flex flex-col items-start gap-0.5">
       {listPrice !== undefined ? (
-        <div className="flex flex-nowrap items-center gap-2 whitespace-nowrap">
+        <div
+          className={
+            wrapListPriceOnMobile
+              ? 'flex flex-wrap items-center gap-2 whitespace-normal md:flex-nowrap md:whitespace-nowrap'
+              : 'flex flex-nowrap items-center gap-2 whitespace-nowrap'
+          }
+        >
           <span
             data-testid="price-list"
             className="text-base text-ink-muted-48 line-through"

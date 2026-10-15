@@ -1,7 +1,7 @@
 # Catalog Layout Refactor Specification
 
 Data: 2026-10-15
-Status: execução em andamento; T1–T4 concluídas, T5–T16 pendentes.
+Status: execução em andamento; T1–T5 concluídas, T6–T16 pendentes.
 Fonte: [desenho aprovado](../../../CATALOG-REFACTORING-DESIGN.md).
 Porte: Large, com especificação completa, design técnico e tarefas formais. Todas as histórias abaixo são P1 e pertencem à entrega aprovada.
 
@@ -229,14 +229,14 @@ A vitrine mobile atual usa cards verticais, dificultando a consulta compacta das
 
 ## Requirement Traceability
 
-Cada ID identifica exatamente um critério de aceite. Evidência e tarefas serão vinculadas nas próximas etapas; nenhum requisito está implementado por esta especificação.
+Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as entregas aos requisitos; as evidências atuais registram somente o escopo concluído.
 
 | Requirement ID | Story | Phase | Status | Tasks |
 | --- | --- | --- | --- | --- |
 | CATREF-01 | US1: Vitrine compacta / AC1 | Tasks | In Tasks | T6, T16 |
 | CATREF-02 | US1: Vitrine compacta / AC2 | Tasks | In Tasks | T6, T16 |
 | CATREF-03 | US1: Vitrine compacta / AC3 | Tasks | In Tasks | T6, T16 |
-| CATREF-04 | US1: Vitrine compacta / AC4 | Tasks | In Tasks | T5, T6, T16 |
+| CATREF-04 | US1: Vitrine compacta / AC4 | Execute | Partial: T5 habilita quebra compacta; integração completa no WatchCard em T6 | T5, T6, T16 |
 | CATREF-05 | US1: Vitrine compacta / AC5 | Tasks | In Tasks | T6, T16 |
 | CATREF-06 | US1: Vitrine compacta / AC6 | Tasks | In Tasks | T6, T16 |
 | CATREF-07 | US1: Vitrine compacta / AC7 | Tasks | In Tasks | T6, T16 |
@@ -295,7 +295,7 @@ Cada ID identifica exatamente um critério de aceite. Evidência e tarefas serã
 | CATREF-60 | US6: Cor opcional e conteúdo preenchido / AC9 | Execute | Implemented — T2 README e T3 skill concluídos | T2, T3, T16 |
 | CATREF-61 | US6: Cor opcional e conteúdo preenchido / AC10 | Execute | Implemented | T1, T2, T3, T13, T16 |
 | CATREF-62 | US7: Identidade, acessibilidade e regras comerciais / AC1 | Tasks | In Tasks | T6, T8, T13, T16 |
-| CATREF-63 | US7: Identidade, acessibilidade e regras comerciais / AC2 | Tasks | In Tasks | T5, T13, T16 |
+| CATREF-63 | US7: Identidade, acessibilidade e regras comerciais / AC2 | Execute | Partial: T5 preserva regras e conteúdo do PriceBlock; integrações restantes em T13/T16 | T5, T13, T16 |
 | CATREF-64 | US7: Identidade, acessibilidade e regras comerciais / AC3 | Tasks | In Tasks | T6, T16 |
 | CATREF-65 | US7: Identidade, acessibilidade e regras comerciais / AC4 | Tasks | In Tasks | T13, T16 |
 | CATREF-66 | US7: Identidade, acessibilidade e regras comerciais / AC5 | Tasks | In Tasks | T13, T16 |
@@ -304,10 +304,20 @@ Cada ID identifica exatamente um critério de aceite. Evidência e tarefas serã
 | CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial: T4 action; remaining controls in T6/T9/T10/T11/T13/T14 | T4, T6, T9, T10, T11, T13, T14, T16 |
-| CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Tasks | In Tasks | T5, T6, T8, T9, T13, T16 |
+| CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Partial: T5 permite quebra compacta; verificação de overflow e layout em T6/T8/T9/T13 | T5, T6, T8, T9, T13, T16 |
 | CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Tasks | In Tasks | T10, T11, T14, T16 |
 
-**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T4 concluídas e T5–T16 pendentes.
+**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T5 concluídas e T6–T16 pendentes.
+
+### T5 execution evidence
+
+| Requirement | Evidence and status |
+| --- | --- |
+| CATREF-04 | Partial. `client/src/components/catalog/price-block.test.tsx:139` — `expect(row?.className).toMatch(/\bflex-wrap\b/)`; `:161` — `expect(screen.getByTestId('price-list').textContent).toBe('De R$ 123.456.789,99')`. WatchCard integration and actual compact layout are verified in T6. |
+| CATREF-63 | Partial. Existing assertions preserve BRL (`price-block.test.tsx:61` — current price equals `R$ 369,90`), installments (`:70` — text equals `ou em até 12x com juros`), Pix (`:79` — text equals `no pix`), and discount behavior (`:99` — `−17%`; `:110` — no badge below 1%). New cases preserve long-price values with and without the seal (`:161`, `:162`, `:172`, `:173`). |
+| CATREF-72 | Partial. Default callers retain nowrap (`price-block.test.tsx:149` — `expect(row?.className).toMatch(/\bflex-nowrap\b/)`; `:151` — `expect(row?.className).not.toMatch(/\bflex-wrap\b/)`). Browser verification of overflow is assigned to T6. |
+
+Full gate `pnpm test`: **318 passed, 0 failed, 0 skipped** (64 shared, 1 prebuild, 253 client), four above the 314-test baseline. T5 adds four explicit scenarios in `client/src/components/catalog/price-block.test.tsx`; the focused PriceBlock run passed 20 tests.
 
 ## Success Criteria
 

@@ -311,16 +311,53 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Oferecer quebra da linha de preço anterior/desconto somente onde a vitrine mobile precisa, mantendo todos os valores e a apresentação desktop.
-- [ ] Preservar os testes de preço/pix/parcelamento/desconto; incluir preço anterior longo e desconto presente/ausente. Conferir quebra real no navegador em T6, sem assumir que classes provam layout.
-- [ ] Pelo menos 4 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Oferecer quebra da linha de preço anterior/desconto somente onde a vitrine mobile precisa, mantendo todos os valores e a apresentação desktop.
+- [x] Preservar os testes de preço/pix/parcelamento/desconto; incluir preço anterior longo e desconto presente/ausente. A quebra real no navegador fica para T6; classes não foram tratadas como prova visual.
+- [x] Pelo menos 4 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration
 
 **Gate**: Full
 
 **Commit**: `fix(catalog): allow compact price wrapping without truncation`
+
+**Status**: done
+
+**Execution evidence**: `wrapListPriceOnMobile` is opt-in and defaults to false. In compact mode, the previous-price row can wrap below `md` and returns to nowrap at `md`; BRL formatting, discount calculation, Pix and installment copy are unchanged. `PriceBlock` callers outside the compact card keep the default presentation. T6 must enable the prop in `WatchCard` and inspect the actual wrap in a browser.
+
+- New scenarios: 4 in `price-block.test.tsx` (20 tests in that file after the change).
+- Full gate: `pnpm test` passed, 318 total (64 shared + 1 prebuild + 253 client), 0 failed, 0 skipped. Baseline was 314, so the suite gained 4 cases.
+- Browser layout verification: assigned to T6 as specified; T5 makes no visual-layout claim from jsdom classes.
+
+**Test Adequacy Review**
+
+*Check A — Sufficient coverage:*
+
+| Done-when criterion / spec AC | `file:line` + assertion expression | Spec-defined outcome | Covered? |
+| --- | --- | --- | --- |
+| Allow compact wrapping and restore nowrap at desktop width | `client/src/components/catalog/price-block.test.tsx:139` — `expect(row?.className).toMatch(/\bflex-wrap\b/)`; `:141` — `expect(row?.className).toMatch(/\bmd:flex-nowrap\b/)` | Compact price may wrap; desktop row stays on one line | Yes; T6 verifies rendered layout in browser |
+| Keep default PriceBlock presentation unchanged outside the compact card | `client/src/components/catalog/price-block.test.tsx:149` — `expect(row?.className).toMatch(/\bflex-nowrap\b/)`; `:151` — `expect(row?.className).not.toMatch(/\bflex-wrap\b/)` | Callers that do not opt in remain nowrap | Yes |
+| Preserve complete long previous price with a discount | `client/src/components/catalog/price-block.test.tsx:161` — `expect(screen.getByTestId('price-list').textContent).toBe('De R$ 123.456.789,99')`; `:162` — `expect(screen.getByTestId('price-badge').textContent).toBe('−99%')` | Full previous amount and integer discount remain visible | Yes |
+| Preserve complete long previous price without a discount seal | `client/src/components/catalog/price-block.test.tsx:172` — `expect(screen.getByTestId('price-list').textContent).toBe('De R$ 123.456.789,99')`; `:173` — `expect(screen.queryByTestId('price-badge')).toBeNull()` | Previous price remains intact and a sub-1% discount has no seal | Yes |
+| Preserve BRL, Pix, installments and discount behavior | `client/src/components/catalog/price-block.test.tsx:61` — `expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')`; `:70` — `expect(installments.textContent).toBe('ou em até 12x com juros')`; `:79` — `expect(pix.textContent).toBe('no pix')`; `:99` — `expect(screen.getByTestId('price-badge').textContent).toBe('−17%')`; `:110` — `expect(screen.queryByTestId('price-badge')).toBeNull()` | Existing monetary values, copy, and discount threshold remain unchanged | Yes; all existing tests preserved and passed |
+
+*Check C — Necessary coverage:*
+
+| `file:line` + assertion expression | Maps to | Keep? |
+| --- | --- | --- |
+| `client/src/components/catalog/price-block.test.tsx:139` — compact `flex-wrap` assertion | T5 compact-only wrapping | Yes |
+| `client/src/components/catalog/price-block.test.tsx:149` — default `flex-nowrap` assertion | T5 desktop and non-card preservation | Yes |
+| `client/src/components/catalog/price-block.test.tsx:161` — exact long reference amount | CATREF-04 / CATREF-63, no truncation | Yes |
+| `client/src/components/catalog/price-block.test.tsx:172` — exact long reference amount with no seal | T5 discount absent edge case | Yes |
+| `client/src/components/catalog/price-block.test.tsx:61` — exact BRL value; `:70` installment text; `:79` Pix text; `:99` discount value; `:110` absent badge | CATREF-63 | Yes; preserved regression assertions |
+
+- Check A: all T5 criteria have assertion or gate evidence; browser rendering is explicitly assigned to T6.
+- Check B: assertions check responsive classes and exact rendered values; no tautologies or assertion-free tests.
+- Check C: all four new tests and referenced preserved tests map to T5 or CATREF-04/CATREF-63.
+- Check D: followed Vitest locations and `pnpm test` from the Test Coverage Matrix; no coverage threshold is configured.
+
+**Verdict**: Adequate for T5; all four new scenarios and existing price regressions pass. Actual visual wrapping remains a T6 browser check.
 
 ### T6: Reorganizar WatchCard no mobile
 
