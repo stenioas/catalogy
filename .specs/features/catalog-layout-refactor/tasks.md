@@ -827,16 +827,46 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Adicionar target por elemento e reobservar quando mudar; manter targetRef como adaptador temporário para o consumidor atual até T13.
-- [ ] Verificar razão menor que 1 mostra, razão 1 oculta, troca A→B desconecta A e observa B, qualquer largura preserva comportamento, espaçador e safe-area; manter os cenários atuais do caminho targetRef.
-- [ ] Pelo menos 5 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Adicionar target por elemento e reobservar quando mudar; manter targetRef como adaptador temporário para o consumidor atual até T13.
+- [x] Verificar razão menor que 1 mostra, razão 1 oculta, troca A→B desconecta A e observa B, qualquer largura preserva comportamento, espaçador e safe-area; manter os cenários atuais do caminho targetRef.
+- [x] Pelo menos 5 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration
 
 **Gate**: Full
 
 **Commit**: `fix(catalog): observe replaced primary whatsapp target`
+
+**Status**: done
+
+### T12 execution evidence
+
+**Result**: PASS. `pnpm test` exit 0: **434 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 369 client), 18 above T11. The 18 new expanded scenarios are 16 combinations of 8 viewport widths (320, 390, 767, 768, 920, 921, 1024, 1440 px) and ratios 0.4/1, one A→B observer replacement, and one measured spacer/safe-area case. The four existing `targetRef` tests remain unchanged. No test was removed or skipped.
+
+The first Full run exposed a wiring issue: the temporary `targetRef.current` is null during render and receives its button after commit. The adapter now resolves it after commit, compares element identity, and reconnects only when that identity changes. No expectation or contract changed. The repeated Full gate passed.
+
+**Test Adequacy Review**
+
+*Check A — Sufficient coverage:*
+
+| Done-when criterion / spec AC / listed edge case | `file:line` + assertion expression | Spec-defined outcome | Covered? |
+| --- | --- | --- | --- |
+| CATREF-68/69; ratio below 1 shows and ratio 1 hides at every tested width | `client/src/components/catalog/sticky-bar.test.tsx:268-272` — `expect(observations[0]?.targets).toEqual([target])`; `expect(screen.queryByTestId('sticky-bar')).toBeNull()` / `expect(screen.getByTestId('sticky-bar')).toBeTruthy()` | Observe the supplied element; show unless `intersectionRatio >= 1`; hide at 1. 16 expanded width/ratio cases. | ✅ |
+| CATREF-68/69; replacing target A with B disconnects A and observes B | `client/src/components/catalog/sticky-bar.test.tsx:294-297` — `expect(observations).toHaveLength(2)`; `expect(observations[0]?.disconnected).toBe(true)`; `expect(observations[1]?.targets).toEqual([secondTarget])`; `expect(screen.getByTestId('sticky-bar')).toBeTruthy()` | Stop observing the replaced node, observe the current node, and show for its partial ratio. | ✅ |
+| CATREF-70; reserve measured bar height and safe-area space | `client/src/components/catalog/sticky-bar.test.tsx:310-314` — `expect(resize.observers[0]?.targets).toEqual([bar])`; `expect(getByTestId('sticky-bar-spacer').style.height).toBe('92px')`; `expect(bar.getAttribute('style')).toContain('padding-bottom: env(safe-area-inset-bottom)')` | Spacer tracks the measured 92 px bar; bar keeps bottom safe-area padding. | ✅ |
+| Keep the current `targetRef` consumer working during migration | `client/src/components/catalog/sticky-bar.test.tsx:185-200,211-214` — `expect(observer.threshold()).toBe(1)`; `expect(bar).toBeTruthy()`; `expect(screen.queryByTestId('sticky-bar')).toBeNull()` | Legacy ref observes the committed target and retains partial/full visibility behavior. | ✅ |
+
+*Check C — Necessary tests:*
+
+| `file:line` + assertion expression | Maps to | Keep? |
+| --- | --- | --- |
+| `client/src/components/catalog/sticky-bar.test.tsx:268-272` — observed target equals `target`; bar visibility follows ratio 0.4/1 | CATREF-68/69; 16 width/ratio cases | ✅ |
+| `client/src/components/catalog/sticky-bar.test.tsx:294-297` — old observer disconnected; new observer receives B; partial target shows bar | CATREF-68/69; target replacement | ✅ |
+| `client/src/components/catalog/sticky-bar.test.tsx:310-314` — resize observer tracks bar; spacer equals measured height; safe-area padding remains | CATREF-70 | ✅ |
+| Existing assertions at `client/src/components/catalog/sticky-bar.test.tsx:181-253` | Preserve the targetRef adapter and existing price, responsive layout, spacer and safe-area regressions | ✅ Keep unchanged |
+
+**Check B**: Assertions inspect the rendered bar, observer target/cleanup, spacer height and inline safe-area padding; none is assertion-free or based on a spy count alone. **Check D**: Co-located React Testing Library/Vitest integration style follows `client/vitest.config.ts` and the catalog component test pattern; the matrix has no percentage threshold. **Verdict**: all T12 criteria are covered by 18 new scenarios, existing targetRef regressions pass, and all tests map to the approved criteria or preserved component contracts.
 
 ### T13: Integrar a nova composição na WatchPage
 

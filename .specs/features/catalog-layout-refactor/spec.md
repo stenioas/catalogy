@@ -300,9 +300,9 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-65 | US7: Identidade, acessibilidade e regras comerciais / AC4 | Tasks | In Tasks | T13, T16 |
 | CATREF-66 | US7: Identidade, acessibilidade e regras comerciais / AC5 | Tasks | In Tasks | T13, T16 |
 | CATREF-67 | US7: Identidade, acessibilidade e regras comerciais / AC6 | Execute | Partial: WatchCard actions share URL in T4/T6; Product page integration in T13 | T4, T6, T13, T16 |
-| CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Tasks | In Tasks | T12, T13, T15, T16 |
-| CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Tasks | In Tasks | T12, T13, T15, T16 |
-| CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Tasks | In Tasks | T12, T13, T15, T16 |
+| CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Tasks | Partial: T12 verifies partial intersection across 8 viewport widths and target replacement; WatchPage integration T13/T15 and final review T16 pending | T12, T13, T15, T16 |
+| CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Tasks | Partial: T12 verifies full intersection across 8 viewport widths and target replacement; WatchPage integration T13/T15 and final review T16 pending | T12, T13, T15, T16 |
+| CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Tasks | Partial: T12 verifies measured spacer height and safe-area padding; WatchPage integration T13/T15 and final review T16 pending | T12, T13, T15, T16 |
 | CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial — T4/T6/T9/T10/T11: ações e mídia acessíveis, foco do modal restaurado; adequação em tasks.md; página T13 e revisão T16 pendentes | T4, T6, T9, T10, T11, T13, T14, T16 |
 | CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Partial: T6 no overflow in CatalogPage; T8/T9 media surfaces use bounded geometry; product integration in T13 | T5, T6, T8, T9, T13, T16 |
 | CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Implemented — T10/T11: duração 0ms em carrossel/Gallery; adequação em tasks.md; migração T14 e revisão T16 pendentes | T10, T11, T14, T16 |

@@ -1,6 +1,6 @@
 import { useRef, type RefObject } from 'react'
 
-import { cleanup, render, screen } from '@testing-library/react'
+import { act, cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { waUrl } from './want-link'
@@ -77,6 +77,99 @@ function renderBar() {
   }
 
   return render(<Fixture />)
+}
+
+function installTargetObserver(getRatio: (target: Element) => number) {
+  const observations: {
+    targets: Element[]
+    disconnected: boolean
+  }[] = []
+
+  class FakeTargetIntersectionObserver {
+    private readonly observation: (typeof observations)[number]
+
+    constructor(
+      private readonly callback: IntersectionObserverCallback,
+      options?: IntersectionObserverInit,
+    ) {
+      this.observation = { targets: [], disconnected: false }
+      observations.push(this.observation)
+      void options
+    }
+
+    observe(target: Element) {
+      this.observation.targets.push(target)
+      const intersectionRatio = getRatio(target)
+      this.callback(
+        [
+          {
+            target,
+            intersectionRatio,
+            isIntersecting: intersectionRatio > 0,
+          } as IntersectionObserverEntry,
+        ],
+        this as unknown as IntersectionObserver,
+      )
+    }
+
+    unobserve() {}
+
+    disconnect() {
+      this.observation.disconnected = true
+    }
+
+    takeRecords() {
+      return []
+    }
+  }
+
+  vi.stubGlobal('IntersectionObserver', FakeTargetIntersectionObserver)
+  return observations
+}
+
+function installResizeObserver() {
+  const observers: {
+    callback: ResizeObserverCallback
+    targets: Element[]
+  }[] = []
+
+  class FakeResizeObserver {
+    private readonly record: (typeof observers)[number]
+
+    constructor(callback: ResizeObserverCallback) {
+      this.record = { callback, targets: [] }
+      observers.push(this.record)
+    }
+
+    observe(target: Element) {
+      this.record.targets.push(target)
+    }
+
+    unobserve() {}
+
+    disconnect() {}
+  }
+
+  vi.stubGlobal('ResizeObserver', FakeResizeObserver)
+  return {
+    observers,
+    trigger: () => {
+      for (const observer of observers) {
+        observer.callback([], {} as ResizeObserver)
+      }
+    },
+  }
+}
+
+function renderTarget(target: Element) {
+  return render(
+    <StickyBar
+      price={369.9}
+      slug={slug}
+      title={title}
+      target={target}
+    />,
+  )
 }
 
 describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
@@ -157,5 +250,67 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(style).toContain('saturate(180%) blur(20px)')
     expect(style).toContain('var(--canvas-parchment)')
     expect(style).toContain('80%')
+  })
+
+  it.each(
+    [320, 390, 767, 768, 920, 921, 1024, 1440].flatMap((width) =>
+      [0.4, 1].map((intersectionRatio) => ({ width, intersectionRatio })),
+    ),
+  )(
+    'uses the full-intersection rule at $width px with ratio $intersectionRatio (CATREF-68, CATREF-69)',
+    ({ width, intersectionRatio }) => {
+      vi.stubGlobal('innerWidth', width)
+      const target = document.createElement('button')
+      const observations = installTargetObserver(() => intersectionRatio)
+
+      renderTarget(target)
+
+      expect(observations[0]?.targets).toEqual([target])
+      if (intersectionRatio === 1) {
+        expect(screen.queryByTestId('sticky-bar')).toBeNull()
+      } else {
+        expect(screen.getByTestId('sticky-bar')).toBeTruthy()
+      }
+    },
+  )
+
+  it('disconnects the previous target and observes its replacement (CATREF-68, CATREF-69)', () => {
+    const firstTarget = document.createElement('button')
+    const secondTarget = document.createElement('button')
+    const observations = installTargetObserver((target) =>
+      target === firstTarget ? 1 : 0.4,
+    )
+    const props = {
+      price: 369.9,
+      slug,
+      title,
+    }
+    const { rerender } = render(<StickyBar {...props} target={firstTarget} />)
+
+    expect(screen.queryByTestId('sticky-bar')).toBeNull()
+
+    rerender(<StickyBar {...props} target={secondTarget} />)
+
+    expect(observations).toHaveLength(2)
+    expect(observations[0]?.disconnected).toBe(true)
+    expect(observations[1]?.targets).toEqual([secondTarget])
+    expect(screen.getByTestId('sticky-bar')).toBeTruthy()
+  })
+
+  it('reserves the measured bar height and keeps safe-area padding with a direct target (CATREF-70)', () => {
+    installTargetObserver(() => 0.4)
+    const resize = installResizeObserver()
+    const target = document.createElement('button')
+    const { getByTestId } = renderTarget(target)
+    const bar = getByTestId('sticky-bar')
+
+    vi.spyOn(bar, 'getBoundingClientRect').mockReturnValue({ height: 92 } as DOMRect)
+    act(() => resize.trigger())
+
+    expect(resize.observers[0]?.targets).toEqual([bar])
+    expect(getByTestId('sticky-bar-spacer').style.height).toBe('92px')
+    expect(bar.getAttribute('style')).toContain(
+      'padding-bottom: env(safe-area-inset-bottom)',
+    )
   })
 })

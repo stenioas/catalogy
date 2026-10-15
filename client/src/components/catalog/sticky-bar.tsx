@@ -11,7 +11,8 @@ export type StickyBarProps = {
   listPrice?: number
   slug: string
   title: string
-  targetRef: RefObject<Element | null>
+  target?: Element | null
+  targetRef?: RefObject<Element | null>
 }
 
 export function StickyBar({
@@ -19,14 +20,27 @@ export function StickyBar({
   listPrice,
   slug,
   title,
+  target: targetElement,
   targetRef,
 }: StickyBarProps) {
   const [fullyVisible, setFullyVisible] = useState(false)
   const [barHeight, setBarHeight] = useState(0)
   const barRef = useRef<HTMLDivElement>(null)
+  const observerRef = useRef<IntersectionObserver | null>(null)
+  const observedTargetRef = useRef<Element | null | undefined>(undefined)
 
   useLayoutEffect(() => {
-    const target = targetRef.current
+    const target = targetElement !== undefined ? targetElement : (targetRef?.current ?? null)
+    const targetChanged = target !== observedTargetRef.current
+
+    if (!targetChanged && (!target || observerRef.current)) return
+
+    observerRef.current?.disconnect()
+    observerRef.current = null
+    if (targetChanged) {
+      observedTargetRef.current = target
+      setFullyVisible(false)
+    }
     if (!target || typeof IntersectionObserver !== 'function') return
 
     const observer = new IntersectionObserver(
@@ -37,8 +51,16 @@ export function StickyBar({
       { threshold: 1 },
     )
     observer.observe(target)
-    return () => observer.disconnect()
-  }, [targetRef])
+    observerRef.current = observer
+  })
+
+  useLayoutEffect(
+    () => () => {
+      observerRef.current?.disconnect()
+      observerRef.current = null
+    },
+    [],
+  )
 
   useLayoutEffect(() => {
     const node = barRef.current
