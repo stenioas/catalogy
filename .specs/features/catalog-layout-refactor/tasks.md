@@ -206,16 +206,22 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Incluir color opcional na leitura completa e no cadastro, omitindo ausente/vazio e evitando repetição em specifications; preservar a confirmação de cadastro existente.
-- [ ] Revisar tabela e instruções contra o contrato; não cadastrar produto nem alterar outros campos da skill nesta tarefa.
-- [ ] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
-- [ ] Gate Documentation aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Incluir color opcional na leitura completa e no cadastro, omitindo ausente/vazio e evitando repetição em specifications; preservar a confirmação de cadastro existente.
+- [x] Revisar tabela e instruções contra o contrato; não cadastrar produto nem alterar outros campos da skill nesta tarefa.
+- [x] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
+- [x] Gate Documentation aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+
+**Revisão manual**: `.agents/skills/cadastrar-relogio/SKILL.md:76-80,110-118` — `color` é opcional, texto livre com uma única cor; ausente e `""` são omitidos, a regra existente preserva strings só com espaços, a leitura completa inclui `color` se houver, e a cor não é inferida nem repetida em `specifications`. A confirmação exata `sim` e os demais campos da skill permanecem intactos. Nenhum produto foi cadastrado ou editado. `git diff --check` e revisão manual passaram; 0 testes automatizados novos.
+
+**Validação auxiliar**: `quick_validate.py` apontou `<`/`>` na descrição preexistente do frontmatter (`client/public/catalog/products/<slug>/`). O campo ficou inalterado por estar fora do escopo T3.
 
 **Tests**: none
 
 **Gate**: Documentation
 
 **Commit**: `docs(skills): support optional product color in registration`
+
+**Status**: done
 
 ### T4: Criar WantIconLink
 
