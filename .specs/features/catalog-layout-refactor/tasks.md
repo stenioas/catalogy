@@ -246,16 +246,47 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Exportar ação compacta com SVG reconhecível de WhatsApp, 44 × 44 px e nome acessível Enviar no WhatsApp, compartilhando waUrl com WantLink.
-- [ ] Verificar nome acessível, ícone decorativo, href idêntico ao textual, ausência de telefone e target/rel existentes; manter os cenários do WantLink textual.
-- [ ] Pelo menos 5 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Exportar ação compacta com SVG reconhecível de WhatsApp, 44 × 44 px e nome acessível Enviar no WhatsApp, compartilhando waUrl com WantLink.
+- [x] Verificar nome acessível, ícone decorativo, href idêntico ao textual, ausência de telefone e target/rel existentes; manter os cenários do WantLink textual.
+- [x] Pelo menos 5 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration
 
 **Gate**: Full
 
 **Commit**: `feat(catalog): add accessible whatsapp icon link`
+
+**Status**: done
+
+#### T4 execution record
+
+- **Implementation review**: `client/src/components/catalog/want-link.tsx:29` exports `WantIconLink` with the same `slug`/`title` inputs as `WantLink`; `:31` uses `size-11` (44 × 44 px); `:33` reuses `waUrl`, `:34` opens a new tab, `:35` sets `noopener noreferrer`, and `:36` names the link “Enviar no WhatsApp”; `:38-40` contain the decorative WhatsApp SVG. The SVG paths were reviewed as the recognizable WhatsApp mark. Existing `WantLink` behavior and its tests remain intact.
+- **Gate**: `pnpm test` passed 314 tests, 0 failed, 0 skipped (64 shared + 1 client prebuild + 249 client), +5 versus T1's 309-test gate. The worker reported this successful run before restart; the code diff has not changed since.
+- **Check A — coverage**:
+
+| Done-when criterion / requirement | Evidence and assertion | Spec-defined outcome | Covered? |
+| --- | --- | --- | --- |
+| CATREF-09: accessible name, decorative icon and minimum 44 × 44 px target | `client/src/components/catalog/want-link.test.tsx:95` — `screen.getByRole('link', { name: LINK_NAME })`; `:99` — `expect(icon?.getAttribute('aria-hidden')).toBe('true')`; `:100` — `expect(link.textContent).toBe('')`; `:107` — `expect(link.className).toMatch(/\bsize-11\b/)` | The link is named “Enviar no WhatsApp”, its SVG is decorative with no visible text, and `size-11` supplies the square 44 px target | Yes |
+| CATREF-67: compact and textual actions share the same wa.me URL and message | `client/src/components/catalog/want-link.test.tsx:123` — `expect(href).toBe(textLink.getAttribute('href'))`; `:124` — `expect(href).toBe(waUrl(slug, title))`; `:125` — `expect(decodeWaText(href!)).toBe(...)` | Both actions use the exact WhatsApp message and product URL required by the spec | Yes |
+| CATREF-11: action opens only WhatsApp sharing, without a phone number or nested product link | `client/src/components/catalog/want-link.test.tsx:135` — hostname is `wa.me`; `:136` — pathname is `/`; `:137` — `text` is present; `:138` — `screen.getAllByRole('link')` has length 1 | The destination has no phone number in its path and the compact action contains no nested product link | Yes |
+| T4 Done when: preserve new-tab protections | `client/src/components/catalog/want-link.test.tsx:145` — `target` is `_blank`; `:146` — `rel` is `noopener noreferrer`; existing textual-link assertions remain at `:53` and `:54` | Both WhatsApp actions retain the existing safe new-tab attributes | Yes |
+| T4 Done when: add at least five scenarios and retain WantLink regressions | Five new cases start at `client/src/components/catalog/want-link.test.tsx:93`, `:103`, `:111`, `:130`, and `:141`; existing textual-link tests start at `:26`, `:31`, `:41`, `:50`, `:57`, and `:70` | Five new cases run alongside the preexisting WantLink cases; the full gate reports 314 passing tests | Yes |
+
+- **Check B — non-shallow**: assertions query the link by accessible name and inspect its attributes, destination, sibling-link count and exact message. The target-size assertion checks the fixed Tailwind `size-11` utility. No call-count-only or tautological assertion was added.
+- **Check C — reverse mapping**:
+
+| Evidence and assertion | Maps to | Keep? |
+| --- | --- | --- |
+| `client/src/components/catalog/want-link.test.tsx:95`, `:99`, `:100` — accessible role/name, decorative SVG, empty visible text | CATREF-09 and T4 icon/accessibility criterion | Yes |
+| `client/src/components/catalog/want-link.test.tsx:107` — `size-11` square target | CATREF-09 and T4 44 × 44 px criterion | Yes |
+| `client/src/components/catalog/want-link.test.tsx:123`, `:124`, `:125` — URL equality and decoded message | CATREF-67 | Yes |
+| `client/src/components/catalog/want-link.test.tsx:135`, `:136`, `:137`, `:138` — host, path, text query and one link | CATREF-11 and CATREF-67 | Yes |
+| `client/src/components/catalog/want-link.test.tsx:145`, `:146` — target and rel | T4 Done when: preserve target/rel | Yes |
+
+- **Check D — guidelines**: followed the integration test location and `pnpm test` command from the Test Coverage Matrix and Gate Check Commands; existing Vitest conventions remain unchanged.
+- **Adequacy verdict**: T4's five new cases cover the component's accessible action, shared WhatsApp destination/message, standalone link structure and new-tab attributes; all are requirement- or Done-when-backed. CATREF-08's responsive placement over the photo remains assigned to T6.
+- **No SPEC_DEVIATION**; no code or adjacent tests were changed during closure.
 
 ### T5: Permitir quebra do preço na apresentação compacta
 

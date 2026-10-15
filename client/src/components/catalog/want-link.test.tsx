@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { waUrl, WantLink } from './want-link'
+import { waUrl, WantIconLink, WantLink } from './want-link'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -82,5 +82,67 @@ describe('WantLink pill (SV-28)', () => {
 
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
     expect(css).toMatch(/--primary:\s*#0066cc/)
+  })
+})
+
+describe('WantIconLink (catalog compact action)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('has the WhatsApp accessible name and a decorative SVG', () => {
+    render(<WantIconLink slug="seculus" title="Seculus" />)
+    const link = screen.getByRole('link', { name: LINK_NAME })
+    const icon = link.querySelector('svg')
+
+    expect(icon).not.toBeNull()
+    expect(icon?.getAttribute('aria-hidden')).toBe('true')
+    expect(link.textContent).toBe('')
+  })
+
+  it('provides a 44px square icon-only target', () => {
+    render(<WantIconLink slug="seculus" title="Seculus" />)
+    const link = screen.getByRole('link', { name: LINK_NAME })
+
+    expect(link.className).toMatch(/\bsize-11\b/)
+    expect(link.querySelector('svg')).not.toBeNull()
+  })
+
+  it('uses the same sharing URL and message as WantLink', () => {
+    const slug = 'addiesdive'
+    const title = 'Addiesdive'
+    render(
+      <>
+        <WantIconLink slug={slug} title={title} />
+        <WantLink slug={slug} title={title} />
+      </>,
+    )
+    const [iconLink, textLink] = screen.getAllByRole('link', { name: LINK_NAME })
+    const href = iconLink.getAttribute('href')
+
+    expect(href).toBe(textLink.getAttribute('href'))
+    expect(href).toBe(waUrl(slug, title))
+    expect(decodeWaText(href!)).toBe(
+      `Olá, tenho interesse no ${title}. ${window.location.origin}/product/${slug}`,
+    )
+  })
+
+  it('opens only the wa.me share URL without a phone number or nested product link', () => {
+    render(<WantIconLink slug="seculus" title="Seculus" />)
+    const link = screen.getByRole('link', { name: LINK_NAME })
+    const url = new URL(link.getAttribute('href')!)
+
+    expect(url.hostname).toBe('wa.me')
+    expect(url.pathname).toBe('/')
+    expect(url.searchParams.has('text')).toBe(true)
+    expect(screen.getAllByRole('link')).toHaveLength(1)
+  })
+
+  it('opens in a new tab with noopener noreferrer', () => {
+    render(<WantIconLink slug="seculus" title="Seculus" />)
+    const link = screen.getByRole('link', { name: LINK_NAME })
+
+    expect(link.getAttribute('target')).toBe('_blank')
+    expect(link.getAttribute('rel')).toBe('noopener noreferrer')
   })
 })

@@ -1,7 +1,7 @@
 # Catalog Layout Refactor Specification
 
 Data: 2026-10-15
-Status: especificação aprovada em conversa; código de produto ainda não alterado.
+Status: execução em andamento; T1–T4 concluídas, T5–T16 pendentes.
 Fonte: [desenho aprovado](../../../CATALOG-REFACTORING-DESIGN.md).
 Porte: Large, com especificação completa, design técnico e tarefas formais. Todas as histórias abaixo são P1 e pertencem à entrega aprovada.
 
@@ -240,10 +240,10 @@ Cada ID identifica exatamente um critério de aceite. Evidência e tarefas serã
 | CATREF-05 | US1: Vitrine compacta / AC5 | Tasks | In Tasks | T6, T16 |
 | CATREF-06 | US1: Vitrine compacta / AC6 | Tasks | In Tasks | T6, T16 |
 | CATREF-07 | US1: Vitrine compacta / AC7 | Tasks | In Tasks | T6, T16 |
-| CATREF-08 | US1: Vitrine compacta / AC8 | Tasks | In Tasks | T4, T6, T16 |
-| CATREF-09 | US1: Vitrine compacta / AC9 | Tasks | In Tasks | T4, T6, T16 |
+| CATREF-08 | US1: Vitrine compacta / AC8 | Execute | Partial: action component in T4; placement in T6 | T4, T6, T16 |
+| CATREF-09 | US1: Vitrine compacta / AC9 | Execute | Partial: T4 component; integration in T6 | T4, T6, T16 |
 | CATREF-10 | US1: Vitrine compacta / AC10 | Tasks | In Tasks | T6, T16 |
-| CATREF-11 | US1: Vitrine compacta / AC11 | Tasks | In Tasks | T4, T6, T16 |
+| CATREF-11 | US1: Vitrine compacta / AC11 | Execute | Partial: T4 component; integration in T6 | T4, T6, T16 |
 | CATREF-12 | US1: Vitrine compacta / AC12 | Tasks | In Tasks | T6, T16 |
 | CATREF-13 | US2: Composição responsiva do produto / AC1 | Tasks | In Tasks | T13, T16 |
 | CATREF-14 | US2: Composição responsiva do produto / AC2 | Tasks | In Tasks | T13, T16 |
@@ -299,15 +299,15 @@ Cada ID identifica exatamente um critério de aceite. Evidência e tarefas serã
 | CATREF-64 | US7: Identidade, acessibilidade e regras comerciais / AC3 | Tasks | In Tasks | T6, T16 |
 | CATREF-65 | US7: Identidade, acessibilidade e regras comerciais / AC4 | Tasks | In Tasks | T13, T16 |
 | CATREF-66 | US7: Identidade, acessibilidade e regras comerciais / AC5 | Tasks | In Tasks | T13, T16 |
-| CATREF-67 | US7: Identidade, acessibilidade e regras comerciais / AC6 | Tasks | In Tasks | T4, T6, T13, T16 |
+| CATREF-67 | US7: Identidade, acessibilidade e regras comerciais / AC6 | Execute | Partial: shared URL in T4; integrations in T6/T13 | T4, T6, T13, T16 |
 | CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Tasks | In Tasks | T12, T13, T15, T16 |
-| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Tasks | In Tasks | T4, T6, T9, T10, T11, T13, T14, T16 |
+| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial: T4 action; remaining controls in T6/T9/T10/T11/T13/T14 | T4, T6, T9, T10, T11, T13, T14, T16 |
 | CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Tasks | In Tasks | T5, T6, T8, T9, T13, T16 |
 | CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Tasks | In Tasks | T10, T11, T14, T16 |
 
-**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; tarefas propostas aguardam aprovação.
+**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T4 concluídas e T5–T16 pendentes.
 
 ## Success Criteria
 
