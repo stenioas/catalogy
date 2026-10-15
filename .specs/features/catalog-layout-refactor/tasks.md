@@ -448,16 +448,48 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Criar cálculo puro do retângulo efetivo, lente, frame e recorte natural conforme o design, retornando null para entradas sem dimensões válidas.
-- [ ] Oráculos numéricos do design para foto quadrada, horizontal e vertical; centro e quatro bordas, fora de object-contain, janela baixa/estreita, dimensões nulas e tolerância de 1 px CSS. Esperados são valores da spec/design, não cópias da função.
-- [ ] Pelo menos 12 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Quick aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Criar cálculo puro do retângulo efetivo, lente, frame e recorte natural conforme o design, retornando null para entradas sem dimensões válidas.
+- [x] Oráculos numéricos do design para foto quadrada, horizontal e vertical; centro e quatro bordas, fora de object-contain, janela baixa/estreita, dimensões nulas e tolerância de 1 px CSS. Esperados são valores da spec/design, não cópias da função.
+- [x] Pelo menos 12 cenários novos ou revalidados, além das regressões existentes; 29 cenários executados.
+- [x] Gate Quick aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: unit
 
 **Gate**: Quick
 
 **Commit**: `feat(catalog): calculate bounded hover zoom geometry`
+
+**Status**: done
+
+#### T7 execution record
+
+- **Implementação revisada**: `client/src/components/catalog/zoom-geometry.ts:13-137` mantém o cálculo puro de imagem efetiva, frame, escala, lente e fonte natural; não foi alterada nesta retomada.
+- **Correção autorizada pelo operador em 2026-10-15**: somente as duas expectativas `source` em `zoom-geometry.test.ts` foram corrigidas de coordenadas CSS para naturais, conforme `source = lente / k` e `k = 0,5`: janela baixa `(289, 252, 222, 296)` e janela estreita `(362, 349.3333, 76, 101.3333)`. Os demais valores esperados, implementação e tolerância ficaram intactos.
+- **Contagem**: 29 cenários (15 orientações/bordas, 2 espaços de object-contain, 1 janela baixa, 1 estreita, 1 viewport de 921 px, 1 sem largura positiva de frame e 8 entradas inválidas). Nenhum teste foi removido ou ignorado.
+- **Gate Quick**: `pnpm --filter client exec vitest run src/components/catalog/zoom-geometry.test.ts` — 29 passed, 0 failed, 0 skipped.
+
+**Test Adequacy Review**
+
+| Critério / requisito | Evidência `file:line` e expressão | Resultado definido pela spec/design | Coberto? |
+| --- | --- | --- | --- |
+| T7: foto quadrada, horizontal e vertical no centro e nas quatro bordas; lente limitada à imagem e recorte natural | `client/src/components/catalog/zoom-geometry.test.ts:42-223,226-230` — `expectGeometryWithinOnePixel(calculateZoomGeometry({ stage, natural, viewport, pointer }), expected)`; helper em `:17-29` compara imagem, lente, frame e `source` | Geometria do design com erro máximo de 1 px CSS; escala maior que 1× | Sim; 15 cenários |
+| CATREF-34: espaço de object-contain não pertence à imagem efetiva | `client/src/components/catalog/zoom-geometry.test.ts:233-245` — `expect(calculateZoomGeometry(...)).toBeNull()` para ponteiro acima e abaixo da foto horizontal | Ponteiro no letterbox retorna `null` | Sim; 2 cenários |
+| CATREF-35/37: frame se adapta à janela baixa/estreita e a viewport desktop, mantendo recorte correspondente e frame contido | `client/src/components/catalog/zoom-geometry.test.ts:247-281` e `:283-302` — oráculos de frame/source; `expect(geometry.frame.x + geometry.frame.width).toBeLessThanOrEqual(921 - 12)` e equivalente vertical | Frame positivo dentro da margem de 12 px; source em coordenadas naturais; ampliação maior que 1× | Sim; 3 cenários |
+| T7: sem espaço positivo para o frame ou com dimensões inválidas, retornar `null` | `client/src/components/catalog/zoom-geometry.test.ts:304-313` e `:315-352` — `expect(calculateZoomGeometry(input)).toBeNull()` para largura indisponível e 8 dimensões zero, negativas ou não finitas | Não calcular overlay sem dimensões/área válidas | Sim; 9 cenários |
+| CATREF-41: geometria recebe dimensões naturais e não gera imagens | `client/src/components/catalog/zoom-geometry.ts:13-137` aceita `natural: Size` e retorna apenas retângulos numéricos; diff T7 não contém assets | Zoom reutiliza a imagem existente; nenhuma imagem nova é criada | Parcial nesta função pura; integração da foto existente permanece em T8/T16 |
+
+| Evidência de teste `file:line` e expressão | Mapeia para | Manter? |
+| --- | --- | --- |
+| `zoom-geometry.test.ts:226-230` — `expectGeometryWithinOnePixel(calculateZoomGeometry(...), expected)` nos 15 casos de `:42-223` | CATREF-33/35/37; T7 centro, quatro bordas e três orientações | Sim |
+| `zoom-geometry.test.ts:237-245` — resultado `.toBeNull()` para letterbox acima/abaixo | CATREF-34 | Sim |
+| `zoom-geometry.test.ts:247-263` e `:265-281` — fonte natural e geometrias de janela baixa/estreita | CATREF-35/37; oráculos independentes da função | Sim |
+| `zoom-geometry.test.ts:291-300` — geometria esperada e limites `<= 921 - 12` / `<= 600 - 12` | CATREF-35/37 | Sim |
+| `zoom-geometry.test.ts:304-313` e `:350-352` — `expect(calculateZoomGeometry(input)).toBeNull()` para frame sem largura e entradas inválidas | T7 dimensões inválidas e ausência de espaço positivo | Sim |
+
+- **Check B — não superficial**: cada caso compara valores geométricos definidos pelo design ou confirma o `null` requerido; nenhuma asserção tautológica ou baseada apenas em chamadas.
+- **Check D — convenções**: seguiu o local unitário e o comando Quick da Test Coverage Matrix, usando Vitest existente; não há regra adicional de cobertura.
+- **Veredito de adequação**: os 29 cenários cobrem os Done when de T7 com oráculos do design. CATREF-33/34/35/37 foram implementados no cálculo; exibição, interação e confirmação visual permanecem em T8/T16. CATREF-41 permanece parcial até a integração de T8/T16; a função pura não cria arquivos de imagem.
+- **SPEC_DEVIATION**: nenhuma.
 
 ### T8: Criar HoverZoom
 
