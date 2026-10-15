@@ -251,7 +251,7 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 - [x] Entrega verificada: Exportar ação compacta com SVG reconhecível de WhatsApp, 44 × 44 px e nome acessível Enviar no WhatsApp, compartilhando waUrl com WantLink.
 - [x] Verificar nome acessível, ícone decorativo, href idêntico ao textual, ausência de telefone e target/rel existentes; manter os cenários do WantLink textual.
 - [x] Pelo menos 5 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration
 
@@ -594,16 +594,51 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Criar apresentação controlada com miniaturas, +N, foto principal acessível e HoverZoom, sem navegação de carrossel desktop.
-- [ ] Fixtures com 1/7/8/9/12 fotos; sete miniaturas e +2/+5; +N sempre solicita índice 7; clique/teclado seleciona, hover não seleciona; ativa além da sétima; clique principal abre seleção; arraste não muda foto; sem setas/bolinhas/contador.
-- [ ] Pelo menos 10 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Criar apresentação controlada com miniaturas, +N, foto principal acessível e HoverZoom, sem navegação de carrossel desktop.
+- [x] Fixtures com 1/7/8/9/12 fotos; sete miniaturas e +2/+5; +N sempre solicita índice 7; clique/teclado seleciona, hover não seleciona; ativa além da sétima; clique principal abre seleção; arraste não muda foto; sem setas/bolinhas/contador.
+- [x] Pelo menos 10 cenários novos ou revalidados, além das regressões existentes; contagem real registrada: 16 novos cenários.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration + browser
 
 **Gate**: Full
 
 **Commit**: `feat(catalog): add desktop product thumbnails`
+
+#### T9 execution and post-gate review
+
+- **Files**: `client/src/components/catalog/desktop-product-media.tsx`, `desktop-product-media.test.tsx`, `tasks.md`, `spec.md` e `t9-desktop-media-review.md`; harness temporário removido antes do commit.
+- **Gate**: `pnpm test`, exit 0: shared 64 + prebuild 1 + client 320 = **385 passed, 0 failed, 0 skipped**. T9 adiciona 16 cenários sobre o baseline 369; nenhum cenário removido ou pulado.
+- **Browser**: CUA no harness local `http://localhost:5173/t9-desktop-product-media.html`, viewport 2560×1236, tema light. Captura exibida na conversa, sem PNG local. Medidas conferidas no DOM: grupo de miniaturas 56×56 px com gap vertical 4 px, gap horizontal 12 px, foto principal 588×588 px com `object-contain`, sem overflow horizontal. Enter em Foto 3 atualizou a seleção e o foco permaneceu visível; Space na principal solicitou a foto selecionada; Enter no +5 solicitou índice 7 e ativou +5; arraste de 100 px na foto principal não selecionou/navegou.
+- **Harness**: o Vite já ativo não aplicou utilities Tailwind dos novos arquivos de prévia automaticamente; CSS temporário importou `index.css` e adicionou `@source` explícito. Arquivos de harness removidos; nenhum token, CSS ou configuração do produto foi alterado.
+
+**Check A — coverage mapping** (paths below are under `client/src/components/catalog/`):
+
+| Criterion / AC | `file:line` + assertion expression | Spec-defined outcome | Covered? |
+| --- | --- | --- | --- |
+| CATREF-21/22: contagem e limite de miniaturas | `desktop-product-media.test.tsx:81-100` — fixtures 1/7/8/9/12; `toHaveLength(thumbs)`, +N equals `count - 7` | Todas até oito; sete e +N após oito, +2/+5 | Sim |
+| CATREF-30: seleção >= foto 8 | `desktop-product-media.test.tsx:103-107` — `aria-pressed` true nos índices 7/8/11 | +N representa a seleção posterior à sétima | Sim |
+| CATREF-23/24: clique e hover | `desktop-product-media.test.tsx:109-138` — índice selecionado 2 após click; `aria-pressed` ativo; mouseEnter/Over preserva índice 0 | Click muda foto ativa; hover não muda | Sim |
+| CATREF-25: +N abre na oitava foto | `desktop-product-media.test.tsx:140-148` — seleção e índice solicitado tornam-se 7 a partir dos índices 0 e 11 | Sempre solicitar o índice 7 e marcar +N ativo | Sim; ciclo de modal continua em T11 |
+| CATREF-26/71: principal acessível e abre seleção | `desktop-product-media.test.tsx:150-160` — nome foto 4, `aria-haspopup`, ref, `src`, saída índice3; `:118-126` — seleção e foco após teclado | Ação acessível aponta para a foto atual, teclado seleciona | Sim; modal continua em T11 |
+| CATREF-28: arraste não navega | `desktop-product-media.test.tsx:162-174` — seleção 0 e gallery `closed` após gesto | Manter seleção sem abrir/navegar carrossel | Sim; também arraste real CUA |
+| CATREF-27: sem affordances de carrossel | `desktop-product-media.test.tsx:176-182` — anterior, próxima, contador e lista de páginas ausentes | Não exibir setas, bolinhas ou contador | Sim |
+| CATREF-16/51/72: apresentação e geometria | `desktop-product-media.tsx:64-110` — grupo vertical, `gap-3`, stage `aspect-square`, `HoverZoom`; medidas no review T9 | Miniaturas ao lado da foto, proporção sem distorção; integração do produto permanece posterior | Parcial para composição integrada em T13 |
+
+**Check C — reverse mapping**:
+
+| `file:line` + assertion expression | Maps to | Keep? |
+| --- | --- | --- |
+| `desktop-product-media.test.tsx:81-107` — thumbs/+N para cinco contagens e seleção ativa | CATREF-21/22/30 | Sim; cinco contagens e três índices |
+| `desktop-product-media.test.tsx:109-138` — saída selecionada e ativa após clique/teclado; hover mantém índice | CATREF-23/24/71 | Sim |
+| `desktop-product-media.test.tsx:140-148` — índice solicitado/selecionado 7, +N ativo | CATREF-25/30 | Sim; dois estados anteriores |
+| `desktop-product-media.test.tsx:150-160` — principal selecionada, acessibilidade, imagem, ref e pedido | CATREF-26/51/71 | Sim |
+| `desktop-product-media.test.tsx:162-182` — arraste deixa saída fechada; controles inexistentes | CATREF-27/28/51 | Sim |
+
+- **Check B**: estado do harness controlado é assertado após seleção e solicitação da galeria, além dos atributos ativos; a verificação não depende apenas de spy-count.
+- **Check D**: testes seguem Vitest/Testing Library e o comando Full da matriz (`pnpm test`). Detector Impeccable retornou `[]`. Evidência visual e foco ficam em `t9-desktop-media-review.md`.
+- **Adequacy verdict**: 16 cenários necessários e suficientes para o componente isolado; sem teste excluído ou pulado. CATREF-29 (retorno da galeria), abertura/fechamento do modal e integração no produto permanecem em T11/T13/T16.
+- **Status**: done
 
 ### T10: Extrair apresentação controlada do Carousel
 
