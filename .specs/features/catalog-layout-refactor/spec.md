@@ -1,7 +1,7 @@
 # Catalog Layout Refactor Specification
 
 Data: 2026-10-15
-Status: execução em andamento; T1–T5 concluídas, T6–T16 pendentes.
+Status: execução em andamento; T1–T8 concluídas, T9–T16 pendentes.
 Fonte: [desenho aprovado](../../../CATALOG-REFACTORING-DESIGN.md).
 Porte: Large, com especificação completa, design técnico e tarefas formais. Todas as histórias abaixo são P1 e pertencem à entrega aprovada.
 
@@ -264,16 +264,16 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-29 | US3: Seleção desktop e galeria compartilhada / AC9 | Tasks | In Tasks | T9, T11, T16 |
 | CATREF-30 | US3: Seleção desktop e galeria compartilhada / AC10 | Tasks | In Tasks | T9, T11, T16 |
 | CATREF-31 | US3: Seleção desktop e galeria compartilhada / AC11 | Tasks | In Tasks | T11, T14, T16 |
-| CATREF-32 | US4: Zoom desktop / AC1 | Tasks | In Tasks | T8, T16 |
-| CATREF-33 | US4: Zoom desktop / AC2 | Execute | Partial: cálculo e limites de lente verificados em T7; exibição e cursor em T8/T16 | T7, T8, T16 |
-| CATREF-34 | US4: Zoom desktop / AC3 | Execute | Partial: imagem efetiva e descarte de letterbox verificados em T7; integração em T8/T16 | T7, T8, T16 |
-| CATREF-35 | US4: Zoom desktop / AC4 | Execute | Partial: geometria do frame/source e escala verificada em T7; renderização do recorte em T8/T16 | T7, T8, T16 |
-| CATREF-36 | US4: Zoom desktop / AC5 | Tasks | In Tasks | T8, T16 |
-| CATREF-37 | US4: Zoom desktop / AC6 | Execute | Partial: limites de viewport e ampliação verificados em T7; comportamento visual em T8/T16 | T7, T8, T16 |
-| CATREF-38 | US4: Zoom desktop / AC7 | Tasks | In Tasks | T8, T16 |
-| CATREF-39 | US4: Zoom desktop / AC8 | Tasks | In Tasks | T8, T16 |
-| CATREF-40 | US4: Zoom desktop / AC9 | Tasks | In Tasks | T8, T11, T16 |
-| CATREF-41 | US4: Zoom desktop / AC10 | Execute | Partial: função geométrica não gera imagens e usa dimensões naturais em T7; integração com imagem existente em T8/T16 | T7, T8, T16 |
+| CATREF-32 | US4: Zoom desktop / AC1 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
+| CATREF-33 | US4: Zoom desktop / AC2 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
+| CATREF-34 | US4: Zoom desktop / AC3 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
+| CATREF-35 | US4: Zoom desktop / AC4 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
+| CATREF-36 | US4: Zoom desktop / AC5 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
+| CATREF-37 | US4: Zoom desktop / AC6 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
+| CATREF-38 | US4: Zoom desktop / AC7 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
+| CATREF-39 | US4: Zoom desktop / AC8 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
+| CATREF-40 | US4: Zoom desktop / AC9 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T11, T16 |
+| CATREF-41 | US4: Zoom desktop / AC10 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
 | CATREF-42 | US5: Preservação do carrossel e da galeria / AC1 | Tasks | In Tasks | T10, T16 |
 | CATREF-43 | US5: Preservação do carrossel e da galeria / AC2 | Tasks | In Tasks | T10, T16 |
 | CATREF-44 | US5: Preservação do carrossel e da galeria / AC3 | Tasks | In Tasks | T10, T14, T16 |
@@ -354,3 +354,7 @@ Full gate `pnpm test`: **318 passed, 0 failed, 0 skipped** (64 shared, 1 prebuil
 ## Next Step
 
 Especificação, contexto e design técnico aprovados. Aprovar tasks.md e a distribuição de ferramentas antes de executar. O desenho da raiz continua sendo a fonte das decisões de produto; design.md tratará apenas da arquitetura de implementação.
+
+### T8 — HoverZoom isolado
+
+CATREF-32 a CATREF-41 implementados no componente com 14 cenários de integração e conferência CUA de recorte, clipping, limites, scroll e breakpoint. Evidência: [T8 zoom review](t8-zoom-review.md) e tabela de adequação T8 em tasks.md. CATREF-62/72 parcialmente atendidos por tokens existentes, proporções uniformes e frame contido sem overflow; integração de mídia e página permanece em T9/T11/T13 e revisão final T16. Gate Full: 369 passed, 0 failed, 0 skipped.

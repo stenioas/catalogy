@@ -10,6 +10,8 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 **Spec**: [spec.md](spec.md), 73 critérios aprovados.
 **Status**: Execução autorizada pelo operador via tlc-task-orchestrator-codex; um worker por tarefa, em sequência.
 
+**Autorização contínua do operador**: corrigir autonomamente erros de expectativa numérica, arredondamento, precisão de ponto flutuante e falhas semelhantes do harness quando o resultado correto for demonstrável pela spec/design. Registrar causa e correção e repetir o gate; não reduzir a exigência dos ACs, apagar/pular testes ou alterar contrato. Consultar o operador em falha crítica, ambiguidade de comportamento ou mudança de escopo. Esta autorização permite retomar o gate após essas correções rotineiras sem nova confirmação.
+
 Uma tarefa entrega um componente, uma função ou um arquivo de documentação. Testes e migrações dos harnesses acompanham a entrega; não são adiados para outra tarefa. As fases e as tarefas executam sequencialmente. Adaptadores temporários de T10 e T12 mantêm cada commit verificável e são removidos por T14 e T15.
 
 ## Test Coverage Matrix
@@ -514,16 +516,60 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Apresentar lente e frame em portal com geometria correta, pointer-events none e atualização local via um requestAnimationFrame pendente.
-- [ ] Mouse com hover ativa; toque/caneta/sem hover não ativam; sair, trocar foto, abrir modal e desmontar limpam overlays e RAF. Verificar carregamento, resize/scroll e ausência de medidas da foto anterior; navegador confirma recorte e ausência de clipping.
-- [ ] Pelo menos 10 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Apresentar lente e frame em portal com geometria correta, pointer-events none e atualização local via um requestAnimationFrame pendente.
+- [x] Mouse com hover ativa; toque/caneta/sem hover não ativam; sair, trocar foto, abrir modal e desmontar limpam overlays e RAF. Verificar carregamento, resize/scroll e ausência de medidas da foto anterior; navegador confirma recorte e ausência de clipping.
+- [x] Pelo menos 10 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration + browser
 
 **Gate**: Full
 
 **Commit**: `feat(catalog): add pointer hover zoom overlay`
+
+
+#### T8 execution and post-gate review
+
+- **Assumptions**: T7 concluída em `be86fe6`; geometria e tolerância do design são a fonte dos oráculos. HoverZoom permanece isolado até T9/T11.
+- **Files**: `hover-zoom.tsx`, `hover-zoom.test.tsx`, `tasks.md`, `spec.md` e `t8-zoom-review.md`; harness temporário removido.
+- **Gate**: `pnpm test`, exit 0: shared 64 + prebuild 1 + client 304 = **369 passed, 0 failed, 0 skipped**. T8 adiciona 14 cenários expandidos aos 355 anteriores. Nenhum cenário removido ou pulado.
+- **Correções autorizadas**: literais de transform/top/height passaram a comparação numérica com precisão de 0,001 px; formato/sinais/escala preservados. Scroll esperado corrigido para 186.6667 px pelo clamp do design. Causa e execuções anteriores registradas em `t8-zoom-review.md`; nenhum comportamento de produto mudou para atender ao teste.
+- **Browser**: CUA com mouse real, portal fora de pai com clipping, recorte correspondente, bordas, scroll e viewport 920/921/1024/1440. Capturas exibidas na conversa sem PNG local. Medidas e limitações em `t8-zoom-review.md`.
+
+**Check A — coverage mapping** (paths below are under `client/src/components/catalog/`):
+
+| Criterion / AC | `file:line` + assertion expression | Spec-defined outcome | Covered? |
+| --- | --- | --- | --- |
+| CATREF-32: lente vertical escura/cursor | `hover-zoom.test.tsx:66` — `expect(lens()?.style.width).toBe('160px')`; `:67` — `expect(parseFloat(lens()!.style.height)).toBeCloseTo(213.3333, 3)`; `:68` — `expect(lens()?.style.background).toBe('var(--surface-black)')`; `:69` — opacity `toBe('0.25')`; `:70` — cursor `toBe('zoom-in')` | Lente 3:4, token escuro, 25%, lupa | Sim |
+| CATREF-33/34: centro, clamp e imagem efetiva | `hover-zoom.test.tsx:64` — left `toBe('120px')`; `:65` — top `toBeCloseTo(93.3333,3)`; `:107` — `expect(frame()).toBeNull()` no letterbox; `:109-112` — left250/top100/width150/height200; `:118-119` — left240/top186.6667 | Valores do design e limites da foto efetiva | Sim |
+| CATREF-35/41/72: recorte original proporcional | `hover-zoom.test.tsx:75` — frame left `toBe('412px')`; `:78` — src `toBe('photo.webp')`; `:79-80` — dimensões800×800; `:82` — `expect(translation).not.toBeNull()`; `:83-84` — eixos `toBeCloseTo(-240,3)` e `toBeCloseTo(-186.6667,3)`; `:139-141` — próxima foto vertical src/left/width400 | Mesmo arquivo, escala uniforme e recorte da lente | Sim; navegador confirmou recorte quadrado; T7 cobre orientações |
+| CATREF-36/39: portal e ausência de captura | `hover-zoom.test.tsx:71` — `expect(container.contains(frame())).toBe(false)`; `:72` — parent `toBe(document.body)`; `:73` — position `toBe('fixed')`; `:74` — pointerEvents `toBe('none')` | Sobreposição fora do fluxo e sem interceptação | Sim; clipping confirmado em navegador |
+| CATREF-37: resize/scroll | `hover-zoom.test.tsx:147` — top `toBeCloseTo(186.6667,3)`; `:148` — frame top12; `:151-152` — frame207×276 | Recalcular e conter frame em janela baixa | Sim; medidas reais registradas |
+| CATREF-38 e cleanup | `hover-zoom.test.tsx:125` e `:130` — frame/lens null e callbacks0; `:136-137` — troca remove overlays/RAF e aguarda load; `:159` e `:161` — unmount deixa portal null e callbacks0 | Saída/cancelamento/troca/modal/unmount encerram zoom e trabalho pendente | Sim |
+| CATREF-40: mouse/hover/largura | `hover-zoom.test.tsx:88` — frame/lens null para touch/pen; `:92` — frame null sem hover; `:96` e `:154` — frame null em920 | Ativação somente mouse com hover desde921 | Sim |
+| Load/error sem dimensões anteriores | `hover-zoom.test.tsx:100-103` — frame null antes de load, presente após load e frame/lens null após erro; `:137` — frame null na próxima foto ainda carregando | Não desenhar antes de dimensões válidas | Sim |
+| RAF único e atualização local | `hover-zoom.test.tsx:116` — `expect(callbacks.size).toBe(1)`; `:118-120` — geometria do último ponteiro e callbacks0 | Um RAF, último ponto; estado local de HoverZoom (`hover-zoom.tsx:18`) sem notificação ao pai | Sim |
+| CATREF-62: tokens | `hover-zoom.test.tsx:68-69` — surface-black/opacidade; `hover-zoom.tsx:103` usa bg-background/ring-border | Tokens existentes e nenhuma nova sombra | Sim; tema light observado, revisão final T16 |
+
+**Check C — reverse mapping**:
+
+| `file:line` + assertion expression | Maps to | Keep? |
+| --- | --- | --- |
+| `hover-zoom.test.tsx:64-84` — lente/cursor/portal/frame/src/dimensões/translation | CATREF-32/33/35/36/39/41/62/72 | Sim |
+| `hover-zoom.test.tsx:88,92,96` — overlays `toBeNull()` | CATREF-40, touch/pen/sem hover/920 | Sim; 4 cenários |
+| `hover-zoom.test.tsx:100-103` — overlays ausentes/presentes conforme load/error | Design: dimensões desconhecidas e falha de foto | Sim |
+| `hover-zoom.test.tsx:107-112` — letterbox null e lente clamp250/100/150/200 | CATREF-33/34, foto horizontal | Sim |
+| `hover-zoom.test.tsx:116-120` — RAF1, última lente240/186.6667 e RAF0 | Done when: um RAF pendente, CATREF-33 | Sim |
+| `hover-zoom.test.tsx:125` — overlays null e callbacks0 | CATREF-38, saída e cancelamento | Sim; 2 cenários |
+| `hover-zoom.test.tsx:130-131` — overlays null, callbacks0 e disabled impede ativar | CATREF-38: galeria aberta | Sim |
+| `hover-zoom.test.tsx:136-141` — limpa foto anterior, aguarda load, próxima src/width400 | CATREF-38/41/72 e design: sem medidas antigas | Sim |
+| `hover-zoom.test.tsx:147-154` — lente186.6667, frame12/207/276 e null em920 | CATREF-37/40, scroll/resize | Sim |
+| `hover-zoom.test.tsx:159-161` — portal null/callbacks0 após desmontar e eventos | Done when: cleanup de RAF/listeners | Sim |
+
+- **Check B**: resultados geométricos, arquivo e estado dos overlays são assertados; a contagem RAF acompanha o resultado do último ponteiro, sem asserção vazia.
+- **Check D**: convenções Vitest/Testing Library existentes e comando Full da matriz; sem threshold adicional. Detector Impeccable retornou `[]`.
+- **Adequacy verdict**: 14 cenários necessários e suficientes para T8 isolada; valores derivados do design, zero testes excluídos/pulados. Nenhum SPEC_DEVIATION. A integração com os proprietários de mídia/galeria e a matriz visual completa permanecem nas tarefas aprovadas posteriores.
+- **Status**: done
 
 ### T9: Criar DesktopProductMedia
 
