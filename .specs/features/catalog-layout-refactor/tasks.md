@@ -663,16 +663,55 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Extrair CarouselView com índice e eventos controlados, mantendo temporariamente o export Carousel atual como adaptador para WatchPage até T13.
-- [ ] Testar apresentação controlada com um harness; manter todos os cenários existentes de gestos, animação e integração do adaptador. Adicionar Enter/Espaço com uma foto e confirmar limites, setas tablet e movimento reduzido.
-- [ ] Pelo menos 6 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Extrair CarouselView com índice e eventos controlados, mantendo temporariamente o export Carousel atual como adaptador para WatchPage até T13.
+- [x] Testar apresentação controlada com um harness; manter todos os cenários existentes de gestos, animação e integração do adaptador. Adicionar Enter/Espaço com uma foto e confirmar limites, setas tablet e movimento reduzido.
+- [x] Pelo menos 6 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration
 
 **Gate**: Full
 
 **Commit**: `refactor(catalog): extract controlled mobile carousel view`
+
+
+**Status**: done
+
+#### T10 execution record
+
+- **Entrega**: `CarouselView` recebe index, onIndexChange, onOpenGallery e primaryRef conforme o design; somente gesto/resistência permanecem locais. `Carousel` mantém temporariamente seleção, Gallery, inert e restauração de foco, sem mudar WatchPage. `animate?: boolean` é um detalhe visual opcional de compatibilidade: o adaptador passa `!galleryOpen` para preservar GAL-38 (track sem animação enquanto o modal está aberto); a apresentação não possui estado modal. T11 usa o contrato funcional aprovado e T14 remove o adaptador.
+- **Ciclo**: testes escritos antes da implementação resultaram em 11 falhas esperadas (View inexistente e tabindex antigo da foto única); após implementação, 36 passed no arquivo. São 27 regressões existentes preservadas e 9 cenários novos expandidos (mínimo 6). Nenhum teste excluído/ignorado. Os dois testes antigos de foto única agora exigem tabindex 0 e reconhecem o controle principal acessível, conforme design/CATREF-71; o teste de inert acompanha seu proprietário, o wrapper do adaptador.
+- **Gates separados**: `pnpm test` exit 0: **394 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 329 client), +9 desde T9 (385), +95 desde baseline (299). `pnpm build` exit 0: 1 teste prebuild passed e Vite com 2.126 módulos transformados; não representa typecheck completo. `git diff --check` exit 0. Phase 2 encerrada com Build aprovado.
+- **Limitação**: testes jsdom comprovam contrato responsivo `hidden md:inline-flex`, não pixels renderizados. A revisão visual transversal permanece em T16; não há requisito de navegador em T10.
+
+**Adequação A/B — critério → evidência** (caminhos relativos a `client/src/components/catalog/`):
+
+| Critério | file:line e expressão | Resultado da spec/design | Coberto |
+| --- | --- | --- | --- |
+| Estado controlado e adaptador preservado | `carousel.test.tsx:542` `expect(shownSrc()).toBe(photos[1])`; `:545` `expect(shownSrc()).toBe(photos[2])`; `:123` `expect(importers.toSorted()).toEqual([...])` | Seleção muda somente com props; WatchPage mantém adaptador | Sim |
+| CATREF-42/43 setas tablet/mobile | `carousel.test.tsx:612` `expect(classes).toContain('hidden')`; `:613` `expect(classes).toContain('md:inline-flex')` | Ocultas abaixo de 768 px; preservadas desde md, incluindo 768–920 | Sim, contrato responsivo |
+| CATREF-44 limites, bolinhas e teclado | `carousel.test.tsx:553` `expect(shownSrc()).toBe(photos[0])`; `:558` `expect(shownSrc()).toBe(photos[2])`; `:562` `expect(screen.getByRole('button', { name: 'Anterior' })).toHaveProperty('disabled', true)` | Sem ciclo, primeira/última foto limitadas | Sim |
+| CATREF-44 gesto, limiar e cancelamento | `carousel.test.tsx:568` `expect(shownSrc()).toBe(photos[0])`; `:571` `expect(shownSrc()).toBe(photos[1])`; `:579` `expect(screen.getByRole('img', { name: 'Seculus' }).style.transform).toBe('translateX(0px) scaleX(1)')` | 40 px não navega; 41 px navega; cancelar limpa resistência | Sim |
+| CATREF-45 contador e indicação atual | `carousel.test.tsx:537` `expect(screen.getByTestId('carousel-count').textContent).toBe('2/3')`; `:538` `expect(screen.getByRole('button', { name: 'Foto 2' }).getAttribute('aria-current')).toBe('true')` | Contador e bolinha correspondem à seleção recebida | Sim |
+| CATREF-46 payload e ausência de proprietário modal na View | `carousel.test.tsx:587` `expect(screen.getByLabelText('Gallery request').textContent).toBe('1:true')`; `:589` `expect(screen.queryByRole('dialog')).toBeNull()` | Tap de 39 px solicita índice 1 e o elemento principal registrado em primaryRef | Sim, ambos os campos verificados no harness |
+| CATREF-51/71 foto única, Enter/Espaço e foco | `carousel.test.tsx:595` `expect(frame().getAttribute('tabindex')).toBe('0')`; `:596` `expect(frame().getAttribute('aria-label')).toBe('Abrir galeria na foto 1')`; `:599` `expect(document.activeElement).toBe(frame())`; `:601` `expect(screen.getByLabelText('Gallery request').textContent).toBe('0:true')`; `:602` `expect(screen.queryByTestId('carousel-count')).toBeNull()` | Foco sequencial, nome, abertura em ambas teclas sem navegação inútil | Sim, 2 cenários |
+| CATREF-73 animação | `carousel.test.tsx:622` `expect(screen.getByTestId('carousel-track').style.transitionDuration).toBe(reduce ? '0ms' : '200ms')` | 0 ms reduzido; 200 ms padrão | Sim, 2 cenários |
+| Regressões do adaptador, Gallery/foco/gestos/animação | `carousel.test.tsx:249` `expect(first.style.transform).toBe('translateX(0px) scaleX(1)')`; `:250` `expect(first.style.transitionDuration).toBe('200ms')`; `:270` `expect(track.style.transitionDuration).toBe('200ms')`; `:280` `expect(shownSrc()).toBe(photos[0])`; `:402` `expect(document.activeElement).toBe(frame())`; `:442` `expect(track.style.transitionDuration).toBe('0ms')`; `:467` `expect(document.activeElement).toBe(frame())` | Resistência, animação, sem autoplay, sincronização modal e foco existentes preservados | Sim, 27 testes existentes reexecutados |
+
+**Adequação C — evidência → necessidade**:
+
+| file:line e expressão | Mapeamento | Manter |
+| --- | --- | --- |
+| `carousel.test.tsx:536` `expect(shownSrc()).toBe(photos[1])` e `:545` `expect(shownSrc()).toBe(photos[2])` | Done when: apresentação controlada; CATREF-44/45 | Sim |
+| `carousel.test.tsx:558` `expect(shownSrc()).toBe(photos[2])` e `:562` `expect(screen.getByRole('button', { name: 'Anterior' })).toHaveProperty('disabled', true)` | CATREF-44, limites | Sim |
+| `carousel.test.tsx:571` `expect(shownSrc()).toBe(photos[1])` e `:580` `expect(screen.getByLabelText('Gallery request').textContent).toBe('closed')` | CATREF-44/46, gestos/limiar/cancelamento | Sim |
+| `carousel.test.tsx:587` `expect(screen.getByLabelText('Gallery request').textContent).toBe('1:true')` | CATREF-46, seleção e acionador corretos | Sim |
+| `carousel.test.tsx:601` `expect(screen.getByLabelText('Gallery request').textContent).toBe('0:true')` (Enter/Espaço) | CATREF-51/71, foto única | Sim |
+| `carousel.test.tsx:613` `expect(classes).toContain('md:inline-flex')` | CATREF-42/43, setas tablet | Sim |
+| `carousel.test.tsx:622` `expect(screen.getByTestId('carousel-track').style.transitionDuration).toBe(reduce ? '0ms' : '200ms')` (2 valores) | CATREF-73, movimento reduzido | Sim |
+| Asserções existentes acima e cenários CAT/SV/GAL em `carousel.test.tsx:114-530` | Done when: preservar todos os 27 cenários do adaptador, inclusive limites, proporção, gestos, foco, sincronização e animação | Sim |
+
+**Adequação D e veredito**: README/manifests e `client/vitest.config.ts` seguidos; testes co-localizados com Testing Library/Vitest. A/B/C/D aprovados no escopo de T10, payload de abertura verificado por valor e identidade do acionador, sem teste removido, sem SPEC_DEVIATION. Sem cosmética após os gates.
 
 ### Phase 3: Estado compartilhado e integração
 

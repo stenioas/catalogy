@@ -2,11 +2,11 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { act } from 'react'
+import { act, useRef, useState } from 'react'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 
-import { Carousel } from './carousel'
+import { Carousel, CarouselView } from './carousel'
 
 const clientSrc = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -83,6 +83,20 @@ function sourceFiles(dir: string): string[] {
     }
   }
   return found
+}
+
+function ControlledCarousel({ images = photos }: { images?: string[] }) {
+  const [index, setIndex] = useState(0)
+  const [opened, setOpened] = useState('closed')
+  const primary = useRef<HTMLElement | null>(null)
+  return <>
+    <CarouselView images={images} alt="Seculus" index={index}
+      onIndexChange={setIndex} primaryRef={(element) => { primary.current = element }}
+      onOpenGallery={(selected, trigger) => {
+        setOpened(`${selected}:${trigger === primary.current}`)
+      }} />
+    <output aria-label="Gallery request">{opened}</output>
+  </>
 }
 
 describe('Carousel (CAT-70–CAT-86)', () => {
@@ -274,10 +288,10 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(screen.queryByTestId('carousel-controls')).toBeNull()
     expect(screen.queryByTestId('carousel-count')).toBeNull()
     expect(frame().className).toMatch(/\baspect-square\b/)
-    expect(frame().getAttribute('tabindex')).toBe('-1')
+    expect(frame().getAttribute('tabindex')).toBe('0')
     drag(frame(), 180, 40)
     expect(shownSrc()).toBe('somente.webp')
-    expect(screen.queryAllByRole('button')).toHaveLength(0)
+    expect(screen.queryAllByRole('button')).toEqual([frame()])
   })
 
   it('shows the current photo and the total on a lighter parchment badge', () => {
@@ -379,14 +393,14 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(dialog.querySelector('img')?.getAttribute('src')).toBe(photos[1])
     expect(visibleGallerySrc(dialog)).toBe(photos[1])
     expect(document.activeElement).toBe(dialog)
-    expect(screen.getByTestId('watch-carousel').hasAttribute('inert')).toBe(true)
+    expect(screen.getByTestId('watch-carousel').parentElement?.hasAttribute('inert')).toBe(true)
     expect(root.hasAttribute('inert')).toBe(true)
 
     fireEvent.click(screen.getByRole('button', { name: 'Fechar' }))
 
     expect(screen.queryByRole('dialog', { name: 'Galeria de fotos' })).toBeNull()
     expect(document.activeElement).toBe(frame())
-    expect(screen.getByTestId('watch-carousel').hasAttribute('inert')).toBe(false)
+    expect(screen.getByTestId('watch-carousel').parentElement?.hasAttribute('inert')).toBe(false)
     expect(root.hasAttribute('inert')).toBe(false)
 
     view.unmount()
@@ -440,18 +454,18 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(shownSrc()).toBe(photos[1])
   })
 
-  it('opens and returns focus to the single-photo frame with tabindex -1 (GAL-01, GAL-08, GAL-14)', () => {
+  it('opens and returns focus to the single-photo frame with sequential focus (GAL-01, GAL-08, GAL-14)', () => {
     renderCarousel(['somente.webp'])
 
     drag(frame(), 100, 99)
 
     expect(screen.getByRole('dialog', { name: 'Galeria de fotos' })).toBeTruthy()
-    expect(frame().getAttribute('tabindex')).toBe('-1')
+    expect(frame().getAttribute('tabindex')).toBe('0')
 
     fireEvent.click(screen.getByRole('button', { name: 'Fechar' }))
 
     expect(document.activeElement).toBe(frame())
-    expect(frame().getAttribute('tabindex')).toBe('-1')
+    expect(frame().getAttribute('tabindex')).toBe('0')
   })
 
   it('does not change the photo when the gesture is cancelled (SV-55)', () => {
@@ -514,4 +528,98 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(dot('Foto 1').hasAttribute('aria-current')).toBe(false)
     expect(dot('Foto 1').className.split(/\s+/)).toContain('bg-current/35')
   })
+  it('renders external selection and never changes it without owner approval (CATREF-44, CATREF-45)', () => {
+    const onIndexChange = vi.fn()
+    const primaryRef = vi.fn()
+    const view = render(<CarouselView images={photos} alt="Seculus" index={1}
+      onIndexChange={onIndexChange} onOpenGallery={vi.fn()} primaryRef={primaryRef} />)
+    expect(shownSrc()).toBe(photos[1])
+    expect(screen.getByTestId('carousel-count').textContent).toBe('2/3')
+    expect(screen.getByRole('button', { name: 'Foto 2' }).getAttribute('aria-current')).toBe('true')
+    expect(primaryRef).toHaveBeenCalledWith(frame())
+    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    expect(onIndexChange).toHaveBeenCalledWith(2)
+    expect(shownSrc()).toBe(photos[1])
+    view.rerender(<CarouselView images={photos} alt="Seculus" index={2}
+      onIndexChange={onIndexChange} onOpenGallery={vi.fn()} primaryRef={primaryRef} />)
+    expect(shownSrc()).toBe(photos[2])
+    expect(screen.getByTestId('carousel-count').textContent).toBe('3/3')
+  })
+
+  it('navigates controlled dots, arrows and keyboard within bounds (CATREF-44)', () => {
+    render(<ControlledCarousel />)
+    frame().focus()
+    fireEvent.keyDown(frame(), { key: 'ArrowLeft' })
+    expect(shownSrc()).toBe(photos[0])
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+    expect(shownSrc()).toBe(photos[1])
+    fireEvent.keyDown(frame(), { key: 'ArrowRight' })
+    fireEvent.keyDown(frame(), { key: 'ArrowRight' })
+    expect(shownSrc()).toBe(photos[2])
+    expect(screen.getByRole('button', { name: 'Seguinte' })).toHaveProperty('disabled', true)
+    fireEvent.click(screen.getByRole('button', { name: 'Foto 1' }))
+    expect(shownSrc()).toBe(photos[0])
+    expect(screen.getByRole('button', { name: 'Anterior' })).toHaveProperty('disabled', true)
+  })
+
+  it('keeps threshold, resistance and cancellation in the controlled harness (CATREF-44, CATREF-46)', () => {
+    render(<ControlledCarousel />)
+    drag(frame(), 100, 60)
+    expect(shownSrc()).toBe(photos[0])
+    expect(screen.getByLabelText('Gallery request').textContent).toBe('closed')
+    drag(frame(), 100, 59)
+    expect(shownSrc()).toBe(photos[1])
+    fireEvent.click(screen.getByRole('button', { name: 'Foto 1' }))
+    fireEvent.pointerDown(frame(), { clientX: 40, pointerId: 1 })
+    fireEvent.pointerMove(frame(), { clientX: 200, pointerId: 1 })
+    expect(screen.getByRole('img', { name: 'Seculus' }).style.transform).toMatch(/scaleX\(1\./)
+    fireEvent.pointerCancel(frame(), { pointerId: 1 })
+    fireEvent.pointerUp(frame(), { clientX: 40, pointerId: 1 })
+    expect(shownSrc()).toBe(photos[0])
+    expect(screen.getByRole('img', { name: 'Seculus' }).style.transform).toBe('translateX(0px) scaleX(1)')
+    expect(screen.getByLabelText('Gallery request').textContent).toBe('closed')
+  })
+
+  it('requests the selected photo and exact primary trigger on a tap without owning a modal (CATREF-46)', () => {
+    render(<ControlledCarousel />)
+    fireEvent.click(screen.getByRole('button', { name: 'Foto 2' }))
+    drag(frame(), 100, 61)
+    expect(screen.getByLabelText('Gallery request').textContent).toBe('1:true')
+    expect(shownSrc()).toBe(photos[1])
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(screen.getByTestId('watch-carousel').parentElement?.hasAttribute('inert')).toBe(false)
+  })
+
+  it.each(['Enter', ' '])('opens a single photo by %s with focus and no navigation (CATREF-51, CATREF-71)', (key) => {
+    render(<ControlledCarousel images={['somente.webp']} />)
+    expect(frame().getAttribute('tabindex')).toBe('0')
+    expect(frame().getAttribute('aria-label')).toBe('Abrir galeria na foto 1')
+    expect(frame().className).toContain('focus-visible:ring-2')
+    frame().focus()
+    expect(document.activeElement).toBe(frame())
+    expect(fireEvent.keyDown(frame(), { key })).toBe(false)
+    expect(screen.getByLabelText('Gallery request').textContent).toBe('0:true')
+    expect(screen.queryByTestId('carousel-count')).toBeNull()
+    expect(screen.queryByTestId('carousel-dots')).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Anterior' })).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Seguinte' })).toBeNull()
+  })
+
+  it('preserves tablet arrow breakpoint rules in the controlled presentation (CATREF-42, CATREF-43)', () => {
+    render(<ControlledCarousel />)
+    for (const name of ['Anterior', 'Seguinte']) {
+      const classes = screen.getByRole('button', { name }).className.split(/\s+/)
+      expect(classes).toContain('hidden')
+      expect(classes).toContain('md:inline-flex')
+    }
+  })
+
+  it.each([false, true])('preserves controlled transition duration with reduced motion %s (CATREF-73)', (reduce) => {
+    mockReducedMotion(reduce)
+    render(<ControlledCarousel />)
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+    expect(shownSrc()).toBe(photos[1])
+    expect(screen.getByTestId('carousel-track').style.transitionDuration).toBe(reduce ? '0ms' : '200ms')
+  })
+
 })

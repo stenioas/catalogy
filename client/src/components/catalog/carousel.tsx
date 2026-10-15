@@ -15,48 +15,30 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-export function Carousel({ images, alt }: CarouselProps) {
-  const [index, setIndex] = useState(0)
-  const [galleryOpen, setGalleryOpen] = useState(false)
+export type CarouselViewProps = CarouselProps & {
+  index: number
+  onIndexChange: (index: number) => void
+  onOpenGallery: (index: number, trigger: HTMLElement) => void
+  primaryRef: (element: HTMLElement | null) => void
+  animate?: boolean
+}
+
+export function CarouselView({
+  images, alt, index, onIndexChange, onOpenGallery, primaryRef, animate = true,
+}: CarouselViewProps) {
   const [pullPx, setPullPx] = useState(0)
   const [dragging, setDragging] = useState(false)
   const dragStartX = useRef<number | null>(null)
-  const frameRef = useRef<HTMLDivElement>(null)
-  const wasGalleryOpen = useRef(false)
   const count = images.length
   const multi = count > 1
   const duration = slideDuration(prefersReducedMotion())
-  const trackDuration = galleryOpen ? '0ms' : duration
+  const trackDuration = animate ? duration : '0ms'
   const atStart = index === 0
   const atEnd = index === count - 1
 
-  useEffect(() => {
-    const root = document.getElementById('root')
-    if (!galleryOpen || !root) return
-    const wasInert = root.hasAttribute('inert')
-    root.setAttribute('inert', '')
-    return () => {
-      if (!wasInert) root.removeAttribute('inert')
-    }
-  }, [galleryOpen])
-
-  useEffect(() => {
-    if (galleryOpen) {
-      wasGalleryOpen.current = true
-      return
-    }
-    if (wasGalleryOpen.current) {
-      frameRef.current?.focus()
-      wasGalleryOpen.current = false
-    }
-  }, [galleryOpen])
-
   function step(delta: number) {
-    setIndex((current) => {
-      const next = current + delta
-      if (next < 0 || next >= count) return current
-      return next
-    })
+    const next = index + delta
+    if (next >= 0 && next < count) onIndexChange(next)
   }
 
   function edgePull(delta: number): number {
@@ -67,7 +49,10 @@ export function Carousel({ images, alt }: CarouselProps) {
 
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.currentTarget !== document.activeElement) return
-    if (event.key === 'ArrowRight') {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      onOpenGallery(index, event.currentTarget)
+    } else if (event.key === 'ArrowRight') {
       event.preventDefault()
       step(1)
     } else if (event.key === 'ArrowLeft') {
@@ -102,7 +87,7 @@ export function Carousel({ images, alt }: CarouselProps) {
     if (start === null) return
     const delta = event.clientX - start
     if (Math.abs(delta) < DRAG_THRESHOLD_PX) {
-      setGalleryOpen(true)
+      onOpenGallery(index, event.currentTarget)
       return
     }
     if (atStart && delta > 0) return
@@ -121,7 +106,7 @@ export function Carousel({ images, alt }: CarouselProps) {
     'hidden size-11 shrink-0 cursor-pointer rounded-full text-inherit hover:bg-[#e5e5ea] md:inline-flex'
 
   return (
-    <div data-testid="watch-carousel" className="w-full" inert={galleryOpen}>
+    <div data-testid="watch-carousel" className="w-full">
       <div
         data-testid="carousel-stage"
         className="relative mx-auto flex w-full max-w-[480px] items-center justify-center md:max-w-[600px] md:gap-4"
@@ -139,15 +124,18 @@ export function Carousel({ images, alt }: CarouselProps) {
           </Button>
         ) : null}
         <div
-          ref={frameRef}
+          ref={primaryRef}
           data-testid="carousel-frame"
-          className="relative mx-auto aspect-square w-full min-w-0 max-w-[480px] flex-1 touch-pan-y overflow-hidden rounded-[12px]"
-          tabIndex={multi ? 0 : -1}
-          onKeyDown={multi ? onKeyDown : undefined}
+          className="relative mx-auto aspect-square w-full min-w-0 max-w-[480px] flex-1 touch-pan-y overflow-hidden rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          role="button"
+          aria-label={`Abrir galeria na foto ${index + 1}`}
+          aria-haspopup="dialog"
+          tabIndex={0}
+          onKeyDown={onKeyDown}
           onPointerDown={onPointerDown}
           onPointerMove={multi ? onPointerMove : undefined}
           onPointerUp={releaseDrag}
-          onPointerCancel={multi ? onPointerCancel : undefined}
+          onPointerCancel={onPointerCancel}
         >
         <div
           data-testid="carousel-track"
@@ -222,13 +210,56 @@ export function Carousel({ images, alt }: CarouselProps) {
                       ? 'size-[10px] cursor-pointer rounded-full bg-[#0066cc] p-0 hover:bg-[#0066cc]'
                       : 'size-[10px] cursor-pointer rounded-full bg-current/35 p-0 hover:bg-[#6e6e73]'
                   }
-                  onClick={() => setIndex(imageIndex)}
+                  onClick={() => onIndexChange(imageIndex)}
                 />
               )
             })}
           </div>
         </div>
       ) : null}
+    </div>
+  )
+}
+
+// Temporary owner for WatchPage until ProductMedia is integrated.
+export function Carousel({ images, alt }: CarouselProps) {
+  const [index, setIndex] = useState(0)
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const frameRef = useRef<HTMLElement | null>(null)
+  const wasGalleryOpen = useRef(false)
+
+  useEffect(() => {
+    const root = document.getElementById('root')
+    if (!galleryOpen || !root) return
+    const wasInert = root.hasAttribute('inert')
+    root.setAttribute('inert', '')
+    return () => {
+      if (!wasInert) root.removeAttribute('inert')
+    }
+  }, [galleryOpen])
+
+  useEffect(() => {
+    if (galleryOpen) {
+      wasGalleryOpen.current = true
+      return
+    }
+    if (wasGalleryOpen.current) {
+      frameRef.current?.focus()
+      wasGalleryOpen.current = false
+    }
+  }, [galleryOpen])
+
+  return (
+    <div inert={galleryOpen}>
+      <CarouselView
+        images={images}
+        alt={alt}
+        index={index}
+        onIndexChange={setIndex}
+        onOpenGallery={() => setGalleryOpen(true)}
+        primaryRef={(element) => { frameRef.current = element }}
+        animate={!galleryOpen}
+      />
       {galleryOpen ? (
         <Gallery
           images={images}

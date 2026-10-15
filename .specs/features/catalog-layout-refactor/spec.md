@@ -1,7 +1,7 @@
 # Catalog Layout Refactor Specification
 
 Data: 2026-10-15
-Status: execução em andamento; T1–T9 concluídas, T10–T16 pendentes.
+Status: execução em andamento; T1–T10 concluídas, T11–T16 pendentes.
 Fonte: [desenho aprovado](../../../CATALOG-REFACTORING-DESIGN.md).
 Porte: Large, com especificação completa, design técnico e tarefas formais. Todas as histórias abaixo são P1 e pertencem à entrega aprovada.
 
@@ -274,16 +274,16 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-39 | US4: Zoom desktop / AC8 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
 | CATREF-40 | US4: Zoom desktop / AC9 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T11, T16 |
 | CATREF-41 | US4: Zoom desktop / AC10 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
-| CATREF-42 | US5: Preservação do carrossel e da galeria / AC1 | Tasks | In Tasks | T10, T16 |
-| CATREF-43 | US5: Preservação do carrossel e da galeria / AC2 | Tasks | In Tasks | T10, T16 |
-| CATREF-44 | US5: Preservação do carrossel e da galeria / AC3 | Tasks | In Tasks | T10, T14, T16 |
-| CATREF-45 | US5: Preservação do carrossel e da galeria / AC4 | Tasks | In Tasks | T10, T16 |
-| CATREF-46 | US5: Preservação do carrossel e da galeria / AC5 | Tasks | In Tasks | T10, T14, T16 |
+| CATREF-42 | US5: Preservação do carrossel e da galeria / AC1 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
+| CATREF-43 | US5: Preservação do carrossel e da galeria / AC2 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
+| CATREF-44 | US5: Preservação do carrossel e da galeria / AC3 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T14, T16 |
+| CATREF-45 | US5: Preservação do carrossel e da galeria / AC4 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
+| CATREF-46 | US5: Preservação do carrossel e da galeria / AC5 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T14, T16 |
 | CATREF-47 | US5: Preservação do carrossel e da galeria / AC6 | Tasks | In Tasks | T11, T14, T16 |
 | CATREF-48 | US5: Preservação do carrossel e da galeria / AC7 | Tasks | In Tasks | T11, T14, T16 |
 | CATREF-49 | US5: Preservação do carrossel e da galeria / AC8 | Tasks | In Tasks | T11, T14, T16 |
 | CATREF-50 | US5: Preservação do carrossel e da galeria / AC9 | Tasks | In Tasks | T11, T14, T16 |
-| CATREF-51 | US5: Preservação do carrossel e da galeria / AC10 | Tasks | Partial: API de apresentação T9; propriedade/fluxo da galeria em T11/T14 | T9, T10, T11, T14, T16 |
+| CATREF-51 | US5: Preservação do carrossel e da galeria / AC10 | Tasks | Partial: apresentações controladas T9/T10 e foto única mobile por teclado em T10; propriedade/fluxo da galeria em T11/T14 | T9, T10, T11, T14, T16 |
 | CATREF-52 | US6: Cor opcional e conteúdo preenchido / AC1 | Execute | Implemented | T1, T16 |
 | CATREF-53 | US6: Cor opcional e conteúdo preenchido / AC2 | Execute | Implemented | T1, T16 |
 | CATREF-54 | US6: Cor opcional e conteúdo preenchido / AC3 | Tasks | In Tasks | T13, T16 |
@@ -303,11 +303,11 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Tasks | In Tasks | T12, T13, T15, T16 |
-| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial: T4/T6 WhatsApp and T9 media controls have accessible names and visible keyboard focus; remaining controls in T10/T11/T13/T14 | T4, T6, T9, T10, T11, T13, T14, T16 |
+| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial: T4/T6 WhatsApp and T9 media controls have accessible names and visible keyboard focus; remaining integration in T11/T13/T14; T10: foto principal mobile com foco, nome e Enter/Espaço com foto única | T4, T6, T9, T10, T11, T13, T14, T16 |
 | CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Partial: T6 no overflow in CatalogPage; T8/T9 media surfaces use bounded geometry; product integration in T13 | T5, T6, T8, T9, T13, T16 |
-| CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Tasks | In Tasks | T10, T11, T14, T16 |
+| CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Partial: T10 transições controladas de 0/200 ms verificadas; integração T11/T14 pendente | T10, T11, T14, T16 |
 
-**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T9 concluídas e T10–T16 pendentes.
+**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T10 concluídas e T11–T16 pendentes.
 
 ### T5 execution evidence
 
