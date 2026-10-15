@@ -168,16 +168,20 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Incluir color na tabela de campos como texto livre opcional, origem exclusiva do resumo e orientação para evitar repetição em specifications.
-- [ ] Revisão do texto contra CATREF-60 e contrato; nenhum teste automatizado novo para documentação.
-- [ ] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
-- [ ] Gate Documentation aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Incluir color na tabela de campos como texto livre opcional, origem exclusiva do resumo e orientação para evitar repetição em specifications.
+- [x] Revisão do texto contra CATREF-60 e contrato; nenhum teste automatizado novo para documentação.
+- [x] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
+- [x] Gate Documentation aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+
+**Revisão manual**: README.md:44,51 — `color` é opcional e livre, alimenta somente a cor do resumo e não deve ser repetido em `specifications`; nenhum JSON de produto foi alterado. `git diff --check` aprovado; 0 testes automatizados novos.
 
 **Tests**: none
 
 **Gate**: Documentation
 
 **Commit**: `docs(catalog): document optional product color`
+
+**Status**: done
 
 ### T3: Atualizar a skill de cadastro para color
 

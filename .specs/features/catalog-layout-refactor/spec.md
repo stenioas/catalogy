@@ -292,7 +292,7 @@ Cada ID identifica exatamente um critério de aceite. Evidência e tarefas serã
 | CATREF-57 | US6: Cor opcional e conteúdo preenchido / AC6 | Tasks | In Tasks | T13, T16 |
 | CATREF-58 | US6: Cor opcional e conteúdo preenchido / AC7 | Tasks | In Tasks | T13, T16 |
 | CATREF-59 | US6: Cor opcional e conteúdo preenchido / AC8 | Tasks | In Tasks | T13, T16 |
-| CATREF-60 | US6: Cor opcional e conteúdo preenchido / AC9 | Tasks | In Tasks | T2, T3, T16 |
+| CATREF-60 | US6: Cor opcional e conteúdo preenchido / AC9 | Execute | In Progress — T2 README concluído; T3 da skill pendente | T2, T3, T16 |
 | CATREF-61 | US6: Cor opcional e conteúdo preenchido / AC10 | Execute | Implemented | T1, T2, T3, T13, T16 |
 | CATREF-62 | US7: Identidade, acessibilidade e regras comerciais / AC1 | Tasks | In Tasks | T6, T8, T13, T16 |
 | CATREF-63 | US7: Identidade, acessibilidade e regras comerciais / AC2 | Tasks | In Tasks | T5, T13, T16 |
