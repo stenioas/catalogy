@@ -738,16 +738,71 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **Done when**:
 
-- [ ] Entrega verificada: Possuir seleção, galeria única, consulta min-width 921px e foco; fornecer media/isDesktop via children e conectar CarouselView e DesktopProductMedia.
-- [ ] Testar seleção inicial, miniaturas, +N, sincronização ao fechar, galeria única, inert anterior, rolagem e retorno de foco. Cruzar 920/921 com modal aberto e fechado, preservar zoom interno aberto e usar fallback de foco quando acionador desmonta. Alterar slug reinicia seleção.
-- [ ] Pelo menos 12 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Possuir seleção, galeria única, consulta min-width 921px e foco; fornecer media/isDesktop via children e conectar CarouselView e DesktopProductMedia.
+- [x] Testar seleção inicial, miniaturas, +N, sincronização ao fechar, galeria única, inert anterior, rolagem e retorno de foco. Cruzar 920/921 com modal aberto e fechado, preservar zoom interno aberto e usar fallback de foco quando acionador desmonta. Alterar slug reinicia seleção.
+- [x] Pelo menos 12 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration
 
 **Gate**: Full
 
 **Commit**: `feat(catalog): share product media selection and gallery state`
+
+**Status**: done
+
+#### T11 execution record
+
+- **Assumptions**: the approved children callback exposes media/isDesktop; the consumer keys ProductMedia by slug as designed. ProductMedia and Gallery remain above the responsive branches. WatchPage integration remains T13, and the legacy Carousel adapter remains T14.
+- **Files**: product-media.tsx and product-media.test.tsx; desktop-product-media.tsx forwards disabled to the existing HoverZoom prop so opening Gallery removes overlays; carousel.test.tsx adds the approved ProductMedia importer to its exact CAT-70 list. No product data, dependencies or unrelated files changed.
+- **Skills applied**: tlc-spec-driven Execute; vercel-react-best-practices `rerender-derived-state` (subscribe to the breakpoint boolean); vercel-composition-patterns `state-lift-state` and `state-decouple-implementation` (one state owner above both controlled presentations). The approved local children callback supplies composition without a global store or context.
+- **Tests before implementation**: 20 expanded AC-derived scenarios written first; the initial run failed because ProductMedia did not exist. The implementation then passed these 20; two targeted cleanup/hidden-trigger scenarios complete the 22 new cases. No existing test was deleted, skipped or weakened.
+- **Harness correction**: CAT-70's former exact importer list omitted ProductMedia because it predated the approved architecture. Added only `components/catalog/product-media.tsx`; the exact list still excludes catalog-page and unrelated consumers. Authorized correction of a demonstrably obsolete structural oracle, with unchanged product behavior.
+- **Gate Full**: `pnpm test` exit 0: **416 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 351 client), 22 above T10's 394 and 117 above the original 299 baseline. Focused ProductMedia verification: 22 passed. Full client execution: 22 files passed, duration 68.60 s. An additional focused run during the long full gate confirmed the new scenarios were not hanging; it emitted React act-environment warnings but all 22 passed. No assertion failure or behavior ambiguity occurred.
+- **Scope**: MCP NONE; no browser was opened. These integration tests prove state/events, while visual validation remains T13/T16.
+
+**Check A — sufficient coverage**. Paths abbreviated below are under `client/src/components/catalog/`; PM = `product-media.test.tsx`.
+
+| Done-when / AC / edge case | Exact evidence and assertion expression | Spec-defined outcome | Covered? |
+| --- | --- | --- | --- |
+| Initial selection; 1/7/8/9/12 photos; CATREF-21/22 | PM:82 `expect(selected()).toBe(photos[0])`; :83 `expect(screen.queryByRole('dialog')).toBeNull()`; :85 `expect(within(thumbnails).getAllByRole('button').length).toBe(count > 8 ? 8 : count)`; :87 ``expect(within(thumbnails).getByRole('button', { name: `Abrir galeria na foto 8, mais ${count - 7} fotos` }).textContent).toBe(`+${count - 7}`)`` | Index zero, closed modal; all thumbnails up to eight, otherwise seven plus total-minus-seven | Yes |
+| CATREF-23/24/26, thumbnail selection and main activation | PM:96 `expect(selected()).toBe(photos[0])`; :98 `expect(selected()).toBe(photos[2])`; :99 `expect(third.getAttribute('aria-pressed')).toBe('true')`; :102 `expect(galleryPhoto()).toBe(photos[2])` | Hover unchanged; activated thumbnail becomes selected; main opens that selection | Yes |
+| CATREF-25/29/30, +N and synchronization | PM:109/:118 `expect(galleryPhoto()).toBe(photos[7])`; :111 `expect(galleryPhoto()).toBe(photos[8])`; :113 `expect(selected()).toBe(photos[8])`; :115 `expect(more.getAttribute('aria-pressed')).toBe('true')` | +N always opens eighth; last gallery photo remains selected, with +N active for index >=7 | Yes |
+| CATREF-27/28, desktop controls and drag | PM:88 `expect(screen.queryByTestId('watch-carousel')).toBeNull()`; :89 `expect(screen.queryByTestId('carousel-count')).toBeNull()`; :269 `expect(selected()).toBe(photos[0])`; :270 `expect(screen.queryByRole('dialog')).toBeNull()`; desktop-product-media.test.tsx:178 `expect(screen.queryByRole('button', { name: 'Anterior' })).toBeNull()`; :180 `expect(screen.queryByText(/^\d+\s*\/\s*\d+$/)).toBeNull()` | No desktop carousel navigation; drag neither changes selection nor accidentally opens Gallery | Yes |
+| Unique gallery and CATREF-48 closure modes | PM:125 `expect(screen.getAllByRole('dialog').length).toBe(1)`; :132 `expect(screen.queryByRole('dialog')).toBeNull()` after button, Escape or backdrop | One modal; all three approved close paths work | Yes |
+| CATREF-49, background isolation/scroll and previous state | PM:127 `expect(root.hasAttribute('inert')).toBe(true)`; :128 `expect(document.body.style.overflow).toBe('hidden')`; :133 `expect(root.hasAttribute('inert')).toBe(false)`; :134 `expect(document.body.style.overflow).toBe('scroll')`; :143/:146 `expect(root.getAttribute('inert')).toBe('previous')` | Background inerte while open; exact prior inert/overflow state restored after close/unmount | Yes |
+| CATREF-50/71, focus and hidden/disconnected trigger | PM:126 `expect(document.activeElement).toBe(dialog())`; :135 `expect(document.activeElement).toBe(trigger)`; :116 `expect(document.activeElement).toBe(more)`; :180 `expect(trigger.isConnected).toBe(false)`; :184/:229 `expect(document.activeElement).toBe(main())` | Focus enters modal, returns to visible trigger or current principal control | Yes |
+| CATREF-31, closed modal through both directions 920/921 | PM:157 `expect(selected()).toBe(photos[2])`; :158 `expect(screen.queryByRole('dialog')).toBeNull()`; :159 `expect(screen.getByRole(next >= 921 ? 'region' : 'article', { name: next >= 921 ? 'Desktop' : 'Mobile' })).toBeTruthy()` | Selection and closed state preserved while the actual composition changes | Yes |
+| CATREF-31/47, open modal/zoom through 920/921 | PM:176 `expect(dialog()).toBe(modal)`; :177 `expect(screen.getAllByRole('dialog').length).toBe(1)`; :178 `expect(viewport.style.transform).toBe(zoom)`; :179 `expect(galleryPhoto()).toBe(photos[2])`; :183 `expect(selected()).toBe(photos[3])` | Same Gallery instance retains zoom; navigating and closing updates shared selection | Yes |
+| CATREF-47, existing gesture regressions revalidated | gallery.test.tsx:313 `expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe(`translate(${limit}px, ${limit}px) scale(2) scaleX(1)`)`; :380 `expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-12.5px, -6.25px) scale(1.25) scaleX(1)')`; :405 `expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-15.625px, 0px) scale(2.5) scaleX(1)')`; :437 `expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(-100px, -50px) scale(3) scaleX(1)')`; :442 `expect(screen.getByTestId('watch-gallery-viewport').style.transform).toBe('translate(0px, 0px) scale(1) scaleX(1)')` | Bounded pan, Ctrl-wheel, pinch and double-tap retain exact existing outcomes | Yes |
+| New slug resets owner; listener cleanup | PM:192 `expect(selected()).toBe(photos[0])`; :193 `expect(screen.queryByRole('dialog')).toBeNull()`; :195 `expect(document.getElementById('root')?.hasAttribute('inert')).toBe(false)`; :148 `expect(listeners.size).toBe(0)` | Keyed new product starts at index zero, closed; modal side effects/listener cleaned up | Yes |
+| CATREF-51/71, single photo at 920 and 921 | PM:202 `expect(galleryPhoto()).toBe(photos[0])`; :203 `expect(within(dialog()).queryByRole('button', { name: 'Seguinte' })).toBeNull()`; :204 `expect(within(dialog()).queryByRole('button', { name: 'Anterior' })).toBeNull()`; :206 `expect(document.activeElement).toBe(trigger)`; desktop-product-media.test.tsx:124 `expect(screen.getByTestId('selected-index').textContent).toBe('3')` | Single photo still opens, omits useless navigation and returns focus; keyboard activation retained | Yes |
+| CATREF-73, reduced motion | PM:215 `expect(screen.getByTestId('carousel-track').style.transitionDuration).toBe('0ms')`; :218 `expect(screen.getByTestId('watch-gallery-track').style.transitionDuration).toBe('0ms')` | Both transitions have exactly zero duration | Yes |
+| CATREF-40 and approved opening cleanup | PM:249 `expect(screen.queryByTestId('hover-zoom-lens')).not.toBeNull()`; :250 `expect(screen.queryByTestId('hover-zoom-frame')).not.toBeNull()` before opening; :254 `expect(screen.queryByTestId('hover-zoom-lens')).toBeNull()`; :255/:260 `expect(screen.queryByTestId('hover-zoom-frame')).toBeNull()`; :256 `expect(callbacks.size).toBe(0)`; :259 `expect(screen.queryByTestId('hover-zoom-stage')).toBeNull()` | Opening Gallery removes lens/frame/RAF; mobile composition cannot mount hover zoom | Yes |
+
+**Check B — non-shallow**: assertions inspect selected image src, active controls, exact DOM identity, zoom transform, overlays, focus and inert/overflow state. No call-count-only or assertion-free scenarios. Props carry images/alt/index/actions; integration asserts image and selection outputs, while existing T9/T10 controlled-contract tests remain intact.
+
+**Check C — necessary reverse mapping**:
+
+| Exact assertion evidence (PM = product-media.test.tsx) | Maps to | Keep? |
+| --- | --- | --- |
+| PM:82 `expect(selected()).toBe(photos[0])`; :85 `expect(within(thumbnails).getAllByRole('button').length).toBe(count > 8 ? 8 : count)` (five fixtures) | CATREF-21/22; initial-state Done when | Yes |
+| PM:96 `expect(selected()).toBe(photos[0])`; :98 `expect(selected()).toBe(photos[2])`; :102 `expect(galleryPhoto()).toBe(photos[2])` | CATREF-23/24/26 | Yes |
+| PM:109 `expect(galleryPhoto()).toBe(photos[7])`; :113 `expect(selected()).toBe(photos[8])`; :115 `expect(more.getAttribute('aria-pressed')).toBe('true')` | CATREF-25/29/30/50 | Yes |
+| PM:125 `expect(screen.getAllByRole('dialog').length).toBe(1)`; :127 `expect(root.hasAttribute('inert')).toBe(true)`; :134 `expect(document.body.style.overflow).toBe('scroll')`; :135 `expect(document.activeElement).toBe(trigger)` (three closure paths) | CATREF-48/49/50 | Yes |
+| PM:143 `expect(root.getAttribute('inert')).toBe('previous')`; :148 `expect(listeners.size).toBe(0)` | Previous-inert, scroll and lifecycle Done when | Yes |
+| PM:157 `expect(selected()).toBe(photos[2])`; :158 `expect(screen.queryByRole('dialog')).toBeNull()` (both initial widths) | CATREF-31 closed | Yes |
+| PM:176 `expect(dialog()).toBe(modal)`; :178 `expect(viewport.style.transform).toBe(zoom)`; :183 `expect(selected()).toBe(photos[3])`; :184 `expect(document.activeElement).toBe(main())` (both initial widths) | CATREF-31/47/50 open | Yes |
+| PM:192 `expect(selected()).toBe(photos[0])`; :193 `expect(screen.queryByRole('dialog')).toBeNull()` | Slug-reset Done when | Yes |
+| PM:202 `expect(galleryPhoto()).toBe(photos[0])`; :203 `expect(within(dialog()).queryByRole('button', { name: 'Seguinte' })).toBeNull()`; :206 `expect(document.activeElement).toBe(trigger)` (both widths) | CATREF-51/71 | Yes |
+| PM:215 `expect(screen.getByTestId('carousel-track').style.transitionDuration).toBe('0ms')`; :218 `expect(screen.getByTestId('watch-gallery-track').style.transitionDuration).toBe('0ms')` | CATREF-73 | Yes |
+| PM:228 `expect(trigger.isConnected).toBe(true)`; :229 `expect(document.activeElement).toBe(main())` | CATREF-50 hidden-trigger fallback | Yes |
+| PM:249 `expect(screen.queryByTestId('hover-zoom-lens')).not.toBeNull()`; :254 `expect(screen.queryByTestId('hover-zoom-lens')).toBeNull()`; :255 `expect(screen.queryByTestId('hover-zoom-frame')).toBeNull()`; :256 `expect(callbacks.size).toBe(0)`; :259 `expect(screen.queryByTestId('hover-zoom-stage')).toBeNull()` | CATREF-40 and approved zoom cleanup | Yes |
+| PM:269 `expect(selected()).toBe(photos[0])`; :270 `expect(screen.queryByRole('dialog')).toBeNull()` | CATREF-28 | Yes |
+| carousel.test.tsx:123 `expect(importers.toSorted()).toEqual(['components/catalog/carousel.test.tsx', 'components/catalog/product-media.tsx', 'routes/watch-page.tsx'])` | Approved T11 reuse and temporary T10/T14 migration boundary | Yes |
+
+- **Check D**: existing catalog colocated Vitest integration conventions and the Matrix commands followed; no threshold or extra test guideline applies. All 22 added scenarios map to the approved requirements/edges; minimum 12 satisfied. No tests removed or skipped.
+- **Adequacy verdict**: Checks A/B/C/D pass. All applicable T11 criteria have exact outcome evidence. No spec deviation. Browser evidence and real WatchPage composition remain the approved later tasks.
 
 ### T12: Observar o elemento atual do botão na StickyBar
 

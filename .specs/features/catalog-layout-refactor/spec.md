@@ -1,7 +1,7 @@
 # Catalog Layout Refactor Specification
 
 Data: 2026-10-15
-Status: execução em andamento; T1–T10 concluídas, T11–T16 pendentes.
+Status: execução em andamento; T1–T11 concluídas, T12–T16 pendentes.
 Fonte: [desenho aprovado](../../../CATALOG-REFACTORING-DESIGN.md).
 Porte: Large, com especificação completa, design técnico e tarefas formais. Todas as histórias abaixo são P1 e pertencem à entrega aprovada.
 
@@ -253,17 +253,17 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-18 | US2: Composição responsiva do produto / AC6 | Tasks | In Tasks | T13, T16 |
 | CATREF-19 | US2: Composição responsiva do produto / AC7 | Tasks | In Tasks | T13, T16 |
 | CATREF-20 | US2: Composição responsiva do produto / AC8 | Tasks | In Tasks | T13, T16 |
-| CATREF-21 | US3: Seleção desktop e galeria compartilhada / AC1 | Tasks | Partial: quantidades em T9; integração desktop em T11/T13 | T9, T11, T16 |
-| CATREF-22 | US3: Seleção desktop e galeria compartilhada / AC2 | Tasks | Partial: limite/+N em T9; integração desktop em T11/T13 | T9, T11, T16 |
-| CATREF-23 | US3: Seleção desktop e galeria compartilhada / AC3 | Tasks | Partial: seleção controlada em T9; integração desktop em T11/T13 | T9, T11, T16 |
-| CATREF-24 | US3: Seleção desktop e galeria compartilhada / AC4 | Tasks | Partial: hover sem seleção em T9; integração desktop em T11/T13 | T9, T11, T16 |
-| CATREF-25 | US3: Seleção desktop e galeria compartilhada / AC5 | Tasks | Partial: T9 solicita índice 7; abertura da galeria em T11 | T9, T11, T16 |
-| CATREF-26 | US3: Seleção desktop e galeria compartilhada / AC6 | Tasks | Partial: T9 solicita seleção atual; abertura da galeria em T11 | T9, T11, T16 |
-| CATREF-27 | US3: Seleção desktop e galeria compartilhada / AC7 | Tasks | Partial: T9 não renderiza controles de carrossel; integração desktop em T11/T13 | T9, T11, T16 |
-| CATREF-28 | US3: Seleção desktop e galeria compartilhada / AC8 | Tasks | Partial: T9 suprime ativação por arraste; integração desktop em T11/T13 | T9, T11, T16 |
-| CATREF-29 | US3: Seleção desktop e galeria compartilhada / AC9 | Tasks | In Tasks; manter seleção após fechar a galeria em T11 | T9, T11, T16 |
-| CATREF-30 | US3: Seleção desktop e galeria compartilhada / AC10 | Tasks | Partial: +N representa índices >= 7 em T9; integração desktop em T11/T13 | T9, T11, T16 |
-| CATREF-31 | US3: Seleção desktop e galeria compartilhada / AC11 | Tasks | In Tasks | T11, T14, T16 |
+| CATREF-21 | US3: Seleção desktop e galeria compartilhada / AC1 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-22 | US3: Seleção desktop e galeria compartilhada / AC2 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-23 | US3: Seleção desktop e galeria compartilhada / AC3 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-24 | US3: Seleção desktop e galeria compartilhada / AC4 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-25 | US3: Seleção desktop e galeria compartilhada / AC5 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-26 | US3: Seleção desktop e galeria compartilhada / AC6 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-27 | US3: Seleção desktop e galeria compartilhada / AC7 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-28 | US3: Seleção desktop e galeria compartilhada / AC8 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-29 | US3: Seleção desktop e galeria compartilhada / AC9 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-30 | US3: Seleção desktop e galeria compartilhada / AC10 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
+| CATREF-31 | US3: Seleção desktop e galeria compartilhada / AC11 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T11, T14, T16 |
 | CATREF-32 | US4: Zoom desktop / AC1 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
 | CATREF-33 | US4: Zoom desktop / AC2 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
 | CATREF-34 | US4: Zoom desktop / AC3 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
@@ -272,18 +272,18 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-37 | US4: Zoom desktop / AC6 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
 | CATREF-38 | US4: Zoom desktop / AC7 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
 | CATREF-39 | US4: Zoom desktop / AC8 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
-| CATREF-40 | US4: Zoom desktop / AC9 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T11, T16 |
+| CATREF-40 | US4: Zoom desktop / AC9 | Execute | Implemented — T8/T11: hover restrito ao desktop; integração e cleanup verificados em tasks.md; revisão T16 pendente | T8, T11, T16 |
 | CATREF-41 | US4: Zoom desktop / AC10 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
 | CATREF-42 | US5: Preservação do carrossel e da galeria / AC1 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
 | CATREF-43 | US5: Preservação do carrossel e da galeria / AC2 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
 | CATREF-44 | US5: Preservação do carrossel e da galeria / AC3 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T14, T16 |
 | CATREF-45 | US5: Preservação do carrossel e da galeria / AC4 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
 | CATREF-46 | US5: Preservação do carrossel e da galeria / AC5 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T14, T16 |
-| CATREF-47 | US5: Preservação do carrossel e da galeria / AC6 | Tasks | In Tasks | T11, T14, T16 |
-| CATREF-48 | US5: Preservação do carrossel e da galeria / AC7 | Tasks | In Tasks | T11, T14, T16 |
-| CATREF-49 | US5: Preservação do carrossel e da galeria / AC8 | Tasks | In Tasks | T11, T14, T16 |
-| CATREF-50 | US5: Preservação do carrossel e da galeria / AC9 | Tasks | In Tasks | T11, T14, T16 |
-| CATREF-51 | US5: Preservação do carrossel e da galeria / AC10 | Tasks | Partial: apresentações controladas T9/T10 e foto única mobile por teclado em T10; propriedade/fluxo da galeria em T11/T14 | T9, T10, T11, T14, T16 |
+| CATREF-47 | US5: Preservação do carrossel e da galeria / AC6 | Execute | Implemented — T11: Gallery única, gestos preservados, isolamento e foco; adequação em tasks.md; página T13, migração T14 e revisão T16 pendentes | T11, T14, T16 |
+| CATREF-48 | US5: Preservação do carrossel e da galeria / AC7 | Execute | Implemented — T11: Gallery única, gestos preservados, isolamento e foco; adequação em tasks.md; página T13, migração T14 e revisão T16 pendentes | T11, T14, T16 |
+| CATREF-49 | US5: Preservação do carrossel e da galeria / AC8 | Execute | Implemented — T11: Gallery única, gestos preservados, isolamento e foco; adequação em tasks.md; página T13, migração T14 e revisão T16 pendentes | T11, T14, T16 |
+| CATREF-50 | US5: Preservação do carrossel e da galeria / AC9 | Execute | Implemented — T11: Gallery única, gestos preservados, isolamento e foco; adequação em tasks.md; página T13, migração T14 e revisão T16 pendentes | T11, T14, T16 |
+| CATREF-51 | US5: Preservação do carrossel e da galeria / AC10 | Execute | Implemented — T9/T10/T11: foto única acessível nas apresentações e no fluxo modal; adequação em tasks.md; página T13 e revisão T16 pendentes | T9, T10, T11, T14, T16 |
 | CATREF-52 | US6: Cor opcional e conteúdo preenchido / AC1 | Execute | Implemented | T1, T16 |
 | CATREF-53 | US6: Cor opcional e conteúdo preenchido / AC2 | Execute | Implemented | T1, T16 |
 | CATREF-54 | US6: Cor opcional e conteúdo preenchido / AC3 | Tasks | In Tasks | T13, T16 |
@@ -303,11 +303,11 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Tasks | In Tasks | T12, T13, T15, T16 |
 | CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Tasks | In Tasks | T12, T13, T15, T16 |
-| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial: T4/T6 WhatsApp and T9 media controls have accessible names and visible keyboard focus; remaining integration in T11/T13/T14; T10: foto principal mobile com foco, nome e Enter/Espaço com foto única | T4, T6, T9, T10, T11, T13, T14, T16 |
+| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Partial — T4/T6/T9/T10/T11: ações e mídia acessíveis, foco do modal restaurado; adequação em tasks.md; página T13 e revisão T16 pendentes | T4, T6, T9, T10, T11, T13, T14, T16 |
 | CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Partial: T6 no overflow in CatalogPage; T8/T9 media surfaces use bounded geometry; product integration in T13 | T5, T6, T8, T9, T13, T16 |
-| CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Partial: T10 transições controladas de 0/200 ms verificadas; integração T11/T14 pendente | T10, T11, T14, T16 |
+| CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Implemented — T10/T11: duração 0ms em carrossel/Gallery; adequação em tasks.md; migração T14 e revisão T16 pendentes | T10, T11, T14, T16 |
 
-**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T10 concluídas e T11–T16 pendentes.
+**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T11 concluídas e T12–T16 pendentes.
 
 ### T5 execution evidence
 
@@ -362,3 +362,7 @@ CATREF-32 a CATREF-41 implementados no componente com 14 cenários de integraç�
 ### T9 — DesktopProductMedia isolado
 
 CATREF-16/21–28/30/51 parcialmente atendidos pela apresentação controlada, sem propriedade do modal; CATREF-71/72 parcialmente atendidos com nomes/foco acessíveis e geometria verificada. Evidência de navegador, medidas e adequação: [T9 desktop media review](t9-desktop-media-review.md) e tabela T9 em tasks.md. CATREF-29 e a integração do fluxo modal permanecem em T11; integração da página em T13; revisão final em T16. Gate Full: 385 passed, 0 failed, 0 skipped (64 shared, 1 prebuild, 320 client).
+
+### T11 — ProductMedia estável
+
+Proprietário único de seleção, Gallery, breakpoint e foco implementado; apresentações controladas recebem estado e o callback children fornece media/isDesktop. CATREF-21–31/40/47–51/71/73 têm evidência de integração no registro T11 de [tasks.md](tasks.md), incluindo 22 cenários novos, troca 920/921 aberta/fechada, zoom interno preservado, seleção após fechar, isolamento/restauração exata e reset por key de slug. DesktopProductMedia encaminha disabled ao HoverZoom existente para remover lente/frame ao abrir o modal. Gate Full: **416 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 351 client), +22 sobre T10. A integração real da página permanece T13, remoção do adaptador T14 e revisão visual T16; nenhum navegador foi aberto nesta tarefa.

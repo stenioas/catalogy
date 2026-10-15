@@ -122,6 +122,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
 
     expect(importers.toSorted()).toEqual([
       'components/catalog/carousel.test.tsx',
+      'components/catalog/product-media.tsx',
       'routes/watch-page.tsx',
     ])
   })

@@ -7,6 +7,7 @@ type DesktopProductMediaProps = {
   images: string[]
   alt: string
   index: number
+  disabled?: boolean
   onIndexChange: (index: number) => void
   onOpenGallery: (index: number, trigger: HTMLElement) => void
   primaryRef: (element: HTMLElement | null) => void
@@ -23,6 +24,7 @@ export function DesktopProductMedia({
   onIndexChange,
   onOpenGallery,
   primaryRef,
+  disabled = false,
 }: DesktopProductMediaProps) {
   const pointerStart = useRef<Point | null>(null)
   const dragged = useRef(false)
@@ -107,7 +109,7 @@ export function DesktopProductMedia({
         onPointerCancel={endPointer}
         onClick={openFromMain}
       >
-        <HoverZoom src={images[index]} alt={alt} />
+        <HoverZoom src={images[index]} alt={alt} disabled={disabled} />
       </Button>
     </div>
   )
