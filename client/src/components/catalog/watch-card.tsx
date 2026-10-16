@@ -25,7 +25,7 @@ export function WatchCard({ product }: WatchCardProps) {
         <Link
           to={watchPath}
           data-testid="watch-card-link"
-          className="flex w-full items-start gap-3 text-left md:block"
+          className="flex w-full items-start gap-2 text-left md:block md:gap-0"
         >
           <div
             data-testid="watch-card-image"
@@ -43,17 +43,17 @@ export function WatchCard({ product }: WatchCardProps) {
           </div>
           <div
             data-testid="watch-card-body"
-            className="flex min-w-0 flex-1 flex-col items-start gap-2 text-left md:mt-3 md:w-full md:flex-none md:px-[24px]"
+            className="flex min-w-0 flex-1 flex-col items-start gap-1 text-left md:mt-3 md:w-full md:flex-none md:gap-2 md:px-[24px]"
           >
-            <ProductStateBadge state={product.state} className="md:hidden" />
-            <h2 className="m-0 line-clamp-2 w-full min-w-0 font-display text-xl font-semibold text-foreground md:line-clamp-none">
+            <ProductStateBadge state={product.state} compact className="md:hidden" />
+            <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-xl md:leading-normal md:font-semibold md:line-clamp-none">
               {product.title}
             </h2>
-            <div className="flex w-full flex-col items-start gap-2">
+            <div className="flex w-full flex-col items-start gap-1 md:gap-2">
               <PriceBlock
                 price={product.price}
                 listPrice={product.listPrice}
-                wrapListPriceOnMobile
+                showcase
               />
               <ProductAvailabilityBadge
                 availabilityStatus={product.availabilityStatus}

@@ -35,7 +35,7 @@ function darkBlock(css: string): string {
 }
 
 function renderPriceBlock(
-  props: { price: number; listPrice?: number; wrapListPriceOnMobile?: boolean },
+  props: { price: number; listPrice?: number; wrapListPriceOnMobile?: boolean; showcase?: boolean },
   theme: 'light' | 'dark' = 'light',
 ) {
   applyThemeClass(theme)
@@ -140,6 +140,30 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(row?.className).toMatch(/\bwhitespace-normal\b/)
     expect(row?.className).toMatch(/\bmd:flex-nowrap\b/)
     expect(row?.className).toMatch(/\bmd:whitespace-nowrap\b/)
+  })
+
+  it('places a small upright discount beside the current price on the mobile showcase and restores it beside the reference price from md', () => {
+    renderPriceBlock({ price: 369.9, listPrice: 450, showcase: true })
+    const list = screen.getByTestId('price-list')
+    const badge = screen.getByTestId('price-badge')
+    const current = screen.getByTestId('price-current')
+    const installments = screen.getByTestId('price-installments')
+
+    expect(list.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-span-3', 'text-xs', 'md:text-base', 'md:row-start-1']))
+    expect(current.className.split(/\s+/)).toEqual(expect.arrayContaining(['text-base', 'md:text-xl', 'row-start-2']))
+    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-start-2', 'row-start-2', 'text-[11px]', 'md:row-start-1', 'md:-rotate-[8deg]']))
+    expect(badge.className.split(/\s+/)).not.toContain('-rotate-[8deg]')
+    expect(badge.textContent).toBe('−17%')
+    expect(installments.className).toMatch(/\btext-xs\b/)
+    expect(installments.textContent).toBe('ou em até 12x com juros')
+    expect(screen.getByTestId('price-pix').className.split(/\s+/)).toContain('col-start-3')
+  })
+
+  it('keeps the showcase current price on the first row when there is no reference price', () => {
+    renderPriceBlock({ price: 369.9, showcase: true })
+    expect(screen.queryByTestId('price-badge')).toBeNull()
+    expect(screen.getByTestId('price-current').className.split(/\s+/)).toContain('row-start-1')
+    expect(screen.getByTestId('price-pix').className.split(/\s+/)).toContain('col-start-2')
   })
 
   it('keeps the default reference row unchanged outside the compact card', () => {

@@ -256,7 +256,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
 
     expect(link.className).toMatch(/\bflex\b/)
     expect(link.className).toMatch(/\bitems-start\b/)
-    expect(link.className).toMatch(/\bgap-3\b/)
+    expect(link.className).toMatch(/\bgap-2\b/)
     expect(link.className).toMatch(/\bmd:block\b/)
     expect(image.className).toMatch(/\bsize-32\b/)
     expect(body.className).toMatch(/\bmin-w-0\b/)
@@ -271,6 +271,10 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(heading.textContent).toBe(title)
     expect(heading.className).toMatch(/\bline-clamp-2\b/)
     expect(heading.className).toMatch(/\bmd:line-clamp-none\b/)
+    expect(heading.className).toMatch(/text-\[13px\]/)
+    expect(heading.className).toMatch(/\bfont-medium\b/)
+    expect(heading.className).toMatch(/\bmd:text-xl\b/)
+    expect(heading.className).toMatch(/\bmd:font-semibold\b/)
   })
 
   it('keeps description and specifications out of the catalog row', () => {
@@ -341,8 +345,18 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(within(body).getByText('no pix')).toBeDefined()
     expect(within(body).getByText('ou em até 12x com juros')).toBeDefined()
     expect(within(body).getByText('Em estoque')).toBeDefined()
-    expect(screen.getByTestId('price-list')?.parentElement?.className).toMatch(/\bflex-wrap\b/)
-    expect(screen.getByTestId('price-list')?.parentElement?.className).toMatch(/\bmd:flex-nowrap\b/)
+    const list = screen.getByTestId('price-list')
+    const badge = screen.getByTestId('price-badge')
+    const current = screen.getByTestId('price-current')
+    expect(list.className).toMatch(/\btext-xs\b/)
+    expect(list.className).toMatch(/\bmd:text-base\b/)
+    expect(current.className).toMatch(/\btext-base\b/)
+    expect(current.className).toMatch(/\bmd:text-xl\b/)
+    expect(badge.className.split(/\s+/)).toContain('row-start-2')
+    expect(badge.className.split(/\s+/)).toContain('md:row-start-1')
+    expect(badge.className.split(/\s+/)).toContain('md:-rotate-[8deg]')
+    expect(badge.className.split(/\s+/)).not.toContain('-rotate-[8deg]')
+    expect(screen.getByTestId('price-installments').className).toMatch(/\btext-xs\b/)
   })
 
   it('renders the same 128px image frame with short and long product titles', () => {

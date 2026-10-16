@@ -2,11 +2,23 @@ import type { Product } from '@catalogo/shared'
 
 import { Badge } from '@/components/ui/badge'
 
-export function ProductStateBadge({ state, className = '' }: { state: Product['state']; className?: string }) {
+export function ProductStateBadge({
+  state,
+  compact = false,
+  className = '',
+}: {
+  state: Product['state']
+  compact?: boolean
+  className?: string
+}) {
+  const sizeClassName = compact
+    ? 'px-1.5 py-0 text-[11px] leading-none md:px-2.5 md:py-0.5 md:text-sm'
+    : 'px-2.5 py-0.5 text-sm'
+
   return (
     <Badge
       data-testid="state-badge"
-      className={`h-auto rounded-full px-2.5 py-0.5 text-sm font-semibold ${
+      className={`h-auto rounded-full font-semibold ${sizeClassName} ${
         state === 'Novo'
           ? 'bg-product-state-new text-product-state-new-foreground'
           : 'bg-product-state-neutral text-product-state-neutral-foreground'

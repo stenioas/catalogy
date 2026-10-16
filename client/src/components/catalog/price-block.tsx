@@ -6,6 +6,7 @@ export type PriceBlockProps = {
   price: number
   listPrice?: number
   wrapListPriceOnMobile?: boolean
+  showcase?: boolean
 }
 
 const currentPriceClassName = 'text-xl font-semibold'
@@ -14,11 +15,58 @@ export function PriceBlock({
   price,
   listPrice,
   wrapListPriceOnMobile = false,
+  showcase = false,
 }: PriceBlockProps) {
   const currentLabel = formatBrl(price)
 
   const percent = listPrice === undefined ? 0 : discountPercent(price, listPrice)
   const showBadge = percent >= 1
+  const priceRow = listPrice === undefined ? 'row-start-1' : 'row-start-2'
+  const installmentRow = listPrice === undefined ? 'row-start-2' : 'row-start-3'
+
+  if (showcase) {
+    return (
+      <div
+        data-testid="price-block"
+        className="grid w-full grid-cols-[auto_auto_auto] items-center justify-start gap-x-1.5 gap-y-0.5"
+      >
+        {listPrice !== undefined ? (
+          <span
+            data-testid="price-list"
+            className="col-span-3 text-xs text-ink-muted-48 line-through md:col-span-1 md:row-start-1 md:text-base"
+          >
+            De {formatBrl(listPrice)}
+          </span>
+        ) : null}
+        {showBadge ? (
+          <Badge
+            data-testid="price-badge"
+            className="col-start-2 row-start-2 h-auto rounded-full bg-primary-tint-background px-1.5 py-0 text-[11px] font-medium text-primary-tint-foreground md:col-start-2 md:row-start-1 md:-rotate-[8deg] md:px-2 md:py-0.5 md:text-sm"
+          >
+            −{percent}%
+          </Badge>
+        ) : null}
+        <span
+          data-testid="price-current"
+          className={`col-start-1 text-base font-semibold md:text-xl ${priceRow}`}
+        >
+          {currentLabel}
+        </span>
+        <span
+          data-testid="price-pix"
+          className={`${showBadge ? 'col-start-3 md:col-start-2' : 'col-start-2'} text-xs text-muted-foreground md:text-sm ${priceRow}`}
+        >
+          no pix
+        </span>
+        <span
+          data-testid="price-installments"
+          className={`col-span-3 text-xs text-muted-foreground md:text-sm ${installmentRow}`}
+        >
+          ou em até 12x com juros
+        </span>
+      </div>
+    )
+  }
 
   return (
     <div data-testid="price-block" className="flex flex-col items-start gap-0.5">

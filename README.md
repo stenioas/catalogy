@@ -56,4 +56,4 @@ Disponibilidade: `available` mostra **Em estoque** em verde; `on_order`, **Sob e
 
 Ao salvar um `product.json` com o servidor de desenvolvimento aberto, a lista do catálogo é atualizada. O build recusa um JSON que fure esse contrato ou uma foto citada que não esteja em `img/`.
 
-O preço na vitrine, na página do produto e na barra fixa é seguido de “no pix”. A badge de desconto fica ao lado do preço anterior, inclinada à esquerda. O bloco inclui a mensagem padrão “ou em até 12x com juros”, definida no componente compartilhado de preço.
+O preço na vitrine, na página do produto e na barra fixa é seguido de “no pix”. Na página do produto e na barra fixa, a badge de desconto fica ao lado do preço anterior, inclinada à esquerda. Na vitrine mobile, o título usa 13px, o preço anterior 12px, o preço atual 16px e a badge de desconto fica pequena, reta, ao lado do preço atual; a partir de 768px a vitrine volta ao tamanho e à posição anteriores. O bloco inclui a mensagem padrão “ou em até 12x com juros”, definida no componente compartilhado de preço.
