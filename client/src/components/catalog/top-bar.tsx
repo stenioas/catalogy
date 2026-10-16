@@ -51,7 +51,7 @@ export function TopBar({ catalogHref }: TopBarProps) {
       <header
         data-testid="top-bar"
         inert={hidden}
-        className={`fixed inset-x-0 top-0 z-20 h-16 w-full bg-[var(--surface-black)] text-[var(--on-primary)] motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
+        className={`fixed inset-x-0 top-0 z-20 h-16 w-full border-b border-[rgba(0,0,0,0.08)] bg-[color-mix(in_srgb,var(--canvas-parchment)_80%,transparent)] text-[var(--ink)] [-webkit-backdrop-filter:saturate(180%)_blur(20px)] [backdrop-filter:saturate(180%)_blur(20px)] motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
       >
         <div
           data-testid="top-bar-inner"
@@ -62,7 +62,7 @@ export function TopBar({ catalogHref }: TopBarProps) {
               <Button
                 asChild
                 variant="ghost"
-                className="size-11 shrink-0 rounded-full text-inherit hover:bg-[#3a3a3c] hover:text-inherit"
+                className="size-11 shrink-0 rounded-full text-inherit hover:bg-[color-mix(in_srgb,var(--ink)_8%,transparent)] hover:text-inherit"
               >
                 <Link to={catalogHref} aria-label="Voltar">
                   <ChevronLeft aria-hidden="true" />
