@@ -18,7 +18,7 @@ export function UnmissableOfferBadge({ className = '' }: { className?: string })
         'bg-primary text-primary-foreground',
         className,
       )}
-    >
+      >
       <Gift aria-hidden="true" className="size-3" />
       OFERTA IMPERDÍVEL
     </Badge>
@@ -34,15 +34,15 @@ export function ProductStateBadge({
   compact?: boolean
   className?: string
 }) {
+  if (state === 'Novo') return null
+
   return (
     <Badge
       data-testid="state-badge"
       className={cn(
         'h-auto rounded-full font-semibold',
         compact ? compactBadgeClassName : 'px-2.5 py-0.5 text-sm',
-        state === 'Novo'
-          ? 'bg-product-state-new text-product-state-new-foreground'
-          : 'bg-product-state-neutral text-product-state-neutral-foreground',
+        'bg-product-state-neutral text-product-state-neutral-foreground',
         className,
       )}
     >
@@ -86,7 +86,8 @@ export function ProductAvailabilityBadge({
       data-testid="availability-badge"
       variant="outline"
       className={cn(
-        'h-auto rounded-full font-medium',
+        'h-auto font-medium',
+        badgeRadiusClassName,
         compact ? compactBadgeClassName : 'px-2.5 py-0.5 text-sm',
         presentation.className,
         className,
@@ -94,5 +95,20 @@ export function ProductAvailabilityBadge({
     >
       {presentation.label}
     </Badge>
+  )
+}
+
+export function ProductConditionLine({
+  state,
+  availabilityStatus,
+}: {
+  state: Product['state']
+  availabilityStatus: Product['availabilityStatus']
+}) {
+  return (
+    <p data-testid="product-condition" className="m-0 flex flex-wrap items-center gap-1.5 text-xs leading-none text-muted-foreground">
+      <span data-testid="state-label">{state}</span>
+      <ProductAvailabilityBadge availabilityStatus={availabilityStatus} compact />
+    </p>
   )
 }

@@ -31,9 +31,9 @@
   --availability-available: #f0fdf4;
   --availability-available-foreground: #166534;
   --availability-available-border: #bbf7d0;
-  --availability-on-order: #fffbeb;
-  --availability-on-order-foreground: #92400e;
-  --availability-on-order-border: #fde68a;
+  --availability-on-order: #fff7ed;
+  --availability-on-order-foreground: #c2410c;
+  --availability-on-order-border: #fdba74;
   --availability-unavailable: #f9fafb;
   --availability-unavailable-foreground: #4b5563;
   --availability-unavailable-border: #e5e7eb;
@@ -101,9 +101,9 @@
   --availability-available: #1c3025;
   --availability-available-foreground: #a7d8b6;
   --availability-available-border: #385541;
-  --availability-on-order: #332b1e;
-  --availability-on-order-foreground: #e6c58b;
-  --availability-on-order-border: #5c4b30;
+  --availability-on-order: #3d2a1a;
+  --availability-on-order-foreground: #fdba74;
+  --availability-on-order-border: #7a4e28;
   --availability-unavailable: #303036;
   --availability-unavailable-foreground: #c4c4cc;
   --availability-unavailable-border: #4a4a52;

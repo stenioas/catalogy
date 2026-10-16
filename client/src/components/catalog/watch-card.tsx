@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Card } from '@/components/ui/card'
 
 import { PriceBlock } from './price-block'
-import { ProductAvailabilityBadge, ProductStateBadge, UnmissableOfferBadge } from './product-badges'
+import { ProductConditionLine, UnmissableOfferBadge } from './product-badges'
 import { WantIconLink } from './want-link'
 
 export type WatchCardProps = {
@@ -32,10 +32,6 @@ export function WatchCard({ product }: WatchCardProps) {
               alt={product.title}
               className="h-full w-full object-contain"
             />
-            <ProductStateBadge
-              state={product.state}
-              className="absolute right-3 bottom-3 hidden md:block"
-            />
             {product.unmissableOffer ? (
               <UnmissableOfferBadge className="absolute bottom-3 left-3 hidden md:inline-flex" />
             ) : null}
@@ -54,6 +50,7 @@ export function WatchCard({ product }: WatchCardProps) {
               {product.unmissableOffer ? (
                 <UnmissableOfferBadge className="md:hidden" />
               ) : null}
+              <ProductConditionLine state={product.state} availabilityStatus={product.availabilityStatus} />
               <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-xl md:leading-normal md:font-semibold md:line-clamp-none">
                 {product.title}
               </h2>
@@ -63,13 +60,6 @@ export function WatchCard({ product }: WatchCardProps) {
                   listPrice={product.listPrice}
                   showcase
                 />
-                <div className="flex flex-wrap items-center gap-1">
-                  <ProductStateBadge state={product.state} compact className="md:hidden" />
-                  <ProductAvailabilityBadge
-                    availabilityStatus={product.availabilityStatus}
-                    compact
-                  />
-                </div>
               </div>
             </Link>
             <div data-testid="watch-card-mobile-action" className="shrink-0">

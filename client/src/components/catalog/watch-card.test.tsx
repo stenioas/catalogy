@@ -75,29 +75,24 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
-  it.each(['Novo', 'Usado', 'Openbox'] as const)('keeps %s in the mobile info column and desktop photo', (state) => {
-    renderWatchCard({ ...sampleProduct, state })
-    const badges = screen.getAllByTestId('state-badge')
-    const price = screen.getByTestId('price-block')
-    const photoBadge = badges.find((badge) => badge.className.includes('md:block'))
-    const infoBadge = badges.find((badge) => badge.className.includes('md:hidden'))
-    const frame = screen.getByTestId('watch-card-image')
-    const body = screen.getByTestId('watch-card-body')
-    expect(badges).toHaveLength(2)
-    expect(photoBadge?.textContent).toBe(state)
-    expect(photoBadge?.parentElement).toBe(frame)
-    expect(photoBadge?.className.split(/\s+/)).toEqual(expect.arrayContaining(['absolute', 'right-3', 'bottom-3']))
-    expect(infoBadge?.textContent).toBe(state)
-    expect(body.contains(infoBadge as Node)).toBe(true)
-    expect(frame.contains(infoBadge as Node)).toBe(false)
-    expect(price.contains(infoBadge as Node)).toBe(false)
-    expect(photoBadge?.className).not.toMatch(/rotate/)
-    expect(infoBadge?.className).not.toMatch(/rotate/)
-    const palette = state === 'Novo' ? 'new' : 'neutral'
-    for (const badge of badges) {
-      expect(badge.className.split(/\s+/)).toContain(`bg-product-state-${palette}`)
-      expect(badge.className.split(/\s+/)).toContain(`text-product-state-${palette}-foreground`)
-    }
+  it.each(['Novo', 'Usado', 'Openbox'] as const)('shows %s and availability as one line above the title', (state) => {
+    renderWatchCard({ ...sampleProduct, state, availabilityStatus: 'available' })
+    const line = screen.getByTestId('product-condition')
+    const heading = screen.getByRole('heading', { name: 'Seculus' })
+    const stateLabel = within(line).getByTestId('state-label')
+    const availability = within(line).getByTestId('availability-badge')
+
+    expect(screen.queryByTestId('state-badge')).toBeNull()
+    expect(stateLabel.textContent).toBe(state)
+    expect(stateLabel.className).not.toMatch(/rounded/)
+    expect(line.textContent).toBe(`${state}Em estoque`)
+    expect(line.className).toMatch(/\bgap-1\.5\b/)
+    expect(stateLabel.nextElementSibling).toBe(availability)
+    expect(availability.className).toMatch(/rounded-\[4px\]/)
+    expect(availability.className).not.toMatch(/\brounded-full\b/)
+    expect(line.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(line.compareDocumentPosition(screen.getByTestId('price-block')) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(screen.getByTestId('watch-card-image').contains(line)).toBe(false)
   })
 
   it.each([
@@ -105,24 +100,24 @@ describe('WatchCard (SV-13, SV-14)', () => {
     ['on_order', 'Sob encomenda', 'on-order'],
     ['unavailable', 'Indisponível', 'unavailable'],
     ['sold_out', 'Esgotado', 'sold-out'],
-  ] as const)('keeps availability %s below the price block', (availabilityStatus, label, palette) => {
-    renderWatchCard({ ...sampleProduct, availabilityStatus })
-    const price = screen.getByTestId('price-block')
-    const badge = screen.getByTestId('availability-badge')
+  ] as const)('shows availability %s in the condition line above the title', (availabilityStatus, label, palette) => {
+    renderWatchCard({ ...sampleProduct, state: 'Openbox', availabilityStatus })
+    const line = screen.getByTestId('product-condition')
+    const badge = within(line).getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
-    const stateBadge = screen.getAllByTestId('state-badge').find((node) => node.className.includes('md:hidden'))
-    const sharedSize = ['h-5', 'px-1.5', 'text-xs', 'font-medium', 'leading-none']
     expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining([
       `bg-availability-${palette}`,
       `text-availability-${palette}-foreground`,
       `border-availability-${palette}-border`,
-      ...sharedSize,
+      'rounded-[4px]',
+      'h-5',
+      'px-1.5',
+      'text-xs',
+      'font-medium',
+      'leading-none',
     ]))
-    expect(stateBadge?.className.split(/\s+/)).toEqual(expect.arrayContaining(sharedSize))
-    const meta = price.nextElementSibling
-    expect(meta?.contains(badge)).toBe(true)
-    expect(badge.parentElement).toBe(meta)
-    expect(screen.getByTestId('watch-card-body').contains(badge)).toBe(true)
+    expect(badge.className).not.toMatch(/\brounded-full\b/)
+    expect(screen.getByTestId('price-block').contains(badge)).toBe(false)
   })
 
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {

@@ -44,16 +44,16 @@ O `slug` da pasta e o `slug` do JSON são o mesmo, em minúsculas, com hífens. 
 | `color` | não | Texto livre opcional; fonte exclusiva da cor no resumo |
 | `specifications` | não | Lista de `{ "label", "value" }` |
 | `observations` | não | Nota no fim da página |
-| `state` | sim | `"Novo"`, `"Usado"` ou `"Openbox"`; badge sempre visível e alinhada à direita na vitrine |
+| `state` | sim | `"Novo"`, `"Usado"` ou `"Openbox"`; a badge aparece só para Usado e Openbox |
 | `availabilityStatus` | sim | `"available"`, `"on_order"`, `"unavailable"` ou `"sold_out"`; define o texto e a cor da disponibilidade |
 | `enabled` | não | Ausente ou `true` mostra o produto; `false` esconde da vitrine e do link direto |
 | `unmissableOffer` | não | `true` mostra a badge **OFERTA IMPERDÍVEL** no card da vitrine; ausente ou `false` não mostra |
 
-**Novo**: produto novo, lacrado e nunca usado. **Openbox**: caixa aberta, sem uso ou com uso muito breve. **Usado**: produto que foi usado. A badge é laranja para Novo e cinza claro para Openbox e Usado.
+**Novo**: produto novo, lacrado e nunca usado. **Openbox**: caixa aberta, sem uso ou com uso muito breve. **Usado**: produto que foi usado. No card, o estado aparece em texto, acima do título, separado da disponibilidade por um espaço: `Novo` e depois **Em estoque**.
 
 `color` informa a cor da unidade ofertada e alimenta exclusivamente a cor no resumo do produto. O catálogo não infere esse valor das fotos, da descrição ou de `specifications`; para evitar repetição, não cadastre o mesmo valor de cor também em `specifications`.
 
-Disponibilidade: `available` mostra **Em estoque** em verde; `on_order`, **Sob encomenda** em âmbar; `unavailable`, **Indisponível** em cinza; `sold_out`, **Esgotado** em vermelho. As badges usam fundos suaves, com cores ajustadas para os temas claro e escuro. No card, ficam abaixo do parcelamento, com fonte de 12px. O campo `availability` foi substituído por `availabilityStatus`; o texto é gerado pela interface.
+Disponibilidade: `available` mostra **Em estoque** em verde claro; `on_order`, **Sob encomenda** em laranja claro; `unavailable`, **Indisponível** em cinza; `sold_out`, **Esgotado** em vermelho. As badges usam cantos menores que uma pílula e fundos suaves, com cores ajustadas para os temas claro e escuro. No card, a disponibilidade fica na mesma linha do estado, acima do título. O campo `availability` foi substituído por `availabilityStatus`; o texto é gerado pela interface.
 
 `unmissableOffer` liga a badge **OFERTA IMPERDÍVEL** acima do título no card mobile e no canto inferior esquerdo da foto a partir de 768px. O texto da badge é fixo; o JSON só decide se ela aparece. Nenhum produto precisa receber a prop para continuar válido.
 

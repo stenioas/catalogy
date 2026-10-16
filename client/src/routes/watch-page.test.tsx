@@ -114,7 +114,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     installObserver(1)
   })
 
-  it.each(['Novo', 'Openbox', 'Usado'] as const)('shows state %s near the product title', (state) => {
+  it('hides the state badge when the product is Novo', () => {
+    mockProductsRef.current = [makeProduct({ state: 'Novo' })]
+    renderWatchPage()
+    expect(screen.queryByTestId('state-badge')).toBeNull()
+  })
+
+  it.each(['Openbox', 'Usado'] as const)('shows state %s near the product title', (state) => {
     mockProductsRef.current = [makeProduct({ state })]
     renderWatchPage()
     const heading = screen.getByRole('heading', { level: 1, name: 'Seculus' })
