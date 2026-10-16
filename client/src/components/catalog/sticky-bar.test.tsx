@@ -1,10 +1,16 @@
-import { useRef, type RefObject } from 'react'
+import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { dirname, join, relative } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+import { useLayoutEffect, useRef, useState } from 'react'
 
 import { act, cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { waUrl } from './want-link'
 import { StickyBar } from './sticky-bar'
+
+const clientSrc = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
 const slug = 'seculus'
 const title = 'Seculus'
@@ -48,30 +54,32 @@ function installObserver(intersectionRatio: number, isIntersecting: boolean) {
   }
 }
 
-function Harness({
-  targetRef,
-}: {
-  targetRef: RefObject<HTMLButtonElement | null>
-}) {
-  return (
-    <StickyBar
-      price={369.9}
-      slug={slug}
-      title={title}
-      targetRef={targetRef}
-    />
-  )
+function sourceFiles(dir: string): string[] {
+  const found: string[] = []
+  for (const entry of readdirSync(dir)) {
+    const path = join(dir, entry)
+    if (statSync(path).isDirectory()) {
+      found.push(...sourceFiles(path))
+    } else if (path.endsWith('.ts') || path.endsWith('.tsx')) {
+      found.push(path)
+    }
+  }
+  return found
 }
 
 function renderBar() {
   function Fixture() {
-    const targetRef = useRef<HTMLButtonElement>(null)
+    const buttonRef = useRef<HTMLButtonElement>(null)
+    const [target, setTarget] = useState<Element | null>(null)
+    useLayoutEffect(() => {
+      if (buttonRef.current) setTarget(buttonRef.current)
+    }, [])
     return (
       <>
-        <button ref={targetRef} type="button">
+        <button ref={buttonRef} type="button">
           alvo
         </button>
-        <Harness targetRef={targetRef} />
+        <StickyBar price={369.9} slug={slug} title={title} target={target} />
       </>
     )
   }
@@ -176,6 +184,23 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
   afterEach(() => {
     cleanup()
     vi.unstubAllGlobals()
+  })
+
+  it('accepts only the element target API with no targetRef compatibility path (CATREF-68, CATREF-69, CATREF-70)', () => {
+    const productionFiles = sourceFiles(clientSrc).filter((path) => !path.endsWith('.test.tsx'))
+    const targetRefConsumers = productionFiles.flatMap((path) => {
+      const text = readFileSync(path, 'utf8')
+      if (!/\btargetRef\b/.test(text)) return []
+      return [relative(clientSrc, path)]
+    })
+    const stickySource = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), 'sticky-bar.tsx'),
+      'utf8',
+    )
+
+    expect(targetRefConsumers).toEqual([])
+    expect(stickySource).not.toMatch(/\btargetRef\b/)
+    expect(stickySource).toMatch(/target\?: Element \| null/)
   })
 
   it('shows the price and the same WhatsApp href as the page button on first paint without full intersection (SV-20, CAT-89)', () => {

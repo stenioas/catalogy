@@ -1,7 +1,7 @@
 # Catalog Layout Refactor Specification
 
 Data: 2026-10-15
-Status: execução em andamento; T1–T14 concluídas, T15–T16 pendentes.
+Status: execução em andamento; T1–T15 concluídas, T16 pendente.
 Fonte: [desenho aprovado](../../../CATALOG-REFACTORING-DESIGN.md).
 Porte: Large, com especificação completa, design técnico e tarefas formais. Todas as histórias abaixo são P1 e pertencem à entrega aprovada.
 
@@ -300,14 +300,14 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-65 | US7: Identidade, acessibilidade e regras comerciais / AC4 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
 | CATREF-66 | US7: Identidade, acessibilidade e regras comerciais / AC5 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
 | CATREF-67 | US7: Identidade, acessibilidade e regras comerciais / AC6 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T4, T6, T13, T16 |
-| CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T12, T13, T15, T16 |
-| CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T12, T13, T15, T16 |
-| CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T12, T13, T15, T16 |
+| CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Execute | Implemented — T12/T13/T15: interseção total via `target`; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão final T16 pendente | T12, T13, T15, T16 |
+| CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Execute | Implemented — T12/T13/T15: ocultação com ratio 1 via `target`; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão final T16 pendente | T12, T13, T15, T16 |
+| CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Execute | Implemented — T12/T13/T15: espaçador e safe-area com `target` direto; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão final T16 pendente | T12, T13, T15, T16 |
 | CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Implemented — T13/T14 integrados; adaptador Carousel removido; adequação em tasks.md; revisão final T16 pendente | T4, T6, T9, T10, T11, T13, T14, T16 |
 | CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T5, T6, T8, T9, T13, T16 |
 | CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Implemented — T10/T11/T14: duração 0ms revalidada via ProductMedia; adaptador removido; revisão T16 pendente | T10, T11, T14, T16 |
 
-**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T14 concluídas e T15–T16 pendentes.
+**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T15 concluídas e T16 pendente.
 
 ### T5 execution evidence
 
@@ -370,3 +370,7 @@ Proprietário único de seleção, Gallery, breakpoint e foco implementado; apre
 ### T13 — WatchPage integrada
 
 CATREF-13–20/54–59/61–63/65–72 integrados pela composição da WatchPage. ProductMedia permanece acima dos ramos com key por slug; callback estável do WantLink registra o alvo atual da StickyBar. Há um conjunto real de conteúdo por faixa. Cores e especificações são independentes; trim só determina presença. Gate Full: **449 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild +384 client), +15 T12. Adequação detalhada e migração de 31 regressões em tasks.md. Evidência geométrica, capturas na conversa e limitação do tema claro em [T13 page review](t13-page-review.md). T14/T15 mantêm remoções dos adaptadores; T16 mantém revisão final.
+
+### T15 — StickyBar API final
+
+CATREF-68–70 fechados com API `target: Element | null` exclusiva; prop e ramo `targetRef` removidos de `sticky-bar.tsx`. Harness migrado para `target` com oracle de ausência de `targetRef` em produção (`sticky-bar.test.tsx`). WatchPage permanece com `target={wantTarget}`. Gate Full: **450 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 385 client). Adequação em tasks.md; revisão visual T16 pendente.

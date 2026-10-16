@@ -1054,16 +1054,48 @@ Caminhos abreviados: CT=`client/src/components/catalog/carousel.test.tsx`.
 
 **Done when**:
 
-- [ ] Entrega verificada: Concluir a API aprovada de StickyBar com target: Element ou null, removendo o caminho targetRef após a migração de WatchPage.
-- [ ] Migrar harnesses existentes para target na mesma tarefa e preservar contagem/cobertura de visibilidade, substituição do botão, preço, href, espaçador e safe-area. Confirmar ausência de consumidores de targetRef.
-- [ ] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Concluir a API aprovada de StickyBar com target: Element ou null, removendo o caminho targetRef após a migração de WatchPage.
+- [x] Migrar harnesses existentes para target na mesma tarefa e preservar contagem/cobertura de visibilidade, substituição do botão, preço, href, espaçador e safe-area. Confirmar ausência de consumidores de targetRef.
+- [x] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration
 
 **Gate**: Full
 
 **Commit**: `refactor(catalog): finish sticky bar element target API`
+
+#### T15 execution record
+
+- **Assumptions**: WatchPage (T13) já passa `target={wantTarget}`; T15 remove só a compatibilidade `targetRef` em StickyBar e migra o harness de integração para `target` sem alterar asserções de visibilidade, preço, href, layout, espaçador ou safe-area.
+- **Files touched**: `sticky-bar.tsx` (removidos prop e ramo `targetRef`); `sticky-bar.test.tsx` (`renderBar` com `target` via `useLayoutEffect`; oracle de ausência de `targetRef` em produção). Nenhum consumidor de produção alterado além da barra.
+- **Tests**: 1 cenário de contrato (oracle) substituindo o caminho legado no harness; 22 cenários de comportamento reexecutados com `target` direto ou fixture migrada. Nenhum teste excluído, enfraquecido ou ignorado.
+- **Gate Full**: `pnpm test`, exit 0, **450 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 385 client), +1 oracle sobre T14.
+
+**Test Adequacy Review — Check A**
+
+Caminhos abreviados: ST=`client/src/components/catalog/sticky-bar.test.tsx`.
+
+| Critério / AC / borda | file:line + expressão | Resultado definido | Coberto? |
+| --- | --- | --- | --- |
+| Done when: API final só `target: Element \| null` | ST:189 `expect(stickySource).not.toMatch(/\btargetRef\b/)`; ST:190 `expect(stickySource).toMatch(/target\?: Element \| null/)` | Nenhum caminho `targetRef` no componente | Sim |
+| Done when: sem consumidores `targetRef` | ST:184 `expect(targetRefConsumers).toEqual([])` | Nenhum arquivo de produção referencia `targetRef` | Sim |
+| CATREF-68: barra visível sem interseção total | ST:206-220, ST:255-299 `it.each` ratio ≠ 1 → barra presente | Barra fixa enquanto alvo não está totalmente visível | Sim |
+| CATREF-69: barra oculta com interseção total | ST:232-240, ST:255-299 ratio 1 → `queryByTestId('sticky-bar')` null | Barra oculta quando WhatsApp principal totalmente visível | Sim |
+| CATREF-70: espaçador e safe-area | ST:322-339 altura medida 92px; ST:269-278 `env(safe-area-inset-bottom)` | Reserva de altura e padding de área segura preservados | Sim |
+| Migração harness preço/href/layout | ST:206-268 asserções de preço, href, flex-col/md:flex-row, blur | Cobertura T12 preservada via `target` | Sim |
+
+**Check C — reverse mapping**
+
+| file:line + expressão | AC ou done-when | Keep? |
+| --- | --- | --- |
+| ST:184-190 oracle `targetRef` | Done when: confirmar ausência de consumidores | Sim |
+| ST:206-339 cenários migrados | CATREF-68–70; visibilidade, layout, safe-area, troca de alvo | Sim, 22 regressões + 1 oracle |
+
+- **Check B/D**: asserções sobre preço, href, interseção, spacer e estilo; matriz Vitest existente seguida.
+- **Verdict**: adequado no escopo T15. Sem SPEC_DEVIATION.
+
+**Status**: done
 
 ### Phase 4: Revisão visual e regressão
 

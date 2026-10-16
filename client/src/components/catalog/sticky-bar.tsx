@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, type RefObject } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 import { PriceBlock } from './price-block'
 import { WantLink } from './want-link'
@@ -12,7 +12,6 @@ export type StickyBarProps = {
   slug: string
   title: string
   target?: Element | null
-  targetRef?: RefObject<Element | null>
 }
 
 export function StickyBar({
@@ -21,7 +20,6 @@ export function StickyBar({
   slug,
   title,
   target: targetElement,
-  targetRef,
 }: StickyBarProps) {
   const [fullyVisible, setFullyVisible] = useState(false)
   const [barHeight, setBarHeight] = useState(0)
@@ -30,7 +28,7 @@ export function StickyBar({
   const observedTargetRef = useRef<Element | null | undefined>(undefined)
 
   useLayoutEffect(() => {
-    const target = targetElement !== undefined ? targetElement : (targetRef?.current ?? null)
+    const target = targetElement ?? null
     const targetChanged = target !== observedTargetRef.current
 
     if (!targetChanged && (!target || observerRef.current)) return
