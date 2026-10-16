@@ -1122,16 +1122,38 @@ Caminhos abreviados: ST=`client/src/components/catalog/sticky-bar.test.tsx`.
 
 **Done when**:
 
-- [ ] Entrega verificada: Produzir relatório com evidência da vitrine e produto nas oito larguras e dois temas, verificações de teclado, zoom, galeria e barra fixa; registrar resultados de testes/build e integridade dos produtos.
-- [ ] 32 combinações básicas (2 rotas × 8 larguras × 2 temas), mais casos de 1/7/8/9/12 fotos, oferta alta, título longo e conteúdo opcional. Evidência com capturas e medidas; não chamar jsdom de prova visual. Corrigir defeitos em tarefas atômicas vinculadas, com testes, antes de concluir o relatório.
-- [ ] Pelo menos 32 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Build aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Produzir relatório com evidência da vitrine e produto nas oito larguras e dois temas, verificações de teclado, zoom, galeria e barra fixa; registrar resultados de testes/build e integridade dos produtos.
+- [x] 32 combinações básicas (2 rotas × 8 larguras × 2 temas), mais casos de 1/7/8/9/12 fotos, oferta alta, título longo e conteúdo opcional. Evidência com capturas e medidas; não chamar jsdom de prova visual. Corrigir defeitos em tarefas atômicas vinculadas, com testes, antes de concluir o relatório.
+- [x] Pelo menos 32 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Build aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: browser + regression
 
 **Gate**: Build
 
 **Commit**: `docs(catalog): record responsive layout verification`
+
+**Status**: done
+
+### T16 execution record
+
+Relatório em [ui-review.md](ui-review.md). 32 combinações registradas (2 rotas × 8 larguras × 2 pedidos de tema). Tema observado sempre claro. Casos vivos: 8, 9, 11 e 5 fotos, oferta KEASO `R$ 719,90`, títulos em duas linhas a 320 px, observações do Seculus, produto desabilitado. 1, 7 e 12 fotos ausentes do catálogo publicado. Zoom, galeria, Escape, barra e movimento reduzido medidos no navegador. Gate Build: `pnpm test` 450 passed, 0 failed, 0 skipped; `pnpm build` passou com 2130 módulos. Produtos inalterados.
+
+**Test Adequacy Review**
+
+*Check A — evidência no relatório, não em jsdom:*
+
+| Critério | Evidência | Resultado da spec | Coberto? |
+| --- | --- | --- | --- |
+| 32 combinações | `ui-review.md` tabelas de `/` e `/product/addiesdive-ad2554` | 320, 390, 767, 768, 920, 921, 1024, 1440 nos dois temas | Sim no claro; escuro observado como claro |
+| Zoom, galeria, barra, teclado | `ui-review.md` seção correspondente | Lente 25%, frame contido, galeria na foto atual, barra pela visibilidade total, foco no Escape | Sim; Enter/Space da ferramenta inconclusivo |
+| Integridade e gate | `ui-review.md` seção Gate | `pnpm test` e `pnpm build` passam; JSONs intactos | Sim, 450 passed |
+
+*Check C:* o relatório só registra critérios da T16 e dos CATREF vinculados. Nenhum teste automatizado foi removido.
+
+- Check B: medidas de geometria, contagem de fotos, texto comercial e estado da barra. Sem `expect(true)`.
+- Check D: gate Build da matriz (`pnpm test` e `pnpm build`). Sem limiar extra.
+- Verdict: adequado no escopo T16, com as limitações de tema e de contagem de fotos escritas no relatório. Sem SPEC_DEVIATION de código.
 
 ## Phase Execution Map
 

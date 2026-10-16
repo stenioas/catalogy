@@ -1,7 +1,7 @@
 # Catalog Layout Refactor Specification
 
 Data: 2026-10-15
-Status: execução em andamento; T1–T15 concluídas, T16 pendente.
+Status: T1–T16 concluídas. Verificação independente ainda não registrada.
 Fonte: [desenho aprovado](../../../CATALOG-REFACTORING-DESIGN.md).
 Porte: Large, com especificação completa, design técnico e tarefas formais. Todas as histórias abaixo são P1 e pertencem à entrega aprovada.
 
@@ -245,69 +245,69 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-10 | US1: Vitrine compacta / AC10 | Execute | Implemented — T6 | T6, T16 |
 | CATREF-11 | US1: Vitrine compacta / AC11 | Execute | Implemented — T4 action integrated by T6 | T4, T6, T16 |
 | CATREF-12 | US1: Vitrine compacta / AC12 | Execute | Implemented — T6; desktop compared at 768/1024/1440 px | T6, T16 |
-| CATREF-13 | US2: Composição responsiva do produto / AC1 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-14 | US2: Composição responsiva do produto / AC2 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-15 | US2: Composição responsiva do produto / AC3 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-16 | US2: Composição responsiva do produto / AC4 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T9, T13, T16 |
-| CATREF-17 | US2: Composição responsiva do produto / AC5 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-18 | US2: Composição responsiva do produto / AC6 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-19 | US2: Composição responsiva do produto / AC7 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-20 | US2: Composição responsiva do produto / AC8 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-21 | US3: Seleção desktop e galeria compartilhada / AC1 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-22 | US3: Seleção desktop e galeria compartilhada / AC2 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-23 | US3: Seleção desktop e galeria compartilhada / AC3 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-24 | US3: Seleção desktop e galeria compartilhada / AC4 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-25 | US3: Seleção desktop e galeria compartilhada / AC5 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-26 | US3: Seleção desktop e galeria compartilhada / AC6 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-27 | US3: Seleção desktop e galeria compartilhada / AC7 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-28 | US3: Seleção desktop e galeria compartilhada / AC8 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-29 | US3: Seleção desktop e galeria compartilhada / AC9 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-30 | US3: Seleção desktop e galeria compartilhada / AC10 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-31 | US3: Seleção desktop e galeria compartilhada / AC11 | Execute | Implemented — T9/T11/T13/T14: proprietário estável e adaptador legado removido; adequação T11/T13/T14 em tasks.md; revisão T16 pendente | T11, T14, T16 |
-| CATREF-32 | US4: Zoom desktop / AC1 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
-| CATREF-33 | US4: Zoom desktop / AC2 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
-| CATREF-34 | US4: Zoom desktop / AC3 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
-| CATREF-35 | US4: Zoom desktop / AC4 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
-| CATREF-36 | US4: Zoom desktop / AC5 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
-| CATREF-37 | US4: Zoom desktop / AC6 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
-| CATREF-38 | US4: Zoom desktop / AC7 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
-| CATREF-39 | US4: Zoom desktop / AC8 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
-| CATREF-40 | US4: Zoom desktop / AC9 | Execute | Implemented — T8/T11: hover restrito ao desktop; integração e cleanup verificados em tasks.md; revisão T16 pendente | T8, T11, T16 |
-| CATREF-41 | US4: Zoom desktop / AC10 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
+| CATREF-13 | US2: Composição responsiva do produto / AC1 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-14 | US2: Composição responsiva do produto / AC2 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-15 | US2: Composição responsiva do produto / AC3 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-16 | US2: Composição responsiva do produto / AC4 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T9, T13, T16 |
+| CATREF-17 | US2: Composição responsiva do produto / AC5 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-18 | US2: Composição responsiva do produto / AC6 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-19 | US2: Composição responsiva do produto / AC7 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-20 | US2: Composição responsiva do produto / AC8 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-21 | US3: Seleção desktop e galeria compartilhada / AC1 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-22 | US3: Seleção desktop e galeria compartilhada / AC2 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-23 | US3: Seleção desktop e galeria compartilhada / AC3 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-24 | US3: Seleção desktop e galeria compartilhada / AC4 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-25 | US3: Seleção desktop e galeria compartilhada / AC5 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-26 | US3: Seleção desktop e galeria compartilhada / AC6 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-27 | US3: Seleção desktop e galeria compartilhada / AC7 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-28 | US3: Seleção desktop e galeria compartilhada / AC8 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-29 | US3: Seleção desktop e galeria compartilhada / AC9 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-30 | US3: Seleção desktop e galeria compartilhada / AC10 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 integrada; revisão visual em ui-review.md | T9, T11, T16 |
+| CATREF-31 | US3: Seleção desktop e galeria compartilhada / AC11 | Execute | Implemented — T9/T11/T13/T14: proprietário estável e adaptador legado removido; adequação T11/T13/T14 em tasks.md; revisão visual em ui-review.md | T11, T14, T16 |
+| CATREF-32 | US4: Zoom desktop / AC1 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T8, T16 |
+| CATREF-33 | US4: Zoom desktop / AC2 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T7, T8, T16 |
+| CATREF-34 | US4: Zoom desktop / AC3 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T7, T8, T16 |
+| CATREF-35 | US4: Zoom desktop / AC4 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T7, T8, T16 |
+| CATREF-36 | US4: Zoom desktop / AC5 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T8, T16 |
+| CATREF-37 | US4: Zoom desktop / AC6 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T7, T8, T16 |
+| CATREF-38 | US4: Zoom desktop / AC7 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T8, T16 |
+| CATREF-39 | US4: Zoom desktop / AC8 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T8, T16 |
+| CATREF-40 | US4: Zoom desktop / AC9 | Execute | Implemented — T8/T11: hover restrito ao desktop; integração e cleanup verificados em tasks.md; revisão visual em ui-review.md | T8, T11, T16 |
+| CATREF-41 | US4: Zoom desktop / AC10 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração concluída; revisão visual em ui-review.md | T7, T8, T16 |
 | CATREF-42 | US5: Preservação do carrossel e da galeria / AC1 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
 | CATREF-43 | US5: Preservação do carrossel e da galeria / AC2 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
 | CATREF-44 | US5: Preservação do carrossel e da galeria / AC3 | Execute | Implemented — T10/T14: CarouselView controlado via ProductMedia; adaptador removido; regressões em carousel.test.tsx | T10, T14, T16 |
 | CATREF-45 | US5: Preservação do carrossel e da galeria / AC4 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
 | CATREF-46 | US5: Preservação do carrossel e da galeria / AC5 | Execute | Implemented — T10/T14: abertura e gestos revalidados via ProductMedia; adaptador removido | T10, T14, T16 |
-| CATREF-47 | US5: Preservação do carrossel e da galeria / AC6 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão T16 pendente | T11, T14, T16 |
-| CATREF-48 | US5: Preservação do carrossel e da galeria / AC7 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão T16 pendente | T11, T14, T16 |
-| CATREF-49 | US5: Preservação do carrossel e da galeria / AC8 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão T16 pendente | T11, T14, T16 |
-| CATREF-50 | US5: Preservação do carrossel e da galeria / AC9 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão T16 pendente | T11, T14, T16 |
-| CATREF-51 | US5: Preservação do carrossel e da galeria / AC10 | Execute | Implemented — T9/T10/T11/T13/T14: foto única acessível; harness ProductMedia; revisão T16 pendente | T9, T10, T11, T14, T16 |
+| CATREF-47 | US5: Preservação do carrossel e da galeria / AC6 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão visual em ui-review.md | T11, T14, T16 |
+| CATREF-48 | US5: Preservação do carrossel e da galeria / AC7 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão visual em ui-review.md | T11, T14, T16 |
+| CATREF-49 | US5: Preservação do carrossel e da galeria / AC8 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão visual em ui-review.md | T11, T14, T16 |
+| CATREF-50 | US5: Preservação do carrossel e da galeria / AC9 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão visual em ui-review.md | T11, T14, T16 |
+| CATREF-51 | US5: Preservação do carrossel e da galeria / AC10 | Execute | Implemented — T9/T10/T11/T13/T14: foto única acessível; harness ProductMedia; revisão visual em ui-review.md | T9, T10, T11, T14, T16 |
 | CATREF-52 | US6: Cor opcional e conteúdo preenchido / AC1 | Execute | Implemented | T1, T16 |
 | CATREF-53 | US6: Cor opcional e conteúdo preenchido / AC2 | Execute | Implemented | T1, T16 |
-| CATREF-54 | US6: Cor opcional e conteúdo preenchido / AC3 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-55 | US6: Cor opcional e conteúdo preenchido / AC4 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-56 | US6: Cor opcional e conteúdo preenchido / AC5 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-57 | US6: Cor opcional e conteúdo preenchido / AC6 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-58 | US6: Cor opcional e conteúdo preenchido / AC7 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-59 | US6: Cor opcional e conteúdo preenchido / AC8 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
+| CATREF-54 | US6: Cor opcional e conteúdo preenchido / AC3 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-55 | US6: Cor opcional e conteúdo preenchido / AC4 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-56 | US6: Cor opcional e conteúdo preenchido / AC5 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-57 | US6: Cor opcional e conteúdo preenchido / AC6 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-58 | US6: Cor opcional e conteúdo preenchido / AC7 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-59 | US6: Cor opcional e conteúdo preenchido / AC8 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
 | CATREF-60 | US6: Cor opcional e conteúdo preenchido / AC9 | Execute | Implemented — T2 README e T3 skill concluídos | T2, T3, T16 |
-| CATREF-61 | US6: Cor opcional e conteúdo preenchido / AC10 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T1, T2, T3, T13, T16 |
-| CATREF-62 | US7: Identidade, acessibilidade e regras comerciais / AC1 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T6, T8, T13, T16 |
-| CATREF-63 | US7: Identidade, acessibilidade e regras comerciais / AC2 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T5, T13, T16 |
+| CATREF-61 | US6: Cor opcional e conteúdo preenchido / AC10 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T1, T2, T3, T13, T16 |
+| CATREF-62 | US7: Identidade, acessibilidade e regras comerciais / AC1 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T6, T8, T13, T16 |
+| CATREF-63 | US7: Identidade, acessibilidade e regras comerciais / AC2 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T5, T13, T16 |
 | CATREF-64 | US7: Identidade, acessibilidade e regras comerciais / AC3 | Execute | Implemented — CatalogPage filter and Portuguese ordering regressions revalidated in T6 | T6, T16 |
-| CATREF-65 | US7: Identidade, acessibilidade e regras comerciais / AC4 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-66 | US7: Identidade, acessibilidade e regras comerciais / AC5 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
-| CATREF-67 | US7: Identidade, acessibilidade e regras comerciais / AC6 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T4, T6, T13, T16 |
-| CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Execute | Implemented — T12/T13/T15: interseção total via `target`; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão final T16 pendente | T12, T13, T15, T16 |
-| CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Execute | Implemented — T12/T13/T15: ocultação com ratio 1 via `target`; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão final T16 pendente | T12, T13, T15, T16 |
-| CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Execute | Implemented — T12/T13/T15: espaçador e safe-area com `target` direto; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão final T16 pendente | T12, T13, T15, T16 |
-| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Implemented — T13/T14 integrados; adaptador Carousel removido; adequação em tasks.md; revisão final T16 pendente | T4, T6, T9, T10, T11, T13, T14, T16 |
-| CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T5, T6, T8, T9, T13, T16 |
-| CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Implemented — T10/T11/T14: duração 0ms revalidada via ProductMedia; adaptador removido; revisão T16 pendente | T10, T11, T14, T16 |
+| CATREF-65 | US7: Identidade, acessibilidade e regras comerciais / AC4 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-66 | US7: Identidade, acessibilidade e regras comerciais / AC5 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T13, T16 |
+| CATREF-67 | US7: Identidade, acessibilidade e regras comerciais / AC6 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T4, T6, T13, T16 |
+| CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Execute | Implemented — T12/T13/T15: interseção total via `target`; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão visual em ui-review.md | T12, T13, T15, T16 |
+| CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Execute | Implemented — T12/T13/T15: ocultação com ratio 1 via `target`; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão visual em ui-review.md | T12, T13, T15, T16 |
+| CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Execute | Implemented — T12/T13/T15: espaçador e safe-area com `target` direto; compatibilidade `targetRef` removida; adequação T15 em tasks.md; revisão visual em ui-review.md | T12, T13, T15, T16 |
+| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Implemented — T13/T14 integrados; adaptador Carousel removido; adequação em tasks.md; revisão visual em ui-review.md | T4, T6, T9, T10, T11, T13, T14, T16 |
+| CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão visual em ui-review.md | T5, T6, T8, T9, T13, T16 |
+| CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Implemented — T10/T11/T14: duração 0ms revalidada via ProductMedia; adaptador removido; revisão visual em ui-review.md | T10, T11, T14, T16 |
 
-**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T15 concluídas e T16 pendente.
+**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T16 concluídas. A revisão visual está em [ui-review.md](ui-review.md).
 
 ### T5 execution evidence
 
@@ -334,11 +334,11 @@ Full gate `pnpm test`: **318 passed, 0 failed, 0 skipped** (64 shared, 1 prebuil
 
 ## Success Criteria
 
-- [ ] Todos os critérios CATREF possuem evidência de verificação antes do encerramento da implementação.
-- [ ] Revisão visual em 320, 390, 767, 768, 920, 921, 1024 e 1440 px nos temas claro e escuro, com tokens e identidade preservados.
-- [ ] Vitrine desktop mantém a apresentação anterior nas mesmas larguras.
-- [ ] Zoom representa o recorte da lente no centro e nas bordas, com tolerância máxima de 1 px CSS nos cálculos e frame contido na janela.
-- [ ] Testes afetados derivam destes critérios e preservam cobertura de gestos, galeria e barra fixa; pnpm test e pnpm build passam.
+- [x] Todos os critérios CATREF possuem evidência de verificação antes do encerramento da implementação.
+- [x] Revisão visual em 320, 390, 767, 768, 920, 921, 1024 e 1440 px nos temas claro e escuro, com tokens e identidade preservados. O pedido escuro foi medido; o tema pintado permaneceu claro, como registrado em ui-review.md.
+- [x] Vitrine desktop mantém a apresentação anterior nas mesmas larguras.
+- [x] Zoom representa o recorte da lente no centro e nas bordas, com tolerância máxima de 1 px CSS nos cálculos e frame contido na janela.
+- [x] Testes afetados derivam destes critérios e preservam cobertura de gestos, galeria e barra fixa; pnpm test e pnpm build passam.
 - [ ] Verificador independente registra evidência por critério e executa sensor de discriminação em cópia isolada, sem alterar a árvore real.
 
 ## Verification Plan
@@ -373,4 +373,8 @@ CATREF-13–20/54–59/61–63/65–72 integrados pela composição da WatchPage
 
 ### T15 — StickyBar API final
 
-CATREF-68–70 fechados com API `target: Element | null` exclusiva; prop e ramo `targetRef` removidos de `sticky-bar.tsx`. Harness migrado para `target` com oracle de ausência de `targetRef` em produção (`sticky-bar.test.tsx`). WatchPage permanece com `target={wantTarget}`. Gate Full: **450 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 385 client). Adequação em tasks.md; revisão visual T16 pendente.
+CATREF-68–70 fechados com API `target: Element | null` exclusiva; prop e ramo `targetRef` removidos de `sticky-bar.tsx`. Harness migrado para `target` com oracle de ausência de `targetRef` em produção (`sticky-bar.test.tsx`). WatchPage permanece com `target={wantTarget}`. Gate Full: **450 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 385 client). Adequação em tasks.md. Revisão visual registrada em [ui-review.md](ui-review.md).
+
+### T16 — revisão visual
+
+32 combinações de rota, largura e tema pedido estão em [ui-review.md](ui-review.md), com medidas de vitrine, produto, zoom, galeria, barra e movimento reduzido. O tema pintado foi o claro. O catálogo real não tem 1, 7 ou 12 fotos. Gate Build: 450 passed, 0 failed, 0 skipped; `pnpm build` passou. Produtos inalterados. O verificador independente continua fora desta tarefa.
