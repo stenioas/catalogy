@@ -90,22 +90,26 @@ describe('WantIconLink (catalog compact action)', () => {
     cleanup()
   })
 
-  it('has the WhatsApp accessible name and a decorative SVG', () => {
+  it('has the WhatsApp accessible name and a decorative share icon', () => {
     render(<WantIconLink slug="seculus" title="Seculus" />)
     const link = screen.getByRole('link', { name: LINK_NAME })
     const icon = link.querySelector('svg')
 
     expect(icon).not.toBeNull()
     expect(icon?.getAttribute('aria-hidden')).toBe('true')
+    expect(icon?.classList.contains('lucide-share-2')).toBe(true)
     expect(link.textContent).toBe('')
   })
 
-  it('provides a 44px square icon-only target', () => {
+  it('provides a 32px light frosted icon target', () => {
     render(<WantIconLink slug="seculus" title="Seculus" />)
     const link = screen.getByRole('link', { name: LINK_NAME })
 
-    expect(link.className).toMatch(/\bsize-11\b/)
-    expect(link.querySelector('svg')).not.toBeNull()
+    expect(link.className).toMatch(/\bsize-8\b/)
+    expect(link.className).toContain('bg-[color-mix(in_srgb,var(--canvas-parchment)_52%,transparent)]')
+    expect(link.className).toContain('text-[var(--ink)]')
+    expect(link.className).toContain('[backdrop-filter:saturate(140%)_blur(8px)]')
+    expect(link.querySelector('svg')?.classList.contains('lucide-share-2')).toBe(true)
   })
 
   it('uses the same sharing URL and message as WantLink', () => {

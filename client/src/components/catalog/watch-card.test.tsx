@@ -258,7 +258,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     const body = screen.getByTestId('watch-card-body')
 
     expect(link.className).toMatch(/\bflex\b/)
-    expect(link.className).toMatch(/\bitems-start\b/)
+    expect(link.className).toMatch(/\bitems-center\b/)
     expect(link.className).toMatch(/\bgap-2\b/)
     expect(link.className).toMatch(/\bmd:block\b/)
     expect(image.className).toMatch(/\bsize-32\b/)
@@ -291,21 +291,26 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.queryByText('Automático')).toBeNull()
   })
 
-  it('places an icon-only WhatsApp action over the photo with its accessible name and 44px target', () => {
+  it('places a small share icon at the bottom-right of the photo', () => {
     renderWatchCard()
     const action = screen.getByTestId('watch-card-mobile-action')
     const link = within(action).getByRole('link', { name: 'Enviar no WhatsApp' })
     const icon = link.querySelector('svg')
+    const anchor = link.parentElement
 
     expect(action.className).toMatch(/\babsolute\b/)
-    expect(action.className).toMatch(/\btop-0\b/)
-    expect(action.className).toMatch(/\bleft-0\b/)
-    expect(action.className).toMatch(/\bw-32\b/)
-    expect(action.className).toMatch(/\bjustify-end\b/)
+    expect(action.className).toMatch(/\binset-0\b/)
+    expect(action.className).toMatch(/\bitems-center\b/)
     expect(action.className).toMatch(/\bmd:hidden\b/)
-    expect(link.className).toMatch(/\bsize-11\b/)
+    expect(anchor?.className).toMatch(/\bright-1\b/)
+    expect(anchor?.className).toMatch(/\bbottom-1\b/)
+    expect(link.className).toMatch(/\bsize-8\b/)
+    expect(link.className).toContain('bg-[color-mix(in_srgb,var(--canvas-parchment)_52%,transparent)]')
+    expect(link.className).toContain('[backdrop-filter:saturate(140%)_blur(8px)]')
+    expect(link.className).toContain('text-[var(--ink)]')
     expect(link.textContent).toBe('')
     expect(icon?.getAttribute('aria-hidden')).toBe('true')
+    expect(icon?.classList.contains('lucide-share-2')).toBe(true)
   })
 
   it('keeps the textual WhatsApp action for desktop at the existing md breakpoint', () => {

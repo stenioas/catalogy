@@ -25,7 +25,7 @@ export function WatchCard({ product }: WatchCardProps) {
         <Link
           to={watchPath}
           data-testid="watch-card-link"
-          className="flex w-full items-start gap-2 text-left md:block md:gap-0"
+          className="flex w-full items-center gap-2 text-left md:block md:gap-0"
         >
           <div
             data-testid="watch-card-image"
@@ -72,8 +72,15 @@ export function WatchCard({ product }: WatchCardProps) {
             </div>
           </div>
         </Link>
-        <div data-testid="watch-card-mobile-action" className="absolute top-0 left-0 z-10 flex w-32 justify-end md:hidden">
-          <WantIconLink slug={product.slug} title={product.title} />
+        <div
+          data-testid="watch-card-mobile-action"
+          className="pointer-events-none absolute inset-0 z-10 flex items-center md:hidden"
+        >
+          <div className="relative size-32">
+            <div className="pointer-events-auto absolute right-1 bottom-1">
+              <WantIconLink slug={product.slug} title={product.title} />
+            </div>
+          </div>
         </div>
       </div>
       <div data-testid="watch-card-actions" className="hidden px-[24px] pb-[24px] md:block">
