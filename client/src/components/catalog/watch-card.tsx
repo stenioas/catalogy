@@ -45,7 +45,7 @@ export function WatchCard({ product }: WatchCardProps) {
           <Link
             to={watchPath}
             data-testid="watch-card-link"
-            className="flex w-full min-w-0 flex-col items-start gap-1 pr-10 md:gap-2 md:pr-0"
+            className="flex w-full min-w-0 flex-col items-start gap-1 pr-12 md:gap-2 md:pr-0"
           >
             {product.unmissableOffer ? (
               <p
@@ -73,7 +73,7 @@ export function WatchCard({ product }: WatchCardProps) {
               </div>
             </div>
           </Link>
-          <div data-testid="watch-card-mobile-action" className="absolute right-0 bottom-0 z-10 md:hidden">
+          <div data-testid="watch-card-mobile-action" className="absolute right-2 bottom-0 z-10 md:hidden">
             <WantIconLink slug={product.slug} title={product.title} />
           </div>
         </div>

@@ -303,7 +303,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.getByTestId('watch-card-link').contains(action)).toBe(false)
     expect(screen.getByTestId('watch-card-image').contains(action)).toBe(false)
     expect(action.className).toMatch(/\babsolute\b/)
-    expect(action.className).toMatch(/\bright-0\b/)
+    expect(action.className).toMatch(/\bright-2\b/)
     expect(action.className).toMatch(/\bbottom-0\b/)
     expect(action.className).toMatch(/\bmd:hidden\b/)
     expect(link.className).toMatch(/\bsize-8\b/)
