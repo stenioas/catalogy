@@ -29,7 +29,7 @@ export function WantLink({ slug, title, ref }: WantLinkProps) {
 }
 
 const shareButtonClassName =
-  'size-8 rounded-full bg-[color-mix(in_srgb,var(--canvas-parchment)_52%,transparent)] p-0 text-[var(--ink)] [-webkit-backdrop-filter:saturate(140%)_blur(8px)] [backdrop-filter:saturate(140%)_blur(8px)] hover:bg-[color-mix(in_srgb,var(--canvas-parchment)_70%,transparent)] hover:text-[var(--ink)]'
+  'size-8 rounded-full bg-[color-mix(in_srgb,var(--primary)_16%,white)] p-0 text-[var(--ink)] hover:bg-[color-mix(in_srgb,var(--primary)_24%,white)] hover:text-[var(--ink)]'
 
 export function WantIconLink({ slug, title }: Pick<WantLinkProps, 'slug' | 'title'>) {
   return (

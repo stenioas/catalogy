@@ -106,9 +106,8 @@ describe('WantIconLink (catalog compact action)', () => {
     const link = screen.getByRole('link', { name: LINK_NAME })
 
     expect(link.className).toMatch(/\bsize-8\b/)
-    expect(link.className).toContain('bg-[color-mix(in_srgb,var(--canvas-parchment)_52%,transparent)]')
+    expect(link.className).toContain('bg-[color-mix(in_srgb,var(--primary)_16%,white)]')
     expect(link.className).toContain('text-[var(--ink)]')
-    expect(link.className).toContain('[backdrop-filter:saturate(140%)_blur(8px)]')
     expect(link.querySelector('svg')?.classList.contains('lucide-share-2')).toBe(true)
   })
 
