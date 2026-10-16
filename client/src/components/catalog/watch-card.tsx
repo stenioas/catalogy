@@ -68,7 +68,7 @@ export function WatchCard({ product }: WatchCardProps) {
                 <ProductStateBadge state={product.state} compact className="md:hidden" />
                 <ProductAvailabilityBadge
                   availabilityStatus={product.availabilityStatus}
-                  className="text-xs"
+                  compact
                 />
               </div>
             </div>

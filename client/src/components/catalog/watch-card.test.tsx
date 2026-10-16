@@ -110,12 +110,15 @@ describe('WatchCard (SV-13, SV-14)', () => {
     const price = screen.getByTestId('price-block')
     const badge = screen.getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
+    const stateBadge = screen.getAllByTestId('state-badge').find((node) => node.className.includes('md:hidden'))
+    const sharedSize = ['h-5', 'px-1.5', 'text-xs', 'font-medium', 'leading-none']
     expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining([
       `bg-availability-${palette}`,
       `text-availability-${palette}-foreground`,
       `border-availability-${palette}-border`,
-      'text-xs',
+      ...sharedSize,
     ]))
+    expect(stateBadge?.className.split(/\s+/)).toEqual(expect.arrayContaining(sharedSize))
     const meta = price.nextElementSibling
     expect(meta?.contains(badge)).toBe(true)
     expect(badge.parentElement).toBe(meta)

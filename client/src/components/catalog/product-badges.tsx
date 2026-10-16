@@ -1,6 +1,9 @@
 import type { Product } from '@catalogo/shared'
+import { cn } from 'cn'
 
 import { Badge } from '@/components/ui/badge'
+
+const compactBadgeClassName = 'h-5 px-1.5 py-0 text-xs leading-none font-medium'
 
 export function ProductStateBadge({
   state,
@@ -11,18 +14,17 @@ export function ProductStateBadge({
   compact?: boolean
   className?: string
 }) {
-  const sizeClassName = compact
-    ? 'px-1.5 py-0 text-[11px] leading-none md:px-2.5 md:py-0.5 md:text-sm'
-    : 'px-2.5 py-0.5 text-sm'
-
   return (
     <Badge
       data-testid="state-badge"
-      className={`h-auto rounded-full font-semibold ${sizeClassName} ${
+      className={cn(
+        'h-auto rounded-full font-semibold',
+        compact ? compactBadgeClassName : 'px-2.5 py-0.5 text-sm',
         state === 'Novo'
           ? 'bg-product-state-new text-product-state-new-foreground'
-          : 'bg-product-state-neutral text-product-state-neutral-foreground'
-      } ${className}`}
+          : 'bg-product-state-neutral text-product-state-neutral-foreground',
+        className,
+      )}
     >
       {state}
     </Badge>
@@ -48,14 +50,27 @@ const availabilityPresentation = {
   },
 } satisfies Record<Product['availabilityStatus'], { label: string; className: string }>
 
-export function ProductAvailabilityBadge({ availabilityStatus, className = '' }: { availabilityStatus: Product['availabilityStatus']; className?: string }) {
+export function ProductAvailabilityBadge({
+  availabilityStatus,
+  compact = false,
+  className = '',
+}: {
+  availabilityStatus: Product['availabilityStatus']
+  compact?: boolean
+  className?: string
+}) {
   const presentation = availabilityPresentation[availabilityStatus]
 
   return (
     <Badge
       data-testid="availability-badge"
       variant="outline"
-      className={`h-auto rounded-full px-2.5 py-0.5 text-sm font-medium ${presentation.className} ${className}`}
+      className={cn(
+        'h-auto rounded-full font-medium',
+        compact ? compactBadgeClassName : 'px-2.5 py-0.5 text-sm',
+        presentation.className,
+        className,
+      )}
     >
       {presentation.label}
     </Badge>
