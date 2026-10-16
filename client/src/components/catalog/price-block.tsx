@@ -41,7 +41,7 @@ export function PriceBlock({
         {showBadge ? (
           <Badge
             data-testid="price-badge"
-            className="col-start-2 row-start-2 h-auto rounded-full bg-primary-tint-background px-1.5 py-0 text-[11px] font-medium text-primary-tint-foreground md:col-start-2 md:row-start-1 md:-rotate-[8deg] md:px-2 md:py-0.5 md:text-sm"
+            className="col-start-2 row-start-2 h-auto rounded-[4px] bg-primary-tint-background px-1.5 py-0 text-[11px] font-medium text-primary-tint-foreground md:col-start-2 md:row-start-1 md:-rotate-[8deg] md:px-2 md:py-0.5 md:text-sm"
           >
             −{percent}%
           </Badge>
@@ -87,7 +87,7 @@ export function PriceBlock({
           {showBadge ? (
             <Badge
               data-testid="price-badge"
-              className="-rotate-[8deg] rounded-full bg-primary-tint-background text-sm font-medium text-primary-tint-foreground"
+              className="-rotate-[8deg] rounded-[4px] bg-primary-tint-background text-sm font-medium text-primary-tint-foreground"
             >
               −{percent}%
             </Badge>

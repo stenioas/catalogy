@@ -123,6 +123,8 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(badge.getAttribute('data-slot')).toBe('badge')
     expect(badge.className).toMatch(/\btext-primary-tint-foreground\b/)
     expect(badge.className).toMatch(/\bbg-primary-tint-background\b/)
+    expect(badge.className).toMatch(/rounded-\[4px\]/)
+    expect(badge.className).not.toMatch(/\brounded-full\b/)
     expect(badge.className).not.toMatch(/green|red|emerald|rose/i)
   })
 
