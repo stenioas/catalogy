@@ -54,7 +54,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     const frame = img.parentElement
     expect(frame).not.toBeNull()
     expect(frame?.className).toMatch(/\bmd:aspect-square\b/)
-    expect(frame?.className).toMatch(/\bsize-24\b/)
+    expect(frame?.className).toMatch(/\bsize-32\b/)
     const backgroundTokens = frame?.className.match(/\bbg-\S+/g) ?? []
     expect(backgroundTokens.filter((token) => token !== 'bg-transparent')).toEqual([])
     expect(frame?.getAttribute('style') ?? '').not.toMatch(/background/i)
@@ -199,7 +199,7 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     const card = container.querySelector('[data-slot="card"]') as HTMLElement
     const img = screen.getByRole('img', { name: 'Seculus' })
     const frame = img.parentElement as HTMLElement
-    expect(classTokens(frame.className)).toContain('size-24')
+    expect(classTokens(frame.className)).toContain('size-32')
     expect(classTokens(frame.className)).toContain('md:w-full')
     expect(classTokens(frame.className)).toContain('md:aspect-square')
     expect(classTokens(img.className)).toContain('w-full')
@@ -258,7 +258,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(link.className).toMatch(/\bitems-start\b/)
     expect(link.className).toMatch(/\bgap-3\b/)
     expect(link.className).toMatch(/\bmd:block\b/)
-    expect(image.className).toMatch(/\bsize-24\b/)
+    expect(image.className).toMatch(/\bsize-32\b/)
     expect(body.className).toMatch(/\bmin-w-0\b/)
     expect(body.className).toMatch(/\bflex-1\b/)
   })
@@ -293,7 +293,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(action.className).toMatch(/\babsolute\b/)
     expect(action.className).toMatch(/\btop-0\b/)
     expect(action.className).toMatch(/\bleft-0\b/)
-    expect(action.className).toMatch(/\bw-24\b/)
+    expect(action.className).toMatch(/\bw-32\b/)
     expect(action.className).toMatch(/\bjustify-end\b/)
     expect(action.className).toMatch(/\bmd:hidden\b/)
     expect(link.className).toMatch(/\bsize-11\b/)
@@ -345,7 +345,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.getByTestId('price-list')?.parentElement?.className).toMatch(/\bmd:flex-nowrap\b/)
   })
 
-  it('renders the same 96px image frame with short and long product titles', () => {
+  it('renders the same 128px image frame with short and long product titles', () => {
     const { container } = render(
       <MemoryRouter>
         <WatchCard product={sampleProduct} />
@@ -356,8 +356,8 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
 
     expect(frames).toHaveLength(2)
     expect(Array.from(frames, (frame) => frame.className)).toEqual([
-      expect.stringContaining('size-24'),
-      expect.stringContaining('size-24'),
+      expect.stringContaining('size-32'),
+      expect.stringContaining('size-32'),
     ])
   })
 })

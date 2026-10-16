@@ -15,7 +15,7 @@ export function CatalogPage() {
     <>
       <TopBar />
       <main className="max-w-full min-w-0 overflow-x-clip">
-        <div data-testid="catalog-page-column" className="catalog-column py-8">
+        <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-8">
           {sortedProducts.length === 0 ? (
             <p className="m-0 text-[var(--ink-primary)]">{EMPTY_VITRINE_MESSAGE}</p>
           ) : (

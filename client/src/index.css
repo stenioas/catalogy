@@ -237,6 +237,16 @@
   padding-inline: 24px;
 }
 
+.catalog-vitrine {
+  padding-inline: 0;
+}
+
+@media (min-width: 768px) {
+  .catalog-vitrine {
+    padding-inline: 24px;
+  }
+}
+
 body {
   width: 100%;
   margin: 0;

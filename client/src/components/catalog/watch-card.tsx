@@ -29,7 +29,7 @@ export function WatchCard({ product }: WatchCardProps) {
         >
           <div
             data-testid="watch-card-image"
-            className="relative size-24 shrink-0 md:aspect-square md:size-auto md:w-full"
+            className="relative size-32 shrink-0 md:aspect-square md:size-auto md:w-full"
           >
             <img
               src={productImageSrc(product.slug, firstImage)}
@@ -62,7 +62,7 @@ export function WatchCard({ product }: WatchCardProps) {
             </div>
           </div>
         </Link>
-        <div data-testid="watch-card-mobile-action" className="absolute top-0 left-0 z-10 flex w-24 justify-end md:hidden">
+        <div data-testid="watch-card-mobile-action" className="absolute top-0 left-0 z-10 flex w-32 justify-end md:hidden">
           <WantIconLink slug={product.slug} title={product.title} />
         </div>
       </div>

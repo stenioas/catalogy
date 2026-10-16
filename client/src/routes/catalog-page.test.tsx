@@ -178,6 +178,21 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(block).toMatch(/padding-inline:\s*24px/)
   })
 
+  it('removes horizontal padding from the vitrine below md and restores 24px from 768px', () => {
+    mockProductsRef.current = [makeProduct('one', 'One')]
+    renderCatalogPage()
+    const column = screen.getByTestId('catalog-page-column')
+    expect(column.classList.contains('catalog-vitrine')).toBe(true)
+
+    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
+    const block = css.match(/\.catalog-vitrine\s*\{([^}]*)\}/)?.[1]
+    expect(block).toMatch(/padding-inline:\s*0/)
+    const desktop = css.match(
+      /@media\s*\(min-width:\s*768px\)\s*\{[\s\S]*?\.catalog-vitrine\s*\{([^}]*)\}/,
+    )?.[1]
+    expect(desktop).toMatch(/padding-inline:\s*24px/)
+  })
+
   it('lists each watch in the product grid (SV-01, AC1)', () => {
     mockProductsRef.current = [
       makeProduct('alpha', 'Alpha'),
