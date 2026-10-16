@@ -20,7 +20,7 @@ export function WatchCard({ product }: WatchCardProps) {
   const watchPath = `/product/${product.slug}`
 
   return (
-    <Card className="gap-0 overflow-hidden rounded-none border-0 bg-card p-0 py-0 shadow-none ring-0 md:rounded-[12px] md:border-[1px]">
+    <Card className="gap-0 overflow-hidden rounded-none border-0 bg-background p-0 py-0 shadow-none ring-0 md:rounded-[12px] md:border-[1px] md:bg-card">
       <div className="relative">
         <Link
           to={watchPath}

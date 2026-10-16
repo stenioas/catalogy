@@ -186,7 +186,8 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
   it('paints the card with the canvas token in light and surface-tile-2 in dark (SV-37, SV-38)', () => {
     const { container } = renderWatchCard()
     const card = container.querySelector('[data-slot="card"]') as HTMLElement
-    expect(classTokens(card.className)).toContain('bg-card')
+    expect(classTokens(card.className)).toContain('bg-background')
+    expect(classTokens(card.className)).toContain('md:bg-card')
 
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
     const root = blockBody(css, ':root')
