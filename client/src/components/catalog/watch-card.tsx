@@ -21,12 +21,8 @@ export function WatchCard({ product }: WatchCardProps) {
 
   return (
     <Card className="gap-0 overflow-hidden rounded-none border-0 bg-background p-0 py-0 shadow-none ring-0 md:rounded-[12px] md:border-[1px] md:bg-card">
-      <div className="relative">
-        <Link
-          to={watchPath}
-          data-testid="watch-card-link"
-          className="flex w-full items-center gap-2 text-left md:block md:gap-0"
-        >
+      <div data-testid="watch-card-row" className="flex w-full items-center gap-2 md:block">
+        <Link to={watchPath} className="contents">
           <div
             data-testid="watch-card-image"
             className="relative size-32 shrink-0 md:aspect-square md:size-auto md:w-full"
@@ -41,9 +37,15 @@ export function WatchCard({ product }: WatchCardProps) {
               className="absolute right-3 bottom-3 hidden md:block"
             />
           </div>
-          <div
-            data-testid="watch-card-body"
-            className="flex min-w-0 flex-1 flex-col items-start gap-1 text-left md:mt-3 md:w-full md:flex-none md:gap-2 md:px-[24px]"
+        </Link>
+        <div
+          data-testid="watch-card-body"
+          className="relative flex min-w-0 flex-1 flex-col items-start gap-1 text-left md:mt-3 md:w-full md:flex-none md:gap-2 md:px-[24px]"
+        >
+          <Link
+            to={watchPath}
+            data-testid="watch-card-link"
+            className="flex w-full min-w-0 flex-col items-start gap-1 pr-10 md:gap-2 md:pr-0"
           >
             {product.unmissableOffer ? (
               <p
@@ -70,16 +72,9 @@ export function WatchCard({ product }: WatchCardProps) {
                 />
               </div>
             </div>
-          </div>
-        </Link>
-        <div
-          data-testid="watch-card-mobile-action"
-          className="pointer-events-none absolute inset-0 z-10 flex items-center md:hidden"
-        >
-          <div className="relative size-32">
-            <div className="pointer-events-auto absolute right-1 bottom-1">
-              <WantIconLink slug={product.slug} title={product.title} />
-            </div>
+          </Link>
+          <div data-testid="watch-card-mobile-action" className="absolute right-0 bottom-0 z-10 md:hidden">
+            <WantIconLink slug={product.slug} title={product.title} />
           </div>
         </div>
       </div>

@@ -99,10 +99,10 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     expect(inner.className).not.toMatch(/\bpy-2\.5\b/)
   })
 
-  it('uses ChevronLeft on a ghost 44×44 Voltar without the WhatsApp pill background (SV-29, SV-33)', () => {
+  it('uses ArrowLeft on a ghost 44×44 Voltar without the WhatsApp pill background (SV-29, SV-33)', () => {
     renderTopBar('/')
     const back = screen.getByRole('link', { name: 'Voltar' })
-    expect(back.querySelector('svg.lucide-chevron-left')).not.toBeNull()
+    expect(back.querySelector('svg.lucide-arrow-left')).not.toBeNull()
     expect(back.getAttribute('data-slot')).toBe('button')
     expect(back.getAttribute('data-variant')).toBe('ghost')
     expect(back.className).toMatch(/\bsize-11\b/)

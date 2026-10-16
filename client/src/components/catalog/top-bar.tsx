@@ -1,4 +1,4 @@
-import { ChevronLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -65,7 +65,7 @@ export function TopBar({ catalogHref }: TopBarProps) {
                 className="size-11 shrink-0 rounded-full text-inherit hover:bg-[color-mix(in_srgb,var(--ink)_8%,transparent)] hover:text-inherit"
               >
                 <Link to={catalogHref} aria-label="Voltar">
-                  <ChevronLeft aria-hidden="true" />
+                  <ArrowLeft aria-hidden="true" />
                 </Link>
               </Button>
             ) : null}

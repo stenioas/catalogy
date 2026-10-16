@@ -254,7 +254,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
 
   it('places the fixed photo beside a flexible text column below md and restores the card stack at md', () => {
     renderWatchCard()
-    const link = screen.getByTestId('watch-card-link')
+    const link = screen.getByTestId('watch-card-row')
     const image = screen.getByTestId('watch-card-image')
     const body = screen.getByTestId('watch-card-body')
 
@@ -292,19 +292,20 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.queryByText('Automático')).toBeNull()
   })
 
-  it('places a small share icon at the bottom-right of the photo', () => {
+  it('places a small share icon at the bottom-right of the price group', () => {
     renderWatchCard()
     const action = screen.getByTestId('watch-card-mobile-action')
+    const body = screen.getByTestId('watch-card-body')
     const link = within(action).getByRole('link', { name: 'Enviar no WhatsApp' })
     const icon = link.querySelector('svg')
-    const anchor = link.parentElement
 
+    expect(body.contains(action)).toBe(true)
+    expect(screen.getByTestId('watch-card-link').contains(action)).toBe(false)
+    expect(screen.getByTestId('watch-card-image').contains(action)).toBe(false)
     expect(action.className).toMatch(/\babsolute\b/)
-    expect(action.className).toMatch(/\binset-0\b/)
-    expect(action.className).toMatch(/\bitems-center\b/)
+    expect(action.className).toMatch(/\bright-0\b/)
+    expect(action.className).toMatch(/\bbottom-0\b/)
     expect(action.className).toMatch(/\bmd:hidden\b/)
-    expect(anchor?.className).toMatch(/\bright-1\b/)
-    expect(anchor?.className).toMatch(/\bbottom-1\b/)
     expect(link.className).toMatch(/\bsize-8\b/)
     expect(link.className).toContain('bg-[color-mix(in_srgb,var(--canvas-parchment)_52%,transparent)]')
     expect(link.className).toContain('[backdrop-filter:saturate(140%)_blur(8px)]')
