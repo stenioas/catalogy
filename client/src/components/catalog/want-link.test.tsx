@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { waUrl, WantIconLink, WantLink } from './want-link'
@@ -144,5 +144,26 @@ describe('WantIconLink (catalog compact action)', () => {
 
     expect(link.getAttribute('target')).toBe('_blank')
     expect(link.getAttribute('rel')).toBe('noopener noreferrer')
+  })
+})
+
+describe('WhatsApp keyboard access (CATREF-71)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it.each([
+    ['WantLink', WantLink],
+    ['WantIconLink', WantIconLink],
+  ] as const)('gives %s the WhatsApp name, a visible focus ring, and keyboard activation', (_name, Component) => {
+    render(<Component slug="seculus" title="Seculus" />)
+    const link = screen.getByRole('link', { name: LINK_NAME })
+
+    expect(link.className).toMatch(/focus-visible:ring/)
+    expect(link.tabIndex).toBeGreaterThanOrEqual(0)
+    link.focus()
+    expect(document.activeElement).toBe(link)
+    expect(fireEvent.keyDown(link, { key: 'Enter' })).toBe(true)
+    expect(link.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/\?text=/)
   })
 })

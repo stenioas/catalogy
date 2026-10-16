@@ -180,4 +180,50 @@ describe('DesktopProductMedia (CATREF-16, CATREF-21–30, CATREF-51, CATREF-71)'
     expect(screen.queryByText(/^\d+\s*\/\s*\d+$/)).toBeNull()
     expect(screen.queryByRole('list', { name: /página|bolinha/i })).toBeNull()
   })
+
+  it('presents a vertical thumbnail column beside the main photo (CATREF-16)', () => {
+    renderMedia(photos(3))
+    const media = screen.getByTestId('desktop-product-media')
+    const group = screen.getByRole('group', { name: 'Miniaturas do produto' })
+    const main = screen.getByRole('button', { name: 'Abrir galeria na foto 1' })
+    const mediaTokens = media.className.split(/\s+/)
+    const groupTokens = group.className.split(/\s+/)
+
+    expect(groupTokens).toContain('flex-col')
+    expect(groupTokens).not.toContain('flex-row')
+    expect(mediaTokens).toContain('flex')
+    expect(mediaTokens).not.toContain('flex-col')
+    expect(media.contains(group)).toBe(true)
+    expect(media.contains(main)).toBe(true)
+    expect(group.compareDocumentPosition(main) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('offers a name, visible focus, and keyboard activation for thumbnails, +N, and the main photo (CATREF-71)', () => {
+    renderControlledMedia(photos(9))
+    const thumbnail = screen.getByRole('button', { name: 'Foto 2' })
+    const more = screen.getByRole('button', { name: 'Abrir galeria na foto 8, mais 2 fotos' })
+    const main = screen.getByRole('button', { name: 'Abrir galeria na foto 1' })
+
+    expect(thumbnail.className).toMatch(/focus-visible:ring/)
+    expect(more.className).toMatch(/focus-visible:ring/)
+    expect(main.className).toMatch(/focus-visible:ring/)
+
+    thumbnail.focus()
+    expect(document.activeElement).toBe(thumbnail)
+    fireEvent.click(thumbnail, { detail: 0 })
+    expect(screen.getByTestId('selected-index').textContent).toBe('1')
+    expect(screen.getByRole('button', { name: 'Foto 2' }).getAttribute('aria-pressed')).toBe('true')
+
+    const selectedMain = screen.getByRole('button', { name: 'Abrir galeria na foto 2' })
+    selectedMain.focus()
+    expect(document.activeElement).toBe(selectedMain)
+    fireEvent.click(selectedMain, { detail: 0 })
+    expect(screen.getByTestId('requested-gallery-index').textContent).toBe('1')
+
+    more.focus()
+    expect(document.activeElement).toBe(more)
+    fireEvent.click(more, { detail: 0 })
+    expect(screen.getByTestId('requested-gallery-index').textContent).toBe('7')
+    expect(more.getAttribute('aria-pressed')).toBe('true')
+  })
 })
