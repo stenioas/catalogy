@@ -247,6 +247,27 @@
   }
 }
 
+.catalog-grid > li {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .catalog-grid > li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: calc(100% + 8px);
+    height: 1px;
+    transform: translateY(-50%);
+    background: rgb(0 0 0 / 8%);
+  }
+
+  .dark .catalog-grid > li:not(:last-child)::after {
+    background: rgb(255 255 255 / 12%);
+  }
+}
+
 body {
   width: 100%;
   margin: 0;

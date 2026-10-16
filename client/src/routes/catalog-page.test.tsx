@@ -150,9 +150,7 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(grid.className).toMatch(/\blg:grid-cols-3\b/)
     expect(grid.className).toMatch(/\bgap-4\b/)
     expect(grid.className).toMatch(/\bmd:gap-6\b/)
-    expect(grid.className).toMatch(/\bdivide-y\b/)
-    expect(grid.className).toMatch(/\bdivide-black\/8\b/)
-    expect(grid.className).toMatch(/\bmd:divide-y-0\b/)
+    expect(grid.classList.contains('catalog-grid')).toBe(true)
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
     expect(css).not.toMatch(/html\s*\{[^}]*font-size/)
     expect(lengthToPx(breakpointToken('md'))).toBe(768)
@@ -181,6 +179,19 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(block).toMatch(/max-width:\s*1120px/)
     expect(block).toMatch(/margin-inline:\s*auto/)
     expect(block).toMatch(/padding-inline:\s*24px/)
+  })
+
+  it('centers a hairline in the mobile row gap and omits it after the last product', () => {
+    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
+    const mobile = css.match(
+      /@media\s*\(max-width:\s*767px\)\s*\{([\s\S]*?)\n\}/,
+    )?.[1]
+    expect(mobile).toBeDefined()
+    expect(mobile).toMatch(/\.catalog-grid > li:not\(:last-child\)::after/)
+    expect(mobile).toMatch(/top:\s*calc\(100% \+ 8px\)/)
+    expect(mobile).toMatch(/transform:\s*translateY\(-50%\)/)
+    expect(mobile).toMatch(/height:\s*1px/)
+    expect(mobile).not.toMatch(/border-bottom/)
   })
 
   it('removes horizontal padding from the vitrine below md and restores 24px from 768px', () => {
