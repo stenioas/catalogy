@@ -891,16 +891,79 @@ The first Full run exposed a wiring issue: the temporary `targetRef.current` is 
 
 **Done when**:
 
-- [ ] Entrega verificada: Usar ProductMedia acima dos ramos de layout; desktop com colunas independentes e descrição→observações→características; mobile com ordem aprovada; cor opcional e seções filtradas; StickyBar recebe target atual.
-- [ ] Testar DOM por faixa, um título, metadados, color ausente/vazio/espaços/presente, Cor independente, linhas vazias, seções sem conteúdo, produto ausente/desabilitado, links similares e WhatsApp. Atualizar explicitamente cenário antigo de descrição com espaços para exigir ausência, conforme CATREF-59. Navegador verifica conteúdo esquerdo independente da oferta alta.
-- [ ] Pelo menos 14 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Usar ProductMedia acima dos ramos de layout; desktop com colunas independentes e descrição→observações→características; mobile com ordem aprovada; cor opcional e seções filtradas; StickyBar recebe target atual.
+- [x] Testar DOM por faixa, um título, metadados, color ausente/vazio/espaços/presente, Cor independente, linhas vazias, seções sem conteúdo, produto ausente/desabilitado, links similares e WhatsApp. Atualizar explicitamente cenário antigo de descrição com espaços para exigir ausência, conforme CATREF-59. Navegador verifica conteúdo esquerdo independente da oferta alta.
+- [x] Pelo menos 14 cenários novos ou revalidados, além das regressões existentes; contagem real registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration + browser
 
 **Gate**: Full
 
 **Commit**: `feat(catalog): compose responsive product page layout`
+
+### T13 execution record
+
+- **Assumptions**: APIs aprovadas de T11/T12; ProductMedia acima dos ramos, identidade por slug, filtragem por trim sem transformar dados.
+- **Files touched**: WatchPage e seu teste; router.test.tsx/main.test.tsx (matchMedia do consumidor integrado); carousel.test.tsx (asserção de importador direto); tasks.md/spec.md e t13-page-review.md. Nenhum adaptador ou produto alterado.
+- **Tests first**: focused inicial 24 passed/21 failed antes do código. Novo contrato e migrações preservam 31 cenários anteriores. Quinze cenários novos: 4 larguras/título/colunas; 3 cores vazias; 2 cores independentes/linhas; 2 seções vazias; 2 conteúdo literal/WhatsApp; 1 alvo substituído; 1 galeria estável. Focused final 46 passed.
+- **Gate Full**: `pnpm test`, exit 0, **449 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 384 client), +15 T12/+150 baseline. Diagnóstico client verbose também 384 passed. Sem exclusão/skip. As causas rotineiras e correções de harness estão no [review T13](t13-page-review.md).
+- **Browser**: oferta alta 921: mídia bottom572, descrição y604, direita bottom2064.98; colunas 500.39/333.61; mobile920 na ordem aprovada. Página real nas oito larguras, sem overflow; tema efetivo claro preexistente; capturas na conversa e medidas no review. Harness temporário removido.
+
+**Test Adequacy Review — Check A**
+
+Caminhos abreviados: WP=`client/src/routes/watch-page.test.tsx`; SB=`client/src/components/catalog/sticky-bar.test.tsx`; PB=`client/src/components/catalog/price-block.test.tsx`; PM=`client/src/components/catalog/product-media.test.tsx`; WL=`client/src/components/catalog/want-link.test.tsx`.
+
+| Critério / AC / borda | file:line + expressão | Resultado definido / cobertura |
+| --- | --- | --- |
+| CATREF-13 ordem mobile e metadados | WP:195 `expect(follows(ordered[index - 1], ordered[index])).toBe(true)`; WP:122 `expect(badge.textContent).toBe(state)`; WP:138 `expect(badge.textContent).toBe(label)` | Título, mídia, oferta/metadados, características, descrição, notas, WhatsApp; 3 condições/4 disponibilidades. Sim |
+| CATREF-14 título único completo | WP:440 `expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)`; WP:441 `expect(heading.textContent).toBe('Título completo '.repeat(20))`; WP:442 `expect(heading.className).not.toMatch(/line-clamp|truncate/)` | Um título inteiro nas quatro larguras. Sim |
+| CATREF-15/16 colunas e miniaturas | WP:450 `expect(left.parentElement?.className).toContain('grid-cols-[minmax(0,3fr)_minmax(0,2fr)]')`; WP:451 `expect(within(left).getByRole('group', { name: 'Miniaturas do produto' })).toBeDefined()` | Duas colunas independentes, esquerda mais larga; miniaturas lado a lado com mídia, medidas reais no review. Sim |
+| CATREF-17 oferta direita e um botão | WP:452 `expect(within(right).getByRole('heading', { level: 1 })).toBe(heading)`; WP:453 `expect(within(right).getByTestId('watch-offer')).toBeDefined()`; WP:454 `expect(within(right).getByRole('link', { name: 'Enviar no WhatsApp' })).toBeDefined()`; WP:443 `expect(screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })).toHaveLength(1)` | Título/oferta (PriceBlock/metadados/cor) e ação na direita; um principal. Sim |
+| CATREF-18/19 conteúdo esquerdo independente | WP:456 `expect(sections).toEqual(['Descrição', 'Observações', 'Características do produto'])`; WP:457 `expect(follows(within(left).getByTestId('desktop-product-media'), within(left).getByRole('heading', { name: 'Descrição' }))).toBe(true)` | Ordem e colunas reais; navegador prova descrição y604 antes de direita bottom2064.98. Sim |
+| CATREF-20 tabela renomeada | WP:236 `expect(screen.getByRole('heading', { name: 'Características do produto' })).toBeDefined()` | Nome exato; tabela existente mantida. Sim |
+| CATREF-54/55/56 cor | WP:473 `expect(screen.getByTestId('watch-color').textContent).toBe('Cor:   Azul  ')`; WP:465 `expect(screen.queryByTestId('watch-color')).toBeNull()` | Texto original preservado; undefined/vazio/espaços omitidos; sem inferência de descrição/Cor. Sim |
+| CATREF-57/58 especificações independentes e repetidas | WP:474 `expect(within(screen.getByRole('table')).getAllByRole('row').map((row) => row.textContent)).toEqual(['CorPrata', 'Cor do mostradorPreto', 'Cor da pulseiraAço', 'CorPrata'])` | Só linhas com valor; rótulos/duplicatas preservados. Sim |
+| CATREF-59 seções vazias/literais | WP:204 `expect(screen.queryByRole('heading', { name: 'Descrição' })).toBeNull()`; WP:481 `expect(screen.queryByRole('heading', { level: 2 })).toBeNull()`; WP:483 `expect(screen.getByRole('main').querySelectorAll('section')).toHaveLength(0)`; WP:491 `expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.querySelector('p')?.textContent).toBe('  Caixa de aço.  ')`; WP:492 equivalente observações literal | Caso antigo espaços agora exige ausência; seções inteiras omitidas; textos preenchidos sem transformação. Sim |
+| CATREF-61 dados intactos | review: comando `git diff --name-only -- client/public/catalog client/src/catalog/products.generated.ts` vazio | Nenhum arquivo de produto alterado. Sim |
+| CATREF-62 identidade | WP:403 `expect(heading.className.split(/\s+/)).toContain('text-foreground')`; WL:84 `expect(css).toMatch(/--primary:\s*#0066cc/)` | Tokens existentes, Table/PriceBlock/badges/WantLink reutilizados; revisão visual clara. Tema escuro real permanece limitação baseline/T16 |
+| CATREF-63 preço | WP:197 `expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')`; WP:149 `expect(within(offer).getByTestId('price-installments').textContent).toBe('ou em até 12x com juros')`; WP:150 pix; WP:445 preço anterior; PB:99 `expect(screen.getByTestId('price-badge').textContent).toBe('−17%')`; PB:110 `expect(screen.queryByTestId('price-badge')).toBeNull()` | BRL, anterior opcional, piso desconto >=1%, pix/parcelas preservados. Sim |
+| CATREF-65 ausente/desabilitado | WP:277 `expect(screen.getByText('Este relógio não está no catálogo.')).toBeDefined()`; WP:285 mesma mensagem; WP:286 `expect(screen.queryByRole('link', { name: 'Enviar no WhatsApp' })).toBeNull()` | Mensagem exata, sem oferta para slug ausente. Sim |
+| CATREF-66 similar | WP:356 `expect(links[0].getAttribute('href')).toBe(httpsUrl)`; WP:360 `expect(links[1].getAttribute('href')).toBe(httpUrl)`; WP:357/358 target/rel exatos | http/https preservados. Sim |
+| CATREF-67 WhatsApp | WP:493 `expect(link.getAttribute('href')).toBe(\`https://wa.me/?text=${encodeURIComponent(\`Olá, tenho interesse no Seculus. ${window.location.origin}/product/seculus-kit\`)}\`)` | Mesmo destino/mensagem exatos em principal e barra nas duas composições. Sim |
+| CATREF-68/69 target e visibilidade | WP:296 `expect(links).toHaveLength(2)`; WP:307 `expect(screen.queryByTestId('sticky-bar')).toBeNull()`; WP:510 `expect(targets).toEqual([mobile, desktop])`; WP:508 `expect(mobile.isConnected).toBe(false)`; SB:270/272 regra por 8 larguras | Callback estável substitui alvo; barra só oculta com ratio1. Sim |
+| CATREF-70 espaço/safe area | SB:311 `expect(getByTestId('sticky-bar-spacer').style.height).toBe('92px')`; SB:312 `expect(bar.getAttribute('style')).toContain('padding-bottom: env(safe-area-inset-bottom)')` | Componente reutilizado, altura real + área segura. Sim |
+| Proprietário estável / CATREF-31/71 | WP:523 `expect(screen.getByRole('dialog', { name: 'Galeria de fotos' })).toBe(gallery)`; WP:524/526 src igual `two.webp`; WP:527 `expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Abrir galeria na foto 2' }))`; PM:135 `expect(document.activeElement).toBe(trigger)`; WL:76 `expect(link.className).toMatch(/\bmin-h-11\b/)` | Uma Gallery sobrevive a desktop→mobile, foto/foco preservados; controles acessíveis e botão existente reutilizados. Sim |
+| CATREF-72 proporção/overflow | WP:426 `expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth)`; WP:335/336 células whitespace-normal/break-words; review medidas reais + object-fit contain | jsdom cobre contrato; navegador comprova overflow/proporção. Sim |
+
+**Check C — reverse mapping**
+
+| file:line + expressão / grupo | AC ou regressão preservada | Keep? |
+| --- | --- | --- |
+| WP:122 `expect(badge.textContent).toBe(state)`; WP:138 `expect(badge.textContent).toBe(label)`; WP:149/150 parcelas/pix exatos | CATREF-13/17/63, metadados anteriores | Sim |
+| WP:158/166/179 href `/`; WP:186/187 histórico não chamado; WP:270 título com seller | Navegação atual preservada pela integração | Sim |
+| WP:195 `expect(follows(...)).toBe(true)`; WP:204/211/215 ausência Descrição; WP:220/221 observações; WP:227/231 ausência notas | CATREF-13/59 | Sim |
+| WP:241 `expect(rows).toHaveLength(2)`; WP:244/247 células exatas; WP:253/258 tabela ausente; WP:265 text-left; WP:315 data-slot; WP:335/336 quebra | CATREF-20/57/58/59/62/72 e tabela incumbente | Sim |
+| WP:277/285 mensagem exata; WP:286 ação ausente | CATREF-65 | Sim |
+| WP:296 dois links; WP:299 destinos iguais; WP:307 barra ausente | CATREF-67/68/69 | Sim |
+| WP:356/360 href http/https; WP:381/396 classes de link; WP:403 foreground; WP:411–414 limites main; WP:426–432 overflow/texto similar | CATREF-62/66/72 | Sim |
+| WP:440/441 título; WP:443 ação única; WP:444 cor literal; WP:445 anterior; WP:450/451 colunas/mídia; WP:456 ordem | CATREF-14–20/54/63 | Sim, 4 cenários novos |
+| WP:465 `expect(screen.queryByTestId('watch-color')).toBeNull()`; WP:466 Cor preenchida na tabela | CATREF-55/56 | Sim, 3 novos |
+| WP:473 cor literal; WP:474 array de linhas exato | CATREF-54/57/58 | Sim, 2 novos |
+| WP:481–483 ausência de headings/tabela/seções | CATREF-59 | Sim, 2 novos |
+| WP:491/492 textos literais; WP:493 destino exato | CATREF-59/67 | Sim, 2 novos |
+| WP:508/510 alvo desligado/novo alvo; WP:512 barra ausente | CATREF-68/69 | Sim, 1 novo |
+| WP:523 mesma Gallery; WP:524/526 mesma foto; WP:527 foco | ProductMedia estável requerido T13; CATREF-31/71 | Sim, 1 novo |
+| carousel.test.tsx:123 `expect(importers.toSorted()).toEqual([...])` | Migração de consumidor para ProductMedia, preservando teste de wiring | Sim, existente |
+| router/main: matchMedia local, asserções anteriores intactas | Harness necessário para consumidor WatchPage integrado | Sim, sem teste novo |
+
+- **Check A**: requisitos e done-when cobertos por expressões/medidas; sem precisão indefinida no comportamento implementado.
+- **Check B**: resultados de texto, ordem, presença, href, identidade do modal, foto e foco são verificados; não há substituição por contagem de mocks.
+- **Check C**: 15 novos cenários ancorados; 31 regressões de página preservadas/migradas; sem cenário especulativo.
+- **Check D**: matriz e comandos Vitest existentes seguidos; nenhum threshold adicional inventado.
+- **Verdict**: adequado no escopo T13. Sem SPEC_DEVIATION. Limitação de tema efetivo claro declarada; revisão final T16 permanece.
+
+**Status**: done
 
 ### T14: Remover adaptador legado do Carousel
 

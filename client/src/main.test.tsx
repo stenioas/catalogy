@@ -37,6 +37,12 @@ function didRequestSellers(fetchMock: ReturnType<typeof vi.fn>) {
 }
 
 async function renderApp(path: string) {
+  vi.stubGlobal('matchMedia', vi.fn((query: string) => ({
+    matches: false,
+    media: query,
+    addEventListener() {},
+    removeEventListener() {},
+  })))
   window.history.replaceState({}, '', path)
   vi.resetModules()
   const fetchMock = installFetchSpy()

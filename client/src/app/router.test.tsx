@@ -64,6 +64,12 @@ function watchTitle(): string {
 }
 
 beforeEach(() => {
+  vi.stubGlobal('matchMedia', vi.fn((query: string) => ({
+    matches: false,
+    media: query,
+    addEventListener() {},
+    removeEventListener() {},
+  })))
   mockProductsRef.current = null
 })
 

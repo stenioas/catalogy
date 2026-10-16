@@ -111,7 +111,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     vi.useRealTimers()
   })
 
-  it('is mounted only from the watch page (CAT-70)', () => {
+  it('is mounted from the watch page through ProductMedia (CAT-70, CATREF-13)', () => {
     const importers = sourceFiles(clientSrc).flatMap((path) => {
       const text = readFileSync(path, 'utf8')
       const importsCarousel =
@@ -123,7 +123,6 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(importers.toSorted()).toEqual([
       'components/catalog/carousel.test.tsx',
       'components/catalog/product-media.tsx',
-      'routes/watch-page.tsx',
     ])
   })
 
