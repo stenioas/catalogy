@@ -1,21 +1,17 @@
-import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
+import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { Gallery } from './gallery'
 import { DRAG_THRESHOLD_PX, rubberBand, rubberStretch, slideDuration } from './motion'
-
-export type CarouselProps = {
-  images: string[]
-  alt: string
-}
 
 function prefersReducedMotion(): boolean {
   if (typeof window.matchMedia !== 'function') return false
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-export type CarouselViewProps = CarouselProps & {
+export type CarouselViewProps = {
+  images: string[]
+  alt: string
   index: number
   onIndexChange: (index: number) => void
   onOpenGallery: (index: number, trigger: HTMLElement) => void
@@ -216,58 +212,6 @@ export function CarouselView({
             })}
           </div>
         </div>
-      ) : null}
-    </div>
-  )
-}
-
-// Temporary owner for WatchPage until ProductMedia is integrated.
-export function Carousel({ images, alt }: CarouselProps) {
-  const [index, setIndex] = useState(0)
-  const [galleryOpen, setGalleryOpen] = useState(false)
-  const frameRef = useRef<HTMLElement | null>(null)
-  const wasGalleryOpen = useRef(false)
-
-  useEffect(() => {
-    const root = document.getElementById('root')
-    if (!galleryOpen || !root) return
-    const wasInert = root.hasAttribute('inert')
-    root.setAttribute('inert', '')
-    return () => {
-      if (!wasInert) root.removeAttribute('inert')
-    }
-  }, [galleryOpen])
-
-  useEffect(() => {
-    if (galleryOpen) {
-      wasGalleryOpen.current = true
-      return
-    }
-    if (wasGalleryOpen.current) {
-      frameRef.current?.focus()
-      wasGalleryOpen.current = false
-    }
-  }, [galleryOpen])
-
-  return (
-    <div inert={galleryOpen}>
-      <CarouselView
-        images={images}
-        alt={alt}
-        index={index}
-        onIndexChange={setIndex}
-        onOpenGallery={() => setGalleryOpen(true)}
-        primaryRef={(element) => { frameRef.current = element }}
-        animate={!galleryOpen}
-      />
-      {galleryOpen ? (
-        <Gallery
-          images={images}
-          alt={alt}
-          index={index}
-          onIndexChange={setIndex}
-          onClose={() => setGalleryOpen(false)}
-        />
       ) : null}
     </div>
   )

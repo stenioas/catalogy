@@ -4,9 +4,10 @@ import { fileURLToPath } from 'node:url'
 
 import { act, useRef, useState } from 'react'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { Carousel, CarouselView } from './carousel'
+import { CarouselView } from './carousel'
+import { ProductMedia } from './product-media'
 
 const clientSrc = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -16,7 +17,7 @@ function mockReducedMotion(reduce: boolean) {
   vi.stubGlobal(
     'matchMedia',
     vi.fn((query: string) => ({
-      matches: reduce && query === '(prefers-reduced-motion: reduce)',
+      matches: query === '(min-width: 921px)' ? false : reduce && query === '(prefers-reduced-motion: reduce)',
       media: query,
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
@@ -25,8 +26,9 @@ function mockReducedMotion(reduce: boolean) {
   )
 }
 
-function renderCarousel(images: string[] = photos) {
-  return render(<Carousel images={images} alt="Seculus" />)
+function renderCarousel(images: string[] = photos, container?: HTMLElement) {
+  const productMedia = <ProductMedia images={images} alt="Seculus">{({ media }) => media}</ProductMedia>
+  return container ? render(productMedia, { container }) : render(productMedia)
 }
 
 function shownSrc() {
@@ -105,23 +107,31 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     window.PointerEvent = class PointerEvent extends MouseEvent {} as typeof PointerEvent
   })
 
+  beforeEach(() => mockReducedMotion(false))
+
   afterEach(() => {
     cleanup()
     vi.unstubAllGlobals()
     vi.useRealTimers()
   })
 
-  it('is mounted from the watch page through ProductMedia (CAT-70, CATREF-13)', () => {
-    const importers = sourceFiles(clientSrc).flatMap((path) => {
+  it('is consumed only through ProductMedia and has no legacy adapter importers (CAT-70, CATREF-13)', () => {
+    const productionFiles = sourceFiles(clientSrc).filter((path) => !path.endsWith('.test.tsx'))
+    const legacyImporters = productionFiles.flatMap((path) => {
       const text = readFileSync(path, 'utf8')
-      const importsCarousel =
-        text.includes('catalog/carousel') || text.includes("from './carousel'")
-      if (!importsCarousel) return []
+      if (!/import\s*\{[^}]*\bCarousel\b[^}]*\}\s*from\s*['"][^'"]*carousel['"]/.test(text)) return []
       return [relative(clientSrc, path)]
     })
+    const viewImporters = productionFiles.flatMap((path) => {
+      const text = readFileSync(path, 'utf8')
+      if (!/import\s*\{[^}]*\bCarouselView\b[^}]*\}\s*from\s*['"][^'"]*carousel['"]/.test(text)) return []
+      return [relative(clientSrc, path)]
+    })
+    const carouselSource = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'carousel.tsx'), 'utf8')
 
-    expect(importers.toSorted()).toEqual([
-      'components/catalog/carousel.test.tsx',
+    expect(legacyImporters).toEqual([])
+    expect(carouselSource).not.toMatch(/export function Carousel\s*\(/)
+    expect(viewImporters.toSorted()).toEqual([
       'components/catalog/product-media.tsx',
     ])
   })
@@ -383,7 +393,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     const root = document.createElement('div')
     root.id = 'root'
     document.body.appendChild(root)
-    const view = render(<Carousel images={photos} alt="Seculus" />, { container: root })
+    const view = renderCarousel(photos, root)
     fireEvent.click(screen.getByRole('button', { name: 'Foto 2' }))
 
     fireEvent.pointerDown(frame(), { clientX: 100, pointerId: 1 })

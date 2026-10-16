@@ -988,16 +988,48 @@ Caminhos abreviados: WP=`client/src/routes/watch-page.test.tsx`; SB=`client/src/
 
 **Done when**:
 
-- [ ] Entrega verificada: Remover o export adaptador não controlado, seu index/galleryOpen e seus efeitos de modal; manter somente CarouselView controlado na apresentação mobile.
-- [ ] Migrar os cenários do adaptador para harness controlado ou ProductMedia na mesma tarefa, preservando asserções de resultado, gestos, foco e foto única. Nenhum teste é eliminado sem equivalente identificado. Confirmar ausência de importadores legados.
-- [ ] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
-- [ ] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
+- [x] Entrega verificada: Remover o export adaptador não controlado, seu index/galleryOpen e seus efeitos de modal; manter somente CarouselView controlado na apresentação mobile.
+- [x] Migrar os cenários do adaptador para harness controlado ou ProductMedia na mesma tarefa, preservando asserções de resultado, gestos, foco e foto única. Nenhum teste é eliminado sem equivalente identificado. Confirmar ausência de importadores legados.
+- [x] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
+- [x] Gate Full aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
 **Tests**: integration
 
 **Gate**: Full
 
 **Commit**: `refactor(catalog): remove legacy carousel modal ownership`
+
+#### T14 execution record
+
+- **Assumptions**: ProductMedia (T11) e WatchPage (T13) já são os únicos proprietários de seleção/modal; T14 remove só o adaptador `Carousel` e migra o harness de integração para ProductMedia sem alterar asserções de comportamento.
+- **Files touched**: `carousel.tsx` (removidos export `Carousel`, Gallery/inert/foco locais); `carousel.test.tsx` (`renderCarousel` via ProductMedia; oracle de importadores legados; `ControlledCarousel` preservado para View). Nenhum outro consumidor alterado.
+- **Tests**: 0 cenários novos; 36 cenários do arquivo reexecutados via ProductMedia ou harness controlado existente. Nenhum teste excluído, enfraquecido ou ignorado.
+- **Gate Full**: `pnpm test`, exit 0, **449 passed, 0 failed, 0 skipped** (64 shared + 1 prebuild + 384 client), mesma contagem de T13.
+
+**Test Adequacy Review — Check A**
+
+Caminhos abreviados: CT=`client/src/components/catalog/carousel.test.tsx`.
+
+| Critério / AC / borda | file:line + expressão | Resultado definido | Coberto? |
+| --- | --- | --- | --- |
+| Done when: adaptador removido; só CarouselView na apresentação | CT:133 `expect(carouselSource).not.toMatch(/export function Carousel\s*\(/`); CT:132 `expect(legacyImporters).toEqual([])` | Nenhum export/import legado de `Carousel` em produção | Sim |
+| Done when: consumo via ProductMedia | CT:134 `expect(viewImporters.toSorted()).toEqual(['components/catalog/product-media.tsx'])`; CT:29-31 harness `ProductMedia` + children | CarouselView importado só por ProductMedia; integração mobile usa proprietário estável | Sim |
+| CATREF-44/45/46 gestos, limites, abertura | CT:541-589 harness `ControlledCarousel`; CT:380-465 gestos/Gallery via `renderCarousel` | Mesmas asserções de seleção, limiar 40px, payload e modal preservadas via ProductMedia | Sim |
+| CATREF-47-50 modal, inert, foco, sincronização | CT:392-417 inert root + foco ao fechar; CT:434-453 track 0ms e foto sincronizada | Comportamento modal permanece no ProductMedia; regressões do adaptador revalidadas | Sim |
+| CATREF-51/71 foto única e teclado | CT:293-305 foto única; CT:467-478 foco sequencial; CT:595-602 Enter/Espaço no harness controlado | Foto única acessível; abertura sem navegação inútil | Sim |
+| CATREF-73 movimento reduzido | CT:327-334 `expect(track.style.transitionDuration).toBe('0ms')` com reduce true | 0 ms quando reduzido | Sim |
+
+**Check C — reverse mapping**
+
+| file:line + expressão | AC ou done-when | Keep? |
+| --- | --- | --- |
+| CT:132-136 oracles de import/export legado | Done when: confirmar ausência de importadores legados | Sim |
+| CT:29-31, CT:139-540 cenários via `renderCarousel`/`ControlledCarousel` | Migração do adaptador para ProductMedia/harness; CATREF-42–51, CAT-70–86, GAL/SV | Sim, 36 regressões preservadas |
+
+- **Check B/D**: asserções sobre src, foco, inert, transform e disabled; matriz Vitest existente seguida.
+- **Verdict**: adequado no escopo T14. Sem SPEC_DEVIATION.
+
+**Status**: done
 
 ### T15: Remover compatibilidade targetRef da StickyBar
 

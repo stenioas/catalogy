@@ -1,7 +1,7 @@
 # Catalog Layout Refactor Specification
 
 Data: 2026-10-15
-Status: execução em andamento; T1–T13 concluídas, T14–T16 pendentes.
+Status: execução em andamento; T1–T14 concluídas, T15–T16 pendentes.
 Fonte: [desenho aprovado](../../../CATALOG-REFACTORING-DESIGN.md).
 Porte: Large, com especificação completa, design técnico e tarefas formais. Todas as histórias abaixo são P1 e pertencem à entrega aprovada.
 
@@ -263,7 +263,7 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-28 | US3: Seleção desktop e galeria compartilhada / AC8 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
 | CATREF-29 | US3: Seleção desktop e galeria compartilhada / AC9 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
 | CATREF-30 | US3: Seleção desktop e galeria compartilhada / AC10 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T9, T11, T16 |
-| CATREF-31 | US3: Seleção desktop e galeria compartilhada / AC11 | Execute | Implemented — T9/T11: apresentações e proprietário compartilhado; adequação T11 em tasks.md; página T13 e revisão T16 pendentes | T11, T14, T16 |
+| CATREF-31 | US3: Seleção desktop e galeria compartilhada / AC11 | Execute | Implemented — T9/T11/T13/T14: proprietário estável e adaptador legado removido; adequação T11/T13/T14 em tasks.md; revisão T16 pendente | T11, T14, T16 |
 | CATREF-32 | US4: Zoom desktop / AC1 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T8, T16 |
 | CATREF-33 | US4: Zoom desktop / AC2 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
 | CATREF-34 | US4: Zoom desktop / AC3 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
@@ -276,14 +276,14 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-41 | US4: Zoom desktop / AC10 | Execute | Implemented — T8 isolada; evidência em t8-zoom-review.md e adequação em tasks.md; integração T9/T11 e revisão T16 pendentes | T7, T8, T16 |
 | CATREF-42 | US5: Preservação do carrossel e da galeria / AC1 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
 | CATREF-43 | US5: Preservação do carrossel e da galeria / AC2 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
-| CATREF-44 | US5: Preservação do carrossel e da galeria / AC3 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T14, T16 |
+| CATREF-44 | US5: Preservação do carrossel e da galeria / AC3 | Execute | Implemented — T10/T14: CarouselView controlado via ProductMedia; adaptador removido; regressões em carousel.test.tsx | T10, T14, T16 |
 | CATREF-45 | US5: Preservação do carrossel e da galeria / AC4 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T16 |
-| CATREF-46 | US5: Preservação do carrossel e da galeria / AC5 | Execute | Implemented — T10; apresentação controlada e adaptador revalidados; adequação em tasks.md | T10, T14, T16 |
-| CATREF-47 | US5: Preservação do carrossel e da galeria / AC6 | Execute | Implemented — T11: Gallery única, gestos preservados, isolamento e foco; adequação em tasks.md; página T13, migração T14 e revisão T16 pendentes | T11, T14, T16 |
-| CATREF-48 | US5: Preservação do carrossel e da galeria / AC7 | Execute | Implemented — T11: Gallery única, gestos preservados, isolamento e foco; adequação em tasks.md; página T13, migração T14 e revisão T16 pendentes | T11, T14, T16 |
-| CATREF-49 | US5: Preservação do carrossel e da galeria / AC8 | Execute | Implemented — T11: Gallery única, gestos preservados, isolamento e foco; adequação em tasks.md; página T13, migração T14 e revisão T16 pendentes | T11, T14, T16 |
-| CATREF-50 | US5: Preservação do carrossel e da galeria / AC9 | Execute | Implemented — T11: Gallery única, gestos preservados, isolamento e foco; adequação em tasks.md; página T13, migração T14 e revisão T16 pendentes | T11, T14, T16 |
-| CATREF-51 | US5: Preservação do carrossel e da galeria / AC10 | Execute | Implemented — T9/T10/T11: foto única acessível nas apresentações e no fluxo modal; adequação em tasks.md; página T13 e revisão T16 pendentes | T9, T10, T11, T14, T16 |
+| CATREF-46 | US5: Preservação do carrossel e da galeria / AC5 | Execute | Implemented — T10/T14: abertura e gestos revalidados via ProductMedia; adaptador removido | T10, T14, T16 |
+| CATREF-47 | US5: Preservação do carrossel e da galeria / AC6 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão T16 pendente | T11, T14, T16 |
+| CATREF-48 | US5: Preservação do carrossel e da galeria / AC7 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão T16 pendente | T11, T14, T16 |
+| CATREF-49 | US5: Preservação do carrossel e da galeria / AC8 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão T16 pendente | T11, T14, T16 |
+| CATREF-50 | US5: Preservação do carrossel e da galeria / AC9 | Execute | Implemented — T11/T13/T14: Gallery única, inert/foco via ProductMedia; adaptador Carousel removido; revisão T16 pendente | T11, T14, T16 |
+| CATREF-51 | US5: Preservação do carrossel e da galeria / AC10 | Execute | Implemented — T9/T10/T11/T13/T14: foto única acessível; harness ProductMedia; revisão T16 pendente | T9, T10, T11, T14, T16 |
 | CATREF-52 | US6: Cor opcional e conteúdo preenchido / AC1 | Execute | Implemented | T1, T16 |
 | CATREF-53 | US6: Cor opcional e conteúdo preenchido / AC2 | Execute | Implemented | T1, T16 |
 | CATREF-54 | US6: Cor opcional e conteúdo preenchido / AC3 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T13, T16 |
@@ -303,11 +303,11 @@ Cada ID identifica exatamente um critério de aceite. As tarefas vinculam as ent
 | CATREF-68 | US7: Identidade, acessibilidade e regras comerciais / AC7 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T12, T13, T15, T16 |
 | CATREF-69 | US7: Identidade, acessibilidade e regras comerciais / AC8 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T12, T13, T15, T16 |
 | CATREF-70 | US7: Identidade, acessibilidade e regras comerciais / AC9 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T12, T13, T15, T16 |
-| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T4, T6, T9, T10, T11, T13, T14, T16 |
+| CATREF-71 | US7: Identidade, acessibilidade e regras comerciais / AC10 | Execute | Implemented — T13/T14 integrados; adaptador Carousel removido; adequação em tasks.md; revisão final T16 pendente | T4, T6, T9, T10, T11, T13, T14, T16 |
 | CATREF-72 | US7: Identidade, acessibilidade e regras comerciais / AC11 | Execute | Implemented — T13 integrada; adequação em tasks.md e navegador em t13-page-review.md; revisão final T16 pendente | T5, T6, T8, T9, T13, T16 |
-| CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Implemented — T10/T11: duração 0ms em carrossel/Gallery; adequação em tasks.md; migração T14 e revisão T16 pendentes | T10, T11, T14, T16 |
+| CATREF-73 | US7: Identidade, acessibilidade e regras comerciais / AC12 | Execute | Implemented — T10/T11/T14: duração 0ms revalidada via ProductMedia; adaptador removido; revisão T16 pendente | T10, T11, T14, T16 |
 
-**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T11 concluídas e T12–T16 pendentes.
+**Coverage:** 73 total, 73 mapped to tasks, 0 unmapped; T1–T14 concluídas e T15–T16 pendentes.
 
 ### T5 execution evidence
 
