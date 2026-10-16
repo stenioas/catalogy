@@ -148,7 +148,7 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(grid.className).toMatch(/\bgrid-cols-1\b/)
     expect(grid.className).toMatch(/\bmd:grid-cols-2\b/)
     expect(grid.className).toMatch(/\blg:grid-cols-3\b/)
-    expect(grid.className).toMatch(/\bgap-0\b/)
+    expect(grid.className).toMatch(/\bgap-4\b/)
     expect(grid.className).toMatch(/\bmd:gap-6\b/)
     expect(grid.className).toMatch(/\bdivide-y\b/)
     expect(grid.className).toMatch(/\bdivide-black\/8\b/)
