@@ -21,7 +21,7 @@ export function CatalogPage() {
           ) : (
             <ul
               data-testid="catalog-grid"
-              className="m-0 grid list-none grid-cols-1 gap-6 p-0 md:grid-cols-2 lg:grid-cols-3"
+              className="m-0 grid list-none grid-cols-1 gap-1 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
             >
               {sortedProducts.map((product) => (
                 <li key={product.slug}>

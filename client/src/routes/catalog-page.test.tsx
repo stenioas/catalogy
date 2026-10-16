@@ -148,6 +148,8 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(grid.className).toMatch(/\bgrid-cols-1\b/)
     expect(grid.className).toMatch(/\bmd:grid-cols-2\b/)
     expect(grid.className).toMatch(/\blg:grid-cols-3\b/)
+    expect(grid.className).toMatch(/\bgap-1\b/)
+    expect(grid.className).toMatch(/\bmd:gap-6\b/)
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
     expect(css).not.toMatch(/html\s*\{[^}]*font-size/)
     expect(lengthToPx(breakpointToken('md'))).toBe(768)
