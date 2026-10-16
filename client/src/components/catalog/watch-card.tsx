@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card'
 
 import { PriceBlock } from './price-block'
 import { ProductAvailabilityBadge, ProductStateBadge } from './product-badges'
-import { WantIconLink, WantLink } from './want-link'
+import { WantIconLink } from './want-link'
 
 export type WatchCardProps = {
   product: Product
@@ -40,47 +40,44 @@ export function WatchCard({ product }: WatchCardProps) {
         </Link>
         <div
           data-testid="watch-card-body"
-          className="relative flex min-w-0 flex-1 flex-col items-start gap-1 text-left md:mt-3 md:w-full md:flex-none md:gap-2 md:px-[24px]"
+          className="relative flex min-w-0 flex-1 flex-col items-start gap-1 text-left md:mt-3 md:w-full md:flex-none md:gap-2 md:px-[24px] md:pb-[24px]"
         >
-          <Link
-            to={watchPath}
-            data-testid="watch-card-link"
-            className="flex w-full min-w-0 flex-col items-start gap-1 pr-12 md:gap-2 md:pr-0"
-          >
-            {product.unmissableOffer ? (
-              <p
-                data-testid="unmissable-offer"
-                className="m-0 text-[10px] leading-none font-bold tracking-wide text-primary uppercase md:hidden"
-              >
-                OFERTA IMPERDÍVEL
-              </p>
-            ) : null}
-            <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-xl md:leading-normal md:font-semibold md:line-clamp-none">
-              {product.title}
-            </h2>
-            <div className="flex w-full flex-col items-start gap-1 md:gap-2">
-              <PriceBlock
-                price={product.price}
-                listPrice={product.listPrice}
-                showcase
-              />
-              <div className="flex flex-wrap items-center gap-1">
-                <ProductStateBadge state={product.state} compact className="md:hidden" />
-                <ProductAvailabilityBadge
-                  availabilityStatus={product.availabilityStatus}
-                  compact
+          <div className="flex w-full items-end gap-2 md:gap-3">
+            <Link
+              to={watchPath}
+              data-testid="watch-card-link"
+              className="flex min-w-0 flex-1 flex-col items-start gap-1 md:gap-2"
+            >
+              {product.unmissableOffer ? (
+                <p
+                  data-testid="unmissable-offer"
+                  className="m-0 text-[10px] leading-none font-bold tracking-wide text-primary uppercase md:hidden"
+                >
+                  OFERTA IMPERDÍVEL
+                </p>
+              ) : null}
+              <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-xl md:leading-normal md:font-semibold md:line-clamp-none">
+                {product.title}
+              </h2>
+              <div className="flex w-full flex-col items-start gap-1 md:gap-2">
+                <PriceBlock
+                  price={product.price}
+                  listPrice={product.listPrice}
+                  showcase
                 />
+                <div className="flex flex-wrap items-center gap-1">
+                  <ProductStateBadge state={product.state} compact className="md:hidden" />
+                  <ProductAvailabilityBadge
+                    availabilityStatus={product.availabilityStatus}
+                    compact
+                  />
+                </div>
               </div>
+            </Link>
+            <div data-testid="watch-card-mobile-action" className="shrink-0">
+              <WantIconLink slug={product.slug} title={product.title} />
             </div>
-          </Link>
-          <div data-testid="watch-card-mobile-action" className="absolute right-2 bottom-0 z-10 md:hidden">
-            <WantIconLink slug={product.slug} title={product.title} />
           </div>
-        </div>
-      </div>
-      <div data-testid="watch-card-actions" className="hidden px-[24px] pb-[24px] md:block">
-        <div className="mt-2">
-          <WantLink slug={product.slug} title={product.title} />
         </div>
       </div>
     </Card>

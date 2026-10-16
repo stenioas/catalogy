@@ -29,7 +29,7 @@ export function WantLink({ slug, title, ref }: WantLinkProps) {
 }
 
 const shareButtonClassName =
-  'size-8 rounded-full bg-[color-mix(in_srgb,var(--primary)_16%,white)] p-0 text-[var(--ink)] hover:bg-[color-mix(in_srgb,var(--primary)_24%,white)] hover:text-[var(--ink)]'
+  'size-8 rounded-full bg-[color-mix(in_srgb,var(--primary)_16%,white)] p-0 text-[var(--ink)] hover:bg-[color-mix(in_srgb,var(--primary)_24%,white)] hover:text-[var(--ink)] md:size-10'
 
 export function WantIconLink({ slug, title }: Pick<WantLinkProps, 'slug' | 'title'>) {
   return (
@@ -40,7 +40,7 @@ export function WantIconLink({ slug, title }: Pick<WantLinkProps, 'slug' | 'titl
         rel="noopener noreferrer"
         aria-label={WHATSAPP_LABEL}
       >
-        <Share2 aria-hidden="true" className="size-4" />
+        <Share2 aria-hidden="true" className="size-4 md:size-5" />
       </a>
     </Button>
   )
