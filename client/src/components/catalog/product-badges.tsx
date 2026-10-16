@@ -1,9 +1,29 @@
 import type { Product } from '@catalogo/shared'
 import { cn } from 'cn'
+import { Gift } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 
 const compactBadgeClassName = 'h-5 px-1.5 py-0 text-xs leading-none font-medium'
+const badgeRadiusClassName = 'rounded-[4px]'
+
+export function UnmissableOfferBadge({ className = '' }: { className?: string }) {
+  return (
+    <Badge
+      data-testid="unmissable-offer"
+      className={cn(
+        badgeRadiusClassName,
+        'tracking-wide uppercase',
+        compactBadgeClassName,
+        'bg-primary text-primary-foreground',
+        className,
+      )}
+    >
+      <Gift aria-hidden="true" className="size-3" />
+      OFERTA IMPERDÍVEL
+    </Badge>
+  )
+}
 
 export function ProductStateBadge({
   state,

@@ -382,18 +382,37 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.queryByTestId('unmissable-offer')).toBeNull()
   })
 
-  it('shows a small OFERTA IMPERDÍVEL line above the title on mobile when unmissableOffer is true', () => {
+  it('places OFERTA IMPERDÍVEL above the title on mobile and on the photo from md', () => {
     renderWatchCard({ ...sampleProduct, unmissableOffer: true })
-    const offer = screen.getByTestId('unmissable-offer')
-    const heading = screen.getByRole('heading', { name: 'Seculus' })
+    const offers = screen.getAllByTestId('unmissable-offer')
+    const frame = screen.getByTestId('watch-card-image')
     const body = screen.getByTestId('watch-card-body')
+    const heading = screen.getByRole('heading', { name: 'Seculus' })
+    const aboveTitle = offers.find((offer) => offer.className.includes('md:hidden'))
+    const onPhoto = offers.find((offer) => offer.className.includes('md:inline-flex'))
 
-    expect(offer.textContent).toBe('OFERTA IMPERDÍVEL')
-    expect(offer.className).toMatch(/text-\[10px\]/)
-    expect(offer.className).toMatch(/\buppercase\b/)
-    expect(offer.className).toMatch(/\bmd:hidden\b/)
-    expect(body.contains(offer)).toBe(true)
-    expect(offer.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(offers).toHaveLength(2)
+    expect(aboveTitle?.textContent).toBe('OFERTA IMPERDÍVEL')
+    expect(body.contains(aboveTitle as Node)).toBe(true)
+    expect(frame.contains(aboveTitle as Node)).toBe(false)
+    expect(aboveTitle?.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(onPhoto?.textContent).toBe('OFERTA IMPERDÍVEL')
+    expect(frame.contains(onPhoto as Node)).toBe(true)
+    expect(body.contains(onPhoto as Node)).toBe(false)
+    for (const offer of offers) {
+      const icon = offer.querySelector('svg')
+      expect(icon?.getAttribute('aria-hidden')).toBe('true')
+      expect(icon?.classList.contains('lucide-gift')).toBe(true)
+      expect(offer.firstElementChild).toBe(icon)
+      expect(offer.className).toMatch(/rounded-\[4px\]/)
+      expect(offer.className).not.toMatch(/\brounded-full\b/)
+      expect(offer.className).toMatch(/\bh-5\b/)
+      expect(offer.className).toMatch(/\bpx-1\.5\b/)
+      expect(offer.className).toMatch(/\btext-xs\b/)
+      expect(offer.className).toMatch(/\bbg-primary\b/)
+      expect(offer.className).toMatch(/\btext-primary-foreground\b/)
+    }
+    expect(onPhoto?.className.split(/\s+/)).toEqual(expect.arrayContaining(['absolute', 'left-3', 'bottom-3', 'hidden']))
   })
 
   it('renders the same 128px image frame with short and long product titles', () => {

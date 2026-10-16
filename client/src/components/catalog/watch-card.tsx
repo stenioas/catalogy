@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Card } from '@/components/ui/card'
 
 import { PriceBlock } from './price-block'
-import { ProductAvailabilityBadge, ProductStateBadge } from './product-badges'
+import { ProductAvailabilityBadge, ProductStateBadge, UnmissableOfferBadge } from './product-badges'
 import { WantIconLink } from './want-link'
 
 export type WatchCardProps = {
@@ -36,6 +36,9 @@ export function WatchCard({ product }: WatchCardProps) {
               state={product.state}
               className="absolute right-3 bottom-3 hidden md:block"
             />
+            {product.unmissableOffer ? (
+              <UnmissableOfferBadge className="absolute bottom-3 left-3 hidden md:inline-flex" />
+            ) : null}
           </div>
         </Link>
         <div
@@ -49,12 +52,7 @@ export function WatchCard({ product }: WatchCardProps) {
               className="flex min-w-0 flex-1 flex-col items-start gap-1 md:gap-2"
             >
               {product.unmissableOffer ? (
-                <p
-                  data-testid="unmissable-offer"
-                  className="m-0 text-[10px] leading-none font-bold tracking-wide text-primary uppercase md:hidden"
-                >
-                  OFERTA IMPERDÍVEL
-                </p>
+                <UnmissableOfferBadge className="md:hidden" />
               ) : null}
               <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-xl md:leading-normal md:font-semibold md:line-clamp-none">
                 {product.title}
