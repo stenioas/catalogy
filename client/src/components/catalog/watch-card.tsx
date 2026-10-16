@@ -20,7 +20,7 @@ export function WatchCard({ product }: WatchCardProps) {
   const watchPath = `/product/${product.slug}`
 
   return (
-    <Card className="gap-0 overflow-hidden rounded-none border-0 bg-background p-0 py-0 shadow-none ring-0 md:rounded-[12px] md:border-[1px] md:bg-card">
+    <Card className="h-full w-full gap-0 overflow-hidden rounded-none border-0 bg-background p-0 py-0 shadow-none ring-0 md:rounded-[12px] md:border-[1px] md:bg-card">
       <div data-testid="watch-card-row" className="flex w-full items-center gap-2 md:block">
         <Link to={watchPath} className="contents">
           <div
@@ -51,7 +51,7 @@ export function WatchCard({ product }: WatchCardProps) {
                 <UnmissableOfferBadge className="md:hidden" />
               ) : null}
               <ProductConditionLine state={product.state} availabilityStatus={product.availabilityStatus} />
-              <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-xl md:leading-normal md:font-semibold md:line-clamp-none">
+              <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-base md:leading-snug md:font-semibold md:line-clamp-none">
                 {product.title}
               </h2>
               <div className="flex w-full flex-col items-start gap-1 md:gap-2">

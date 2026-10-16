@@ -108,7 +108,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining([
       `bg-availability-${palette}`,
       `text-availability-${palette}-foreground`,
-      `border-availability-${palette}-border`,
+      'border-0',
       'rounded-[4px]',
       'h-5',
       'px-1.5',
@@ -271,7 +271,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(heading.className).toMatch(/\bmd:line-clamp-none\b/)
     expect(heading.className).toMatch(/text-\[13px\]/)
     expect(heading.className).toMatch(/\bfont-medium\b/)
-    expect(heading.className).toMatch(/\bmd:text-xl\b/)
+    expect(heading.className).toMatch(/\bmd:text-base\b/)
     expect(heading.className).toMatch(/\bmd:font-semibold\b/)
   })
 
@@ -358,13 +358,14 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     const badge = screen.getByTestId('price-badge')
     const current = screen.getByTestId('price-current')
     expect(list.className).toMatch(/\btext-xs\b/)
-    expect(list.className).toMatch(/\bmd:text-base\b/)
+    expect(list.className).toMatch(/\bmd:text-sm\b/)
+    expect(badge.className).toMatch(/text-\[11px\]/)
+    expect(badge.className).not.toMatch(/\bmd:text-sm\b/)
     expect(current.className).toMatch(/\btext-base\b/)
     expect(current.className).toMatch(/\bmd:text-xl\b/)
     expect(badge.className.split(/\s+/)).toContain('row-start-2')
     expect(badge.className.split(/\s+/)).toContain('md:row-start-1')
-    expect(badge.className.split(/\s+/)).toContain('md:-rotate-[8deg]')
-    expect(badge.className.split(/\s+/)).not.toContain('-rotate-[8deg]')
+    expect(badge.className).not.toMatch(/rotate/)
     expect(screen.getByTestId('price-installments').className).toMatch(/\btext-xs\b/)
   })
 

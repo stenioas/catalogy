@@ -159,6 +159,12 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(columnCount(grid.className, 768)).toBe(2)
     expect(columnCount(grid.className, 1023)).toBe(2)
     expect(columnCount(grid.className, 1024)).toBe(3)
+    expect(grid.className).toMatch(/\bitems-stretch\b/)
+    const item = grid.querySelector('li')
+    const card = item?.querySelector('[data-slot="card"]')
+    expect(item?.className).toMatch(/\bflex\b/)
+    expect(item?.className).toMatch(/\bh-full\b/)
+    expect(card?.className).toMatch(/\bh-full\b/)
   })
 
   it('paints the page background across the full viewport width (CAT-39)', () => {

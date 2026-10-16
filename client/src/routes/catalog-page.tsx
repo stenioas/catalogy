@@ -21,10 +21,10 @@ export function CatalogPage() {
           ) : (
             <ul
               data-testid="catalog-grid"
-              className="catalog-grid m-0 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+              className="catalog-grid m-0 grid list-none grid-cols-1 items-stretch gap-4 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
             >
               {sortedProducts.map((product) => (
-                <li key={product.slug}>
+                <li key={product.slug} className="flex h-full">
                   <WatchCard product={product} />
                 </li>
               ))}

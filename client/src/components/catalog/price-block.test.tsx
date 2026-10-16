@@ -82,14 +82,14 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(pix.compareDocumentPosition(screen.getByTestId('price-installments')) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
   })
 
-  it('places the tilted discount badge beside the reference price above the current price', () => {
+  it('places the upright discount badge beside the reference price above the current price', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450 })
     const badge = screen.getByTestId('price-badge')
     const reference = screen.getByTestId('price-list')
     const current = screen.getByTestId('price-current')
     expect(badge.parentElement).toBe(reference.parentElement)
     expect(badge.compareDocumentPosition(current) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
-    expect(badge.className.split(/\s+/)).toContain('-rotate-[8deg]')
+    expect(badge.className).not.toMatch(/rotate/)
   })
 
   it('shows De R$ 450,00 struck and −17% for list 450 and price 369.9 (CAT-100, CAT-101)', () => {
@@ -151,10 +151,10 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     const current = screen.getByTestId('price-current')
     const installments = screen.getByTestId('price-installments')
 
-    expect(list.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-span-3', 'text-xs', 'md:text-base', 'md:row-start-1']))
+    expect(list.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-span-3', 'text-xs', 'md:text-sm', 'md:row-start-1']))
     expect(current.className.split(/\s+/)).toEqual(expect.arrayContaining(['text-base', 'md:text-xl', 'row-start-2']))
-    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-start-2', 'row-start-2', 'text-[11px]', 'md:row-start-1', 'md:-rotate-[8deg]']))
-    expect(badge.className.split(/\s+/)).not.toContain('-rotate-[8deg]')
+    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-start-2', 'row-start-2', 'text-[11px]', 'md:row-start-1']))
+    expect(badge.className).not.toMatch(/rotate/)
     expect(badge.textContent).toBe('−17%')
     expect(installments.className).toMatch(/\btext-xs\b/)
     expect(installments.textContent).toBe('ou em até 12x com juros')
