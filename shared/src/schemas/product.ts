@@ -48,6 +48,7 @@ export const ProductSchema = z
     enabled: z.boolean().optional(),
     specifications: z.array(SpecificationSchema).optional(),
     observations: z.string().optional(),
+    unmissableOffer: z.boolean().optional(),
   })
   .superRefine((product, context) => {
     if (

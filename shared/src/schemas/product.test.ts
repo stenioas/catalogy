@@ -157,6 +157,16 @@ describe('ProductSchema optional fields (CAT-13)', () => {
     }
   })
 
+  it('accepts unmissableOffer only as a boolean and omits it by default', () => {
+    const omitted = ProductSchema.safeParse(baseProduct)
+    const turnedOn = ProductSchema.safeParse({ ...baseProduct, unmissableOffer: true })
+    const turnedOff = ProductSchema.safeParse({ ...baseProduct, unmissableOffer: false })
+    expect(omitted.success && omitted.data.unmissableOffer).toBeUndefined()
+    expect(turnedOn.success && turnedOn.data.unmissableOffer).toBe(true)
+    expect(turnedOff.success && turnedOff.data.unmissableOffer).toBe(false)
+    expect(ProductSchema.safeParse({ ...baseProduct, unmissableOffer: 'true' }).success).toBe(false)
+  })
+
   it('keeps a product listed when enabled is omitted or true, and stores false', () => {
     const omitted = ProductSchema.safeParse(baseProduct)
     const turnedOn = ProductSchema.safeParse({ ...baseProduct, enabled: true })

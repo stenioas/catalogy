@@ -116,8 +116,9 @@ describe('WatchCard (SV-13, SV-14)', () => {
       `border-availability-${palette}-border`,
       'text-xs',
     ]))
-    expect(price.nextElementSibling).toBe(badge)
-    expect(badge.parentElement).toBe(price.parentElement)
+    const meta = price.nextElementSibling
+    expect(meta?.contains(badge)).toBe(true)
+    expect(badge.parentElement).toBe(meta)
     expect(screen.getByTestId('watch-card-body').contains(badge)).toBe(true)
   })
 
@@ -357,6 +358,29 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(badge.className.split(/\s+/)).toContain('md:-rotate-[8deg]')
     expect(badge.className.split(/\s+/)).not.toContain('-rotate-[8deg]')
     expect(screen.getByTestId('price-installments').className).toMatch(/\btext-xs\b/)
+  })
+
+  it('hides the unmissable offer line unless unmissableOffer is true', () => {
+    renderWatchCard()
+    expect(screen.queryByTestId('unmissable-offer')).toBeNull()
+
+    cleanup()
+    renderWatchCard({ ...sampleProduct, unmissableOffer: false })
+    expect(screen.queryByTestId('unmissable-offer')).toBeNull()
+  })
+
+  it('shows a small OFERTA IMPERDÍVEL line above the title on mobile when unmissableOffer is true', () => {
+    renderWatchCard({ ...sampleProduct, unmissableOffer: true })
+    const offer = screen.getByTestId('unmissable-offer')
+    const heading = screen.getByRole('heading', { name: 'Seculus' })
+    const body = screen.getByTestId('watch-card-body')
+
+    expect(offer.textContent).toBe('OFERTA IMPERDÍVEL')
+    expect(offer.className).toMatch(/text-\[10px\]/)
+    expect(offer.className).toMatch(/\buppercase\b/)
+    expect(offer.className).toMatch(/\bmd:hidden\b/)
+    expect(body.contains(offer)).toBe(true)
+    expect(offer.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
   })
 
   it('renders the same 128px image frame with short and long product titles', () => {

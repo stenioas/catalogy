@@ -45,7 +45,14 @@ export function WatchCard({ product }: WatchCardProps) {
             data-testid="watch-card-body"
             className="flex min-w-0 flex-1 flex-col items-start gap-1 text-left md:mt-3 md:w-full md:flex-none md:gap-2 md:px-[24px]"
           >
-            <ProductStateBadge state={product.state} compact className="md:hidden" />
+            {product.unmissableOffer ? (
+              <p
+                data-testid="unmissable-offer"
+                className="m-0 text-[10px] leading-none font-bold tracking-wide text-primary uppercase md:hidden"
+              >
+                OFERTA IMPERDÍVEL
+              </p>
+            ) : null}
             <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-xl md:leading-normal md:font-semibold md:line-clamp-none">
               {product.title}
             </h2>
@@ -55,10 +62,13 @@ export function WatchCard({ product }: WatchCardProps) {
                 listPrice={product.listPrice}
                 showcase
               />
-              <ProductAvailabilityBadge
-                availabilityStatus={product.availabilityStatus}
-                className="text-xs"
-              />
+              <div className="flex flex-wrap items-center gap-1">
+                <ProductStateBadge state={product.state} compact className="md:hidden" />
+                <ProductAvailabilityBadge
+                  availabilityStatus={product.availabilityStatus}
+                  className="text-xs"
+                />
+              </div>
             </div>
           </div>
         </Link>
