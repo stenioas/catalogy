@@ -91,8 +91,8 @@ describe('HoverZoom (CATREF-32–41)', () => {
     hover = false; ready(); move(); flush()
     expect(frame()).toBeNull()
   })
-  it('does not activate below 921px', () => {
-    vi.stubGlobal('innerWidth', 920); ready(); move(); flush()
+  it('does not activate below 920px', () => {
+    vi.stubGlobal('innerWidth', 919); ready(); move(); flush()
     expect(frame()).toBeNull()
   })
   it('waits for natural dimensions and removes overlays on image failure', () => {
@@ -146,11 +146,11 @@ describe('HoverZoom (CATREF-32–41)', () => {
     fireEvent.scroll(window); flush()
     expect(parseFloat(lens()!.style.top)).toBeCloseTo(186.6667, 3)
     expect(frame()?.style.top).toBe('12px')
-    vi.stubGlobal('innerWidth', 921); vi.stubGlobal('innerHeight', 300)
+    vi.stubGlobal('innerWidth', 920); vi.stubGlobal('innerHeight', 300)
     fireEvent.resize(window); flush()
     expect(frame()?.style.width).toBe('207px')
     expect(frame()?.style.height).toBe('276px')
-    vi.stubGlobal('innerWidth', 920)
+    vi.stubGlobal('innerWidth', 919)
     fireEvent.resize(window); flush(); expect(frame()).toBeNull()
   })
   it('unmount removes the portal and cancels outstanding work', () => {

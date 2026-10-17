@@ -102,10 +102,10 @@ export function CarouselView({
     'hidden size-11 shrink-0 cursor-pointer rounded-full text-inherit hover:bg-[#e5e5ea] md:inline-flex'
 
   return (
-    <div data-testid="watch-carousel" className="w-full">
+    <div data-testid="watch-carousel" className="watch-carousel w-full">
       <div
         data-testid="carousel-stage"
-        className="relative mx-auto flex w-full max-w-[480px] items-center justify-center md:max-w-[600px] md:gap-4"
+        className="relative mx-auto flex w-full max-w-[840px] items-center justify-center md:gap-4"
       >
         {multi ? (
           <Button
@@ -122,7 +122,7 @@ export function CarouselView({
         <div
           ref={primaryRef}
           data-testid="carousel-frame"
-          className="relative mx-auto aspect-square w-full min-w-0 max-w-[480px] flex-1 touch-pan-y overflow-hidden rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="relative mx-auto aspect-square w-full min-w-0 max-w-[840px] flex-1 touch-pan-y overflow-hidden rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:rounded-[12px]"
           role="button"
           aria-label={`Abrir galeria na foto ${index + 1}`}
           aria-haspopup="dialog"

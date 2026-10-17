@@ -10,7 +10,8 @@ type ProductMediaProps = {
   children: (slot: { isDesktop: boolean; media: ReactNode }) => ReactNode
 }
 
-const DESKTOP_QUERY = '(min-width: 921px)'
+const THUMBNAIL_QUERY = '(min-width: 768px)'
+const DESKTOP_QUERY = '(min-width: 920px)'
 
 function isVisible(element: HTMLElement | null): element is HTMLElement {
   if (!element?.isConnected || element.closest('[hidden]')) return false
@@ -21,16 +22,25 @@ function isVisible(element: HTMLElement | null): element is HTMLElement {
 export function ProductMedia({ images, alt, children }: ProductMediaProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [galleryOpen, setGalleryOpen] = useState(false)
+  const [useThumbnails, setUseThumbnails] = useState(() => window.matchMedia(THUMBNAIL_QUERY).matches)
   const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(DESKTOP_QUERY).matches)
   const triggerRef = useRef<HTMLElement | null>(null)
   const primaryRef = useRef<HTMLElement | null>(null)
   const wasGalleryOpen = useRef(false)
 
   useEffect(() => {
-    const query = window.matchMedia(DESKTOP_QUERY)
-    function update() { setIsDesktop(query.matches) }
-    query.addEventListener('change', update)
-    return () => query.removeEventListener('change', update)
+    const thumbnail = window.matchMedia(THUMBNAIL_QUERY)
+    const desktop = window.matchMedia(DESKTOP_QUERY)
+    function update() {
+      setUseThumbnails(thumbnail.matches)
+      setIsDesktop(desktop.matches)
+    }
+    thumbnail.addEventListener('change', update)
+    desktop.addEventListener('change', update)
+    return () => {
+      thumbnail.removeEventListener('change', update)
+      desktop.removeEventListener('change', update)
+    }
   }, [])
 
   useEffect(() => {
@@ -69,7 +79,7 @@ export function ProductMedia({ images, alt, children }: ProductMediaProps) {
     onOpenGallery: openGallery,
     primaryRef: (element: HTMLElement | null) => { primaryRef.current = element },
   }
-  const media = isDesktop
+  const media = useThumbnails
     ? <DesktopProductMedia {...presentationProps} disabled={galleryOpen} />
     : <CarouselView {...presentationProps} animate={!galleryOpen} />
 

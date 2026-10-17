@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
 import { PriceBlock } from './price-block'
-import { WantLink } from './want-link'
+import { ProductShareButton } from './want-link'
 
 const frostedBarStyle =
   'background-color: color-mix(in srgb, var(--canvas-parchment) 80%, transparent); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);'
@@ -94,16 +94,13 @@ export function StickyBar({
       >
         <div
           data-testid="sticky-bar-row"
-          className="catalog-column flex flex-col items-stretch gap-3 py-3 md:flex-row md:items-center"
+          className="catalog-column watch-page-column flex items-end gap-3 py-3 md:grid md:grid-cols-2"
         >
-          <div className="min-w-0 md:flex-1">
+          <div className="min-w-0 flex-1">
             <PriceBlock price={price} listPrice={listPrice} />
           </div>
-          <div
-            data-testid="sticky-bar-action"
-            className="w-full min-w-0 md:flex-1 [&>a]:flex [&>a]:w-full [&>a]:justify-center"
-          >
-            <WantLink slug={slug} title={title} />
+          <div data-testid="sticky-bar-action" className="shrink-0 md:w-full">
+            <ProductShareButton slug={slug} title={title} placement="footer" />
           </div>
         </div>
       </div>

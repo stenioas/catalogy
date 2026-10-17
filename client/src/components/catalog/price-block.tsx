@@ -9,7 +9,7 @@ export type PriceBlockProps = {
   showcase?: boolean
 }
 
-const currentPriceClassName = 'text-xl font-semibold'
+const currentPriceClassName = 'text-2xl font-semibold'
 
 export function PriceBlock({
   price,
@@ -80,14 +80,14 @@ export function PriceBlock({
         >
           <span
             data-testid="price-list"
-            className="text-base text-ink-muted-48 line-through"
+            className="text-sm text-ink-muted-48 line-through"
           >
             De {formatBrl(listPrice)}
           </span>
           {showBadge ? (
             <Badge
               data-testid="price-badge"
-              className="rounded-[4px] bg-primary-tint-background text-sm font-medium text-primary-tint-foreground"
+              className="rounded-[4px] bg-primary-tint-background text-xs font-medium text-primary-tint-foreground"
             >
               −{percent}%
             </Badge>

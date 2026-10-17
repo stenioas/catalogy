@@ -275,7 +275,7 @@ describe('rotas sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {
   it('mostra a frase de relógio ausente e omite o WhatsApp quando o slug não existe', async () => {
     const fetchMock = renderAt('/product/slug-ausente')
     expect(await screen.findByText(MISSING_WATCH_MESSAGE)).toBeDefined()
-    expect(screen.queryByRole('link', { name: 'Enviar no WhatsApp' })).toBeNull()
+    expect(screen.queryByRole('link', { name: 'Compartilhar' })).toBeNull()
     expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
     expect(didRequestSellers(fetchMock)).toBe(false)
   })

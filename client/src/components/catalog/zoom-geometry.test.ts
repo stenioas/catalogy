@@ -280,11 +280,11 @@ describe('calculateZoomGeometry', () => {
     )
   })
 
-  it('keeps the frame inside a 921px viewport beside a desktop media stage', () => {
+  it('keeps the frame inside a 920px viewport beside a desktop media stage', () => {
     const geometry = calculateZoomGeometry({
       stage: { x: 92, y: 20, width: 441, height: 441 },
       natural: { width: 882, height: 882 },
-      viewport: { width: 921, height: 600 },
+      viewport: { width: 920, height: 600 },
       pointer: { x: 312.5, y: 240.5 },
     })
 
@@ -296,7 +296,7 @@ describe('calculateZoomGeometry', () => {
       source: { x: 281, y: 227.6667, width: 320, height: 426.6667 },
     })
     if (geometry !== null) {
-      expect(geometry.frame.x + geometry.frame.width).toBeLessThanOrEqual(921 - 12)
+      expect(geometry.frame.x + geometry.frame.width).toBeLessThanOrEqual(920 - 12)
       expect(geometry.frame.y + geometry.frame.height).toBeLessThanOrEqual(600 - 12)
     }
   })

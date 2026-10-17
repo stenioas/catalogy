@@ -34,7 +34,9 @@ export function ProductStateBadge({
   compact?: boolean
   className?: string
 }) {
-  if (state === 'Novo') return null
+  const tone = state === 'Novo'
+    ? 'bg-product-state-new text-product-state-new-foreground'
+    : 'bg-product-state-neutral text-product-state-neutral-foreground'
 
   return (
     <Badge
@@ -42,7 +44,7 @@ export function ProductStateBadge({
       className={cn(
         'h-auto rounded-full font-semibold',
         compact ? compactBadgeClassName : 'px-2.5 py-0.5 text-sm',
-        'bg-product-state-neutral text-product-state-neutral-foreground',
+        tone,
         className,
       )}
     >

@@ -5,7 +5,7 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vite
 import { ProductMedia } from './product-media'
 
 const photos = Array.from({ length: 12 }, (_, index) => `foto-${index + 1}.webp`)
-let width = 921
+let width = 920
 let reduced = false
 const listeners = new Set<() => void>()
 
@@ -37,7 +37,7 @@ function main() {
 function open() {
   const trigger = main()
   trigger.focus()
-  if (width >= 921) fireEvent.click(trigger)
+  if (width >= 768) fireEvent.click(trigger)
   else fireEvent.keyDown(trigger, { key: 'Enter' })
   return trigger
 }
@@ -56,16 +56,20 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
-  width = 921
+  width = 920
   reduced = false
   listeners.clear()
   vi.stubGlobal('matchMedia', vi.fn((query: string) => ({
-    get matches() { return query === '(min-width: 921px)' ? width >= 921 : query === '(hover: hover)' || reduced && query === '(prefers-reduced-motion: reduce)' },
+    get matches() {
+      if (query === '(min-width: 768px)') return width >= 768
+      if (query === '(min-width: 920px)') return width >= 920
+      return query === '(hover: hover)' || reduced && query === '(prefers-reduced-motion: reduce)'
+    },
     media: query,
-    addEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 921px)') listeners.add(listener) },
-    removeEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 921px)') listeners.delete(listener) },
+    addEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 768px)' || query === '(min-width: 920px)') listeners.add(listener) },
+    removeEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 768px)' || query === '(min-width: 920px)') listeners.delete(listener) },
   })))
-  resize(921)
+  resize(920)
 })
 
 afterEach(() => {
@@ -148,19 +152,19 @@ describe('ProductMedia shared owner (CATREF-21–31, 40, 47–51, 71, 73)', () =
     expect(listeners.size).toBe(0)
   })
 
-  it.each([920, 921])('preserves selection and the closed modal across both breakpoints starting at %i', (initial) => {
+  it.each([919, 920])('preserves selection and the closed modal across both breakpoints starting at %i', (initial) => {
     resize(initial)
     mount()
     fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
-    for (const next of [initial === 920 ? 921 : 920, initial]) {
+    for (const next of [initial === 919 ? 920 : 919, initial]) {
       resize(next)
       expect(selected()).toBe(photos[2])
       expect(screen.queryByRole('dialog')).toBeNull()
-      expect(screen.getByRole(next >= 921 ? 'region' : 'article', { name: next >= 921 ? 'Desktop' : 'Mobile' })).toBeTruthy()
+      expect(screen.getByRole(next >= 920 ? 'region' : 'article', { name: next >= 920 ? 'Desktop' : 'Mobile' })).toBeTruthy()
     }
   })
 
-  it.each([920, 921])('keeps the same open gallery and internal zoom across 920/921 starting at %i', (initial) => {
+  it.each([919, 920])('keeps the same open gallery and internal zoom across 919/920 starting at %i', (initial) => {
     resize(initial)
     mount()
     fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
@@ -172,7 +176,7 @@ describe('ProductMedia shared owner (CATREF-21–31, 40, 47–51, 71, 73)', () =
     fireEvent.wheel(frame, { ctrlKey: true, deltaY: -100, clientX: 200, clientY: 200 })
     const zoom = viewport.style.transform
     expect(zoom).not.toContain('scale(1)')
-    resize(initial === 920 ? 921 : 920)
+    resize(initial === 919 ? 920 : 919)
     expect(dialog()).toBe(modal)
     expect(screen.getAllByRole('dialog').length).toBe(1)
     expect(viewport.style.transform).toBe(zoom)
@@ -195,7 +199,7 @@ describe('ProductMedia shared owner (CATREF-21–31, 40, 47–51, 71, 73)', () =
     expect(document.getElementById('root')?.hasAttribute('inert')).toBe(false)
   })
 
-  it.each([920, 921])('opens and restores focus with one photo at %i without navigation', (initial) => {
+  it.each([919, 920])('opens and restores focus with one photo at %i without navigation', (initial) => {
     resize(initial)
     mount(photos.slice(0, 1))
     const trigger = open()
@@ -209,7 +213,7 @@ describe('ProductMedia shared owner (CATREF-21–31, 40, 47–51, 71, 73)', () =
 
   it('preserves reduced motion for both carousel and gallery navigation', () => {
     reduced = true
-    resize(920)
+    resize(767)
     mount()
     fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
     expect(screen.getByTestId('carousel-track').style.transitionDuration).toBe('0ms')
@@ -255,7 +259,7 @@ describe('ProductMedia shared owner (CATREF-21–31, 40, 47–51, 71, 73)', () =
     expect(screen.queryByTestId('hover-zoom-frame')).toBeNull()
     expect(callbacks.size).toBe(0)
     expect(galleryPhoto()).toBe(photos[0])
-    resize(920)
+    resize(767)
     expect(screen.queryByTestId('hover-zoom-stage')).toBeNull()
     expect(screen.queryByTestId('hover-zoom-frame')).toBeNull()
   })

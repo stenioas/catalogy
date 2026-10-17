@@ -240,6 +240,15 @@
 }
 
 @media (max-width: 767px) {
+  .watch-page-column {
+    padding-inline: 16px;
+  }
+
+  .watch-carousel {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+  }
+
   .catalog-grid > li:not(:last-child)::after {
     content: '';
     position: absolute;

@@ -17,7 +17,7 @@ function mockReducedMotion(reduce: boolean) {
   vi.stubGlobal(
     'matchMedia',
     vi.fn((query: string) => ({
-      matches: query === '(min-width: 921px)' ? false : reduce && query === '(prefers-reduced-motion: reduce)',
+      matches: query === '(min-width: 768px)' || query === '(min-width: 920px)' ? false : reduce && query === '(prefers-reduced-motion: reduce)',
       media: query,
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
@@ -353,14 +353,15 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(shownSrc()).toBe(photos[2])
   })
 
-  it('keeps the frame centered, square, and at most 480px, with the photo contained (SV-44)', () => {
+  it('keeps the frame centered, square, and at most 840px, with the photo contained (SV-44)', () => {
     renderCarousel()
     const box = frame()
     const classes = box.className.split(/\s+/)
-    expect(classes).toContain('max-w-[480px]')
+    expect(classes).toContain('max-w-[840px]')
     expect(classes).toContain('mx-auto')
     expect(classes).toContain('aspect-square')
-    expect(classes).toContain('rounded-[12px]')
+    expect(classes).toContain('rounded-none')
+    expect(classes).toContain('md:rounded-[12px]')
     for (const img of box.querySelectorAll('img')) {
       expect(img.className.split(/\s+/)).toContain('object-contain')
     }

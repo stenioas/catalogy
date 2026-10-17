@@ -102,7 +102,7 @@ export function DesktopProductMedia({
         aria-label={`Abrir galeria na foto ${index + 1}`}
         aria-haspopup="dialog"
         data-testid="desktop-product-main"
-        className="relative aspect-square h-auto min-w-0 flex-1 overflow-hidden rounded-xl p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="relative aspect-square h-auto min-w-0 w-full max-w-[840px] flex-1 overflow-hidden rounded-xl p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         onPointerDown={startPointer}
         onPointerMove={movePointer}
         onPointerUp={endPointer}

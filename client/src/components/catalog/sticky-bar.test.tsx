@@ -14,7 +14,7 @@ const clientSrc = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
 const slug = 'seculus'
 const title = 'Seculus'
-const whatsappLinkName = 'Enviar no WhatsApp'
+const whatsappLinkName = 'Compartilhar'
 
 function installObserver(intersectionRatio: number, isIntersecting: boolean) {
   let threshold: number | number[] | undefined
@@ -239,7 +239,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(screen.queryByTestId('price-current')).toBeNull()
   })
 
-  it('places the price beside the button from 768px and above a full-width button below that (CAT-91, CAT-92, CAT-93)', () => {
+  it('places the price beside the share icon in the footer (CAT-91, CAT-92, CAT-93)', () => {
     installObserver(0, false)
     renderBar()
 
@@ -248,21 +248,21 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const action = screen.getByTestId('sticky-bar-action')
     const link = screen.getByRole('link', { name: whatsappLinkName })
 
-    expect(row.className).toMatch(/\bflex-col\b/)
-    expect(row.className).toMatch(/\bmd:flex-row\b/)
-    expect(row.className).not.toMatch(/\bmd:justify-between\b/)
+    expect(row.className).toMatch(/\bitems-end\b/)
+    expect(row.className).toMatch(/\bgap-3\b/)
+    expect(row.className).toMatch(/\bmd:grid-cols-2\b/)
+    expect(row.className).not.toMatch(/\bflex-col\b/)
     expect(
       price.compareDocumentPosition(action) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).not.toBe(0)
-    expect(price.parentElement?.className).toMatch(/\bmd:flex-1\b/)
-    expect(action.className).toMatch(/\bw-full\b/)
-    expect(action.className).toMatch(/\bmd:flex-1\b/)
-    expect(action.className).not.toMatch(/\bmd:w-auto\b/)
-    expect(action.className).toMatch(/\[&>a\]:flex/)
-    expect(action.className).toMatch(/\[&>a\]:w-full/)
-    expect(action.className).toMatch(/\[&>a\]:justify-center/)
-    expect(action.className).not.toMatch(/md:\[&>a\]:w-auto/)
-    expect(action.className).not.toMatch(/\[&>a\]:block/)
+    expect(price.parentElement?.className).toMatch(/\bflex-1\b/)
+    expect(action.className).toMatch(/\bshrink-0\b/)
+    expect(action.className).toMatch(/\bmd:w-full\b/)
+    expect(link.className).toMatch(/\bsize-10\b/)
+    expect(link.className).toMatch(/color-mix\(in_srgb,var\(--primary\)_16%,white\)/)
+    expect(link.className).toMatch(/\bmd:w-full\b/)
+    expect(link.className).not.toMatch(/max-\[919px\]/)
+    expect(link.textContent).toBe('Compartilhar')
     expect(action.contains(link)).toBe(true)
   })
 

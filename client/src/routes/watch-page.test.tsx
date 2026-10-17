@@ -104,30 +104,40 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     width = 390
     mediaListeners.clear()
     vi.stubGlobal('matchMedia', vi.fn((query: string) => ({
-      get matches() { return query === '(min-width: 921px)' ? width >= 921 : false },
+      get matches() {
+        if (query === '(min-width: 768px)') return width >= 768
+        if (query === '(min-width: 920px)') return width >= 920
+        return false
+      },
       media: query,
-      addEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 921px)') mediaListeners.add(listener) },
-      removeEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 921px)') mediaListeners.delete(listener) },
+      addEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 768px)' || query === '(min-width: 920px)') mediaListeners.add(listener) },
+      removeEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 768px)' || query === '(min-width: 920px)') mediaListeners.delete(listener) },
     })))
     mockProductsRef.current = [makeProduct()]
     // Ratio 1: in-page Eu quero! fully visible, so the sticky bar is absent.
     installObserver(1)
   })
 
-  it('hides the state badge when the product is Novo', () => {
-    mockProductsRef.current = [makeProduct({ state: 'Novo' })]
-    renderWatchPage()
-    expect(screen.queryByTestId('state-badge')).toBeNull()
-  })
-
-  it.each(['Openbox', 'Usado'] as const)('shows state %s near the product title', (state) => {
+  it.each(['Novo', 'Openbox', 'Usado'] as const)('shows state %s as plain text before the title', (state) => {
     mockProductsRef.current = [makeProduct({ state })]
     renderWatchPage()
     const heading = screen.getByRole('heading', { level: 1, name: 'Seculus' })
-    const badge = screen.getByTestId('state-badge')
-    expect(badge.textContent).toBe(state)
-    expect(screen.getByTestId('watch-metadata').contains(badge)).toBe(true)
-    expect(follows(heading, badge)).toBe(true)
+    const line = screen.getByTestId('product-condition')
+    const stateLabel = within(line).getByTestId('state-label')
+    const identity = screen.getByTestId('watch-identity')
+    expect(screen.queryByTestId('state-badge')).toBeNull()
+    expect(stateLabel.textContent).toBe(state)
+    expect(stateLabel.className).not.toMatch(/rounded/)
+    expect(line.className).toMatch(/\bgap-1\.5\b/)
+    expect(screen.getByTestId('watch-metadata').contains(line)).toBe(true)
+    expect(identity.className).toMatch(/\bgap-1\b/)
+    expect(identity.className).toMatch(/\bmd:gap-2\b/)
+    expect(identity.contains(line)).toBe(true)
+    expect(identity.contains(heading)).toBe(true)
+    expect(heading.className).toMatch(/\btext-base\b/)
+    expect(heading.className).not.toMatch(/\btext-lg\b/)
+    expect(heading.className).not.toMatch(/\btext-xl\b/)
+    expect(follows(stateLabel, heading)).toBe(true)
   })
 
   it.each([
@@ -142,11 +152,25 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const installments = screen.getByTestId('price-installments')
     const badge = screen.getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
-    expect(within(screen.getByTestId('watch-offer')).getByTestId('availability-badge')).toBe(badge)
+    expect(within(screen.getByTestId('watch-offer')).queryByTestId('availability-badge')).toBeNull()
     expect(screen.getByTestId('watch-metadata').contains(badge)).toBe(true)
-    expect(follows(installments, badge)).toBe(true)
+    expect(follows(badge, heading)).toBe(true)
+    expect(follows(badge, installments)).toBe(true)
     expect(badge.closest('[data-testid="watch-metadata"]')).toBe(screen.getByTestId('watch-metadata'))
     expect(badge.className.split(/\s+/)).toContain('text-xs')
+  })
+
+  it('places Oferta imperdível above the price only when unmissableOffer is true', () => {
+    renderWatchPage()
+    expect(screen.queryByTestId('unmissable-offer')).toBeNull()
+    cleanup()
+    mockProductsRef.current = [makeProduct({ unmissableOffer: true })]
+    renderWatchPage()
+    const badge = screen.getByTestId('unmissable-offer')
+    const price = screen.getByTestId('price-block')
+    expect(badge.textContent).toContain('OFERTA IMPERDÍVEL')
+    expect(screen.getByTestId('watch-commerce').contains(badge)).toBe(true)
+    expect(follows(badge, price)).toBe(true)
   })
 
   it('shows installment terms below the in-page price', () => {
@@ -195,13 +219,36 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     goSpy.mockRestore()
   })
 
-  it('orders mobile title, media, offer, metadata, characteristics, description, notes and WhatsApp (CATREF-13)', () => {
+  it('orders mobile title, media, badges, price, share, description, notes and characteristics (CATREF-13)', () => {
     renderWatchPage()
-    const ordered = [screen.getByRole('heading', { name: 'Seculus' }), screen.getByTestId('watch-carousel'), screen.getByTestId('price-block'), screen.getByTestId('watch-metadata'), screen.getByRole('heading', { name: 'Características do produto' }), screen.getByRole('heading', { name: 'Descrição' }), screen.getByRole('heading', { name: 'Observações' }), screen.getByRole('link', { name: 'Enviar no WhatsApp' })]
+    const ordered = [screen.getByTestId('watch-metadata'), screen.getByRole('heading', { name: 'Seculus' }), screen.getByTestId('watch-carousel'), screen.getByTestId('price-block'), screen.getByRole('link', { name: 'Compartilhar' }), screen.getByRole('heading', { name: 'Descrição' }), screen.getByRole('heading', { name: 'Observações' }), screen.getByRole('heading', { name: 'Características do produto' })]
     for (let index = 1; index < ordered.length; index++) expect(follows(ordered[index - 1], ordered[index])).toBe(true)
     expect(screen.getByRole('img', { name: 'Seculus' }).getAttribute('src')).toBe('/catalog/products/seculus-kit/img/foto.webp')
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
     expect(screen.getByTestId('watch-page-column').classList.contains('catalog-column')).toBe(true)
+    expect(screen.getByTestId('watch-page-column').classList.contains('watch-page-column')).toBe(true)
+    const share = screen.getByRole('link', { name: 'Compartilhar' })
+    expect(share.querySelector('svg')?.classList.contains('lucide-share-2')).toBe(true)
+    expect(share.className).toMatch(/\bsize-10\b/)
+    expect(share.className).toMatch(/color-mix\(in_srgb,var\(--primary\)_16%,white\)/)
+    expect(share.className).toMatch(/\bmd:max-\[919px\]:w-full\b/)
+    expect(screen.getByTestId('watch-offer').className).toMatch(/\bmd:max-\[919px\]:grid-cols-2\b/)
+    expect(screen.getByTestId('watch-offer').className).not.toMatch(/\bflex-col\b/)
+    expect(screen.getByTestId('watch-offer').contains(share)).toBe(true)
+    expect(share.textContent).toBe('Compartilhar')
+  })
+
+  it('uses 16px horizontal padding on the product content below 768px', () => {
+    const css = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../index.css'), 'utf8')
+    const mobile = css.match(/@media\s*\(max-width:\s*767px\)\s*\{([\s\S]*?)\n\}/)?.[1]
+    expect(mobile).toBeDefined()
+    expect(mobile).toMatch(/\.watch-page-column\s*\{[^}]*padding-inline:\s*16px/)
+    expect(mobile).toMatch(/\.watch-carousel\s*\{[^}]*width:\s*calc\(100% \+ 32px\)/)
+    expect(mobile).toMatch(/\.watch-carousel\s*\{[^}]*margin-inline:\s*-16px/)
+    const column = css.match(/\.catalog-column\s*\{([^}]*)\}/)?.[1]
+    expect(column).toMatch(/padding-inline:\s*24px/)
+    expect(column).toMatch(/max-width:\s*1120px/)
+    expect(css).not.toMatch(/\.watch-page-column\s*\{[^}]*max-width/)
   })
 
   it('hides Descrição when description contains only whitespace (CATREF-59, supersedes CAT-63)', () => {
@@ -289,7 +336,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const column = screen.getByTestId('watch-page-column')
     expect(column.classList.contains('catalog-column')).toBe(true)
     expect(within(column).getByText('Este relógio não está no catálogo.')).toBeDefined()
-    expect(screen.queryByRole('link', { name: 'Enviar no WhatsApp' })).toBeNull()
+    expect(screen.queryByRole('link', { name: 'Compartilhar' })).toBeNull()
     expect(screen.queryByRole('heading', { name: 'Seculus' })).toBeNull()
   })
 
@@ -297,8 +344,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     installObserver(0.4)
     renderWatchPage()
     const bar = screen.getByTestId('sticky-bar')
-    const barLink = within(bar).getByRole('link', { name: 'Enviar no WhatsApp' })
-    const links = screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })
+    const barLink = within(bar).getByRole('link', { name: 'Compartilhar' })
+    const links = screen.getAllByRole('link', { name: 'Compartilhar' })
     expect(links).toHaveLength(2)
     const pageLink = links.find((link) => !bar.contains(link))
     if (!pageLink) throw new Error('in-page WhatsApp link not found')
@@ -311,7 +358,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     installObserver(1)
     renderWatchPage()
     expect(screen.queryByTestId('sticky-bar')).toBeNull()
-    expect(screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })).toHaveLength(1)
+    expect(screen.getAllByRole('link', { name: 'Compartilhar' })).toHaveLength(1)
   })
 
   it('shows specifications in the shadcn Table under Características do produto (SV-45)', () => {
@@ -438,31 +485,62 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       'Ver anúncio similar',
     )
   })
-  it.each([390, 920, 921, 1440])('renders one title and primary action at %i px (CATREF-14/17)', (viewport) => {
+  it.each([390, 768, 919, 920, 1440])('renders one title and primary action at %i px (CATREF-14/17)', (viewport) => {
     width = viewport
-    mockProductsRef.current = [makeProduct({ title: 'Título completo '.repeat(20), color: '  Azul  ', listPrice: 449.9 })]
+    mockProductsRef.current = [makeProduct({ title: 'Título completo '.repeat(20), color: '  Azul  ', listPrice: 449.9, unmissableOffer: true })]
     renderWatchPage()
     const heading = screen.getByRole('heading', { level: 1 })
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     expect(heading.textContent).toBe('Título completo '.repeat(20))
     expect(heading.className).not.toMatch(/line-clamp|truncate/)
-    expect(screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })).toHaveLength(1)
+    expect(screen.getAllByRole('link', { name: 'Compartilhar' })).toHaveLength(1)
     expect(screen.getByTestId('watch-color').textContent).toBe('Cor:   Azul  ')
     expect(screen.getByTestId('price-list').textContent).toBe('De R$ 449,90')
-    if (viewport >= 921) {
+    expect(follows(heading, screen.getByTestId('unmissable-offer'))).toBe(true)
+    expect(follows(screen.getByTestId('unmissable-offer'), screen.getByTestId('price-current'))).toBe(true)
+    if (viewport >= 920) {
       const left = screen.getByTestId('watch-left-column')
       const right = screen.getByTestId('watch-right-column')
       expect(left.parentElement).toBe(right.parentElement)
-      expect(left.parentElement?.className).toContain('grid-cols-[minmax(0,3fr)_minmax(0,2fr)]')
+      expect(left.parentElement?.className).toContain('grid-cols-[minmax(0,1fr)_minmax(220px,280px)]')
       expect(within(left).getByRole('group', { name: 'Miniaturas do produto' })).toBeDefined()
       expect(within(right).getByRole('heading', { level: 1 })).toBe(heading)
-      expect(within(right).getByTestId('watch-offer')).toBeDefined()
-      expect(within(right).getByRole('link', { name: 'Enviar no WhatsApp' })).toBeDefined()
+      expect(follows(within(right).getByTestId('watch-metadata'), heading)).toBe(true)
+      expect(follows(heading, within(right).getByTestId('watch-offer'))).toBe(true)
+      expect(follows(within(right).getByTestId('price-current'), within(right).getByTestId('price-installments'))).toBe(true)
+      const description = within(right).getByRole('heading', { name: 'Descrição' })
+      const share = within(right).getByRole('link', { name: 'Compartilhar' })
+      expect(follows(within(right).getByTestId('watch-offer'), description)).toBe(true)
+      expect(follows(description, share)).toBe(true)
+      expect(within(right).getByTestId('watch-offer').contains(share)).toBe(false)
+      expect(share.className).toMatch(/\bw-full\b/)
+      expect(share.className).toMatch(/color-mix\(in_srgb,var\(--primary\)_16%,white\)/)
+      expect(share.textContent).toBe('Compartilhar')
+      expect(share.querySelector('svg')?.classList.contains('lucide-share-2')).toBe(true)
+      expect(screen.getByTestId('price-list').className).toMatch(/\btext-sm\b/)
+      expect(screen.getByTestId('price-badge').className).toMatch(/\btext-xs\b/)
+      expect(screen.getByTestId('price-current').className).toMatch(/\btext-2xl\b/)
       const sections = within(left).getAllByRole('heading').map((node) => node.textContent)
-      expect(sections).toEqual(['Descrição', 'Observações', 'Características do produto'])
-      expect(follows(within(left).getByTestId('desktop-product-media'), within(left).getByRole('heading', { name: 'Descrição' }))).toBe(true)
+      expect(sections).toEqual(['Observações', 'Características do produto'])
+      expect(follows(within(left).getByTestId('desktop-product-media'), within(left).getByRole('heading', { name: 'Observações' }))).toBe(true)
       expect(screen.queryByTestId('watch-carousel')).toBeNull()
-    } else expect(screen.queryByTestId('watch-left-column')).toBeNull()
+    } else {
+      expect(screen.queryByTestId('watch-left-column')).toBeNull()
+      expect(follows(screen.getByTestId('watch-metadata'), heading)).toBe(true)
+      expect(follows(screen.getByTestId('watch-metadata'), screen.getByTestId('watch-offer'))).toBe(true)
+      const share = screen.getByRole('link', { name: 'Compartilhar' })
+      expect(screen.getByTestId('watch-offer').contains(share)).toBe(true)
+      expect(screen.getByTestId('watch-offer').className).toMatch(/\bmd:max-\[919px\]:grid-cols-2\b/)
+      expect(screen.getByTestId('watch-offer').className).not.toMatch(/\bflex-col\b/)
+      if (viewport >= 768) {
+        expect(screen.getByRole('group', { name: 'Miniaturas do produto' })).toBeDefined()
+        expect(screen.queryByTestId('watch-carousel')).toBeNull()
+        expect(screen.queryByRole('button', { name: 'Anterior' })).toBeNull()
+        expect(screen.queryByTestId('carousel-dots')).toBeNull()
+      } else {
+        expect(screen.getByTestId('watch-carousel')).toBeDefined()
+      }
+    }
   })
 
   it.each([undefined, '', '   '])('omits absent or empty color %s without inferring Cor from specifications (CATREF-55/56)', (color) => {
@@ -472,7 +550,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(within(screen.getByRole('table')).getByText('Prata')).toBeDefined()
   })
 
-  it.each([390, 921])('preserves color and independent repeated specifications at %i px (CATREF-54/57/58)', (viewport) => {
+  it.each([390, 920])('preserves color and independent repeated specifications at %i px (CATREF-54/57/58)', (viewport) => {
     width = viewport
     mockProductsRef.current = [makeProduct({ color: '  Azul  ', specifications: [{ label: 'Cor', value: 'Prata' }, { label: 'Cor do mostrador', value: 'Preto' }, { label: 'Cor da pulseira', value: 'Aço' }, { label: 'Cor', value: 'Prata' }, { label: 'Vazio', value: '' }, { label: 'Espaços', value: '   ' }] })]
     renderWatchPage()
@@ -480,7 +558,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(within(screen.getByRole('table')).getAllByRole('row').map((row) => row.textContent)).toEqual(['CorPrata', 'Cor do mostradorPreto', 'Cor da pulseiraAço', 'CorPrata'])
   })
 
-  it.each([390, 921])('omits all empty sections at %i px (CATREF-59)', (viewport) => {
+  it.each([390, 920])('omits all empty sections at %i px (CATREF-59)', (viewport) => {
     width = viewport
     mockProductsRef.current = [makeProduct({ description: '   ', observations: ' \n ', specifications: [{ label: 'Marca', value: ' ' }] })]
     renderWatchPage()
@@ -489,14 +567,14 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByRole('main').querySelectorAll('section')).toHaveLength(0)
   })
 
-  it.each([390, 921])('preserves filled content verbatim and exact sharing destination at %i px (CATREF-59/67)', (viewport) => {
+  it.each([390, 920])('preserves filled content verbatim and exact sharing destination at %i px (CATREF-59/67)', (viewport) => {
     width = viewport
     installObserver(0.4)
     mockProductsRef.current = [makeProduct({ description: '  Caixa de aço.  ', observations: '  Entrega em mãos.  ' })]
     renderWatchPage()
     expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.querySelector('p')?.textContent).toBe('  Caixa de aço.  ')
     expect(screen.getByRole('heading', { name: 'Observações' }).parentElement?.querySelector('p')?.textContent).toBe('  Entrega em mãos.  ')
-    for (const link of screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })) expect(link.getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Seculus. ${window.location.origin}/product/seculus-kit`)}`)
+    for (const link of screen.getAllByRole('link', { name: 'Compartilhar' })) expect(link.getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Seculus. ${window.location.origin}/product/seculus-kit`)}`)
   })
 
   it('reobserves the current primary WhatsApp after a breakpoint switch (CATREF-68/69)', () => {
@@ -508,9 +586,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       disconnect = disconnect
     })
     renderWatchPage()
-    const mobile = screen.getByRole('link', { name: 'Enviar no WhatsApp' })
-    resize(921)
-    const desktop = screen.getByRole('link', { name: 'Enviar no WhatsApp' })
+    const mobile = screen.getByRole('link', { name: 'Compartilhar' })
+    resize(920)
+    const desktop = screen.getByRole('link', { name: 'Compartilhar' })
     expect(mobile.isConnected).toBe(false)
     expect(desktop).not.toBe(mobile)
     expect(targets).toEqual([mobile, desktop])
@@ -519,13 +597,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   })
 
   it('keeps the shared gallery and selection mounted across page compositions (CATREF-31)', () => {
-    width = 921
+    width = 920
     mockProductsRef.current = [makeProduct({ images: ['one.webp', 'two.webp'] })]
     renderWatchPage()
     fireEvent.click(screen.getByRole('button', { name: 'Foto 2' }))
     fireEvent.click(screen.getByRole('button', { name: 'Abrir galeria na foto 2' }))
     const gallery = screen.getByRole('dialog', { name: 'Galeria de fotos' })
-    resize(920)
+    resize(390)
     expect(screen.getByRole('dialog', { name: 'Galeria de fotos' })).toBe(gallery)
     expect(within(gallery).getByRole('img', { name: 'Seculus' }).getAttribute('src')).toBe('/catalog/products/seculus-kit/img/two.webp')
     fireEvent.click(within(gallery).getByRole('button', { name: 'Fechar' }))

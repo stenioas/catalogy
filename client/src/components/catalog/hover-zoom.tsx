@@ -30,7 +30,7 @@ export function HoverZoom({ src, alt, disabled = false }: HoverZoomProps) {
     }
     function update() {
       pending.current = null
-      if (disabled || !hover.matches || window.innerWidth < 921 || !pointer.current || !natural.current) {
+      if (disabled || !hover.matches || window.innerWidth < 920 || !pointer.current || !natural.current) {
         setGeometry(null)
         return
       }
@@ -46,7 +46,7 @@ export function HoverZoom({ src, alt, disabled = false }: HoverZoomProps) {
       if (pointer.current && pending.current === null) pending.current = requestAnimationFrame(update)
     }
     function move(event: globalThis.PointerEvent) {
-      if (event.pointerType !== 'mouse' || disabled || !hover.matches || window.innerWidth < 921) {
+      if (event.pointerType !== 'mouse' || disabled || !hover.matches || window.innerWidth < 920) {
         stop()
         return
       }
