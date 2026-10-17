@@ -1,8 +1,9 @@
 {
   "slug": "curren-8455",
   "title": "Curren 8455",
-  "price": 119.9,
-  "listPrice": 149.9,
+  "unmissableOffer": true,
+  "price": 99.9,
+  "listPrice": 139.9,
   "state": "Novo",
   "images": [
     "curren-8455-1.png",
