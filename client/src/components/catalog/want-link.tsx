@@ -43,28 +43,14 @@ export const SHARE_LABEL = 'Compartilhar'
 const frostedShareClassName =
   'bg-[color-mix(in_srgb,var(--primary)_16%,white)] text-[var(--ink)] hover:bg-[color-mix(in_srgb,var(--primary)_24%,white)] hover:text-[var(--ink)]'
 
-const besidePriceShareClassName =
-  `${frostedShareClassName} size-10 rounded-full p-0 md:h-11 md:gap-2 md:rounded-lg md:px-4 md:text-base`
+const labeledShareClassName = `${frostedShareClassName} h-11 w-full gap-2 rounded-lg px-4 text-base`
 
-const responsiveShareClassName = `${besidePriceShareClassName} md:max-[919px]:w-full`
-
-const footerShareClassName = `${besidePriceShareClassName} md:w-full`
-
-const columnShareClassName = `${frostedShareClassName} h-11 w-full gap-2 rounded-lg px-4 text-base`
-
-export function ProductShareButton({
-  slug,
-  title,
-  ref,
-  placement = 'responsive',
-}: WantLinkProps & { placement?: 'responsive' | 'column' | 'footer' }) {
-  const column = placement === 'column'
-  const className = column ? columnShareClassName : placement === 'footer' ? footerShareClassName : responsiveShareClassName
+export function ProductShareButton({ slug, title, ref }: WantLinkProps) {
   return (
-    <Button asChild variant="ghost" className={className}>
+    <Button asChild variant="ghost" className={labeledShareClassName}>
       <a ref={ref} href={waUrl(slug, title)} target="_blank" rel="noopener noreferrer">
         <Share2 aria-hidden="true" className="size-4" />
-        <span className={column ? undefined : 'max-md:sr-only'}>{SHARE_LABEL}</span>
+        <span>{SHARE_LABEL}</span>
       </a>
     </Button>
   )

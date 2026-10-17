@@ -79,7 +79,7 @@ function ProductPriceShare({
   wantRef: (element: HTMLAnchorElement | null) => void
   share: 'beside-price' | 'below-description'
 }) {
-  return <div data-testid="watch-offer" className="flex w-full min-w-0 items-end gap-3 md:max-[919px]:grid md:max-[919px]:grid-cols-2">
+  return <div data-testid="watch-offer" className="flex w-full min-w-0 flex-col items-stretch gap-3 md:max-[919px]:grid md:max-[919px]:grid-cols-2 md:max-[919px]:items-end">
     <div className="min-w-0 flex-1">
       <PriceBlock price={product.price} listPrice={product.listPrice} />
     </div>
@@ -135,7 +135,7 @@ function WatchColumn({ product }: { product: Product }) {
             <ProductIdentity product={product} />
             <ProductCommerce product={product} wantRef={setWantTarget} share="below-description" />
             <TextSection title="Descrição" value={product.description} />
-            <ProductShareButton ref={setWantTarget} slug={product.slug} title={product.title} placement="column" />
+            <ProductShareButton ref={setWantTarget} slug={product.slug} title={product.title} />
           </div>
         </div>
       ) : (

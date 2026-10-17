@@ -239,7 +239,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(screen.queryByTestId('price-current')).toBeNull()
   })
 
-  it('places the price beside the share icon in the footer (CAT-91, CAT-92, CAT-93)', () => {
+  it('stacks a full-width share button under the price below 768px and splits the row from 768px (CAT-91, CAT-92, CAT-93)', () => {
     installObserver(0, false)
     renderBar()
 
@@ -248,20 +248,20 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const action = screen.getByTestId('sticky-bar-action')
     const link = screen.getByRole('link', { name: whatsappLinkName })
 
-    expect(row.className).toMatch(/\bitems-end\b/)
+    expect(row.className).toMatch(/\bflex-col\b/)
     expect(row.className).toMatch(/\bgap-3\b/)
     expect(row.className).toMatch(/\bmd:grid-cols-2\b/)
-    expect(row.className).not.toMatch(/\bflex-col\b/)
+    expect(row.className).toMatch(/\bmd:items-end\b/)
     expect(
       price.compareDocumentPosition(action) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).not.toBe(0)
     expect(price.parentElement?.className).toMatch(/\bflex-1\b/)
-    expect(action.className).toMatch(/\bshrink-0\b/)
-    expect(action.className).toMatch(/\bmd:w-full\b/)
-    expect(link.className).toMatch(/\bsize-10\b/)
+    expect(action.className).toMatch(/\bw-full\b/)
+    expect(link.className).toMatch(/\bh-11\b/)
+    expect(link.className).toMatch(/\bw-full\b/)
+    expect(link.className).not.toMatch(/\bsize-10\b/)
     expect(link.className).toMatch(/color-mix\(in_srgb,var\(--primary\)_16%,white\)/)
-    expect(link.className).toMatch(/\bmd:w-full\b/)
-    expect(link.className).not.toMatch(/max-\[919px\]/)
+    expect(link.querySelector('span')?.className ?? '').not.toMatch(/sr-only/)
     expect(link.textContent).toBe('Compartilhar')
     expect(action.contains(link)).toBe(true)
   })

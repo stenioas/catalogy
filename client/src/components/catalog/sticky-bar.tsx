@@ -94,13 +94,13 @@ export function StickyBar({
       >
         <div
           data-testid="sticky-bar-row"
-          className="catalog-column watch-page-column flex items-end gap-3 py-3 md:grid md:grid-cols-2"
+          className="catalog-column watch-page-column flex flex-col items-stretch gap-3 py-3 md:grid md:grid-cols-2 md:items-end"
         >
           <div className="min-w-0 flex-1">
             <PriceBlock price={price} listPrice={listPrice} />
           </div>
-          <div data-testid="sticky-bar-action" className="shrink-0 md:w-full">
-            <ProductShareButton slug={slug} title={title} placement="footer" />
+          <div data-testid="sticky-bar-action" className="w-full">
+            <ProductShareButton slug={slug} title={title} />
           </div>
         </div>
       </div>
