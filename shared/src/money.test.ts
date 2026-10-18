@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import {
   compareTitles,
+  creditCardInstallment,
+  creditInstallmentLabel,
   discountPercent,
   formatBrl,
   truncateReais,
@@ -31,6 +33,17 @@ describe('formatBrl (CAT-95, CAT-96)', () => {
 
   it('formats a whole reais amount with ,00', () => {
     expect(formatBrl(450)).toBe('R$ 450,00')
+  })
+})
+
+describe('creditCardInstallment', () => {
+  it('splits the price grossed up by the 12.08% card fee into 10 installments', () => {
+    expect(creditCardInstallment(369.9)).toBe(42.07)
+    expect(creditInstallmentLabel(369.9)).toBe('10x R$ 42,07 no cartão')
+  })
+
+  it('keeps an exact ten-cent result when the fee divides evenly', () => {
+    expect(creditCardInstallment(109.9)).toBe(12.5)
   })
 })
 

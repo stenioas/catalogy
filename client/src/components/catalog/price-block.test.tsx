@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { creditInstallmentLabel } from '@catalogo/shared'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
@@ -67,7 +68,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     renderPriceBlock({ price: 369.9, listPrice })
     const current = screen.getByTestId('price-current')
     const installments = screen.getByTestId('price-installments')
-    expect(installments.textContent).toBe('ou em até 12x com juros')
+    expect(installments.textContent).toBe(creditInstallmentLabel(369.9))
     expect(screen.getByTestId('price-block').contains(installments)).toBe(true)
     expect(current.compareDocumentPosition(installments) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
   })
@@ -157,7 +158,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(badge.className).not.toMatch(/rotate/)
     expect(badge.textContent).toBe('−17%')
     expect(installments.className).toMatch(/\btext-xs\b/)
-    expect(installments.textContent).toBe('ou em até 12x com juros')
+    expect(installments.textContent).toBe(creditInstallmentLabel(369.9))
     expect(screen.getByTestId('price-pix').className.split(/\s+/)).toContain('col-start-3')
   })
 

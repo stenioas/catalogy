@@ -1,4 +1,4 @@
-import { discountPercent, formatBrl } from '@catalogo/shared'
+import { creditInstallmentLabel, discountPercent, formatBrl } from '@catalogo/shared'
 
 import { Badge } from '@/components/ui/badge'
 
@@ -20,6 +20,7 @@ export function PriceBlock({
   unmissableOffer = false,
 }: PriceBlockProps) {
   const currentLabel = formatBrl(price)
+  const installmentLabel = creditInstallmentLabel(price)
   const currentPriceTone = unmissableOffer ? 'text-destructive' : ''
 
   const percent = listPrice === undefined ? 0 : discountPercent(price, listPrice)
@@ -31,7 +32,7 @@ export function PriceBlock({
     return (
       <div
         data-testid="price-block"
-        className="grid w-full grid-cols-[auto_auto_auto] items-center justify-start gap-x-1.5 gap-y-0.5"
+        className="grid w-full min-w-0 grid-cols-[auto_auto_auto] items-center justify-start gap-x-1.5 gap-y-0.5"
       >
         {listPrice !== undefined ? (
           <span
@@ -63,16 +64,16 @@ export function PriceBlock({
         </span>
         <span
           data-testid="price-installments"
-          className={`col-span-3 text-xs text-muted-foreground md:text-sm ${installmentRow}`}
+          className={`col-span-3 min-w-0 whitespace-normal text-xs text-muted-foreground md:text-sm ${installmentRow}`}
         >
-          ou em até 12x com juros
+          {installmentLabel}
         </span>
       </div>
     )
   }
 
   return (
-    <div data-testid="price-block" className="flex flex-col items-start gap-0.5">
+    <div data-testid="price-block" className="flex w-full min-w-0 flex-col items-start gap-0.5">
       {listPrice !== undefined ? (
         <div
           className={
@@ -105,8 +106,8 @@ export function PriceBlock({
           no pix
         </span>
       </div>
-      <span data-testid="price-installments" className="text-sm text-muted-foreground">
-        ou em até 12x com juros
+      <span data-testid="price-installments" className="min-w-0 whitespace-normal text-sm text-muted-foreground">
+        {installmentLabel}
       </span>
     </div>
   )

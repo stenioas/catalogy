@@ -7,6 +7,8 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { act, cleanup, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { creditInstallmentLabel } from '@catalogo/shared'
+
 import { waUrl } from './want-link'
 import { StickyBar } from './sticky-bar'
 
@@ -211,7 +213,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const bar = screen.getByTestId('sticky-bar')
     expect(bar).toBeTruthy()
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
-    expect(screen.getByTestId('price-installments').textContent).toBe('ou em até 12x com juros')
+    expect(screen.getByTestId('price-installments').textContent).toBe(creditInstallmentLabel(369.9))
     expect(screen.getByTestId('price-pix').textContent).toBe('no pix')
 
     const link = screen.getByRole('link', { name: whatsappLinkName })

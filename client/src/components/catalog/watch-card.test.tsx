@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import type { Product } from '@catalogo/shared'
+import { creditInstallmentLabel, type Product } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { MemoryRouter, useLocation } from 'react-router-dom'
@@ -124,7 +124,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     renderWatchCard()
     expect(screen.getByRole('heading', { name: 'Seculus' })).toBeTruthy()
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
-    expect(screen.getByTestId('price-installments').textContent).toBe('ou em até 12x com juros')
+    expect(screen.getByTestId('price-installments').textContent).toBe(creditInstallmentLabel(369.9))
     expect(screen.getByTestId('price-pix').textContent).toBe('no pix')
     const wantLink = within(screen.getByTestId('watch-card-mobile-action')).getByRole('link', { name: 'Enviar no WhatsApp' })
     expect(screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })).toHaveLength(1)
@@ -352,7 +352,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(within(body).getByText('−17%')).toBeDefined()
     expect(within(body).getByText('R$ 369,90')).toBeDefined()
     expect(within(body).getByText('no pix')).toBeDefined()
-    expect(within(body).getByText('ou em até 12x com juros')).toBeDefined()
+    expect(within(body).getByText(creditInstallmentLabel(369.9))).toBeDefined()
     expect(within(body).getByText('Em estoque')).toBeDefined()
     const list = screen.getByTestId('price-list')
     const badge = screen.getByTestId('price-badge')

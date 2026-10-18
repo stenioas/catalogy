@@ -21,6 +21,19 @@ export function formatBrl(value: number): string {
   return `${prefix}${grouped},${cents}`
 }
 
+export const CARD_MACHINE_FEE_RATE = 0.1208
+export const CREDIT_INSTALLMENT_COUNT = 10
+
+export function creditCardInstallment(price: number): number {
+  const total = price / (1 - CARD_MACHINE_FEE_RATE)
+  const installment = total / CREDIT_INSTALLMENT_COUNT
+  return Math.round((installment + Number.EPSILON) * 100) / 100
+}
+
+export function creditInstallmentLabel(price: number): string {
+  return `${CREDIT_INSTALLMENT_COUNT}x ${formatBrl(creditCardInstallment(price))} no cartão`
+}
+
 export function discountPercent(price: number, listPrice: number): number {
   const current = truncateReais(price)
   const reference = truncateReais(listPrice)

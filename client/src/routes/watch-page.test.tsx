@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import type { Product } from '@catalogo/shared'
+import { creditInstallmentLabel, type Product } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
@@ -176,7 +176,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   it('shows installment terms below the in-page price', () => {
     renderWatchPage()
     const offer = screen.getByTestId('watch-offer')
-    expect(within(offer).getByTestId('price-installments').textContent).toBe('ou em até 12x com juros')
+    expect(within(offer).getByTestId('price-installments').textContent).toBe(creditInstallmentLabel(369.9))
     expect(within(offer).getByTestId('price-pix').textContent).toBe('no pix')
   })
 
