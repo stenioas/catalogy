@@ -1,7 +1,7 @@
 {
   "slug": "benyar-5229",
   "title": "BENYAR 5229",
-  "price": 274.9,
+  "price": 239.9,
   "listPrice": 399.9,
   "images": [
     "benyar-5229-1.png",
@@ -58,10 +58,6 @@
       "value": "20 a 24 mm"
     },
     {
-      "label": "Fecho",
-      "value": "Fecho de pulseira"
-    },
-    {
       "label": "Material do vidro",
       "value": "Hardlex"
     },
@@ -72,26 +68,6 @@
     {
       "label": "Funções",
       "value": "Cronógrafo e calendário"
-    },
-    {
-      "label": "Luminosidade",
-      "value": "Ponteiros e marcadores luminosos"
-    },
-    {
-      "label": "Bateria incluída",
-      "value": "Sim"
-    },
-    {
-      "label": "Estilo",
-      "value": "Negócios"
-    },
-    {
-      "label": "Origem",
-      "value": "China"
-    },
-    {
-      "label": "Certificação",
-      "value": "CE"
     }
   ],
   "unmissableOffer": true
