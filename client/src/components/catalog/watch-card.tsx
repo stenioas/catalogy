@@ -59,6 +59,7 @@ export function WatchCard({ product }: WatchCardProps) {
                   price={product.price}
                   listPrice={product.listPrice}
                   showcase
+                  unmissableOffer={product.unmissableOffer}
                 />
               </div>
             </Link>

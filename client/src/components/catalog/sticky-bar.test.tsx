@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 import { useLayoutEffect, useRef, useState } from 'react'
 
-import { act, cleanup, render, screen } from '@testing-library/react'
+import { act, cleanup, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { waUrl } from './want-link'
@@ -67,7 +67,7 @@ function sourceFiles(dir: string): string[] {
   return found
 }
 
-function renderBar() {
+function renderBar(unmissableOffer = false) {
   function Fixture() {
     const buttonRef = useRef<HTMLButtonElement>(null)
     const [target, setTarget] = useState<Element | null>(null)
@@ -79,7 +79,7 @@ function renderBar() {
         <button ref={buttonRef} type="button">
           alvo
         </button>
-        <StickyBar price={369.9} slug={slug} title={title} target={target} />
+        <StickyBar price={369.9} unmissableOffer={unmissableOffer} slug={slug} title={title} target={target} />
       </>
     )
   }
@@ -264,6 +264,19 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(link.querySelector('span')?.className ?? '').not.toMatch(/sr-only/)
     expect(link.textContent).toBe('Compartilhar')
     expect(action.contains(link)).toBe(true)
+  })
+
+  it('shows Oferta imperdível above a red current price', () => {
+    installObserver(0, false)
+    renderBar(true)
+
+    const bar = screen.getByTestId('sticky-bar')
+    const badge = within(bar).getByTestId('unmissable-offer')
+    const price = within(bar).getByTestId('price-current')
+
+    expect(badge.textContent).toContain('OFERTA IMPERDÍVEL')
+    expect(badge.compareDocumentPosition(price) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(price.className).toMatch(/\btext-destructive\b/)
   })
 
   it('respects the safe area and uses the parchment blur (CAT-94)', () => {

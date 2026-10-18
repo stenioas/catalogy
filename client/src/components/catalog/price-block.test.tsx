@@ -237,4 +237,12 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450 }, 'dark')
     expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
+
+  it.each([false, true])('paints the current price red only for an unmissable offer when showcase is %s', (showcase) => {
+    renderPriceBlock({ price: 369.9, showcase, unmissableOffer: true })
+    expect(screen.getByTestId('price-current').className).toMatch(/\btext-destructive\b/)
+    cleanup()
+    renderPriceBlock({ price: 369.9, showcase })
+    expect(screen.getByTestId('price-current').className).not.toMatch(/\btext-destructive\b/)
+  })
 })

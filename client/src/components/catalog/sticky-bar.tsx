@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
 import { PriceBlock } from './price-block'
+import { UnmissableOfferBadge } from './product-badges'
 import { ProductShareButton } from './want-link'
 
 const frostedBarStyle =
@@ -9,6 +10,7 @@ const frostedBarStyle =
 export type StickyBarProps = {
   price: number
   listPrice?: number
+  unmissableOffer?: boolean
   slug: string
   title: string
   target?: Element | null
@@ -17,6 +19,7 @@ export type StickyBarProps = {
 export function StickyBar({
   price,
   listPrice,
+  unmissableOffer = false,
   slug,
   title,
   target: targetElement,
@@ -96,8 +99,9 @@ export function StickyBar({
           data-testid="sticky-bar-row"
           className="catalog-column watch-page-column flex flex-col items-stretch gap-3 py-3 md:grid md:grid-cols-2 md:items-end"
         >
-          <div className="min-w-0 flex-1">
-            <PriceBlock price={price} listPrice={listPrice} />
+          <div className="flex min-w-0 flex-1 flex-col items-start gap-1">
+            {unmissableOffer ? <UnmissableOfferBadge /> : null}
+            <PriceBlock price={price} listPrice={listPrice} unmissableOffer={unmissableOffer} />
           </div>
           <div data-testid="sticky-bar-action" className="w-full">
             <ProductShareButton slug={slug} title={title} />

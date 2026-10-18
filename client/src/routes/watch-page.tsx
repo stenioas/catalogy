@@ -46,7 +46,7 @@ function ProductTitle({ product }: { product: Product }) {
 }
 
 function ProductIdentity({ product }: { product: Product }) {
-  return <div data-testid="watch-identity" className="flex w-full min-w-0 flex-col items-start gap-1 md:gap-2">
+  return <div data-testid="watch-identity" className="flex w-full min-w-0 flex-col items-start gap-0.5 md:gap-2">
     <div data-testid="watch-metadata">
       <ProductConditionLine state={product.state} availabilityStatus={product.availabilityStatus} />
     </div>
@@ -81,7 +81,7 @@ function ProductPriceShare({
 }) {
   return <div data-testid="watch-offer" className="flex w-full min-w-0 flex-col items-stretch gap-3 md:max-[919px]:grid md:max-[919px]:grid-cols-2 md:max-[919px]:items-end">
     <div className="min-w-0 flex-1">
-      <PriceBlock price={product.price} listPrice={product.listPrice} />
+      <PriceBlock price={product.price} listPrice={product.listPrice} unmissableOffer={product.unmissableOffer} />
     </div>
     {share === 'beside-price' ? <ProductShareButton ref={wantRef} slug={product.slug} title={product.title} /> : null}
   </div>
@@ -140,15 +140,17 @@ function WatchColumn({ product }: { product: Product }) {
         </div>
       ) : (
         <div className="flex w-full min-w-0 flex-col gap-8">
-          <ProductIdentity product={product} />
-          {media}
-          <ProductCommerce product={product} wantRef={setWantTarget} share="beside-price" />
+          <div data-testid="watch-intro" className="flex w-full min-w-0 flex-col gap-2 md:contents">
+            <ProductIdentity product={product} />
+            {media}
+            <ProductCommerce product={product} wantRef={setWantTarget} share="beside-price" />
+          </div>
           <TextSection title="Descrição" value={product.description} />
           <ProductDetails product={product} />
         </div>
       )}
     </ProductMedia>
-    <StickyBar price={product.price} listPrice={product.listPrice} slug={product.slug} title={product.title} target={wantTarget} />
+    <StickyBar price={product.price} listPrice={product.listPrice} unmissableOffer={product.unmissableOffer} slug={product.slug} title={product.title} target={wantTarget} />
   </>
 }
 
@@ -161,7 +163,7 @@ export function WatchPage({ slug }: WatchPageProps) {
     <>
       <TopBar catalogHref={catalogHref} />
       <main className="max-w-full min-w-0 overflow-x-clip">
-        <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 py-8 text-left">
+        <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pt-2 pb-8 text-left md:py-8">
           {product ? (
             <WatchColumn product={product} />
           ) : (

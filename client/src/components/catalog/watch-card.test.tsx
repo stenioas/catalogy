@@ -388,6 +388,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     const onPhoto = offers.find((offer) => offer.className.includes('md:inline-flex'))
 
     expect(offers).toHaveLength(2)
+    expect(screen.getByTestId('price-current').className).toMatch(/\btext-destructive\b/)
     expect(aboveTitle?.textContent).toBe('OFERTA IMPERDÍVEL')
     expect(body.contains(aboveTitle as Node)).toBe(true)
     expect(frame.contains(aboveTitle as Node)).toBe(false)
