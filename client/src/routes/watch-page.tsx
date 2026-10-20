@@ -56,34 +56,32 @@ function ProductIdentity({ product }: { product: Product }) {
 
 function ProductCommerce({
   product,
-  wantRef,
+  commerceRef,
   share,
 }: {
   product: Product
-  wantRef: (element: HTMLAnchorElement | null) => void
+  commerceRef: (element: HTMLDivElement | null) => void
   share: 'beside-price' | 'below-description'
 }) {
-  return <div data-testid="watch-commerce" className="flex w-full min-w-0 flex-col items-start gap-1 md:gap-2">
+  return <div ref={commerceRef} data-testid="watch-commerce" className="flex w-full min-w-0 flex-col items-start gap-1 md:gap-2">
     {hasText(product.color) ? <p data-testid="watch-color" className="m-0 break-words text-[var(--ink-primary)]">Cor: {product.color}</p> : null}
     {product.unmissableOffer ? <UnmissableOfferBadge /> : null}
-    <ProductPriceShare product={product} wantRef={wantRef} share={share} />
+    <ProductPriceShare product={product} share={share} />
   </div>
 }
 
 function ProductPriceShare({
   product,
-  wantRef,
   share,
 }: {
   product: Product
-  wantRef: (element: HTMLAnchorElement | null) => void
   share: 'beside-price' | 'below-description'
 }) {
   return <div data-testid="watch-offer" className="flex w-full min-w-0 flex-col items-stretch gap-3 md:max-[919px]:grid md:max-[919px]:grid-cols-2 md:max-[919px]:items-end">
     <div className="min-w-0 flex-1">
       <PriceBlock price={product.price} listPrice={product.listPrice} unmissableOffer={product.unmissableOffer} />
     </div>
-    {share === 'beside-price' ? <ProductShareButton ref={wantRef} slug={product.slug} title={product.title} /> : null}
+    {share === 'beside-price' ? <ProductShareButton slug={product.slug} title={product.title} /> : null}
   </div>
 }
 
@@ -121,7 +119,7 @@ function ProductDetails({ product }: { product: Product }) {
 }
 
 function WatchColumn({ product }: { product: Product }) {
-  const [wantTarget, setWantTarget] = useState<HTMLAnchorElement | null>(null)
+  const [commerceTarget, setCommerceTarget] = useState<HTMLDivElement | null>(null)
 
   return <>
     <ProductMedia key={product.slug} images={product.images.map((file) => productImageSrc(product.slug, file))} alt={product.title}>
@@ -133,9 +131,9 @@ function WatchColumn({ product }: { product: Product }) {
           </div>
           <div data-testid="watch-right-column" className="flex min-w-0 flex-col gap-4">
             <ProductIdentity product={product} />
-            <ProductCommerce product={product} wantRef={setWantTarget} share="below-description" />
+            <ProductCommerce product={product} commerceRef={setCommerceTarget} share="below-description" />
             <TextSection title="Descrição" value={product.description} />
-            <ProductShareButton ref={setWantTarget} slug={product.slug} title={product.title} />
+            <ProductShareButton slug={product.slug} title={product.title} />
           </div>
         </div>
       ) : (
@@ -143,14 +141,14 @@ function WatchColumn({ product }: { product: Product }) {
           <div data-testid="watch-intro" className="flex w-full min-w-0 flex-col gap-2 md:contents">
             <ProductIdentity product={product} />
             {media}
-            <ProductCommerce product={product} wantRef={setWantTarget} share="beside-price" />
+            <ProductCommerce product={product} commerceRef={setCommerceTarget} share="beside-price" />
           </div>
           <TextSection title="Descrição" value={product.description} />
           <ProductDetails product={product} />
         </div>
       )}
     </ProductMedia>
-    <StickyBar price={product.price} listPrice={product.listPrice} unmissableOffer={product.unmissableOffer} slug={product.slug} title={product.title} target={wantTarget} />
+    <StickyBar price={product.price} listPrice={product.listPrice} unmissableOffer={product.unmissableOffer} slug={product.slug} title={product.title} target={commerceTarget} />
   </>
 }
 

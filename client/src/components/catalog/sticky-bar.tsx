@@ -24,7 +24,7 @@ export function StickyBar({
   title,
   target: targetElement,
 }: StickyBarProps) {
-  const [fullyVisible, setFullyVisible] = useState(false)
+  const [offscreen, setOffscreen] = useState(false)
   const [barHeight, setBarHeight] = useState(0)
   const barRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -40,16 +40,16 @@ export function StickyBar({
     observerRef.current = null
     if (targetChanged) {
       observedTargetRef.current = target
-      setFullyVisible(false)
+      setOffscreen(false)
     }
     if (!target || typeof IntersectionObserver !== 'function') return
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0]
-        setFullyVisible(entry !== undefined && entry.intersectionRatio >= 1)
+        setOffscreen(entry !== undefined && entry.intersectionRatio === 0)
       },
-      { threshold: 1 },
+      { threshold: 0 },
     )
     observer.observe(target)
     observerRef.current = observer
@@ -77,9 +77,9 @@ export function StickyBar({
     const observer = new ResizeObserver(measure)
     observer.observe(node)
     return () => observer.disconnect()
-  }, [fullyVisible])
+  }, [offscreen])
 
-  if (fullyVisible) return null
+  if (!offscreen) return null
 
   return (
     <>

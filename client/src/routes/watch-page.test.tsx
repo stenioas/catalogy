@@ -114,7 +114,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       removeEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 768px)' || query === '(min-width: 920px)') mediaListeners.delete(listener) },
     })))
     mockProductsRef.current = [makeProduct()]
-    // Ratio 1: in-page Eu quero! fully visible, so the sticky bar is absent.
+    // Ratio 1: watch-commerce is on screen, so the sticky bar is absent.
     installObserver(1)
   })
 
@@ -351,8 +351,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.queryByRole('heading', { name: 'Seculus' })).toBeNull()
   })
 
-  it('shows the sticky bar with the same Eu quero! href as the in-page link at ratio 0.4 (CAT-89, CAT-90, CAT-151)', () => {
-    installObserver(0.4)
+  it('shows the sticky bar with price and the same share href when watch-commerce is offscreen (CAT-89, CAT-90, CAT-151)', () => {
+    installObserver(0)
     renderWatchPage()
     const bar = screen.getByTestId('sticky-bar')
     const barLink = within(bar).getByRole('link', { name: 'Compartilhar' })
@@ -363,10 +363,11 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(barLink.getAttribute('href')).toBe(pageLink.getAttribute('href'))
     expect(pageLink.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/\?text=/)
     expect(within(bar).getByTestId('price-current').textContent).toBe('R$ 369,90')
+    expect(within(bar).getAllByRole('link')).toHaveLength(1)
   })
 
   it('repeats Oferta imperdível in the footer and paints the current price red', () => {
-    installObserver(0.4)
+    installObserver(0)
     mockProductsRef.current = [makeProduct({ unmissableOffer: true })]
     renderWatchPage()
     const bar = screen.getByTestId('sticky-bar')
@@ -377,6 +378,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(follows(footerBadge, footerPrice)).toBe(true)
     expect(footerPrice.className).toMatch(/\btext-destructive\b/)
     expect(pagePrice.className).toMatch(/\btext-destructive\b/)
+  })
+
+  it('hides the sticky bar while any part of watch-commerce is visible (CAT-89)', () => {
+    installObserver(0.4)
+    renderWatchPage()
+    expect(screen.queryByTestId('sticky-bar')).toBeNull()
+    expect(screen.getAllByRole('link', { name: 'Compartilhar' })).toHaveLength(1)
   })
 
   it('hides the sticky bar at ratio 1 (CAT-89)', () => {
@@ -611,9 +619,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       disconnect = disconnect
     })
     renderWatchPage()
-    const mobile = screen.getByRole('link', { name: 'Compartilhar' })
+    const mobile = screen.getByTestId('watch-commerce')
     resize(920)
-    const desktop = screen.getByRole('link', { name: 'Compartilhar' })
+    const desktop = screen.getByTestId('watch-commerce')
     expect(mobile.isConnected).toBe(false)
     expect(desktop).not.toBe(mobile)
     expect(targets).toEqual([mobile, desktop])

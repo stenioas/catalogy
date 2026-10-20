@@ -205,11 +205,11 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(stickySource).toMatch(/target\?: Element \| null/)
   })
 
-  it('shows the price and the same WhatsApp href as the page button on first paint without full intersection (SV-20, CAT-89)', () => {
-    const observer = installObserver(0.4, true)
+  it('shows the price and the same WhatsApp href when the commerce block is offscreen (SV-20, CAT-89)', () => {
+    const observer = installObserver(0, false)
     renderBar()
 
-    expect(observer.threshold()).toBe(1)
+    expect(observer.threshold()).toBe(0)
     const bar = screen.getByTestId('sticky-bar')
     expect(bar).toBeTruthy()
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
@@ -231,14 +231,17 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(row.classList.contains('catalog-column')).toBe(true)
   })
 
-  it('hides the bar on first paint when the button is fully inside the viewport (SV-16, CAT-90, CAT-151)', () => {
-    installObserver(1, true)
+  it.each([
+    { name: 'partially visible', ratio: 0.4, intersecting: true },
+    { name: 'fully visible', ratio: 1, intersecting: true },
+  ])('hides the bar when the commerce block is $name (SV-16, CAT-90, CAT-151)', ({ ratio, intersecting }) => {
+    installObserver(ratio, intersecting)
     renderBar()
 
     expect(screen.queryByTestId('sticky-bar')).toBeNull()
     expect(screen.queryByTestId('sticky-bar-spacer')).toBeNull()
     expect(screen.queryByRole('link', { name: whatsappLinkName })).toBeNull()
-    expect(screen.queryByTestId('price-current')).toBeNull()
+    expect(screen.queryByTestId('price-block')).toBeNull()
   })
 
   it('stacks a full-width share button under the price below 768px and splits the row from 768px (CAT-91, CAT-92, CAT-93)', () => {
@@ -254,9 +257,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(row.className).toMatch(/\bgap-3\b/)
     expect(row.className).toMatch(/\bmd:grid-cols-2\b/)
     expect(row.className).toMatch(/\bmd:items-end\b/)
-    expect(
-      price.compareDocumentPosition(action) & Node.DOCUMENT_POSITION_FOLLOWING,
-    ).not.toBe(0)
+    expect(price.compareDocumentPosition(action) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(price.parentElement?.className).toMatch(/\bflex-1\b/)
     expect(action.className).toMatch(/\bw-full\b/)
     expect(link.className).toMatch(/\bh-11\b/)
@@ -294,10 +295,10 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
 
   it.each(
     [320, 390, 767, 768, 920, 921, 1024, 1440].flatMap((width) =>
-      [0.4, 1].map((intersectionRatio) => ({ width, intersectionRatio })),
+      [0, 0.4, 1].map((intersectionRatio) => ({ width, intersectionRatio })),
     ),
   )(
-    'uses the full-intersection rule at $width px with ratio $intersectionRatio (CATREF-68, CATREF-69)',
+    'shows the bar only when the target is fully offscreen at $width px with ratio $intersectionRatio (CATREF-68, CATREF-69)',
     ({ width, intersectionRatio }) => {
       vi.stubGlobal('innerWidth', width)
       const target = document.createElement('button')
@@ -306,10 +307,10 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
       renderTarget(target)
 
       expect(observations[0]?.targets).toEqual([target])
-      if (intersectionRatio === 1) {
-        expect(screen.queryByTestId('sticky-bar')).toBeNull()
-      } else {
+      if (intersectionRatio === 0) {
         expect(screen.getByTestId('sticky-bar')).toBeTruthy()
+      } else {
+        expect(screen.queryByTestId('sticky-bar')).toBeNull()
       }
     },
   )
@@ -318,7 +319,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const firstTarget = document.createElement('button')
     const secondTarget = document.createElement('button')
     const observations = installTargetObserver((target) =>
-      target === firstTarget ? 1 : 0.4,
+      target === firstTarget ? 1 : 0,
     )
     const props = {
       price: 369.9,
@@ -338,7 +339,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
   })
 
   it('reserves the measured bar height and keeps safe-area padding with a direct target (CATREF-70)', () => {
-    installTargetObserver(() => 0.4)
+    installTargetObserver(() => 0)
     const resize = installResizeObserver()
     const target = document.createElement('button')
     const { getByTestId } = renderTarget(target)
