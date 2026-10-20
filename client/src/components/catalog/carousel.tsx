@@ -122,7 +122,7 @@ export function CarouselView({
         <div
           ref={primaryRef}
           data-testid="carousel-frame"
-          className="relative mx-auto aspect-square w-full min-w-0 max-w-[840px] flex-1 touch-pan-y overflow-hidden rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:rounded-[12px]"
+          className="relative mx-auto aspect-square w-full min-w-0 max-w-[476px] flex-1 touch-pan-y overflow-hidden rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:rounded-[12px]"
           role="button"
           aria-label={`Abrir galeria na foto ${index + 1}`}
           aria-haspopup="dialog"

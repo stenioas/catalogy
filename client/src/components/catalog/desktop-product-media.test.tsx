@@ -205,7 +205,9 @@ describe('DesktopProductMedia (CATREF-16, CATREF-21–30, CATREF-51, CATREF-71)'
     const main = screen.getByRole('button', { name: 'Abrir galeria na foto 1' })
 
     expect(thumbnail.className).toMatch(/focus-visible:ring/)
+    expect(thumbnail.className).toMatch(/\bcursor-pointer\b/)
     expect(more.className).toMatch(/focus-visible:ring/)
+    expect(more.className).toMatch(/\bcursor-pointer\b/)
     expect(main.className).toMatch(/focus-visible:ring/)
 
     thumbnail.focus()

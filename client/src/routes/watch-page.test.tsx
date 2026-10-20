@@ -527,7 +527,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       const left = screen.getByTestId('watch-left-column')
       const right = screen.getByTestId('watch-right-column')
       expect(left.parentElement).toBe(right.parentElement)
-      expect(left.parentElement?.className).toContain('grid-cols-[minmax(0,1fr)_minmax(220px,280px)]')
+      expect(left.parentElement?.className).toContain('grid-cols-[fit-content(calc(476px+3.5rem+0.75rem))_minmax(220px,1fr)]')
       expect(within(left).getByRole('group', { name: 'Miniaturas do produto' })).toBeDefined()
       expect(within(right).getByRole('heading', { level: 1 })).toBe(heading)
       expect(follows(within(right).getByTestId('watch-metadata'), heading)).toBe(true)

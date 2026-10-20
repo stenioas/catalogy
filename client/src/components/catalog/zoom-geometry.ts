@@ -76,22 +76,17 @@ export function calculateZoomGeometry(input: {
 
   const frameX = stage.x + stage.width + 12
   const availableWidth = viewport.width - 12 - frameX
-  const frameWidth = Math.min(
-    320,
-    availableWidth,
-    (viewport.height - 24) * (3 / 4),
-  )
-  if (!Number.isFinite(frameWidth) || frameWidth <= 0) return null
+  const frameSize = Math.min(476, availableWidth, viewport.height - 24)
+  if (!Number.isFinite(frameSize) || frameSize <= 0) return null
 
-  const frameHeight = frameWidth * (4 / 3)
   const frame: Rect = {
     x: frameX,
     y: Math.min(
-      viewport.height - 12 - frameHeight,
+      viewport.height - 12 - frameSize,
       Math.max(12, image.y),
     ),
-    width: frameWidth,
-    height: frameHeight,
+    width: frameSize,
+    height: frameSize,
   }
   const scale = Math.max(2, frame.width / image.width, frame.height / image.height)
   const lens: Rect = {

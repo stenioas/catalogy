@@ -74,7 +74,7 @@ export function DesktopProductMedia({
               variant="outline"
               aria-label={`Foto ${imageIndex + 1}`}
               aria-pressed={selected}
-              className={`size-14 shrink-0 p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${selected ? 'border-primary ring-1 ring-primary' : ''}`}
+              className={`size-14 shrink-0 cursor-pointer p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${selected ? 'border-primary ring-1 ring-primary' : ''}`}
               onClick={() => onIndexChange(imageIndex)}
             >
               <img src={src} alt="" aria-hidden="true" draggable={false} className="size-full rounded-md object-contain" />
@@ -87,7 +87,7 @@ export function DesktopProductMedia({
             variant="outline"
             aria-label={`Abrir galeria na foto 8, mais ${moreCount} fotos`}
             aria-pressed={selectedMore}
-            className={`size-14 shrink-0 p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${selectedMore ? 'border-primary ring-1 ring-primary' : ''}`}
+            className={`size-14 shrink-0 cursor-pointer p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${selectedMore ? 'border-primary ring-1 ring-primary' : ''}`}
             onClick={(event) => onOpenGallery(7, event.currentTarget)}
           >
             +{moreCount}
@@ -102,7 +102,7 @@ export function DesktopProductMedia({
         aria-label={`Abrir galeria na foto ${index + 1}`}
         aria-haspopup="dialog"
         data-testid="desktop-product-main"
-        className="relative aspect-square h-auto min-w-0 w-full max-w-[840px] flex-1 overflow-hidden rounded-xl p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="relative aspect-square h-auto min-w-0 w-full max-w-[476px] flex-1 overflow-hidden rounded-xl p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         onPointerDown={startPointer}
         onPointerMove={movePointer}
         onPointerUp={endPointer}

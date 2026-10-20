@@ -353,11 +353,11 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(shownSrc()).toBe(photos[2])
   })
 
-  it('keeps the frame centered, square, and at most 840px, with the photo contained (SV-44)', () => {
+  it('keeps the frame centered, square, and at most 476px, with the photo contained (SV-44)', () => {
     renderCarousel()
     const box = frame()
     const classes = box.className.split(/\s+/)
-    expect(classes).toContain('max-w-[840px]')
+    expect(classes).toContain('max-w-[476px]')
     expect(classes).toContain('mx-auto')
     expect(classes).toContain('aspect-square')
     expect(classes).toContain('rounded-none')

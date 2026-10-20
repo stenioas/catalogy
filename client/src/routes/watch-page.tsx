@@ -126,7 +126,7 @@ function WatchColumn({ product }: { product: Product }) {
   return <>
     <ProductMedia key={product.slug} images={product.images.map((file) => productImageSrc(product.slug, file))} alt={product.title}>
       {({ media, isDesktop }) => isDesktop ? (
-        <div className="grid w-full min-w-0 grid-cols-[minmax(0,1fr)_minmax(220px,280px)] items-start gap-6">
+        <div className="grid w-full min-w-0 grid-cols-[fit-content(calc(476px+3.5rem+0.75rem))_minmax(220px,1fr)] items-start gap-6">
           <div data-testid="watch-left-column" className="flex min-w-0 flex-col gap-8">
             {media}
             <ProductDetails product={product} />

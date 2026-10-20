@@ -46,10 +46,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 200 },
     expected: {
       image: { x: 0, y: 0, width: 400, height: 400 },
-      lens: { x: 120, y: 93.3333, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
+      lens: { x: 81, y: 81, width: 238, height: 238 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
       scale: 2,
-      source: { x: 240, y: 186.6667, width: 320, height: 426.6667 },
+      source: { x: 162, y: 162, width: 476, height: 476 },
     },
   },
   {
@@ -58,10 +58,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 0, y: 200 },
     expected: {
       image: { x: 0, y: 0, width: 400, height: 400 },
-      lens: { x: 0, y: 93.3333, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
+      lens: { x: 0, y: 81, width: 238, height: 238 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
       scale: 2,
-      source: { x: 0, y: 186.6667, width: 320, height: 426.6667 },
+      source: { x: 0, y: 162, width: 476, height: 476 },
     },
   },
   {
@@ -70,10 +70,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 0 },
     expected: {
       image: { x: 0, y: 0, width: 400, height: 400 },
-      lens: { x: 120, y: 0, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
+      lens: { x: 81, y: 0, width: 238, height: 238 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
       scale: 2,
-      source: { x: 240, y: 0, width: 320, height: 426.6667 },
+      source: { x: 162, y: 0, width: 476, height: 476 },
     },
   },
   {
@@ -82,10 +82,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 400, y: 200 },
     expected: {
       image: { x: 0, y: 0, width: 400, height: 400 },
-      lens: { x: 240, y: 93.3333, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
+      lens: { x: 162, y: 81, width: 238, height: 238 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
       scale: 2,
-      source: { x: 480, y: 186.6667, width: 320, height: 426.6667 },
+      source: { x: 324, y: 162, width: 476, height: 476 },
     },
   },
   {
@@ -94,10 +94,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 400 },
     expected: {
       image: { x: 0, y: 0, width: 400, height: 400 },
-      lens: { x: 120, y: 186.6667, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
+      lens: { x: 81, y: 162, width: 238, height: 238 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
       scale: 2,
-      source: { x: 240, y: 373.3333, width: 320, height: 426.6667 },
+      source: { x: 162, y: 324, width: 476, height: 476 },
     },
   },
   {
@@ -106,10 +106,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 200 },
     expected: {
       image: { x: 0, y: 100, width: 400, height: 200 },
-      lens: { x: 125, y: 100, width: 150, height: 200 },
-      frame: { x: 412, y: 100, width: 320, height: 426.6667 },
-      scale: 32 / 15,
-      source: { x: 250, y: 0, width: 300, height: 400 },
+      lens: { x: 100, y: 100, width: 200, height: 200 },
+      frame: { x: 412, y: 100, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 200, y: 0, width: 400, height: 400 },
     },
   },
   {
@@ -118,10 +118,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 0, y: 200 },
     expected: {
       image: { x: 0, y: 100, width: 400, height: 200 },
-      lens: { x: 0, y: 100, width: 150, height: 200 },
-      frame: { x: 412, y: 100, width: 320, height: 426.6667 },
-      scale: 32 / 15,
-      source: { x: 0, y: 0, width: 300, height: 400 },
+      lens: { x: 0, y: 100, width: 200, height: 200 },
+      frame: { x: 412, y: 100, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 0, y: 0, width: 400, height: 400 },
     },
   },
   {
@@ -130,10 +130,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 100 },
     expected: {
       image: { x: 0, y: 100, width: 400, height: 200 },
-      lens: { x: 125, y: 100, width: 150, height: 200 },
-      frame: { x: 412, y: 100, width: 320, height: 426.6667 },
-      scale: 32 / 15,
-      source: { x: 250, y: 0, width: 300, height: 400 },
+      lens: { x: 100, y: 100, width: 200, height: 200 },
+      frame: { x: 412, y: 100, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 200, y: 0, width: 400, height: 400 },
     },
   },
   {
@@ -142,10 +142,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 400, y: 200 },
     expected: {
       image: { x: 0, y: 100, width: 400, height: 200 },
-      lens: { x: 250, y: 100, width: 150, height: 200 },
-      frame: { x: 412, y: 100, width: 320, height: 426.6667 },
-      scale: 32 / 15,
-      source: { x: 500, y: 0, width: 300, height: 400 },
+      lens: { x: 200, y: 100, width: 200, height: 200 },
+      frame: { x: 412, y: 100, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 400, y: 0, width: 400, height: 400 },
     },
   },
   {
@@ -154,10 +154,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 300 },
     expected: {
       image: { x: 0, y: 100, width: 400, height: 200 },
-      lens: { x: 125, y: 100, width: 150, height: 200 },
-      frame: { x: 412, y: 100, width: 320, height: 426.6667 },
-      scale: 32 / 15,
-      source: { x: 250, y: 0, width: 300, height: 400 },
+      lens: { x: 100, y: 100, width: 200, height: 200 },
+      frame: { x: 412, y: 100, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 200, y: 0, width: 400, height: 400 },
     },
   },
   {
@@ -166,10 +166,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 200 },
     expected: {
       image: { x: 100, y: 0, width: 200, height: 400 },
-      lens: { x: 120, y: 93.3333, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
-      scale: 2,
-      source: { x: 40, y: 186.6667, width: 320, height: 426.6667 },
+      lens: { x: 100, y: 100, width: 200, height: 200 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 0, y: 200, width: 400, height: 400 },
     },
   },
   {
@@ -178,10 +178,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 100, y: 200 },
     expected: {
       image: { x: 100, y: 0, width: 200, height: 400 },
-      lens: { x: 100, y: 93.3333, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
-      scale: 2,
-      source: { x: 0, y: 186.6667, width: 320, height: 426.6667 },
+      lens: { x: 100, y: 100, width: 200, height: 200 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 0, y: 200, width: 400, height: 400 },
     },
   },
   {
@@ -190,10 +190,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 0 },
     expected: {
       image: { x: 100, y: 0, width: 200, height: 400 },
-      lens: { x: 120, y: 0, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
-      scale: 2,
-      source: { x: 40, y: 0, width: 320, height: 426.6667 },
+      lens: { x: 100, y: 0, width: 200, height: 200 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 0, y: 0, width: 400, height: 400 },
     },
   },
   {
@@ -202,10 +202,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 300, y: 200 },
     expected: {
       image: { x: 100, y: 0, width: 200, height: 400 },
-      lens: { x: 140, y: 93.3333, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
-      scale: 2,
-      source: { x: 80, y: 186.6667, width: 320, height: 426.6667 },
+      lens: { x: 100, y: 100, width: 200, height: 200 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 0, y: 200, width: 400, height: 400 },
     },
   },
   {
@@ -214,10 +214,10 @@ const orientationScenarios: EdgeScenario[] = [
     pointer: { x: 200, y: 400 },
     expected: {
       image: { x: 100, y: 0, width: 200, height: 400 },
-      lens: { x: 120, y: 186.6667, width: 160, height: 213.3333 },
-      frame: { x: 412, y: 12, width: 320, height: 426.6667 },
-      scale: 2,
-      source: { x: 40, y: 373.3333, width: 320, height: 426.6667 },
+      lens: { x: 100, y: 200, width: 200, height: 200 },
+      frame: { x: 412, y: 12, width: 476, height: 476 },
+      scale: 476 / 200,
+      source: { x: 0, y: 400, width: 400, height: 400 },
     },
   },
 ]
@@ -254,10 +254,10 @@ describe('calculateZoomGeometry', () => {
       }),
       {
         image: { x: 0, y: 0, width: 400, height: 400 },
-        lens: { x: 144.5, y: 126, width: 111, height: 148 },
-        frame: { x: 412, y: 12, width: 222, height: 296 },
+        lens: { x: 126, y: 126, width: 148, height: 148 },
+        frame: { x: 412, y: 12, width: 296, height: 296 },
         scale: 2,
-        source: { x: 289, y: 252, width: 222, height: 296 },
+        source: { x: 252, y: 252, width: 296, height: 296 },
       },
     )
   })
@@ -272,10 +272,10 @@ describe('calculateZoomGeometry', () => {
       }),
       {
         image: { x: 0, y: 0, width: 400, height: 400 },
-        lens: { x: 181, y: 174.6667, width: 38, height: 50.6667 },
-        frame: { x: 412, y: 12, width: 76, height: 101.3333 },
+        lens: { x: 181, y: 181, width: 38, height: 38 },
+        frame: { x: 412, y: 12, width: 76, height: 76 },
         scale: 2,
-        source: { x: 362, y: 349.3333, width: 76, height: 101.3333 },
+        source: { x: 362, y: 362, width: 76, height: 76 },
       },
     )
   })
@@ -290,10 +290,10 @@ describe('calculateZoomGeometry', () => {
 
     expectGeometryWithinOnePixel(geometry, {
       image: { x: 92, y: 20, width: 441, height: 441 },
-      lens: { x: 232.5, y: 133.8333, width: 160, height: 213.3333 },
-      frame: { x: 545, y: 20, width: 320, height: 426.6667 },
+      lens: { x: 221.75, y: 149.75, width: 181.5, height: 181.5 },
+      frame: { x: 545, y: 20, width: 363, height: 363 },
       scale: 2,
-      source: { x: 281, y: 227.6667, width: 320, height: 426.6667 },
+      source: { x: 259.5, y: 259.5, width: 363, height: 363 },
     })
     if (geometry !== null) {
       expect(geometry.frame.x + geometry.frame.width).toBeLessThanOrEqual(920 - 12)
