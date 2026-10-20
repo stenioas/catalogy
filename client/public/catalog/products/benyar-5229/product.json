@@ -17,7 +17,7 @@
     "benyar-5229-10.png",
     "benyar-5229-11.png"
   ],
-  "description": "O BENYAR 5229 é um relógio masculino de quartzo com estilo moderno para o dia a dia e ambientes de negócios. Possui caixa e pulseira de aço inoxidável, vidro Hardlex, cronógrafo, calendário e ponteiros e marcadores luminosos. A resistência à água é de 3 bar.",
+  "description": "O BENYAR 5229 é um relógio masculino de quartzo com estilo moderno para o dia a dia e ambientes de negócios. Possui caixa e pulseira de aço inoxidável, vidro mineral endurecido, cronógrafo, calendário e ponteiros e marcadores luminosos. A resistência à água é de 3 bar.",
   "state": "Novo",
   "availabilityStatus": "available",
   "specifications": [
@@ -63,7 +63,7 @@
     },
     {
       "label": "Material do vidro",
-      "value": "Hardlex"
+      "value": "Vidro mineral endurecido"
     },
     {
       "label": "Resistência à água",
