@@ -1,0 +1,71 @@
+{
+  "slug": "addiesdive-my-h3-2qz-black",
+  "state": "Openbox",
+  "title": "Relógio Addiesdive MY-H3-2QZ Preto",
+  "unmissableOffer": true,
+  "price": 359.9,
+  "listPrice": 519.9,
+  "color": "Preto",
+  "images": [
+    "addiesdive-1.png",
+    "addiesdive-2.png",
+    "addiesdive-3.png",
+    "addiesdive-4.png",
+    "addiesdive-5.png",
+    "addiesdive-6.png",
+    "addiesdive-7.png",
+    "addiesdive-8.png"
+  ],
+  "description": "O Addiesdive MY-H3-2QZ é um homage do Rolex Submariner Date, do tipo diver (mergulho), com movimento de quartzo Miyota 2115. A caixa é de aço inoxidável 316L, com 41 mm de diâmetro sem a coroa, a pulseira é de aço inoxidável, com 20 mm de largura no encaixe da caixa. O vidro é Hardlex, o bisel é de cerâmica e a resistência à água é de 200 m (20 bar).",
+  "specifications": [
+    {
+      "label": "Homage de",
+      "value": "Rolex Submariner Date"
+    },
+    {
+      "label": "Estado",
+      "value": "Embalagem foi aberta"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Diver (mergulho)"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo (Miyota 2115)"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "200 m (20 bar)"
+    },
+    {
+      "label": "Tamanho da caixa",
+      "value": "41 mm de diâmetro, sem a coroa"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm no encaixe da caixa"
+    },
+    {
+      "label": "Material do bisel",
+      "value": "Cerâmica"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "availabilityStatus": "available"
+}

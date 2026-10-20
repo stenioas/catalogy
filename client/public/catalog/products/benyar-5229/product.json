@@ -1,8 +1,9 @@
 {
   "slug": "benyar-5229",
-  "title": "BENYAR 5229",
+  "title": "Relógio BENYAR 5229 Prata/Azul",
+  "color": "Prata/Azul",
   "price": 239.9,
-  "listPrice": 399.9,
+  "listPrice": 319.9,
   "images": [
     "benyar-5229-1.png",
     "benyar-5229-2.png",
@@ -17,10 +18,13 @@
     "benyar-5229-11.png"
   ],
   "description": "O BENYAR 5229 é um relógio masculino de quartzo com estilo moderno para o dia a dia e ambientes de negócios. Possui caixa e pulseira de aço inoxidável, vidro Hardlex, cronógrafo, calendário e ponteiros e marcadores luminosos. A resistência à água é de 3 bar.",
-  "color": "Silver Blue",
   "state": "Novo",
   "availabilityStatus": "available",
   "specifications": [
+    {
+      "label": "Estado",
+      "value": "Novo"
+    },
     {
       "label": "Marca",
       "value": "BENYAR"
@@ -68,6 +72,10 @@
     {
       "label": "Funções",
       "value": "Cronógrafo e calendário"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
     }
   ],
   "unmissableOffer": true

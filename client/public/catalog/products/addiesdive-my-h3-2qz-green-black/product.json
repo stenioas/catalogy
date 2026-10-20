@@ -1,10 +1,10 @@
 {
-  "slug": "addiesdive-my-h3-2qz",
-  "state": "Openbox",
-  "title": "Addiesdive MY-H3-2QZ",
-  "unmissableOffer": true,
-  "price": 359.9,
+  "slug": "addiesdive-my-h3-2qz-green-black",
+  "state": "Novo",
+  "title": "Relógio Addiesdive MY-H3-2QZ Verde/Preto (Starbucks)",
+  "price": 429.9,
   "listPrice": 519.9,
+  "color": "Verde/Preto (Starbucks)",
   "images": [
     "addiesdive-1.png",
     "addiesdive-2.png",
@@ -13,7 +13,8 @@
     "addiesdive-5.png",
     "addiesdive-6.png",
     "addiesdive-7.png",
-    "addiesdive-8.png"
+    "addiesdive-8.png",
+    "addiesdive-9.png"
   ],
   "description": "O Addiesdive MY-H3-2QZ é um homage do Rolex Submariner Date, do tipo diver (mergulho), com movimento de quartzo Miyota 2115. A caixa é de aço inoxidável 316L, com 41 mm de diâmetro sem a coroa, a pulseira é de aço inoxidável, com 20 mm de largura no encaixe da caixa. O vidro é Hardlex, o bisel é de cerâmica e a resistência à água é de 200 m (20 bar).",
   "specifications": [
@@ -23,7 +24,7 @@
     },
     {
       "label": "Estado",
-      "value": "Embalagem foi aberta"
+      "value": "Novo"
     },
     {
       "label": "Tipo do relógio",

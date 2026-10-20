@@ -1,7 +1,8 @@
 {
   "slug": "seculus-kit-cantil",
   "state": "Openbox",
-  "title": "Kit Seculus Cantil",
+  "title": "Kit Seculus Cantil Azul",
+  "color": "Azul",
   "price": 299.9,
   "listPrice": 369.9,
   "images": [
