@@ -79,6 +79,77 @@ Use `color` para a cor do exemplar ofertado quando o operador a informar. Não a
 
 String só com espaços **não** conta como vazio para omitir; só `""` ou campo omitido.
 
+## specifications (lista fechada)
+
+Cada linha de `specifications` usa **somente** uma das 20 labels abaixo, **na ordem canônica do schema** (`SPECIFICATION_LABELS` em `@catalogo/shared`). A ordem no `product.json` pode ser outra; a ficha do site reordena na exibição.
+
+| # | Label |
+| --- | --- |
+| 1 | Marca |
+| 2 | Modelo |
+| 3 | Homage de |
+| 4 | Estado |
+| 5 | Tipo do relógio |
+| 6 | Funções |
+| 7 | Tipo de movimento |
+| 8 | Movimento |
+| 9 | Material da caixa |
+| 10 | Material da pulseira |
+| 11 | Material do vidro |
+| 12 | Material do bisel |
+| 13 | Resistência à água |
+| 14 | Largura da pulseira |
+| 15 | Tamanho da caixa |
+| 16 | Coroa |
+| 17 | Tampa inferior |
+| 18 | Diâmetro do mostrador |
+| 19 | Espessura da caixa |
+| 20 | Garantia |
+
+Regras do `ProductSchema` (o build recusa o contrário):
+
+- Label fora da lista, label repetida no mesmo produto ou `value` vazio / só espaços → **não grave**; corrija com o operador.
+- Nenhuma label é obrigatória; `specifications` ausente ou `[]` é válido.
+- Não crie `Coroa` nem `Tampa inferior` a partir de foto ou descrição; só grave se o operador disser na mensagem.
+
+### Fonte dos valores
+
+Inferir **apenas** do texto que o operador enviou (modo A ou B). **Não** use fotos, **não** busque anúncio na web e **não** invente homage, calibre ou medida que não estejam no texto.
+
+Se um campo não der para inferir com segurança, deixe a label **fora** do JSON na leitura (ou o par label/value vazio na leitura) e **pergunte ao operador antes** de pedir o `sim`. Não preencha por adivinhação.
+
+Na **leitura completa**, liste as specifications **na ordem da tabela acima**, omitindo linhas que ficaram vazias.
+
+### Medidas de caixa e movimento
+
+| Label | Quando preencher sem perguntar |
+| --- | --- |
+| `Tamanho da caixa` | O texto menciona **lug to lug** (inclua o valor que o operador passou). |
+| `Diâmetro do mostrador` | O texto menciona **diâmetro** (em geral sem a coroa). |
+| `Espessura da caixa` | O texto menciona **espessura**. |
+| `Movimento` | O texto nomeia um **calibre** (ex.: `2035`, `NH35`). |
+| `Tipo de movimento` | Classe do movimento quando o texto for claro (quartzo, automático, mecânico, meca-quartz, etc.), inclusive com calibre na mesma frase se for o caso. |
+
+Deixe **em branco** e **pergunte** antes do `sim` quando o texto trouxer **comprimento**, **medida nominal** ou **largura da caixa** em vez de lug to lug, ou quando houver linha de movimento **sem calibre nomeado** e você não souber o que gravar em `Movimento` vs `Tipo de movimento`.
+
+`state` do produto (`Novo` / `Openbox` / `Usado`) continua obrigatório e independente. `Estado` em `specifications` é opcional e pode ter outro texto (ex.: condição da embalagem).
+
+### Resistência à água
+
+Grave sempre no formato **`{metros}m ({n} ATM)`**: sem espaço antes de `m`, espaço antes do parêntese, unidade `ATM` no parêntese. Na ficha, **1 bar = 1 ATM = 10 m**; não converta pressão real.
+
+**Sem perguntar**, quando o texto do operador disser exatamente o padrão abaixo, grave o valor canônico:
+
+| Texto do operador (exemplos) | Valor em `Resistência à água` |
+| --- | --- |
+| `3 bar` | `30m (3 ATM)` |
+| `30 m (3 bar)` | `30m (3 ATM)` |
+| `5 ATM` | `50m (5 ATM)` |
+
+Para outros pares de metros e bar/ATM no **mesmo** texto, só converta se fecharem **10 m por 1 ATM** (ex.: `50 m (5 bar)` → `50m (5 ATM)`). Se metros e bar/ATM **não** fecharem essa conta, deixe `Resistência à água` em branco e **pergunte**; não invente conversão.
+
+Notas de uso (natação, mergulho, etc.) **não** entram no `value` de `Resistência à água`; podem ir em `description` ou `observations` se o operador pedir.
+
 Se `listPrice` existir, após truncar deve ser **maior** que `price`; caso contrário, corrija com o operador antes de gravar.
 
 ## Conflito de pasta

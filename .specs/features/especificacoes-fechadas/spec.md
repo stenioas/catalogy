@@ -196,16 +196,16 @@ Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com
 | SPEC-35 | P1: Limpeza do catálogo atual | T2 | Done |
 | SPEC-36 | P1: Limpeza do catálogo atual | T2 | Done |
 | SPEC-37 | P1: Limpeza do catálogo atual | T2 | Done |
-| SPEC-38 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
-| SPEC-39 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
-| SPEC-40 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
-| SPEC-41 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
-| SPEC-42 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
+| SPEC-38 | P1: Contrato escrito para o próximo cadastro | T4 | Done |
+| SPEC-39 | P1: Contrato escrito para o próximo cadastro | T4 | Done |
+| SPEC-40 | P1: Contrato escrito para o próximo cadastro | T4 | Done |
+| SPEC-41 | P1: Contrato escrito para o próximo cadastro | T4 | Done |
+| SPEC-42 | P1: Contrato escrito para o próximo cadastro | T4 | Done |
 | SPEC-43 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
 
 Mapeamento: SPEC-01 a SPEC-08 são os critérios da história do schema, na ordem em que aparecem. SPEC-09 a SPEC-13 são os da ficha. SPEC-14 a SPEC-37 são os da limpeza, na ordem em que aparecem. SPEC-38 a SPEC-43 são os do contrato escrito.
 
-**Coverage:** 43 total, 37 mapped to tasks (T1, T2, T3), 6 unmapped.
+**Coverage:** 43 total, 42 mapped to tasks (T1, T2, T3, T4), 1 unmapped.
 
 ---
 

@@ -190,17 +190,19 @@ T4 → T5
 
 **Done when**:
 
-- [ ] As 20 labels aparecem na ordem exportada
-- [ ] `3 bar`, `30 m (3 bar)` e `5 ATM` são gravados como `30m (3 ATM)` ou `50m (5 ATM)` sem pergunta
-- [ ] Lug to lug, diâmetro, espessura e calibre nomeado são preenchidos. Comprimento, medida nominal e largura da caixa ficam em branco e geram pergunta
-- [ ] A fonte é o texto do operador, não foto nem anúncio novo
-- [ ] Água com metros e ATM que não fecham 10 m por 1 ATM gera pergunta
-- [ ] Nenhum teste Vitest novo cobre esta skill
+- [x] As 20 labels aparecem na ordem exportada
+- [x] `3 bar`, `30 m (3 bar)` e `5 ATM` são gravados como `30m (3 ATM)` ou `50m (5 ATM)` sem pergunta
+- [x] Lug to lug, diâmetro, espessura e calibre nomeado são preenchidos. Comprimento, medida nominal e largura da caixa ficam em branco e geram pergunta
+- [x] A fonte é o texto do operador, não foto nem anúncio novo
+- [x] Água com metros e ATM que não fecham 10 m por 1 ATM gera pergunta
+- [x] Nenhum teste Vitest novo cobre esta skill
 
 **Tests**: none
 **Gate**: build
 
 **Commit**: `docs(skill): teach cadastrar-relogio the closed specification labels`
+
+**Status**: done
 
 ---
 
