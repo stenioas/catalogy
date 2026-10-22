@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { ProductSchema } from './product'
+import {
+  ProductSchema,
+  SPECIFICATION_LABELS,
+} from './product'
+import { SPECIFICATION_LABELS as exportedLabels } from '../index'
 
 const baseProduct = {
   slug: 'seculus-kit',
@@ -251,6 +255,107 @@ describe('ProductSchema state', () => {
     expect(ProductSchema.safeParse({ ...baseProduct, state: undefined, new: true }).success).toBe(false)
     expect(ProductSchema.parse({ ...baseProduct, new: true })).not.toHaveProperty('new')
   })
+})
+
+const canonicalLabelsInOrder = [
+  'Marca',
+  'Modelo',
+  'Homage de',
+  'Estado',
+  'Tipo do relógio',
+  'Funções',
+  'Tipo de movimento',
+  'Movimento',
+  'Material da caixa',
+  'Material da pulseira',
+  'Material do vidro',
+  'Material do bisel',
+  'Resistência à água',
+  'Largura da pulseira',
+  'Tamanho da caixa',
+  'Coroa',
+  'Tampa inferior',
+  'Diâmetro do mostrador',
+  'Espessura da caixa',
+  'Garantia',
+] as const
+
+describe('SPECIFICATION_LABELS (SPEC-01)', () => {
+  it('exports the 20 canonical labels in spec order from the schema module', () => {
+    expect([...SPECIFICATION_LABELS]).toEqual([...canonicalLabelsInOrder])
+  })
+
+  it('re-exports the same list from the shared package entry', () => {
+    expect([...exportedLabels]).toEqual([...canonicalLabelsInOrder])
+  })
+})
+
+describe('ProductSchema specifications (SPEC-02–SPEC-08)', () => {
+  it('accepts a product when specifications is omitted (SPEC-02)', () => {
+    expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
+  })
+
+  it('accepts a product whose specifications array is empty (SPEC-03)', () => {
+    expect(
+      ProductSchema.safeParse({ ...baseProduct, specifications: [] }).success,
+    ).toBe(true)
+  })
+
+  it('accepts a valid subset with each label at most once and non-blank values (SPEC-04)', () => {
+    const result = ProductSchema.safeParse({
+      ...baseProduct,
+      specifications: [
+        { label: 'Marca', value: 'Seculus' },
+        { label: 'Garantia', value: '90 dias.' },
+      ],
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('accepts specifications not in exported label order (SPEC-05)', () => {
+    const result = ProductSchema.safeParse({
+      ...baseProduct,
+      specifications: [
+        { label: 'Garantia', value: '90 dias.' },
+        { label: 'Marca', value: 'Seculus' },
+        { label: 'Modelo', value: 'Kit Cantil' },
+      ],
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects an unknown specification label (SPEC-06)', () => {
+    expect(
+      ProductSchema.safeParse({
+        ...baseProduct,
+        specifications: [{ label: 'Formato da caixa', value: 'Redonda' }],
+      }).success,
+    ).toBe(false)
+  })
+
+  it('rejects the same specification label more than once (SPEC-07)', () => {
+    expect(
+      ProductSchema.safeParse({
+        ...baseProduct,
+        specifications: [
+          { label: 'Marca', value: 'Seculus' },
+          { label: 'Marca', value: 'Outra' },
+        ],
+      }).success,
+    ).toBe(false)
+  })
+
+  it.each(['', '   '])(
+    'rejects a specification value that is empty or only spaces (SPEC-08): %j',
+    (value) => {
+      expect(
+        ProductSchema.safeParse({
+          ...baseProduct,
+          specifications: [{ label: 'Marca', value }],
+        }).success,
+      ).toBe(false)
+    },
+  )
 })
 
 describe('ProductSchema availabilityStatus', () => {

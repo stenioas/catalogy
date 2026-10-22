@@ -1,5 +1,6 @@
 export {
   ProductSchema,
+  SPECIFICATION_LABELS,
   isProductListed,
   type Product,
   type Specification,
