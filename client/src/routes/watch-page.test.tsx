@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { creditInstallmentLabel, type Product } from '@catalogo/shared'
+import { creditInstallmentLabel, SPECIFICATION_LABELS, type Product } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
@@ -35,7 +35,7 @@ function makeProduct(overrides: Partial<Product> = {}): Product {
     observations: 'Entrega em mãos.',
     specifications: [
       { label: 'Marca', value: 'Seculus' },
-      { label: 'Pulseira', value: 'Aço' },
+      { label: 'Material da pulseira', value: 'Aço' },
     ],
     ...overrides,
   }
@@ -308,7 +308,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     ).toEqual(['Marca', 'Seculus'])
     expect(
       within(rows[1]).getAllByRole('cell').map((cell) => cell.textContent),
-    ).toEqual(['Pulseira', 'Aço'])
+    ).toEqual(['Material da pulseira', 'Aço'])
   })
 
   it('hides Características do produto when specifications is missing or an empty list (CAT-68)', () => {
@@ -410,7 +410,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       'Seculus',
     ])
     expect(within(rows[1]).getAllByRole('cell').map((cell) => cell.textContent)).toEqual([
-      'Pulseira',
+      'Material da pulseira',
       'Aço',
     ])
     expect(table.className.split(/\s+/)).toContain('table-fixed')
@@ -437,6 +437,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       }),
     ]
     renderWatchPage()
+    const table = screen.getByRole('table')
+    const rows = within(table).getAllByRole('row')
+    expect(rows.map((row) => within(row).getAllByRole('cell')[0].textContent)).toEqual([
+      'Marca',
+      'Anúncio',
+      'Espelho',
+    ])
     const links = screen.getAllByRole('link', { name: 'Ver anúncio similar' })
     expect(links).toHaveLength(2)
     expect(links[0].getAttribute('href')).toBe(httpsUrl)
@@ -447,7 +454,6 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(links[1].getAttribute('target')).toBe('_blank')
     expect(links[1].getAttribute('rel')).toBe('noopener noreferrer')
     expect(links[1].textContent).toBe('Ver anúncio similar')
-    const table = screen.getByRole('table')
     expect(table.textContent).not.toContain(httpsUrl)
     expect(table.textContent).not.toContain(httpUrl)
     expect(table.textContent).toContain('Seculus')
@@ -627,6 +633,98 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(targets).toEqual([mobile, desktop])
     expect(disconnect).toHaveBeenCalled()
     expect(screen.queryByTestId('sticky-bar')).toBeNull()
+  })
+
+  describe('closed specification labels on the watch page (SPEC-09–SPEC-13)', () => {
+    it('shows canonical labels in exported order regardless of product array order (SPEC-09)', () => {
+      mockProductsRef.current = [
+        makeProduct({
+          specifications: [
+            { label: 'Garantia', value: '90 dias.' },
+            { label: 'Marca', value: 'Seculus' },
+            { label: 'Resistência à água', value: '50m (5 ATM)' },
+            { label: 'Modelo', value: 'Kit' },
+          ],
+        }),
+      ]
+      renderWatchPage()
+      const labels = within(screen.getByRole('table'))
+        .getAllByRole('row')
+        .map((row) => within(row).getAllByRole('cell')[0].textContent)
+      const canonicalInTable = labels.filter((label) =>
+        (SPECIFICATION_LABELS as readonly string[]).includes(label ?? ''),
+      )
+      expect(canonicalInTable).toEqual(['Marca', 'Modelo', 'Resistência à água', 'Garantia'])
+    })
+
+    it('renders labels outside the exported list after canonical rows, preserving outside relative order (SPEC-10)', () => {
+      mockProductsRef.current = [
+        makeProduct({
+          specifications: [
+            { label: 'Fora Z', value: 'último-fora' },
+            { label: 'Garantia', value: '90 dias.' },
+            { label: 'Fora A', value: 'primeiro-fora' },
+            { label: 'Marca', value: 'Seculus' },
+          ] as Product['specifications'],
+        }),
+      ]
+      renderWatchPage()
+      expect(
+        within(screen.getByRole('table'))
+          .getAllByRole('row')
+          .map((row) => within(row).getAllByRole('cell').map((cell) => cell.textContent)),
+      ).toEqual([
+        ['Marca', 'Seculus'],
+        ['Garantia', '90 dias.'],
+        ['Fora Z', 'último-fora'],
+        ['Fora A', 'primeiro-fora'],
+      ])
+    })
+
+    it('omits specification rows whose value has no non-space character (SPEC-11)', () => {
+      mockProductsRef.current = [
+        makeProduct({
+          specifications: [
+            { label: 'Marca', value: 'Seculus' },
+            { label: 'Modelo', value: '   ' },
+            { label: 'Garantia', value: '' },
+          ],
+        }),
+      ]
+      renderWatchPage()
+      const rows = within(screen.getByRole('table')).getAllByRole('row')
+      expect(rows).toHaveLength(1)
+      expect(within(rows[0]).getAllByRole('cell').map((cell) => cell.textContent)).toEqual([
+        'Marca',
+        'Seculus',
+      ])
+    })
+
+    it('reads displayed color only from the color field, not from specifications (SPEC-12)', () => {
+      mockProductsRef.current = [
+        makeProduct({
+          color: 'Azul',
+          specifications: [{ label: 'Material da pulseira', value: 'Prata' }],
+        }),
+      ]
+      renderWatchPage()
+      expect(screen.getByTestId('watch-color').textContent).toBe('Cor: Azul')
+      expect(within(screen.getByRole('table')).queryByText('Azul')).toBeNull()
+      expect(within(screen.getByRole('table')).getByText('Prata')).toBeDefined()
+    })
+
+    it('shows Ver anúncio similar for http(s) values without raw URL text (SPEC-13)', () => {
+      const url = 'https://loja.example/item'
+      mockProductsRef.current = [
+        makeProduct({
+          specifications: [{ label: 'Modelo', value: url }],
+        }),
+      ]
+      renderWatchPage()
+      const link = screen.getByRole('link', { name: 'Ver anúncio similar' })
+      expect(link.getAttribute('href')).toBe(url)
+      expect(screen.getByRole('table').textContent).not.toContain(url)
+    })
   })
 
   it('keeps the shared gallery and selection mounted across page compositions (CATREF-31)', () => {

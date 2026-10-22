@@ -167,11 +167,11 @@ Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com
 | SPEC-06 | P1: Vocabulário fechado no schema | T1 | Done |
 | SPEC-07 | P1: Vocabulário fechado no schema | T1 | Done |
 | SPEC-08 | P1: Vocabulário fechado no schema | T1 | Done |
-| SPEC-09 | P1: Ordem única na ficha | Specify | Pending |
-| SPEC-10 | P1: Ordem única na ficha | Specify | Pending |
-| SPEC-11 | P1: Ordem única na ficha | Specify | Pending |
-| SPEC-12 | P1: Ordem única na ficha | Specify | Pending |
-| SPEC-13 | P1: Ordem única na ficha | Specify | Pending |
+| SPEC-09 | P1: Ordem única na ficha | T3 | Done |
+| SPEC-10 | P1: Ordem única na ficha | T3 | Done |
+| SPEC-11 | P1: Ordem única na ficha | T3 | Done |
+| SPEC-12 | P1: Ordem única na ficha | T3 | Done |
+| SPEC-13 | P1: Ordem única na ficha | T3 | Done |
 | SPEC-14 | P1: Limpeza do catálogo atual | T2 | Done |
 | SPEC-15 | P1: Limpeza do catálogo atual | T2 | Done |
 | SPEC-16 | P1: Limpeza do catálogo atual | T2 | Done |
@@ -205,7 +205,7 @@ Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com
 
 Mapeamento: SPEC-01 a SPEC-08 são os critérios da história do schema, na ordem em que aparecem. SPEC-09 a SPEC-13 são os da ficha. SPEC-14 a SPEC-37 são os da limpeza, na ordem em que aparecem. SPEC-38 a SPEC-43 são os do contrato escrito.
 
-**Coverage:** 43 total, 32 mapped to tasks (T1, T2), 11 unmapped.
+**Coverage:** 43 total, 37 mapped to tasks (T1, T2, T3), 6 unmapped.
 
 ---
 

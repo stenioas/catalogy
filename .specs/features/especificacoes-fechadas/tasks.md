@@ -153,20 +153,22 @@ T4 → T5
 
 **Done when**:
 
-- [ ] `Garantia` antes de `Marca` no array aparece como `Marca` e depois `Garantia`
-- [ ] Label fora da lista fica depois das canônicas, na ordem relativa original
-- [ ] Valor sem texto não gera linha
-- [ ] Cor continua vindo de `color`
-- [ ] URL `http://` e `https://` continuam virando o link `Ver anúncio similar` sem mostrar a URL crua
-- [ ] Fixtures usam labels canônicas onde o tipo passou a exigi-las
-- [ ] Gate check passes: `pnpm --filter client exec vitest run src/routes/watch-page.test.tsx`
-- [ ] Gate check passes: `pnpm build`
-- [ ] Nenhum teste existente é apagado ou enfraquecido
+- [x] `Garantia` antes de `Marca` no array aparece como `Marca` e depois `Garantia`
+- [x] Label fora da lista fica depois das canônicas, na ordem relativa original
+- [x] Valor sem texto não gera linha
+- [x] Cor continua vindo de `color`
+- [x] URL `http://` e `https://` continuam virando o link `Ver anúncio similar` sem mostrar a URL crua
+- [x] Fixtures usam labels canônicas onde o tipo passou a exigi-las
+- [x] Gate check passes: `pnpm --filter client exec vitest run src/routes/watch-page.test.tsx`
+- [x] Gate check passes: `pnpm build`
+- [x] Nenhum teste existente é apagado ou enfraquecido
 
 **Tests**: unit
 **Gate**: page
 
 **Commit**: `feat(client): show specifications in canonical order`
+
+**Status**: done
 
 ---
 

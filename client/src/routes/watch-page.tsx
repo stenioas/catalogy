@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { isProductListed, type Product } from '@catalogo/shared'
+import { isProductListed, SPECIFICATION_LABELS, type Product } from '@catalogo/shared'
 
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
@@ -25,6 +25,28 @@ function hasText(value: string | undefined): value is string {
 
 function isSimilarAdUrl(value: string): boolean {
   return value.startsWith('http://') || value.startsWith('https://')
+}
+
+const specificationLabelRank = new Map(
+  SPECIFICATION_LABELS.map((label, index) => [label, index]),
+)
+
+function orderSpecificationRows<T extends { label: string; value: string }>(rows: T[]): T[] {
+  const canonical: T[] = []
+  const outside: T[] = []
+  for (const row of rows) {
+    if (specificationLabelRank.has(row.label)) {
+      canonical.push(row)
+    } else {
+      outside.push(row)
+    }
+  }
+  canonical.sort(
+    (left, right) =>
+      (specificationLabelRank.get(left.label) ?? 0) -
+      (specificationLabelRank.get(right.label) ?? 0),
+  )
+  return [...canonical, ...outside]
 }
 
 function SpecificationValue({ value }: { value: string }) {
@@ -94,7 +116,9 @@ function TextSection({ title, value }: { title: string; value?: string }) {
 }
 
 function Specifications({ product }: { product: Product }) {
-  const specifications = (product.specifications ?? []).filter((row) => hasText(row.value))
+  const specifications = orderSpecificationRows(
+    (product.specifications ?? []).filter((row) => hasText(row.value)),
+  )
   if (specifications.length === 0) return null
   return <section className="w-full min-w-0">
     <h2 className="m-0 font-display text-lg font-semibold text-foreground">Características do produto</h2>
