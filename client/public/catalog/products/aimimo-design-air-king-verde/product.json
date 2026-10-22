@@ -11,7 +11,7 @@
     "aimimo-design-air-king-2.png",
     "aimimo-design-air-king-3.png"
   ],
-  "description": "O AIMIMO DESIGN DD39MM é um homage do Rolex Air-King. Tem caixa de aço inoxidável 316L, com acabamento polido e fundo escovado, e pulseira de aço inoxidável. O diâmetro é de 39 mm sem a coroa, o comprimento lug to lug é de 48 mm e a espessura é de 12,5 mm. O vidro é de cristal de safira, a coroa é parafusada e a resistência à água é de 50 m (5 ATM). O movimento é de quartzo japonês, com três ponteiros, calendário e luminosidade. A pulseira tem 20 mm de largura. A tolerância de medição manual informada é de ±1 mm.",
+  "description": "O AIMIMO DESIGN DD39MM é um homage do Rolex Air-King. Tem caixa de aço inoxidável 316L, com acabamento polido e fundo escovado, e pulseira de aço inoxidável. O diâmetro é de 39 mm sem a coroa, o comprimento lug to lug é de 48 mm e a espessura é de 12,5 mm. O vidro é de cristal de safira, a coroa é parafusada e a resistência à água é de 50 m (5 ATM). O movimento é de quartzo japonês, com três ponteiros, calendário e luminosidade. A pulseira tem 20 mm de largura.",
   "specifications": [
     {
       "label": "Homage de",
@@ -27,7 +27,7 @@
     },
     {
       "label": "Movimento",
-      "value": "Quartzo japonês, três ponteiros e calendário"
+      "value": "Quartzo japonês"
     },
     {
       "label": "Material da caixa",
@@ -64,10 +64,6 @@
     {
       "label": "Tampa inferior",
       "value": "Aço inoxidável"
-    },
-    {
-      "label": "Tolerância de medição",
-      "value": "±1 mm"
     }
   ],
   "availabilityStatus": "available"
