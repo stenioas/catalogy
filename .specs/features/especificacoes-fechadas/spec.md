@@ -9,7 +9,7 @@ Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com
 - [ ] O `ProductSchema` aceita só as 20 labels canônicas, sem obrigar nenhuma, sem repetir label e sem valor em branco
 - [ ] A página do relógio mostra essas labels sempre na mesma ordem
 - [ ] Os 11 `product.json` atuais passam pela limpeza combinada e pela resistência à água `30m (3 ATM)`
-- [ ] A skill `cadastrar-relogio` e o `README.md` descrevem o mesmo contrato
+- [x] A skill `cadastrar-relogio` e o `README.md` descrevem o mesmo contrato
 
 ## Out of Scope
 
@@ -201,11 +201,11 @@ Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com
 | SPEC-40 | P1: Contrato escrito para o próximo cadastro | T4 | Done |
 | SPEC-41 | P1: Contrato escrito para o próximo cadastro | T4 | Done |
 | SPEC-42 | P1: Contrato escrito para o próximo cadastro | T4 | Done |
-| SPEC-43 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
+| SPEC-43 | P1: Contrato escrito para o próximo cadastro | T5 | Done |
 
 Mapeamento: SPEC-01 a SPEC-08 são os critérios da história do schema, na ordem em que aparecem. SPEC-09 a SPEC-13 são os da ficha. SPEC-14 a SPEC-37 são os da limpeza, na ordem em que aparecem. SPEC-38 a SPEC-43 são os do contrato escrito.
 
-**Coverage:** 43 total, 42 mapped to tasks (T1, T2, T3, T4), 1 unmapped.
+**Coverage:** 43 total, 43 mapped to tasks (T1, T2, T3, T4, T5), 0 unmapped.
 
 ---
 

@@ -222,14 +222,16 @@ T4 → T5
 
 **Done when**:
 
-- [ ] O README nomeia as 20 labels na ordem exportada
-- [ ] O README diz que a página mostra essa ordem
-- [ ] O README continua dizendo que `color` não é lido de `specifications`
+- [x] O README nomeia as 20 labels na ordem exportada
+- [x] O README diz que a página mostra essa ordem
+- [x] O README continua dizendo que `color` não é lido de `specifications`
 
 **Tests**: none
 **Gate**: build
 
 **Commit**: `docs(readme): document the closed specification labels`
+
+**Status**: done
 
 ---
 
