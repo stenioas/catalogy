@@ -1,9 +1,9 @@
 {
   "slug": "curren-8455",
   "title": "Curren 8455 Azul",
-  "unmissableOffer": true,
+  "unmissableOffer": false,
   "color": "Azul",
-  "price": 99.9,
+  "price": 119.9,
   "listPrice": 139.9,
   "state": "Novo",
   "images": [

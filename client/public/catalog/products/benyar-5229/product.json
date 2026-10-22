@@ -2,8 +2,9 @@
   "slug": "benyar-5229",
   "title": "BENYAR 5229 Prata/Azul",
   "color": "Prata/Azul",
-  "price": 239.9,
+  "price": 259.9,
   "listPrice": 319.9,
+  "unmissableOffer": false,
   "images": [
     "benyar-5229-1.png",
     "benyar-5229-2.png",
@@ -77,6 +78,5 @@
       "label": "Garantia",
       "value": "90 dias"
     }
-  ],
-  "unmissableOffer": true
+  ]
 }
