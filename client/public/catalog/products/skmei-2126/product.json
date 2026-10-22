@@ -15,6 +15,14 @@
   "description": "O Skmei 2126 é um relógio masculino digital esportivo, na cor preta, com dois horários, calendário, dia da semana, dia do mês, despertador, cronômetro, contador regressivo e luz verde. A caixa é quadrada e de plástico, com 51 mm de lug to lug, 50 mm de diâmetro contando os botões e 14 mm de espessura, e a pulseira é de borracha, com 20 mm de largura e comprimento máximo de 250 mm. O vidro é acrílico, o fecho é fivela e a alimentação é por bateria interna. A resistência à água é de 5 bar (50 m): serve para natação e não para mergulho.",
   "specifications": [
     {
+      "label": "Marca",
+      "value": "Skmei"
+    },
+    {
+      "label": "Modelo",
+      "value": "2126"
+    },
+    {
       "label": "Estado",
       "value": "Novo"
     },

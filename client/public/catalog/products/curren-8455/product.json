@@ -20,6 +20,14 @@
   "description": "O Curren 8455 é um relógio analógico de estilo casual e esportivo, com movimento de quartzo alimentado por bateria. A caixa é de liga metálica, com 42 mm de diâmetro e 11 mm de espessura, e a pulseira é de aço inoxidável, com largura de 22 mm. O vidro é mineral endurecido e a resistência à água é de 30 m (3 bar).",
   "specifications": [
     {
+      "label": "Marca",
+      "value": "Curren"
+    },
+    {
+      "label": "Modelo",
+      "value": "8455"
+    },
+    {
       "label": "Estado",
       "value": "Novo"
     },

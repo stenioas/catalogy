@@ -15,6 +15,14 @@
   "description": "O Seculus Navy é um relógio analógico casual da linha Navy, com movimento de quartzo alimentado por bateria e calendário. A caixa é de aço inoxidável, com 45 mm de diâmetro, e a pulseira também é de aço inoxidável. O vidro é de cristal mineral, o bisel possui detalhes em alumínio e a resistência à água é de 50 m (5 ATM).",
   "specifications": [
     {
+      "label": "Marca",
+      "value": "Seculus"
+    },
+    {
+      "label": "Modelo",
+      "value": "Navy"
+    },
+    {
       "label": "Estado",
       "value": "Embalagem foi aberta"
     },

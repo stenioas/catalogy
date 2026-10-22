@@ -19,6 +19,14 @@
   "description": "O Addiesdive AD2554 é um homage do Tudor Ranger, de estilo analógico retrô, com movimento de quartzo japonês calibre 2035. A caixa e a pulseira são de aço inoxidável 316L. A caixa mede 36 mm de diâmetro sem a coroa, 46 mm de comprimento e 10 mm de espessura, com encaixe de pulseira de 20 mm. O vidro é de safira, os ponteiros e marcadores são luminosos, e a coroa e a tampa do fundo são rosqueadas. A resistência à água é de 100 m (10 bar). O peso é de 113,6 g e o comprimento total do relógio é de 220 mm.",
   "specifications": [
     {
+      "label": "Marca",
+      "value": "Addiesdive"
+    },
+    {
+      "label": "Modelo",
+      "value": "AD2554"
+    },
+    {
       "label": "Homage de",
       "value": "Tudor Ranger"
     },

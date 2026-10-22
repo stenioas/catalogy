@@ -19,6 +19,14 @@
   "description": "O Addiesdive MY-H3-2QZ é um homage do Rolex Submariner Date, do tipo diver (mergulho), com movimento de quartzo Miyota 2115. A caixa é de aço inoxidável 316L, com 41 mm de diâmetro sem a coroa, a pulseira é de aço inoxidável, com 20 mm de largura no encaixe da caixa. O vidro é mineral endurecido, o bisel é de cerâmica e a resistência à água é de 200 m (20 bar).",
   "specifications": [
     {
+      "label": "Marca",
+      "value": "Addiesdive"
+    },
+    {
+      "label": "Modelo",
+      "value": "MY-H3-2QZ"
+    },
+    {
       "label": "Homage de",
       "value": "Rolex Submariner Date"
     },

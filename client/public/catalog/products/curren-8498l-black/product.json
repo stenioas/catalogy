@@ -15,6 +15,10 @@
   "description": "O Curren 8498L é um relógio analógico feminino de estilo fashion e casual, com movimento de quartzo, data automática e marcadores luminosos. O mostrador não tem números. A caixa é de liga, com 10 mm de espessura, e o diâmetro do mostrador é de 33 mm. O vidro é Hardlex. A pulseira é de aço inoxidável, com 14 mm de largura e 19 cm de comprimento, e fecho de pulseira. A resistência à água é de 30 m (3 bar). O peso é de 79,5 g.",
   "specifications": [
     {
+      "label": "Marca",
+      "value": "Curren"
+    },
+    {
       "label": "Estado",
       "value": "Novo"
     },
