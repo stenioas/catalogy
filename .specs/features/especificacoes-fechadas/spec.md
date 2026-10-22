@@ -172,30 +172,30 @@ Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com
 | SPEC-11 | P1: Ordem única na ficha | Specify | Pending |
 | SPEC-12 | P1: Ordem única na ficha | Specify | Pending |
 | SPEC-13 | P1: Ordem única na ficha | Specify | Pending |
-| SPEC-14 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-15 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-16 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-17 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-18 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-19 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-20 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-21 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-22 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-23 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-24 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-25 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-26 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-27 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-28 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-29 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-30 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-31 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-32 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-33 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-34 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-35 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-36 | P1: Limpeza do catálogo atual | Specify | Pending |
-| SPEC-37 | P1: Limpeza do catálogo atual | Specify | Pending |
+| SPEC-14 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-15 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-16 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-17 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-18 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-19 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-20 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-21 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-22 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-23 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-24 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-25 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-26 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-27 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-28 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-29 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-30 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-31 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-32 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-33 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-34 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-35 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-36 | P1: Limpeza do catálogo atual | T2 | Done |
+| SPEC-37 | P1: Limpeza do catálogo atual | T2 | Done |
 | SPEC-38 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
 | SPEC-39 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
 | SPEC-40 | P1: Contrato escrito para o próximo cadastro | Specify | Pending |
@@ -205,7 +205,7 @@ Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com
 
 Mapeamento: SPEC-01 a SPEC-08 são os critérios da história do schema, na ordem em que aparecem. SPEC-09 a SPEC-13 são os da ficha. SPEC-14 a SPEC-37 são os da limpeza, na ordem em que aparecem. SPEC-38 a SPEC-43 são os do contrato escrito.
 
-**Coverage:** 43 total, 8 mapped to tasks (T1), 35 unmapped.
+**Coverage:** 43 total, 32 mapped to tasks (T1, T2), 11 unmapped.
 
 ---
 

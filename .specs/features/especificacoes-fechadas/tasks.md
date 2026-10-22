@@ -121,15 +121,17 @@ T4 → T5
 
 **Done when**:
 
-- [ ] Cada critério SPEC-14 a SPEC-36 está coberto por `client/scripts/specification-migration.test.ts`
-- [ ] Descrição, garantia `90 dias.`, `Estado` "Embalagem foi aberta", `Tamanho da caixa` e calibres citados na spec permanecem
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] Nenhum teste existente do client é apagado ou enfraquecido
+- [x] Cada critério SPEC-14 a SPEC-36 está coberto por `client/scripts/specification-migration.test.ts`
+- [x] Descrição, garantia `90 dias.`, `Estado` "Embalagem foi aberta", `Tamanho da caixa` e calibres citados na spec permanecem
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] Nenhum teste existente do client é apagado ou enfraquecido
 
 **Tests**: integration
 **Gate**: full
 
 **Commit**: `fix(catalog): normalize specification labels and water resistance`
+
+**Status**: done
 
 ---
 

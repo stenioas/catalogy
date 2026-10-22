@@ -47,7 +47,7 @@
     },
     {
       "label": "Resistência à água",
-      "value": "50 m (5 ATM)"
+      "value": "50m (5 ATM)"
     },
     {
       "label": "Tamanho da caixa",
@@ -58,12 +58,8 @@
       "value": "20 mm"
     },
     {
-      "label": "Luminosidade",
-      "value": "Sim"
-    },
-    {
-      "label": "Tampa inferior",
-      "value": "Aço inoxidável"
+      "label": "Funções",
+      "value": "Luminosidade"
     }
   ],
   "availabilityStatus": "available"

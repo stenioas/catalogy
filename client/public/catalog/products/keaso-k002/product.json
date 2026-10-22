@@ -50,7 +50,7 @@
     },
     {
       "label": "Resistência à água",
-      "value": "200 m (20 bar)"
+      "value": "200m (20 ATM)"
     },
     {
       "label": "Tamanho da caixa",
@@ -59,10 +59,6 @@
     {
       "label": "Largura da pulseira",
       "value": "20 a 24 mm"
-    },
-    {
-      "label": "Material do bisel",
-      "value": ""
     },
     {
       "label": "Garantia",
