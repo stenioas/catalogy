@@ -44,8 +44,12 @@
       "value": "30m (3 ATM)"
     },
     {
-      "label": "Tamanho da caixa",
-      "value": "9 mm de espessura; diâmetro do mostrador: 32 mm"
+      "label": "Diâmetro do mostrador",
+      "value": "32 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "9 mm"
     },
     {
       "label": "Largura da pulseira",

@@ -66,7 +66,13 @@ describe('catalog specification migration', () => {
   it('keeps the aimimo-design-air-king-verde case size', () => {
     expect(
       value(readProduct('aimimo-design-air-king-verde'), 'Tamanho da caixa'),
-    ).toBe('39 mm de diâmetro, sem a coroa; 48 mm lug to lug; 12,5 mm de espessura')
+    ).toBe('48 mm')
+    expect(
+      value(readProduct('aimimo-design-air-king-verde'), 'Diâmetro do mostrador'),
+    ).toBe('39 mm')
+    expect(
+      value(readProduct('aimimo-design-air-king-verde'), 'Espessura da caixa'),
+    ).toBe('12,5 mm')
   })
 
   it('omits Homage de Não se aplica from curren-9096', () => {
@@ -135,8 +141,9 @@ describe('catalog specification migration', () => {
 
   it('keeps the addiesdive-ad2554 movement caliber', () => {
     expect(value(readProduct('addiesdive-ad2554'), 'Tipo de movimento')).toBe(
-      'Quartzo japonês, calibre 2035',
+      'Quartzo japonês',
     )
+    expect(value(readProduct('addiesdive-ad2554'), 'Movimento')).toBe('2035')
   })
 
   it('records addiesdive-my-h3-2qz-black water resistance as 200m (20 ATM)', () => {
@@ -170,8 +177,9 @@ describe('catalog specification migration', () => {
     )
   })
 
-  it('keeps benyar-5229 Movimento as Quartzo', () => {
-    expect(value(readProduct('benyar-5229'), 'Movimento')).toBe('Quartzo')
+  it('keeps benyar-5229 Movimento as Sunon PE702', () => {
+    expect(value(readProduct('benyar-5229'), 'Tipo de movimento')).toBe('Quartzo')
+    expect(value(readProduct('benyar-5229'), 'Movimento')).toBe('Sunon PE702')
   })
 
   it('accepts every current product.json in ProductSchema', () => {

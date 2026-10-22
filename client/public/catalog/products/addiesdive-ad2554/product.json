@@ -32,7 +32,11 @@
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo japonês, calibre 2035"
+      "value": "Quartzo japonês"
+    },
+    {
+      "label": "Movimento",
+      "value": "2035"
     },
     {
       "label": "Material da caixa",
@@ -51,8 +55,12 @@
       "value": "100m (10 ATM)"
     },
     {
-      "label": "Tamanho da caixa",
-      "value": "36 mm de diâmetro, sem a coroa; 46 mm de comprimento; 10 mm de espessura"
+      "label": "Diâmetro do mostrador",
+      "value": "36 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "10 mm"
     },
     {
       "label": "Largura da pulseira",

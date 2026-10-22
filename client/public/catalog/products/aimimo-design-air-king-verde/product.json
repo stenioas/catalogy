@@ -26,8 +26,16 @@
       "value": "Novo"
     },
     {
-      "label": "Movimento",
+      "label": "Funções",
+      "value": "Luminosidade"
+    },
+    {
+      "label": "Tipo de movimento",
       "value": "Quartzo japonês"
+    },
+    {
+      "label": "Movimento",
+      "value": "Miyota 2035"
     },
     {
       "label": "Material da caixa",
@@ -50,16 +58,20 @@
       "value": "50m (5 ATM)"
     },
     {
-      "label": "Tamanho da caixa",
-      "value": "39 mm de diâmetro, sem a coroa; 48 mm lug to lug; 12,5 mm de espessura"
-    },
-    {
       "label": "Largura da pulseira",
       "value": "20 mm"
     },
     {
-      "label": "Funções",
-      "value": "Luminosidade"
+      "label": "Tamanho da caixa",
+      "value": "48 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "39 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "12,5 mm"
     }
   ],
   "availabilityStatus": "available"

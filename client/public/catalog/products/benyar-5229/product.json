@@ -34,8 +34,16 @@
       "value": "5229"
     },
     {
-      "label": "Movimento",
+      "label": "Funções",
+      "value": "Cronógrafo e calendário"
+    },
+    {
+      "label": "Tipo de movimento",
       "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "Sunon PE702"
     },
     {
       "label": "Material da caixa",
@@ -43,7 +51,7 @@
     },
     {
       "label": "Diâmetro do mostrador",
-      "value": "40 a 44 mm"
+      "value": "42 mm"
     },
     {
       "label": "Espessura da caixa",
@@ -64,10 +72,6 @@
     {
       "label": "Resistência à água",
       "value": "30m (3 ATM)"
-    },
-    {
-      "label": "Funções",
-      "value": "Cronógrafo e calendário"
     },
     {
       "label": "Garantia",

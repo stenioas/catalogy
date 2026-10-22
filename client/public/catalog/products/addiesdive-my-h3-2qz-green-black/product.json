@@ -32,7 +32,11 @@
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo (Miyota 2115)"
+      "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "Miyota 2115"
     },
     {
       "label": "Material da caixa",
@@ -51,8 +55,8 @@
       "value": "200m (20 ATM)"
     },
     {
-      "label": "Tamanho da caixa",
-      "value": "41 mm de diâmetro, sem a coroa"
+      "label": "Diâmetro do mostrador",
+      "value": "41 mm"
     },
     {
       "label": "Largura da pulseira",

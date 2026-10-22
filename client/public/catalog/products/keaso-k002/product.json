@@ -34,7 +34,11 @@
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo (Miyota 2035)"
+      "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "Miyota 2035"
     },
     {
       "label": "Material da caixa",
@@ -53,8 +57,12 @@
       "value": "200m (20 ATM)"
     },
     {
-      "label": "Tamanho da caixa",
-      "value": "40 a 44 mm de diâmetro; 13 mm de espessura"
+      "label": "Diâmetro do mostrador",
+      "value": "42,5 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "13 mm"
     },
     {
       "label": "Largura da pulseira",
