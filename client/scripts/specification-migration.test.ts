@@ -187,7 +187,7 @@ describe('catalog specification migration', () => {
       .filter((entry) => entry.isDirectory())
       .map((entry) => entry.name)
 
-    expect(slugs).toHaveLength(11)
+    expect(slugs).toHaveLength(12)
     for (const slug of slugs) {
       const parsed = ProductSchema.safeParse(
         JSON.parse(

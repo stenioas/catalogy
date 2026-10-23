@@ -1,0 +1,72 @@
+{
+  "slug": "skmei-1628",
+  "state": "Novo",
+  "title": "Skmei 1628",
+  "price": 104.9,
+  "listPrice": 129.9,
+  "images": [
+    "skmei-1628-1.png",
+    "skmei-1628-2.png",
+    "skmei-1628-3.png",
+    "skmei-1628-4.png",
+    "skmei-1628-5.png",
+    "skmei-1628-6.png",
+    "skmei-1628-7.png",
+    "skmei-1628-8.png",
+    "skmei-1628-9.png",
+    "skmei-1628-10.png",
+    "skmei-1628-11.png"
+  ],
+  "description": "O Skmei 1628 é um relógio digital militar, de estilo fashion e casual, com movimento digital. A caixa é de ABS, quadrada, com 44 mm de diâmetro e 14 mm de espessura, e o vidro é de resina. A pulseira é de PU, com 19 mm de largura e 24,5 cm de comprimento, e fecho de fivela. Tem dois horários, cronógrafo, alarme, calendário, dia da semana, repetidor de hora, luz LED, relógio de 12/24 horas e contagem regressiva. A resistência à água é de 5 bar (50 m) e serve para natação e banho. É à prova de choque. Está disponível em várias cores.",
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Skmei"
+    },
+    {
+      "label": "Modelo",
+      "value": "1628"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Digital militar, fashion e casual"
+    },
+    {
+      "label": "Funções",
+      "value": "2 horários, cronógrafo, alarme, calendário, dia da semana, repetidor de hora, luz LED, 12/24 horas, contagem regressiva"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Digital"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "ABS"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "PU"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Resina"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "19 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "44 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "14 mm"
+    }
+  ],
+  "availabilityStatus": "on_order"
+}
