@@ -5,6 +5,7 @@
   "price": 259.9,
   "listPrice": 319.9,
   "unmissableOffer": false,
+  "enabled": false,
   "images": [
     "benyar-5229-1.png",
     "benyar-5229-2.png",
