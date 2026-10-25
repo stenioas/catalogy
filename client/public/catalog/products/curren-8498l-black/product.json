@@ -5,6 +5,7 @@
   "color": "Preto",
   "price": 134.9,
   "listPrice": 159.9,
+  "enabled": false,
   "images": [
     "curren-8498l-1.png",
     "curren-8498l-2.png",

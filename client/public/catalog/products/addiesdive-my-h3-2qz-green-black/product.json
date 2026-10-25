@@ -1,8 +1,8 @@
 {
   "slug": "addiesdive-my-h3-2qz-green-black",
-  "state": "Novo",
+  "state": "Openbox",
   "title": "Addiesdive MY-H3-2QZ Verde/Preto (Starbucks)",
-  "price": 399.9,
+  "price": 369.9,
   "listPrice": 519.9,
   "unmissableOffer": true,
   "color": "Verde/Preto (Starbucks)",
@@ -33,7 +33,7 @@
     },
     {
       "label": "Estado",
-      "value": "Novo"
+      "value": "Embalagem foi aberta"
     },
     {
       "label": "Tipo do relógio",
