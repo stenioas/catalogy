@@ -1,0 +1,80 @@
+{
+  "slug": "sapphero-so2205",
+  "title": "SAPPHERO SO2205",
+  "price": 139.9,
+  "listPrice": 199.9,
+  "images": [
+    "sapphero-so2205-1.png",
+    "sapphero-so2205-2.png",
+    "sapphero-so2205-3.png",
+    "sapphero-so2205-4.png",
+    "sapphero-so2205-5.png",
+    "sapphero-so2205-6.png",
+    "sapphero-so2205-9.png",
+    "sapphero-so2205-13.png",
+    "sapphero-so2205-14.png",
+    "sapphero-so2205-15.png",
+    "sapphero-so2205-16.png",
+    "sapphero-so2205-17.png",
+    "sapphero-so2205-18.png"
+  ],
+  "description": "Relógio masculino analógico de quartzo com cronógrafo e data, caixa em aço inoxidável, pulseira de couro e vidro Hardlex. Acompanha caixa de presente e manual do usuário.",
+  "color": "Silver Black",
+  "state": "Novo",
+  "availabilityStatus": "available",
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "SAPPHERO"
+    },
+    {
+      "label": "Modelo",
+      "value": "SO2205"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico"
+    },
+    {
+      "label": "Funções",
+      "value": "Cronógrafo e data"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Couro"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "45 a 49 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "12 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "unmissableOffer": true
+}

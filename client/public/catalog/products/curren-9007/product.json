@@ -73,5 +73,6 @@
       "label": "Garantia",
       "value": "90 dias"
     }
-  ]
+  ],
+  "unmissableOffer": true
 }
