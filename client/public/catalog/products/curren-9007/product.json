@@ -1,0 +1,77 @@
+{
+  "slug": "curren-9007",
+  "title": "Curren 9007",
+  "price": 119.9,
+  "listPrice": 154.9,
+  "images": [
+    "curren-9007-1.png",
+    "curren-9007-2.png",
+    "curren-9007-3.png",
+    "curren-9007-4.png",
+    "curren-9007-5.png",
+    "curren-9007-6.png",
+    "curren-9007-7.png",
+    "curren-9007-8.png",
+    "curren-9007-9.png",
+    "curren-9007-10.png",
+    "curren-9007-11.png",
+    "curren-9007-12.png",
+    "curren-9007-13.png",
+    "curren-9007-14.png",
+    "curren-9007-15.png"
+  ],
+  "description": "Relógio feminino Curren 9007 com caixa redonda, pulseira de aço inoxidável e movimento de quartzo de origem japonesa.",
+  "color": "Rosé Gold",
+  "state": "Novo",
+  "availabilityStatus": "on_order",
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Curren"
+    },
+    {
+      "label": "Modelo",
+      "value": "9007"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Feminino"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Liga"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "12 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "30 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "8 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ]
+}
