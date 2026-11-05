@@ -78,5 +78,6 @@
       "value": "12,5 mm"
     }
   ],
-  "availabilityStatus": "available"
+  "availabilityStatus": "available",
+  "enabled": false
 }

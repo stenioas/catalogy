@@ -80,5 +80,6 @@
       "value": "90 dias"
     }
   ],
-  "availabilityStatus": "available"
+  "availabilityStatus": "available",
+  "enabled": false
 }
