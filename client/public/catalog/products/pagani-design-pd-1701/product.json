@@ -1,8 +1,9 @@
 {
   "slug": "pagani-design-pd-1701",
   "title": "PAGANI DESIGN PD-1701",
-  "price": 999,
-  "listPrice": 1499.9,
+  "price": 1099.9,
+  "listPrice": 1399.9,
+  "unmissableOffer": true,
   "images": [
     "pagani-design-pd-1701-1.png",
     "pagani-design-pd-1701-2.png",
