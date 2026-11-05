@@ -5,6 +5,7 @@
   "color": "Variados",
   "price": 599.9,
   "listPrice": 779.9,
+  "unmissableOffer": true,
   "images": [
     "keaso-1.png",
     "keaso-2.png",
