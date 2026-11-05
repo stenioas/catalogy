@@ -1,7 +1,7 @@
 {
   "slug": "curren-9007",
   "title": "Curren 9007",
-  "price": 119.9,
+  "price": 129.9,
   "listPrice": 154.9,
   "images": [
     "curren-9007-1.png",
@@ -73,6 +73,5 @@
       "label": "Garantia",
       "value": "90 dias"
     }
-  ],
-  "unmissableOffer": true
+  ]
 }
