@@ -17,10 +17,16 @@ describe('@catalogo/shared barrel (CAT-07, CAT-09, CAT-95, SV-09)', () => {
       ProductSchema.safeParse({
         slug: 'seculus',
         title: 'Seculus',
-        state: 'Novo',
-        availabilityStatus: 'available',
-        price: 369.9,
-        images: ['foto.jpg'],
+        axes: [],
+        listings: [
+          {
+            id: 'listing',
+            state: 'new',
+            availabilityStatus: 'available',
+            images: ['foto.jpg'],
+            variants: [{ axes: [], price: 369.9, mainImage: 'foto.jpg' }],
+          },
+        ],
       }).success,
     ).toBe(true)
 

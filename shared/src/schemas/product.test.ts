@@ -2,266 +2,14 @@ import { describe, expect, it } from 'vitest'
 import {
   ProductSchema,
   SPECIFICATION_LABELS,
+  isProductListed,
 } from './product'
 import { SPECIFICATION_LABELS as exportedLabels } from '../index'
-
-const baseProduct = {
-  slug: 'seculus-kit',
-  title: 'Seculus',
-  state: 'Novo',
-  availabilityStatus: 'available',
-  price: 369.9,
-  images: ['foto1.jpg'],
-}
-
-describe('ProductSchema price (CAT-05, CAT-06, CAT-07)', () => {
-  it('rejects a price of zero', () => {
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, price: 0 }).success,
-    ).toBe(false)
-  })
-
-  it('rejects a negative price', () => {
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, price: -1 }).success,
-    ).toBe(false)
-  })
-
-  it('accepts a price of 369.9', () => {
-    expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
-  })
-})
-
-describe('ProductSchema price truncation (CAT-08, CAT-09)', () => {
-  it('truncates extra decimal digits without rounding before later checks', () => {
-    const result = ProductSchema.safeParse({
-      ...baseProduct,
-      price: 369.999,
-    })
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.price).toBe(369.99)
-    }
-  })
-})
-
-describe('ProductSchema listPrice (CAT-10, CAT-150)', () => {
-  it('rejects listPrice less than or equal to price after truncation', () => {
-    expect(
-      ProductSchema.safeParse({
-        ...baseProduct,
-        price: 369.9,
-        listPrice: 369.9,
-      }).success,
-    ).toBe(false)
-    expect(
-      ProductSchema.safeParse({
-        ...baseProduct,
-        price: 100,
-        listPrice: 50,
-      }).success,
-    ).toBe(false)
-  })
-
-  it('accepts listPrice greater than price after both are truncated', () => {
-    const result = ProductSchema.safeParse({
-      ...baseProduct,
-      price: 369.9,
-      listPrice: 450,
-    })
-    expect(result.success).toBe(true)
-  })
-
-  it('rejects when truncated listPrice equals truncated price', () => {
-    expect(
-      ProductSchema.safeParse({
-        ...baseProduct,
-        price: 100,
-        listPrice: 100.001,
-      }).success,
-    ).toBe(false)
-  })
-})
-
-describe('ProductSchema images (CAT-11, CAT-12, CAT-14, CAT-15)', () => {
-  it('rejects an empty images list', () => {
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, images: [] }).success,
-    ).toBe(false)
-  })
-
-  it('rejects an image file name containing slash or backslash', () => {
-    expect(
-      ProductSchema.safeParse({
-        ...baseProduct,
-        images: ['path/foto.jpg'],
-      }).success,
-    ).toBe(false)
-    expect(
-      ProductSchema.safeParse({
-        ...baseProduct,
-        images: ['path\\foto.jpg'],
-      }).success,
-    ).toBe(false)
-  })
-
-  it('accepts allowed extensions in any letter case', () => {
-    for (const name of [
-      'a.jpg',
-      'b.JPEG',
-      'c.png',
-      'd.WebP',
-      'e.avif',
-    ]) {
-      const result = ProductSchema.safeParse({
-        ...baseProduct,
-        images: [name],
-      })
-      expect(result.success).toBe(true)
-    }
-  })
-
-  it('keeps the image file name exactly as written in images', () => {
-    const result = ProductSchema.safeParse({
-      ...baseProduct,
-      images: ['Minha-Foto.JPG'],
-    })
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.images[0]).toBe('Minha-Foto.JPG')
-    }
-  })
-
-  it('rejects an image file name without an allowed extension', () => {
-    expect(
-      ProductSchema.safeParse({
-        ...baseProduct,
-        images: ['foto.gif'],
-      }).success,
-    ).toBe(false)
-  })
-})
-
-describe('ProductSchema optional fields (CAT-13)', () => {
-  it('accepts a product when listPrice, description, specifications, and observations are omitted', () => {
-    expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
-  })
-
-  it('accepts optional fields when present', () => {
-    const result = ProductSchema.safeParse({
-      ...baseProduct,
-      listPrice: 450,
-      description: 'Descrição do relógio.',
-      specifications: [{ label: 'Marca', value: 'Seculus' }],
-      observations: 'Observação.',
-    })
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.observations).toBe('Observação.')
-    }
-  })
-
-  it('accepts unmissableOffer only as a boolean and omits it by default', () => {
-    const omitted = ProductSchema.safeParse(baseProduct)
-    const turnedOn = ProductSchema.safeParse({ ...baseProduct, unmissableOffer: true })
-    const turnedOff = ProductSchema.safeParse({ ...baseProduct, unmissableOffer: false })
-    expect(omitted.success && omitted.data.unmissableOffer).toBeUndefined()
-    expect(turnedOn.success && turnedOn.data.unmissableOffer).toBe(true)
-    expect(turnedOff.success && turnedOff.data.unmissableOffer).toBe(false)
-    expect(ProductSchema.safeParse({ ...baseProduct, unmissableOffer: 'true' }).success).toBe(false)
-  })
-
-  it('keeps a product listed when enabled is omitted or true, and stores false', () => {
-    const omitted = ProductSchema.safeParse(baseProduct)
-    const turnedOn = ProductSchema.safeParse({ ...baseProduct, enabled: true })
-    const turnedOff = ProductSchema.safeParse({ ...baseProduct, enabled: false })
-    expect(omitted.success && omitted.data.enabled).toBeUndefined()
-    expect(turnedOn.success && turnedOn.data.enabled).toBe(true)
-    expect(turnedOff.success && turnedOff.data.enabled).toBe(false)
-    expect(ProductSchema.safeParse({ ...baseProduct, enabled: 'false' }).success).toBe(false)
-  })
-})
-
-describe('ProductSchema color (CATREF-52, CATREF-53, CATREF-61)', () => {
-  it('accepts a product without color and leaves the property omitted', () => {
-    const result = ProductSchema.safeParse(baseProduct)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data).not.toHaveProperty('color')
-    }
-  })
-
-  it.each(['Azul petróleo', '', '  '])(
-    'preserves color string %j without transformation',
-    (color) => {
-      const result = ProductSchema.safeParse({ ...baseProduct, color })
-
-      expect(result.success).toBe(true)
-      if (result.success) {
-        expect(result.data.color).toBe(color)
-      }
-    },
-  )
-
-  it.each([
-    { label: 'null', color: null },
-    { label: 'number', color: 42 },
-    { label: 'boolean', color: true },
-    { label: 'array', color: [] },
-    { label: 'object', color: {} },
-  ])('rejects color with a $label value', ({ color }) => {
-    expect(ProductSchema.safeParse({ ...baseProduct, color }).success).toBe(
-      false,
-    )
-  })
-})
-
-describe('ProductSchema slug (CAT-04)', () => {
-  it('rejects a slug outside lowercase letters, digits, and single hyphens', () => {
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, slug: 'Seculus' }).success,
-    ).toBe(false)
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, slug: 'seculus-' }).success,
-    ).toBe(false)
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, slug: '-seculus' }).success,
-    ).toBe(false)
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, slug: 'seculus--kit' }).success,
-    ).toBe(false)
-  })
-
-  it('accepts a slug matching the contract pattern', () => {
-    expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, slug: 'seculus-kit' }).success,
-    ).toBe(true)
-  })
-})
-
-describe('ProductSchema state', () => {
-  it.each(['Novo', 'Usado', 'Openbox'])('accepts state %s', (state) => {
-    const result = ProductSchema.parse({ ...baseProduct, state })
-    expect(result.state).toBe(state)
-  })
-
-  it.each([undefined, null, '', 'novo', 'Lacrado', true])('rejects missing or invalid state %s', (state) => {
-    expect(ProductSchema.safeParse({ ...baseProduct, state }).success).toBe(false)
-  })
-
-  it('does not use the legacy new flag as a replacement for state', () => {
-    expect(ProductSchema.safeParse({ ...baseProduct, state: undefined, new: true }).success).toBe(false)
-    expect(ProductSchema.parse({ ...baseProduct, new: true })).not.toHaveProperty('new')
-  })
-})
 
 const canonicalLabelsInOrder = [
   'Marca',
   'Modelo',
   'Homage de',
-  'Estado',
   'Tipo do relógio',
   'Funções',
   'Tipo de movimento',
@@ -280,94 +28,777 @@ const canonicalLabelsInOrder = [
   'Garantia',
 ] as const
 
-describe('SPECIFICATION_LABELS (SPEC-01)', () => {
-  it('exports the 20 canonical labels in spec order from the schema module', () => {
-    expect([...SPECIFICATION_LABELS]).toEqual([...canonicalLabelsInOrder])
+function variant(overrides: Record<string, unknown> = {}) {
+  return {
+    axes: [] as { axisId: string; valueId: string }[],
+    price: 369.9,
+    mainImage: 'foto1.jpg',
+    ...overrides,
+  }
+}
+
+function listing(overrides: Record<string, unknown> = {}) {
+  return {
+    id: 'listing',
+    state: 'new',
+    availabilityStatus: 'available',
+    images: ['foto1.jpg'],
+    variants: [variant()],
+    ...overrides,
+  }
+}
+
+function product(overrides: Record<string, unknown> = {}) {
+  return {
+    slug: 'seculus-kit',
+    title: 'Seculus',
+    axes: [] as {
+      id: string
+      label: string
+      values: { id: string; value: string; alias?: string }[]
+    }[],
+    listings: [listing()],
+    ...overrides,
+  }
+}
+
+function productWithAxes() {
+  return product({
+    description: 'Descrição do relógio.',
+    audience: 'male',
+    axes: [
+      {
+        id: 'color',
+        label: 'Cor',
+        values: [
+          { id: 'preto', value: 'Preto', alias: 'Black' },
+          { id: 'azul', value: 'Azul' },
+        ],
+      },
+      {
+        id: 'size',
+        label: 'Tamanho',
+        values: [
+          { id: 'mm40', value: '40' },
+          { id: 'mm42', value: '42' },
+        ],
+      },
+    ],
+    specifications: [{ label: 'Marca', value: 'Seculus' }],
+    listings: [
+      listing({
+        variants: [
+          variant({
+            axes: [
+              { axisId: 'color', valueId: 'preto' },
+              { axisId: 'size', valueId: 'mm40' },
+            ],
+          }),
+        ],
+      }),
+    ],
+  })
+}
+
+describe('ProductSchema product shape (VAR-01)', () => {
+  it('reads slug, title, description, audience, axes, specifications, and listings', () => {
+    const result = ProductSchema.safeParse(productWithAxes())
+
+    expect(result.success).toBe(true)
+    if (!result.success) {
+      return
+    }
+    expect(result.data.slug).toBe('seculus-kit')
+    expect(result.data.title).toBe('Seculus')
+    expect(result.data.description).toBe('Descrição do relógio.')
+    expect(result.data.audience).toBe('male')
+    expect(result.data.axes[0]).toEqual({
+      id: 'color',
+      label: 'Cor',
+      values: [
+        { id: 'preto', value: 'Preto', alias: 'Black' },
+        { id: 'azul', value: 'Azul' },
+      ],
+    })
+    expect(result.data.specifications).toEqual([{ label: 'Marca', value: 'Seculus' }])
+    expect(result.data.listings).toHaveLength(1)
+    expect(result.data.listings[0].id).toBe('listing')
   })
 
-  it('re-exports the same list from the shared package entry', () => {
-    expect([...exportedLabels]).toEqual([...canonicalLabelsInOrder])
+  it('accepts a product when description, audience, and specifications are omitted', () => {
+    const result = ProductSchema.safeParse(product())
+
+    expect(result.success).toBe(true)
+    if (!result.success) {
+      return
+    }
+    expect(result.data.description).toBeUndefined()
+    expect(result.data.audience).toBeUndefined()
+    expect(result.data.specifications).toBeUndefined()
+  })
+
+  it('rejects a product that omits axes', () => {
+    const { axes: _axes, ...withoutAxes } = product()
+
+    expect(ProductSchema.safeParse(withoutAxes).success).toBe(false)
   })
 })
 
-describe('ProductSchema specifications (SPEC-02–SPEC-08)', () => {
-  it('accepts a product when specifications is omitted (SPEC-02)', () => {
-    expect(ProductSchema.safeParse(baseProduct).success).toBe(true)
-  })
+describe('ProductSchema audience (VAR-02, VAR-102)', () => {
+  it.each(['male', 'female', 'unisex', 'child'])('accepts audience %s', (audience) => {
+    const result = ProductSchema.safeParse(product({ audience }))
 
-  it('accepts a product whose specifications array is empty (SPEC-03)', () => {
-    expect(
-      ProductSchema.safeParse({ ...baseProduct, specifications: [] }).success,
-    ).toBe(true)
-  })
-
-  it('accepts a valid subset with each label at most once and non-blank values (SPEC-04)', () => {
-    const result = ProductSchema.safeParse({
-      ...baseProduct,
-      specifications: [
-        { label: 'Marca', value: 'Seculus' },
-        { label: 'Garantia', value: '90 dias.' },
-      ],
-    })
     expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.audience).toBe(audience)
+    }
   })
 
-  it('accepts specifications not in exported label order (SPEC-05)', () => {
-    const result = ProductSchema.safeParse({
-      ...baseProduct,
-      specifications: [
-        { label: 'Garantia', value: '90 dias.' },
-        { label: 'Marca', value: 'Seculus' },
-        { label: 'Modelo', value: 'Kit Cantil' },
-      ],
-    })
-    expect(result.success).toBe(true)
-  })
-
-  it('rejects an unknown specification label (SPEC-06)', () => {
-    expect(
-      ProductSchema.safeParse({
-        ...baseProduct,
-        specifications: [{ label: 'Formato da caixa', value: 'Redonda' }],
-      }).success,
-    ).toBe(false)
-  })
-
-  it('rejects the same specification label more than once (SPEC-07)', () => {
-    expect(
-      ProductSchema.safeParse({
-        ...baseProduct,
-        specifications: [
-          { label: 'Marca', value: 'Seculus' },
-          { label: 'Marca', value: 'Outra' },
-        ],
-      }).success,
-    ).toBe(false)
-  })
-
-  it.each(['', '   '])(
-    'rejects a specification value that is empty or only spaces (SPEC-08): %j',
-    (value) => {
-      expect(
-        ProductSchema.safeParse({
-          ...baseProduct,
-          specifications: [{ label: 'Marca', value }],
-        }).success,
-      ).toBe(false)
+  it.each(['Masculino', 'Feminino', 'Unissex', 'Infantil', 'men'])(
+    'rejects audience %s',
+    (audience) => {
+      expect(ProductSchema.safeParse(product({ audience })).success).toBe(false)
     },
   )
 })
 
-describe('ProductSchema availabilityStatus', () => {
-  it.each(['available', 'on_order', 'unavailable', 'sold_out'])('accepts availabilityStatus %s', (availabilityStatus) => {
-    expect(ProductSchema.parse({ ...baseProduct, availabilityStatus }).availabilityStatus).toBe(availabilityStatus)
+describe('ProductSchema listings and variants (VAR-03, VAR-04)', () => {
+  it('rejects a product when listings is omitted or empty', () => {
+    const { listings: _listings, ...withoutListings } = product()
+
+    expect(ProductSchema.safeParse(withoutListings).success).toBe(false)
+    expect(ProductSchema.safeParse(product({ listings: [] })).success).toBe(false)
   })
 
-  it.each([undefined, null, '', 'Em estoque', 'Sob encomenda', 'unknown', true])('rejects missing or invalid availabilityStatus %s', (availabilityStatus) => {
-    expect(ProductSchema.safeParse({ ...baseProduct, availabilityStatus }).success).toBe(false)
+  it('rejects a listing when variants is omitted or empty', () => {
+    const { variants: _variants, ...withoutVariants } = listing()
+
+    expect(
+      ProductSchema.safeParse(product({ listings: [withoutVariants] })).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(product({ listings: [listing({ variants: [] })] })).success,
+    ).toBe(false)
+  })
+})
+
+describe('ProductSchema listing id (VAR-05)', () => {
+  it.each(['Listing', 'listing-', '-listing', 'listing--a'])(
+    'rejects listing id %s',
+    (id) => {
+      expect(ProductSchema.safeParse(product({ listings: [listing({ id })] })).success).toBe(false)
+    },
+  )
+
+  it('rejects a repeated listing id and accepts two distinct ids', () => {
+    expect(
+      ProductSchema.safeParse(
+        product({
+          listings: [listing({ id: 'listing' }), listing({ id: 'listing' })],
+        }),
+      ).success,
+    ).toBe(false)
+
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [listing({ id: 'listing' }), listing({ id: 'listing-b' })],
+      }),
+    )
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings.map((item) => item.id)).toEqual(['listing', 'listing-b'])
+    }
+  })
+})
+
+describe('ProductSchema omitted flags (VAR-06, VAR-11, VAR-12)', () => {
+  it('treats omitted enabled as visible and stores an explicit boolean', () => {
+    const omitted = ProductSchema.safeParse(product())
+    const turnedOn = ProductSchema.safeParse(
+      product({ listings: [listing({ enabled: true })] }),
+    )
+    const turnedOff = ProductSchema.safeParse(
+      product({ listings: [listing({ enabled: false })] }),
+    )
+
+    expect(omitted.success).toBe(true)
+    expect(turnedOn.success).toBe(true)
+    expect(turnedOff.success).toBe(true)
+    if (!omitted.success || !turnedOn.success || !turnedOff.success) {
+      return
+    }
+    expect(omitted.data.listings[0].enabled).toBeUndefined()
+    expect(isProductListed(omitted.data.listings[0])).toBe(true)
+    expect(turnedOn.data.listings[0].enabled).toBe(true)
+    expect(isProductListed(turnedOn.data.listings[0])).toBe(true)
+    expect(turnedOff.data.listings[0].enabled).toBe(false)
+    expect(isProductListed(turnedOff.data.listings[0])).toBe(false)
+    expect(
+      ProductSchema.safeParse(product({ listings: [listing({ enabled: 'false' })] })).success,
+    ).toBe(false)
   })
 
-  it('requires availabilityStatus even when the old availability field is supplied', () => {
-    expect(ProductSchema.safeParse({ ...baseProduct, availabilityStatus: undefined, availability: 'Em estoque' }).success).toBe(false)
+  it('treats omitted orderable as orderable and omitted unmissableOffer as not an offer', () => {
+    const omitted = ProductSchema.safeParse(product())
+    const explicit = ProductSchema.safeParse(
+      product({
+        listings: [
+          listing({
+            variants: [variant({ orderable: true, unmissableOffer: false })],
+          }),
+        ],
+      }),
+    )
+
+    expect(omitted.success).toBe(true)
+    expect(explicit.success).toBe(true)
+    if (!omitted.success || !explicit.success) {
+      return
+    }
+    expect(omitted.data.listings[0].variants[0].orderable).toBeUndefined()
+    expect(omitted.data.listings[0].variants[0].orderable === false).toBe(false)
+    expect(omitted.data.listings[0].variants[0].unmissableOffer).toBeUndefined()
+    expect(omitted.data.listings[0].variants[0].unmissableOffer).not.toBe(true)
+    expect(explicit.data.listings[0].variants[0].orderable).toBe(true)
+    expect(explicit.data.listings[0].variants[0].unmissableOffer).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({ listings: [listing({ variants: [variant({ orderable: 'false' })] })] }),
+      ).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({
+          listings: [listing({ variants: [variant({ unmissableOffer: 'true' })] })],
+        }),
+      ).success,
+    ).toBe(false)
+  })
+})
+
+describe('ProductSchema availability and state tokens (VAR-07, VAR-08, VAR-102)', () => {
+  it.each(['available', 'coming_soon', 'on_order'])(
+    'stores availabilityStatus %s',
+    (availabilityStatus) => {
+      const state = availabilityStatus === 'on_order' ? 'new' : 'used'
+      const result = ProductSchema.safeParse(
+        product({ listings: [listing({ availabilityStatus, state })] }),
+      )
+
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.listings[0].availabilityStatus).toBe(availabilityStatus)
+      }
+    },
+  )
+
+  it.each(['unavailable', 'sold_out', 'Sob encomenda', 'Disponível', 'Chega em breve'])(
+    'rejects availabilityStatus %s',
+    (availabilityStatus) => {
+      expect(
+        ProductSchema.safeParse(product({ listings: [listing({ availabilityStatus })] })).success,
+      ).toBe(false)
+    },
+  )
+
+  it.each(['new', 'openbox', 'used', 'defective'])('stores state %s', (state) => {
+    const result = ProductSchema.safeParse(product({ listings: [listing({ state })] }))
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].state).toBe(state)
+    }
+  })
+
+  it.each(['Novo', 'Openbox', 'Usado', 'Com defeito'])('rejects state %s', (state) => {
+    expect(ProductSchema.safeParse(product({ listings: [listing({ state })] })).success).toBe(false)
+  })
+})
+
+describe('ProductSchema on-order rules (VAR-09, VAR-10)', () => {
+  it.each(['openbox', 'used', 'defective'])(
+    'rejects on_order combined with state %s',
+    (state) => {
+      expect(
+        ProductSchema.safeParse(
+          product({
+            listings: [listing({ availabilityStatus: 'on_order', state })],
+          }),
+        ).success,
+      ).toBe(false)
+    },
+  )
+
+  it('accepts on_order only when state is new', () => {
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [listing({ availabilityStatus: 'on_order', state: 'new' })],
+      }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].availabilityStatus).toBe('on_order')
+      expect(result.data.listings[0].state).toBe('new')
+    }
+  })
+
+  it.each(['available', 'coming_soon'])(
+    'rejects orderable false when availabilityStatus is %s',
+    (availabilityStatus) => {
+      expect(
+        ProductSchema.safeParse(
+          product({
+            listings: [
+              listing({
+                availabilityStatus,
+                state: 'new',
+                variants: [variant({ orderable: false })],
+              }),
+            ],
+          }),
+        ).success,
+      ).toBe(false)
+    },
+  )
+
+  it('accepts orderable false only on an on_order listing', () => {
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [
+          listing({
+            availabilityStatus: 'on_order',
+            state: 'new',
+            variants: [variant({ orderable: false })],
+          }),
+        ],
+      }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].orderable).toBe(false)
+    }
+  })
+})
+
+describe('ProductSchema variant price (VAR-13, VAR-14)', () => {
+  it.each([0, -1, 0.001])('rejects price %s after truncateReais', (price) => {
+    expect(
+      ProductSchema.safeParse(
+        product({ listings: [listing({ variants: [variant({ price })] })] }),
+      ).success,
+    ).toBe(false)
+  })
+
+  it('stores a positive price after truncateReais without rounding', () => {
+    const result = ProductSchema.safeParse(
+      product({ listings: [listing({ variants: [variant({ price: 369.999 })] })] }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].price).toBe(369.99)
+    }
+  })
+
+  it('rejects listPrice that is not greater than price after truncateReais', () => {
+    expect(
+      ProductSchema.safeParse(
+        product({
+          listings: [listing({ variants: [variant({ price: 369.9, listPrice: 369.9 })] })],
+        }),
+      ).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({
+          listings: [listing({ variants: [variant({ price: 100, listPrice: 50 })] })],
+        }),
+      ).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({
+          listings: [listing({ variants: [variant({ price: 100, listPrice: 100.009 })] })],
+        }),
+      ).success,
+    ).toBe(false)
+  })
+
+  it('stores listPrice when it stays greater than price after truncateReais', () => {
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [listing({ variants: [variant({ price: 369.999, listPrice: 450.009 })] })],
+      }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].price).toBe(369.99)
+      expect(result.data.listings[0].variants[0].listPrice).toBe(450)
+    }
+  })
+})
+
+describe('ProductSchema axis combinations (VAR-15, VAR-16)', () => {
+  it('rejects a listing that repeats one axis-value combination', () => {
+    const repeated = productWithAxes()
+    const first = repeated.listings[0].variants[0]
+    repeated.listings[0].variants = [
+      first,
+      {
+        ...first,
+        axes: [
+          { axisId: 'size', valueId: 'mm40' },
+          { axisId: 'color', valueId: 'preto' },
+        ],
+      },
+    ]
+
+    expect(ProductSchema.safeParse(repeated).success).toBe(false)
+  })
+
+  it('accepts the same axis-value combination on two listings', () => {
+    const sameCombo = productWithAxes()
+    sameCombo.listings = [
+      listing({
+        id: 'listing-a',
+        variants: [sameCombo.listings[0].variants[0]],
+      }),
+      listing({
+        id: 'listing-b',
+        state: 'used',
+        variants: [variant({ axes: sameCombo.listings[0].variants[0].axes })],
+      }),
+    ]
+
+    const result = ProductSchema.safeParse(sameCombo)
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].axes).toEqual(result.data.listings[1].variants[0].axes)
+    }
+  })
+})
+
+describe('ProductSchema variant axes (VAR-17, VAR-18)', () => {
+  it('rejects a value id the product axes do not declare', () => {
+    const unknown = productWithAxes()
+    unknown.listings[0].variants[0].axes = [
+      { axisId: 'color', valueId: 'verde' },
+      { axisId: 'size', valueId: 'mm40' },
+    ]
+
+    expect(ProductSchema.safeParse(unknown).success).toBe(false)
+  })
+
+  it('rejects a value id declared on a different axis', () => {
+    const swapped = productWithAxes()
+    swapped.listings[0].variants[0].axes = [
+      { axisId: 'color', valueId: 'mm40' },
+      { axisId: 'size', valueId: 'preto' },
+    ]
+
+    expect(ProductSchema.safeParse(swapped).success).toBe(false)
+  })
+
+  it('rejects a variant that skips a declared axis', () => {
+    const skipped = productWithAxes()
+    skipped.listings[0].variants[0].axes = [{ axisId: 'color', valueId: 'preto' }]
+
+    expect(ProductSchema.safeParse(skipped).success).toBe(false)
+  })
+
+  it('rejects a variant that selects the same axis twice', () => {
+    const doubled = productWithAxes()
+    doubled.listings[0].variants[0].axes = [
+      { axisId: 'color', valueId: 'preto' },
+      { axisId: 'color', valueId: 'azul' },
+    ]
+
+    expect(ProductSchema.safeParse(doubled).success).toBe(false)
+  })
+
+  it('accepts an empty axis list only when the variant selects nothing', () => {
+    const accepted = ProductSchema.safeParse(product())
+    const extra = product({
+      listings: [listing({ variants: [variant({ axes: [{ axisId: 'color', valueId: 'preto' }] })] })],
+    })
+
+    expect(accepted.success).toBe(true)
+    if (accepted.success) {
+      expect(accepted.data.axes).toEqual([])
+      expect(accepted.data.listings[0].variants[0].axes).toEqual([])
+    }
+    expect(ProductSchema.safeParse(extra).success).toBe(false)
+  })
+})
+
+describe('ProductSchema mainImage (VAR-19)', () => {
+  it('rejects mainImage that is not one of the listing images', () => {
+    expect(
+      ProductSchema.safeParse(
+        product({
+          listings: [listing({ variants: [variant({ mainImage: 'outra.jpg' })] })],
+        }),
+      ).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({
+          listings: [
+            listing({
+              images: ['Foto.jpg'],
+              variants: [variant({ mainImage: 'foto.jpg' })],
+            }),
+          ],
+        }),
+      ).success,
+    ).toBe(false)
+  })
+
+  it('accepts mainImage that matches a listing image exactly', () => {
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [
+          listing({
+            images: ['Foto.jpg', 'lado.png'],
+            variants: [variant({ mainImage: 'Foto.jpg' })],
+          }),
+        ],
+      }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].mainImage).toBe('Foto.jpg')
+      expect(result.data.listings[0].images).toEqual(['Foto.jpg', 'lado.png'])
+    }
+  })
+})
+
+describe('ProductSchema images', () => {
+  it('rejects an empty image list, a path separator, or a disallowed extension', () => {
+    expect(
+      ProductSchema.safeParse(product({ listings: [listing({ images: [] })] })).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({ listings: [listing({ images: ['path/foto.jpg'] })] }),
+      ).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({ listings: [listing({ images: ['path\\foto.jpg'] })] }),
+      ).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(product({ listings: [listing({ images: ['foto.gif'] })] })).success,
+    ).toBe(false)
+  })
+
+  it.each(['a.jpg', 'b.JPEG', 'c.png', 'd.WebP', 'e.avif'])(
+    'accepts image file name %s',
+    (name) => {
+      const result = ProductSchema.safeParse(
+        product({
+          listings: [listing({ images: [name], variants: [variant({ mainImage: name })] })],
+        }),
+      )
+
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.listings[0].images[0]).toBe(name)
+      }
+    },
+  )
+})
+
+describe('SPECIFICATION_LABELS', () => {
+  it('exports the closed label list without Estado or Público-alvo', () => {
+    expect([...SPECIFICATION_LABELS]).toEqual([...canonicalLabelsInOrder])
+    expect(SPECIFICATION_LABELS).not.toContain('Estado')
+    expect(SPECIFICATION_LABELS).not.toContain('Público-alvo')
+    expect([...exportedLabels]).toEqual([...canonicalLabelsInOrder])
+  })
+})
+
+describe('ProductSchema specification labels (VAR-20, VAR-21)', () => {
+  it.each(['Estado', 'Público-alvo'])(
+    'rejects product specification label %s',
+    (label) => {
+      expect(
+        ProductSchema.safeParse(
+          product({ specifications: [{ label, value: 'Seculus' }] }),
+        ).success,
+      ).toBe(false)
+    },
+  )
+
+  it.each(['Estado', 'Público-alvo'])(
+    'rejects listing specification label %s',
+    (label) => {
+      expect(
+        ProductSchema.safeParse(
+          product({
+            listings: [listing({ specifications: [{ label, value: 'Seculus' }] })],
+          }),
+        ).success,
+      ).toBe(false)
+    },
+  )
+
+  it('rejects a repeated label in the product sheet, in one listing sheet, or across both', () => {
+    expect(
+      ProductSchema.safeParse(
+        product({
+          specifications: [
+            { label: 'Marca', value: 'Seculus' },
+            { label: 'Marca', value: 'Outra' },
+          ],
+        }),
+      ).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({
+          listings: [
+            listing({
+              specifications: [
+                { label: 'Modelo', value: 'Kit' },
+                { label: 'Modelo', value: 'Outro' },
+              ],
+            }),
+          ],
+        }),
+      ).success,
+    ).toBe(false)
+    expect(
+      ProductSchema.safeParse(
+        product({
+          specifications: [{ label: 'Garantia', value: '90 dias.' }],
+          listings: [listing({ specifications: [{ label: 'Garantia', value: '1 ano' }] })],
+        }),
+      ).success,
+    ).toBe(false)
+  })
+
+  it('accepts the same label on two listings when the product sheet does not use it', () => {
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [
+          listing({
+            id: 'listing-a',
+            specifications: [{ label: 'Marca', value: 'Seculus' }],
+          }),
+          listing({
+            id: 'listing-b',
+            specifications: [{ label: 'Marca', value: 'Seculus' }],
+          }),
+        ],
+      }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].specifications?.[0].label).toBe('Marca')
+      expect(result.data.listings[1].specifications?.[0].label).toBe('Marca')
+    }
+  })
+})
+
+describe('ProductSchema axes identity (VAR-22, VAR-23)', () => {
+  it('rejects a product that repeats an axis label', () => {
+    const repeated = productWithAxes()
+    repeated.axes[1].label = 'Cor'
+
+    expect(ProductSchema.safeParse(repeated).success).toBe(false)
+  })
+
+  it.each(['Cor', 'color-', '-color', 'color--id'])('rejects axis id %s', (id) => {
+    const invalid = productWithAxes()
+    invalid.axes = [
+      {
+        id,
+        label: 'Cor',
+        values: [{ id: 'preto', value: 'Preto' }],
+      },
+    ]
+    invalid.listings[0].variants[0].axes = [{ axisId: id, valueId: 'preto' }]
+
+    expect(ProductSchema.safeParse(invalid).success).toBe(false)
+  })
+
+  it.each(['Preto', 'preto-', '-preto', 'preto--id'])('rejects axis value id %s', (id) => {
+    const invalid = productWithAxes()
+    invalid.axes = [
+      {
+        id: 'color',
+        label: 'Cor',
+        values: [{ id, value: 'Preto' }],
+      },
+    ]
+    invalid.listings[0].variants[0].axes = [{ axisId: 'color', valueId: id }]
+
+    expect(ProductSchema.safeParse(invalid).success).toBe(false)
+  })
+
+  it('rejects a repeated axis id and a repeated value id inside one axis', () => {
+    const repeatedAxis = productWithAxes()
+    repeatedAxis.axes[1].id = 'color'
+    repeatedAxis.axes[1].label = 'Outro'
+    repeatedAxis.listings[0].variants[0].axes = [
+      { axisId: 'color', valueId: 'preto' },
+      { axisId: 'color', valueId: 'mm40' },
+    ]
+
+    const repeatedValue = productWithAxes()
+    repeatedValue.axes = [
+      {
+        id: 'color',
+        label: 'Cor',
+        values: [
+          { id: 'preto', value: 'Preto' },
+          { id: 'preto', value: 'Black' },
+        ],
+      },
+    ]
+    repeatedValue.listings[0].variants[0].axes = [{ axisId: 'color', valueId: 'preto' }]
+
+    expect(ProductSchema.safeParse(repeatedAxis).success).toBe(false)
+    expect(ProductSchema.safeParse(repeatedValue).success).toBe(false)
+  })
+
+  it('accepts the same value id on two different axes', () => {
+    const shared = productWithAxes()
+    shared.axes[1].values[0].id = 'preto'
+    shared.listings[0].variants[0].axes = [
+      { axisId: 'color', valueId: 'preto' },
+      { axisId: 'size', valueId: 'preto' },
+    ]
+
+    const result = ProductSchema.safeParse(shared)
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.axes[0].values[0].id).toBe('preto')
+      expect(result.data.axes[1].values[0].id).toBe('preto')
+    }
+  })
+})
+
+describe('ProductSchema invalid document (VAR-26)', () => {
+  it('rejects a product.json that does not match the product contract', () => {
+    expect(
+      ProductSchema.safeParse({
+        slug: 'seculus',
+        title: 'Seculus',
+        state: 'Novo',
+        availabilityStatus: 'available',
+        price: 369.9,
+        images: ['foto.jpg'],
+      }).success,
+    ).toBe(false)
   })
 })
