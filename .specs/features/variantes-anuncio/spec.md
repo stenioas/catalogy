@@ -312,15 +312,15 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-39 | P1: Home | Tasks | Done |
 | VAR-40 | P1: Home | Tasks | Done |
 | VAR-41 | P1: Home | Tasks | Done |
-| VAR-42 | P1: Home | Tasks | Done |
-| VAR-43 | P1: Home | Tasks | Done |
-| VAR-44 | P1: Home | Tasks | Done |
-| VAR-45 | P1: Home | Tasks | Done |
-| VAR-46 | P1: Home | Tasks | Done |
+| VAR-42 | P1: Home | Tasks | Done · T10 |
+| VAR-43 | P1: Home | Tasks | Done · T10 |
+| VAR-44 | P1: Home | Tasks | Done · T10 |
+| VAR-45 | P1: Home | Tasks | Done · T10 |
+| VAR-46 | P1: Home | Tasks | Done · T10 |
 | VAR-47 | P1: Home | Tasks | Done |
-| VAR-48 | P1: Home | Tasks | Done |
-| VAR-49 | P1: Home | Tasks | Done |
-| VAR-50 | P1: Home | Tasks | Done |
+| VAR-48 | P1: Home | Tasks | Done · T10 |
+| VAR-49 | P1: Home | Tasks | Done · T10 |
+| VAR-50 | P1: Home | Tasks | Done · T5, T10 |
 | VAR-51 | P1: Filtro | Tasks | Done |
 | VAR-52 | P1: Filtro | Tasks | Done |
 | VAR-53 | P1: Filtro | Tasks | Done |

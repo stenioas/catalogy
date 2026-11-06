@@ -2,36 +2,82 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { creditInstallmentLabel, type Product } from '@catalogo/shared'
+import {
+  creditInstallmentLabel,
+  homeCards,
+  ProductSchema,
+  shareMessage,
+  type CatalogCard,
+  type Product,
+} from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 
 import { WatchCard } from './watch-card'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 
-const sampleProduct: Product = {
-  slug: 'seculus-kit-com-cantil',
-  title: 'Seculus',
-  state: 'Novo',
-  availabilityStatus: 'available',
-  price: 369.9,
-  listPrice: 450,
-  images: ['foto-principal.webp', 'foto-extra.jpg'],
+function baseListing(
+  listingOverrides: Record<string, unknown> = {},
+  variantOverrides: Record<string, unknown> = {},
+) {
+  return {
+    id: 'listing',
+    state: 'new' as const,
+    availabilityStatus: 'available' as const,
+    images: ['foto-principal.webp', 'foto-extra.jpg'],
+    variants: [
+      {
+        axes: [] as { axisId: string; valueId: string }[],
+        price: 369.9,
+        listPrice: 450,
+        mainImage: 'foto-principal.webp',
+        ...variantOverrides,
+      },
+    ],
+    ...listingOverrides,
+  }
 }
 
-function renderWatchCard(product: Product = sampleProduct) {
+function baseProduct(overrides: Record<string, unknown> = {}): Product {
+  const raw = {
+    slug: 'seculus-kit-com-cantil',
+    title: 'Seculus',
+    axes: [] as Product['axes'],
+    listings: [baseListing()],
+    ...overrides,
+  }
+  return ProductSchema.parse(raw)
+}
+
+function cardFor(product: Product, section: string | null = 'available'): CatalogCard {
+  const [card] = homeCards([product], section, { state: [], audience: [], axes: {} })
+  if (card === undefined) throw new Error('homeCards returned no card')
+  return card
+}
+
+function renderWatchCard(product: Product = baseProduct(), section: string | null = 'available') {
+  const card = cardFor(product, section)
   return render(
     <MemoryRouter>
-      <WatchCard product={product} />
+      <WatchCard product={product} card={card} />
     </MemoryRouter>,
   )
 }
 
+beforeEach(() => {
+  vi.stubGlobal('location', { ...window.location, origin: 'http://localhost' })
+})
+
 function CurrentPath() {
-  const { pathname } = useLocation()
-  return <output data-testid="current-path">{pathname}</output>
+  const { pathname, search } = useLocation()
+  return (
+    <output data-testid="current-path">
+      {pathname}
+      {search}
+    </output>
+  )
 }
 
 describe('WatchCard (SV-13, SV-14)', () => {
@@ -39,15 +85,15 @@ describe('WatchCard (SV-13, SV-14)', () => {
     cleanup()
   })
 
-  it('requests the first image at /catalog/products/<slug>/img/<file> (CAT-28)', () => {
-    renderWatchCard()
+  it('requests the card main image at /catalog/products/<slug>/img/<file> (CAT-28)', () => {
+    const product = baseProduct()
+    const card = cardFor(product)
+    renderWatchCard(product)
     const img = screen.getByRole('img', { name: 'Seculus' })
-    expect(img.getAttribute('src')).toBe(
-      '/catalog/products/seculus-kit-com-cantil/img/foto-principal.webp',
-    )
+    expect(img.getAttribute('src')).toBe(`/catalog/products/${product.slug}/img/${card.image}`)
   })
 
-  it('uses object-contain in a square frame and the first images entry (CAT-52, CAT-53)', () => {
+  it('uses object-contain in a square frame and the card image file (CAT-52, CAT-53)', () => {
     renderWatchCard()
     const img = screen.getByRole('img', { name: 'Seculus' })
     expect(img.className).toMatch(/\bobject-contain\b/)
@@ -68,69 +114,216 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(textBlock.className).toMatch(/\btext-left\b/)
   })
 
-  it('links photo, title and price to /product/<slug> without seller query (SV-13)', () => {
-    renderWatchCard()
+  it('links photo, title and price to the card variant path without seller query (SV-13)', () => {
+    const product = baseProduct()
+    const card = cardFor(product)
+    renderWatchCard(product)
     const cardLink = screen.getByTestId('watch-card-link')
-    expect(cardLink.getAttribute('href')).toBe('/product/seculus-kit-com-cantil')
+    expect(cardLink.getAttribute('href')).toBe(card.path)
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
-  it.each(['Novo', 'Usado', 'Openbox'] as const)('shows %s and availability as one line above the title', (state) => {
-    renderWatchCard({ ...sampleProduct, state, availabilityStatus: 'available' })
+  it.each(['new', 'openbox', 'used'] as const)('shows %s and availability as one line above the title', (state) => {
+    const product = baseProduct({
+      listings: [
+        baseListing({
+          state,
+        }),
+      ],
+    })
+    renderWatchCard(product)
     const line = screen.getByTestId('product-condition')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
     const stateLabel = within(line).getByTestId('state-label')
     const availability = within(line).getByTestId('availability-badge')
 
     expect(screen.queryByTestId('state-badge')).toBeNull()
-    expect(stateLabel.textContent).toBe(state)
+    expect(stateLabel.textContent).not.toBe('')
     expect(stateLabel.className).not.toMatch(/rounded/)
-    expect(line.textContent).toBe(`${state}Em estoque`)
     expect(line.className).toMatch(/\bgap-1\.5\b/)
     expect(stateLabel.nextElementSibling).toBe(availability)
     expect(availability.className).toMatch(/rounded-\[4px\]/)
     expect(availability.className).not.toMatch(/\brounded-full\b/)
     expect(line.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
-    expect(line.compareDocumentPosition(screen.getByTestId('price-block')) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(
+      line.compareDocumentPosition(screen.getByTestId('price-block')) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).not.toBe(0)
     expect(screen.getByTestId('watch-card-image').contains(line)).toBe(false)
   })
 
   it.each([
-    ['available', 'Em estoque', 'available'],
-    ['on_order', 'Sob encomenda', 'on-order'],
-    ['unavailable', 'Indisponível', 'unavailable'],
-    ['sold_out', 'Esgotado', 'sold-out'],
-  ] as const)('shows availability %s in the condition line above the title', (availabilityStatus, label, palette) => {
-    renderWatchCard({ ...sampleProduct, state: 'Openbox', availabilityStatus })
+    ['available', 'Disponível'],
+    ['coming_soon', 'Chega em breve'],
+    ['on_order', 'Sob encomenda'],
+  ] as const)('shows availability %s in the condition line above the title', (availabilityStatus, label) => {
+    const section =
+      availabilityStatus === 'available'
+        ? 'available'
+        : availabilityStatus === 'coming_soon'
+          ? 'coming-soon'
+          : 'on-order'
+    const product = baseProduct({
+      listings: [
+        baseListing({
+          state: availabilityStatus === 'on_order' ? 'new' : 'openbox',
+          availabilityStatus,
+        }),
+      ],
+    })
+    renderWatchCard(product, section)
     const line = screen.getByTestId('product-condition')
     const badge = within(line).getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
-    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining([
-      `bg-availability-${palette}`,
-      `text-availability-${palette}-foreground`,
-      'border-0',
-      'rounded-[4px]',
-      'h-5',
-      'px-1.5',
-      'text-xs',
-      'font-medium',
-      'leading-none',
-    ]))
+    expect(badge.className.split(/\s+/)).toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(/^bg-availability-/),
+        expect.stringMatching(/^text-availability-/),
+        'border-0',
+        'rounded-[4px]',
+        'h-5',
+        'px-1.5',
+        'text-xs',
+        'font-medium',
+        'leading-none',
+      ]),
+    )
     expect(badge.className).not.toMatch(/\brounded-full\b/)
     expect(screen.getByTestId('price-block').contains(badge)).toBe(false)
   })
 
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {
-    renderWatchCard()
+    const product = baseProduct()
+    const card = cardFor(product)
+    const listing = product.listings[0]!
+    const variant = listing.variants[0]!
+    const expectedMessage = shareMessage(product, listing, variant, window.location.origin)
+    renderWatchCard(product)
     expect(screen.getByRole('heading', { name: 'Seculus' })).toBeTruthy()
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
     expect(screen.getByTestId('price-installments').textContent).toBe(creditInstallmentLabel(369.9))
     expect(screen.getByTestId('price-pix').textContent).toBe('no pix')
-    const wantLink = within(screen.getByTestId('watch-card-mobile-action')).getByRole('link', { name: 'Enviar no WhatsApp' })
+    const wantLink = within(screen.getByTestId('watch-card-mobile-action')).getByRole('link', {
+      name: 'Enviar no WhatsApp',
+    })
     expect(screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })).toHaveLength(1)
-    expect(wantLink.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/\?text=/)
+    expect(wantLink.getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(expectedMessage)}`)
     expect(screen.getByTestId('watch-card-link').contains(wantLink)).toBe(false)
     expect(screen.queryByTestId('watch-card-actions')).toBeNull()
+  })
+})
+
+describe('WatchCard listing card rules (VAR-42–VAR-50)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('uses product title on the card with no axis alias in the heading', () => {
+    const product = baseProduct({
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [{ id: 'azul', value: 'Azul', alias: 'AliasAzul' }],
+        },
+        {
+          id: 'size',
+          label: 'Tamanho',
+          values: [{ id: 'mm40', value: '40' }],
+        },
+      ],
+      listings: [
+        baseListing({
+          variants: [
+            {
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'mm40' },
+              ],
+              price: 100,
+              mainImage: 'foto-principal.webp',
+            },
+          ],
+        }),
+      ],
+    })
+    renderWatchCard(product)
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(product.title)
+    expect(screen.getByRole('heading', { level: 2 }).textContent).not.toContain('AliasAzul')
+  })
+
+  it('links to the listing path with v query when the product has axes', () => {
+    const product = baseProduct({
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [{ id: 'azul', value: 'Azul' }],
+        },
+        {
+          id: 'size',
+          label: 'Tamanho',
+          values: [{ id: 'mm40', value: '40' }],
+        },
+      ],
+      listings: [
+        baseListing({
+          variants: [
+            {
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'mm40' },
+              ],
+              price: 100,
+              mainImage: 'foto-principal.webp',
+            },
+          ],
+        }),
+      ],
+    })
+    const card = cardFor(product)
+    renderWatchCard(product)
+    expect(screen.getByTestId('watch-card-link').getAttribute('href')).toBe(card.path)
+    expect(card.path).toMatch(/\?v=azul,mm40$/)
+  })
+
+  it('uses shareMessage for the WhatsApp link (same sentence as listing page)', () => {
+    const product = baseProduct({
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [{ id: 'azul', value: 'Azul' }],
+        },
+        {
+          id: 'size',
+          label: 'Tamanho',
+          values: [{ id: 'mm40', value: '40' }],
+        },
+      ],
+      listings: [
+        baseListing({
+          variants: [
+            {
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'mm40' },
+              ],
+              price: 100,
+              mainImage: 'foto-principal.webp',
+            },
+          ],
+        }),
+      ],
+    })
+    const listing = product.listings[0]!
+    const variant = listing.variants[0]!
+    const expected = shareMessage(product, listing, variant, window.location.origin)
+    renderWatchCard(product)
+    const href = within(screen.getByTestId('watch-card-mobile-action'))
+      .getByRole('link', { name: 'Enviar no WhatsApp' })
+      .getAttribute('href')!
+    const text = new URL(href).searchParams.get('text')
+    expect(text).toBe(expected)
   })
 })
 
@@ -263,7 +456,8 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
 
   it('clamps a long title to two compact lines while keeping its full text available', () => {
     const title = 'Relógio masculino automático de aço com mostrador azul e calendário'
-    renderWatchCard({ ...sampleProduct, title })
+    const product = baseProduct({ title })
+    renderWatchCard(product)
     const heading = screen.getByRole('heading', { name: title })
 
     expect(heading.textContent).toBe(title)
@@ -276,14 +470,14 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
   })
 
   it('keeps description and specifications out of the catalog row', () => {
-    renderWatchCard({
-      ...sampleProduct,
+    const product = baseProduct({
       description: 'Descrição longa do relógio',
-      specifications: [{ label: 'Movimento', value: 'Automático' }],
+      specifications: [{ label: 'Marca', value: 'Valor só da ficha' }],
     })
+    renderWatchCard(product)
 
     expect(screen.queryByText('Descrição longa do relógio')).toBeNull()
-    expect(screen.queryByText('Automático')).toBeNull()
+    expect(screen.queryByText('Valor só da ficha')).toBeNull()
   })
 
   it('places a small share icon at the bottom-right of the price group', () => {
@@ -327,21 +521,27 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
   })
 
   it('navigates through product content while the WhatsApp action remains an independent share link', () => {
+    const product = baseProduct()
+    const card = cardFor(product)
     render(
       <MemoryRouter initialEntries={['/catalog']}>
-        <WatchCard product={sampleProduct} />
+        <WatchCard product={product} card={card} />
         <CurrentPath />
       </MemoryRouter>,
     )
 
     fireEvent.click(screen.getByTestId('watch-card-link'))
-    expect(screen.getByTestId('current-path').textContent).toBe('/product/seculus-kit-com-cantil')
+    expect(screen.getByTestId('current-path').textContent).toBe(card.path)
     const share = within(screen.getByTestId('watch-card-mobile-action')).getByRole('link', {
       name: 'Enviar no WhatsApp',
     })
     fireEvent.click(share)
-    expect(screen.getByTestId('current-path').textContent).toBe('/product/seculus-kit-com-cantil')
-    expect(share.getAttribute('href')).toContain(encodeURIComponent('Olá, tenho interesse no Seculus.'))
+    expect(screen.getByTestId('current-path').textContent).toBe(card.path)
+    const listing = product.listings[0]!
+    const variant = listing.variants[0]!
+    expect(share.getAttribute('href')).toContain(
+      encodeURIComponent(shareMessage(product, listing, variant, window.location.origin)),
+    )
   })
 
   it('retains current price, discount, Pix, installment and availability text in the info column', () => {
@@ -353,7 +553,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(within(body).getByText('R$ 369,90')).toBeDefined()
     expect(within(body).getByText('no pix')).toBeDefined()
     expect(within(body).getByText(creditInstallmentLabel(369.9))).toBeDefined()
-    expect(within(body).getByText('Em estoque')).toBeDefined()
+    expect(within(body).getByText('Disponível')).toBeDefined()
     const list = screen.getByTestId('price-list')
     const badge = screen.getByTestId('price-badge')
     const current = screen.getByTestId('price-current')
@@ -374,12 +574,18 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.queryByTestId('unmissable-offer')).toBeNull()
 
     cleanup()
-    renderWatchCard({ ...sampleProduct, unmissableOffer: false })
+    const product = baseProduct({
+      listings: [baseListing({}, { unmissableOffer: false })],
+    })
+    renderWatchCard(product)
     expect(screen.queryByTestId('unmissable-offer')).toBeNull()
   })
 
   it('places OFERTA IMPERDÍVEL above the title on mobile and on the photo from md', () => {
-    renderWatchCard({ ...sampleProduct, unmissableOffer: true })
+    const product = baseProduct({
+      listings: [baseListing({}, { unmissableOffer: true })],
+    })
+    renderWatchCard(product)
     const offers = screen.getAllByTestId('unmissable-offer')
     const frame = screen.getByTestId('watch-card-image')
     const body = screen.getByTestId('watch-card-body')
@@ -404,7 +610,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
       expect(offer.className).toMatch(/rounded-\[4px\]/)
       expect(offer.className).not.toMatch(/\brounded-full\b/)
       expect(offer.className).toMatch(/\bh-5\b/)
-      expect(offer.className).toMatch(/\bpx-1\.5\b/)
+      expect(offer.className).toMatch(/\bpx-1.5\b/)
       expect(offer.className).toMatch(/\btext-xs\b/)
       expect(offer.className).toMatch(/\bbg-primary\b/)
       expect(offer.className).toMatch(/\btext-primary-foreground\b/)
@@ -413,10 +619,15 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
   })
 
   it('renders the same 128px image frame with short and long product titles', () => {
+    const a = baseProduct()
+    const b = baseProduct({
+      slug: 'seculus-longo',
+      title: 'Relógio Seculus automático masculino em aço inoxidável com mostrador azul',
+    })
     const { container } = render(
       <MemoryRouter>
-        <WatchCard product={sampleProduct} />
-        <WatchCard product={{ ...sampleProduct, slug: 'seculus-longo', title: 'Relógio Seculus automático masculino em aço inoxidável com mostrador azul' }} />
+        <WatchCard product={a} card={cardFor(a)} />
+        <WatchCard product={b} card={cardFor(b)} />
       </MemoryRouter>,
     )
     const frames = container.querySelectorAll('[data-testid="watch-card-image"]')

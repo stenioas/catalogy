@@ -12,6 +12,8 @@ export type WantLinkProps = {
 
 export type WantIconLinkProps = Pick<WantLinkProps, 'slug' | 'title' | 'ref'> & {
   size?: 'md' | 'lg'
+  /** When set, used instead of {@link waUrl} (e.g. listing-variant sentence from {@link shareMessage}). */
+  href?: string
 }
 
 const WHATSAPP_LABEL = 'Enviar no WhatsApp'
@@ -56,13 +58,14 @@ export function ProductShareButton({ slug, title, ref }: WantLinkProps) {
   )
 }
 
-export function WantIconLink({ slug, title, ref, size = 'md' }: WantIconLinkProps) {
+export function WantIconLink({ slug, title, ref, size = 'md', href }: WantIconLinkProps) {
   const large = size === 'lg'
+  const resolvedHref = href ?? waUrl(slug, title)
   return (
     <Button asChild variant="ghost" size="icon" className={large ? largeShareButtonClassName : shareButtonClassName}>
       <a
         ref={ref}
-        href={waUrl(slug, title)}
+        href={resolvedHref}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={WHATSAPP_LABEL}

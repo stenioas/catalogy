@@ -380,14 +380,15 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] Título é o do produto, sem alias. Foto, preços e oferta vêm do card
-- [ ] O link abre o caminho da variante. O WhatsApp envia a frase do spec
-- [ ] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/watch-card.test.tsx`
+- [x] Título é o do produto, sem alias. Foto, preços e oferta vêm do card
+- [x] O link abre o caminho da variante. O WhatsApp envia a frase do spec
+- [x] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/watch-card.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
 
 **Commit**: `feat(client): render one card for the highlighted variant`
+**Status**: done
 
 ### T11: Home com seção e filtro
 
