@@ -189,30 +189,6 @@ export function CarouselView({
           </Button>
         ) : null}
       </div>
-      {multi ? (
-        <div data-testid="carousel-controls" className="mt-6 flex items-center justify-center">
-          <div data-testid="carousel-dots" className="flex justify-center gap-2">
-            {images.map((src, imageIndex) => {
-              const current = imageIndex === index
-              return (
-                <Button
-                  key={`${src}:${imageIndex}`}
-                  type="button"
-                  variant="ghost"
-                  aria-label={`Foto ${imageIndex + 1}`}
-                  aria-current={current ? 'true' : undefined}
-                  className={
-                    current
-                      ? 'size-[10px] cursor-pointer rounded-full bg-[#0066cc] p-0 hover:bg-[#0066cc]'
-                      : 'size-[10px] cursor-pointer rounded-full bg-current/35 p-0 hover:bg-[#6e6e73]'
-                  }
-                  onClick={() => onIndexChange(imageIndex)}
-                />
-              )
-            })}
-          </div>
-        </div>
-      ) : null}
     </div>
   )
 }

@@ -442,15 +442,16 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] `startIndex` muda a foto atual para a `mainImage`
-- [ ] Nenhuma largura renderiza `carousel-dots`. Setas e contador abaixo de 768px permanecem
-- [ ] De 768px a 919px a coluna de miniaturas permanece e o contador aparece. De 920px em diante o desktop segue sem contador
-- [ ] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/product-media.test.tsx src/components/catalog/carousel.test.tsx src/components/catalog/desktop-product-media.test.tsx`
+- [x] `startIndex` muda a foto atual para a `mainImage`
+- [x] Nenhuma largura renderiza `carousel-dots`. Setas e contador abaixo de 768px permanecem
+- [x] De 768px a 919px a coluna de miniaturas permanece e o contador aparece. De 920px em diante o desktop segue sem contador
+- [x] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/product-media.test.tsx src/components/catalog/carousel.test.tsx src/components/catalog/desktop-product-media.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
 
 **Commit**: `feat(client): open the carousel on the variant photo and remove the dots`
+**Status**: done
 
 ### T13: Faixa de variantes
 

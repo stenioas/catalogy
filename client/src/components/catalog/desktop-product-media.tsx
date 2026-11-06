@@ -8,6 +8,8 @@ type DesktopProductMediaProps = {
   alt: string
   index: number
   disabled?: boolean
+  /** Foto atual / total; usado de 768px a 919px com miniaturas (spec VAR-90). */
+  showCounter?: boolean
   onIndexChange: (index: number) => void
   onOpenGallery: (index: number, trigger: HTMLElement) => void
   primaryRef: (element: HTMLElement | null) => void
@@ -25,6 +27,7 @@ export function DesktopProductMedia({
   onOpenGallery,
   primaryRef,
   disabled = false,
+  showCounter = false,
 }: DesktopProductMediaProps) {
   const pointerStart = useRef<Point | null>(null)
   const dragged = useRef(false)
@@ -32,6 +35,7 @@ export function DesktopProductMedia({
   const hasMore = images.length > 8
   const moreCount = images.length - 7
   const selectedMore = hasMore && index >= 7
+  const multi = images.length > 1
 
   function startPointer(event: PointerEvent<HTMLButtonElement>) {
     if (event.button !== 0) return
@@ -110,6 +114,15 @@ export function DesktopProductMedia({
         onClick={openFromMain}
       >
         <HoverZoom src={images[index]} alt={alt} disabled={disabled} />
+        {multi && showCounter ? (
+          <p
+            data-testid="carousel-count"
+            aria-hidden="true"
+            className="pointer-events-none absolute right-3 bottom-3 m-0 rounded-full bg-[color-mix(in_srgb,var(--canvas-parchment)_52%,transparent)] px-2.5 py-1 text-sm font-medium text-[var(--ink)] tabular-nums [-webkit-backdrop-filter:saturate(140%)_blur(8px)] [backdrop-filter:saturate(140%)_blur(8px)]"
+          >
+            {index + 1}/{images.length}
+          </p>
+        ) : null}
       </Button>
     </div>
   )

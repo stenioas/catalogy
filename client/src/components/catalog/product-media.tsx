@@ -7,7 +7,14 @@ import { Gallery } from './gallery'
 type ProductMediaProps = {
   images: string[]
   alt: string
+  /** Índice da foto principal da variante (`mainImage` na ordem de `images`). */
+  startIndex?: number
   children: (slot: { isDesktop: boolean; media: ReactNode }) => ReactNode
+}
+
+function clampIndex(start: number, length: number): number {
+  if (length <= 0) return 0
+  return Math.min(Math.max(0, start), length - 1)
 }
 
 const THUMBNAIL_QUERY = '(min-width: 768px)'
@@ -19,8 +26,8 @@ function isVisible(element: HTMLElement | null): element is HTMLElement {
   return style.display !== 'none' && style.visibility !== 'hidden'
 }
 
-export function ProductMedia({ images, alt, children }: ProductMediaProps) {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+export function ProductMedia({ images, alt, startIndex = 0, children }: ProductMediaProps) {
+  const [selectedIndex, setSelectedIndex] = useState(() => clampIndex(startIndex, images.length))
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [useThumbnails, setUseThumbnails] = useState(() => window.matchMedia(THUMBNAIL_QUERY).matches)
   const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(DESKTOP_QUERY).matches)
@@ -42,6 +49,18 @@ export function ProductMedia({ images, alt, children }: ProductMediaProps) {
       desktop.removeEventListener('change', update)
     }
   }, [])
+
+  const prevStartIndexRef = useRef(startIndex)
+  useEffect(() => {
+    setSelectedIndex((current) => clampIndex(current, images.length))
+  }, [images.length])
+
+  useEffect(() => {
+    if (prevStartIndexRef.current !== startIndex) {
+      prevStartIndexRef.current = startIndex
+      setSelectedIndex(clampIndex(startIndex, images.length))
+    }
+  }, [startIndex, images.length])
 
   useEffect(() => {
     if (!galleryOpen) return
@@ -79,8 +98,9 @@ export function ProductMedia({ images, alt, children }: ProductMediaProps) {
     onOpenGallery: openGallery,
     primaryRef: (element: HTMLElement | null) => { primaryRef.current = element },
   }
+  const showTabletCounter = useThumbnails && !isDesktop
   const media = useThumbnails
-    ? <DesktopProductMedia {...presentationProps} disabled={galleryOpen} />
+    ? <DesktopProductMedia {...presentationProps} disabled={galleryOpen} showCounter={showTabletCounter} />
     : <CarouselView {...presentationProps} animate={!galleryOpen} />
 
   return <>

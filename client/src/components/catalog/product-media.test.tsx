@@ -15,19 +15,19 @@ function resize(next: number) {
   act(() => { listeners.forEach((listener) => listener()) })
 }
 
-function Product({ slug = 'watch', images = photos }: { slug?: string; images?: string[] }) {
-  return <ProductMedia key={slug} images={images} alt="Seculus">
+function Product({ slug = 'watch', images = photos, startIndex = 0 }: { slug?: string; images?: string[]; startIndex?: number }) {
+  return <ProductMedia key={slug} images={images} alt="Seculus" startIndex={startIndex}>
     {({ media, isDesktop }) => isDesktop
       ? <section aria-label="Desktop">{media}<button>Oferta desktop</button></section>
       : <article aria-label="Mobile"><button>Oferta mobile</button>{media}</article>}
   </ProductMedia>
 }
 
-function mount(images = photos) {
+function mount(images = photos, startIndex = 0) {
   const root = document.createElement('div')
   root.id = 'root'
   document.body.append(root)
-  return { root, ...render(<Product images={images} />, { container: root }) }
+  return { root, ...render(<Product images={images} startIndex={startIndex} />, { container: root }) }
 }
 
 function main() {
@@ -78,6 +78,44 @@ afterEach(() => {
   document.body.style.overflow = ''
   vi.restoreAllMocks()
   vi.unstubAllGlobals()
+})
+
+describe('ProductMedia listing media (VAR-77, VAR-89–VAR-91)', () => {
+  it('opens on startIndex matching mainImage and syncs when startIndex changes', () => {
+    resize(920)
+    const { rerender } = mount(photos, 2)
+    expect(selected()).toBe(photos[2])
+    expect(screen.getByRole('button', { name: 'Foto 3' }).getAttribute('aria-pressed')).toBe('true')
+    rerender(<Product slug="watch" images={photos} startIndex={5} />)
+    expect(selected()).toBe(photos[5])
+  })
+
+  it.each([400, 800, 920])('never renders carousel dots at width %i (VAR-89)', (w) => {
+    resize(w)
+    mount()
+    expect(document.querySelector('[data-testid="carousel-dots"]')).toBeNull()
+  })
+
+  it('shows carousel counter below 920px and hides it from 920px (VAR-90, VAR-91)', () => {
+    resize(767)
+    mount()
+    expect(screen.getByTestId('carousel-count').textContent).toBe('1/12')
+    resize(800)
+    expect(
+      within(screen.getByTestId('desktop-product-main')).getByTestId('carousel-count').textContent,
+    ).toBe('1/12')
+    resize(920)
+    expect(screen.queryByTestId('carousel-count')).toBeNull()
+  })
+
+  it('keeps the thumbnail column from 768px with counter in the tablet band (VAR-90)', () => {
+    resize(850)
+    mount()
+    expect(screen.getByRole('group', { name: 'Miniaturas do produto' })).toBeTruthy()
+    expect(screen.getByTestId('desktop-product-media')).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Foto 2' }))
+    expect(within(screen.getByTestId('desktop-product-main')).getByTestId('carousel-count').textContent).toBe('2/12')
+  })
 })
 
 describe('ProductMedia shared owner (CATREF-21–31, 40, 47–51, 71, 73)', () => {
@@ -215,7 +253,8 @@ describe('ProductMedia shared owner (CATREF-21–31, 40, 47–51, 71, 73)', () =
     reduced = true
     resize(767)
     mount()
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     expect(screen.getByTestId('carousel-track').style.transitionDuration).toBe('0ms')
     open()
     fireEvent.keyDown(document, { key: 'ArrowRight' })

@@ -87,8 +87,8 @@ function sourceFiles(dir: string): string[] {
   return found
 }
 
-function ControlledCarousel({ images = photos }: { images?: string[] }) {
-  const [index, setIndex] = useState(0)
+function ControlledCarousel({ images = photos, initialIndex = 0 }: { images?: string[]; initialIndex?: number }) {
+  const [index, setIndex] = useState(initialIndex)
   const [opened, setOpened] = useState('closed')
   const primary = useRef<HTMLElement | null>(null)
   return <>
@@ -166,24 +166,19 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     }
   })
 
-  it('places previous and next on the photo line and keeps the dots centered underneath (CAT-75, CAT-76)', () => {
+  it('places previous and next on the photo line with no dot row (VAR-89)', () => {
     renderCarousel()
     const stage = screen.getByTestId('carousel-stage')
-    const controls = screen.getByTestId('carousel-controls')
     const previous = screen.getByRole('button', { name: 'Anterior' })
-    const dots = screen.getByTestId('carousel-dots')
     const next = screen.getByRole('button', { name: 'Seguinte' })
+    const carousel = screen.getByTestId('watch-carousel')
 
+    expect(screen.queryByTestId('carousel-dots')).toBeNull()
+    expect(screen.queryByTestId('carousel-controls')).toBeNull()
     expect(stage.contains(frame())).toBe(true)
     expect(stage.contains(previous)).toBe(true)
     expect(stage.contains(next)).toBe(true)
-    expect(follows(frame(), controls)).toBe(true)
-    expect(controls.className.split(/\s+/)).toContain('mt-6')
-    expect(follows(previous, frame())).toBe(true)
-    expect(follows(frame(), next)).toBe(true)
-    expect(follows(previous, dots)).toBe(true)
-    expect(follows(next, dots)).toBe(true)
-    expect(dots.className).toMatch(/\bjustify-center\b/)
+    expect(carousel.querySelectorAll('[data-testid="carousel-dots"]')).toHaveLength(0)
     expect(stage.className).toMatch(/\bitems-center\b/)
     expect(stage.className).toMatch(/\bmd:gap-4\b/)
     for (const arrow of [previous, next]) {
@@ -192,26 +187,20 @@ describe('Carousel (CAT-70–CAT-86)', () => {
       expect(arrow.className).toMatch(/\brounded-full\b/)
       expect(arrow.className).toMatch(/hover:bg-\[#e5e5ea\]/)
     }
-    expect(previous.hasAttribute('hidden')).toBe(false)
-    expect(next.hasAttribute('hidden')).toBe(false)
     expect(previous).toHaveProperty('disabled', true)
     expect(next).toHaveProperty('disabled', false)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    fireEvent.click(next)
+    fireEvent.click(next)
     expect(shownSrc()).toBe(photos[2])
-    expect(screen.getByRole('button', { name: 'Anterior' }).hasAttribute('hidden')).toBe(
-      false,
-    )
-    expect(screen.getByRole('button', { name: 'Seguinte' }).hasAttribute('hidden')).toBe(
-      false,
-    )
     expect(screen.getByRole('button', { name: 'Anterior' })).toHaveProperty('disabled', false)
     expect(screen.getByRole('button', { name: 'Seguinte' })).toHaveProperty('disabled', true)
   })
 
   it('stays on the last photo when next is pressed (CAT-77)', () => {
     renderCarousel()
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     const next = screen.getByRole('button', { name: 'Seguinte' })
     expect(next).toHaveProperty('disabled', true)
     fireEvent.click(next)
@@ -226,13 +215,14 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(shownSrc()).toBe(photos[0])
   })
 
-  it('shows the photo for each dot (CAT-79)', () => {
+  it('changes the visible photo with the arrow buttons (replaces dot navigation)', () => {
     renderCarousel()
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 2' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     expect(shownSrc()).toBe(photos[1])
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     expect(shownSrc()).toBe(photos[2])
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 1' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Anterior' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Anterior' }))
     expect(shownSrc()).toBe(photos[0])
   })
 
@@ -259,7 +249,8 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(first.style.transform).toBe('translateX(0px) scaleX(1)')
     expect(first.style.transitionDuration).toBe('200ms')
 
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     fireEvent.pointerDown(box, { clientX: 200, pointerId: 1 })
     fireEvent.pointerMove(box, { clientX: 40, pointerId: 1 })
     const last = screen.getByRole('img', { name: 'Seculus' })
@@ -290,7 +281,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(shownSrc()).toBe(photos[0])
   })
 
-  it('hides the arrow row, the dots, and the drag gesture when there is one photo (CAT-84, SV-56, SV-57)', () => {
+  it('hides the arrow row and the drag gesture when there is one photo (CAT-84, SV-56, SV-57)', () => {
     renderCarousel(['somente.webp'])
     expect(screen.queryByRole('button', { name: 'Anterior' })).toBeNull()
     expect(screen.queryByRole('button', { name: 'Seguinte' })).toBeNull()
@@ -320,7 +311,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     expect(badge.textContent).toBe('2/3')
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     expect(badge.textContent).toBe('3/3')
   })
 
@@ -395,7 +386,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     root.id = 'root'
     document.body.appendChild(root)
     const view = renderCarousel(photos, root)
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 2' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
 
     fireEvent.pointerDown(frame(), { clientX: 100, pointerId: 1 })
     fireEvent.pointerUp(frame(), { clientX: 61, pointerId: 1 })
@@ -508,37 +499,6 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(next.querySelector('svg.lucide-chevron-right')).not.toBeNull()
   })
 
-  it('paints the current 10px dot #0066cc with aria-current and the others in the text color at 0.35 opacity (SV-59, SV-60)', () => {
-    renderCarousel()
-
-    function dot(name: string) {
-      return screen.getByRole('button', { name })
-    }
-
-    expect(dot('Foto 1').getAttribute('data-slot')).toBe('button')
-    expect(dot('Foto 1').getAttribute('aria-current')).toBe('true')
-    expect(dot('Foto 1').className.split(/\s+/)).toContain('size-[10px]')
-    expect(dot('Foto 1').className.split(/\s+/)).toContain('cursor-pointer')
-    expect(dot('Foto 1').className.split(/\s+/)).toContain('bg-[#0066cc]')
-    expect(dot('Foto 1').className).toMatch(/hover:bg-\[#0066cc\]/)
-    expect(dot('Foto 1').className).not.toMatch(/\bbg-current\/35\b/)
-
-    for (const name of ['Foto 2', 'Foto 3']) {
-      expect(dot(name).getAttribute('data-slot')).toBe('button')
-      expect(dot(name).hasAttribute('aria-current')).toBe(false)
-      expect(dot(name).className.split(/\s+/)).toContain('size-[10px]')
-      expect(dot(name).className.split(/\s+/)).toContain('cursor-pointer')
-      expect(dot(name).className.split(/\s+/)).toContain('bg-current/35')
-      expect(dot(name).className).toMatch(/hover:bg-\[#6e6e73\]/)
-      expect(dot(name).className).not.toMatch(/\bbg-\[#0066cc\]\b/)
-    }
-
-    fireEvent.click(dot('Foto 2'))
-    expect(dot('Foto 2').getAttribute('aria-current')).toBe('true')
-    expect(dot('Foto 2').className.split(/\s+/)).toContain('bg-[#0066cc]')
-    expect(dot('Foto 1').hasAttribute('aria-current')).toBe(false)
-    expect(dot('Foto 1').className.split(/\s+/)).toContain('bg-current/35')
-  })
   it('renders external selection and never changes it without owner approval (CATREF-44, CATREF-45)', () => {
     const onIndexChange = vi.fn()
     const primaryRef = vi.fn()
@@ -546,9 +506,8 @@ describe('Carousel (CAT-70–CAT-86)', () => {
       onIndexChange={onIndexChange} onOpenGallery={vi.fn()} primaryRef={primaryRef} />)
     expect(shownSrc()).toBe(photos[1])
     expect(screen.getByTestId('carousel-count').textContent).toBe('2/3')
-    expect(screen.getByRole('button', { name: 'Foto 2' }).getAttribute('aria-current')).toBe('true')
     expect(primaryRef).toHaveBeenCalledWith(frame())
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 3' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Seguinte' }))
     expect(onIndexChange).toHaveBeenCalledWith(2)
     expect(shownSrc()).toBe(photos[1])
     view.rerender(<CarouselView images={photos} alt="Seculus" index={2}
@@ -557,7 +516,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(screen.getByTestId('carousel-count').textContent).toBe('3/3')
   })
 
-  it('navigates controlled dots, arrows and keyboard within bounds (CATREF-44)', () => {
+  it('navigates controlled arrows and keyboard within bounds (CATREF-44)', () => {
     render(<ControlledCarousel />)
     frame().focus()
     fireEvent.keyDown(frame(), { key: 'ArrowLeft' })
@@ -568,7 +527,8 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     fireEvent.keyDown(frame(), { key: 'ArrowRight' })
     expect(shownSrc()).toBe(photos[2])
     expect(screen.getByRole('button', { name: 'Seguinte' })).toHaveProperty('disabled', true)
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 1' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Anterior' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Anterior' }))
     expect(shownSrc()).toBe(photos[0])
     expect(screen.getByRole('button', { name: 'Anterior' })).toHaveProperty('disabled', true)
   })
@@ -580,7 +540,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
     expect(screen.getByLabelText('Gallery request').textContent).toBe('closed')
     drag(frame(), 100, 59)
     expect(shownSrc()).toBe(photos[1])
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 1' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Anterior' }))
     fireEvent.pointerDown(frame(), { clientX: 40, pointerId: 1 })
     fireEvent.pointerMove(frame(), { clientX: 200, pointerId: 1 })
     expect(screen.getByRole('img', { name: 'Seculus' }).style.transform).toMatch(/scaleX\(1\./)
@@ -592,8 +552,7 @@ describe('Carousel (CAT-70–CAT-86)', () => {
   })
 
   it('requests the selected photo and exact primary trigger on a tap without owning a modal (CATREF-46)', () => {
-    render(<ControlledCarousel />)
-    fireEvent.click(screen.getByRole('button', { name: 'Foto 2' }))
+    render(<ControlledCarousel initialIndex={1} />)
     drag(frame(), 100, 61)
     expect(screen.getByLabelText('Gallery request').textContent).toBe('1:true')
     expect(shownSrc()).toBe(photos[1])
