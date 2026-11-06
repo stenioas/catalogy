@@ -472,15 +472,16 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] A faixa segue a fila, marca a ativa e mantém a indisponível apagada com borda tracejada
-- [ ] Tocar na foto seleciona a variante
-- [ ] Uma variante só não renderiza a faixa
-- [ ] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/variant-strip.test.tsx`
+- [x] A faixa segue a fila, marca a ativa e mantém a indisponível apagada com borda tracejada
+- [x] Tocar na foto seleciona a variante
+- [x] Uma variante só não renderiza a faixa
+- [x] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/variant-strip.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
 
 **Commit**: `feat(client): select a variant from the photo strip below 920px`
+**Status**: done
 
 ### T14: Seletores de eixo
 
