@@ -30,6 +30,8 @@
 
   --availability-available: #f0fdf4;
   --availability-available-foreground: #166534;
+  --availability-coming-soon: #eff6ff;
+  --availability-coming-soon-foreground: #1e40af;
   --availability-on-order: #fff7ed;
   --availability-on-order-foreground: #c2410c;
   --availability-unavailable: #f9fafb;
@@ -96,6 +98,8 @@
 
   --availability-available: #1c3025;
   --availability-available-foreground: #a7d8b6;
+  --availability-coming-soon: #1e2a3d;
+  --availability-coming-soon-foreground: #93c5fd;
   --availability-on-order: #3d2a1a;
   --availability-on-order-foreground: #fdba74;
   --availability-unavailable: #303036;
@@ -142,6 +146,8 @@
 @theme inline {
   --color-availability-available: var(--availability-available);
   --color-availability-available-foreground: var(--availability-available-foreground);
+  --color-availability-coming-soon: var(--availability-coming-soon);
+  --color-availability-coming-soon-foreground: var(--availability-coming-soon-foreground);
   --color-availability-on-order: var(--availability-on-order);
   --color-availability-on-order-foreground: var(--availability-on-order-foreground);
   --color-availability-unavailable: var(--availability-unavailable);

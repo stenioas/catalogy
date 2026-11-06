@@ -11,6 +11,9 @@ export {
   variantQueue,
   resolveVariant,
   canVariantRepresentCard,
+  AVAILABILITY_LABEL,
+  STATE_LABEL,
+  AUDIENCE_LABEL,
 } from './catalog/listings.ts'
 export {
   truncateReais,

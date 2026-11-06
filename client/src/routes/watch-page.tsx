@@ -68,9 +68,10 @@ function ProductTitle({ product }: { product: Product }) {
 }
 
 function ProductIdentity({ product }: { product: Product }) {
+  const listing = product.listings[0]!
   return <div data-testid="watch-identity" className="flex w-full min-w-0 flex-col items-start gap-0.5 md:gap-2">
     <div data-testid="watch-metadata">
-      <ProductConditionLine state={product.state} availabilityStatus={product.availabilityStatus} />
+      <ProductConditionLine state={listing.state} availabilityStatus={listing.availabilityStatus} />
     </div>
     <ProductTitle product={product} />
   </div>

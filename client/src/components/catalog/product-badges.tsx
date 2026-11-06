@@ -1,4 +1,4 @@
-import type { Product } from '@catalogo/shared'
+import { AVAILABILITY_LABEL, STATE_LABEL, type Listing } from '@catalogo/shared'
 import { cn } from 'cn'
 import { Gift } from 'lucide-react'
 
@@ -30,11 +30,12 @@ export function ProductStateBadge({
   compact = false,
   className = '',
 }: {
-  state: Product['state']
+  state: Listing['state']
   compact?: boolean
   className?: string
 }) {
-  const tone = state === 'Novo'
+  const tone =
+    state === 'new'
     ? 'bg-product-state-new text-product-state-new-foreground'
     : 'bg-product-state-neutral text-product-state-neutral-foreground'
 
@@ -48,36 +49,32 @@ export function ProductStateBadge({
         className,
       )}
     >
-      {state}
+      {STATE_LABEL[state]}
     </Badge>
   )
 }
 
 const availabilityPresentation = {
   available: {
-    label: 'Em estoque',
+    label: AVAILABILITY_LABEL.available,
     className: 'bg-availability-available text-availability-available-foreground',
   },
+  coming_soon: {
+    label: AVAILABILITY_LABEL.coming_soon,
+    className: 'bg-availability-coming-soon text-availability-coming-soon-foreground',
+  },
   on_order: {
-    label: 'Sob encomenda',
+    label: AVAILABILITY_LABEL.on_order,
     className: 'bg-availability-on-order text-availability-on-order-foreground',
   },
-  unavailable: {
-    label: 'Indisponível',
-    className: 'bg-availability-unavailable text-availability-unavailable-foreground',
-  },
-  sold_out: {
-    label: 'Esgotado',
-    className: 'bg-availability-sold-out text-availability-sold-out-foreground',
-  },
-} satisfies Record<Product['availabilityStatus'], { label: string; className: string }>
+} satisfies Record<Listing['availabilityStatus'], { label: string; className: string }>
 
 export function ProductAvailabilityBadge({
   availabilityStatus,
   compact = false,
   className = '',
 }: {
-  availabilityStatus: Product['availabilityStatus']
+  availabilityStatus: Listing['availabilityStatus']
   compact?: boolean
   className?: string
 }) {
@@ -103,12 +100,12 @@ export function ProductConditionLine({
   state,
   availabilityStatus,
 }: {
-  state: Product['state']
-  availabilityStatus: Product['availabilityStatus']
+  state: Listing['state']
+  availabilityStatus: Listing['availabilityStatus']
 }) {
   return (
     <p data-testid="product-condition" className="m-0 flex flex-wrap items-center gap-1.5 text-xs leading-none text-muted-foreground">
-      <span data-testid="state-label">{state}</span>
+      <span data-testid="state-label">{STATE_LABEL[state]}</span>
       <ProductAvailabilityBadge availabilityStatus={availabilityStatus} compact />
     </p>
   )

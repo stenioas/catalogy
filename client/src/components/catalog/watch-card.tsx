@@ -16,7 +16,8 @@ export function productImageSrc(slug: string, fileName: string): string {
 }
 
 export function WatchCard({ product }: WatchCardProps) {
-  const firstImage = product.images[0]
+  const listing = product.listings[0]!
+  const firstImage = listing.images[0]!
   const watchPath = `/product/${product.slug}`
 
   return (
@@ -32,7 +33,7 @@ export function WatchCard({ product }: WatchCardProps) {
               alt={product.title}
               className="h-full w-full object-contain"
             />
-            {product.unmissableOffer ? (
+            {listing.variants[0]?.unmissableOffer ? (
               <UnmissableOfferBadge className="absolute bottom-3 left-3 hidden md:inline-flex" />
             ) : null}
           </div>
@@ -47,19 +48,19 @@ export function WatchCard({ product }: WatchCardProps) {
               data-testid="watch-card-link"
               className="flex min-w-0 flex-1 flex-col items-start gap-1 md:gap-2"
             >
-              {product.unmissableOffer ? (
+              {listing.variants[0]?.unmissableOffer ? (
                 <UnmissableOfferBadge className="md:hidden" />
               ) : null}
-              <ProductConditionLine state={product.state} availabilityStatus={product.availabilityStatus} />
+              <ProductConditionLine state={listing.state} availabilityStatus={listing.availabilityStatus} />
               <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-base md:leading-snug md:font-semibold md:line-clamp-none">
                 {product.title}
               </h2>
               <div className="flex w-full flex-col items-start gap-1 md:gap-2">
                 <PriceBlock
-                  price={product.price}
-                  listPrice={product.listPrice}
+                  price={listing.variants[0]!.price}
+                  listPrice={listing.variants[0]!.listPrice}
                   showcase
-                  unmissableOffer={product.unmissableOffer}
+                  unmissableOffer={listing.variants[0]?.unmissableOffer}
                 />
               </div>
             </Link>

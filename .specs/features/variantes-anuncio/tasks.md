@@ -350,15 +350,16 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] `available`, `coming_soon` e `on_order` aparecem como Disponível, Chega em breve e Sob encomenda
-- [ ] `new`, `openbox`, `used` e `defective` aparecem como Novo, Openbox, Usado e Com defeito
-- [ ] Em estoque, Esgotado e o status de produto Indisponível saem deste badge
-- [ ] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/product-badges.test.tsx`
+- [x] `available`, `coming_soon` e `on_order` aparecem como Disponível, Chega em breve e Sob encomenda
+- [x] `new`, `openbox`, `used` e `defective` aparecem como Novo, Openbox, Usado e Com defeito
+- [x] Em estoque, Esgotado e o status de produto Indisponível saem deste badge
+- [x] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/product-badges.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
 
 **Commit**: `feat(client): show portuguese labels for listing state and availability`
+**Status**: done
 
 ### T10: Card da variante em evidência
 
