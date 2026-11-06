@@ -304,37 +304,37 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-31 | P1: Migração | Tasks | In Tasks |
 | VAR-32 | P1: Migração | Tasks | In Tasks |
 | VAR-33 | P1: Migração | Tasks | In Tasks |
-| VAR-34 | P1: Home | Tasks | In Tasks |
-| VAR-35 | P1: Home | Tasks | In Tasks |
-| VAR-36 | P1: Home | Tasks | In Tasks |
-| VAR-37 | P1: Home | Tasks | In Tasks |
-| VAR-38 | P1: Home | Tasks | In Tasks |
-| VAR-39 | P1: Home | Tasks | In Tasks |
+| VAR-34 | P1: Home | Tasks | Done |
+| VAR-35 | P1: Home | Tasks | Done |
+| VAR-36 | P1: Home | Tasks | Done |
+| VAR-37 | P1: Home | Tasks | Done |
+| VAR-38 | P1: Home | Tasks | Done |
+| VAR-39 | P1: Home | Tasks | Done |
 | VAR-40 | P1: Home | Tasks | Done |
-| VAR-41 | P1: Home | Tasks | In Tasks |
-| VAR-42 | P1: Home | Tasks | In Tasks |
-| VAR-43 | P1: Home | Tasks | In Tasks |
-| VAR-44 | P1: Home | Tasks | In Tasks |
-| VAR-45 | P1: Home | Tasks | In Tasks |
-| VAR-46 | P1: Home | Tasks | In Tasks |
-| VAR-47 | P1: Home | Tasks | In Tasks |
-| VAR-48 | P1: Home | Tasks | In Tasks |
-| VAR-49 | P1: Home | Tasks | In Tasks |
+| VAR-41 | P1: Home | Tasks | Done |
+| VAR-42 | P1: Home | Tasks | Done |
+| VAR-43 | P1: Home | Tasks | Done |
+| VAR-44 | P1: Home | Tasks | Done |
+| VAR-45 | P1: Home | Tasks | Done |
+| VAR-46 | P1: Home | Tasks | Done |
+| VAR-47 | P1: Home | Tasks | Done |
+| VAR-48 | P1: Home | Tasks | Done |
+| VAR-49 | P1: Home | Tasks | Done |
 | VAR-50 | P1: Home | Tasks | In Tasks |
-| VAR-51 | P1: Filtro | Tasks | In Tasks |
-| VAR-52 | P1: Filtro | Tasks | In Tasks |
-| VAR-53 | P1: Filtro | Tasks | In Tasks |
-| VAR-54 | P1: Filtro | Tasks | In Tasks |
-| VAR-55 | P1: Filtro | Tasks | In Tasks |
-| VAR-56 | P1: Filtro | Tasks | In Tasks |
-| VAR-57 | P1: Filtro | Tasks | In Tasks |
-| VAR-58 | P1: Filtro | Tasks | In Tasks |
-| VAR-59 | P1: Filtro | Tasks | In Tasks |
-| VAR-60 | P1: Filtro | Tasks | In Tasks |
-| VAR-61 | P1: Filtro | Tasks | In Tasks |
-| VAR-62 | P1: Filtro | Tasks | In Tasks |
-| VAR-63 | P1: Filtro | Tasks | In Tasks |
-| VAR-64 | P1: Filtro | Tasks | In Tasks |
+| VAR-51 | P1: Filtro | Tasks | Done |
+| VAR-52 | P1: Filtro | Tasks | Done |
+| VAR-53 | P1: Filtro | Tasks | Done |
+| VAR-54 | P1: Filtro | Tasks | Done |
+| VAR-55 | P1: Filtro | Tasks | Done |
+| VAR-56 | P1: Filtro | Tasks | Done |
+| VAR-57 | P1: Filtro | Tasks | Done |
+| VAR-58 | P1: Filtro | Tasks | Done |
+| VAR-59 | P1: Filtro | Tasks | Done |
+| VAR-60 | P1: Filtro | Tasks | Done |
+| VAR-61 | P1: Filtro | Tasks | Done |
+| VAR-62 | P1: Filtro | Tasks | Done |
+| VAR-63 | P1: Filtro | Tasks | Done |
+| VAR-64 | P1: Filtro | Tasks | Done |
 | VAR-65 | P1: Página | Tasks | In Tasks |
 | VAR-66 | P1: Página | Tasks | In Tasks |
 | VAR-67 | P1: Página | Tasks | In Tasks |

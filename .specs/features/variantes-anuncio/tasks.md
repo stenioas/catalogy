@@ -164,17 +164,18 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] Sem `section` válida, abre a primeira seção com card. Sem card algum, fica em Disponível
-- [ ] Marcas dentro do grupo se somam. Entre grupos, todas precisam bater. Grupo sem marca não restringe
-- [ ] Grupo com uma opção no catálogo da seção fica oculto. Opção ausente não aparece. Marca desconhecida é ignorada
-- [ ] O card usa a primeira oferta imperdível que passa no filtro, senão a primeira da fila que passa
-- [ ] Ordem: título pt-BR, slug, ordem de `listings`. O caminho omite `v` sem eixo
-- [ ] Gate quick passa: `pnpm --filter @catalogo/shared test`
+- [x] Sem `section` válida, abre a primeira seção com card. Sem card algum, fica em Disponível
+- [x] Marcas dentro do grupo se somam. Entre grupos, todas precisam bater. Grupo sem marca não restringe
+- [x] Grupo com uma opção no catálogo da seção fica oculto. Opção ausente não aparece. Marca desconhecida é ignorada
+- [x] O card usa a primeira oferta imperdível que passa no filtro, senão a primeira da fila que passa
+- [x] Ordem: título pt-BR, slug, ordem de `listings`. O caminho omite `v` sem eixo
+- [x] Gate quick passa: `pnpm --filter @catalogo/shared test`
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(shared): build home sections, filters, and cards`
+**Status**: done
 
 ### T4: Vista de um anúncio
 
