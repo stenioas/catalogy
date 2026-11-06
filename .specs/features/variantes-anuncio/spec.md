@@ -310,7 +310,7 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-37 | P1: Home | Tasks | In Tasks |
 | VAR-38 | P1: Home | Tasks | In Tasks |
 | VAR-39 | P1: Home | Tasks | In Tasks |
-| VAR-40 | P1: Home | Tasks | In Tasks |
+| VAR-40 | P1: Home | Tasks | Done |
 | VAR-41 | P1: Home | Tasks | In Tasks |
 | VAR-42 | P1: Home | Tasks | In Tasks |
 | VAR-43 | P1: Home | Tasks | In Tasks |
@@ -339,10 +339,10 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-66 | P1: Página | Tasks | In Tasks |
 | VAR-67 | P1: Página | Tasks | In Tasks |
 | VAR-68 | P1: Página | Tasks | In Tasks |
-| VAR-69 | P1: Página | Tasks | In Tasks |
-| VAR-70 | P1: Página | Tasks | In Tasks |
-| VAR-71 | P1: Página | Tasks | In Tasks |
-| VAR-72 | P1: Página | Tasks | In Tasks |
+| VAR-69 | P1: Página | Tasks | Done |
+| VAR-70 | P1: Página | Tasks | Done |
+| VAR-71 | P1: Página | Tasks | Done |
+| VAR-72 | P1: Página | Tasks | Done |
 | VAR-73 | P1: Página | Tasks | In Tasks |
 | VAR-74 | P1: Página | Tasks | In Tasks |
 | VAR-75 | P1: Página | Tasks | In Tasks |

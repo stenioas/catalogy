@@ -132,17 +132,18 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] `variantQueue` conserva a ordem relativa das variantes indisponíveis no fim
-- [ ] `resolveVariant` abre a primeira da fila quando `v` falta ou não pertence ao anúncio
-- [ ] Com todas indisponíveis e `v` inválido, abre a primeira do array original
-- [ ] `v` válido abre essa variante, inclusive indisponível
-- [ ] Variante `orderable: false` não representa card
-- [ ] Gate quick passa: `pnpm --filter @catalogo/shared test`
+- [x] `variantQueue` conserva a ordem relativa das variantes indisponíveis no fim
+- [x] `resolveVariant` abre a primeira da fila quando `v` falta ou não pertence ao anúncio
+- [x] Com todas indisponíveis e `v` inválido, abre a primeira do array original
+- [x] `v` válido abre essa variante, inclusive indisponível
+- [x] Variante `orderable: false` não representa card
+- [x] Gate quick passa: `pnpm --filter @catalogo/shared test`
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(shared): resolve the variant queue and the v query`
+**Status**: done
 
 ### T3: Seção, filtro e cards
 

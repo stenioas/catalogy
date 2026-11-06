@@ -105,8 +105,8 @@ const ListingSchema = z.object({
 })
 
 type Axis = z.infer<typeof AxisSchema>
-type Variant = z.infer<typeof VariantSchema>
-type Listing = z.infer<typeof ListingSchema>
+export type Variant = z.infer<typeof VariantSchema>
+export type Listing = z.infer<typeof ListingSchema>
 type Specification = z.infer<typeof SpecificationSchema>
 
 function addIssue(
