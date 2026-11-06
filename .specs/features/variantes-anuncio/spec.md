@@ -297,13 +297,13 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-24 | P1: Contrato | Tasks | Done |
 | VAR-25 | P1: Contrato | Tasks | Done |
 | VAR-26 | P1: Contrato | Tasks | Done |
-| VAR-27 | P1: Migração | Tasks | In Tasks |
-| VAR-28 | P1: Migração | Tasks | In Tasks |
-| VAR-29 | P1: Migração | Tasks | In Tasks |
-| VAR-30 | P1: Migração | Tasks | In Tasks |
-| VAR-31 | P1: Migração | Tasks | In Tasks |
-| VAR-32 | P1: Migração | Tasks | In Tasks |
-| VAR-33 | P1: Migração | Tasks | In Tasks |
+| VAR-27 | P1: Migração | Tasks | Done |
+| VAR-28 | P1: Migração | Tasks | Done |
+| VAR-29 | P1: Migração | Tasks | Done |
+| VAR-30 | P1: Migração | Tasks | Done |
+| VAR-31 | P1: Migração | Tasks | Done |
+| VAR-32 | P1: Migração | Tasks | Done |
+| VAR-33 | P1: Migração | Tasks | Done |
 | VAR-34 | P1: Home | Tasks | Done |
 | VAR-35 | P1: Home | Tasks | Done |
 | VAR-36 | P1: Home | Tasks | Done |

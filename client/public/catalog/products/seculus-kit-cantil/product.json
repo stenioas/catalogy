@@ -1,19 +1,19 @@
 {
   "slug": "seculus-kit-cantil",
-  "state": "Openbox",
   "title": "Kit Seculus Cantil Azul",
-  "color": "Azul",
-  "price": 279.9,
-  "listPrice": 369.9,
-  "unmissableOffer": true,
-  "images": [
-    "seculus-1.png",
-    "seculus-2.png",
-    "seculus-3.png",
-    "seculus-4.png",
-    "seculus-5.png"
-  ],
   "description": "O Seculus Navy é um relógio analógico casual da linha Navy, com movimento de quartzo alimentado por bateria e calendário. A caixa é de aço inoxidável, com 45 mm de diâmetro, e a pulseira também é de aço inoxidável. O vidro é de cristal mineral, o bisel possui detalhes em alumínio e a resistência à água é de 50 m (5 ATM).",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "azul",
+          "value": "Azul"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -22,10 +22,6 @@
     {
       "label": "Modelo",
       "value": "Navy"
-    },
-    {
-      "label": "Estado",
-      "value": "Embalagem foi aberta"
     },
     {
       "label": "Tipo do relógio",
@@ -64,6 +60,33 @@
       "value": "1 ano e 6 meses."
     }
   ],
-  "observations": "Acompanha caixa de metal e cantil",
-  "availabilityStatus": "available"
+  "listings": [
+    {
+      "id": "listing",
+      "state": "openbox",
+      "availabilityStatus": "available",
+      "images": [
+        "seculus-1.png",
+        "seculus-2.png",
+        "seculus-3.png",
+        "seculus-4.png",
+        "seculus-5.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "azul"
+            }
+          ],
+          "price": 279.9,
+          "listPrice": 369.9,
+          "unmissableOffer": true,
+          "mainImage": "seculus-1.png",
+          "observations": "Acompanha caixa de metal e cantil"
+        }
+      ]
+    }
+  ]
 }

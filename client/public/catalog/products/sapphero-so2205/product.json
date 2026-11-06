@@ -1,27 +1,19 @@
 {
   "slug": "sapphero-so2205",
   "title": "SAPPHERO SO2205",
-  "price": 139.9,
-  "listPrice": 199.9,
-  "images": [
-    "sapphero-so2205-1.png",
-    "sapphero-so2205-2.png",
-    "sapphero-so2205-3.png",
-    "sapphero-so2205-4.png",
-    "sapphero-so2205-5.png",
-    "sapphero-so2205-6.png",
-    "sapphero-so2205-9.png",
-    "sapphero-so2205-13.png",
-    "sapphero-so2205-14.png",
-    "sapphero-so2205-15.png",
-    "sapphero-so2205-16.png",
-    "sapphero-so2205-17.png",
-    "sapphero-so2205-18.png"
-  ],
   "description": "Relógio masculino analógico de quartzo com cronógrafo e data, caixa em aço inoxidável, pulseira de couro e vidro Hardlex. Acompanha caixa de presente e manual do usuário.",
-  "color": "Silver Black",
-  "state": "Novo",
-  "availabilityStatus": "available",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "silver-black",
+          "value": "Silver Black"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -76,5 +68,40 @@
       "value": "90 dias"
     }
   ],
-  "unmissableOffer": true
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "available",
+      "images": [
+        "sapphero-so2205-1.png",
+        "sapphero-so2205-2.png",
+        "sapphero-so2205-3.png",
+        "sapphero-so2205-4.png",
+        "sapphero-so2205-5.png",
+        "sapphero-so2205-6.png",
+        "sapphero-so2205-9.png",
+        "sapphero-so2205-13.png",
+        "sapphero-so2205-14.png",
+        "sapphero-so2205-15.png",
+        "sapphero-so2205-16.png",
+        "sapphero-so2205-17.png",
+        "sapphero-so2205-18.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-black"
+            }
+          ],
+          "price": 139.9,
+          "listPrice": 199.9,
+          "unmissableOffer": true,
+          "mainImage": "sapphero-so2205-1.png"
+        }
+      ]
+    }
+  ]
 }

@@ -1,23 +1,8 @@
 {
   "slug": "aimimo-design-tsuyosa",
   "title": "Aimimo Design Tsuyosa",
-  "price": 399.9,
-  "listPrice": 499.9,
-  "images": [
-    "aimimo-design-tsuyosa-1.png",
-    "aimimo-design-tsuyosa-2.png",
-    "aimimo-design-tsuyosa-3.png",
-    "aimimo-design-tsuyosa-4.png",
-    "aimimo-design-tsuyosa-5.png",
-    "aimimo-design-tsuyosa-6.png",
-    "aimimo-design-tsuyosa-7.png",
-    "aimimo-design-tsuyosa-8.png",
-    "aimimo-design-tsuyosa-9.png",
-    "aimimo-design-tsuyosa-10.png"
-  ],
   "description": "Relógio masculino analógico com movimento de quartzo japonês Miyota 2115, três ponteiros, calendário e ponteiros luminosos. Caixa e pulseira de aço inoxidável, vidro de cristal de safira e resistência à água de 50m (5 ATM). A caixa tem 40 mm de diâmetro sem a coroa, 45 mm de lug to lug e 13 mm de espessura. A pulseira tem 20 mm de largura e o comprimento total do relógio, incluindo a caixa, é de 19 cm.",
-  "state": "Novo",
-  "availabilityStatus": "on_order",
+  "axes": [],
   "specifications": [
     {
       "label": "Marca",
@@ -92,5 +77,32 @@
       "value": "90 dias"
     }
   ],
-  "observations": "Cores disponíveis: green e mint blue."
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "aimimo-design-tsuyosa-1.png",
+        "aimimo-design-tsuyosa-2.png",
+        "aimimo-design-tsuyosa-3.png",
+        "aimimo-design-tsuyosa-4.png",
+        "aimimo-design-tsuyosa-5.png",
+        "aimimo-design-tsuyosa-6.png",
+        "aimimo-design-tsuyosa-7.png",
+        "aimimo-design-tsuyosa-8.png",
+        "aimimo-design-tsuyosa-9.png",
+        "aimimo-design-tsuyosa-10.png"
+      ],
+      "variants": [
+        {
+          "axes": [],
+          "price": 399.9,
+          "listPrice": 499.9,
+          "mainImage": "aimimo-design-tsuyosa-1.png",
+          "observations": "Cores disponíveis: green e mint blue."
+        }
+      ]
+    }
+  ]
 }

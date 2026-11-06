@@ -1,21 +1,19 @@
 {
   "slug": "curren-8106",
   "title": "CURREN 8106",
-  "price": 129.9,
-  "listPrice": 169.9,
-  "images": [
-    "curren-8106-1.png",
-    "curren-8106-2.png",
-    "curren-8106-3.png",
-    "curren-8106-4.png",
-    "curren-8106-5.png",
-    "curren-8106-6.png",
-    "curren-8106-7.png"
-  ],
   "description": "Relógio masculino CURREN 8106 de estilo casual, com movimento de quartzo e calendário. Caixa e pulseira em aço inoxidável, vidro Hardlex e pulseira ajustável de 20 cm. Acompanha 1 relógio CURREN original.",
-  "color": "Silver White | Silver Black",
-  "state": "Novo",
-  "availabilityStatus": "on_order",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "silver-white-silver-black",
+          "value": "Silver White | Silver Black"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -70,5 +68,34 @@
       "value": "90 dias"
     }
   ],
-  "unmissableOffer": true
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "curren-8106-1.png",
+        "curren-8106-2.png",
+        "curren-8106-3.png",
+        "curren-8106-4.png",
+        "curren-8106-5.png",
+        "curren-8106-6.png",
+        "curren-8106-7.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white-silver-black"
+            }
+          ],
+          "price": 129.9,
+          "listPrice": 169.9,
+          "unmissableOffer": true,
+          "mainImage": "curren-8106-1.png"
+        }
+      ]
+    }
+  ]
 }

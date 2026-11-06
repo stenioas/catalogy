@@ -1,32 +1,20 @@
 {
   "slug": "benyar-5229",
   "title": "BENYAR 5229 Prata/Azul",
-  "color": "Prata/Azul",
-  "price": 259.9,
-  "listPrice": 319.9,
-  "unmissableOffer": false,
-  "enabled": false,
-  "images": [
-    "benyar-5229-1.png",
-    "benyar-5229-2.png",
-    "benyar-5229-3.png",
-    "benyar-5229-4.png",
-    "benyar-5229-5.png",
-    "benyar-5229-6.png",
-    "benyar-5229-7.png",
-    "benyar-5229-8.png",
-    "benyar-5229-9.png",
-    "benyar-5229-10.png",
-    "benyar-5229-11.png"
-  ],
   "description": "O BENYAR 5229 é um relógio masculino de quartzo com estilo moderno para o dia a dia e ambientes de negócios. Possui caixa e pulseira de aço inoxidável, vidro mineral endurecido, cronógrafo, calendário e ponteiros e marcadores luminosos. A resistência à água é de 3 bar.",
-  "state": "Novo",
-  "availabilityStatus": "available",
-  "specifications": [
+  "axes": [
     {
-      "label": "Estado",
-      "value": "Novo"
-    },
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "prata-azul",
+          "value": "Prata/Azul"
+        }
+      ]
+    }
+  ],
+  "specifications": [
     {
       "label": "Marca",
       "value": "BENYAR"
@@ -78,6 +66,41 @@
     {
       "label": "Garantia",
       "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "available",
+      "enabled": false,
+      "images": [
+        "benyar-5229-1.png",
+        "benyar-5229-2.png",
+        "benyar-5229-3.png",
+        "benyar-5229-4.png",
+        "benyar-5229-5.png",
+        "benyar-5229-6.png",
+        "benyar-5229-7.png",
+        "benyar-5229-8.png",
+        "benyar-5229-9.png",
+        "benyar-5229-10.png",
+        "benyar-5229-11.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "prata-azul"
+            }
+          ],
+          "price": 259.9,
+          "listPrice": 319.9,
+          "unmissableOffer": false,
+          "mainImage": "benyar-5229-1.png"
+        }
+      ]
     }
   ]
 }

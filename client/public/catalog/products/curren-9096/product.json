@@ -1,19 +1,19 @@
 {
   "slug": "curren-9096",
-  "state": "Novo",
   "title": "Curren 9096 Rosé/Branco",
-  "color": "Rosé/Branco",
-  "price": 129.9,
-  "listPrice": 144.9,
-  "images": [
-    "curren-9096-1.png",
-    "curren-9096-2.png",
-    "curren-9096-3.png",
-    "curren-9096-4.png",
-    "curren-9096-5.png",
-    "curren-9096-6.png"
-  ],
   "description": "O Curren 9096 é um relógio analógico feminino de estilo casual, com movimento de quartzo japonês e calendário. A caixa é de aço inoxidável, com 9 mm de espessura, e o diâmetro do mostrador é de 32 mm. O vidro é mineral endurecido e a resistência à água é de 30 m (3 bar). A pulseira metálica mede 14 mm de largura e 230 mm de comprimento, com fecho de pulseira. O peso é de 63 g.",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "rose-branco",
+          "value": "Rosé/Branco"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -22,10 +22,6 @@
     {
       "label": "Modelo",
       "value": "9096"
-    },
-    {
-      "label": "Estado",
-      "value": "Novo"
     },
     {
       "label": "Tipo do relógio",
@@ -68,5 +64,32 @@
       "value": "90 dias"
     }
   ],
-  "availabilityStatus": "on_order"
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "curren-9096-1.png",
+        "curren-9096-2.png",
+        "curren-9096-3.png",
+        "curren-9096-4.png",
+        "curren-9096-5.png",
+        "curren-9096-6.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "rose-branco"
+            }
+          ],
+          "price": 129.9,
+          "listPrice": 144.9,
+          "mainImage": "curren-9096-1.png"
+        }
+      ]
+    }
+  ]
 }

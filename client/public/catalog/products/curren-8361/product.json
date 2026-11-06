@@ -1,38 +1,19 @@
 {
   "slug": "curren-8361",
-  "state": "Novo",
   "title": "Curren 8361",
-  "color": "Várias cores",
-  "price": 199.9,
-  "listPrice": 259.9,
-  "unmissableOffer": true,
-  "images": [
-    "curren-8361-1.png",
-    "curren-8361-2.png",
-    "curren-8361-3.png",
-    "curren-8361-4.png",
-    "curren-8361-5.png",
-    "curren-8361-6.png",
-    "curren-8361-7.png",
-    "curren-8361-8.png",
-    "curren-8361-9.png",
-    "curren-8361-10.png",
-    "curren-8361-11.png",
-    "curren-8361-12.png",
-    "curren-8361-13.png",
-    "curren-8361-14.png",
-    "curren-8361-15.png",
-    "curren-8361-16.png",
-    "curren-8361-17.png",
-    "curren-8361-18.png",
-    "curren-8361-19.png",
-    "curren-8361-20.png",
-    "curren-8361-21.png",
-    "curren-8361-22.png",
-    "curren-8361-23.png",
-    "curren-8361-24.png"
-  ],
   "description": "O Curren 8361 é um relógio masculino de quartzo, de estilo fashion e casual, com dia, cronógrafo, ponteiros luminosos e resistência a choques. A caixa é redonda, de liga, com 48 mm de diâmetro e 14 mm de espessura. A coroa é de aço inoxidável. A pulseira é de aço inoxidável, com 24 mm de largura e 240 mm de comprimento, e fecho de pulseira. O vidro é Hardlex. A resistência à água é de 30 m (3 ATM) e cobre respingos, chuva e lavagem das mãos. A bateria está inclusa e o peso é de 170,6 g. Está disponível em várias cores e a embalagem é de papel.",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "varias-cores",
+          "value": "Várias cores"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -41,10 +22,6 @@
     {
       "label": "Modelo",
       "value": "8361"
-    },
-    {
-      "label": "Estado",
-      "value": "Novo"
     },
     {
       "label": "Tipo do relógio",
@@ -91,5 +68,51 @@
       "value": "14 mm"
     }
   ],
-  "availabilityStatus": "on_order"
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "curren-8361-1.png",
+        "curren-8361-2.png",
+        "curren-8361-3.png",
+        "curren-8361-4.png",
+        "curren-8361-5.png",
+        "curren-8361-6.png",
+        "curren-8361-7.png",
+        "curren-8361-8.png",
+        "curren-8361-9.png",
+        "curren-8361-10.png",
+        "curren-8361-11.png",
+        "curren-8361-12.png",
+        "curren-8361-13.png",
+        "curren-8361-14.png",
+        "curren-8361-15.png",
+        "curren-8361-16.png",
+        "curren-8361-17.png",
+        "curren-8361-18.png",
+        "curren-8361-19.png",
+        "curren-8361-20.png",
+        "curren-8361-21.png",
+        "curren-8361-22.png",
+        "curren-8361-23.png",
+        "curren-8361-24.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "varias-cores"
+            }
+          ],
+          "price": 199.9,
+          "listPrice": 259.9,
+          "unmissableOffer": true,
+          "mainImage": "curren-8361-1.png"
+        }
+      ]
+    }
+  ]
 }

@@ -1,22 +1,19 @@
 {
   "slug": "addiesdive-ad2554",
-  "state": "Novo",
   "title": "Addiesdive AD2554 Azul",
-  "color": "Azul",
-  "price": 399.9,
-  "listPrice": 539.9,
-  "unmissableOffer": true,
-  "images": [
-    "addiesdive-1.png",
-    "addiesdive-2.png",
-    "addiesdive-3.png",
-    "addiesdive-4.png",
-    "addiesdive-5.png",
-    "addiesdive-6.png",
-    "addiesdive-7.png",
-    "addiesdive-8.png"
-  ],
   "description": "O Addiesdive AD2554 é um homage do Tudor Ranger, de estilo analógico retrô, com movimento de quartzo japonês calibre 2035. A caixa e a pulseira são de aço inoxidável 316L. A caixa mede 36 mm de diâmetro sem a coroa, 46 mm de comprimento e 10 mm de espessura, com encaixe de pulseira de 20 mm. O vidro é de safira, os ponteiros e marcadores são luminosos, e a coroa e a tampa do fundo são rosqueadas. A resistência à água é de 100 m (10 bar). O peso é de 113,6 g e o comprimento total do relógio é de 220 mm.",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "azul",
+          "value": "Azul"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -29,10 +26,6 @@
     {
       "label": "Homage de",
       "value": "Tudor Ranger"
-    },
-    {
-      "label": "Estado",
-      "value": "Novo"
     },
     {
       "label": "Tipo do relógio",
@@ -79,5 +72,35 @@
       "value": "90 dias"
     }
   ],
-  "availabilityStatus": "available"
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "available",
+      "images": [
+        "addiesdive-1.png",
+        "addiesdive-2.png",
+        "addiesdive-3.png",
+        "addiesdive-4.png",
+        "addiesdive-5.png",
+        "addiesdive-6.png",
+        "addiesdive-7.png",
+        "addiesdive-8.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "azul"
+            }
+          ],
+          "price": 399.9,
+          "listPrice": 539.9,
+          "unmissableOffer": true,
+          "mainImage": "addiesdive-1.png"
+        }
+      ]
+    }
+  ]
 }

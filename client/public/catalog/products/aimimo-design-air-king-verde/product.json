@@ -1,17 +1,19 @@
 {
   "slug": "aimimo-design-air-king-verde",
-  "state": "Novo",
   "title": "AIMIMO DESIGN DD39MM Verde",
-  "color": "Verde",
-  "price": 269.9,
-  "listPrice": 359.9,
-  "unmissableOffer": true,
-  "images": [
-    "aimimo-design-air-king-1.png",
-    "aimimo-design-air-king-2.png",
-    "aimimo-design-air-king-3.png"
-  ],
   "description": "O AIMIMO DESIGN DD39MM é um homage do Rolex Air-King. Tem caixa de aço inoxidável 316L, com acabamento polido e fundo escovado, e pulseira de aço inoxidável. O diâmetro é de 39 mm sem a coroa, o comprimento lug to lug é de 48 mm e a espessura é de 12,5 mm. O vidro é de cristal de safira, a coroa é parafusada e a resistência à água é de 50 m (5 ATM). O movimento é de quartzo japonês, com três ponteiros, calendário e luminosidade. A pulseira tem 20 mm de largura.",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "verde",
+          "value": "Verde"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Homage de",
@@ -24,10 +26,6 @@
     {
       "label": "Modelo",
       "value": "DD39MM"
-    },
-    {
-      "label": "Estado",
-      "value": "Novo"
     },
     {
       "label": "Funções",
@@ -78,6 +76,31 @@
       "value": "12,5 mm"
     }
   ],
-  "availabilityStatus": "available",
-  "enabled": false
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "available",
+      "enabled": false,
+      "images": [
+        "aimimo-design-air-king-1.png",
+        "aimimo-design-air-king-2.png",
+        "aimimo-design-air-king-3.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "verde"
+            }
+          ],
+          "price": 269.9,
+          "listPrice": 359.9,
+          "unmissableOffer": true,
+          "mainImage": "aimimo-design-air-king-1.png"
+        }
+      ]
+    }
+  ]
 }

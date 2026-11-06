@@ -1,66 +1,19 @@
 {
   "slug": "pagani-design-pd-1701",
   "title": "PAGANI DESIGN PD-1701",
-  "price": 1099.9,
-  "listPrice": 1399.9,
-  "unmissableOffer": true,
-  "images": [
-    "pagani-design-pd-1701-1.png",
-    "pagani-design-pd-1701-2.png",
-    "pagani-design-pd-1701-3.png",
-    "pagani-design-pd-1701-4.png",
-    "pagani-design-pd-1701-5.png",
-    "pagani-design-pd-1701-6.png",
-    "pagani-design-pd-1701-7.png",
-    "pagani-design-pd-1701-8.png",
-    "pagani-design-pd-1701-9.png",
-    "pagani-design-pd-1701-10.png",
-    "pagani-design-pd-1701-11.png",
-    "pagani-design-pd-1701-12.png",
-    "pagani-design-pd-1701-13.png",
-    "pagani-design-pd-1701-14.png",
-    "pagani-design-pd-1701-15.png",
-    "pagani-design-pd-1701-16.png",
-    "pagani-design-pd-1701-17.png",
-    "pagani-design-pd-1701-18.png",
-    "pagani-design-pd-1701-19.png",
-    "pagani-design-pd-1701-20.png",
-    "pagani-design-pd-1701-21.png",
-    "pagani-design-pd-1701-22.png",
-    "pagani-design-pd-1701-23.png",
-    "pagani-design-pd-1701-24.png",
-    "pagani-design-pd-1701-25.png",
-    "pagani-design-pd-1701-26.png",
-    "pagani-design-pd-1701-27.png",
-    "pagani-design-pd-1701-28.png",
-    "pagani-design-pd-1701-29.png",
-    "pagani-design-pd-1701-30.png",
-    "pagani-design-pd-1701-31.png",
-    "pagani-design-pd-1701-32.png",
-    "pagani-design-pd-1701-33.png",
-    "pagani-design-pd-1701-34.png",
-    "pagani-design-pd-1701-35.png",
-    "pagani-design-pd-1701-36.png",
-    "pagani-design-pd-1701-37.png",
-    "pagani-design-pd-1701-38.png",
-    "pagani-design-pd-1701-39.png",
-    "pagani-design-pd-1701-40.png",
-    "pagani-design-pd-1701-41.png",
-    "pagani-design-pd-1701-42.png",
-    "pagani-design-pd-1701-43.png",
-    "pagani-design-pd-1701-44.png",
-    "pagani-design-pd-1701-45.png",
-    "pagani-design-pd-1701-46.png",
-    "pagani-design-pd-1701-47.png",
-    "pagani-design-pd-1701-48.png",
-    "pagani-design-pd-1701-49.png",
-    "pagani-design-pd-1701-50.png",
-    "pagani-design-pd-1701-51.png"
-  ],
   "description": "Relógio esportivo com cronógrafo e movimento de quartzo japonês TMI VK63. Caixa e pulseira em aço inoxidável, vidro de safira com revestimento antirreflexo, bisel de cerâmica e ponteiros luminosos.",
-  "color": "Várias cores",
-  "state": "Novo",
-  "availabilityStatus": "on_order",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "varias-cores",
+          "value": "Várias cores"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -125,6 +78,80 @@
     {
       "label": "Garantia",
       "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "pagani-design-pd-1701-1.png",
+        "pagani-design-pd-1701-2.png",
+        "pagani-design-pd-1701-3.png",
+        "pagani-design-pd-1701-4.png",
+        "pagani-design-pd-1701-5.png",
+        "pagani-design-pd-1701-6.png",
+        "pagani-design-pd-1701-7.png",
+        "pagani-design-pd-1701-8.png",
+        "pagani-design-pd-1701-9.png",
+        "pagani-design-pd-1701-10.png",
+        "pagani-design-pd-1701-11.png",
+        "pagani-design-pd-1701-12.png",
+        "pagani-design-pd-1701-13.png",
+        "pagani-design-pd-1701-14.png",
+        "pagani-design-pd-1701-15.png",
+        "pagani-design-pd-1701-16.png",
+        "pagani-design-pd-1701-17.png",
+        "pagani-design-pd-1701-18.png",
+        "pagani-design-pd-1701-19.png",
+        "pagani-design-pd-1701-20.png",
+        "pagani-design-pd-1701-21.png",
+        "pagani-design-pd-1701-22.png",
+        "pagani-design-pd-1701-23.png",
+        "pagani-design-pd-1701-24.png",
+        "pagani-design-pd-1701-25.png",
+        "pagani-design-pd-1701-26.png",
+        "pagani-design-pd-1701-27.png",
+        "pagani-design-pd-1701-28.png",
+        "pagani-design-pd-1701-29.png",
+        "pagani-design-pd-1701-30.png",
+        "pagani-design-pd-1701-31.png",
+        "pagani-design-pd-1701-32.png",
+        "pagani-design-pd-1701-33.png",
+        "pagani-design-pd-1701-34.png",
+        "pagani-design-pd-1701-35.png",
+        "pagani-design-pd-1701-36.png",
+        "pagani-design-pd-1701-37.png",
+        "pagani-design-pd-1701-38.png",
+        "pagani-design-pd-1701-39.png",
+        "pagani-design-pd-1701-40.png",
+        "pagani-design-pd-1701-41.png",
+        "pagani-design-pd-1701-42.png",
+        "pagani-design-pd-1701-43.png",
+        "pagani-design-pd-1701-44.png",
+        "pagani-design-pd-1701-45.png",
+        "pagani-design-pd-1701-46.png",
+        "pagani-design-pd-1701-47.png",
+        "pagani-design-pd-1701-48.png",
+        "pagani-design-pd-1701-49.png",
+        "pagani-design-pd-1701-50.png",
+        "pagani-design-pd-1701-51.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "varias-cores"
+            }
+          ],
+          "price": 1099.9,
+          "listPrice": 1399.9,
+          "unmissableOffer": true,
+          "mainImage": "pagani-design-pd-1701-1.png"
+        }
+      ]
     }
   ]
 }

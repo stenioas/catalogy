@@ -1,23 +1,8 @@
 {
   "slug": "skmei-1628",
-  "state": "Novo",
   "title": "Skmei 1628",
-  "price": 104.9,
-  "listPrice": 129.9,
-  "images": [
-    "skmei-1628-1.png",
-    "skmei-1628-2.png",
-    "skmei-1628-3.png",
-    "skmei-1628-4.png",
-    "skmei-1628-5.png",
-    "skmei-1628-6.png",
-    "skmei-1628-7.png",
-    "skmei-1628-8.png",
-    "skmei-1628-9.png",
-    "skmei-1628-10.png",
-    "skmei-1628-11.png"
-  ],
   "description": "O Skmei 1628 é um relógio digital militar, de estilo fashion e casual, com movimento digital. A caixa é de ABS, quadrada, com 44 mm de diâmetro e 14 mm de espessura, e o vidro é de resina. A pulseira é de PU, com 19 mm de largura e 24,5 cm de comprimento, e fecho de fivela. Tem dois horários, cronógrafo, alarme, calendário, dia da semana, repetidor de hora, luz LED, relógio de 12/24 horas e contagem regressiva. A resistência à água é de 5 bar (50 m) e serve para natação e banho. É à prova de choque. Está disponível em várias cores.",
+  "axes": [],
   "specifications": [
     {
       "label": "Marca",
@@ -68,5 +53,32 @@
       "value": "14 mm"
     }
   ],
-  "availabilityStatus": "on_order"
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "skmei-1628-1.png",
+        "skmei-1628-2.png",
+        "skmei-1628-3.png",
+        "skmei-1628-4.png",
+        "skmei-1628-5.png",
+        "skmei-1628-6.png",
+        "skmei-1628-7.png",
+        "skmei-1628-8.png",
+        "skmei-1628-9.png",
+        "skmei-1628-10.png",
+        "skmei-1628-11.png"
+      ],
+      "variants": [
+        {
+          "axes": [],
+          "price": 104.9,
+          "listPrice": 129.9,
+          "mainImage": "skmei-1628-1.png"
+        }
+      ]
+    }
+  ]
 }

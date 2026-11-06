@@ -1,25 +1,19 @@
 {
   "slug": "keaso-k002",
-  "state": "Novo",
   "title": "KEASO K002",
-  "color": "Variados",
-  "price": 599.9,
-  "listPrice": 779.9,
-  "unmissableOffer": true,
-  "images": [
-    "keaso-1.png",
-    "keaso-2.png",
-    "keaso-3.png",
-    "keaso-4.png",
-    "keaso-5.png",
-    "keaso-6.png",
-    "keaso-7.png",
-    "keaso-8.png",
-    "keaso-9.png",
-    "keaso-10.png",
-    "keaso-11.png"
-  ],
   "description": "O KEASO K002 é um homage do Seiko SKX 5 Sports, do tipo diver (mergulho), com movimento de quartzo Miyota 2035 de origem japonesa. A caixa é de aço inoxidável 316L, com 13 mm de espessura, e a pulseira é de aço inoxidável com fecho dobrável com segurança. Possui vidro de safira, luminosidade C3 e resistência à água de 200 m (20 bar).",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "variados",
+          "value": "Variados"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -32,10 +26,6 @@
     {
       "label": "Homage de",
       "value": "Seiko SKX 5 Sports"
-    },
-    {
-      "label": "Estado",
-      "value": "Novo"
     },
     {
       "label": "Tipo do relógio",
@@ -82,5 +72,38 @@
       "value": "90 dias"
     }
   ],
-  "availabilityStatus": "on_order"
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "keaso-1.png",
+        "keaso-2.png",
+        "keaso-3.png",
+        "keaso-4.png",
+        "keaso-5.png",
+        "keaso-6.png",
+        "keaso-7.png",
+        "keaso-8.png",
+        "keaso-9.png",
+        "keaso-10.png",
+        "keaso-11.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "variados"
+            }
+          ],
+          "price": 599.9,
+          "listPrice": 779.9,
+          "unmissableOffer": true,
+          "mainImage": "keaso-1.png"
+        }
+      ]
+    }
+  ]
 }

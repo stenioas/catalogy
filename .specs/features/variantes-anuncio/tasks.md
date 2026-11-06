@@ -318,15 +318,16 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] A fixture velha sai com id `listing`, eixo `color` só quando havia cor, rótulo Cor, sem alias, e sem linha `Estado`
-- [ ] `Novo`, `Openbox` e `Usado` viram `new`, `openbox` e `used`. A primeira foto é `mainImage`
-- [ ] Os `product.json` do catálogo ficam no formato novo e o schema aceita todos
-- [ ] Gate build passa: `pnpm build`
+- [x] A fixture velha sai com id `listing`, eixo `color` só quando havia cor, rótulo Cor, sem alias, e sem linha `Estado`
+- [x] `Novo`, `Openbox` e `Usado` viram `new`, `openbox` e `used`. A primeira foto é `mainImage`
+- [x] Os `product.json` do catálogo ficam no formato novo e o schema aceita todos
+- [x] Gate build passa: `pnpm build`
 
 **Tests**: integration
 **Gate**: build
 
 **Commit**: `feat(catalog): migrate each product to one listing and one variant`
+**Status**: done
 
 ### Phase 3: Home
 

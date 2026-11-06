@@ -1,29 +1,19 @@
 {
   "slug": "curren-9007",
   "title": "Curren 9007",
-  "price": 129.9,
-  "listPrice": 154.9,
-  "images": [
-    "curren-9007-1.png",
-    "curren-9007-2.png",
-    "curren-9007-3.png",
-    "curren-9007-4.png",
-    "curren-9007-5.png",
-    "curren-9007-6.png",
-    "curren-9007-7.png",
-    "curren-9007-8.png",
-    "curren-9007-9.png",
-    "curren-9007-10.png",
-    "curren-9007-11.png",
-    "curren-9007-12.png",
-    "curren-9007-13.png",
-    "curren-9007-14.png",
-    "curren-9007-15.png"
-  ],
   "description": "Relógio feminino Curren 9007 com caixa redonda, pulseira de aço inoxidável e movimento de quartzo de origem japonesa.",
-  "color": "Rosé Gold",
-  "state": "Novo",
-  "availabilityStatus": "on_order",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "rose-gold",
+          "value": "Rosé Gold"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
@@ -72,6 +62,43 @@
     {
       "label": "Garantia",
       "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "curren-9007-1.png",
+        "curren-9007-2.png",
+        "curren-9007-3.png",
+        "curren-9007-4.png",
+        "curren-9007-5.png",
+        "curren-9007-6.png",
+        "curren-9007-7.png",
+        "curren-9007-8.png",
+        "curren-9007-9.png",
+        "curren-9007-10.png",
+        "curren-9007-11.png",
+        "curren-9007-12.png",
+        "curren-9007-13.png",
+        "curren-9007-14.png",
+        "curren-9007-15.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "rose-gold"
+            }
+          ],
+          "price": 129.9,
+          "listPrice": 154.9,
+          "mainImage": "curren-9007-1.png"
+        }
+      ]
     }
   ]
 }

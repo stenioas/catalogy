@@ -1,27 +1,23 @@
 {
   "slug": "curren-8498l-black",
-  "state": "Novo",
   "title": "Curren 8498L Preto",
-  "color": "Preto",
-  "price": 134.9,
-  "listPrice": 159.9,
-  "enabled": false,
-  "images": [
-    "curren-8498l-1.png",
-    "curren-8498l-2.png",
-    "curren-8498l-3.png",
-    "curren-8498l-4.png",
-    "curren-8498l-5.png"
-  ],
   "description": "O Curren 8498L é um relógio analógico feminino de estilo fashion e casual, com movimento de quartzo, data automática e marcadores luminosos. O mostrador não tem números. A caixa é de liga, com 10 mm de espessura, e o diâmetro do mostrador é de 33 mm. O vidro é Hardlex. A pulseira é de aço inoxidável, com 14 mm de largura e 19 cm de comprimento, e fecho de pulseira. A resistência à água é de 30 m (3 bar). O peso é de 79,5 g.",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "preto",
+          "value": "Preto"
+        }
+      ]
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
       "value": "Curren"
-    },
-    {
-      "label": "Estado",
-      "value": "Novo"
     },
     {
       "label": "Tipo do relógio",
@@ -72,5 +68,32 @@
       "value": "90 dias"
     }
   ],
-  "availabilityStatus": "available"
+  "listings": [
+    {
+      "id": "listing",
+      "state": "new",
+      "availabilityStatus": "available",
+      "enabled": false,
+      "images": [
+        "curren-8498l-1.png",
+        "curren-8498l-2.png",
+        "curren-8498l-3.png",
+        "curren-8498l-4.png",
+        "curren-8498l-5.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "preto"
+            }
+          ],
+          "price": 134.9,
+          "listPrice": 159.9,
+          "mainImage": "curren-8498l-1.png"
+        }
+      ]
+    }
+  ]
 }
