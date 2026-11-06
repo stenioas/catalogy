@@ -409,16 +409,17 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] Sem `section`, abre a primeira seção com card e não grava a chave. Seção vazia na URL permanece
-- [ ] Textos exatos: `Não temos nenhum anúncio ativo.` e `Nenhum anúncio corresponde aos filtros.`
-- [ ] Trocar de seção conserva as marcas. Voltar do anúncio devolve a mesma query
-- [ ] Grupos na ordem Estado, Público-alvo e eixos. Uma opção só oculta o grupo
-- [ ] Gate quick passa: `pnpm --filter client exec vitest run src/routes/catalog-page.test.tsx`
+- [x] Sem `section`, abre a primeira seção com card e não grava a chave. Seção vazia na URL permanece
+- [x] Textos exatos: `Não temos nenhum anúncio ativo.` e `Nenhum anúncio corresponde aos filtros.`
+- [x] Trocar de seção conserva as marcas. Voltar do anúncio devolve a mesma query
+- [x] Grupos na ordem Estado, Público-alvo e eixos. Uma opção só oculta o grupo
+- [x] Gate quick passa: `pnpm --filter client exec vitest run src/routes/catalog-page.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
 
 **Commit**: `feat(client): filter the home by section, state, audience, and axes`
+**Status**: done
 
 ### Phase 4: Página do anúncio
 

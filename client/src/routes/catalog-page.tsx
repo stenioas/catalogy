@@ -1,29 +1,135 @@
-import { homeCards, type FilterMarks } from '@catalogo/shared'
-import { useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
+import {
+  activeSection,
+  filterGroups,
+  homeCards,
+  homeEmptyText,
+  type FilterMarks,
+  type SectionId,
+} from '@catalogo/shared'
+import { useSearchParams } from 'react-router-dom'
 
 import { products } from '../catalog/products.generated'
 import { TopBar } from '../components/catalog/top-bar'
 import { WatchCard } from '../components/catalog/watch-card'
 
-export const EMPTY_VITRINE_MESSAGE = 'A vitrine ainda não tem relógios.'
+const SECTIONS: { id: SectionId; label: string }[] = [
+  { id: 'available', label: 'Disponível' },
+  { id: 'coming-soon', label: 'Chega em breve' },
+  { id: 'on-order', label: 'Sob encomenda' },
+]
 
-const emptyMarks: FilterMarks = { state: [], audience: [], axes: {} }
+const RESERVED_QUERY_KEYS = new Set(['section', 'state', 'audience', 'v', 'seller'])
+
+function isSectionId(value: string | null): value is SectionId {
+  return value === 'available' || value === 'coming-soon' || value === 'on-order'
+}
+
+function tokens(params: URLSearchParams, key: string): string[] {
+  return params
+    .getAll(key)
+    .flatMap((part) => part.split(','))
+    .map((token) => token.trim())
+    .filter((token) => token.length > 0)
+}
+
+function marksFromParams(params: URLSearchParams): FilterMarks {
+  const axes: Record<string, string[]> = {}
+  for (const key of new Set(params.keys())) {
+    if (RESERVED_QUERY_KEYS.has(key)) continue
+    const values = tokens(params, key)
+    if (values.length > 0) axes[key] = values
+  }
+  return {
+    state: tokens(params, 'state'),
+    audience: tokens(params, 'audience'),
+    axes,
+  }
+}
+
+function selectedInGroup(marks: FilterMarks, groupId: string, optionId: string): boolean {
+  if (groupId === 'state') return marks.state.includes(optionId)
+  if (groupId === 'audience') return marks.audience.includes(optionId)
+  return (marks.axes[groupId] ?? []).includes(optionId)
+}
 
 export function CatalogPage() {
-  const location = useLocation()
-  const section = useMemo(() => new URLSearchParams(location.search).get('section'), [location.search])
+  const [params, setParams] = useSearchParams()
+  const sectionParam = params.get('section')
+  const marks = marksFromParams(params)
+  const resolved = activeSection(products, sectionParam)
+  const groups = filterGroups(products, sectionParam)
+  const cards = homeCards(products, sectionParam, marks)
+  const emptyText = homeEmptyText(products, sectionParam, marks)
 
-  const cards = useMemo(() => homeCards(products, section, emptyMarks), [section])
+  function selectSection(id: SectionId) {
+    const raw = params.get('section')
+    if (raw === id) return
+    if (!isSectionId(raw) && id === resolved) return
+    setParams((prev) => {
+      const next = new URLSearchParams(prev)
+      next.set('section', id)
+      return next
+    })
+  }
+
+  function toggleMark(groupId: string, optionId: string) {
+    setParams((prev) => {
+      const next = new URLSearchParams(prev)
+      const current = tokens(next, groupId)
+      const updated = current.includes(optionId)
+        ? current.filter((id) => id !== optionId)
+        : [...current, optionId]
+      if (updated.length === 0) next.delete(groupId)
+      else next.set(groupId, updated.join(','))
+      return next
+    })
+  }
 
   return (
     <>
       <TopBar />
       <main className="max-w-full min-w-0 overflow-x-clip">
         <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-8">
-          {cards.length === 0 ? (
-            <p className="m-0 text-[var(--ink-primary)]">{EMPTY_VITRINE_MESSAGE}</p>
-          ) : (
+          <div role="group" aria-label="Seção" className="mb-6 flex flex-wrap gap-2">
+            {SECTIONS.map((section) => (
+              <button
+                key={section.id}
+                type="button"
+                aria-pressed={section.id === resolved}
+                className="rounded-full border border-[rgba(0,0,0,0.12)] px-3 py-1.5 text-sm text-[var(--ink-primary)] aria-pressed:bg-[var(--ink)] aria-pressed:text-[var(--canvas-parchment)]"
+                onClick={() => selectSection(section.id)}
+              >
+                {section.label}
+              </button>
+            ))}
+          </div>
+          {groups.length > 0 ? (
+            <div className="mb-6 flex flex-col gap-4">
+              {groups.map((group) => (
+                <fieldset key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
+                  <legend className="text-sm font-medium text-[var(--ink-primary)]">{group.label}</legend>
+                  <div className="flex flex-wrap gap-3">
+                    {group.options.map((option) => (
+                      <label
+                        key={option.id}
+                        className="inline-flex items-center gap-2 text-sm text-[var(--ink-primary)]"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedInGroup(marks, group.id, option.id)}
+                          onChange={() => toggleMark(group.id, option.id)}
+                        />
+                        {option.label}
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ))}
+            </div>
+          ) : null}
+          {emptyText !== null ? (
+            <p className="m-0 text-[var(--ink-primary)]">{emptyText}</p>
+          ) : cards.length === 0 ? null : (
             <ul
               data-testid="catalog-grid"
               className="catalog-grid m-0 grid list-none grid-cols-1 items-stretch gap-4 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"

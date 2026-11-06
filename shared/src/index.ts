@@ -13,11 +13,14 @@ export {
   canVariantRepresentCard,
   shareMessage,
   homeCards,
+  activeSection,
+  filterGroups,
+  homeEmptyText,
   AVAILABILITY_LABEL,
   STATE_LABEL,
   AUDIENCE_LABEL,
 } from './catalog/listings.ts'
-export type { CatalogCard, FilterMarks } from './catalog/listings.ts'
+export type { CatalogCard, FilterGroup, FilterMarks, SectionId } from './catalog/listings.ts'
 export {
   truncateReais,
   formatBrl,

@@ -304,10 +304,10 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-31 | P1: Migração | Tasks | Done |
 | VAR-32 | P1: Migração | Tasks | Done |
 | VAR-33 | P1: Migração | Tasks | Done |
-| VAR-34 | P1: Home | Tasks | Done |
-| VAR-35 | P1: Home | Tasks | Done |
-| VAR-36 | P1: Home | Tasks | Done |
-| VAR-37 | P1: Home | Tasks | Done |
+| VAR-34 | P1: Home | Tasks | Done · T11 |
+| VAR-35 | P1: Home | Tasks | Done · T11 |
+| VAR-36 | P1: Home | Tasks | Done · T11 |
+| VAR-37 | P1: Home | Tasks | Done · T11 |
 | VAR-38 | P1: Home | Tasks | Done · T3, T9 |
 | VAR-39 | P1: Home | Tasks | Done |
 | VAR-40 | P1: Home | Tasks | Done |
@@ -317,24 +317,24 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-44 | P1: Home | Tasks | Done · T10 |
 | VAR-45 | P1: Home | Tasks | Done · T10 |
 | VAR-46 | P1: Home | Tasks | Done · T10 |
-| VAR-47 | P1: Home | Tasks | Done |
+| VAR-47 | P1: Home | Tasks | Done · T11 |
 | VAR-48 | P1: Home | Tasks | Done · T10 |
 | VAR-49 | P1: Home | Tasks | Done · T10 |
 | VAR-50 | P1: Home | Tasks | Done · T5, T10 |
-| VAR-51 | P1: Filtro | Tasks | Done |
-| VAR-52 | P1: Filtro | Tasks | Done |
-| VAR-53 | P1: Filtro | Tasks | Done |
-| VAR-54 | P1: Filtro | Tasks | Done |
-| VAR-55 | P1: Filtro | Tasks | Done |
-| VAR-56 | P1: Filtro | Tasks | Done |
-| VAR-57 | P1: Filtro | Tasks | Done |
-| VAR-58 | P1: Filtro | Tasks | Done |
-| VAR-59 | P1: Filtro | Tasks | Done |
-| VAR-60 | P1: Filtro | Tasks | Done |
-| VAR-61 | P1: Filtro | Tasks | Done |
-| VAR-62 | P1: Filtro | Tasks | Done |
-| VAR-63 | P1: Filtro | Tasks | Done |
-| VAR-64 | P1: Filtro | Tasks | Done |
+| VAR-51 | P1: Filtro | Tasks | Done · T11 |
+| VAR-52 | P1: Filtro | Tasks | Done · T11 |
+| VAR-53 | P1: Filtro | Tasks | Done · T11 |
+| VAR-54 | P1: Filtro | Tasks | Done · T11 |
+| VAR-55 | P1: Filtro | Tasks | Done · T11 |
+| VAR-56 | P1: Filtro | Tasks | Done · T11 |
+| VAR-57 | P1: Filtro | Tasks | Done · T11 |
+| VAR-58 | P1: Filtro | Tasks | Done · T11 |
+| VAR-59 | P1: Filtro | Tasks | Done · T11 |
+| VAR-60 | P1: Filtro | Tasks | Done · T11 |
+| VAR-61 | P1: Filtro | Tasks | Done · T11 |
+| VAR-62 | P1: Filtro | Tasks | Done · T11 |
+| VAR-63 | P1: Filtro | Tasks | Done · T11 |
+| VAR-64 | P1: Filtro | Tasks | Done · T11 |
 | VAR-65 | P1: Página | Tasks | Done |
 | VAR-66 | P1: Página | Tasks | Done |
 | VAR-67 | P1: Página | Tasks | Done |
