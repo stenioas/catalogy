@@ -260,14 +260,15 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] Foto nomeada em `images` e ausente em `img/` faz `validateCatalog` lançar
-- [ ] Foto em `img/` que nenhum anúncio cita não lança
-- [ ] Gate quick passa: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
+- [x] Foto nomeada em `images` e ausente em `img/` faz `validateCatalog` lançar
+- [x] Foto em `img/` que nenhum anúncio cita não lança
+- [x] Gate quick passa: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
 
 **Tests**: integration
 **Gate**: quick
 
 **Commit**: `fix(catalog): require cited images and allow extra source files`
+**Status**: done
 
 ### T7: Foto não citada fora do dist
 

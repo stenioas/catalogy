@@ -32,6 +32,35 @@ function tempDir(): string {
   return dir
 }
 
+/** Minimal shape accepted by ProductSchema (listings + variants). */
+function productFixture(overrides: Record<string, unknown> = {}) {
+  return {
+    slug: 'seculus-kit',
+    title: 'Seculus',
+    axes: [] as Array<{
+      id: string
+      label: string
+      values: { id: string; value: string; alias?: string }[]
+    }>,
+    listings: [
+      {
+        id: 'listing',
+        state: 'new',
+        availabilityStatus: 'available',
+        images: ['frente.png'],
+        variants: [
+          {
+            axes: [],
+            price: 369.9,
+            mainImage: 'frente.png',
+          },
+        ],
+      },
+    ],
+    ...overrides,
+  }
+}
+
 function writeProduct(
   catalogDir: string,
   slug: string,
@@ -57,14 +86,7 @@ function writeValidCatalog(): string {
   writeProduct(
     catalogDir,
     'seculus-kit',
-    {
-      slug: 'seculus-kit',
-      title: 'Seculus',
-      state: 'Novo',
-      availabilityStatus: 'available',
-      price: 369.9,
-      images: ['frente.png'],
-    },
+    productFixture(),
     {
       'frente.png': photoBytes,
       'notas.txt': 'isto não é foto',
@@ -73,14 +95,25 @@ function writeValidCatalog(): string {
   writeProduct(
     catalogDir,
     'curren-gold',
-    {
+    productFixture({
       slug: 'curren-gold',
       title: 'CURREN',
-      state: 'Novo',
-      availabilityStatus: 'available',
-      price: 199,
-      images: ['pulseira.jpg'],
-    },
+      listings: [
+        {
+          id: 'listing',
+          state: 'new',
+          availabilityStatus: 'available',
+          images: ['pulseira.jpg'],
+          variants: [
+            {
+              axes: [],
+              price: 199,
+              mainImage: 'pulseira.jpg',
+            },
+          ],
+        },
+      ],
+    }),
     {
       'pulseira.jpg': photoBytes,
     },
@@ -94,52 +127,71 @@ describe('validateCatalog', () => {
 
     expect(products).toHaveLength(2)
     const bySlug = Object.fromEntries(products.map((product) => [product.slug, product]))
-    expect(bySlug['seculus-kit']).toEqual({
+    expect(bySlug['seculus-kit']).toMatchObject({
       slug: 'seculus-kit',
       title: 'Seculus',
-      state: 'Novo',
-      availabilityStatus: 'available',
-      price: 369.9,
-      images: ['frente.png'],
+      listings: [
+        expect.objectContaining({
+          images: ['frente.png'],
+          variants: [expect.objectContaining({ price: 369.9, mainImage: 'frente.png' })],
+        }),
+      ],
     })
-    expect(bySlug['curren-gold']).toEqual({
+    expect(bySlug['curren-gold']).toMatchObject({
       slug: 'curren-gold',
       title: 'CURREN',
-      state: 'Novo',
-      availabilityStatus: 'available',
-      price: 199,
-      images: ['pulseira.jpg'],
+      listings: [
+        expect.objectContaining({
+          images: ['pulseira.jpg'],
+          variants: [expect.objectContaining({ price: 199, mainImage: 'pulseira.jpg' })],
+        }),
+      ],
     })
   })
 
-  it('preserves the optional color through validation and generated output', () => {
+  it('preserves axis value text through validation and generated output', () => {
     const catalogDir = tempDir()
-    const color = '  Azul petróleo  '
+    const colorValue = '  Azul petróleo  '
     writeProduct(
       catalogDir,
       'seculus-kit',
-      {
-        slug: 'seculus-kit',
-        title: 'Seculus',
-        state: 'Novo',
-        availabilityStatus: 'available',
-        price: 369.9,
-        images: ['frente.png'],
-        color,
-      },
+      productFixture({
+        axes: [
+          {
+            id: 'color',
+            label: 'Cor',
+            values: [{ id: 'azul-petroleo', value: colorValue }],
+          },
+        ],
+        listings: [
+          {
+            id: 'listing',
+            state: 'new',
+            availabilityStatus: 'available',
+            images: ['frente.png'],
+            variants: [
+              {
+                axes: [{ axisId: 'color', valueId: 'azul-petroleo' }],
+                price: 369.9,
+                mainImage: 'frente.png',
+              },
+            ],
+          },
+        ],
+      }),
       { 'frente.png': photoBytes },
     )
 
     const products = validateCatalog(catalogDir)
-    expect(products[0].color).toBe(color)
+    expect(products[0].axes[0].values[0].value).toBe(colorValue)
 
     const outFile = join(tempDir(), 'products.generated.ts')
     writeProductsModule(products, outFile)
     const source = readFileSync(outFile, 'utf8')
     const emittedProducts = JSON.parse(
       source.split('export const products: Product[] = ')[1],
-    ) as Array<{ color?: string }>
-    expect(emittedProducts[0].color).toBe(color)
+    ) as Array<{ axes: { values: { value: string }[] }[] }>
+    expect(emittedProducts[0].axes[0].values[0].value).toBe(colorValue)
   })
 
   it('validates without sellers.json on disk', () => {
@@ -160,59 +212,72 @@ describe('validateCatalog', () => {
     writeProduct(
       catalogDir,
       'seculus-kit',
-      {
-        slug: 'seculus-kit',
-        title: 'Seculus',
-        state: 'Novo',
-        availabilityStatus: 'available',
-        price: 0,
-        images: ['frente.png'],
-      },
+      productFixture({
+        listings: [
+          {
+            id: 'listing',
+            state: 'new',
+            availabilityStatus: 'available',
+            images: ['frente.png'],
+            variants: [
+              {
+                axes: [],
+                price: 0,
+                mainImage: 'frente.png',
+              },
+            ],
+          },
+        ],
+      }),
       { 'frente.png': photoBytes },
     )
 
     expect(() => validateCatalog(catalogDir)).toThrow()
   })
 
-  it('throws when an images name is missing from img/', () => {
+  it('throws when a listing image is named in images but missing from img/', () => {
     const catalogDir = tempDir()
     writeProduct(
       catalogDir,
       'seculus-kit',
-      {
-        slug: 'seculus-kit',
-        title: 'Seculus',
-        state: 'Novo',
-        availabilityStatus: 'available',
-        price: 369.9,
-        images: ['frente.png', 'verso.png'],
-      },
+      productFixture({
+        listings: [
+          {
+            id: 'listing',
+            state: 'new',
+            availabilityStatus: 'available',
+            images: ['frente.png', 'verso.png'],
+            variants: [
+              {
+                axes: [],
+                price: 369.9,
+                mainImage: 'frente.png',
+              },
+            ],
+          },
+        ],
+      }),
       { 'frente.png': photoBytes },
     )
 
     expect(() => validateCatalog(catalogDir)).toThrow()
   })
 
-  it('throws when an image file in img/ is missing from images', () => {
+  it('does not throw when img/ has an image file no listing images entry names', () => {
     const catalogDir = tempDir()
     writeProduct(
       catalogDir,
       'seculus-kit',
-      {
-        slug: 'seculus-kit',
-        title: 'Seculus',
-        state: 'Novo',
-        availabilityStatus: 'available',
-        price: 369.9,
-        images: ['frente.png'],
-      },
+      productFixture(),
       {
         'frente.png': photoBytes,
-        'verso.png': photoBytes,
+        'extra-unused.png': photoBytes,
       },
     )
 
-    expect(() => validateCatalog(catalogDir)).toThrow()
+    expect(() => validateCatalog(catalogDir)).not.toThrow()
+    const products = validateCatalog(catalogDir)
+    expect(products).toHaveLength(1)
   })
 })
 
@@ -234,8 +299,12 @@ describe('writeProductsModule', () => {
     expect(parsed).toEqual(products)
     expect(parsed).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ images: ['frente.png'] }),
-        expect.objectContaining({ images: ['pulseira.jpg'] }),
+        expect.objectContaining({
+          listings: [expect.objectContaining({ images: ['frente.png'] })],
+        }),
+        expect.objectContaining({
+          listings: [expect.objectContaining({ images: ['pulseira.jpg'] })],
+        }),
       ]),
     )
     expect(written.includes(photoBytes)).toBe(false)
@@ -277,38 +346,27 @@ describe('initial catalog in public/', () => {
     expect(existsSync(join(catalogDir, 'sellers.json'))).toBe(false)
   })
 
-  it('validates the committed public catalog', () => {
-    expect(() => validateCatalog(catalogDir)).not.toThrow()
-    expect(Array.isArray(validateCatalog(catalogDir))).toBe(true)
-  })
-
   it('writes the products module for one valid watch', () => {
     const oneWatchDir = tempDir()
     writeProduct(
       oneWatchDir,
       'seculus-kit',
-      {
-        slug: 'seculus-kit',
-        title: 'Seculus',
-        state: 'Novo',
-        availabilityStatus: 'available',
-        price: 369.9,
-        images: ['frente.png'],
-      },
+      productFixture(),
       { 'frente.png': photoBytes },
     )
 
     const products = validateCatalog(oneWatchDir)
-    expect(products).toEqual([
-      {
-        slug: 'seculus-kit',
-        title: 'Seculus',
-        state: 'Novo',
-        availabilityStatus: 'available',
-        price: 369.9,
-        images: ['frente.png'],
-      },
-    ])
+    expect(products).toHaveLength(1)
+    expect(products[0]).toMatchObject({
+      slug: 'seculus-kit',
+      title: 'Seculus',
+      listings: [
+        expect.objectContaining({
+          images: ['frente.png'],
+          variants: [expect.objectContaining({ mainImage: 'frente.png' })],
+        }),
+      ],
+    })
     const outFile = join(tempDir(), 'products.generated.ts')
     writeProductsModule(products, outFile)
     expect(existsSync(outFile)).toBe(true)

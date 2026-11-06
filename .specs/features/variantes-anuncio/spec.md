@@ -294,7 +294,7 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-21 | P1: Contrato | Tasks | Done |
 | VAR-22 | P1: Contrato | Tasks | Done |
 | VAR-23 | P1: Contrato | Tasks | Done |
-| VAR-24 | P1: Contrato | Tasks | In Tasks |
+| VAR-24 | P1: Contrato | Tasks | Done |
 | VAR-25 | P1: Contrato | Tasks | In Tasks |
 | VAR-26 | P1: Contrato | Tasks | Done |
 | VAR-27 | P1: Migração | Tasks | In Tasks |

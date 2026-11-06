@@ -16,12 +16,15 @@ function isImageFile(name: string): boolean {
   return imageExtensions.has(name.slice(dot + 1).toLowerCase())
 }
 
-function sameNameSet(left: string[], right: string[]): boolean {
-  const rightNames = new Set(right)
-  if (new Set(left).size !== rightNames.size) {
-    return false
+/** Union of every file name listed in `listings[].images` (for dist and validation). */
+export function citedImageNames(product: Product): string[] {
+  const names = new Set<string>()
+  for (const listing of product.listings) {
+    for (const name of listing.images) {
+      names.add(name)
+    }
   }
-  return left.every((name) => rightNames.has(name))
+  return [...names]
 }
 
 export function validateCatalog(catalogDir: string): Product[] {
@@ -44,13 +47,15 @@ export function validateCatalog(catalogDir: string): Product[] {
     }
 
     const imgDir = join(productDir, 'img')
-    const imageFiles = existsSync(imgDir)
-      ? readdirSync(imgDir).filter(isImageFile)
-      : []
-    if (!sameNameSet(parsed.data.images, imageFiles)) {
-      throw new Error(
-        `Image set for ${parsed.data.slug} does not match img/`,
-      )
+    const imageFilesOnDisk = existsSync(imgDir)
+      ? new Set(readdirSync(imgDir).filter(isImageFile))
+      : new Set<string>()
+    for (const name of citedImageNames(parsed.data)) {
+      if (!imageFilesOnDisk.has(name)) {
+        throw new Error(
+          `Missing cited image "${name}" under ${parsed.data.slug}/img/`,
+        )
+      }
     }
     products.push(parsed.data)
   }
