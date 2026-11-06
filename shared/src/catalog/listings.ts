@@ -500,6 +500,25 @@ function pageTitle(product: Product, variant: Variant): string {
   return parts.join(' ')
 }
 
+/**
+ * WhatsApp share sentence and absolute URL for a listing variant (VAR-74, VAR-80, VAR-81).
+ * Uses the same page title, state label and availability line as the listing page (VAR-50).
+ */
+export function shareMessage(
+  product: Product,
+  listing: Listing,
+  variant: Variant,
+  origin: string,
+): string {
+  const title = pageTitle(product, variant)
+  const stateLabel = STATE_LABEL[listing.state]
+  const availabilityLabel =
+    variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[listing.availabilityStatus]
+  const path = listingPath(product.slug, listing.id, valueIdsInAxisOrder(product, variant))
+  const base = origin.replace(/\/$/, '')
+  return `Olá, tenho interesse no ${title}. ${stateLabel}, ${availabilityLabel}. ${base}${path}`
+}
+
 function openListing(product: Product, listing: Listing, v: string | null): OpenListingView {
   const variant = resolveVariant(listing, v)
   const view: OpenListingView = {

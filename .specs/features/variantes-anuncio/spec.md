@@ -320,7 +320,7 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-47 | P1: Home | Tasks | Done |
 | VAR-48 | P1: Home | Tasks | Done |
 | VAR-49 | P1: Home | Tasks | Done |
-| VAR-50 | P1: Home | Tasks | In Tasks |
+| VAR-50 | P1: Home | Tasks | Done |
 | VAR-51 | P1: Filtro | Tasks | Done |
 | VAR-52 | P1: Filtro | Tasks | Done |
 | VAR-53 | P1: Filtro | Tasks | Done |
@@ -344,14 +344,14 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-71 | P1: Página | Tasks | Done |
 | VAR-72 | P1: Página | Tasks | Done |
 | VAR-73 | P1: Página | Tasks | Done |
-| VAR-74 | P1: Página | Tasks | In Tasks |
+| VAR-74 | P1: Página | Tasks | Done |
 | VAR-75 | P1: Página | Tasks | Done |
 | VAR-76 | P1: Página | Tasks | Done |
 | VAR-77 | P1: Página | Tasks | Done |
 | VAR-78 | P1: Página | Tasks | Done |
 | VAR-79 | P1: Página | Tasks | Done |
-| VAR-80 | P1: Página | Tasks | In Tasks |
-| VAR-81 | P1: Página | Tasks | In Tasks |
+| VAR-80 | P1: Página | Tasks | Done |
+| VAR-81 | P1: Página | Tasks | Done |
 | VAR-82 | P1: Página | Tasks | Done |
 | VAR-83 | P1: Página | Tasks | Done |
 | VAR-84 | P1: Página | Tasks | Done |

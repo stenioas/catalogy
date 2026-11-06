@@ -228,15 +228,16 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] `shareMessage` devolve `Olá, tenho interesse no {título}. {estado em português}, {disponibilidade mostrada}. {URL absoluta}`
-- [ ] O caminho é `/product/<slug>/<id>` e leva `?v=` só quando há eixo
-- [ ] Variante indisponível continua com a frase, usando Indisponível
-- [ ] Gate quick passa: `pnpm --filter @catalogo/shared test`
+- [x] `shareMessage` devolve `Olá, tenho interesse no {título}. {estado em português}, {disponibilidade mostrada}. {URL absoluta}`
+- [x] O caminho é `/product/<slug>/<id>` e leva `?v=` só quando há eixo
+- [x] Variante indisponível continua com a frase, usando Indisponível
+- [x] Gate quick passa: `pnpm --filter @catalogo/shared test`
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(shared): build the listing share message and path`
+**Status**: done
 
 ### Phase 2: Catálogo no disco
 

@@ -9,6 +9,7 @@ import {
   homeEmptyText,
   listingByPath,
   resolveVariant,
+  shareMessage,
   variantQueue,
   type FilterMarks,
   type ListingView,
@@ -1127,6 +1128,71 @@ describe('listingByPath', () => {
     const available = requireOpen(listingByPath([vistaProduct()], 'vista', 'vista', 'preto,m'))
     expect(available.availabilityLabel).toBe('Disponível')
     expect(available.stateLabel).toBe('Usado')
+  })
+})
+
+describe('shareMessage', () => {
+  const origin = 'https://loja.example'
+
+  it('builds the spec sentence with page title, Portuguese state and availability, and absolute URL with path /product/slug/id and v only when there are axes', () => {
+    const product = vistaProduct()
+    const listing = product.listings.find((item) => item.id === 'vista')!
+    const variant = listing.variants.find((item) => item.price === 20)!
+
+    expect(shareMessage(product, listing, variant, origin)).toBe(
+      'Olá, tenho interesse no Pulseira Black M. Usado, Disponível. https://loja.example/product/vista/vista?v=preto,m',
+    )
+  })
+
+  it('uses Indisponível in the sentence when the variant is orderable false', () => {
+    const product = productOf(
+      'encomenda',
+      'Encomenda',
+      [
+        listingOf('dead', {
+          state: 'new',
+          availabilityStatus: 'on_order',
+          images: [img],
+          variants: [
+            variantOf(55, {
+              orderable: false,
+              mainImage: img,
+              axes: [{ axisId: 'color', valueId: 'a' }],
+            }),
+          ],
+        }),
+      ],
+      {
+        axes: [
+          {
+            id: 'color',
+            label: 'Cor',
+            values: [{ id: 'a', value: 'A' }],
+          },
+        ],
+      },
+    )
+    const listing = product.listings[0]!
+    const variant = listing.variants[0]!
+
+    expect(shareMessage(product, listing, variant, `${origin}/`)).toBe(
+      'Olá, tenho interesse no Encomenda A. Novo, Indisponível. https://loja.example/product/encomenda/dead?v=a',
+    )
+  })
+
+  it('omits ?v= when the product has no axes', () => {
+    const product = productOf('liso', 'Liso', [
+      listingOf('listing', {
+        images: ['a.jpg'],
+        variants: [variantOf(9, { mainImage: 'a.jpg' })],
+      }),
+    ])
+    const listing = product.listings[0]!
+    const variant = listing.variants[0]!
+
+    expect(shareMessage(product, listing, variant, origin)).toBe(
+      'Olá, tenho interesse no Liso. Novo, Disponível. https://loja.example/product/liso/listing',
+    )
   })
 })
 
