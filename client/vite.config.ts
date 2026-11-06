@@ -1,36 +1,39 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { mkdirSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
 
-function syncCatalogFromJson(): void {
-  const productsDir = join(import.meta.dirname, 'public/catalog/products')
-  const products: unknown[] = []
-  if (existsSync(productsDir)) {
-    for (const entry of readdirSync(productsDir, { withFileTypes: true })) {
-      if (!entry.isDirectory()) {
-        continue
-      }
-      const jsonPath = join(productsDir, entry.name, 'product.json')
-      if (!existsSync(jsonPath)) {
-        continue
-      }
-      products.push(JSON.parse(readFileSync(jsonPath, 'utf8')) as unknown)
-    }
+function omitUncitedCatalogImagesPlugin(): Plugin {
+  let outDirAbs = ''
+  return {
+    name: 'omit-uncited-catalog-images',
+    apply: 'build',
+    configResolved(config) {
+      outDirAbs = resolve(config.root, config.build.outDir)
+    },
+    async closeBundle() {
+      const { omitUncitedImages, validateCatalog } = await import('./scripts/catalog.ts')
+      const catalogDir =
+        process.env.CATALOG_DIR ?? join(import.meta.dirname, 'public/catalog')
+      const products = validateCatalog(catalogDir)
+      omitUncitedImages(join(outDirAbs, 'catalog', 'products'), products)
+    },
   }
-  const outFile = join(import.meta.dirname, 'src/catalog/products.generated.ts')
-  mkdirSync(dirname(outFile), { recursive: true })
-  writeFileSync(
-    outFile,
-    `import type { Product } from '@catalogo/shared'\n\nexport const products: Product[] = ${JSON.stringify(products, null, 2)}\n`,
-  )
 }
 
 function catalogProductsPlugin(): Plugin {
   return {
     name: 'catalog-products',
-    configureServer(server) {
+    async configureServer(server) {
+      const { validateCatalog, writeProductsModule } = await import('./scripts/catalog.ts')
+      const syncCatalogFromJson = (): void => {
+        const catalogDir = join(import.meta.dirname, 'public/catalog')
+        const products = validateCatalog(catalogDir)
+        const outFile = join(import.meta.dirname, 'src/catalog/products.generated.ts')
+        mkdirSync(dirname(outFile), { recursive: true })
+        writeProductsModule(products, outFile)
+      }
       syncCatalogFromJson()
       const refresh = (file: string) => {
         if (file.endsWith('product.json') && file.includes(join('catalog', 'products'))) {
@@ -46,7 +49,12 @@ function catalogProductsPlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [catalogProductsPlugin(), react(), tailwindcss()],
+  plugins: [
+    catalogProductsPlugin(),
+    omitUncitedCatalogImagesPlugin(),
+    react(),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
       '@': new URL('./src', import.meta.url).pathname,

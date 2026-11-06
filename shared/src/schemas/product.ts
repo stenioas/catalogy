@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { truncateReais } from '../money'
+import { truncateReais } from '../money.ts'
 
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const imageExtensionPattern = /\.(jpe?g|png|webp|avif)$/i

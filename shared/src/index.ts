@@ -6,12 +6,12 @@ export {
   type Listing,
   type Variant,
   type Specification,
-} from './schemas/product'
+} from './schemas/product.ts'
 export {
   variantQueue,
   resolveVariant,
   canVariantRepresentCard,
-} from './catalog/listings'
+} from './catalog/listings.ts'
 export {
   truncateReais,
   formatBrl,
@@ -21,4 +21,4 @@ export {
   creditInstallmentLabel,
   discountPercent,
   compareTitles,
-} from './money'
+} from './money.ts'

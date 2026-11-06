@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import * as barrel from './index'
+import * as barrel from './index.ts'
 import {
   ProductSchema,
   formatBrl,
   truncateReais,
-} from './index'
+} from './index.ts'
 
 describe('@catalogo/shared barrel (CAT-07, CAT-09, CAT-95, SV-09)', () => {
   it('does not export SellerSchema (SV-09)', () => {

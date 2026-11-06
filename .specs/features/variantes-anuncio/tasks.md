@@ -289,14 +289,15 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] A pasta fonte conserva a foto não citada
-- [ ] O `dist` não a contém
-- [ ] Gate build passa: `pnpm build`
+- [x] A pasta fonte conserva a foto não citada
+- [x] O `dist` não a contém
+- [x] Gate build passa: `pnpm build`
 
 **Tests**: integration
 **Gate**: build
 
 **Commit**: `fix(client): omit uncited catalog images from the published build`
+**Status**: done
 
 ### T8: Migrar os product.json atuais
 

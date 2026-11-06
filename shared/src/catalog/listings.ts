@@ -1,5 +1,5 @@
-import { compareTitles } from '../money'
-import type { Listing, Product, Variant } from '../schemas/product'
+import { compareTitles } from '../money.ts'
+import type { Listing, Product, Variant } from '../schemas/product.ts'
 
 /**
  * Puts every variant with orderable: false at the end, preserving relative order

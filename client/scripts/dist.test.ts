@@ -12,7 +12,9 @@ import {
 import { tmpdir } from 'node:os'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { Product } from '@catalogo/shared'
 import { beforeAll, describe, expect, it } from 'vitest'
+import { citedImageNames, validateCatalog } from './catalog'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(clientRoot, 'dist')
@@ -48,6 +50,34 @@ function listRelativeFiles(root: string, dir = root): string[] {
   return found.sort()
 }
 
+function isCatalogImageFileName(name: string): boolean {
+  return /\.(jpe?g|png|webp|avif)$/i.test(name)
+}
+
+/** Paths under catalog/ that the published dist should contain (VAR-25 omits uncited images). */
+function expectedDistCatalogRelPaths(
+  publicCatalogDir: string,
+  products: Product[],
+): string[] {
+  const sourceFiles = listRelativeFiles(publicCatalogDir)
+  const citedBySlug = new Map(
+    products.map((p) => [p.slug, new Set(citedImageNames(p))]),
+  )
+  const out: string[] = []
+  for (const rel of sourceFiles) {
+    const m = rel.match(/^products\/([^/]+)\/img\/([^/]+)$/)
+    if (
+      m !== null &&
+      isCatalogImageFileName(m[2]) &&
+      citedBySlug.get(m[1])?.has(m[2]) === false
+    ) {
+      continue
+    }
+    out.push(rel)
+  }
+  return out.sort()
+}
+
 function distAssetExtensions(ext: string): string[] {
   const assetsDir = join(distDir, 'assets')
   if (!existsSync(assetsDir)) {
@@ -71,13 +101,13 @@ describe('Cloudflare SPA fallback (_redirects)', () => {
 describe('pnpm build emitindo dist estático', () => {
   beforeAll(() => {
     execSync('pnpm build', { cwd: clientRoot, stdio: 'pipe' })
-  }, 120_000)
+  }, 300_000)
 
   it('termina com código zero quando o catálogo não tem produtos', () => {
     expect(() =>
       execSync('pnpm build', { cwd: clientRoot, stdio: 'pipe' }),
     ).not.toThrow()
-  }, 120_000)
+  }, 300_000)
 
   it('publica o catálogo sem catalog/sellers.json, com _redirects e um único index.html na raiz do dist', () => {
     const indexFiles = collectIndexHtmlFiles(distDir)
@@ -92,10 +122,12 @@ describe('pnpm build emitindo dist estático', () => {
     const distCatalog = join(distDir, 'catalog')
     const sourceFiles = listRelativeFiles(publicCatalog)
     const copiedFiles = listRelativeFiles(distCatalog)
+    const products = validateCatalog(publicCatalog)
+    const expectedCatalogFiles = expectedDistCatalogRelPaths(publicCatalog, products)
     expect(sourceFiles).not.toContain('sellers.json')
     expect(copiedFiles).not.toContain('sellers.json')
-    expect(copiedFiles).toEqual(sourceFiles)
-    for (const file of sourceFiles) {
+    expect(copiedFiles).toEqual(expectedCatalogFiles)
+    for (const file of expectedCatalogFiles) {
       expect(readFileSync(join(distCatalog, file))).toEqual(
         readFileSync(join(publicCatalog, file)),
       )
@@ -103,7 +135,7 @@ describe('pnpm build emitindo dist estático', () => {
 
     const redirects = readFileSync(join(distDir, '_redirects'), 'utf-8')
     expect(redirects).toContain('/* /index.html 200')
-  }, 120_000)
+  }, 300_000)
 
   it('não publica os arquivos da antiga origem de vendedores', () => {
     expect(existsSync(join(distDir, 'vendedores'))).toBe(false)

@@ -6,7 +6,7 @@ import {
   discountPercent,
   formatBrl,
   truncateReais,
-} from './money'
+} from './money.ts'
 
 describe('truncateReais (CAT-08, CAT-09)', () => {
   it('discards digits past the second decimal without rounding', () => {

@@ -3,8 +3,8 @@ import {
   ProductSchema,
   SPECIFICATION_LABELS,
   isProductListed,
-} from './product'
-import { SPECIFICATION_LABELS as exportedLabels } from '../index'
+} from './product.ts'
+import { SPECIFICATION_LABELS as exportedLabels } from '../index.ts'
 
 const canonicalLabelsInOrder = [
   'Marca',

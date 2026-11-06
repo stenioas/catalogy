@@ -1,4 +1,5 @@
 import {
+  copyFileSync,
   existsSync,
   mkdtempSync,
   mkdirSync,
@@ -10,7 +11,13 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
-import { validateCatalog, writeProductsModule } from './catalog'
+import { ProductSchema } from '@catalogo/shared'
+import {
+  normalizeProductJson,
+  omitUncitedImages,
+  validateCatalog,
+  writeProductsModule,
+} from './catalog'
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const tempDirs: string[] = []
@@ -278,6 +285,64 @@ describe('validateCatalog', () => {
     expect(() => validateCatalog(catalogDir)).not.toThrow()
     const products = validateCatalog(catalogDir)
     expect(products).toHaveLength(1)
+  })
+})
+
+describe('normalizeProductJson', () => {
+  it('reshapes flat legacy product.json into listings the schema accepts (VAR-25 bridge)', () => {
+    const legacy = {
+      slug: 'legacy-watch',
+      state: 'Novo',
+      title: 'Legacy',
+      price: 100,
+      images: ['a.png'],
+      availabilityStatus: 'available',
+      specifications: [
+        { label: 'Estado', value: 'Novo' },
+        { label: 'Marca', value: 'X' },
+      ],
+    }
+    const normalized = normalizeProductJson(legacy)
+    const parsed = ProductSchema.safeParse(normalized)
+    expect(parsed.success).toBe(true)
+    if (!parsed.success) {
+      return
+    }
+    expect(parsed.data.listings).toHaveLength(1)
+    expect(parsed.data.listings[0].images).toEqual(['a.png'])
+    expect(parsed.data.specifications?.some((s) => s.label === 'Estado')).toBe(false)
+  })
+})
+
+describe('omitUncitedImages', () => {
+  it('removes image files under dist img/ that no listing cites', () => {
+    const catalogDir = tempDir()
+    writeProduct(
+      catalogDir,
+      'seculus-kit',
+      productFixture(),
+      {
+        'frente.png': photoBytes,
+        'extra-uncited.png': photoBytes,
+      },
+    )
+    const products = validateCatalog(catalogDir)
+
+    const distCatalogProductsDir = tempDir()
+    const distImg = join(distCatalogProductsDir, 'seculus-kit', 'img')
+    mkdirSync(distImg, { recursive: true })
+    const srcImg = join(catalogDir, 'products', 'seculus-kit', 'img')
+    copyFileSync(join(srcImg, 'frente.png'), join(distImg, 'frente.png'))
+    copyFileSync(join(srcImg, 'extra-uncited.png'), join(distImg, 'extra-uncited.png'))
+
+    omitUncitedImages(distCatalogProductsDir, products)
+
+    expect(existsSync(join(distImg, 'frente.png'))).toBe(true)
+    expect(existsSync(join(distImg, 'extra-uncited.png'))).toBe(false)
+  })
+
+  it('does not throw when the dist catalog products directory is absent', () => {
+    expect(() => omitUncitedImages(join(tempDir(), 'no-catalog-here'), [])).not.toThrow()
   })
 })
 

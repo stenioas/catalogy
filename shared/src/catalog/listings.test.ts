@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { Listing, Product, Variant } from '../schemas/product'
+import type { Listing, Product, Variant } from '../schemas/product.ts'
 import {
   MISSING_LISTING_TEXT,
   activeSection,
@@ -13,7 +13,7 @@ import {
   variantQueue,
   type FilterMarks,
   type ListingView,
-} from './listings'
+} from './listings.ts'
 
 const img = 'watch.jpg'
 
