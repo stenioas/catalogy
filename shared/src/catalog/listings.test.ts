@@ -1,14 +1,17 @@
 import { describe, expect, it } from 'vitest'
 import type { Listing, Product, Variant } from '../schemas/product'
 import {
+  MISSING_LISTING_TEXT,
   activeSection,
   canVariantRepresentCard,
   filterGroups,
   homeCards,
   homeEmptyText,
+  listingByPath,
   resolveVariant,
   variantQueue,
   type FilterMarks,
+  type ListingView,
 } from './listings'
 
 const img = 'watch.jpg'
@@ -857,3 +860,340 @@ describe('filterGroups', () => {
     ])
   })
 })
+
+function requireOpen(view: ListingView) {
+  expect(view.missing).toBe(false)
+  if (view.missing) {
+    throw new Error('expected an open listing')
+  }
+  return view
+}
+
+describe('listingByPath', () => {
+  it('opens the first listing that would enter the home, by section then listings order', () => {
+    const product = productOf('fila', 'Fila', [
+      listingOf('breve', { availabilityStatus: 'coming_soon', variants: [variantOf(1)] }),
+      listingOf('segundo', { variants: [variantOf(2)] }),
+      listingOf('primeiro', { variants: [variantOf(3)] }),
+    ])
+
+    expect(requireOpen(listingByPath([product], 'fila', null, null)).listingId).toBe('segundo')
+  })
+
+  it('skips an on_order listing whose every variant is orderable false', () => {
+    const dead = listingOf('dead', {
+      availabilityStatus: 'on_order',
+      variants: [variantOf(1, { orderable: false })],
+    })
+    const live = listingOf('live', {
+      availabilityStatus: 'on_order',
+      variants: [variantOf(30), variantOf(4, { orderable: false })],
+    })
+    const stock = listingOf('stock', { variants: [variantOf(5)] })
+
+    expect(
+      requireOpen(listingByPath([productOf('pula', 'Pula', [dead, live])], 'pula', null, null))
+        .listingId,
+    ).toBe('live')
+    expect(
+      requireOpen(
+        listingByPath([productOf('misto', 'Misto', [dead, stock])], 'misto', null, null),
+      ).listingId,
+    ).toBe('stock')
+    expect(
+      listingByPath(
+        [productOf('so-morto', 'Morto', [dead])],
+        'so-morto',
+        null,
+        null,
+      ),
+    ).toEqual({ missing: true })
+  })
+
+  it('opens a direct id even outside the home, and returns missing when the listing cannot be shown', () => {
+    const dead = listingOf('dead', {
+      availabilityStatus: 'on_order',
+      variants: [variantOf(1, { orderable: false })],
+    })
+    const stock = listingOf('stock', { variants: [variantOf(5)] })
+    const hidden = listingOf('hidden', { enabled: false, variants: [variantOf(9)] })
+    const product = productOf('relogio', 'Relógio', [stock, dead, hidden])
+    const allHidden = productOf('oculto', 'Oculto', [
+      listingOf('a', { enabled: false }),
+      listingOf('b', { enabled: false }),
+    ])
+
+    expect(requireOpen(listingByPath([product], 'relogio', 'dead', null)).listingId).toBe('dead')
+    expect(requireOpen(listingByPath([product], 'relogio', null, null)).listingId).toBe('stock')
+    expect(listingByPath([product], 'relogio', 'hidden', null)).toEqual({ missing: true })
+    expect(listingByPath([product], 'relogio', 'ausente', null)).toEqual({ missing: true })
+    expect(listingByPath([product], 'nao-existe', null, null)).toEqual({ missing: true })
+    expect(listingByPath([product], 'nao-existe', 'stock', null)).toEqual({ missing: true })
+    expect(listingByPath([allHidden], 'oculto', null, null)).toEqual({ missing: true })
+    expect(listingByPath([allHidden], 'oculto', 'a', null)).toEqual({ missing: true })
+    expect(MISSING_LISTING_TEXT).toBe('Este relógio não está no catálogo.')
+  })
+
+  it('builds the title from alias or value and shows each selector value, with impossible options disabled', () => {
+    const product = vistaProduct()
+    const view = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m'))
+
+    expect(view.title).toBe('Pulseira Black M')
+    expect(requireOpen(listingByPath([product], 'vista', 'vista', 'azul,p')).title).toBe(
+      'Pulseira Azul P',
+    )
+
+    const plain = productOf('liso', 'Liso', [
+      listingOf('listing', {
+        images: ['a.jpg', 'b.jpg'],
+        variants: [variantOf(9, { mainImage: 'b.jpg' })],
+      }),
+    ])
+    const plainView = requireOpen(listingByPath([plain], 'liso', null, null))
+    expect(plainView.title).toBe('Liso')
+    expect(plainView.selectors).toEqual([])
+
+    const color = view.selectors.find((selector) => selector.axisId === 'color')
+    const size = view.selectors.find((selector) => selector.axisId === 'size')
+    expect(view.selectors.map((selector) => selector.label)).toEqual(['Cor', 'Tamanho'])
+    expect(color?.options.map((option) => option.value)).toEqual(['Preto', 'Azul'])
+    expect(color?.options).toEqual([
+      { valueId: 'preto', value: 'Preto', disabled: false, v: 'preto,m' },
+      { valueId: 'azul', value: 'Azul', disabled: false, v: 'azul,p' },
+    ])
+    expect(size?.options).toEqual([
+      { valueId: 'p', value: 'P', disabled: true, v: null },
+      { valueId: 'm', value: 'M', disabled: false, v: 'preto,m' },
+    ])
+  })
+
+  it('lands on the first queue variant that contains the new axis value and starts the carousel at mainImage', () => {
+    const product = vistaProduct()
+    const current = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m'))
+    const azul = current.selectors
+      .find((selector) => selector.axisId === 'color')
+      ?.options.find((option) => option.valueId === 'azul')
+
+    expect(azul).toEqual({ valueId: 'azul', value: 'Azul', disabled: false, v: 'azul,p' })
+
+    const next = requireOpen(listingByPath([product], 'vista', 'vista', azul?.v ?? null))
+    expect(next.price).toBe(10)
+    expect(next.title).toBe('Pulseira Azul P')
+    expect(current.images).toEqual(['a.jpg', 'b.jpg', 'c.jpg'])
+    expect(current.images[current.imageIndex]).toBe('b.jpg')
+    expect(current.images.slice(current.imageIndex)).toEqual(['b.jpg', 'c.jpg'])
+    expect(next.images).toEqual(['a.jpg', 'b.jpg', 'c.jpg'])
+    expect(next.images[next.imageIndex]).toBe('a.jpg')
+    expect(next.images.slice(next.imageIndex)).toEqual(['a.jpg', 'b.jpg', 'c.jpg'])
+
+    const queued = productOf(
+      'fila-eixo',
+      'Fila',
+      [
+        listingOf('item', {
+          availabilityStatus: 'on_order',
+          images: [img],
+          variants: [
+            variantOf(99, {
+              orderable: false,
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'p' },
+              ],
+            }),
+            variantOf(20, {
+              axes: [
+                { axisId: 'color', valueId: 'preto' },
+                { axisId: 'size', valueId: 'm' },
+              ],
+            }),
+            variantOf(30, {
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'm' },
+              ],
+            }),
+          ],
+        }),
+      ],
+      {
+        axes: [
+          {
+            id: 'color',
+            label: 'Cor',
+            values: [
+              { id: 'preto', value: 'Preto' },
+              { id: 'azul', value: 'Azul' },
+            ],
+          },
+          {
+            id: 'size',
+            label: 'Tamanho',
+            values: [
+              { id: 'p', value: 'P' },
+              { id: 'm', value: 'M' },
+            ],
+          },
+        ],
+      },
+    )
+    const queuedView = requireOpen(listingByPath([queued], 'fila-eixo', 'item', 'preto,m'))
+    const queuedAzul = queuedView.selectors
+      .find((selector) => selector.axisId === 'color')
+      ?.options.find((option) => option.valueId === 'azul')
+    expect(queuedAzul?.v).toBe('azul,m')
+    expect(requireOpen(listingByPath([queued], 'fila-eixo', 'item', queuedAzul?.v ?? null)).price).toBe(
+      30,
+    )
+  })
+
+  it('keeps description and specification sheets while price, observations, and offer follow the variant', () => {
+    const product = vistaProduct()
+    const current = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m'))
+    const next = requireOpen(listingByPath([product], 'vista', 'vista', 'azul,p'))
+
+    expect([current.productSpecifications, current.listingSpecifications]).toEqual([
+      [{ label: 'Marca', value: 'Seiko' }],
+      [{ label: 'Modelo', value: 'Vista' }],
+    ])
+    expect(next.description).toBe(current.description)
+    expect(next.productSpecifications).toEqual(current.productSpecifications)
+    expect(next.listingSpecifications).toEqual(current.listingSpecifications)
+    expect(current.description).toBe('Texto fixo')
+    expect(current.price).toBe(20)
+    expect(current.listPrice).toBe(40)
+    expect(current.observations).toBe('Caixa')
+    expect(current.unmissableOffer).toBe(true)
+    expect(next.price).toBe(10)
+    expect(next.listPrice).toBeUndefined()
+    expect(next.observations).toBeUndefined()
+    expect(next.unmissableOffer).toBe(false)
+    expect(current.listingId).toBe('vista')
+  })
+
+  it('shows Indisponível for an non-orderable variant, keeps the state label, and keeps the price', () => {
+    const product = productOf(
+      'encomenda',
+      'Encomenda',
+      [
+        listingOf('dead', {
+          state: 'new',
+          availabilityStatus: 'on_order',
+          images: [img, 'b.jpg'],
+          variants: [
+            variantOf(55, {
+              orderable: false,
+              mainImage: 'b.jpg',
+              axes: [{ axisId: 'color', valueId: 'a' }],
+            }),
+            variantOf(70, {
+              orderable: false,
+              axes: [{ axisId: 'color', valueId: 'b' }],
+            }),
+          ],
+        }),
+      ],
+      {
+        axes: [
+          {
+            id: 'color',
+            label: 'Cor',
+            values: [
+              { id: 'a', value: 'A' },
+              { id: 'b', value: 'B' },
+            ],
+          },
+        ],
+      },
+    )
+
+    const view = requireOpen(listingByPath([product], 'encomenda', 'dead', 'b'))
+    expect(view.price).toBe(70)
+    expect(view.availabilityLabel).toBe('Indisponível')
+    expect(view.stateLabel).toBe('Novo')
+    expect(view.images[view.imageIndex]).toBe(img)
+
+    const states: [Listing['state'], string][] = [
+      ['new', 'Novo'],
+      ['openbox', 'Openbox'],
+      ['used', 'Usado'],
+      ['defective', 'Com defeito'],
+    ]
+    for (const [state, label] of states) {
+      const labeled = productOf('estado', 'Estado', [listingOf('item', { state })])
+      expect(requireOpen(listingByPath([labeled], 'estado', 'item', null)).stateLabel).toBe(label)
+    }
+
+    const available = requireOpen(listingByPath([vistaProduct()], 'vista', 'vista', 'preto,m'))
+    expect(available.availabilityLabel).toBe('Disponível')
+    expect(available.stateLabel).toBe('Usado')
+  })
+})
+
+function vistaProduct(): Product {
+  return {
+    ...productOf(
+      'vista',
+      'Pulseira',
+      [
+        listingOf('vista', {
+          state: 'used',
+          images: ['a.jpg', 'b.jpg', 'c.jpg'],
+          specifications: [{ label: 'Modelo', value: 'Vista' }],
+          variants: [
+            variantOf(10, {
+              mainImage: 'a.jpg',
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'p' },
+              ],
+            }),
+            variantOf(20, {
+              mainImage: 'b.jpg',
+              listPrice: 40,
+              unmissableOffer: true,
+              observations: 'Caixa',
+              axes: [
+                { axisId: 'color', valueId: 'preto' },
+                { axisId: 'size', valueId: 'm' },
+              ],
+            }),
+            variantOf(30, {
+              mainImage: 'c.jpg',
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'm' },
+              ],
+            }),
+          ],
+        }),
+        listingOf('outro', {
+          availabilityStatus: 'coming_soon',
+          specifications: [{ label: 'Modelo', value: 'Outro' }],
+        }),
+      ],
+      {
+        axes: [
+          {
+            id: 'color',
+            label: 'Cor',
+            values: [
+              { id: 'preto', value: 'Preto', alias: 'Black' },
+              { id: 'azul', value: 'Azul' },
+            ],
+          },
+          {
+            id: 'size',
+            label: 'Tamanho',
+            values: [
+              { id: 'p', value: 'P' },
+              { id: 'm', value: 'M' },
+            ],
+          },
+        ],
+      },
+    ),
+    description: 'Texto fixo',
+    specifications: [{ label: 'Marca', value: 'Seiko' }],
+  }
+}

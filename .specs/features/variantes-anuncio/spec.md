@@ -335,27 +335,27 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-62 | P1: Filtro | Tasks | Done |
 | VAR-63 | P1: Filtro | Tasks | Done |
 | VAR-64 | P1: Filtro | Tasks | Done |
-| VAR-65 | P1: Página | Tasks | In Tasks |
-| VAR-66 | P1: Página | Tasks | In Tasks |
-| VAR-67 | P1: Página | Tasks | In Tasks |
-| VAR-68 | P1: Página | Tasks | In Tasks |
+| VAR-65 | P1: Página | Tasks | Done |
+| VAR-66 | P1: Página | Tasks | Done |
+| VAR-67 | P1: Página | Tasks | Done |
+| VAR-68 | P1: Página | Tasks | Done |
 | VAR-69 | P1: Página | Tasks | Done |
 | VAR-70 | P1: Página | Tasks | Done |
 | VAR-71 | P1: Página | Tasks | Done |
 | VAR-72 | P1: Página | Tasks | Done |
-| VAR-73 | P1: Página | Tasks | In Tasks |
+| VAR-73 | P1: Página | Tasks | Done |
 | VAR-74 | P1: Página | Tasks | In Tasks |
-| VAR-75 | P1: Página | Tasks | In Tasks |
-| VAR-76 | P1: Página | Tasks | In Tasks |
-| VAR-77 | P1: Página | Tasks | In Tasks |
-| VAR-78 | P1: Página | Tasks | In Tasks |
-| VAR-79 | P1: Página | Tasks | In Tasks |
+| VAR-75 | P1: Página | Tasks | Done |
+| VAR-76 | P1: Página | Tasks | Done |
+| VAR-77 | P1: Página | Tasks | Done |
+| VAR-78 | P1: Página | Tasks | Done |
+| VAR-79 | P1: Página | Tasks | Done |
 | VAR-80 | P1: Página | Tasks | In Tasks |
 | VAR-81 | P1: Página | Tasks | In Tasks |
-| VAR-82 | P1: Página | Tasks | In Tasks |
-| VAR-83 | P1: Página | Tasks | In Tasks |
-| VAR-84 | P1: Página | Tasks | In Tasks |
-| VAR-85 | P1: Página | Tasks | In Tasks |
+| VAR-82 | P1: Página | Tasks | Done |
+| VAR-83 | P1: Página | Tasks | Done |
+| VAR-84 | P1: Página | Tasks | Done |
+| VAR-85 | P1: Página | Tasks | Done |
 | VAR-86 | P1: Largura | Tasks | In Tasks |
 | VAR-87 | P1: Largura | Tasks | In Tasks |
 | VAR-88 | P1: Largura | Tasks | In Tasks |

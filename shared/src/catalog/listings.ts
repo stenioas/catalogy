@@ -406,6 +406,143 @@ export function filterGroups(products: Product[], section: string | null): Filte
   return groups
 }
 
+export const MISSING_LISTING_TEXT = 'Este relógio não está no catálogo.'
+
+export type ListingSelectorOption = {
+  valueId: string
+  value: string
+  disabled: boolean
+  v: string | null
+}
+
+export type ListingSelector = {
+  axisId: string
+  label: string
+  options: ListingSelectorOption[]
+}
+
+export type OpenListingView = {
+  missing: false
+  listingId: string
+  title: string
+  stateLabel: string
+  availabilityLabel: string
+  price: number
+  listPrice?: number
+  observations?: string
+  unmissableOffer: boolean
+  description?: string
+  productSpecifications: NonNullable<Product['specifications']>
+  listingSpecifications: NonNullable<Listing['specifications']>
+  images: string[]
+  imageIndex: number
+  selectors: ListingSelector[]
+}
+
+export type ListingView = { missing: true } | OpenListingView
+
+function firstListingForSlug(product: Product): Listing | null {
+  for (const section of SECTION_IDS) {
+    const status = availabilityForSection(section)
+    for (const listing of product.listings) {
+      if (listing.availabilityStatus === status && canGenerateCard(listing)) return listing
+    }
+  }
+  return null
+}
+
+function variantQuery(product: Product, variant: Variant): string | null {
+  const ids = valueIdsInAxisOrder(product, variant)
+  if (ids.length === 0) return null
+  return ids.join(',')
+}
+
+function variantContains(variant: Variant, axisId: string, valueId: string): boolean {
+  return variant.axes.some((item) => item.axisId === axisId && item.valueId === valueId)
+}
+
+function compatibleWithOtherAxes(variant: Variant, active: Variant, axisId: string): boolean {
+  return active.axes.every((selection) => {
+    if (selection.axisId === axisId) return true
+    return variantContains(variant, selection.axisId, selection.valueId)
+  })
+}
+
+function selectorsFor(product: Product, listing: Listing, active: Variant): ListingSelector[] {
+  const queue = variantQueue(listing)
+  return product.axes.map((axis) => ({
+    axisId: axis.id,
+    label: axis.label,
+    options: axis.values.map((axisValue) => {
+      const possible = listing.variants.some(
+        (variant) =>
+          variantContains(variant, axis.id, axisValue.id) &&
+          compatibleWithOtherAxes(variant, active, axis.id),
+      )
+      const landing = queue.find((variant) => variantContains(variant, axis.id, axisValue.id))
+      return {
+        valueId: axisValue.id,
+        value: axisValue.value,
+        disabled: !possible,
+        v: possible && landing !== undefined ? variantQuery(product, landing) : null,
+      }
+    }),
+  }))
+}
+
+function pageTitle(product: Product, variant: Variant): string {
+  const parts = [product.title]
+  for (const axis of product.axes) {
+    const selectedId = variant.axes.find((item) => item.axisId === axis.id)?.valueId
+    const axisValue = axis.values.find((item) => item.id === selectedId)
+    if (axisValue !== undefined) parts.push(axisValue.alias ?? axisValue.value)
+  }
+  return parts.join(' ')
+}
+
+function openListing(product: Product, listing: Listing, v: string | null): OpenListingView {
+  const variant = resolveVariant(listing, v)
+  const view: OpenListingView = {
+    missing: false,
+    listingId: listing.id,
+    title: pageTitle(product, variant),
+    stateLabel: STATE_LABEL[listing.state],
+    availabilityLabel:
+      variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[listing.availabilityStatus],
+    price: variant.price,
+    unmissableOffer: variant.unmissableOffer === true,
+    productSpecifications: product.specifications ?? [],
+    listingSpecifications: listing.specifications ?? [],
+    images: listing.images,
+    imageIndex: listing.images.indexOf(variant.mainImage),
+    selectors: selectorsFor(product, listing, variant),
+  }
+  if (product.description !== undefined) view.description = product.description
+  if (variant.listPrice !== undefined) view.listPrice = variant.listPrice
+  if (variant.observations !== undefined) view.observations = variant.observations
+  return view
+}
+
+export function listingByPath(
+  products: Product[],
+  slug: string,
+  listingId: string | null,
+  v: string | null,
+): ListingView {
+  const product = products.find((item) => item.slug === slug)
+  if (product === undefined) return { missing: true }
+
+  if (listingId === null) {
+    const listing = firstListingForSlug(product)
+    if (listing === null) return { missing: true }
+    return openListing(product, listing, v)
+  }
+
+  const listing = product.listings.find((item) => item.id === listingId)
+  if (listing === undefined || listing.enabled === false) return { missing: true }
+  return openListing(product, listing, v)
+}
+
 export function homeEmptyText(
   products: Product[],
   section: string | null,

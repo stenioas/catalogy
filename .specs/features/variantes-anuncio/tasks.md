@@ -196,17 +196,18 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] `/product/<slug>` escolhe o primeiro anúncio que entraria na home e pula o Sob encomenda todo indisponível
-- [ ] Id direto abre o anúncio mesmo fora da home. Oculto, id inexistente ou produto todo oculto devolve ausente
-- [ ] Título usa alias ou valor. Seletor mostra `value`. Opção impossível fica desabilitada
-- [ ] Trocar um eixo cai na primeira da fila que contém o valor novo. A foto inicial é a `mainImage`
-- [ ] Descrição e fichas não dependem da variante. Preço, observação e oferta dependem
-- [ ] Gate quick passa: `pnpm --filter @catalogo/shared test`
+- [x] `/product/<slug>` escolhe o primeiro anúncio que entraria na home e pula o Sob encomenda todo indisponível
+- [x] Id direto abre o anúncio mesmo fora da home. Oculto, id inexistente ou produto todo oculto devolve ausente
+- [x] Título usa alias ou valor. Seletor mostra `value`. Opção impossível fica desabilitada
+- [x] Trocar um eixo cai na primeira da fila que contém o valor novo. A foto inicial é a `mainImage`
+- [x] Descrição e fichas não dependem da variante. Preço, observação e oferta dependem
+- [x] Gate quick passa: `pnpm --filter @catalogo/shared test`
 
 **Tests**: unit
 **Gate**: quick
 
 **Commit**: `feat(shared): resolve one listing page from the product path`
+**Status**: done
 
 ### T5: Frase do WhatsApp e caminho
 
