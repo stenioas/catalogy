@@ -597,14 +597,15 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] A skill valida com `ProductSchema`, grava anúncio e não funde anúncios
-- [ ] `cadastrar-relogio` não permanece como skill de gravação do catálogo
-- [ ] Nenhuma suíte Vitest executa a skill
+- [x] A skill valida com `ProductSchema`, grava anúncio e não funde anúncios
+- [x] `cadastrar-relogio` não permanece como skill de gravação do catálogo
+- [x] Nenhuma suíte Vitest executa a skill
 
 **Tests**: none
 **Gate**: quick
 
 **Commit**: `feat(skill): register listings with product-register`
+**Status**: done
 
 ### T18: Insumos do product-scrapper
 

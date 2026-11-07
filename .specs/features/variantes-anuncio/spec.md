@@ -367,9 +367,9 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-94 | P1: Largura | Tasks | Done · T15 |
 | VAR-95 | P1: Largura | Tasks | Done · T15 |
 | VAR-96 | P1: Largura | Tasks | Done · T13 |
-| VAR-97 | P1: Cadastro | Tasks | In Tasks |
-| VAR-98 | P1: Cadastro | Tasks | In Tasks |
-| VAR-99 | P1: Cadastro | Tasks | In Tasks |
+| VAR-97 | P1: Cadastro | Tasks | Done · T17 |
+| VAR-98 | P1: Cadastro | Tasks | Done · T17 |
+| VAR-99 | P1: Cadastro | Tasks | Done · T17 |
 | VAR-100 | P1: Cadastro | Tasks | In Tasks |
 | VAR-101 | P1: Cadastro | Tasks | In Tasks |
 | VAR-102 | P1: Contrato | Tasks | Done · T1, T9 |
