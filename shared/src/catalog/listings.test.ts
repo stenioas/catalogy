@@ -774,6 +774,49 @@ describe('filterGroups', () => {
     ])
   })
 
+  it('lets every variant of a Chega em breve listing contribute options, including orderable false', () => {
+    const products = [
+      productOf(
+        'breve',
+        'Breve',
+        [
+          listingOf('breve', {
+            availabilityStatus: 'coming_soon',
+            variants: [
+              variantOf(10, { axes: [{ axisId: 'cor', valueId: 'preto' }] }),
+              variantOf(20, {
+                orderable: false,
+                axes: [{ axisId: 'cor', valueId: 'verde' }],
+              }),
+            ],
+          }),
+        ],
+        {
+          axes: [
+            {
+              id: 'cor',
+              label: 'Cor',
+              values: [
+                { id: 'preto', value: 'Preto' },
+                { id: 'verde', value: 'Verde' },
+              ],
+            },
+          ],
+        },
+      ),
+    ]
+    expect(filterGroups(products, 'coming-soon')).toEqual([
+      {
+        id: 'cor',
+        label: 'Cor',
+        options: [
+          { id: 'preto', label: 'Preto' },
+          { id: 'verde', label: 'Verde' },
+        ],
+      },
+    ])
+  })
+
   it('takes Sob encomenda options only from variants that can represent a card', () => {
     const products = [
       productOf(

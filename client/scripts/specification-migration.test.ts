@@ -189,7 +189,26 @@ describe('catalog specification migration', () => {
       .filter((entry) => entry.isDirectory())
       .map((entry) => entry.name)
 
-    expect(slugs.length).toBeGreaterThan(0)
+    expect(slugs.sort()).toEqual([
+      'addiesdive-ad2554',
+      'addiesdive-my-h3-2qz-black',
+      'addiesdive-my-h3-2qz-green-black',
+      'aimimo-design-air-king-verde',
+      'aimimo-design-tsuyosa',
+      'benyar-5229',
+      'curren-8106',
+      'curren-8361',
+      'curren-8455',
+      'curren-8498l-black',
+      'curren-9007',
+      'curren-9096',
+      'keaso-k002',
+      'pagani-design-pd-1701',
+      'sapphero-so2205',
+      'seculus-kit-cantil',
+      'skmei-1628',
+      'skmei-2126',
+    ])
     for (const slug of slugs) {
       const parsed = ProductSchema.safeParse(
         JSON.parse(

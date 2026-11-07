@@ -339,6 +339,7 @@ describe('omitUncitedImages', () => {
 
     expect(existsSync(join(distImg, 'frente.png'))).toBe(true)
     expect(existsSync(join(distImg, 'extra-uncited.png'))).toBe(false)
+    expect(existsSync(join(srcImg, 'extra-uncited.png'))).toBe(true)
   })
 
   it('does not throw when the dist catalog products directory is absent', () => {

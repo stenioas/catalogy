@@ -182,6 +182,51 @@ describe('pnpm build emitindo dist estático', () => {
     expect(output).toMatch(/failed the shared contract/)
   }, 120_000)
 
+  it('sai com erro quando images cita um arquivo ausente em img/ (VAR-24)', () => {
+    const catalogDir = mkdtempSync(join(tmpdir(), 'catalog-missing-image-'))
+    const productDir = join(catalogDir, 'products', 'seculus-kit')
+    mkdirSync(join(productDir, 'img'), { recursive: true })
+    writeFileSync(
+      join(productDir, 'product.json'),
+      JSON.stringify({
+        slug: 'seculus-kit',
+        title: 'Seculus',
+        axes: [],
+        listings: [
+          {
+            id: 'listing',
+            state: 'new',
+            availabilityStatus: 'available',
+            images: ['frente.png', 'verso.png'],
+            variants: [
+              {
+                axes: [],
+                price: 369.9,
+                mainImage: 'frente.png',
+              },
+            ],
+          },
+        ],
+      }),
+    )
+    writeFileSync(join(productDir, 'img', 'frente.png'), 'not-a-real-png')
+    let status = 0
+    try {
+      execSync('pnpm build', {
+        cwd: clientRoot,
+        env: { ...process.env, CATALOG_DIR: catalogDir },
+        encoding: 'utf-8',
+        stdio: 'pipe',
+      })
+    } catch (error) {
+      const failed = error as { status?: number | null }
+      status = failed.status ?? 1
+    } finally {
+      rmSync(catalogDir, { recursive: true, force: true })
+    }
+    expect(status).not.toBe(0)
+  }, 120_000)
+
   it('empacota o texto Enviar no WhatsApp no dist (CAT-30, SV-17)', () => {
     const files = listRelativeFiles(distDir).filter((file) =>
       /\.(js|html)$/.test(file),

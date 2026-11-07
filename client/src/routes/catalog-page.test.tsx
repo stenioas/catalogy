@@ -794,4 +794,42 @@ describe('CatalogPage section and filter', () => {
     expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Fora' })).toBeNull()
   })
+
+  it('offers the orderable false variant in Chega em breve', () => {
+    mockProductsRef.current = [
+      catalogProduct({
+        slug: 'breve',
+        title: 'Breve',
+        axes: [
+          {
+            id: 'cor',
+            label: 'Cor',
+            values: [
+              { id: 'preto', value: 'Preto' },
+              { id: 'verde', value: 'Verde' },
+            ],
+          },
+        ],
+        listings: [
+          listing('breve', {
+            availabilityStatus: 'coming_soon',
+            variants: [
+              variant({ axes: [{ axisId: 'cor', valueId: 'preto' }] }),
+              variant({
+                orderable: false,
+                price: 20,
+                axes: [{ axisId: 'cor', valueId: 'verde' }],
+              }),
+            ],
+          }),
+        ],
+      }),
+    ]
+    renderHome('/?section=coming-soon')
+    expect(
+      within(screen.getByRole('group', { name: 'Cor' }))
+        .getAllByRole('checkbox')
+        .map((node) => node.parentElement?.textContent?.trim()),
+    ).toEqual(['Preto', 'Verde'])
+  })
 })
