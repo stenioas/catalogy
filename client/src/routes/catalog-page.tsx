@@ -51,8 +51,8 @@ export function CatalogPage() {
     <>
       <TopBar />
       <main className="max-w-full min-w-0 overflow-x-clip">
-        <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine pb-4">
-          <div className="mb-2">
+        <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-2 md:py-4">
+          <div className="mb-2 md:mb-6">
             <Tabs
               data-testid="section-toggle"
               className="items-center"
@@ -64,14 +64,14 @@ export function CatalogPage() {
               <TabsList
                 variant="line"
                 aria-label="Seção"
-                className="h-8 w-fit gap-3 p-0 text-xs group-data-horizontal/tabs:h-8"
+                className="h-8 w-fit gap-3 p-0 text-[13px] group-data-horizontal/tabs:h-8 md:text-sm"
               >
                 {SECTIONS.map((section) => (
                   <TabsTrigger
                     key={section.id}
                     value={section.id}
                     disabled={!sectionHasCards(products, section.id)}
-                    className="w-auto flex-none px-0 text-xs data-active:text-primary data-active:after:bg-primary dark:data-active:text-primary"
+                    className="w-auto flex-none px-0 text-[13px] data-active:text-primary data-active:after:bg-primary md:text-sm dark:data-active:text-primary"
                   >
                     {section.label}
                   </TabsTrigger>
