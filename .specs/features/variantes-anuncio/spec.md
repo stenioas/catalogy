@@ -370,8 +370,8 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-97 | P1: Cadastro | Tasks | Done · T17 |
 | VAR-98 | P1: Cadastro | Tasks | Done · T17 |
 | VAR-99 | P1: Cadastro | Tasks | Done · T17 |
-| VAR-100 | P1: Cadastro | Tasks | In Tasks |
-| VAR-101 | P1: Cadastro | Tasks | In Tasks |
+| VAR-100 | P1: Cadastro | Tasks | Done · T18 |
+| VAR-101 | P1: Cadastro | Tasks | Done · T18 |
 | VAR-102 | P1: Contrato | Tasks | Done · T1, T9 |
 
 **Coverage:** 102 total, 102 mapped to tasks, 0 unmapped. O mapa está em `tasks.md`.

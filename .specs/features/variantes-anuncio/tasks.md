@@ -626,14 +626,16 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] A skill descreve insumos no formato de produto, anúncio e variante
-- [ ] A skill não escreve `product.json` e não funde anúncios
-- [ ] Nenhuma suíte Vitest executa a skill
+- [x] A skill descreve insumos no formato de produto, anúncio e variante
+- [x] A skill não escreve `product.json` e não funde anúncios
+- [x] Nenhuma suíte Vitest executa a skill
 
 **Tests**: none
 **Gate**: quick
 
 **Commit**: `docs(skill): prepare listing inputs without writing product.json`
+
+**Status**: done
 
 ---
 
