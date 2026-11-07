@@ -398,6 +398,21 @@ function groupNames(): string[] {
   })
 }
 
+const RESULTS_ENTER_CLASSES = [
+  'motion-safe:animate-in',
+  'motion-safe:fade-in',
+  'motion-safe:slide-in-from-bottom-2',
+  'motion-safe:duration-200',
+]
+
+function expectResultsEnter() {
+  const results = screen.getByTestId('catalog-results')
+  for (const className of RESULTS_ENTER_CLASSES) {
+    expect(results.classList.contains(className)).toBe(true)
+  }
+  expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
+}
+
 describe('CatalogPage section and filter', () => {
   afterEach(() => {
     cleanup()
@@ -515,6 +530,7 @@ describe('CatalogPage section and filter', () => {
     expect(params.get('cor')).toBe('azul')
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Agora' })).toBeNull()
+    expectResultsEnter()
   })
 
   it('returns from a listing with the same home query', async () => {
@@ -672,6 +688,7 @@ describe('CatalogPage section and filter', () => {
     expect(searchParamsOf(router.state.location.search).get('audience')).toBe('male')
     expect(searchParamsOf(router.state.location.search).has('section')).toBe(false)
     expect(screen.getAllByRole('heading', { level: 2 }).map((node) => node.textContent)).toEqual(['B'])
+    expectResultsEnter()
   })
 
   it('writes the section token for the chosen label and keeps the card status text', () => {

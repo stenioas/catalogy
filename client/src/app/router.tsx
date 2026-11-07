@@ -1,10 +1,11 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect } from 'react'
 import {
   createBrowserRouter,
+  Outlet,
   useLocation,
+  useNavigation,
   useNavigationType,
   useParams,
-  useRoutes,
   type NavigationType,
   type RouteObject,
 } from 'react-router-dom'
@@ -47,27 +48,21 @@ function ScrollToTop({ pathname, navigationType }: { pathname: string; navigatio
   return null
 }
 
+const routeEnterClass =
+  'motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200'
+
 export function AppShell() {
   const location = useLocation()
   const navigationType = useNavigationType()
-  const [displayed, setDisplayed] = useState({ location, navigationType })
-  const [initialReady, setInitialReady] = useState(!location.pathname.startsWith('/product/'))
-  const loading = !initialReady || location !== displayed.location
-  const page = useRoutes(appRoutes, displayed.location)
-
-  useEffect(() => {
-    if (!loading) return
-    const timer = window.setTimeout(() => {
-      setDisplayed({ location, navigationType })
-      setInitialReady(true)
-    }, 500)
-    return () => window.clearTimeout(timer)
-  }, [location, navigationType, loading])
+  const navigation = useNavigation()
+  const loading = navigation.state === 'loading'
 
   return (
     <div className="group/route">
-      <ScrollToTop pathname={displayed.location.pathname} navigationType={displayed.navigationType} />
-      <div aria-busy={loading}>{page}</div>
+      <ScrollToTop pathname={location.pathname} navigationType={navigationType} />
+      <div key={location.pathname} aria-busy={loading} data-testid="route-stage" className={routeEnterClass}>
+        <Outlet />
+      </div>
       {loading ? (
         <div
           data-testid="route-loading"

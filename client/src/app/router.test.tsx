@@ -80,9 +80,15 @@ afterEach(() => {
   vi.useRealTimers()
 })
 
-describe('loading ao navegar entre vitrine e produto', () => {
+const ROUTE_ENTER_CLASSES = [
+  'motion-safe:animate-in',
+  'motion-safe:fade-in',
+  'motion-safe:slide-in-from-bottom-2',
+  'motion-safe:duration-200',
+]
+
+describe('troca entre vitrine e produto', () => {
   function setup(path = '/') {
-    vi.useFakeTimers()
     vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0)
     vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
     const router = createMemoryRouter(
@@ -93,8 +99,37 @@ describe('loading ao navegar entre vitrine e produto', () => {
     return router
   }
 
-  async function advance(ms: number) {
-    await act(async () => { await vi.advanceTimersByTimeAsync(ms) })
+  function setupPendingLoader() {
+    vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0)
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+    let release: (value: null) => void = () => {}
+    const pending = new Promise<null>((resolve) => {
+      release = resolve
+    })
+    const router = createMemoryRouter(
+      [{
+        element: <AppShell />,
+        children: [
+          ...appRoutes,
+          {
+            path: '/lento',
+            loader: () => pending,
+            element: <div data-testid="slow-page" />,
+          },
+        ],
+      }],
+      { initialEntries: ['/'] },
+    )
+    renderWithTheme(<RouterProvider router={router} />)
+    return { router, release: () => release(null) }
+  }
+
+  function expectRouteEnter() {
+    const stage = screen.getByTestId('route-stage')
+    for (const className of ROUTE_ENTER_CLASSES) {
+      expect(stage.classList.contains(className)).toBe(true)
+    }
+    expect(screen.queryByTestId('route-loading')).toBeNull()
   }
 
   function expectLoading(currentPage: 'catalog' | 'watch' = 'catalog') {
@@ -113,77 +148,83 @@ describe('loading ao navegar entre vitrine e produto', () => {
     expect(screen.queryByTestId(`${currentPage === 'catalog' ? 'watch' : 'catalog'}-page-column`)).toBeNull()
   }
 
-  it('exibe o spinner por 500ms ao abrir o produto e ao voltar pelo botão', async () => {
+  it('troca o card e a volta na hora, com animação e sem loading', () => {
     setup()
+    expectRouteEnter()
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
     const card = screen.getAllByTestId('watch-card-link')[0]
     const title = card.querySelector('h2')!.textContent!
     fireEvent.click(card)
-    expectLoading()
-    expect(window.scrollTo).not.toHaveBeenCalled()
-    await advance(499)
-    expectLoading()
-    expect(window.scrollTo).not.toHaveBeenCalled()
-    await advance(1)
     expect(screen.getByRole('heading', { name: title })).toBeDefined()
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0)
     expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
+    expectRouteEnter()
 
     fireEvent.click(screen.getByRole('link', { name: 'Voltar' }))
-    expectLoading('watch')
-    await advance(499)
-    expectLoading('watch')
-    await advance(1)
-    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
-  })
-
-  it('mantém o mínimo de 500ms também no voltar e avançar do navegador', async () => {
-    const router = setup()
-    await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
-    await advance(500)
-    await act(async () => { await router.navigate(-1) })
-    expectLoading('watch')
-    await advance(499)
-    expectLoading('watch')
-    await advance(1)
-    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
-
-    await act(async () => { await router.navigate(1) })
-    expectLoading()
-    await advance(500)
-    expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
-  })
-
-  it('exibe o loading ao abrir diretamente a URL do produto', async () => {
-    setup(`/product/${watchSlug()}`)
-    expectLoading('watch')
-    await advance(499)
-    expectLoading('watch')
-    await advance(1)
-    expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
-  })
-
-  it('reinicia os 500ms mínimos quando o destino muda durante o loading', async () => {
-    const router = setup()
-    await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
-    await advance(250)
-    await act(async () => { await router.navigate('/') })
-    await advance(499)
-    expectLoading()
-    await advance(1)
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
     expect(screen.queryByTestId('watch-page-column')).toBeNull()
+    expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
+    expectRouteEnter()
   })
 
-  it('cobre a faixa superior quando a appbar está escondida e acompanha seu retorno', async () => {
+  it('troca seção e filtro na hora, sem loading artificial', () => {
     setup()
+    fireEvent.click(screen.getAllByRole('checkbox')[0])
+    expect(screen.getByTestId('catalog-results').classList.contains('motion-safe:animate-in')).toBe(true)
+    expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
+
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
+    const results = screen.getByTestId('catalog-results')
+    for (const className of ROUTE_ENTER_CLASSES) {
+      expect(results.classList.contains(className)).toBe(true)
+    }
+    expect(screen.queryByTestId('route-loading')).toBeNull()
+  })
+
+  it('troca na hora no voltar e avançar do navegador, sem loading', async () => {
+    const router = setup()
+    await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
+    expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
+    expect(screen.queryByTestId('route-loading')).toBeNull()
+
+    await act(async () => { await router.navigate(-1) })
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+    expect(screen.queryByTestId('route-loading')).toBeNull()
+
+    await act(async () => { await router.navigate(1) })
+    expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
+    expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
+    expectRouteEnter()
+  })
+
+  it('abre a URL do produto na hora, sem o loading artificial', () => {
+    setup(`/product/${watchSlug()}`)
+    expect(screen.getByRole('heading', { name: watchTitle() })).toBeDefined()
+    expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
+    expectRouteEnter()
+  })
+
+  it('mostra na hora o destino mais recente, sem segurar a tela anterior', async () => {
+    const router = setup()
+    await act(async () => { await router.navigate(`/product/${watchSlug()}`) })
+    await act(async () => { await router.navigate('/') })
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+    expect(screen.queryByTestId('watch-page-column')).toBeNull()
+    expect(screen.queryByTestId('route-loading')).toBeNull()
+  })
+
+  it('mantém o loading e cobre a faixa superior enquanto um loader real está pendente', async () => {
+    const { router, release } = setupPendingLoader()
     const scrollY = vi.spyOn(window, 'scrollY', 'get')
     scrollY.mockReturnValue(160)
     fireEvent.scroll(window)
     const bar = screen.getByTestId('top-bar')
     expect(bar.hasAttribute('inert')).toBe(true)
 
-    fireEvent.click(screen.getAllByTestId('watch-card-link')[0])
+    let pendingNavigation: Promise<unknown> = Promise.resolve()
+    await act(async () => {
+      pendingNavigation = router.navigate('/lento')
+    })
     expectLoading()
     const overlay = screen.getByTestId('route-loading')
     expect(overlay.closest('.group\\/route')?.contains(bar)).toBe(true)
@@ -194,11 +235,14 @@ describe('loading ao navegar entre vitrine e produto', () => {
     fireEvent.scroll(window)
     expect(bar.hasAttribute('inert')).toBe(false)
     expect(overlay.classList.contains('top-16')).toBe(true)
-    await advance(499)
     expect(screen.getByRole('status', { name: 'Carregando' })).toBeDefined()
-    await advance(1)
+
+    await act(async () => {
+      release()
+      await pendingNavigation
+    })
     expect(screen.queryByTestId('route-loading')).toBeNull()
-    expect(screen.getByTestId('watch-page-column')).toBeDefined()
+    expect(screen.getByTestId('slow-page')).toBeDefined()
   })
 })
 

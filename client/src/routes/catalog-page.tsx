@@ -20,6 +20,8 @@ const SECTIONS: { id: SectionId; label: string }[] = [
 ]
 
 const RESERVED_QUERY_KEYS = new Set(['section', 'state', 'audience', 'v', 'seller'])
+const resultsEnterClass =
+  'motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200'
 
 function isSectionId(value: string | null): value is SectionId {
   return value === 'available' || value === 'coming-soon' || value === 'on-order'
@@ -134,24 +136,30 @@ export function CatalogPage() {
                   ))}
                 </div>
               ) : null}
-              {emptyText !== null ? (
-                <p className="m-0 text-[var(--ink-primary)]">{emptyText}</p>
-              ) : cards.length === 0 ? null : (
-                <ul
-                  data-testid="catalog-grid"
-                  className="catalog-grid m-0 grid list-none grid-cols-1 items-stretch gap-4 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
-                >
-                  {cards.map((card) => {
-                    const product = products.find((item) => item.slug === card.slug)
-                    if (product === undefined) return null
-                    return (
-                      <li key={`${card.slug}-${card.listingId}`} className="flex h-full">
-                        <WatchCard product={product} card={card} />
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
+              <div
+                key={`${resolved}|${params.toString()}`}
+                data-testid="catalog-results"
+                className={resultsEnterClass}
+              >
+                {emptyText !== null ? (
+                  <p className="m-0 text-[var(--ink-primary)]">{emptyText}</p>
+                ) : cards.length === 0 ? null : (
+                  <ul
+                    data-testid="catalog-grid"
+                    className="catalog-grid m-0 grid list-none grid-cols-1 items-stretch gap-4 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+                  >
+                    {cards.map((card) => {
+                      const product = products.find((item) => item.slug === card.slug)
+                      if (product === undefined) return null
+                      return (
+                        <li key={`${card.slug}-${card.listingId}`} className="flex h-full">
+                          <WatchCard product={product} card={card} />
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+              </div>
             </TabsContent>
           </Tabs>
         </div>
