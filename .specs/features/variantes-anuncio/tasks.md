@@ -565,15 +565,16 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] As duas rotas renderizam `WatchPage`
-- [ ] Slug ausente, id ausente e anúncio oculto mostram a frase de ausente
-- [ ] Gate full passa: `pnpm test`
-- [ ] Gate build passa: `pnpm build`
+- [x] As duas rotas renderizam `WatchPage`
+- [x] Slug ausente, id ausente e anúncio oculto mostram a frase de ausente
+- [x] Gate full passa: `pnpm test`
+- [x] Gate build passa: `pnpm build`
 
 **Tests**: integration
 **Gate**: full
 
 **Commit**: `feat(client): route the product path to one listing`
+**Status**: done
 
 ### Phase 5: Cadastro
 

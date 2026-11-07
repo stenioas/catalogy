@@ -10,7 +10,7 @@ import { AppShell, appRoutes } from './router'
 
 const INCOMPLETE_LINK_MESSAGE =
   'Este link está incompleto ou o vendedor não existe.'
-const EMPTY_VITRINE_MESSAGE = 'A vitrine ainda não tem relógios.'
+const EMPTY_VITRINE_MESSAGE = 'Não temos nenhum anúncio ativo.'
 const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
 const SELLERS_URL = '/catalog/sellers.json'
 const TOP_BAR_TITLE = 'Catálogo de Produtos'
@@ -255,6 +255,36 @@ describe('rotas sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {
     const fetchMock = renderAt(`/product/${slug}`)
     expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
     expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
+    expect(didRequestSellers(fetchMock)).toBe(false)
+  })
+
+  it('associa /product/:slug/:listingId à rota com listingId e abre o anúncio (VAR-82, VAR-83)', async () => {
+    const slug = watchSlug()
+    const matches = matchRoutes(appRoutes, `/product/${slug}/listing`)
+    expect(matches).toHaveLength(1)
+    expect(matches![0].route.path).toBe('/product/:slug/:listingId')
+    expect(matches![0].params.slug).toBe(slug)
+    expect(matches![0].params.listingId).toBe('listing')
+
+    const fetchMock = renderAt(`/product/${slug}/listing`)
+    expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
+    expect(screen.getByTestId('watch-page-column')).toBeDefined()
+    expect(screen.queryByText(MISSING_WATCH_MESSAGE)).toBeNull()
+    expect(didRequestSellers(fetchMock)).toBe(false)
+  })
+
+  it('mostra a frase de ausente quando o id do anúncio não existe (VAR-85)', async () => {
+    const slug = watchSlug()
+    const fetchMock = renderAt(`/product/${slug}/id-inexistente`)
+    expect(await screen.findByText(MISSING_WATCH_MESSAGE)).toBeDefined()
+    expect(screen.queryByRole('link', { name: 'Compartilhar' })).toBeNull()
+    expect(didRequestSellers(fetchMock)).toBe(false)
+  })
+
+  it('mostra a frase de ausente quando o anúncio está oculto (VAR-85)', async () => {
+    const fetchMock = renderAt('/product/addiesdive-my-h3-2qz-green-black/listing')
+    expect(await screen.findByText(MISSING_WATCH_MESSAGE)).toBeDefined()
+    expect(screen.queryByRole('link', { name: 'Compartilhar' })).toBeNull()
     expect(didRequestSellers(fetchMock)).toBe(false)
   })
 

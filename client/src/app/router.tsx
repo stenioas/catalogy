@@ -18,10 +18,19 @@ function WatchRoute() {
   return <WatchPage slug={slug ?? ''} />
 }
 
+function WatchListingRoute() {
+  const { slug, listingId } = useParams()
+  return <WatchPage slug={slug ?? ''} listingId={listingId ?? ''} />
+}
+
 export const appRoutes: RouteObject[] = [
   {
     path: '/',
     element: <CatalogPage />,
+  },
+  {
+    path: '/product/:slug/:listingId',
+    element: <WatchListingRoute />,
   },
   {
     path: '/product/:slug',
