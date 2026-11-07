@@ -333,7 +333,6 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
 })
 
 const NO_ACTIVE_LISTING_TEXT = 'Não temos nenhum anúncio ativo.'
-const NO_FILTER_MATCH_TEXT = 'Nenhum anúncio corresponde aos filtros.'
 
 function variant(overrides: Partial<Variant> = {}): Variant {
   return {
@@ -391,13 +390,6 @@ function renderHome(entry: string) {
   return router
 }
 
-function groupNames(): string[] {
-  return screen.getAllByRole('group').map((node) => {
-    const legend = node.querySelector('legend')
-    return legend?.textContent ?? node.getAttribute('aria-label') ?? ''
-  })
-}
-
 const RESULTS_ENTER_CLASSES = [
   'motion-safe:animate-in',
   'motion-safe:fade-in',
@@ -413,7 +405,7 @@ function expectResultsEnter() {
   expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
 }
 
-describe('CatalogPage section and filter', () => {
+describe('CatalogPage sections', () => {
   afterEach(() => {
     cleanup()
     mockProductsRef.current = []
@@ -457,7 +449,6 @@ describe('CatalogPage section and filter', () => {
     expect(screen.getByRole('tab', { name: 'Sob encomenda', selected: true })).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Agora' })).toBeNull()
     expect(screen.queryByText(NO_ACTIVE_LISTING_TEXT)).toBeNull()
-    expect(screen.queryByText(NO_FILTER_MATCH_TEXT)).toBeNull()
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
   })
 
@@ -477,218 +468,13 @@ describe('CatalogPage section and filter', () => {
     expect(params.get('state')).toBe('used')
   })
 
-  it('shows the exact empty texts for no listing and for a filter that hides every card', () => {
+  it('shows the empty text when the catalog has no active listing', () => {
     mockProductsRef.current = []
     const empty = renderHome('/')
     expect(screen.getByRole('tab', { name: 'Disponível', selected: true })).toBeDefined()
     expect(screen.getByText(NO_ACTIVE_LISTING_TEXT)).toBeDefined()
     expect(screen.queryByTestId('catalog-grid')).toBeNull()
     expect(empty.state.location.search).toBe('')
-    cleanup()
-
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'novo',
-        title: 'Novo',
-        listings: [listing('novo', { state: 'new' })],
-      }),
-      catalogProduct({
-        slug: 'usado',
-        title: 'Usado',
-        listings: [listing('usado', { state: 'used' })],
-      }),
-    ]
-    const filtered = renderHome('/?state=openbox')
-    expect(screen.getByText(NO_FILTER_MATCH_TEXT)).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Novo' })).toBeNull()
-    expect(screen.queryByRole('heading', { name: 'Usado' })).toBeNull()
-    expect(screen.queryByRole('checkbox', { name: 'Openbox' })).toBeNull()
-    expect(searchParamsOf(filtered.state.location.search).get('state')).toBe('openbox')
-  })
-
-  it('keeps filter marks when the section changes', () => {
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'agora',
-        title: 'Agora',
-        audience: 'male',
-        listings: [listing('agora', { state: 'new' })],
-      }),
-      catalogProduct({
-        slug: 'breve',
-        title: 'Breve',
-        audience: 'male',
-        listings: [listing('breve', { availabilityStatus: 'coming_soon', state: 'new' })],
-      }),
-    ]
-    const router = renderHome('/?state=new&audience=male&cor=azul')
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
-    const params = searchParamsOf(router.state.location.search)
-    expect(params.get('section')).toBe('coming-soon')
-    expect(params.get('state')).toBe('new')
-    expect(params.get('audience')).toBe('male')
-    expect(params.get('cor')).toBe('azul')
-    expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Agora' })).toBeNull()
-    expectResultsEnter()
-  })
-
-  it('returns from a listing with the same home query', async () => {
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'usado',
-        title: 'Usado',
-        audience: 'male',
-        listings: [listing('usado', { state: 'used' })],
-      }),
-      catalogProduct({
-        slug: 'novo',
-        title: 'Novo',
-        audience: 'female',
-        listings: [listing('novo', { state: 'new' })],
-      }),
-    ]
-    const router = renderHome('/?state=used&audience=male')
-    const cardLink = screen.getAllByRole('link').find((node) =>
-      node.getAttribute('href')?.startsWith('/product/usado/usado'),
-    )
-    expect(cardLink).toBeDefined()
-    fireEvent.click(cardLink!)
-    expect(router.state.location.pathname).toBe('/product/usado/usado')
-    await router.navigate(-1)
-    const params = searchParamsOf(router.state.location.search)
-    expect(router.state.location.pathname).toBe('/')
-    expect(params.get('state')).toBe('used')
-    expect(params.get('audience')).toBe('male')
-    expect(params.has('section')).toBe(false)
-    expect(await screen.findByRole('heading', { name: 'Usado' })).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Novo' })).toBeNull()
-  })
-
-  it('renders Estado, Público-alvo, then axes, and hides a group with one option', () => {
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'alfa',
-        title: 'Alfa',
-        audience: 'unisex',
-        listings: [listing('alfa', { state: 'defective' })],
-      }),
-      catalogProduct({
-        slug: 'cores',
-        title: 'Delta',
-        audience: 'male',
-        axes: [
-          {
-            id: 'pulseira',
-            label: 'Pulseira',
-            values: [
-              { id: 'm', value: 'Médio' },
-              { id: 'g', value: 'Grande' },
-            ],
-          },
-          {
-            id: 'cor',
-            label: 'Cor',
-            values: [
-              { id: 'az', value: 'Azul' },
-              { id: 'am', value: 'Amarelo' },
-            ],
-          },
-        ],
-        listings: [
-          listing('cores', {
-            state: 'new',
-            variants: [
-              variant({
-                axes: [
-                  { axisId: 'pulseira', valueId: 'm' },
-                  { axisId: 'cor', valueId: 'az' },
-                ],
-              }),
-              variant({
-                price: 120,
-                axes: [
-                  { axisId: 'pulseira', valueId: 'g' },
-                  { axisId: 'cor', valueId: 'am' },
-                ],
-              }),
-            ],
-          }),
-        ],
-      }),
-    ]
-    renderHome('/')
-    expect(screen.getByRole('tablist', { name: 'Seção' })).toBeDefined()
-    expect(groupNames()).toEqual(['Estado', 'Público-alvo', 'Cor', 'Pulseira'])
-    const optionLabels = (name: string) =>
-      within(screen.getByRole('group', { name }))
-        .getAllByRole('checkbox')
-        .map((node) => node.parentElement?.textContent?.trim())
-    expect(optionLabels('Estado')).toEqual(['Novo', 'Com defeito'])
-    expect(screen.queryByRole('checkbox', { name: 'Openbox' })).toBeNull()
-    expect(screen.queryByRole('checkbox', { name: 'Usado' })).toBeNull()
-    expect(optionLabels('Público-alvo')).toEqual(['Masculino', 'Unissex'])
-    expect(optionLabels('Cor')).toEqual(['Amarelo', 'Azul'])
-    expect(optionLabels('Pulseira')).toEqual(['Grande', 'Médio'])
-    cleanup()
-
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'unico',
-        title: 'Único',
-        audience: 'male',
-        axes: [{ id: 'cor', label: 'Cor', values: [{ id: 'preto', value: 'Preto' }] }],
-        listings: [
-          listing('unico', {
-            variants: [variant({ axes: [{ axisId: 'cor', valueId: 'preto' }] })],
-          }),
-        ],
-      }),
-    ]
-    renderHome('/')
-    expect(screen.queryByRole('group', { name: 'Estado' })).toBeNull()
-    expect(screen.queryByRole('group', { name: 'Público-alvo' })).toBeNull()
-    expect(screen.queryByRole('group', { name: 'Cor' })).toBeNull()
-    expect(screen.getByRole('heading', { name: 'Único' })).toBeDefined()
-  })
-
-  it('ORs marks inside a group and ANDs marks across groups from the query', () => {
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'm-new',
-        title: 'B',
-        audience: 'male',
-        listings: [listing('m-new', { state: 'new' })],
-      }),
-      catalogProduct({
-        slug: 'f-new',
-        title: 'A',
-        audience: 'female',
-        listings: [listing('f-new', { state: 'new' })],
-      }),
-      catalogProduct({
-        slug: 'm-used',
-        title: 'C',
-        audience: 'male',
-        listings: [listing('m-used', { state: 'used' })],
-      }),
-    ]
-    const router = renderHome('/')
-    fireEvent.click(screen.getByRole('checkbox', { name: 'Novo' }))
-    fireEvent.click(screen.getByRole('checkbox', { name: 'Usado' }))
-    expect(searchParamsOf(router.state.location.search).get('state')).toBe('new,used')
-    expect(screen.getAllByRole('heading', { level: 2 }).map((node) => node.textContent)).toEqual([
-      'A',
-      'B',
-      'C',
-    ])
-    fireEvent.click(screen.getByRole('checkbox', { name: 'Usado' }))
-    fireEvent.click(screen.getByRole('checkbox', { name: 'Masculino' }))
-    expect(searchParamsOf(router.state.location.search).get('state')).toBe('new')
-    expect(searchParamsOf(router.state.location.search).get('audience')).toBe('male')
-    expect(searchParamsOf(router.state.location.search).has('section')).toBe(false)
-    expect(screen.getAllByRole('heading', { level: 2 }).map((node) => node.textContent)).toEqual(['B'])
-    expectResultsEnter()
   })
 
   it('writes the section token for the chosen label and keeps the card status text', () => {
@@ -722,132 +508,4 @@ describe('CatalogPage section and filter', () => {
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('available')
   })
 
-  it('offers every variant in Disponível and only representable variants in Sob encomenda', () => {
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'cores',
-        title: 'Cores',
-        axes: [
-          {
-            id: 'cor',
-            label: 'Cor',
-            values: [
-              { id: 'preto', value: 'Preto' },
-              { id: 'verde', value: 'Verde' },
-            ],
-          },
-        ],
-        listings: [
-          listing('cores', {
-            variants: [
-              variant({ axes: [{ axisId: 'cor', valueId: 'preto' }] }),
-              variant({
-                orderable: false,
-                price: 20,
-                axes: [{ axisId: 'cor', valueId: 'verde' }],
-              }),
-            ],
-          }),
-        ],
-      }),
-      catalogProduct({
-        slug: 'encomenda',
-        title: 'Encomenda',
-        axes: [
-          {
-            id: 'cor',
-            label: 'Cor',
-            values: [
-              { id: 'preto', value: 'Preto' },
-              { id: 'azul', value: 'Azul' },
-              { id: 'verde', value: 'Verde' },
-            ],
-          },
-        ],
-        listings: [
-          listing('encomenda', {
-            availabilityStatus: 'on_order',
-            state: 'used',
-            variants: [
-              variant({ axes: [{ axisId: 'cor', valueId: 'preto' }] }),
-              variant({ price: 30, axes: [{ axisId: 'cor', valueId: 'azul' }] }),
-              variant({
-                orderable: false,
-                price: 20,
-                axes: [{ axisId: 'cor', valueId: 'verde' }],
-              }),
-            ],
-          }),
-        ],
-      }),
-      catalogProduct({
-        slug: 'fora',
-        title: 'Fora',
-        listings: [
-          listing('fora', {
-            state: 'defective',
-            availabilityStatus: 'on_order',
-            variants: [variant({ orderable: false })],
-          }),
-        ],
-      }),
-    ]
-    renderHome('/?section=available')
-    expect(
-      within(screen.getByRole('group', { name: 'Cor' }))
-        .getAllByRole('checkbox')
-        .map((node) => node.parentElement?.textContent?.trim()),
-    ).toEqual(['Preto', 'Verde'])
-    expect(screen.queryByRole('checkbox', { name: 'Com defeito' })).toBeNull()
-    cleanup()
-
-    renderHome('/?section=on-order')
-    expect(
-      within(screen.getByRole('group', { name: 'Cor' }))
-        .getAllByRole('checkbox')
-        .map((node) => node.parentElement?.textContent?.trim()),
-    ).toEqual(['Azul', 'Preto'])
-    expect(screen.queryByRole('checkbox', { name: 'Verde' })).toBeNull()
-    expect(screen.queryByRole('checkbox', { name: 'Com defeito' })).toBeNull()
-    expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Fora' })).toBeNull()
-  })
-
-  it('offers the orderable false variant in Chega em breve', () => {
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'breve',
-        title: 'Breve',
-        axes: [
-          {
-            id: 'cor',
-            label: 'Cor',
-            values: [
-              { id: 'preto', value: 'Preto' },
-              { id: 'verde', value: 'Verde' },
-            ],
-          },
-        ],
-        listings: [
-          listing('breve', {
-            availabilityStatus: 'coming_soon',
-            variants: [
-              variant({ axes: [{ axisId: 'cor', valueId: 'preto' }] }),
-              variant({
-                orderable: false,
-                price: 20,
-                axes: [{ axisId: 'cor', valueId: 'verde' }],
-              }),
-            ],
-          }),
-        ],
-      }),
-    ]
-    renderHome('/?section=coming-soon')
-    expect(
-      within(screen.getByRole('group', { name: 'Cor' }))
-        .getAllByRole('checkbox')
-        .map((node) => node.parentElement?.textContent?.trim()),
-    ).toEqual(['Preto', 'Verde'])
-  })
 })

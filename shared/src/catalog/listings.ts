@@ -102,40 +102,11 @@ export const STATE_LABEL = {
   defective: 'Com defeito',
 } as const
 
-export const AUDIENCE_LABEL = {
-  male: 'Masculino',
-  female: 'Feminino',
-  unisex: 'Unissex',
-  child: 'Infantil',
-} as const
-
 export const NO_ACTIVE_LISTING_TEXT = 'Não temos nenhum anúncio ativo.'
-export const NO_FILTER_MATCH_TEXT = 'Nenhum anúncio corresponde aos filtros.'
 
 const SECTION_IDS = ['available', 'coming-soon', 'on-order'] as const
-const STATE_TOKENS = ['new', 'openbox', 'used', 'defective'] as const
-const AUDIENCE_TOKENS = ['male', 'female', 'unisex', 'child'] as const
 
 export type SectionId = (typeof SECTION_IDS)[number]
-type StateToken = (typeof STATE_TOKENS)[number]
-type AudienceToken = (typeof AUDIENCE_TOKENS)[number]
-
-export type FilterMarks = {
-  state: string[]
-  audience: string[]
-  axes: Record<string, string[]>
-}
-
-export type FilterOption = {
-  id: string
-  label: string
-}
-
-export type FilterGroup = {
-  id: string
-  label: string
-  options: FilterOption[]
-}
 
 export type CatalogCard = {
   slug: string
@@ -153,14 +124,6 @@ type SortableCard = CatalogCard & { listingIndex: number }
 
 function isSectionId(value: string | null): value is SectionId {
   return value === 'available' || value === 'coming-soon' || value === 'on-order'
-}
-
-function isStateToken(value: string): value is StateToken {
-  return (STATE_TOKENS as readonly string[]).includes(value)
-}
-
-function isAudienceToken(value: string): value is AudienceToken {
-  return (AUDIENCE_TOKENS as readonly string[]).includes(value)
 }
 
 function availabilityForSection(section: SectionId): Listing['availabilityStatus'] {
@@ -195,57 +158,9 @@ export function activeSection(products: Product[], section: string | null): Sect
   return 'available'
 }
 
-function knownAxisValueIds(products: Product[]): Map<string, Set<string>> {
-  const known = new Map<string, Set<string>>()
-  for (const product of products) {
-    for (const axis of product.axes) {
-      let ids = known.get(axis.id)
-      if (ids === undefined) {
-        ids = new Set()
-        known.set(axis.id, ids)
-      }
-      for (const value of axis.values) ids.add(value.id)
-    }
-  }
-  return known
-}
-
-function effectiveMarks(products: Product[], marks: FilterMarks): FilterMarks {
-  const knownAxes = knownAxisValueIds(products)
-  const axes: Record<string, string[]> = {}
-  for (const [axisId, valueIds] of Object.entries(marks.axes)) {
-    const known = knownAxes.get(axisId)
-    if (known === undefined) continue
-    const kept = valueIds.filter((id) => known.has(id))
-    if (kept.length > 0) axes[axisId] = kept
-  }
-  return {
-    state: marks.state.filter(isStateToken),
-    audience: marks.audience.filter(isAudienceToken),
-    axes,
-  }
-}
-
-function passesVariantMarks(listing: Listing, variant: Variant, marks: FilterMarks): boolean {
-  if (marks.state.length > 0 && !marks.state.includes(listing.state)) return false
-  for (const [axisId, valueIds] of Object.entries(marks.axes)) {
-    if (valueIds.length === 0) continue
-    const selected = variant.axes.find((item) => item.axisId === axisId)?.valueId
-    if (selected === undefined || !valueIds.includes(selected)) return false
-  }
-  return true
-}
-
-export function representativeVariant(listing: Listing, marks: FilterMarks): Variant | null {
-  const candidates = variantQueue(listing).filter(
-    (variant) => canVariantRepresentCard(variant) && passesVariantMarks(listing, variant, marks),
-  )
+function representativeVariant(listing: Listing): Variant | null {
+  const candidates = variantQueue(listing).filter((variant) => canVariantRepresentCard(variant))
   return candidates.find((variant) => variant.unmissableOffer === true) ?? candidates[0] ?? null
-}
-
-function audienceAllows(product: Product, marks: FilterMarks): boolean {
-  if (marks.audience.length === 0) return true
-  return product.audience !== undefined && marks.audience.includes(product.audience)
 }
 
 export function listingPath(slug: string, listingId: string, valueIds: string[]): string {
@@ -290,120 +205,20 @@ function compareCards(a: SortableCard, b: SortableCard): number {
   return a.listingIndex - b.listingIndex
 }
 
-export function homeCards(
-  products: Product[],
-  section: string | null,
-  marks: FilterMarks,
-): CatalogCard[] {
+export function homeCards(products: Product[], section: string | null): CatalogCard[] {
   const resolved = activeSection(products, section)
-  const marksToApply = effectiveMarks(products, marks)
   const status = availabilityForSection(resolved)
   const cards: SortableCard[] = []
   for (const product of products) {
-    if (!audienceAllows(product, marksToApply)) continue
     product.listings.forEach((listing, listingIndex) => {
       if (listing.availabilityStatus !== status || !canGenerateCard(listing)) return
-      const variant = representativeVariant(listing, marksToApply)
+      const variant = representativeVariant(listing)
       if (variant === null) return
       cards.push(toCard(product, listing, variant, listingIndex))
     })
   }
   cards.sort(compareCards)
   return cards.map(({ listingIndex: _listingIndex, ...card }) => card)
-}
-
-type Contribution = { product: Product; listing: Listing; variants: Variant[] }
-
-function contributions(products: Product[], section: SectionId): Contribution[] {
-  const status = availabilityForSection(section)
-  const rows: Contribution[] = []
-  for (const product of products) {
-    for (const listing of product.listings) {
-      if (listing.availabilityStatus !== status || !canGenerateCard(listing)) continue
-      const variants =
-        section === 'on-order'
-          ? listing.variants.filter((variant) => variant.orderable !== false)
-          : listing.variants
-      rows.push({ product, listing, variants })
-    }
-  }
-  return rows
-}
-
-function pushGroup(groups: FilterGroup[], id: string, label: string, options: FilterOption[]): void {
-  if (options.length > 1) groups.push({ id, label, options })
-}
-
-function axisValueLabel(product: Product, axisId: string, valueId: string): string | null {
-  const axis = product.axes.find((item) => item.id === axisId)
-  const value = axis?.values.find((item) => item.id === valueId)
-  return value?.value ?? null
-}
-
-export function filterGroups(products: Product[], section: string | null): FilterGroup[] {
-  const resolved = activeSection(products, section)
-  const rows = contributions(products, resolved)
-  const groups: FilterGroup[] = []
-
-  const states = new Set<StateToken>()
-  const audiences = new Set<AudienceToken>()
-  for (const row of rows) {
-    states.add(row.listing.state)
-    if (row.product.audience !== undefined) audiences.add(row.product.audience)
-  }
-  pushGroup(
-    groups,
-    'state',
-    'Estado',
-    STATE_TOKENS.filter((token) => states.has(token)).map((id) => ({
-      id,
-      label: STATE_LABEL[id],
-    })),
-  )
-  pushGroup(
-    groups,
-    'audience',
-    'Público-alvo',
-    AUDIENCE_TOKENS.filter((token) => audiences.has(token)).map((id) => ({
-      id,
-      label: AUDIENCE_LABEL[id],
-    })),
-  )
-
-  const axisOptions = new Map<string, Map<string, string>>()
-  for (const row of rows) {
-    for (const variant of row.variants) {
-      for (const selection of variant.axes) {
-        const label = axisValueLabel(row.product, selection.axisId, selection.valueId)
-        if (label === null) continue
-        let values = axisOptions.get(selection.axisId)
-        if (values === undefined) {
-          values = new Map()
-          axisOptions.set(selection.axisId, values)
-        }
-        if (!values.has(selection.valueId)) values.set(selection.valueId, label)
-      }
-    }
-  }
-
-  const axisGroups: FilterGroup[] = []
-  for (const [axisId, values] of axisOptions) {
-    let label = axisId
-    for (const row of rows) {
-      const axis = row.product.axes.find((item) => item.id === axisId)
-      if (axis !== undefined) {
-        label = axis.label
-        break
-      }
-    }
-    const options = [...values.entries()]
-      .sort((left, right) => compareTitles(left[1], right[1]))
-      .map(([id, value]) => ({ id, label: value }))
-    pushGroup(axisGroups, axisId, label, options)
-  }
-  axisGroups.sort((left, right) => compareTitles(left.label, right.label))
-  groups.push(...axisGroups)
-  return groups
 }
 
 export const MISSING_LISTING_TEXT = 'Este relógio não está no catálogo.'
@@ -567,17 +382,12 @@ export function listingByPath(
   return openListing(product, listing, v)
 }
 
-export function homeEmptyText(
-  products: Product[],
-  section: string | null,
-  marks: FilterMarks,
-): string | null {
+export function homeEmptyText(products: Product[], section: string | null): string | null {
   const resolved = activeSection(products, section)
   if (listingsInSection(products, resolved).length === 0) {
     const anyCard = SECTION_IDS.some((candidate) => listingsInSection(products, candidate).length > 0)
     if (!anyCard && resolved === 'available') return NO_ACTIVE_LISTING_TEXT
     return null
   }
-  if (homeCards(products, resolved, marks).length === 0) return NO_FILTER_MATCH_TEXT
   return null
 }

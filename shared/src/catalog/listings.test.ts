@@ -4,14 +4,12 @@ import {
   MISSING_LISTING_TEXT,
   activeSection,
   canVariantRepresentCard,
-  filterGroups,
   homeCards,
   homeEmptyText,
   listingByPath,
   resolveVariant,
   shareMessage,
   variantQueue,
-  type FilterMarks,
   type ListingView,
 } from './listings.ts'
 
@@ -172,8 +170,6 @@ describe('canVariantRepresentCard', () => {
   })
 })
 
-const noMarks: FilterMarks = { state: [], audience: [], axes: {} }
-
 function variantOf(price: number, extras: Partial<Variant> = {}): Variant {
   return {
     axes: [],
@@ -259,7 +255,7 @@ describe('activeSection', () => {
     ]
     expect(activeSection(products, null)).toBe('available')
     expect(activeSection(products, 'invalida')).toBe('available')
-    expect(homeEmptyText(products, null, noMarks)).toBe('Não temos nenhum anúncio ativo.')
+    expect(homeEmptyText(products, null)).toBe('Não temos nenhum anúncio ativo.')
   })
 
   it('stays on the named section when that section has no card', () => {
@@ -267,7 +263,7 @@ describe('activeSection', () => {
       productOf('pronto', 'Pronto', [listingOf('pronto')]),
     ]
     expect(activeSection(products, 'on-order')).toBe('on-order')
-    expect(homeCards(products, 'on-order', noMarks)).toEqual([])
+    expect(homeCards(products, 'on-order')).toEqual([])
     expect(activeSection(products, 'coming-soon')).toBe('coming-soon')
   })
 })
@@ -313,65 +309,41 @@ describe('homeCards', () => {
     )
   }
 
-  it('renders one card from the first unmissable variant that passes the filter and can represent the card', () => {
-    const cards = homeCards([colored('novo')], 'available', {
-      state: [],
-      audience: [],
-      axes: { cor: ['azul', 'verde'] },
-    })
+  it('renders one card from the first unmissable variant that can represent the card', () => {
+    const cards = homeCards([colored('novo')], 'available')
     expect(cards).toEqual([
       {
         slug: 'seculus',
         listingId: 'novo',
         title: 'Seculus',
-        image: 'oferta.jpg',
-        price: 30,
-        listPrice: 40,
+        image: 'barato.jpg',
+        price: 10,
         unmissableOffer: true,
         statusLabel: 'Disponível',
-        path: '/product/seculus/novo?v=azul',
+        path: '/product/seculus/novo?v=preto',
       },
     ])
     expect(cards[0].title).not.toContain('Az')
     expect(cards[0].title).not.toContain('Preto fosco')
   })
 
-  it('uses the first variant in queue order that passes the filter when none of them is unmissable', () => {
-    expect(
-      homeCards([colored('novo')], 'available', {
-        state: [],
-        audience: [],
-        axes: { cor: ['verde'] },
-      }),
-    ).toEqual([
+  it('uses the first variant in queue order when none of them is unmissable', () => {
+    const product = colored('novo')
+    for (const variant of product.listings[0].variants) {
+      delete variant.unmissableOffer
+    }
+    expect(homeCards([product], 'available')).toEqual([
       {
         slug: 'seculus',
         listingId: 'novo',
         title: 'Seculus',
-        image: 'comum.jpg',
-        price: 20,
+        image: 'barato.jpg',
+        price: 10,
         unmissableOffer: false,
         statusLabel: 'Disponível',
-        path: '/product/seculus/novo?v=verde',
+        path: '/product/seculus/novo?v=preto',
       },
     ])
-  })
-
-  it('omits the card when no variant both passes the filter and can represent it', () => {
-    expect(
-      homeCards([colored('novo')], 'available', {
-        state: [],
-        audience: [],
-        axes: { cor: ['amarelo'] },
-      }),
-    ).toEqual([])
-    expect(
-      homeEmptyText([colored('novo')], 'available', {
-        state: [],
-        audience: [],
-        axes: { cor: ['amarelo'] },
-      }),
-    ).toBe('Nenhum anúncio corresponde aos filtros.')
   })
 
   it('does not let an orderable false variant represent the card', () => {
@@ -401,7 +373,7 @@ describe('homeCards', () => {
         { axes: [color] },
       ),
     ]
-    expect(homeCards(products, 'on-order', noMarks)).toEqual([
+    expect(homeCards(products, 'on-order')).toEqual([
       {
         slug: 'seculus',
         listingId: 'encomenda',
@@ -423,7 +395,7 @@ describe('homeCards', () => {
         listingOf('breve', { availabilityStatus: 'coming_soon', state: 'used' }),
       ]),
     ]
-    expect(homeCards(products, 'available', noMarks)[0]).toEqual({
+    expect(homeCards(products, 'available')[0]).toEqual({
       slug: 'av',
       listingId: 'av',
       title: 'Av',
@@ -433,7 +405,7 @@ describe('homeCards', () => {
       statusLabel: 'Disponível',
       path: '/product/av/av',
     })
-    expect(homeCards(products, 'coming-soon', noMarks)[0]).toEqual({
+    expect(homeCards(products, 'coming-soon')[0]).toEqual({
       slug: 'breve',
       listingId: 'breve',
       title: 'Breve',
@@ -443,7 +415,7 @@ describe('homeCards', () => {
       statusLabel: 'Chega em breve',
       path: '/product/breve/breve',
     })
-    expect(homeCards(products, 'available', noMarks)[0].statusLabel).not.toBe('Indisponível')
+    expect(homeCards(products, 'available')[0].statusLabel).not.toBe('Indisponível')
   })
 
   it('orders cards by pt-BR title, then slug, then listing order', () => {
@@ -455,7 +427,7 @@ describe('homeCards', () => {
         listingOf('antes'),
       ]),
     ]
-    expect(homeCards(products, null, noMarks).map((card) => card.path)).toEqual([
+    expect(homeCards(products, null).map((card) => card.path)).toEqual([
       '/product/alfa/a',
       '/product/meio/depois',
       '/product/meio/antes',
@@ -489,95 +461,10 @@ describe('homeCards', () => {
         },
       ),
     ]
-    expect(homeCards(products, 'available', noMarks).map((card) => card.path)).toEqual([
+    expect(homeCards(products, 'available').map((card) => card.path)).toEqual([
       '/product/liso/unico',
       '/product/seculus/novo?v=preto,gg',
     ])
-  })
-
-  it('keeps the same marks when the section changes and when the home is opened again', () => {
-    const products = [
-      productOf('novo', 'Novo', [listingOf('novo', { state: 'new' })]),
-      productOf('breve', 'Breve', [
-        listingOf('breve', { availabilityStatus: 'coming_soon', state: 'used' }),
-      ]),
-    ]
-    const marks: FilterMarks = { state: ['new'], audience: [], axes: {} }
-    const first = homeCards(products, 'available', marks).map((card) => card.path)
-    const again = homeCards(products, 'available', marks).map((card) => card.path)
-    expect(first).toEqual(['/product/novo/novo'])
-    expect(again).toEqual(['/product/novo/novo'])
-    expect(homeCards(products, 'coming-soon', marks)).toEqual([])
-    expect(marks).toEqual({ state: ['new'], audience: [], axes: {} })
-  })
-
-  it('ORs marks inside a group and ANDs marks across groups', () => {
-    const products = [
-      productOf('m-new', 'B', [listingOf('m-new', { state: 'new' })], { audience: 'male' }),
-      productOf('f-new', 'A', [listingOf('f-new', { state: 'new' })], { audience: 'female' }),
-      productOf('m-used', 'C', [listingOf('m-used', { state: 'used' })], { audience: 'male' }),
-      productOf('plain', 'D', [listingOf('plain', { state: 'new' })]),
-    ]
-    expect(homeCards(products, 'available', noMarks).map((card) => card.listingId)).toEqual([
-      'f-new',
-      'm-new',
-      'm-used',
-      'plain',
-    ])
-    expect(
-      homeCards(products, 'available', { state: ['new', 'used'], audience: [], axes: {} }).map(
-        (card) => card.listingId,
-      ),
-    ).toEqual(['f-new', 'm-new', 'm-used', 'plain'])
-    expect(
-      homeCards(products, 'available', { state: ['new'], audience: [], axes: {} }).map(
-        (card) => card.listingId,
-      ),
-    ).toEqual(['f-new', 'm-new', 'plain'])
-    expect(
-      homeCards(products, 'available', {
-        state: ['new'],
-        audience: ['male'],
-        axes: {},
-      }).map((card) => card.listingId),
-    ).toEqual(['m-new'])
-    expect(
-      homeCards(products, 'available', {
-        state: [],
-        audience: ['male', 'female'],
-        axes: {},
-      }).map((card) => card.listingId),
-    ).toEqual(['f-new', 'm-new', 'm-used'])
-  })
-
-  it('ignores an unknown mark and still restricts a known mark absent from the section', () => {
-    const products = [
-      productOf('usado', 'Usado', [listingOf('usado', { state: 'used' })]),
-      productOf('novo', 'Novo', [listingOf('novo', { state: 'new' })]),
-    ]
-    const absent: FilterMarks = { state: ['openbox'], audience: [], axes: { seller: ['loja'] } }
-    expect(filterGroups(products, 'available')).toEqual([
-      {
-        id: 'state',
-        label: 'Estado',
-        options: [
-          { id: 'new', label: 'Novo' },
-          { id: 'used', label: 'Usado' },
-        ],
-      },
-    ])
-    expect(homeCards(products, 'available', absent)).toEqual([])
-    expect(homeEmptyText(products, 'available', absent)).toBe(
-      'Nenhum anúncio corresponde aos filtros.',
-    )
-    expect(absent).toEqual({ state: ['openbox'], audience: [], axes: { seller: ['loja'] } })
-    expect(
-      homeCards(products, 'available', {
-        state: ['zzz', 'new'],
-        audience: ['baby'],
-        axes: { cor: ['fantasma'], seller: ['loja'] },
-      }).map((card) => card.listingId),
-    ).toEqual(['novo'])
   })
 
   it('counts only an enabled listing with a variant that can represent a card', () => {
@@ -594,314 +481,9 @@ describe('homeCards', () => {
       ]),
       productOf('omisso', 'Omisso', [listingOf('omisso')]),
     ]
-    expect(homeCards(products, null, noMarks).map((card) => card.listingId)).toEqual(['omisso'])
+    expect(homeCards(products, null).map((card) => card.listingId)).toEqual(['omisso'])
     expect(activeSection(products, null)).toBe('available')
-    expect(filterGroups(products, 'on-order')).toEqual([])
-  })
-})
-
-describe('filterGroups', () => {
-  it('orders Estado, Público-alvo, then axes by label, and omits values the section does not have', () => {
-    const products = [
-      productOf('alfa', 'Alfa', [listingOf('alfa', { state: 'defective' })]),
-      productOf('unissex', 'Beta', [listingOf('unissex', { state: 'used' })], {
-        audience: 'unisex',
-      }),
-      productOf('crianca', 'Celta', [listingOf('crianca', { state: 'openbox' })], {
-        audience: 'child',
-      }),
-      productOf(
-        'cores',
-        'Delta',
-        [
-          listingOf('cores', {
-            state: 'new',
-            variants: [
-              variantOf(10, {
-                axes: [
-                  { axisId: 'pulseira', valueId: 'm' },
-                  { axisId: 'cor', valueId: 'az' },
-                ],
-              }),
-              variantOf(20, {
-                axes: [
-                  { axisId: 'pulseira', valueId: 'g' },
-                  { axisId: 'cor', valueId: 'am' },
-                ],
-              }),
-            ],
-          }),
-        ],
-        {
-          audience: 'male',
-          axes: [
-            {
-              id: 'pulseira',
-              label: 'Pulseira',
-              values: [
-                { id: 'm', value: 'Médio' },
-                { id: 'g', value: 'Grande' },
-              ],
-            },
-            {
-              id: 'cor',
-              label: 'Cor',
-              values: [
-                { id: 'az', value: 'Azul', alias: 'Az' },
-                { id: 'am', value: 'Amarelo' },
-              ],
-            },
-          ],
-        },
-      ),
-      productOf(
-        'breve',
-        'Breve',
-        [listingOf('breve', { availabilityStatus: 'coming_soon', state: 'new' })],
-        { audience: 'female' },
-      ),
-      productOf(
-        'oculto',
-        'Oculto',
-        [listingOf('oculto', { enabled: false, state: 'new' })],
-        { audience: 'female' },
-      ),
-    ]
-
-    expect(filterGroups(products, 'available')).toEqual([
-      {
-        id: 'state',
-        label: 'Estado',
-        options: [
-          { id: 'new', label: 'Novo' },
-          { id: 'openbox', label: 'Openbox' },
-          { id: 'used', label: 'Usado' },
-          { id: 'defective', label: 'Com defeito' },
-        ],
-      },
-      {
-        id: 'audience',
-        label: 'Público-alvo',
-        options: [
-          { id: 'male', label: 'Masculino' },
-          { id: 'unisex', label: 'Unissex' },
-          { id: 'child', label: 'Infantil' },
-        ],
-      },
-      {
-        id: 'cor',
-        label: 'Cor',
-        options: [
-          { id: 'am', label: 'Amarelo' },
-          { id: 'az', label: 'Azul' },
-        ],
-      },
-      {
-        id: 'pulseira',
-        label: 'Pulseira',
-        options: [
-          { id: 'g', label: 'Grande' },
-          { id: 'm', label: 'Médio' },
-        ],
-      },
-    ])
-    expect(filterGroups(products, 'outro')[0].options.map((option) => option.id)).toEqual([
-      'new',
-      'openbox',
-      'used',
-      'defective',
-    ])
-  })
-
-  it('hides a group that has exactly one option in the section catalog', () => {
-    const products = [
-      productOf(
-        'unico',
-        'Único',
-        [
-          listingOf('unico', {
-            variants: [variantOf(10, { axes: [{ axisId: 'cor', valueId: 'preto' }] })],
-          }),
-        ],
-        {
-          audience: 'male',
-          axes: [{ id: 'cor', label: 'Cor', values: [{ id: 'preto', value: 'Preto' }] }],
-        },
-      ),
-    ]
-    expect(filterGroups(products, 'available')).toEqual([])
-  })
-
-  it('lets every variant of a Disponível listing contribute options, including orderable false', () => {
-    const products = [
-      productOf(
-        'cores',
-        'Cores',
-        [
-          listingOf('cores', {
-            variants: [
-              variantOf(10, { axes: [{ axisId: 'cor', valueId: 'preto' }] }),
-              variantOf(20, {
-                orderable: false,
-                axes: [{ axisId: 'cor', valueId: 'verde' }],
-              }),
-            ],
-          }),
-        ],
-        {
-          axes: [
-            {
-              id: 'cor',
-              label: 'Cor',
-              values: [
-                { id: 'preto', value: 'Preto' },
-                { id: 'verde', value: 'Verde' },
-              ],
-            },
-          ],
-        },
-      ),
-    ]
-    expect(filterGroups(products, 'available')).toEqual([
-      {
-        id: 'cor',
-        label: 'Cor',
-        options: [
-          { id: 'preto', label: 'Preto' },
-          { id: 'verde', label: 'Verde' },
-        ],
-      },
-    ])
-  })
-
-  it('lets every variant of a Chega em breve listing contribute options, including orderable false', () => {
-    const products = [
-      productOf(
-        'breve',
-        'Breve',
-        [
-          listingOf('breve', {
-            availabilityStatus: 'coming_soon',
-            variants: [
-              variantOf(10, { axes: [{ axisId: 'cor', valueId: 'preto' }] }),
-              variantOf(20, {
-                orderable: false,
-                axes: [{ axisId: 'cor', valueId: 'verde' }],
-              }),
-            ],
-          }),
-        ],
-        {
-          axes: [
-            {
-              id: 'cor',
-              label: 'Cor',
-              values: [
-                { id: 'preto', value: 'Preto' },
-                { id: 'verde', value: 'Verde' },
-              ],
-            },
-          ],
-        },
-      ),
-    ]
-    expect(filterGroups(products, 'coming-soon')).toEqual([
-      {
-        id: 'cor',
-        label: 'Cor',
-        options: [
-          { id: 'preto', label: 'Preto' },
-          { id: 'verde', label: 'Verde' },
-        ],
-      },
-    ])
-  })
-
-  it('takes Sob encomenda options only from variants that can represent a card', () => {
-    const products = [
-      productOf(
-        'misto',
-        'Misto',
-        [
-          listingOf('misto', {
-            availabilityStatus: 'on_order',
-            state: 'new',
-            variants: [
-              variantOf(10, { axes: [{ axisId: 'cor', valueId: 'preto' }] }),
-              variantOf(20, { axes: [{ axisId: 'cor', valueId: 'azul' }] }),
-              variantOf(30, {
-                orderable: false,
-                axes: [{ axisId: 'cor', valueId: 'verde' }],
-              }),
-            ],
-          }),
-        ],
-        {
-          axes: [
-            {
-              id: 'cor',
-              label: 'Cor',
-              values: [
-                { id: 'verde', value: 'Verde' },
-                { id: 'preto', value: 'Preto' },
-                { id: 'azul', value: 'Azul' },
-              ],
-            },
-          ],
-        },
-      ),
-      productOf(
-        'fora',
-        'Fora',
-        [
-          listingOf('fora', {
-            availabilityStatus: 'on_order',
-            state: 'defective',
-            variants: [
-              variantOf(5, {
-                orderable: false,
-                axes: [{ axisId: 'cor', valueId: 'rosa' }],
-              }),
-            ],
-          }),
-        ],
-        {
-          audience: 'female',
-          axes: [
-            {
-              id: 'cor',
-              label: 'Cor',
-              values: [{ id: 'rosa', value: 'Rosa' }],
-            },
-          ],
-        },
-      ),
-      productOf('usado', 'Usado', [
-        listingOf('usado', { availabilityStatus: 'on_order', state: 'used' }),
-      ]),
-    ]
-    expect(filterGroups(products, 'on-order')).toEqual([
-      {
-        id: 'state',
-        label: 'Estado',
-        options: [
-          { id: 'new', label: 'Novo' },
-          { id: 'used', label: 'Usado' },
-        ],
-      },
-      {
-        id: 'cor',
-        label: 'Cor',
-        options: [
-          { id: 'azul', label: 'Azul' },
-          { id: 'preto', label: 'Preto' },
-        ],
-      },
-    ])
-    expect(homeCards(products, 'on-order', noMarks).map((card) => card.listingId)).toEqual([
-      'misto',
-      'usado',
-    ])
+    expect(homeCards(products, 'on-order')).toEqual([])
   })
 })
 

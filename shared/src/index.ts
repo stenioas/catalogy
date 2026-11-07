@@ -14,18 +14,14 @@ export {
   shareMessage,
   homeCards,
   activeSection,
-  filterGroups,
   homeEmptyText,
   listingByPath,
   listingPath,
   AVAILABILITY_LABEL,
   STATE_LABEL,
-  AUDIENCE_LABEL,
 } from './catalog/listings.ts'
 export type {
   CatalogCard,
-  FilterGroup,
-  FilterMarks,
   ListingSelector,
   SectionId,
 } from './catalog/listings.ts'

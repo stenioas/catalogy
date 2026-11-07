@@ -167,12 +167,8 @@ describe('troca entre vitrine e produto', () => {
     expectRouteEnter()
   })
 
-  it('troca seção e filtro na hora, sem loading artificial', () => {
+  it('troca a seção na hora, sem loading artificial', () => {
     setup()
-    fireEvent.click(screen.getAllByRole('checkbox')[0])
-    expect(screen.getByTestId('catalog-results').classList.contains('motion-safe:animate-in')).toBe(true)
-    expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
-
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
     const results = screen.getByTestId('catalog-results')
     for (const className of ROUTE_ENTER_CLASSES) {

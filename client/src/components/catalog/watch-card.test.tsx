@@ -52,7 +52,7 @@ function baseProduct(overrides: Record<string, unknown> = {}): Product {
 }
 
 function cardFor(product: Product, section: string | null = 'available'): CatalogCard {
-  const [card] = homeCards([product], section, { state: [], audience: [], axes: {} })
+  const [card] = homeCards([product], section)
   if (card === undefined) throw new Error('homeCards returned no card')
   return card
 }
