@@ -71,7 +71,7 @@ export function CatalogPage() {
                     key={section.id}
                     value={section.id}
                     disabled={!sectionHasCards(products, section.id)}
-                    className="w-auto flex-none px-0 text-[13px] data-active:text-primary data-active:after:bg-primary md:text-sm dark:data-active:text-primary"
+                    className="w-auto flex-none px-0 text-[13px] data-active:font-bold data-active:text-primary data-active:after:bg-primary md:text-sm dark:data-active:text-primary"
                   >
                     {section.label}
                   </TabsTrigger>
