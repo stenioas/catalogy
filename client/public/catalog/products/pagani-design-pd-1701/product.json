@@ -10,6 +10,10 @@
         {
           "id": "varias-cores",
           "value": "Várias cores"
+        },
+        {
+          "id": "gold-green",
+          "value": "Gold Green"
         }
       ]
     }
@@ -82,7 +86,7 @@
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "listing-varias-cores",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -150,6 +154,34 @@
           "listPrice": 1399.9,
           "unmissableOffer": true,
           "mainImage": "pagani-design-pd-1701-1.png"
+        }
+      ]
+    },
+    {
+      "id": "listing-gold-green",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "pagani-design-pd-1701-6.png",
+        "pagani-design-pd-1701-31.png",
+        "pagani-design-pd-1701-47.png",
+        "pagani-design-pd-1701-48.png",
+        "pagani-design-pd-1701-49.png",
+        "pagani-design-pd-1701-50.png",
+        "pagani-design-pd-1701-51.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold-green"
+            }
+          ],
+          "price": 999.9,
+          "listPrice": 1399.9,
+          "unmissableOffer": true,
+          "mainImage": "pagani-design-pd-1701-6.png"
         }
       ]
     }
