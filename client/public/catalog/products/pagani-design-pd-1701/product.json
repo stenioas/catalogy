@@ -14,6 +14,58 @@
         {
           "id": "gold-green",
           "value": "Gold Green"
+        },
+        {
+          "id": "black",
+          "value": "Black"
+        },
+        {
+          "id": "white",
+          "value": "White"
+        },
+        {
+          "id": "blue",
+          "value": "Blue"
+        },
+        {
+          "id": "ice-blue-v4",
+          "value": "Ice Blue V4"
+        },
+        {
+          "id": "white-v4",
+          "value": "White V4"
+        },
+        {
+          "id": "panda",
+          "value": "Panda"
+        },
+        {
+          "id": "sky-blue",
+          "value": "Sky Blue"
+        },
+        {
+          "id": "gold",
+          "value": "Gold"
+        },
+        {
+          "id": "silver-gold-black",
+          "value": "Silver Gold Black"
+        },
+        {
+          "id": "brown",
+          "value": "Brown"
+        },
+        {
+          "id": "red",
+          "value": "Red"
+        },
+        {
+          "id": "silver-gold",
+          "value": "Silver Gold"
+        },
+        {
+          "id": "all-gold-black",
+          "value": "All Gold Black"
         }
       ]
     }
