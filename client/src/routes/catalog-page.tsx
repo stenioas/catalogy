@@ -1,12 +1,16 @@
-import { activeSection, homeCards, homeEmptyText, type SectionId } from '@catalogo/shared'
-import { useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import {
+  activeSection,
+  homeCards,
+  homeEmptyText,
+  sectionHasCards,
+  type SectionId,
+} from '@catalogo/shared'
 import { useSearchParams } from 'react-router-dom'
 
 import { products } from '../catalog/products.generated'
 import { TopBar } from '../components/catalog/top-bar'
 import { WatchCard } from '../components/catalog/watch-card'
-import { ToggleGroup, ToggleGroupItem } from '../components/ui/toggle-group'
+import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs'
 
 const SECTIONS: { id: SectionId; label: string }[] = [
   { id: 'available', label: 'Disponível' },
@@ -17,70 +21,22 @@ const SECTIONS: { id: SectionId; label: string }[] = [
 const resultsEnterClass =
   'motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200'
 
-const sectionItemClass =
-  'min-w-0 flex-1 shrink px-1.5 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:hover:bg-primary data-[state=on]:hover:text-primary-foreground dark:data-[state=on]:bg-primary dark:data-[state=on]:text-primary-foreground dark:data-[state=on]:hover:bg-primary'
-
-const pinnedShellClass =
-  'fixed inset-x-0 z-10 w-full bg-[color-mix(in_srgb,var(--canvas-parchment)_80%,transparent)] [-webkit-backdrop-filter:saturate(180%)_blur(20px)] [backdrop-filter:saturate(180%)_blur(20px)] motion-safe:transition-[top] motion-safe:duration-300 motion-safe:ease-out'
-
 function isSectionId(value: string | null): value is SectionId {
   return value === 'available' || value === 'coming-soon' || value === 'on-order'
-}
-
-function usePinnedSectionToggle() {
-  const sentinelRef = useRef<HTMLDivElement>(null)
-  const blockRef = useRef<HTMLDivElement>(null)
-  const [pinned, setPinned] = useState(false)
-  const [barHidden, setBarHidden] = useState(false)
-  const [spacerHeight, setSpacerHeight] = useState(0)
-
-  useEffect(() => {
-    const sync = () => {
-      const bar = document.querySelector('[data-testid="top-bar"]')
-      const hidden = bar?.classList.contains('-translate-y-full') ?? false
-      const sentinelTop = sentinelRef.current?.getBoundingClientRect().top ?? 0
-      const y = window.scrollY
-      const stickLine = hidden ? 0 : 64
-      const fitsInFlow = sentinelTop >= stickLine
-      const nextPinned =
-        y === 0 || (y < 64 && fitsInFlow)
-          ? false
-          : y >= 64 && sentinelTop <= stickLine
-            ? true
-            : null
-
-      setBarHidden((prev) => (prev === hidden ? prev : hidden))
-      if (nextPinned === null) return
-      if (nextPinned) {
-        const height = blockRef.current?.offsetHeight ?? 0
-        setSpacerHeight((prev) => (prev === height ? prev : height))
-      }
-      setPinned((prev) => (prev === nextPinned ? prev : nextPinned))
-    }
-
-    sync()
-    const bar = document.querySelector('[data-testid="top-bar"]')
-    const observer = new MutationObserver(sync)
-    if (bar) observer.observe(bar, { attributes: true, attributeFilter: ['class'] })
-    window.addEventListener('scroll', sync, { passive: true })
-    return () => {
-      observer.disconnect()
-      window.removeEventListener('scroll', sync)
-    }
-  }, [])
-
-  return { sentinelRef, blockRef, pinned, barHidden, spacerHeight }
 }
 
 export function CatalogPage() {
   const [params, setParams] = useSearchParams()
   const sectionParam = params.get('section')
-  const resolved = activeSection(products, sectionParam)
-  const cards = homeCards(products, sectionParam)
-  const emptyText = homeEmptyText(products, sectionParam)
-  const { sentinelRef, blockRef, pinned, barHidden, spacerHeight } = usePinnedSectionToggle()
+  const requested = activeSection(products, sectionParam)
+  const filled = SECTIONS.filter((section) => sectionHasCards(products, section.id))
+  const resolved =
+    filled.length === 0 ? 'available' : sectionHasCards(products, requested) ? requested : filled[0].id
+  const cards = homeCards(products, resolved)
+  const emptyText = homeEmptyText(products, resolved)
 
   function selectSection(id: SectionId) {
+    if (!sectionHasCards(products, id)) return
     const raw = params.get('section')
     if (raw === id) return
     if (!isSectionId(raw) && id === resolved) return
@@ -91,46 +47,37 @@ export function CatalogPage() {
     })
   }
 
-  const shell = (
-    <div
-      ref={blockRef}
-      data-testid="section-toggle"
-      className={pinned ? `${pinnedShellClass} ${barHidden ? 'top-0' : 'top-16'}` : undefined}
-    >
-      <div className={pinned ? 'catalog-column catalog-vitrine' : undefined}>
-        <div className="p-1">
-          <ToggleGroup
-            type="single"
-            value={resolved}
-            spacing={0}
-            aria-label="Seção"
-            onValueChange={(id) => {
-              if (isSectionId(id)) selectSection(id)
-            }}
-            className="w-full bg-[var(--hairline)]"
-          >
-            {SECTIONS.map((section) => (
-              <ToggleGroupItem key={section.id} value={section.id} className={sectionItemClass}>
-                {section.label}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
-        </div>
-      </div>
-    </div>
-  )
-
   return (
     <>
       <TopBar />
       <main className="max-w-full min-w-0 overflow-x-clip">
         <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine pb-4">
           <div className="mb-2">
-            <div ref={sentinelRef} data-testid="section-toggle-sentinel" aria-hidden="true" className="h-0" />
-            {pinned ? (
-              <div data-testid="section-toggle-spacer" aria-hidden="true" style={{ height: spacerHeight }} />
-            ) : null}
-            {pinned ? createPortal(shell, document.body) : shell}
+            <Tabs
+              data-testid="section-toggle"
+              className="items-center"
+              value={resolved}
+              onValueChange={(id) => {
+                if (isSectionId(id)) selectSection(id)
+              }}
+            >
+              <TabsList
+                variant="line"
+                aria-label="Seção"
+                className="h-8 w-fit gap-3 p-0 text-xs group-data-horizontal/tabs:h-8"
+              >
+                {SECTIONS.map((section) => (
+                  <TabsTrigger
+                    key={section.id}
+                    value={section.id}
+                    disabled={!sectionHasCards(products, section.id)}
+                    className="w-auto flex-none px-0 text-xs data-active:text-primary data-active:after:bg-primary dark:data-active:text-primary"
+                  >
+                    {section.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
           </div>
           <div key={resolved} data-testid="catalog-results" className={resultsEnterClass}>
             {emptyText !== null ? (

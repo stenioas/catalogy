@@ -13,6 +13,7 @@ export {
   canVariantRepresentCard,
   shareMessage,
   homeCards,
+  sectionHasCards,
   activeSection,
   homeEmptyText,
   listingByPath,

@@ -150,6 +150,10 @@ function listingsInSection(products: Product[], section: SectionId): Listing[] {
   return found
 }
 
+export function sectionHasCards(products: Product[], section: SectionId): boolean {
+  return listingsInSection(products, section).length > 0
+}
+
 export function activeSection(products: Product[], section: string | null): SectionId {
   if (isSectionId(section)) return section
   for (const candidate of SECTION_IDS) {
