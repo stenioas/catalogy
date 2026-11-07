@@ -335,26 +335,26 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-62 | P1: Filtro | Tasks | Done · T11 |
 | VAR-63 | P1: Filtro | Tasks | Done · T11 |
 | VAR-64 | P1: Filtro | Tasks | Done · T11 |
-| VAR-65 | P1: Página | Tasks | Done |
-| VAR-66 | P1: Página | Tasks | Done |
-| VAR-67 | P1: Página | Tasks | Done |
+| VAR-65 | P1: Página | Tasks | Done · T15 |
+| VAR-66 | P1: Página | Tasks | Done · T15 |
+| VAR-67 | P1: Página | Tasks | Done · T15 |
 | VAR-68 | P1: Página | Tasks | Done · T14 |
 | VAR-69 | P1: Página | Tasks | Done |
 | VAR-70 | P1: Página | Tasks | Done |
 | VAR-71 | P1: Página | Tasks | Done |
 | VAR-72 | P1: Página | Tasks | Done |
-| VAR-73 | P1: Página | Tasks | Done |
-| VAR-74 | P1: Página | Tasks | Done |
+| VAR-73 | P1: Página | Tasks | Done · T15 |
+| VAR-74 | P1: Página | Tasks | Done · T15 |
 | VAR-75 | P1: Página | Tasks | Done · T14 |
 | VAR-76 | P1: Página | Tasks | Done · T14 |
 | VAR-77 | P1: Página | Tasks | Done |
-| VAR-78 | P1: Página | Tasks | Done |
-| VAR-79 | P1: Página | Tasks | Done |
-| VAR-80 | P1: Página | Tasks | Done |
-| VAR-81 | P1: Página | Tasks | Done |
+| VAR-78 | P1: Página | Tasks | Done · T15 |
+| VAR-79 | P1: Página | Tasks | Done · T15 |
+| VAR-80 | P1: Página | Tasks | Done · T15 |
+| VAR-81 | P1: Página | Tasks | Done · T15 |
 | VAR-82 | P1: Página | Tasks | Done |
 | VAR-83 | P1: Página | Tasks | Done |
-| VAR-84 | P1: Página | Tasks | Done |
+| VAR-84 | P1: Página | Tasks | Done · T15 |
 | VAR-85 | P1: Página | Tasks | Done |
 | VAR-86 | P1: Largura | Tasks | Done · T13 |
 | VAR-87 | P1: Largura | Tasks | Done · T13 |
@@ -362,10 +362,10 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-89 | P1: Largura | Tasks | Done · T12 |
 | VAR-90 | P1: Largura | Tasks | Done · T12 |
 | VAR-91 | P1: Largura | Tasks | Done · T12 |
-| VAR-92 | P1: Largura | Tasks | In Tasks |
-| VAR-93 | P1: Largura | Tasks | In Tasks |
-| VAR-94 | P1: Largura | Tasks | In Tasks |
-| VAR-95 | P1: Largura | Tasks | In Tasks |
+| VAR-92 | P1: Largura | Tasks | Done · T15 |
+| VAR-93 | P1: Largura | Tasks | Done · T15 |
+| VAR-94 | P1: Largura | Tasks | Done · T15 |
+| VAR-95 | P1: Largura | Tasks | Done · T15 |
 | VAR-96 | P1: Largura | Tasks | Done · T13 |
 | VAR-97 | P1: Cadastro | Tasks | In Tasks |
 | VAR-98 | P1: Cadastro | Tasks | In Tasks |

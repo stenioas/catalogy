@@ -47,10 +47,15 @@ const frostedShareClassName =
 
 const labeledShareClassName = `${frostedShareClassName} h-11 w-full gap-2 rounded-lg px-4 text-base`
 
-export function ProductShareButton({ slug, title, ref }: WantLinkProps) {
+export function ProductShareButton({
+  slug,
+  title,
+  ref,
+  href,
+}: WantLinkProps & { href?: string }) {
   return (
     <Button asChild variant="ghost" className={labeledShareClassName}>
-      <a ref={ref} href={waUrl(slug, title)} target="_blank" rel="noopener noreferrer">
+      <a ref={ref} href={href ?? waUrl(slug, title)} target="_blank" rel="noopener noreferrer">
         <Share2 aria-hidden="true" className="size-4" />
         <span>{SHARE_LABEL}</span>
       </a>

@@ -17,6 +17,7 @@ export {
   filterGroups,
   homeEmptyText,
   listingByPath,
+  listingPath,
   AVAILABILITY_LABEL,
   STATE_LABEL,
   AUDIENCE_LABEL,

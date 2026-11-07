@@ -13,6 +13,8 @@ export type StickyBarProps = {
   unmissableOffer?: boolean
   slug: string
   title: string
+  /** When set, the share control uses this WhatsApp URL instead of the slug/title sentence. */
+  shareHref?: string
   target?: Element | null
 }
 
@@ -22,6 +24,7 @@ export function StickyBar({
   unmissableOffer = false,
   slug,
   title,
+  shareHref,
   target: targetElement,
 }: StickyBarProps) {
   const [offscreen, setOffscreen] = useState(false)
@@ -104,7 +107,7 @@ export function StickyBar({
             <PriceBlock price={price} listPrice={listPrice} unmissableOffer={unmissableOffer} />
           </div>
           <div data-testid="sticky-bar-action" className="w-full">
-            <ProductShareButton slug={slug} title={title} />
+            <ProductShareButton slug={slug} title={title} href={shareHref} />
           </div>
         </div>
       </div>

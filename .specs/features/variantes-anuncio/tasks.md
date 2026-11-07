@@ -532,18 +532,19 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] A ficha do produto vem antes da ficha do anúncio. Outro anúncio do produto não aparece
-- [ ] Preço, observação e oferta trocam com a variante. Descrição e fichas não trocam
-- [ ] Acima do preço, uma linha por eixo com rótulo e `value`. Sem eixo, a linha e o nome da variante somem
-- [ ] De 920px em diante a coluna direita segue estado, título, nome da variante, preço, seletores, descrição e compartilhar
-- [ ] Abaixo de 768px a faixa ocupa o lugar das bolinhas. De 768px a 919px a faixa fica abaixo do bloco de miniaturas
-- [ ] Ausente mostra `Este relógio não está no catálogo.` e omite o WhatsApp
-- [ ] Gate quick passa: `pnpm --filter client exec vitest run src/routes/watch-page.test.tsx`
+- [x] A ficha do produto vem antes da ficha do anúncio. Outro anúncio do produto não aparece
+- [x] Preço, observação e oferta trocam com a variante. Descrição e fichas não trocam
+- [x] Acima do preço, uma linha por eixo com rótulo e `value`. Sem eixo, a linha e o nome da variante somem
+- [x] De 920px em diante a coluna direita segue estado, título, nome da variante, preço, seletores, descrição e compartilhar
+- [x] Abaixo de 768px a faixa ocupa o lugar das bolinhas. De 768px a 919px a faixa fica abaixo do bloco de miniaturas
+- [x] Ausente mostra `Este relógio não está no catálogo.` e omite o WhatsApp
+- [x] Gate quick passa: `pnpm --filter client exec vitest run src/routes/watch-page.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
 
 **Commit**: `feat(client): show one listing and its active variant`
+**Status**: done
 
 ### T16: Rotas do anúncio
 

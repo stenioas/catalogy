@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { creditInstallmentLabel, SPECIFICATION_LABELS, type Product } from '@catalogo/shared'
+import { creditInstallmentLabel, SPECIFICATION_LABELS, type Listing, type Product, type Variant } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
@@ -23,22 +23,83 @@ function resize(next: number) {
   act(() => { mediaListeners.forEach((listener) => listener()) })
 }
 
-function makeProduct(overrides: Partial<Product> = {}): Product {
-  return {
-    slug: 'seculus-kit',
-    title: 'Seculus',
-    state: 'Novo',
-    availabilityStatus: 'available',
-    price: 369.9,
-    images: ['foto.webp'],
-    description: 'Caixa de aço.',
-    observations: 'Entrega em mãos.',
-    specifications: [
+const STATE_FROM_LABEL: Record<string, Listing['state']> = {
+  Novo: 'new',
+  Openbox: 'openbox',
+  Usado: 'used',
+  new: 'new',
+  openbox: 'openbox',
+  used: 'used',
+  defective: 'defective',
+}
+
+type PageFixture = {
+  slug?: string
+  title?: string
+  description?: string
+  specifications?: Product['specifications']
+  state?: keyof typeof STATE_FROM_LABEL
+  availabilityStatus?: Listing['availabilityStatus']
+  price?: number
+  listPrice?: number
+  images?: string[]
+  observations?: string
+  unmissableOffer?: boolean
+  enabled?: boolean
+  color?: string
+  orderable?: boolean
+  listings?: Listing[]
+  axes?: Product['axes']
+}
+
+function makeProduct(overrides: PageFixture = {}): Product {
+  const images = overrides.images ?? ['foto.webp']
+  const color = overrides.color
+  const colorAxis = color !== undefined && color.trim().length > 0
+  const axes = overrides.axes ?? (colorAxis
+    ? [{ id: 'color', label: 'Cor', values: [{ id: 'color-value', value: color }] }]
+    : [])
+  const variant: Variant = {
+    axes: colorAxis ? [{ axisId: 'color', valueId: 'color-value' }] : [],
+    price: overrides.price ?? 369.9,
+    mainImage: images[0] ?? 'foto.webp',
+  }
+  if (overrides.listPrice !== undefined) variant.listPrice = overrides.listPrice
+  if (overrides.unmissableOffer !== undefined) variant.unmissableOffer = overrides.unmissableOffer
+  if (overrides.orderable !== undefined) variant.orderable = overrides.orderable
+  if ('observations' in overrides) {
+    if (overrides.observations !== undefined) variant.observations = overrides.observations
+  } else {
+    variant.observations = 'Entrega em mãos.'
+  }
+  const listing: Listing = {
+    id: 'listing',
+    state: STATE_FROM_LABEL[overrides.state ?? 'new'] ?? 'new',
+    availabilityStatus: overrides.availabilityStatus ?? 'available',
+    images,
+    variants: overrides.listings === undefined ? [variant] : [],
+  }
+  if (overrides.enabled !== undefined) listing.enabled = overrides.enabled
+  const product: Product = {
+    slug: overrides.slug ?? 'seculus-kit',
+    title: overrides.title ?? 'Seculus',
+    axes,
+    listings: overrides.listings ?? [listing],
+  }
+  if ('description' in overrides) {
+    if (overrides.description !== undefined) product.description = overrides.description
+  } else {
+    product.description = 'Caixa de aço.'
+  }
+  if ('specifications' in overrides) {
+    if (overrides.specifications !== undefined) product.specifications = overrides.specifications
+  } else {
+    product.specifications = [
       { label: 'Marca', value: 'Seculus' },
       { label: 'Material da pulseira', value: 'Aço' },
-    ],
-    ...overrides,
+    ]
   }
+  return product
 }
 
 const { mockProductsRef } = vi.hoisted(() => ({
@@ -51,12 +112,17 @@ vi.mock('../catalog/products.generated', () => ({
   },
 }))
 
-function renderWatchPage(slug = 'seculus-kit', withSellerQuery = false) {
-  const path = withSellerQuery ? `/product/${slug}?seller=alexandre` : `/product/${slug}`
+function renderWatchPage(slug = 'seculus-kit', withSellerQuery = false, listingId?: string) {
+  const params = new URLSearchParams()
+  if (withSellerQuery) params.set('seller', 'alexandre')
+  const query = params.toString()
+  const path = listingId
+    ? `/product/${slug}/${listingId}${query ? `?${query}` : ''}`
+    : `/product/${slug}${query ? `?${query}` : ''}`
   return render(
     <ThemeProvider>
       <MemoryRouter initialEntries={[path]}>
-        <WatchPage slug={slug} />
+        <WatchPage slug={slug} listingId={listingId} />
       </MemoryRouter>
     </ThemeProvider>,
   )
@@ -141,10 +207,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   })
 
   it.each([
-    ['available', 'Em estoque'],
+    ['available', 'Disponível'],
+    ['coming_soon', 'Chega em breve'],
     ['on_order', 'Sob encomenda'],
-    ['unavailable', 'Indisponível'],
-    ['sold_out', 'Esgotado'],
   ] as const)('shows availability %s below installments', (availabilityStatus, label) => {
     mockProductsRef.current = [makeProduct({ availabilityStatus })]
     renderWatchPage()
@@ -340,6 +405,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     renderWatchPage()
     expect(screen.getByText('Este relógio não está no catálogo.')).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Seculus' })).toBeNull()
+    expect(screen.queryByRole('link', { name: 'Compartilhar' })).toBeNull()
+    expect(document.querySelector('a[href*="wa.me"]')).toBeNull()
   })
 
   it('shows the missing-watch message and hides Eu quero! when the slug is absent (SV-15, CAT-87, CAT-88)', () => {
@@ -533,7 +600,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(heading.textContent).toBe('Título completo '.repeat(20))
     expect(heading.className).not.toMatch(/line-clamp|truncate/)
     expect(screen.getAllByRole('link', { name: 'Compartilhar' })).toHaveLength(1)
-    expect(screen.getByTestId('watch-color').textContent).toBe('Cor:   Azul  ')
+    expect(screen.getByTestId('axis-line').textContent).toBe('Cor:   Azul  ')
     expect(screen.getByTestId('price-list').textContent).toBe('De R$ 449,90')
     expect(follows(heading, screen.getByTestId('unmissable-offer'))).toBe(true)
     expect(follows(screen.getByTestId('unmissable-offer'), screen.getByTestId('price-current'))).toBe(true)
@@ -585,7 +652,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   it.each([undefined, '', '   '])('omits absent or empty color %s without inferring Cor from specifications (CATREF-55/56)', (color) => {
     mockProductsRef.current = [makeProduct({ color, description: 'Relógio dourado', specifications: [{ label: 'Cor', value: 'Prata' }] })]
     renderWatchPage()
-    expect(screen.queryByTestId('watch-color')).toBeNull()
+    expect(screen.queryByTestId('axis-line')).toBeNull()
+    expect(screen.queryByTestId('variant-name')).toBeNull()
     expect(within(screen.getByRole('table')).getByText('Prata')).toBeDefined()
   })
 
@@ -593,7 +661,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     width = viewport
     mockProductsRef.current = [makeProduct({ color: '  Azul  ', specifications: [{ label: 'Cor', value: 'Prata' }, { label: 'Cor do mostrador', value: 'Preto' }, { label: 'Cor da pulseira', value: 'Aço' }, { label: 'Cor', value: 'Prata' }, { label: 'Vazio', value: '' }, { label: 'Espaços', value: '   ' }] })]
     renderWatchPage()
-    expect(screen.getByTestId('watch-color').textContent).toBe('Cor:   Azul  ')
+    expect(screen.getByTestId('axis-line').textContent).toBe('Cor:   Azul  ')
     expect(within(screen.getByRole('table')).getAllByRole('row').map((row) => row.textContent)).toEqual(['CorPrata', 'Cor do mostradorPreto', 'Cor da pulseiraAço', 'CorPrata'])
   })
 
@@ -613,7 +681,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     renderWatchPage()
     expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.querySelector('p')?.textContent).toBe('  Caixa de aço.  ')
     expect(screen.getByRole('heading', { name: 'Observações' }).parentElement?.querySelector('p')?.textContent).toBe('  Entrega em mãos.  ')
-    for (const link of screen.getAllByRole('link', { name: 'Compartilhar' })) expect(link.getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Seculus. ${window.location.origin}/product/seculus-kit`)}`)
+    for (const link of screen.getAllByRole('link', { name: 'Compartilhar' })) expect(link.getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Seculus. Novo, Disponível. ${window.location.origin}/product/seculus-kit/listing`)}`)
   })
 
   it('reobserves the current primary WhatsApp after a breakpoint switch (CATREF-68/69)', () => {
@@ -708,7 +776,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
         }),
       ]
       renderWatchPage()
-      expect(screen.getByTestId('watch-color').textContent).toBe('Cor: Azul')
+      expect(screen.getByTestId('axis-line').textContent).toBe('Cor: Azul')
       expect(within(screen.getByRole('table')).queryByText('Azul')).toBeNull()
       expect(within(screen.getByRole('table')).getByText('Prata')).toBeDefined()
     })
@@ -740,6 +808,283 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     fireEvent.click(within(gallery).getByRole('button', { name: 'Fechar' }))
     expect(within(screen.getByTestId('watch-carousel')).getByRole('img', { name: 'Seculus' }).getAttribute('src')).toBe('/catalog/products/seculus-kit/img/two.webp')
     expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Abrir galeria na foto 2' }))
+  })
+
+  function listingProduct(): Product {
+    return {
+      slug: 'seculus-kit',
+      title: 'Seculus',
+      description: 'Caixa de aço.',
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [
+            { id: 'azul', value: 'Azul marinho', alias: 'Azul' },
+            { id: 'preto', value: 'Preto' },
+          ],
+        },
+      ],
+      specifications: [{ label: 'Marca', value: 'Do produto' }],
+      listings: [
+        {
+          id: 'listing',
+          state: 'new',
+          availabilityStatus: 'available',
+          images: ['a.webp', 'b.webp'],
+          specifications: [{ label: 'Garantia', value: 'Do anúncio' }],
+          variants: [
+            {
+              axes: [{ axisId: 'color', valueId: 'azul' }],
+              price: 10,
+              listPrice: 12,
+              mainImage: 'a.webp',
+              observations: 'Obs A',
+            },
+            {
+              axes: [{ axisId: 'color', valueId: 'preto' }],
+              price: 20,
+              mainImage: 'b.webp',
+              observations: 'Obs B',
+              unmissableOffer: true,
+            },
+          ],
+        },
+        {
+          id: 'outro',
+          state: 'used',
+          availabilityStatus: 'coming_soon',
+          images: ['c.webp'],
+          specifications: [{ label: 'Garantia', value: 'Do outro' }],
+          variants: [
+            {
+              axes: [{ axisId: 'color', valueId: 'azul' }],
+              price: 99,
+              mainImage: 'c.webp',
+              observations: 'Obs outro',
+            },
+          ],
+        },
+      ],
+    }
+  }
+
+  it('shows the product sheet before the listing sheet and hides the other listing', () => {
+    mockProductsRef.current = [listingProduct()]
+    renderWatchPage()
+    const productHeading = screen.getByRole('heading', { name: 'Características do produto' })
+    const listingHeading = screen.getByRole('heading', { name: 'Características do anúncio' })
+    expect(follows(productHeading, listingHeading)).toBe(true)
+    const tables = screen.getAllByRole('table')
+    expect(tables).toHaveLength(2)
+    expect(within(tables[0]!).getByText('Do produto')).toBeDefined()
+    expect(within(tables[1]!).getByText('Do anúncio')).toBeDefined()
+    expect(follows(tables[0]!, tables[1]!)).toBe(true)
+    expect(screen.queryByText('Do outro')).toBeNull()
+    expect(screen.queryByText('Obs outro')).toBeNull()
+    expect(screen.queryByText('R$ 99,00')).toBeNull()
+    expect(screen.queryByText('Usado')).toBeNull()
+    expect(screen.queryByText('Chega em breve')).toBeNull()
+    expect(screen.getByTestId('state-label').textContent).toBe('Novo')
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 10,00')
+  })
+
+  it('keeps Indisponível on the availability line, the state label and the price, and still shares', () => {
+    mockProductsRef.current = [makeProduct({ orderable: false, price: 15 })]
+    renderWatchPage('seculus-kit', false, 'listing')
+    expect(screen.getByTestId('state-label').textContent).toBe('Novo')
+    expect(screen.getByTestId('availability-badge').textContent).toBe('Indisponível')
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 15,00')
+    const share = screen.getByRole('link', { name: 'Compartilhar' })
+    expect(share.getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Seculus. Novo, Indisponível. ${window.location.origin}/product/seculus-kit/listing`)}`)
+  })
+
+  it('opens a listing that would not enter the home when its id is requested', () => {
+    mockProductsRef.current = [{
+      slug: 'oculto',
+      title: 'Oculto',
+      axes: [],
+      listings: [{
+        id: 'fora',
+        state: 'used',
+        availabilityStatus: 'on_order',
+        images: ['foto.webp'],
+        variants: [{ axes: [], price: 15, mainImage: 'foto.webp', orderable: false }],
+      }],
+    }]
+    renderWatchPage('oculto')
+    expect(screen.getByText('Este relógio não está no catálogo.')).toBeDefined()
+    expect(screen.queryByRole('link', { name: 'Compartilhar' })).toBeNull()
+    cleanup()
+    renderWatchPage('oculto', false, 'fora')
+    expect(screen.getByRole('heading', { level: 1, name: 'Oculto' })).toBeDefined()
+    expect(screen.getByTestId('state-label').textContent).toBe('Usado')
+    expect(screen.getByTestId('availability-badge').textContent).toBe('Indisponível')
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 15,00')
+    expect(screen.getByRole('link', { name: 'Compartilhar' })).toBeDefined()
+  })
+
+  it('shows the missing phrase and omits WhatsApp when the listing id does not exist', () => {
+    mockProductsRef.current = [makeProduct()]
+    renderWatchPage('seculus-kit', false, 'ausente')
+    expect(screen.getByText('Este relógio não está no catálogo.')).toBeDefined()
+    expect(screen.queryByRole('link', { name: 'Compartilhar' })).toBeNull()
+    expect(document.querySelector('a[href*="wa.me"]')).toBeNull()
+  })
+
+  it('places one axis line with label and value above the price and drops both lines when there is no axis', () => {
+    mockProductsRef.current = [listingProduct()]
+    renderWatchPage()
+    const line = screen.getByTestId('axis-line')
+    const price = screen.getByTestId('price-block')
+    expect(line.textContent).toBe('Cor: Azul marinho')
+    expect(screen.getByTestId('variant-name').textContent).toBe('Azul')
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Seculus')
+    expect(follows(line, price)).toBe(true)
+    expect(line.textContent).not.toContain('Azul marinho alias')
+    cleanup()
+    mockProductsRef.current = [makeProduct()]
+    renderWatchPage()
+    expect(screen.queryByTestId('axis-line')).toBeNull()
+    expect(screen.queryByTestId('variant-name')).toBeNull()
+  })
+
+  it('changes price, observation and offer with the variant and keeps description and both sheets', () => {
+    mockProductsRef.current = [listingProduct()]
+    width = 390
+    renderWatchPage()
+    expect(screen.queryByTestId('axis-selectors')).toBeNull()
+    fireEvent.click(screen.getAllByTestId('variant-strip-item')[1]!)
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 20,00')
+    expect(screen.queryByTestId('price-list')).toBeNull()
+    expect(screen.getByText('Obs B')).toBeDefined()
+    expect(screen.queryByText('Obs A')).toBeNull()
+    expect(screen.getByTestId('unmissable-offer').textContent).toContain('OFERTA IMPERDÍVEL')
+    expect(screen.getByTestId('variant-name').textContent).toBe('Preto')
+    expect(screen.getByTestId('axis-line').textContent).toBe('Cor: Preto')
+    expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.querySelector('p')?.textContent).toBe('Caixa de aço.')
+    const tables = screen.getAllByRole('table')
+    expect(within(tables[0]!).getByText('Do produto')).toBeDefined()
+    expect(within(tables[1]!).getByText('Do anúncio')).toBeDefined()
+    expect(screen.getByRole('img', { name: 'Seculus' }).getAttribute('src')).toBe('/catalog/products/seculus-kit/img/b.webp')
+    expect(screen.getByRole('link', { name: 'Compartilhar' }).getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Seculus Preto. Novo, Disponível. ${window.location.origin}/product/seculus-kit/listing?v=preto`)}`)
+  })
+
+  it('changes the active variant from the axis selector at 920px', () => {
+    width = 920
+    mockProductsRef.current = [listingProduct()]
+    renderWatchPage()
+    const right = screen.getByTestId('watch-right-column')
+    fireEvent.click(within(right).getByRole('button', { name: 'Preto' }))
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 20,00')
+    expect(screen.getByText('Obs B')).toBeDefined()
+    expect(screen.getByTestId('unmissable-offer')).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.querySelector('p')?.textContent).toBe('Caixa de aço.')
+    expect(within(screen.getAllByRole('table')[0]!).getByText('Do produto')).toBeDefined()
+    expect(within(screen.getAllByRole('table')[1]!).getByText('Do anúncio')).toBeDefined()
+  })
+
+  it('orders the desktop column and places the strip where the dots and the thumbnails require', () => {
+    const product: Product = {
+      ...listingProduct(),
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [
+            { id: 'azul', value: 'Azul marinho', alias: 'Azul' },
+            { id: 'preto', value: 'Preto' },
+          ],
+        },
+        {
+          id: 'size',
+          label: 'Tamanho',
+          values: [
+            { id: 'p', value: 'Pequeno', alias: 'P' },
+            { id: 'm', value: 'Médio' },
+          ],
+        },
+      ],
+      listings: [
+        {
+          ...listingProduct().listings[0]!,
+          variants: [
+            {
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'p' },
+              ],
+              price: 10,
+              mainImage: 'a.webp',
+              observations: 'Obs A',
+            },
+            {
+              axes: [
+                { axisId: 'color', valueId: 'preto' },
+                { axisId: 'size', valueId: 'm' },
+              ],
+              price: 20,
+              mainImage: 'b.webp',
+              observations: 'Obs B',
+            },
+          ],
+        },
+        listingProduct().listings[1]!,
+      ],
+    }
+    mockProductsRef.current = [product]
+    width = 390
+    renderWatchPage()
+    const strip = screen.getByTestId('variant-strip')
+    const carousel = screen.getByTestId('watch-carousel')
+    expect(screen.queryByTestId('carousel-dots')).toBeNull()
+    expect(screen.queryByRole('group', { name: 'Miniaturas do produto' })).toBeNull()
+    expect(within(strip).getAllByTestId('variant-strip-item')).toHaveLength(2)
+    expect(follows(carousel, strip)).toBe(true)
+    expect(follows(strip, screen.getByTestId('price-block'))).toBe(true)
+    expect(screen.queryByTestId('axis-selectors')).toBeNull()
+    const lines = screen.getAllByTestId('axis-line')
+    expect(lines.map((line) => line.textContent)).toEqual(['Cor: Azul marinho', 'Tamanho: Pequeno'])
+    expect(follows(lines[0]!, lines[1]!)).toBe(true)
+    expect(follows(lines[1]!, screen.getByTestId('price-block'))).toBe(true)
+    expect(screen.getByTestId('variant-name').textContent).toBe('Azul P')
+    cleanup()
+
+    width = 800
+    renderWatchPage()
+    const media = screen.getByTestId('desktop-product-media')
+    const tabletStrip = screen.getByTestId('variant-strip')
+    expect(screen.getByRole('group', { name: 'Miniaturas do produto' })).toBeDefined()
+    expect(within(media).queryByTestId('variant-strip')).toBeNull()
+    expect(follows(media, tabletStrip)).toBe(true)
+    expect(follows(tabletStrip, screen.getByTestId('price-block'))).toBe(true)
+    expect(screen.queryByTestId('carousel-dots')).toBeNull()
+    expect(screen.queryByTestId('watch-carousel')).toBeNull()
+    cleanup()
+
+    width = 920
+    renderWatchPage()
+    expect(screen.queryByTestId('variant-strip')).toBeNull()
+    const right = screen.getByTestId('watch-right-column')
+    const ordered = [
+      within(right).getByTestId('product-condition'),
+      within(right).getByRole('heading', { level: 1, name: 'Seculus' }),
+      within(right).getByTestId('variant-name'),
+      ...within(right).getAllByTestId('axis-line'),
+      within(right).getByTestId('price-block'),
+      within(right).getByTestId('axis-selectors'),
+      within(right).getByRole('heading', { name: 'Descrição' }),
+      within(right).getByRole('link', { name: 'Compartilhar' }),
+    ]
+    for (let index = 1; index < ordered.length; index += 1) {
+      expect(follows(ordered[index - 1]!, ordered[index]!)).toBe(true)
+    }
+    const groups = within(right).getAllByTestId('axis-selector-group')
+    expect(groups.map((group) => group.getAttribute('data-axis-id'))).toEqual(['color', 'size'])
+    expect(within(groups[0]!).getByRole('button', { name: 'Azul marinho' })).toBeDefined()
+    expect(within(groups[1]!).getByRole('button', { name: 'Pequeno' })).toBeDefined()
+    expect(within(right).queryByTestId('variant-strip')).toBeNull()
+    expect(screen.getByRole('link', { name: 'Compartilhar' }).getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Seculus Azul P. Novo, Disponível. ${window.location.origin}/product/seculus-kit/listing?v=azul,p`)}`)
   })
 
 })
