@@ -429,8 +429,8 @@ describe('CatalogPage sections', () => {
       }),
     ]
     const router = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Chega em breve', selected: true })).toBeDefined()
-    expect(screen.getByRole('tab', { name: 'Disponível', selected: false })).toBeDefined()
+    expect(screen.getByRole('radio', { name: 'Chega em breve', checked: true })).toBeDefined()
+    expect(screen.getByRole('radio', { name: 'Disponível', checked: false })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
     expect(router.state.location.search).toBe('')
@@ -446,7 +446,7 @@ describe('CatalogPage sections', () => {
       }),
     ]
     const router = renderHome('/?section=on-order')
-    expect(screen.getByRole('tab', { name: 'Sob encomenda', selected: true })).toBeDefined()
+    expect(screen.getByRole('radio', { name: 'Sob encomenda', checked: true })).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Agora' })).toBeNull()
     expect(screen.queryByText(NO_ACTIVE_LISTING_TEXT)).toBeNull()
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
@@ -461,7 +461,7 @@ describe('CatalogPage sections', () => {
       }),
     ]
     const router = renderHome('/?section=foo&state=used')
-    expect(screen.getByRole('tab', { name: 'Chega em breve', selected: true })).toBeDefined()
+    expect(screen.getByRole('radio', { name: 'Chega em breve', checked: true })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
     const params = searchParamsOf(router.state.location.search)
     expect(params.get('section')).toBe('foo')
@@ -471,7 +471,7 @@ describe('CatalogPage sections', () => {
   it('shows the empty text when the catalog has no active listing', () => {
     mockProductsRef.current = []
     const empty = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Disponível', selected: true })).toBeDefined()
+    expect(screen.getByRole('radio', { name: 'Disponível', checked: true })).toBeDefined()
     expect(screen.getByText(NO_ACTIVE_LISTING_TEXT)).toBeDefined()
     expect(screen.queryByTestId('catalog-grid')).toBeNull()
     expect(empty.state.location.search).toBe('')
@@ -496,16 +496,79 @@ describe('CatalogPage sections', () => {
       }),
     ]
     const router = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Disponível', selected: true })).toBeDefined()
+    expect(screen.getByRole('radio', { name: 'Disponível', checked: true })).toBeDefined()
     expect(within(screen.getByRole('heading', { name: 'Agora' }).closest('li')!).getByText('Disponível')).toBeDefined()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Chega em breve' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('coming-soon')
     expect(within(screen.getByRole('heading', { name: 'Breve' }).closest('li')!).getByText('Chega em breve')).toBeDefined()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Sob encomenda' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Sob encomenda' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
     expect(within(screen.getByRole('heading', { name: 'Encomenda' }).closest('li')!).getByText('Sob encomenda')).toBeDefined()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Disponível' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Disponível' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('available')
+  })
+
+  it('prende o seletor no topo e o desce quando a TopBar volta', () => {
+    const setScrollY = (y: number) => {
+      Object.defineProperty(window, 'scrollY', { configurable: true, writable: true, value: y })
+    }
+    const setSentinelTop = (top: number) => {
+      const sentinel = screen.getByTestId('section-toggle-sentinel')
+      vi.spyOn(sentinel, 'getBoundingClientRect').mockReturnValue({
+        top,
+        bottom: top,
+        left: 0,
+        right: 0,
+        width: 0,
+        height: 0,
+        x: 0,
+        y: top,
+        toJSON() {},
+      } as DOMRect)
+    }
+
+    setScrollY(0)
+    renderHome('/')
+    const bar = screen.getByTestId('top-bar')
+    const shell = () => screen.getByTestId('section-toggle')
+
+    expect(shell().classList.contains('fixed')).toBe(false)
+    expect(screen.queryByTestId('section-toggle-spacer')).toBeNull()
+    expect(screen.getByRole('radiogroup', { name: 'Seção' }).classList.contains('w-full')).toBe(true)
+    expect(screen.getByRole('radiogroup', { name: 'Seção' }).className).not.toContain('md:w-fit')
+
+    setScrollY(200)
+    setSentinelTop(0)
+    bar.classList.add('-translate-y-full')
+    bar.classList.remove('translate-y-0')
+    fireEvent.scroll(window)
+
+    expect(shell().classList.contains('fixed')).toBe(true)
+    expect(shell().classList.contains('top-0')).toBe(true)
+    expect(shell().classList.contains('top-16')).toBe(false)
+    expect(shell().classList.contains('z-10')).toBe(true)
+    expect(shell().className).toContain('motion-safe:duration-300')
+    expect(screen.getByTestId('section-toggle-spacer')).toBeDefined()
+    expect(screen.getByTestId('catalog-page-column').contains(shell())).toBe(false)
+
+    bar.classList.remove('-translate-y-full')
+    bar.classList.add('translate-y-0')
+    fireEvent.scroll(window)
+
+    expect(window.scrollY).toBe(200)
+    expect(shell().classList.contains('fixed')).toBe(true)
+    expect(shell().classList.contains('top-16')).toBe(true)
+    expect(shell().classList.contains('top-0')).toBe(false)
+    expect(shell().querySelector('.catalog-column')?.querySelector('.p-1')).not.toBeNull()
+
+    setScrollY(0)
+    setSentinelTop(96)
+    fireEvent.scroll(window)
+
+    expect(shell().classList.contains('fixed')).toBe(false)
+    expect(screen.queryByTestId('section-toggle-spacer')).toBeNull()
+    expect(screen.getByTestId('catalog-page-column').contains(shell())).toBe(true)
+    setScrollY(0)
   })
 
 })

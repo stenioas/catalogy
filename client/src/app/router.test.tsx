@@ -169,7 +169,7 @@ describe('troca entre vitrine e produto', () => {
 
   it('troca a seção na hora, sem loading artificial', () => {
     setup()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Chega em breve' }))
     const results = screen.getByTestId('catalog-results')
     for (const className of ROUTE_ENTER_CLASSES) {
       expect(results.classList.contains(className)).toBe(true)
