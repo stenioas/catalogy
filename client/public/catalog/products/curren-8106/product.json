@@ -8,8 +8,12 @@
       "label": "Cor",
       "values": [
         {
-          "id": "silver-white-silver-black",
-          "value": "Silver White | Silver Black"
+          "id": "silver-white",
+          "value": "Silver White"
+        },
+        {
+          "id": "silver-black",
+          "value": "Silver Black"
         }
       ]
     }
@@ -72,7 +76,7 @@
     {
       "id": "listing",
       "state": "new",
-      "availabilityStatus": "on_order",
+      "availabilityStatus": "coming_soon",
       "images": [
         "curren-8106-1.png",
         "curren-8106-2.png",
@@ -87,13 +91,25 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "silver-white-silver-black"
+              "valueId": "silver-white"
             }
           ],
           "price": 129.9,
           "listPrice": 169.9,
           "unmissableOffer": true,
           "mainImage": "curren-8106-1.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-black"
+            }
+          ],
+          "price": 129.9,
+          "listPrice": 169.9,
+          "unmissableOffer": true,
+          "mainImage": "curren-8106-2.png"
         }
       ]
     }
