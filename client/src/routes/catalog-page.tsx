@@ -13,6 +13,7 @@ import { WatchCard } from '../components/catalog/watch-card'
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs'
 
 const SECTIONS: { id: SectionId; label: string }[] = [
+  { id: 'all', label: 'Todos' },
   { id: 'available', label: 'Disponível' },
   { id: 'coming-soon', label: 'Chega em breve' },
   { id: 'on-order', label: 'Sob encomenda' },
@@ -22,7 +23,7 @@ const resultsEnterClass =
   'motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200'
 
 function isSectionId(value: string | null): value is SectionId {
-  return value === 'available' || value === 'coming-soon' || value === 'on-order'
+  return value === 'all' || value === 'available' || value === 'coming-soon' || value === 'on-order'
 }
 
 export function CatalogPage() {
@@ -31,7 +32,7 @@ export function CatalogPage() {
   const requested = activeSection(products, sectionParam)
   const filled = SECTIONS.filter((section) => sectionHasCards(products, section.id))
   const resolved =
-    filled.length === 0 ? 'available' : sectionHasCards(products, requested) ? requested : filled[0].id
+    filled.length === 0 ? 'all' : sectionHasCards(products, requested) ? requested : filled[0].id
   const cards = homeCards(products, resolved)
   const emptyText = homeEmptyText(products, resolved)
 
@@ -39,7 +40,7 @@ export function CatalogPage() {
     if (!sectionHasCards(products, id)) return
     const raw = params.get('section')
     if (raw === id) return
-    if (!isSectionId(raw) && id === resolved) return
+    if (!isSectionId(raw) && id === resolved && id !== 'all') return
     setParams((prev) => {
       const next = new URLSearchParams(prev)
       next.set('section', id)

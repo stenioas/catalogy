@@ -167,6 +167,16 @@ describe('troca entre vitrine e produto', () => {
     expectRouteEnter()
   })
 
+  it('mantém a seção escolhida ao voltar do produto', () => {
+    setup()
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
+    fireEvent.click(screen.getAllByTestId('watch-card-link')[0])
+    expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/?section=coming-soon')
+    fireEvent.click(screen.getByRole('link', { name: 'Voltar' }))
+    expect(screen.getByRole('tab', { name: 'Chega em breve', selected: true })).toBeDefined()
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+  })
+
   it('troca a seção na hora, sem loading artificial', () => {
     setup()
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))

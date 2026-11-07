@@ -1,6 +1,6 @@
 import type { CatalogCard, Product } from '@catalogo/shared'
 import { resolveVariant, shareMessage } from '@catalogo/shared'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { Card } from '@/components/ui/card'
 
@@ -28,13 +28,16 @@ function listingVariantForCard(product: Product, card: CatalogCard) {
 }
 
 export function WatchCard({ product, card }: WatchCardProps) {
+  const { search } = useLocation()
+  const section = new URLSearchParams(search).get('section')
+  const linkState = section === null ? undefined : { section }
   const { listing, variant } = listingVariantForCard(product, card)
   const shareText = shareMessage(product, listing, variant, window.location.origin)
 
   return (
     <Card className="h-full w-full gap-0 overflow-hidden rounded-none border-0 bg-background p-0 py-0 shadow-none ring-0 md:rounded-[12px] md:border-[1px] md:bg-card">
       <div data-testid="watch-card-row" className="flex w-full items-center gap-2 md:block">
-        <Link to={card.path} className="contents">
+        <Link to={card.path} state={linkState} className="contents">
           <div
             data-testid="watch-card-image"
             className="relative size-32 shrink-0 md:aspect-square md:size-auto md:w-full"
@@ -56,6 +59,7 @@ export function WatchCard({ product, card }: WatchCardProps) {
           <div className="flex w-full items-end gap-2 md:gap-3">
             <Link
               to={card.path}
+              state={linkState}
               data-testid="watch-card-link"
               className="flex min-w-0 flex-1 flex-col items-start gap-1 md:gap-2"
             >

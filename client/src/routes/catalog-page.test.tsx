@@ -415,7 +415,7 @@ describe('CatalogPage sections', () => {
     mockProductsRef.current = []
   })
 
-  it('opens the first section that has a card and does not write section', () => {
+  it('opens Todos with every section card and does not write section', () => {
     mockProductsRef.current = [
       catalogProduct({
         slug: 'encomenda',
@@ -429,16 +429,16 @@ describe('CatalogPage sections', () => {
       }),
     ]
     const router = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Chega em breve', selected: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toBeDefined()
     expect(screen.getByRole('tab', { name: 'Disponível', selected: false })).toHaveProperty('disabled', true)
     expect(screen.getByRole('tab', { name: 'Sob encomenda' })).toHaveProperty('disabled', false)
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
+    expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
     expect(router.state.location.search).toBe('')
     expect(searchParamsOf(router.state.location.search).has('section')).toBe(false)
   })
 
-  it('disables an empty section and opens the first section that has a card', () => {
+  it('disables an empty section and opens Todos as the first section that has a card', () => {
     mockProductsRef.current = [
       catalogProduct({
         slug: 'agora',
@@ -447,9 +447,10 @@ describe('CatalogPage sections', () => {
       }),
     ]
     const router = renderHome('/?section=on-order')
+    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toHaveProperty('disabled', false)
     expect(screen.getByRole('tab', { name: 'Sob encomenda' })).toHaveProperty('disabled', true)
     expect(screen.getByRole('tab', { name: 'Chega em breve' })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'Disponível', selected: true })).toHaveProperty('disabled', false)
+    expect(screen.getByRole('tab', { name: 'Disponível', selected: false })).toHaveProperty('disabled', false)
     expect(screen.getByRole('heading', { name: 'Agora' })).toBeDefined()
     expect(screen.queryByText(NO_ACTIVE_LISTING_TEXT)).toBeNull()
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
@@ -466,7 +467,7 @@ describe('CatalogPage sections', () => {
       }),
     ]
     const router = renderHome('/?section=foo&state=used')
-    expect(screen.getByRole('tab', { name: 'Chega em breve', selected: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
     const params = searchParamsOf(router.state.location.search)
     expect(params.get('section')).toBe('foo')
@@ -476,7 +477,8 @@ describe('CatalogPage sections', () => {
   it('shows the empty text when the catalog has no active listing', () => {
     mockProductsRef.current = []
     const empty = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Disponível', selected: true })).toHaveProperty('disabled', true)
+    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toHaveProperty('disabled', true)
+    expect(screen.getByRole('tab', { name: 'Disponível' })).toHaveProperty('disabled', true)
     expect(screen.getByRole('tab', { name: 'Chega em breve' })).toHaveProperty('disabled', true)
     expect(screen.getByRole('tab', { name: 'Sob encomenda' })).toHaveProperty('disabled', true)
     expect(screen.getByText(NO_ACTIVE_LISTING_TEXT)).toBeDefined()
@@ -503,16 +505,25 @@ describe('CatalogPage sections', () => {
       }),
     ]
     const router = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Disponível', selected: true })).toBeDefined()
-    expect(within(screen.getByRole('heading', { name: 'Agora' }).closest('li')!).getByText('Disponível')).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Agora' })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('coming-soon')
     expect(within(screen.getByRole('heading', { name: 'Breve' }).closest('li')!).getByText('Chega em breve')).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Agora' })).toBeNull()
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Sob encomenda' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
     expect(within(screen.getByRole('heading', { name: 'Encomenda' }).closest('li')!).getByText('Sob encomenda')).toBeDefined()
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Disponível' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('available')
+    expect(within(screen.getByRole('heading', { name: 'Agora' }).closest('li')!).getByText('Disponível')).toBeDefined()
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Todos' }))
+    expect(searchParamsOf(router.state.location.search).get('section')).toBe('all')
+    expect(screen.getByRole('heading', { name: 'Agora' })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
   })
 
 })

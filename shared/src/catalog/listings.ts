@@ -104,7 +104,11 @@ export const STATE_LABEL = {
 
 export const NO_ACTIVE_LISTING_TEXT = 'Não temos nenhum anúncio ativo.'
 
-const SECTION_IDS = ['available', 'coming-soon', 'on-order'] as const
+const STATUS_SECTION_IDS = ['available', 'coming-soon', 'on-order'] as const
+
+type StatusSectionId = (typeof STATUS_SECTION_IDS)[number]
+
+const SECTION_IDS = ['all', ...STATUS_SECTION_IDS] as const
 
 export type SectionId = (typeof SECTION_IDS)[number]
 
@@ -123,13 +127,19 @@ export type CatalogCard = {
 type SortableCard = CatalogCard & { listingIndex: number }
 
 function isSectionId(value: string | null): value is SectionId {
-  return value === 'available' || value === 'coming-soon' || value === 'on-order'
+  return SECTION_IDS.some((id) => id === value)
 }
 
-function availabilityForSection(section: SectionId): Listing['availabilityStatus'] {
+function availabilityForSection(section: StatusSectionId): Listing['availabilityStatus'] {
   if (section === 'coming-soon') return 'coming_soon'
   if (section === 'on-order') return 'on_order'
   return 'available'
+}
+
+function listingInSection(listing: Listing, section: SectionId): boolean {
+  if (!canGenerateCard(listing)) return false
+  if (section === 'all') return true
+  return listing.availabilityStatus === availabilityForSection(section)
 }
 
 /** Visible listing with at least one variant that can represent a card. */
@@ -138,13 +148,10 @@ export function canGenerateCard(listing: Listing): boolean {
 }
 
 function listingsInSection(products: Product[], section: SectionId): Listing[] {
-  const status = availabilityForSection(section)
   const found: Listing[] = []
   for (const product of products) {
     for (const listing of product.listings) {
-      if (listing.availabilityStatus === status && canGenerateCard(listing)) {
-        found.push(listing)
-      }
+      if (listingInSection(listing, section)) found.push(listing)
     }
   }
   return found
@@ -155,11 +162,9 @@ export function sectionHasCards(products: Product[], section: SectionId): boolea
 }
 
 export function activeSection(products: Product[], section: string | null): SectionId {
+  void products
   if (isSectionId(section)) return section
-  for (const candidate of SECTION_IDS) {
-    if (listingsInSection(products, candidate).length > 0) return candidate
-  }
-  return 'available'
+  return 'all'
 }
 
 function representativeVariant(listing: Listing): Variant | null {
@@ -211,11 +216,10 @@ function compareCards(a: SortableCard, b: SortableCard): number {
 
 export function homeCards(products: Product[], section: string | null): CatalogCard[] {
   const resolved = activeSection(products, section)
-  const status = availabilityForSection(resolved)
   const cards: SortableCard[] = []
   for (const product of products) {
     product.listings.forEach((listing, listingIndex) => {
-      if (listing.availabilityStatus !== status || !canGenerateCard(listing)) return
+      if (!listingInSection(listing, resolved)) return
       const variant = representativeVariant(listing)
       if (variant === null) return
       cards.push(toCard(product, listing, variant, listingIndex))
@@ -263,7 +267,7 @@ export type OpenListingView = {
 export type ListingView = { missing: true } | OpenListingView
 
 function firstListingForSlug(product: Product): Listing | null {
-  for (const section of SECTION_IDS) {
+  for (const section of STATUS_SECTION_IDS) {
     const status = availabilityForSection(section)
     for (const listing of product.listings) {
       if (listing.availabilityStatus === status && canGenerateCard(listing)) return listing
@@ -388,10 +392,10 @@ export function listingByPath(
 
 export function homeEmptyText(products: Product[], section: string | null): string | null {
   const resolved = activeSection(products, section)
-  if (listingsInSection(products, resolved).length === 0) {
-    const anyCard = SECTION_IDS.some((candidate) => listingsInSection(products, candidate).length > 0)
-    if (!anyCard && resolved === 'available') return NO_ACTIVE_LISTING_TEXT
-    return null
-  }
+  if (listingsInSection(products, resolved).length > 0) return null
+  const anyCard = STATUS_SECTION_IDS.some(
+    (candidate) => listingsInSection(products, candidate).length > 0,
+  )
+  if (!anyCard) return NO_ACTIVE_LISTING_TEXT
   return null
 }

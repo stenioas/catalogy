@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import {
   listingByPath,
@@ -25,6 +25,13 @@ import { ProductShareButton } from '../components/catalog/want-link'
 import { productImageSrc } from '../components/catalog/watch-card'
 
 export const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
+
+export function catalogReturnHref(state: unknown): string {
+  if (state === null || typeof state !== 'object' || !('section' in state)) return '/'
+  const section = state.section
+  if (typeof section !== 'string' || section === '') return '/'
+  return `/?section=${encodeURIComponent(section)}`
+}
 
 export type WatchPageProps = {
   slug: string
@@ -331,6 +338,8 @@ function WatchColumn({
 export function WatchPage({ slug, listingId }: WatchPageProps) {
   const [params] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
+  const catalogHref = catalogReturnHref(location.state)
   const requestedV = params.get('v')
   const resolvedListingId = listingId === undefined || listingId === '' ? null : listingId
   const view = listingByPath(products, slug, resolvedListingId, requestedV)
@@ -338,8 +347,6 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   const listing = view.missing || product === undefined
     ? undefined
     : product.listings.find((item) => item.id === view.listingId)
-  const catalogHref = '/'
-
   if (view.missing || product === undefined || listing === undefined) {
     return (
       <>
@@ -362,7 +369,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
 
   function selectVariant(nextV: string | null) {
     const valueIds = nextV === null || nextV.trim() === '' ? [] : nextV.split(',')
-    navigate(listingPath(product!.slug, listing!.id, valueIds))
+    navigate(listingPath(product!.slug, listing!.id, valueIds), { state: location.state })
   }
 
   return (

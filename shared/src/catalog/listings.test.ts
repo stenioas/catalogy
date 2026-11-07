@@ -6,6 +6,7 @@ import {
   canVariantRepresentCard,
   homeCards,
   homeEmptyText,
+  sectionHasCards,
   listingByPath,
   resolveVariant,
   shareMessage,
@@ -206,7 +207,7 @@ function productOf(
 }
 
 describe('activeSection', () => {
-  it('opens the first section that has a card when section is missing or invalid', () => {
+  it('opens Todos when section is missing or invalid', () => {
     const products = [
       productOf('oculto', 'Oculto', [listingOf('oculto', { enabled: false })]),
       productOf('breve', 'Breve', [
@@ -217,32 +218,34 @@ describe('activeSection', () => {
       ]),
     ]
 
-    expect(activeSection(products, null)).toBe('coming-soon')
-    expect(activeSection(products, '')).toBe('coming-soon')
-    expect(activeSection(products, 'coming_soon')).toBe('coming-soon')
-    expect(activeSection(products, 'outro')).toBe('coming-soon')
+    expect(activeSection(products, null)).toBe('all')
+    expect(activeSection(products, '')).toBe('all')
+    expect(activeSection(products, 'coming_soon')).toBe('all')
+    expect(activeSection(products, 'outro')).toBe('all')
   })
 
-  it('opens Disponível when that section has a card', () => {
+  it('keeps Disponível when that section is named and has a card', () => {
     const products = [
       productOf('pronto', 'Pronto', [listingOf('pronto')]),
       productOf('breve', 'Breve', [
         listingOf('breve', { availabilityStatus: 'coming_soon' }),
       ]),
     ]
-    expect(activeSection(products, null)).toBe('available')
+    expect(activeSection(products, 'available')).toBe('available')
+    expect(activeSection(products, null)).toBe('all')
   })
 
-  it('opens Sob encomenda when earlier sections have no card', () => {
+  it('keeps Sob encomenda when that section is named and has a card', () => {
     const products = [
       productOf('encomenda', 'Encomenda', [
         listingOf('encomenda', { availabilityStatus: 'on_order', state: 'new' }),
       ]),
     ]
-    expect(activeSection(products, null)).toBe('on-order')
+    expect(activeSection(products, 'on-order')).toBe('on-order')
+    expect(activeSection(products, null)).toBe('all')
   })
 
-  it('stays on Disponível when no section has a card', () => {
+  it('opens Todos when no section has a card', () => {
     const products = [
       productOf('oculto', 'Oculto', [listingOf('oculto', { enabled: false })]),
       productOf('vazio', 'Vazio', [
@@ -253,8 +256,9 @@ describe('activeSection', () => {
         }),
       ]),
     ]
-    expect(activeSection(products, null)).toBe('available')
-    expect(activeSection(products, 'invalida')).toBe('available')
+    expect(activeSection(products, null)).toBe('all')
+    expect(activeSection(products, 'invalida')).toBe('all')
+    expect(activeSection(products, 'all')).toBe('all')
     expect(homeEmptyText(products, null)).toBe('Não temos nenhum anúncio ativo.')
   })
 
@@ -264,7 +268,9 @@ describe('activeSection', () => {
     ]
     expect(activeSection(products, 'on-order')).toBe('on-order')
     expect(homeCards(products, 'on-order')).toEqual([])
+    expect(homeEmptyText(products, 'on-order')).toBeNull()
     expect(activeSection(products, 'coming-soon')).toBe('coming-soon')
+    expect(activeSection(products, 'all')).toBe('all')
   })
 })
 
@@ -482,8 +488,56 @@ describe('homeCards', () => {
       productOf('omisso', 'Omisso', [listingOf('omisso')]),
     ]
     expect(homeCards(products, null).map((card) => card.listingId)).toEqual(['omisso'])
-    expect(activeSection(products, null)).toBe('available')
+    expect(activeSection(products, null)).toBe('all')
     expect(homeCards(products, 'on-order')).toEqual([])
+  })
+
+  it('lists every status together for all or null, sorted by title, with each availability label', () => {
+    const products = [
+      productOf('zulu', 'Zebra', [
+        listingOf('z', { availabilityStatus: 'on_order' }),
+      ]),
+      productOf('alfa', 'Águia', [listingOf('a')]),
+      productOf('meio', 'bola', [
+        listingOf('breve', { availabilityStatus: 'coming_soon' }),
+      ]),
+    ]
+    const expected = [
+      {
+        slug: 'alfa',
+        listingId: 'a',
+        title: 'Águia',
+        image: img,
+        price: 100,
+        unmissableOffer: false,
+        statusLabel: 'Disponível',
+        path: '/product/alfa/a',
+      },
+      {
+        slug: 'meio',
+        listingId: 'breve',
+        title: 'bola',
+        image: img,
+        price: 100,
+        unmissableOffer: false,
+        statusLabel: 'Chega em breve',
+        path: '/product/meio/breve',
+      },
+      {
+        slug: 'zulu',
+        listingId: 'z',
+        title: 'Zebra',
+        image: img,
+        price: 100,
+        unmissableOffer: false,
+        statusLabel: 'Sob encomenda',
+        path: '/product/zulu/z',
+      },
+    ]
+    expect(homeCards(products, null)).toEqual(expected)
+    expect(homeCards(products, 'all')).toEqual(expected)
+    expect(homeCards(products, 'available').map((card) => card.listingId)).toEqual(['a'])
+    expect(sectionHasCards(products, 'all')).toBe(true)
   })
 })
 
