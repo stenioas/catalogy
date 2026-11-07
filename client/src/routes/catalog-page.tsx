@@ -96,11 +96,15 @@ export function CatalogPage() {
             onValueChange={(id) => {
               if (isSectionId(id)) selectSection(id)
             }}
-            className="w-full"
+            className="mb-6 w-full"
           >
-            <TabsList aria-label="Seção" className="mb-6 h-auto max-w-full flex-wrap">
+            <TabsList aria-label="Seção" className="w-full bg-[var(--hairline)] md:w-fit">
               {SECTIONS.map((section) => (
-                <TabsTrigger key={section.id} value={section.id} className="h-8 flex-none px-3">
+                <TabsTrigger
+                  key={section.id}
+                  value={section.id}
+                  className="data-active:bg-primary data-active:text-primary-foreground dark:data-active:bg-primary dark:data-active:text-primary-foreground"
+                >
                   {section.label}
                 </TabsTrigger>
               ))}
