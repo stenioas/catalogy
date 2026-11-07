@@ -22,7 +22,7 @@ Do T1 ao fim da T15, `pnpm test` na raiz pode falhar: o JSON novo e a página ve
 | Code Layer | Required Test Type | Coverage Expectation | Location Pattern | Run Command |
 | --- | --- | --- | --- | --- |
 | Schema e regras de anúncio | unit | Todos os ramos. Um teste por AC de contrato, fila, home, filtro, página e borda listada | `shared/src/**/*.test.ts` | `pnpm --filter @catalogo/shared test` |
-| Prebuild, migração e dist | integration | JSON inválido falha. Foto citada ausente falha. Foto não citada fica na fonte e sai do dist. Fixture velha vira anúncio `listing` | `client/scripts/**/*.test.ts` | `pnpm --filter client exec vitest run scripts/catalog.test.ts scripts/prebuild-catalog.test.ts scripts/migrate-listings.test.ts scripts/dist.test.ts` |
+| Prebuild e dist | integration | JSON inválido falha. Foto citada ausente falha. Foto não citada fica na fonte e sai do dist | `client/scripts/**/*.test.ts` | `pnpm --filter client exec vitest run scripts/catalog.test.ts scripts/prebuild-catalog.test.ts scripts/dist.test.ts` |
 | Home, card, página, faixa e seletores | integration | Cada rota e largura do spec: caminho feliz, borda e erro. A suíte existente não perde asserção sem equivalente | `client/src/**/*.test.tsx` | `pnpm --filter client exec vitest run <arquivo da tarefa>` |
 | Skill de cadastro | none | O texto da skill cumpre o spec. A suíte Vitest não executa a skill | `.agents/skills/product-register/SKILL.md` e `.agents/skills/product-scrapper/SKILL.md` | gate da tarefa, sem Vitest da skill |
 
@@ -302,7 +302,7 @@ T17 -> T18
 ### T8: Migrar os product.json atuais
 
 **What**: Cada arquivo atual vira um produto com o anúncio `listing` e uma variante.
-**Where**: `client/scripts/migrate-listings.ts`
+**Where**: `client/scripts/migrate-listings.ts` (removido depois que o catálogo ficou no formato novo)
 **Depends on**: T1
 **Reuses**: o teste por fixture de `client/scripts/specification-migration.test.ts`
 **Requirement**: VAR-27, VAR-28, VAR-29, VAR-30, VAR-31, VAR-32, VAR-33
