@@ -422,8 +422,8 @@ describe('CatalogPage section and filter', () => {
       }),
     ]
     const router = renderHome('/')
-    expect(screen.getByRole('button', { name: 'Chega em breve', pressed: true })).toBeDefined()
-    expect(screen.getByRole('button', { name: 'Disponível', pressed: false })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Chega em breve', selected: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Disponível', selected: false })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
     expect(router.state.location.search).toBe('')
@@ -439,7 +439,7 @@ describe('CatalogPage section and filter', () => {
       }),
     ]
     const router = renderHome('/?section=on-order')
-    expect(screen.getByRole('button', { name: 'Sob encomenda', pressed: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Sob encomenda', selected: true })).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Agora' })).toBeNull()
     expect(screen.queryByText(NO_ACTIVE_LISTING_TEXT)).toBeNull()
     expect(screen.queryByText(NO_FILTER_MATCH_TEXT)).toBeNull()
@@ -455,7 +455,7 @@ describe('CatalogPage section and filter', () => {
       }),
     ]
     const router = renderHome('/?section=foo&state=used')
-    expect(screen.getByRole('button', { name: 'Chega em breve', pressed: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Chega em breve', selected: true })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
     const params = searchParamsOf(router.state.location.search)
     expect(params.get('section')).toBe('foo')
@@ -465,7 +465,7 @@ describe('CatalogPage section and filter', () => {
   it('shows the exact empty texts for no listing and for a filter that hides every card', () => {
     mockProductsRef.current = []
     const empty = renderHome('/')
-    expect(screen.getByRole('button', { name: 'Disponível', pressed: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Disponível', selected: true })).toBeDefined()
     expect(screen.getByText(NO_ACTIVE_LISTING_TEXT)).toBeDefined()
     expect(screen.queryByTestId('catalog-grid')).toBeNull()
     expect(empty.state.location.search).toBe('')
@@ -507,7 +507,7 @@ describe('CatalogPage section and filter', () => {
       }),
     ]
     const router = renderHome('/?state=new&audience=male&cor=azul')
-    fireEvent.click(screen.getByRole('button', { name: 'Chega em breve' }))
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
     const params = searchParamsOf(router.state.location.search)
     expect(params.get('section')).toBe('coming-soon')
     expect(params.get('state')).toBe('new')
@@ -602,7 +602,8 @@ describe('CatalogPage section and filter', () => {
       }),
     ]
     renderHome('/')
-    expect(groupNames()).toEqual(['Seção', 'Estado', 'Público-alvo', 'Cor', 'Pulseira'])
+    expect(screen.getByRole('tablist', { name: 'Seção' })).toBeDefined()
+    expect(groupNames()).toEqual(['Estado', 'Público-alvo', 'Cor', 'Pulseira'])
     const optionLabels = (name: string) =>
       within(screen.getByRole('group', { name }))
         .getAllByRole('checkbox')
@@ -692,15 +693,15 @@ describe('CatalogPage section and filter', () => {
       }),
     ]
     const router = renderHome('/')
-    expect(screen.getByRole('button', { name: 'Disponível', pressed: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Disponível', selected: true })).toBeDefined()
     expect(within(screen.getByRole('heading', { name: 'Agora' }).closest('li')!).getByText('Disponível')).toBeDefined()
-    fireEvent.click(screen.getByRole('button', { name: 'Chega em breve' }))
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('coming-soon')
     expect(within(screen.getByRole('heading', { name: 'Breve' }).closest('li')!).getByText('Chega em breve')).toBeDefined()
-    fireEvent.click(screen.getByRole('button', { name: 'Sob encomenda' }))
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Sob encomenda' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
     expect(within(screen.getByRole('heading', { name: 'Encomenda' }).closest('li')!).getByText('Sob encomenda')).toBeDefined()
-    fireEvent.click(screen.getByRole('button', { name: 'Disponível' }))
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Disponível' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('available')
   })
 

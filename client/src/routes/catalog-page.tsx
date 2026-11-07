@@ -11,6 +11,7 @@ import { useSearchParams } from 'react-router-dom'
 import { products } from '../catalog/products.generated'
 import { TopBar } from '../components/catalog/top-bar'
 import { WatchCard } from '../components/catalog/watch-card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 
 const SECTIONS: { id: SectionId; label: string }[] = [
   { id: 'available', label: 'Disponível' },
@@ -90,61 +91,65 @@ export function CatalogPage() {
       <TopBar />
       <main className="max-w-full min-w-0 overflow-x-clip">
         <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-8">
-          <div role="group" aria-label="Seção" className="mb-6 flex flex-wrap gap-2">
-            {SECTIONS.map((section) => (
-              <button
-                key={section.id}
-                type="button"
-                aria-pressed={section.id === resolved}
-                className="rounded-full border border-[rgba(0,0,0,0.12)] px-3 py-1.5 text-sm text-[var(--ink-primary)] aria-pressed:bg-[var(--ink)] aria-pressed:text-[var(--canvas-parchment)]"
-                onClick={() => selectSection(section.id)}
-              >
-                {section.label}
-              </button>
-            ))}
-          </div>
-          {groups.length > 0 ? (
-            <div className="mb-6 flex flex-col gap-4">
-              {groups.map((group) => (
-                <fieldset key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
-                  <legend className="text-sm font-medium text-[var(--ink-primary)]">{group.label}</legend>
-                  <div className="flex flex-wrap gap-3">
-                    {group.options.map((option) => (
-                      <label
-                        key={option.id}
-                        className="inline-flex items-center gap-2 text-sm text-[var(--ink-primary)]"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={selectedInGroup(marks, group.id, option.id)}
-                          onChange={() => toggleMark(group.id, option.id)}
-                        />
-                        {option.label}
-                      </label>
-                    ))}
-                  </div>
-                </fieldset>
+          <Tabs
+            value={resolved}
+            onValueChange={(id) => {
+              if (isSectionId(id)) selectSection(id)
+            }}
+            className="w-full"
+          >
+            <TabsList aria-label="Seção" className="mb-6 h-auto max-w-full flex-wrap">
+              {SECTIONS.map((section) => (
+                <TabsTrigger key={section.id} value={section.id} className="h-8 flex-none px-3">
+                  {section.label}
+                </TabsTrigger>
               ))}
-            </div>
-          ) : null}
-          {emptyText !== null ? (
-            <p className="m-0 text-[var(--ink-primary)]">{emptyText}</p>
-          ) : cards.length === 0 ? null : (
-            <ul
-              data-testid="catalog-grid"
-              className="catalog-grid m-0 grid list-none grid-cols-1 items-stretch gap-4 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
-            >
-              {cards.map((card) => {
-                const product = products.find((item) => item.slug === card.slug)
-                if (product === undefined) return null
-                return (
-                  <li key={`${card.slug}-${card.listingId}`} className="flex h-full">
-                    <WatchCard product={product} card={card} />
-                  </li>
-                )
-              })}
-            </ul>
-          )}
+            </TabsList>
+            <TabsContent value={resolved}>
+              {groups.length > 0 ? (
+                <div className="mb-6 flex flex-col gap-4">
+                  {groups.map((group) => (
+                    <fieldset key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
+                      <legend className="text-sm font-medium text-[var(--ink-primary)]">{group.label}</legend>
+                      <div className="flex flex-wrap gap-3">
+                        {group.options.map((option) => (
+                          <label
+                            key={option.id}
+                            className="inline-flex items-center gap-2 text-sm text-[var(--ink-primary)]"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={selectedInGroup(marks, group.id, option.id)}
+                              onChange={() => toggleMark(group.id, option.id)}
+                            />
+                            {option.label}
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  ))}
+                </div>
+              ) : null}
+              {emptyText !== null ? (
+                <p className="m-0 text-[var(--ink-primary)]">{emptyText}</p>
+              ) : cards.length === 0 ? null : (
+                <ul
+                  data-testid="catalog-grid"
+                  className="catalog-grid m-0 grid list-none grid-cols-1 items-stretch gap-4 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+                >
+                  {cards.map((card) => {
+                    const product = products.find((item) => item.slug === card.slug)
+                    if (product === undefined) return null
+                    return (
+                      <li key={`${card.slug}-${card.listingId}`} className="flex h-full">
+                        <WatchCard product={product} card={card} />
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
     </>
