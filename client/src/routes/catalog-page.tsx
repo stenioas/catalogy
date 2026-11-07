@@ -124,8 +124,8 @@ export function CatalogPage() {
     <>
       <TopBar />
       <main className="max-w-full min-w-0 overflow-x-clip">
-        <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-4">
-          <div className="mb-6">
+        <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine pb-4">
+          <div className="mb-2">
             <div ref={sentinelRef} data-testid="section-toggle-sentinel" aria-hidden="true" className="h-0" />
             {pinned ? (
               <div data-testid="section-toggle-spacer" aria-hidden="true" style={{ height: spacerHeight }} />
