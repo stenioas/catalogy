@@ -412,6 +412,8 @@ export type ListingSelectorOption = {
   valueId: string
   value: string
   disabled: boolean
+  /** true when a valid combination exists but the target variant is not orderable (Indisponível) */
+  unavailable: boolean
   v: string | null
 }
 
@@ -480,10 +482,13 @@ function selectorsFor(product: Product, listing: Listing, active: Variant): List
           compatibleWithOtherAxes(variant, active, axis.id),
       )
       const landing = queue.find((variant) => variantContains(variant, axis.id, axisValue.id))
+      const unavailable =
+        possible && landing !== undefined && landing.orderable === false
       return {
         valueId: axisValue.id,
         value: axisValue.value,
         disabled: !possible,
+        unavailable,
         v: possible && landing !== undefined ? variantQuery(product, landing) : null,
       }
     }),

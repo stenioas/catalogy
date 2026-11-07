@@ -502,15 +502,16 @@ T17 -> T18
 
 **Done when**:
 
-- [ ] A opção mostra `value`
-- [ ] A opção impossível permanece visível e desabilitada
-- [ ] A opção indisponível permanece acionável, apagada e com borda tracejada
-- [ ] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/axis-selectors.test.tsx`
+- [x] A opção mostra `value`
+- [x] A opção impossível permanece visível e desabilitada
+- [x] A opção indisponível permanece acionável, apagada e com borda tracejada
+- [x] Gate quick passa: `pnpm --filter client exec vitest run src/components/catalog/axis-selectors.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
 
 **Commit**: `feat(client): add axis selectors with impossible options disabled`
+**Status**: done
 
 ### T15: Página de um anúncio
 

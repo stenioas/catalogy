@@ -959,12 +959,12 @@ describe('listingByPath', () => {
     expect(view.selectors.map((selector) => selector.label)).toEqual(['Cor', 'Tamanho'])
     expect(color?.options.map((option) => option.value)).toEqual(['Preto', 'Azul'])
     expect(color?.options).toEqual([
-      { valueId: 'preto', value: 'Preto', disabled: false, v: 'preto,m' },
-      { valueId: 'azul', value: 'Azul', disabled: false, v: 'azul,p' },
+      { valueId: 'preto', value: 'Preto', disabled: false, unavailable: false, v: 'preto,m' },
+      { valueId: 'azul', value: 'Azul', disabled: false, unavailable: false, v: 'azul,p' },
     ])
     expect(size?.options).toEqual([
-      { valueId: 'p', value: 'P', disabled: true, v: null },
-      { valueId: 'm', value: 'M', disabled: false, v: 'preto,m' },
+      { valueId: 'p', value: 'P', disabled: true, unavailable: false, v: null },
+      { valueId: 'm', value: 'M', disabled: false, unavailable: false, v: 'preto,m' },
     ])
   })
 
@@ -975,7 +975,13 @@ describe('listingByPath', () => {
       .find((selector) => selector.axisId === 'color')
       ?.options.find((option) => option.valueId === 'azul')
 
-    expect(azul).toEqual({ valueId: 'azul', value: 'Azul', disabled: false, v: 'azul,p' })
+    expect(azul).toEqual({
+      valueId: 'azul',
+      value: 'Azul',
+      disabled: false,
+      unavailable: false,
+      v: 'azul,p',
+    })
 
     const next = requireOpen(listingByPath([product], 'vista', 'vista', azul?.v ?? null))
     expect(next.price).toBe(10)

@@ -338,15 +338,15 @@ O catálogo trata cada `product.json` como um relógio único: um estado, um pre
 | VAR-65 | P1: Página | Tasks | Done |
 | VAR-66 | P1: Página | Tasks | Done |
 | VAR-67 | P1: Página | Tasks | Done |
-| VAR-68 | P1: Página | Tasks | Done |
+| VAR-68 | P1: Página | Tasks | Done · T14 |
 | VAR-69 | P1: Página | Tasks | Done |
 | VAR-70 | P1: Página | Tasks | Done |
 | VAR-71 | P1: Página | Tasks | Done |
 | VAR-72 | P1: Página | Tasks | Done |
 | VAR-73 | P1: Página | Tasks | Done |
 | VAR-74 | P1: Página | Tasks | Done |
-| VAR-75 | P1: Página | Tasks | Done |
-| VAR-76 | P1: Página | Tasks | Done |
+| VAR-75 | P1: Página | Tasks | Done · T14 |
+| VAR-76 | P1: Página | Tasks | Done · T14 |
 | VAR-77 | P1: Página | Tasks | Done |
 | VAR-78 | P1: Página | Tasks | Done |
 | VAR-79 | P1: Página | Tasks | Done |
