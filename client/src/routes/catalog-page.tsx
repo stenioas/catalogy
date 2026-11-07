@@ -14,9 +14,9 @@ import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs'
 
 const SECTIONS: { id: SectionId; label: string }[] = [
   { id: 'all', label: 'Todos' },
-  { id: 'available', label: 'Disponível' },
-  { id: 'coming-soon', label: 'Chega em breve' },
-  { id: 'on-order', label: 'Sob encomenda' },
+  { id: 'available', label: 'Pronta entrega' },
+  { id: 'coming-soon', label: 'A caminho' },
+  { id: 'on-order', label: 'Encomendar' },
 ]
 
 const resultsEnterClass =

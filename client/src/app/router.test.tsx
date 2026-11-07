@@ -169,17 +169,17 @@ describe('troca entre vitrine e produto', () => {
 
   it('mantém a seção escolhida ao voltar do produto', () => {
     setup()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'A caminho' }))
     fireEvent.click(screen.getAllByTestId('watch-card-link')[0])
     expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/?section=coming-soon')
     fireEvent.click(screen.getByRole('link', { name: 'Voltar' }))
-    expect(screen.getByRole('tab', { name: 'Chega em breve', selected: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'A caminho', selected: true })).toBeDefined()
     expect(screen.getByTestId('catalog-page-column')).toBeDefined()
   })
 
   it('troca a seção na hora, sem loading artificial', () => {
     setup()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Chega em breve' }))
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'A caminho' }))
     const results = screen.getByTestId('catalog-results')
     for (const className of ROUTE_ENTER_CLASSES) {
       expect(results.classList.contains(className)).toBe(true)
