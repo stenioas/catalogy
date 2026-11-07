@@ -145,21 +145,26 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(row?.className).toMatch(/\bmd:whitespace-nowrap\b/)
   })
 
-  it('places a small upright discount beside the current price on the mobile showcase and restores it beside the reference price from md', () => {
+  it('places a small upright discount beside the reference price on the showcase at every breakpoint', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450, showcase: true })
     const list = screen.getByTestId('price-list')
     const badge = screen.getByTestId('price-badge')
     const current = screen.getByTestId('price-current')
     const installments = screen.getByTestId('price-installments')
 
-    expect(list.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-span-3', 'text-xs', 'md:text-sm', 'md:row-start-1']))
+    expect(list.className.split(/\s+/)).toEqual(expect.arrayContaining(['row-start-1', 'text-xs', 'md:text-sm']))
+    expect(list.className.split(/\s+/)).not.toContain('col-span-3')
     expect(current.className.split(/\s+/)).toEqual(expect.arrayContaining(['text-base', 'md:text-xl', 'row-start-2']))
-    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-start-2', 'row-start-2', 'text-[11px]', 'md:row-start-1']))
+    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-start-2', 'row-start-1', 'text-[11px]']))
+    expect(badge.className.split(/\s+/)).not.toContain('row-start-2')
     expect(badge.className).not.toMatch(/rotate/)
     expect(badge.textContent).toBe('−17%')
     expect(installments.className).toMatch(/\btext-xs\b/)
     expect(installments.textContent).toBe(creditInstallmentLabel(369.9))
-    expect(screen.getByTestId('price-pix').className.split(/\s+/)).toContain('col-start-3')
+    expect(screen.getByTestId('price-pix').className.split(/\s+/)).toEqual(
+      expect.arrayContaining(['col-start-2', 'row-start-2']),
+    )
+    expect(screen.getByTestId('price-pix').className.split(/\s+/)).not.toContain('col-start-3')
   })
 
   it('keeps the showcase current price on the first row when there is no reference price', () => {

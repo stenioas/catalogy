@@ -37,7 +37,7 @@ export function PriceBlock({
         {listPrice !== undefined ? (
           <span
             data-testid="price-list"
-            className="col-span-3 text-xs text-ink-muted-48 line-through md:col-span-1 md:row-start-1 md:text-sm"
+            className="row-start-1 text-xs text-ink-muted-48 line-through md:text-sm"
           >
             De {formatBrl(listPrice)}
           </span>
@@ -45,7 +45,7 @@ export function PriceBlock({
         {showBadge ? (
           <Badge
             data-testid="price-badge"
-            className="col-start-2 row-start-2 h-auto rounded-[4px] bg-primary-tint-background px-1.5 py-0 text-[11px] font-medium text-primary-tint-foreground md:col-start-2 md:row-start-1"
+            className="col-start-2 row-start-1 h-auto rounded-[4px] bg-primary-tint-background px-1.5 py-0 text-[11px] font-medium text-primary-tint-foreground"
           >
             −{percent}%
           </Badge>
@@ -58,7 +58,7 @@ export function PriceBlock({
         </span>
         <span
           data-testid="price-pix"
-          className={`${showBadge ? 'col-start-3 md:col-start-2' : 'col-start-2'} text-xs text-muted-foreground md:text-sm ${priceRow}`}
+          className={`col-start-2 text-xs text-muted-foreground md:text-sm ${priceRow}`}
         >
           no pix
         </span>

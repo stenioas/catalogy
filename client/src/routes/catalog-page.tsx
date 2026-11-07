@@ -92,7 +92,7 @@ export function CatalogPage() {
     <>
       <TopBar />
       <main className="max-w-full min-w-0 overflow-x-clip">
-        <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-8">
+        <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-4">
           <Tabs
             value={resolved}
             onValueChange={(id) => {
