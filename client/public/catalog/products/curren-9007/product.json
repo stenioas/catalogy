@@ -8,6 +8,10 @@
       "label": "Cor",
       "values": [
         {
+          "id": "gold",
+          "value": "Gold"
+        },
+        {
           "id": "rose-gold",
           "value": "Rosé Gold"
         }
@@ -91,12 +95,50 @@
           "axes": [
             {
               "axisId": "color",
+              "valueId": "gold"
+            }
+          ],
+          "price": 139.9,
+          "listPrice": 154.9,
+          "mainImage": "curren-9007-1.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
               "valueId": "rose-gold"
             }
           ],
-          "price": 129.9,
+          "price": 139.9,
           "listPrice": 154.9,
-          "mainImage": "curren-9007-1.png"
+          "mainImage": "curren-9007-4.png"
+        }
+      ]
+    },
+    {
+      "id": "listing-rose-gold",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "curren-9007-4.png",
+        "curren-9007-5.png",
+        "curren-9007-6.png",
+        "curren-9007-13.png",
+        "curren-9007-14.png",
+        "curren-9007-15.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "rose-gold"
+            }
+          ],
+          "price": 109.9,
+          "listPrice": 154.9,
+          "unmissableOffer": true,
+          "mainImage": "curren-9007-4.png"
         }
       ]
     }

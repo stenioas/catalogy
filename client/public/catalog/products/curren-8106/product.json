@@ -75,7 +75,43 @@
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "listing-on-order",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "curren-8106-1.png",
+        "curren-8106-2.png",
+        "curren-8106-3.png",
+        "curren-8106-4.png",
+        "curren-8106-5.png",
+        "curren-8106-6.png",
+        "curren-8106-7.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white"
+            }
+          ],
+          "price": 149.9,
+          "mainImage": "curren-8106-1.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-black"
+            }
+          ],
+          "price": 149.9,
+          "mainImage": "curren-8106-2.png"
+        }
+      ]
+    },
+    {
+      "id": "listing-comming-soon",
       "state": "new",
       "availabilityStatus": "coming_soon",
       "images": [
@@ -95,8 +131,8 @@
               "valueId": "silver-white"
             }
           ],
-          "price": 129.9,
-          "listPrice": 169.9,
+          "price": 119.9,
+          "listPrice": 149.9,
           "unmissableOffer": true,
           "mainImage": "curren-8106-1.png"
         },
@@ -107,8 +143,8 @@
               "valueId": "silver-black"
             }
           ],
-          "price": 129.9,
-          "listPrice": 169.9,
+          "price": 119.9,
+          "listPrice": 149.9,
           "unmissableOffer": true,
           "mainImage": "curren-8106-2.png"
         }
