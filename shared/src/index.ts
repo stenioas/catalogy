@@ -17,6 +17,7 @@ export {
   activeSection,
   homeEmptyText,
   listingByPath,
+  listingForDisplay,
   listingPath,
   AVAILABILITY_LABEL,
   STATE_LABEL,

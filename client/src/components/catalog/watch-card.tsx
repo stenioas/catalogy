@@ -1,5 +1,5 @@
 import type { CatalogCard, Product } from '@catalogo/shared'
-import { resolveVariant, shareMessage } from '@catalogo/shared'
+import { listingForDisplay, resolveVariant, shareMessage } from '@catalogo/shared'
 import { Link, useLocation } from 'react-router-dom'
 
 import { Card } from '@/components/ui/card'
@@ -18,10 +18,11 @@ export function productImageSrc(slug: string, fileName: string): string {
 }
 
 function listingVariantForCard(product: Product, card: CatalogCard) {
-  const listing = product.listings.find((item) => item.id === card.listingId)
-  if (listing === undefined) {
+  const source = product.listings.find((item) => item.id === card.listingId)
+  if (source === undefined) {
     throw new Error(`WatchCard: listing ${card.listingId} not found on product ${product.slug}`)
   }
+  const listing = listingForDisplay(product, source)
   const vParam = new URL(card.path, 'http://localhost').searchParams.get('v')
   const variant = resolveVariant(listing, vParam)
   return { listing, variant }

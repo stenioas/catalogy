@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import {
   listingByPath,
+  listingForDisplay,
   listingPath,
   resolveVariant,
   shareMessage,
@@ -344,9 +345,12 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   const resolvedListingId = listingId === undefined || listingId === '' ? null : listingId
   const view = listingByPath(products, slug, resolvedListingId, requestedV)
   const product = products.find((item) => item.slug === slug)
-  const listing = view.missing || product === undefined
+  const source = view.missing || product === undefined
     ? undefined
     : product.listings.find((item) => item.id === view.listingId)
+  const listing = source === undefined || product === undefined
+    ? undefined
+    : listingForDisplay(product, source)
   if (view.missing || product === undefined || listing === undefined) {
     return (
       <>

@@ -539,6 +539,130 @@ describe('homeCards', () => {
     expect(homeCards(products, 'available').map((card) => card.listingId)).toEqual(['a'])
     expect(sectionHasCards(products, 'all')).toBe(true)
   })
+
+  it('hides an on-order variant already stocked or arriving and keeps the other colors', () => {
+    const axes = [{
+      id: 'cor',
+      label: 'Cor',
+      values: [
+        { id: 'amarelo', value: 'Amarelo' },
+        { id: 'verde', value: 'Verde' },
+      ],
+    }]
+    const products = [
+      productOf(
+        'curren',
+        'Curren',
+        [
+          listingOf('encomenda', {
+            availabilityStatus: 'on_order',
+            variants: [
+              variantOf(139.9, {
+                mainImage: 'gold.jpg',
+                axes: [{ axisId: 'cor', valueId: 'amarelo' }],
+              }),
+              variantOf(139.9, {
+                mainImage: 'rose.jpg',
+                axes: [{ axisId: 'cor', valueId: 'verde' }],
+              }),
+            ],
+          }),
+          listingOf('caminho', {
+            availabilityStatus: 'coming_soon',
+            variants: [
+              variantOf(109.9, {
+                mainImage: 'rose.jpg',
+                axes: [{ axisId: 'cor', valueId: 'verde' }],
+              }),
+            ],
+          }),
+        ],
+        { axes },
+      ),
+    ]
+    const stored = products[0]!.listings.map((listing) => listing.variants.length)
+
+    expect(homeCards(products, 'on-order')).toEqual([
+      {
+        slug: 'curren',
+        listingId: 'encomenda',
+        title: 'Curren',
+        image: 'gold.jpg',
+        price: 139.9,
+        unmissableOffer: false,
+        statusLabel: 'Sob encomenda',
+        path: '/product/curren/encomenda?v=amarelo',
+      },
+    ])
+    expect(sectionHasCards(products, 'on-order')).toBe(true)
+    expect(homeCards(products, 'coming-soon')[0]?.path).toBe('/product/curren/caminho?v=verde')
+
+    const orderView = requireOpen(listingByPath(products, 'curren', 'encomenda', 'verde'))
+    expect(orderView.price).toBe(139.9)
+    expect(orderView.title).toBe('Curren Amarelo')
+    const orderColors = orderView.selectors.find((selector) => selector.axisId === 'cor')?.options
+    expect(orderColors?.map((option) => option.valueId)).not.toContain('verde')
+    expect(orderColors?.find((option) => option.valueId === 'amarelo')?.disabled).toBe(false)
+
+    const soonView = requireOpen(listingByPath(products, 'curren', 'caminho', null))
+    expect(soonView.selectors.find((selector) => selector.axisId === 'cor')?.options.map((option) => option.valueId)).toContain('verde')
+    expect(products[0]!.listings.map((listing) => listing.variants.length)).toEqual(stored)
+  })
+
+  it('drops the on-order card when every variant is already available or arriving', () => {
+    const products = [
+      productOf(
+        'curren',
+        'Curren',
+        [
+          listingOf('encomenda', {
+            availabilityStatus: 'on_order',
+            variants: [
+              variantOf(10, { axes: [{ axisId: 'cor', valueId: 'preto' }] }),
+              variantOf(20, { axes: [{ axisId: 'cor', valueId: 'azul' }] }),
+            ],
+          }),
+          listingOf('caminho', {
+            availabilityStatus: 'coming_soon',
+            variants: [
+              variantOf(8, { axes: [{ axisId: 'cor', valueId: 'preto' }] }),
+              variantOf(9, { axes: [{ axisId: 'cor', valueId: 'azul' }] }),
+            ],
+          }),
+        ],
+        { axes: [color] },
+      ),
+    ]
+
+    expect(homeCards(products, 'on-order')).toEqual([])
+    expect(sectionHasCards(products, 'on-order')).toBe(false)
+    expect(homeCards(products, 'all').map((card) => card.listingId)).toEqual(['caminho'])
+    expect(listingByPath(products, 'curren', 'encomenda', 'preto')).toEqual({ missing: true })
+  })
+
+  it('keeps an on-order variant when the matching stock listing is disabled', () => {
+    const products = [
+      productOf(
+        'curren',
+        'Curren',
+        [
+          listingOf('encomenda', {
+            availabilityStatus: 'on_order',
+            variants: [variantOf(10, { axes: [{ axisId: 'cor', valueId: 'preto' }] })],
+          }),
+          listingOf('estoque', {
+            enabled: false,
+            variants: [variantOf(10, { axes: [{ axisId: 'cor', valueId: 'preto' }] })],
+          }),
+        ],
+        { axes: [color] },
+      ),
+    ]
+
+    expect(homeCards(products, 'on-order').map((card) => card.path)).toEqual([
+      '/product/curren/encomenda?v=preto',
+    ])
+  })
 })
 
 function requireOpen(view: ListingView) {
@@ -603,7 +727,7 @@ describe('listingByPath', () => {
       listingOf('b', { enabled: false }),
     ])
 
-    expect(requireOpen(listingByPath([product], 'relogio', 'dead', null)).listingId).toBe('dead')
+    expect(listingByPath([product], 'relogio', 'dead', null)).toEqual({ missing: true })
     expect(requireOpen(listingByPath([product], 'relogio', null, null)).listingId).toBe('stock')
     expect(listingByPath([product], 'relogio', 'hidden', null)).toEqual({ missing: true })
     expect(listingByPath([product], 'relogio', 'ausente', null)).toEqual({ missing: true })
