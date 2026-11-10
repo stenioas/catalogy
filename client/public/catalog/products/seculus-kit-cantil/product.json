@@ -1,7 +1,7 @@
 {
   "slug": "seculus-kit-cantil",
-  "title": "Kit Seculus Cantil Azul",
-  "description": "O Seculus Navy é um relógio analógico casual da linha Navy, com movimento de quartzo alimentado por bateria e calendário. A caixa é de aço inoxidável, com 45 mm de diâmetro, e a pulseira também é de aço inoxidável. O vidro é de cristal mineral, o bisel possui detalhes em alumínio e a resistência à água é de 50 m (5 ATM).",
+  "title": "Kit Relógio + Cantil Seculus Navy Azul",
+  "description": "O Kit Relógio + Cantil Seculus Navy Azul é um conjunto de um relógio analógico casual da linha Navy, com movimento de quartzo alimentado por bateria e calendário. A caixa é de aço inoxidável, com 45 mm de diâmetro, e a pulseira também é de aço inoxidável. O vidro é de cristal mineral, o bisel possui detalhes em alumínio e a resistência à água é de 50 m (5 ATM).",
   "axes": [
     {
       "id": "color",
@@ -63,7 +63,7 @@
   "listings": [
     {
       "id": "listing",
-      "state": "openbox",
+      "state": "used",
       "availabilityStatus": "available",
       "images": [
         "seculus-1.png",

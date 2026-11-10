@@ -1,0 +1,97 @@
+{
+  "slug": "qingxiya-7706",
+  "title": "Relógio Qingxiya Speedmaster Moonwatch",
+  "description": "Relógio masculino QINGXIYA 7706, cronógrafo de quartzo com calendário, ponteiros luminosos e submostrador de 24 horas. Caixa de liga com 43 mm de diâmetro e 13 mm de espessura, vidro Hardlex, pulseira de aço inoxidável de 20 mm e fecho oculto. Resistência à água de 30 m (3 ATM).",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "silver-white",
+          "value": "Silver White"
+        }
+      ]
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "QINGXIYA"
+    },
+    {
+      "label": "Modelo",
+      "value": "7706"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Relógio de pulso de quartzo, fashion e casual"
+    },
+    {
+      "label": "Funções",
+      "value": "Cronógrafo, calendário completo, ponteiros luminosos e submostrador de 24 horas"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Liga"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "43 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "13 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "qingxiya-7706-7.png",
+        "qingxiya-7706-17.png",
+        "qingxiya-7706-18.png",
+        "qingxiya-7706-19.png",
+        "qingxiya-7706-20.png",
+        "qingxiya-7706-21.png",
+        "qingxiya-7706-14.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white"
+            }
+          ],
+          "price": 144.9,
+          "listPrice": 179.9,
+          "mainImage": "qingxiya-7706-7.png"
+        }
+      ]
+    }
+  ]
+}

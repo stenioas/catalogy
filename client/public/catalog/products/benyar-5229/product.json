@@ -1,6 +1,6 @@
 {
   "slug": "benyar-5229",
-  "title": "BENYAR 5229 Prata/Azul",
+  "title": "Relógio Benyar Chronograph",
   "description": "O BENYAR 5229 é um relógio masculino de quartzo com estilo moderno para o dia a dia e ambientes de negócios. Possui caixa e pulseira de aço inoxidável, vidro mineral endurecido, cronógrafo, calendário e ponteiros e marcadores luminosos. A resistência à água é de 3 bar.",
   "axes": [
     {
@@ -72,8 +72,8 @@
     {
       "id": "listing",
       "state": "new",
-      "availabilityStatus": "available",
-      "enabled": false,
+      "availabilityStatus": "on_order",
+      "enabled": true,
       "images": [
         "benyar-5229-1.png",
         "benyar-5229-2.png",
