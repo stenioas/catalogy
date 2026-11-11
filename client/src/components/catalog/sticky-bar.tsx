@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
 import { PriceBlock } from './price-block'
-import { UnmissableOfferBadge } from './product-badges'
+import { OfferRow, type OfferBadge } from './product-badges'
 import { ProductShareButton } from './want-link'
 
 const frostedBarStyle =
@@ -10,7 +10,9 @@ const frostedBarStyle =
 export type StickyBarProps = {
   price: number
   listPrice?: number
-  unmissableOffer?: boolean
+  availabilityStatus?: 'available' | 'coming_soon' | 'on_order'
+  availabilityLabel?: string
+  offers?: OfferBadge[]
   slug: string
   title: string
   /** When set, the share control uses this WhatsApp URL instead of the slug/title sentence. */
@@ -21,7 +23,9 @@ export type StickyBarProps = {
 export function StickyBar({
   price,
   listPrice,
-  unmissableOffer = false,
+  availabilityStatus,
+  availabilityLabel,
+  offers = [],
   slug,
   title,
   shareHref,
@@ -32,6 +36,8 @@ export function StickyBar({
   const barRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
   const observedTargetRef = useRef<Element | null | undefined>(undefined)
+
+  const isOnOrder = availabilityStatus === 'on_order'
 
   useLayoutEffect(() => {
     const target = targetElement ?? null
@@ -103,8 +109,27 @@ export function StickyBar({
           className="catalog-column watch-page-column flex flex-col items-stretch gap-3 py-3 md:grid md:grid-cols-2 md:items-end"
         >
           <div className="flex min-w-0 flex-1 flex-col items-start gap-1">
-            {unmissableOffer ? <UnmissableOfferBadge /> : null}
-            <PriceBlock price={price} listPrice={listPrice} unmissableOffer={unmissableOffer} />
+            {isOnOrder ? (
+              <>
+                {offers.length > 0 ? <OfferRow offers={offers} /> : null}
+                {availabilityLabel === 'Indisponível' ? (
+                  <p
+                    data-testid="sticky-unavailable-label"
+                    className="m-0 text-base font-semibold text-foreground"
+                  >
+                    Indisponível
+                  </p>
+                ) : null}
+                <p data-testid="consult-label" className="m-0 text-base font-semibold text-foreground md:text-xl">
+                  Sob consulta
+                </p>
+              </>
+            ) : (
+              <>
+                {offers.length > 0 ? <OfferRow offers={offers} /> : null}
+                <PriceBlock price={price} listPrice={listPrice} />
+              </>
+            )}
           </div>
           <div data-testid="sticky-bar-action" className="w-full">
             <ProductShareButton slug={slug} title={title} href={shareHref} />

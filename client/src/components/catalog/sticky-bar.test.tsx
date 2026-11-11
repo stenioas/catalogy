@@ -69,7 +69,13 @@ function sourceFiles(dir: string): string[] {
   return found
 }
 
-function renderBar(unmissableOffer = false) {
+type BarFixtureProps = {
+  availabilityStatus?: 'available' | 'coming_soon' | 'on_order'
+  availabilityLabel?: string
+  offers?: { text: string; background: string; color: string; icon: string }[]
+}
+
+function renderBar(overrides: BarFixtureProps = {}) {
   function Fixture() {
     const buttonRef = useRef<HTMLButtonElement>(null)
     const [target, setTarget] = useState<Element | null>(null)
@@ -81,7 +87,13 @@ function renderBar(unmissableOffer = false) {
         <button ref={buttonRef} type="button">
           alvo
         </button>
-        <StickyBar price={369.9} unmissableOffer={unmissableOffer} slug={slug} title={title} target={target} />
+        <StickyBar
+          price={369.9}
+          slug={slug}
+          title={title}
+          target={target}
+          {...overrides}
+        />
       </>
     )
   }
@@ -269,17 +281,67 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     expect(action.contains(link)).toBe(true)
   })
 
-  it('shows Oferta imperdível above a red current price', () => {
+  it('OSC-30 OSC-33: shows the offer row above the price in catalog color', () => {
     installObserver(0, false)
-    renderBar(true)
+    renderBar({
+      offers: [
+        {
+          text: 'Promo crua',
+          icon: 'Gift',
+          background: '#0066cc',
+          color: '#ffffff',
+        },
+      ],
+    })
 
     const bar = screen.getByTestId('sticky-bar')
-    const badge = within(bar).getByTestId('unmissable-offer')
+    const offerRow = within(bar).getByTestId('offer-row')
     const price = within(bar).getByTestId('price-current')
 
-    expect(badge.textContent).toContain('OFERTA IMPERDÍVEL')
-    expect(badge.compareDocumentPosition(price) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
-    expect(price.className).toMatch(/\btext-destructive\b/)
+    expect(offerRow.textContent).toContain('Promo crua')
+    expect(offerRow.compareDocumentPosition(price) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(price.className).not.toMatch(/\btext-destructive\b/)
+  })
+
+  it('OSC-27 OSC-29: on_order sticky bar shows offers above Sob consulta without price, pix or installments', () => {
+    installObserver(0, false)
+    renderBar({
+      availabilityStatus: 'on_order',
+      offers: [
+        {
+          text: 'OFERTA IMPERDÍVEL',
+          icon: 'Gift',
+          background: '#0066cc',
+          color: '#ffffff',
+        },
+      ],
+    })
+
+    const bar = screen.getByTestId('sticky-bar')
+    const offerRow = within(bar).getByTestId('offer-row')
+    const consult = within(bar).getByTestId('consult-label')
+
+    expect(consult.textContent).toBe('Sob consulta')
+    expect(offerRow.textContent).toContain('OFERTA IMPERDÍVEL')
+    expect(offerRow.compareDocumentPosition(consult) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(within(bar).queryByTestId('price-block')).toBeNull()
+    expect(within(bar).queryByTestId('price-pix')).toBeNull()
+    expect(within(bar).queryByTestId('price-installments')).toBeNull()
+  })
+
+  it('OSC-28: on_order with Indisponível keeps the label and hides the price in the sticky bar', () => {
+    installObserver(0, false)
+    renderBar({
+      availabilityStatus: 'on_order',
+      availabilityLabel: 'Indisponível',
+    })
+
+    const bar = screen.getByTestId('sticky-bar')
+
+    expect(within(bar).getByTestId('sticky-unavailable-label').textContent).toBe('Indisponível')
+    expect(within(bar).getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(within(bar).queryByTestId('price-block')).toBeNull()
+    expect(within(bar).queryByTestId('price-current')).toBeNull()
   })
 
   it('respects the safe area and uses the parchment blur (CAT-94)', () => {

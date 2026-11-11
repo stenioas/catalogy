@@ -367,6 +367,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T11: Levar ofertas e Sob consulta à barra fixa
 
+**Status**: done
+
 **What**: A barra mostra a fileira da variante acima de **Sob consulta** quando o anúncio é `on_order`. O preço, o pix e o parcelamento ficam ocultos. `orderable: false` mantém **Indisponível**.
 **Where**: `client/src/components/catalog/sticky-bar.tsx`
 **Depends on**: T10
@@ -381,9 +383,9 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] O teste cobre **Sob consulta** sem preço e a fileira acima desse texto
-- [ ] O teste cobre **Indisponível** com o preço oculto
-- [ ] Gate: `pnpm --filter client exec vitest run src/components/catalog/sticky-bar.test.tsx`
+- [x] O teste cobre **Sob consulta** sem preço e a fileira acima desse texto
+- [x] O teste cobre **Indisponível** com o preço oculto
+- [x] Gate: `pnpm --filter client exec vitest run src/components/catalog/sticky-bar.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
