@@ -788,6 +788,189 @@ describe('ProductSchema axes identity (VAR-22, VAR-23)', () => {
   })
 })
 
+const validOffer = {
+  text: 'OFERTA IMPERDÍVEL',
+  background: '#0066cc',
+  color: '#ffffff',
+  icon: 'Gift',
+}
+
+function variantWithOffers(
+  offers: typeof validOffer[] | undefined,
+  price = 369.9,
+  listPrice?: number,
+) {
+  return variant({
+    price,
+    ...(listPrice !== undefined ? { listPrice } : {}),
+    ...(offers !== undefined ? { offers } : {}),
+  })
+}
+
+function productWithOneAxis(axisOverrides: Record<string, unknown> = {}) {
+  return product({
+    axes: [{ id: 'color', label: 'Cor', values: [{ id: 'preto', value: 'Preto' }], ...axisOverrides }],
+    listings: [
+      listing({
+        variants: [variant({ axes: [{ axisId: 'color', valueId: 'preto' }] })],
+      }),
+    ],
+  })
+}
+
+describe('ProductSchema axis presentation (OSC-01)', () => {
+  it.each(['image', 'text'] as const)('accepts axis presentation %s', (presentation) => {
+    const result = ProductSchema.safeParse(productWithOneAxis({ presentation }))
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.axes[0].presentation).toBe(presentation)
+    }
+  })
+
+  it('accepts an axis when presentation is omitted', () => {
+    const result = ProductSchema.safeParse(productWithOneAxis())
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.axes[0].presentation).toBeUndefined()
+    }
+  })
+
+  it.each(['thumbnail', 'badge', ''])('rejects axis presentation %j', (presentation) => {
+    expect(ProductSchema.safeParse(productWithOneAxis({ presentation })).success).toBe(false)
+  })
+})
+
+describe('ProductSchema variant offers (OSC-04, OSC-05, OSC-06, OSC-07, OSC-08, OSC-10)', () => {
+  it('accepts a variant when offers is omitted or an empty array', () => {
+    const omitted = ProductSchema.safeParse(product())
+    const empty = ProductSchema.safeParse(
+      product({ listings: [listing({ variants: [variantWithOffers([])] })] }),
+    )
+
+    expect(omitted.success).toBe(true)
+    expect(empty.success).toBe(true)
+    if (omitted.success) {
+      expect(omitted.data.listings[0].variants[0].offers).toBeUndefined()
+    }
+    if (empty.success) {
+      expect(empty.data.listings[0].variants[0].offers).toEqual([])
+    }
+  })
+
+  it('accepts a variant with one valid offer and keeps price and listPrice unchanged', () => {
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [
+          listing({
+            variants: [variantWithOffers([validOffer], 369.999, 450.009)],
+          }),
+        ],
+      }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      const parsed = result.data.listings[0].variants[0]
+      expect(parsed.offers).toEqual([validOffer])
+      expect(parsed.price).toBe(369.99)
+      expect(parsed.listPrice).toBe(450)
+    }
+  })
+
+  it.each([
+    ['text', ''],
+    ['icon', ''],
+  ] as const)('rejects an offer whose %s is empty', (field, value) => {
+    const offer = { ...validOffer, [field]: value }
+    expect(
+      ProductSchema.safeParse(
+        product({ listings: [listing({ variants: [variantWithOffers([offer])] })] }),
+      ).success,
+    ).toBe(false)
+  })
+
+  it.each(['text', 'background', 'color', 'icon'] as const)(
+    'rejects an offer that omits %s',
+    (field) => {
+      const { [field]: _removed, ...offer } = validOffer
+      expect(
+        ProductSchema.safeParse(
+          product({
+            listings: [listing({ variants: [variantWithOffers([offer as typeof validOffer])] })],
+          }),
+        ).success,
+      ).toBe(false)
+    },
+  )
+
+  it.each(['#fff', '#FFFFFF', '#0066cc', '#ABC'])(
+    'accepts offer background and color %s',
+    (hex) => {
+      const offer = { ...validOffer, background: hex, color: hex }
+      const result = ProductSchema.safeParse(
+        product({ listings: [listing({ variants: [variantWithOffers([offer])] })] }),
+      )
+
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.listings[0].variants[0].offers?.[0].background).toBe(hex)
+        expect(result.data.listings[0].variants[0].offers?.[0].color).toBe(hex)
+      }
+    },
+  )
+
+  it.each(['#ffff', '#12345', '#RRGGBBAA', '#RGBA', '0066cc', '#ggg'])(
+    'rejects offer background or color %s',
+    (hex) => {
+      expect(
+        ProductSchema.safeParse(
+          product({
+            listings: [
+              listing({
+                variants: [
+                  variantWithOffers([{ ...validOffer, background: hex, color: '#fff' }]),
+                ],
+              }),
+            ],
+          }),
+        ).success,
+      ).toBe(false)
+      expect(
+        ProductSchema.safeParse(
+          product({
+            listings: [
+              listing({
+                variants: [
+                  variantWithOffers([{ ...validOffer, background: '#fff', color: hex }]),
+                ],
+              }),
+            ],
+          }),
+        ).success,
+      ).toBe(false)
+    },
+  )
+
+  it('accepts a non-empty icon name without validating Lucide exports in shared', () => {
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [
+          listing({
+            variants: [variantWithOffers([{ ...validOffer, icon: 'NotARealLucideExport' }])],
+          }),
+        ],
+      }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].offers?.[0].icon).toBe('NotARealLucideExport')
+    }
+  })
+})
+
 describe('ProductSchema invalid document (VAR-26)', () => {
   it('rejects a product.json that does not match the product contract', () => {
     expect(

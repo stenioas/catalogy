@@ -51,16 +51,26 @@ function imageFileNameIsValid(name: string): boolean {
   return imageExtensionPattern.test(name)
 }
 
+const hexColorPattern = /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
+
 const AxisValueSchema = z.object({
   id: z.string().regex(idPattern),
   value: z.string(),
   alias: z.string().optional(),
 })
 
+const OfferSchema = z.object({
+  text: z.string().min(1),
+  background: z.string().regex(hexColorPattern),
+  color: z.string().regex(hexColorPattern),
+  icon: z.string().min(1),
+})
+
 const AxisSchema = z.object({
   id: z.string().regex(idPattern),
   label: z.string(),
   values: z.array(AxisValueSchema),
+  presentation: z.enum(['image', 'text']).optional(),
 })
 
 const VariantSchema = z
@@ -73,6 +83,7 @@ const VariantSchema = z
     ),
     price: positiveReais,
     listPrice: positiveReais.optional(),
+    offers: z.array(OfferSchema).optional(),
     unmissableOffer: z.boolean().optional(),
     mainImage: z.string(),
     observations: z.string().optional(),
