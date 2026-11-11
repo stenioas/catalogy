@@ -99,8 +99,15 @@
           ],
           "price": 369.9,
           "listPrice": 519.9,
-          "unmissableOffer": true,
-          "mainImage": "addiesdive-1.png"
+          "mainImage": "addiesdive-1.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         }
       ]
     }

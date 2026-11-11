@@ -97,8 +97,15 @@
           ],
           "price": 269.9,
           "listPrice": 359.9,
-          "unmissableOffer": true,
-          "mainImage": "aimimo-design-air-king-1.png"
+          "mainImage": "aimimo-design-air-king-1.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         }
       ]
     }

@@ -204,8 +204,15 @@
           ],
           "price": 1199.9,
           "listPrice": 1399.9,
-          "unmissableOffer": true,
-          "mainImage": "pagani-design-pd-1701-1.png"
+          "mainImage": "pagani-design-pd-1701-1.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         },
         {
           "axes": [
@@ -216,8 +223,15 @@
           ],
           "price": 1199.9,
           "listPrice": 1399.9,
-          "unmissableOffer": true,
-          "mainImage": "pagani-design-pd-1701-6.png"
+          "mainImage": "pagani-design-pd-1701-6.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         }
       ]
     },
@@ -244,8 +258,15 @@
           ],
           "price": 999.9,
           "listPrice": 1399.9,
-          "unmissableOffer": true,
-          "mainImage": "pagani-design-pd-1701-6.png"
+          "mainImage": "pagani-design-pd-1701-6.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         }
       ]
     }

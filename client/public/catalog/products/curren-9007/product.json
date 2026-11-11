@@ -137,8 +137,15 @@
           ],
           "price": 109.9,
           "listPrice": 154.9,
-          "unmissableOffer": true,
-          "mainImage": "curren-9007-4.png"
+          "mainImage": "curren-9007-4.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         }
       ]
     }

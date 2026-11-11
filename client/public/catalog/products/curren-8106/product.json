@@ -133,8 +133,15 @@
           ],
           "price": 119.9,
           "listPrice": 149.9,
-          "unmissableOffer": true,
-          "mainImage": "curren-8106-1.png"
+          "mainImage": "curren-8106-1.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         },
         {
           "axes": [
@@ -145,8 +152,15 @@
           ],
           "price": 119.9,
           "listPrice": 149.9,
-          "unmissableOffer": true,
-          "mainImage": "curren-8106-2.png"
+          "mainImage": "curren-8106-2.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         }
       ]
     }

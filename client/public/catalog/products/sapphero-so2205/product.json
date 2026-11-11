@@ -98,8 +98,15 @@
           ],
           "price": 139.9,
           "listPrice": 199.9,
-          "unmissableOffer": true,
-          "mainImage": "sapphero-so2205-1.png"
+          "mainImage": "sapphero-so2205-1.png",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         }
       ]
     }

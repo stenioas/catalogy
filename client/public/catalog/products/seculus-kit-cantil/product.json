@@ -82,9 +82,16 @@
           ],
           "price": 279.9,
           "listPrice": 369.9,
-          "unmissableOffer": true,
           "mainImage": "seculus-1.png",
-          "observations": "Acompanha caixa de metal e cantil"
+          "observations": "Acompanha caixa de metal e cantil",
+          "offers": [
+            {
+              "text": "OFERTA IMPERDÍVEL",
+              "icon": "Gift",
+              "background": "#0066cc",
+              "color": "#ffffff"
+            }
+          ]
         }
       ]
     }

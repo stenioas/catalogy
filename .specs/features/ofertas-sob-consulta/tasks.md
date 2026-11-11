@@ -191,6 +191,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T5: Migrar os product.json
 
+**Status**: done
+
 **What**: Cada variante com `unmissableOffer: true` ganha a oferta `Gift` e perde a chave. `false` ou ausente perde a chave e não ganha lista. O prebuild regrava `products.generated.ts` sem `unmissableOffer`.
 **Where**: `client/public/catalog/products/`
 **Depends on**: T4
@@ -205,10 +207,10 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] Nenhum `product.json` publicado contém `unmissableOffer`
-- [ ] Variante que era `true` tem exatamente a oferta `OFERTA IMPERDÍVEL`
-- [ ] `products.generated.ts` não contém `unmissableOffer`
-- [ ] Gate: `pnpm --filter client exec vitest run scripts/prebuild-catalog.test.ts`
+- [x] Nenhum `product.json` publicado contém `unmissableOffer`
+- [x] Variante que era `true` tem exatamente a oferta `OFERTA IMPERDÍVEL`
+- [x] `products.generated.ts` não contém `unmissableOffer`
+- [x] Gate: `pnpm --filter client exec vitest run scripts/prebuild-catalog.test.ts`
 
 **Tests**: integration
 **Gate**: build
