@@ -11,6 +11,10 @@
         {
           "id": "silver-white",
           "value": "Silver White"
+        },
+        {
+          "id": "silver-black",
+          "value": "Silver Black"
         }
       ]
     }
@@ -67,12 +71,62 @@
   ],
   "listings": [
     {
+      "id": "listing-on-order",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "qingxiya-7706-1.png",
+        "qingxiya-7706-2.png",
+        "qingxiya-7706-3.png",
+        "qingxiya-7706-4.png",
+        "qingxiya-7706-5.png",
+        "qingxiya-7706-6.png",
+        "qingxiya-7706-7.png",
+        "qingxiya-7706-8.png",
+        "qingxiya-7706-9.png",
+        "qingxiya-7706-10.png",
+        "qingxiya-7706-11.png",
+        "qingxiya-7706-12.png",
+        "qingxiya-7706-13.png",
+        "qingxiya-7706-14.png",
+        "qingxiya-7706-15.png",
+        "qingxiya-7706-16.png",
+        "qingxiya-7706-17.png",
+        "qingxiya-7706-18.png",
+        "qingxiya-7706-19.png",
+        "qingxiya-7706-20.png",
+        "qingxiya-7706-21.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-black"
+            }
+          ],
+          "price": 179.9,
+          "mainImage": "qingxiya-7706-1.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white"
+            }
+          ],
+          "price": 179.9,
+          "mainImage": "qingxiya-7706-7.png"
+        }
+      ]
+    },
+    {
       "id": "coming-soon",
       "state": "new",
       "availabilityStatus": "coming_soon",
       "images": [
-        "qingxiya-7706-7.png",
         "qingxiya-7706-17.png",
+        "qingxiya-7706-7.png",
         "qingxiya-7706-18.png",
         "qingxiya-7706-19.png",
         "qingxiya-7706-20.png",
@@ -89,7 +143,7 @@
           ],
           "price": 144.9,
           "listPrice": 179.9,
-          "mainImage": "qingxiya-7706-7.png"
+          "mainImage": "qingxiya-7706-17.png"
         }
       ]
     }
