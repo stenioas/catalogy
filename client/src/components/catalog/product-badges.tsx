@@ -1,27 +1,66 @@
 import { AVAILABILITY_LABEL, STATE_LABEL, type Listing } from '@catalogo/shared'
 import { cn } from 'cn'
-import { Gift } from 'lucide-react'
+import dynamicIconImports from 'lucide-react/dynamicIconImports'
+import { lazy, Suspense, type ComponentType, type SVGProps } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 
 const compactBadgeClassName = 'h-5 px-1.5 py-0 text-xs leading-none font-medium'
 const badgeRadiusClassName = 'rounded-[4px]'
 
-export function UnmissableOfferBadge({ className = '' }: { className?: string }) {
+export type OfferBadge = {
+  text: string
+  background: string
+  color: string
+  icon: string
+}
+
+function lucideExportNameToKebab(exportName: string): string {
+  return exportName
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+    .toLowerCase()
+}
+
+function OfferIcon({ name }: { name: string }) {
+  const kebab = lucideExportNameToKebab(name)
+  const importer = dynamicIconImports[kebab as keyof typeof dynamicIconImports]
+  if (!importer) {
+    return null
+  }
+  const LucideIcon = lazy(
+    importer as () => Promise<{ default: ComponentType<SVGProps<SVGSVGElement>> }>,
+  )
   return (
-    <Badge
-      data-testid="unmissable-offer"
-      className={cn(
-        badgeRadiusClassName,
-        'tracking-wide uppercase',
-        compactBadgeClassName,
-        'bg-primary text-primary-foreground',
-        className,
-      )}
-      >
-      <Gift aria-hidden="true" className="size-3" />
-      OFERTA IMPERDÍVEL
-    </Badge>
+    <Suspense fallback={null}>
+      <LucideIcon aria-hidden="true" className="size-3" />
+    </Suspense>
+  )
+}
+
+export function OfferRow({ offers }: { offers: OfferBadge[] }) {
+  if (offers.length === 0) {
+    return null
+  }
+
+  return (
+    <div data-testid="offer-row" className="flex flex-wrap items-center gap-1.5">
+      {offers.map((offer) => (
+        <Badge
+          key={`${offer.text}-${offer.background}-${offer.color}-${offer.icon}`}
+          data-testid="offer-badge"
+          className={cn(
+            badgeRadiusClassName,
+            compactBadgeClassName,
+            'border-0 font-medium',
+          )}
+          style={{ backgroundColor: offer.background, color: offer.color }}
+        >
+          <OfferIcon name={offer.icon} />
+          {offer.text}
+        </Badge>
+      ))}
+    </div>
   )
 }
 
@@ -36,8 +75,8 @@ export function ProductStateBadge({
 }) {
   const tone =
     state === 'new'
-    ? 'bg-product-state-new text-product-state-new-foreground'
-    : 'bg-product-state-neutral text-product-state-neutral-foreground'
+      ? 'bg-product-state-new text-product-state-new-foreground'
+      : 'bg-product-state-neutral text-product-state-neutral-foreground'
 
   return (
     <Badge

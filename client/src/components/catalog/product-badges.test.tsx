@@ -1,12 +1,81 @@
 import { AVAILABILITY_LABEL, STATE_LABEL, type Listing } from '@catalogo/shared'
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import {
+  OfferRow,
   ProductAvailabilityBadge,
   ProductConditionLine,
   ProductStateBadge,
 } from './product-badges'
+
+const sampleOffer = {
+  text: 'OFERTA IMPERDÍVEL',
+  background: '#0066cc',
+  color: '#ffffff',
+  icon: 'Gift',
+} as const
+
+describe('OfferRow (OSC-30, OSC-31, OSC-32)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('OSC-32: renders nothing when offers is an empty array', () => {
+    const { container } = render(<OfferRow offers={[]} />)
+    expect(container.firstChild).toBeNull()
+    expect(screen.queryByTestId('offer-row')).toBeNull()
+  })
+
+  it('OSC-30: renders one badge per offer in array order, side by side with line wrap', () => {
+    const offers = [
+      { text: 'Primeira', background: '#111111', color: '#ffffff', icon: 'Gift' },
+      { text: 'Segunda', background: '#222222', color: '#eeeeee', icon: 'Gift' },
+    ]
+    render(<OfferRow offers={offers} />)
+    const row = screen.getByTestId('offer-row')
+    expect(row.className).toMatch(/\bflex\b/)
+    expect(row.className).toMatch(/\bflex-wrap\b/)
+    const badges = screen.getAllByTestId('offer-badge')
+    expect(badges).toHaveLength(2)
+    expect(badges[0]?.textContent).toContain('Primeira')
+    expect(badges[1]?.textContent).toContain('Segunda')
+  })
+
+  it('OSC-31: keeps offer text exactly as stored, without forcing uppercase', async () => {
+    render(
+      <OfferRow
+        offers={[
+          {
+            text: 'miXed CaSe',
+            background: '#0066cc',
+            color: '#ffffff',
+            icon: 'Gift',
+          },
+        ]}
+      />,
+    )
+    await waitFor(() => {
+      const badge = screen.getByTestId('offer-badge')
+      expect(badge.textContent).toContain('miXed CaSe')
+      expect(badge.className).not.toMatch(/\buppercase\b/)
+    })
+  })
+
+  it('OSC-31: applies background and color from JSON as inline styles in both themes', () => {
+    render(<OfferRow offers={[sampleOffer]} />)
+    const badge = screen.getByTestId('offer-badge') as HTMLElement
+    expect(badge.style.backgroundColor).toBe('rgb(0, 102, 204)')
+    expect(badge.style.color).toBe('rgb(255, 255, 255)')
+  })
+
+  it('OSC-31: loads the Lucide icon named in the offer JSON', async () => {
+    render(<OfferRow offers={[sampleOffer]} />)
+    await waitFor(() => {
+      expect(screen.getByTestId('offer-badge').querySelector('svg')).not.toBeNull()
+    })
+  })
+})
 
 describe('ProductAvailabilityBadge (VAR-38, listing availability tokens)', () => {
   afterEach(() => {

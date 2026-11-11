@@ -280,6 +280,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T8: Desenhar a fileira de ofertas
 
+**Status**: done
+
 **What**: `OfferRow` mostra uma badge por oferta, na ordem do array, lado a lado, com quebra de linha. O hex vai em estilo inline, o texto sai como está no JSON e o ícone vem de `dynamicIconImports`. Lista vazia não desenha a fileira. `UnmissableOfferBadge` sai.
 **Where**: `client/src/components/catalog/product-badges.tsx`
 **Depends on**: T2
@@ -294,8 +296,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] O teste cobre ordem, quebra de linha, texto cru, hex inline e lista vazia
-- [ ] Gate: `pnpm --filter client exec vitest run src/components/catalog/product-badges.test.tsx`
+- [x] O teste cobre ordem, quebra de linha, texto cru, hex inline e lista vazia
+- [x] Gate: `pnpm --filter client exec vitest run src/components/catalog/product-badges.test.tsx`
 
 **Tests**: integration
 **Gate**: quick
