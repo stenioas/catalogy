@@ -6,7 +6,11 @@ import {
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { validateCatalog, writeProductsModule } from './catalog'
+import {
+  normalizeProductJson,
+  validateCatalog,
+  writeProductsModule,
+} from './catalog'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -103,6 +107,24 @@ describe('published catalog migration (OSC-11, OSC-12, OSC-15)', () => {
     }
   })
 
+  it('OSC-12: a legacy JSON without unmissableOffer migrates without legacy or new offers', () => {
+    const legacyJson = JSON.parse(`{
+      "slug": "legacy-watch",
+      "state": "Novo",
+      "title": "Legacy",
+      "price": 100,
+      "images": ["a.png"],
+      "availabilityStatus": "available"
+    }`)
+    const migrated = normalizeProductJson(legacyJson) as {
+      listings: Array<{ variants: Array<Record<string, unknown>> }>
+    }
+    const variant = migrated.listings[0].variants[0]
+
+    expect(variant).not.toHaveProperty('unmissableOffer')
+    expect(variant).not.toHaveProperty('offers')
+  })
+
   it('OSC-15: products.generated.ts does not contain unmissableOffer', () => {
     const catalogDirResolved =
       process.env.CATALOG_DIR ?? join(clientRoot, 'public/catalog')
@@ -110,5 +132,16 @@ describe('published catalog migration (OSC-11, OSC-12, OSC-15)', () => {
     const products = validateCatalog(catalogDirResolved)
     writeProductsModule(products, outFile)
     expect(readFileSync(outFile, 'utf8')).not.toContain('unmissableOffer')
+  })
+})
+
+describe('README offer documentation (OSC-16)', () => {
+  it('documents offers in the card body without the legacy flag or a photo badge', () => {
+    const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
+
+    expect(readme).toContain('`offers`')
+    expect(readme).toContain('fileira no corpo do card acima do preço')
+    expect(readme).not.toContain('unmissableOffer')
+    expect(readme).not.toMatch(/badge de oferta (?:sobre|acima d[ae]) foto/i)
   })
 })

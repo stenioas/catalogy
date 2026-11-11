@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import {
   ProductSchema,
@@ -971,6 +974,21 @@ describe('ProductSchema variant offers (OSC-04, OSC-05, OSC-06, OSC-07, OSC-08, 
     if (result.success) {
       expect(result.data.listings[0].variants[0].offers?.[0].icon).toBe('NotARealLucideExport')
     }
+  })
+
+  it('keeps lucide-react outside shared dependencies', () => {
+    const packageJson = JSON.parse(
+      readFileSync(
+        join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'package.json'),
+        'utf8',
+      ),
+    ) as {
+      dependencies?: Record<string, string>
+      devDependencies?: Record<string, string>
+    }
+
+    expect(packageJson.dependencies).not.toHaveProperty('lucide-react')
+    expect(packageJson.devDependencies).not.toHaveProperty('lucide-react')
   })
 })
 
