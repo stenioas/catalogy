@@ -184,7 +184,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     installObserver(1)
   })
 
-  it.each(['Novo', 'Openbox', 'Usado'] as const)('shows state %s as plain text before the title', (state) => {
+  it.each(['Novo', 'Openbox', 'Usado'] as const)('shows state %s as plain text under the title on mobile', (state) => {
     mockProductsRef.current = [makeProduct({ state })]
     renderWatchPage()
     const heading = screen.getByRole('heading', { level: 1, name: 'Seculus' })
@@ -200,10 +200,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(identity.className).toMatch(/\bmd:gap-2\b/)
     expect(identity.contains(line)).toBe(true)
     expect(identity.contains(heading)).toBe(true)
-    expect(heading.className).toMatch(/\btext-base\b/)
+    expect(heading.className).toMatch(/text-\[15px\]/)
+    expect(heading.className).toMatch(/\bmd:text-base\b/)
+    expect(heading.className).toMatch(/\bmax-md:mt-3\b/)
+    expect(heading.className).toMatch(/\bmax-md:order-2\b/)
+    expect(screen.getByTestId('watch-metadata').className).toMatch(/\bmax-md:order-3\b/)
     expect(heading.className).not.toMatch(/\btext-lg\b/)
     expect(heading.className).not.toMatch(/\btext-xl\b/)
-    expect(follows(stateLabel, heading)).toBe(true)
   })
 
   it.each([
@@ -217,7 +220,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const badge = screen.getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
     expect(screen.getByTestId('watch-metadata').contains(badge)).toBe(true)
-    expect(follows(badge, heading)).toBe(true)
+    expect(heading.className).toMatch(/\bmax-md:order-2\b/)
+    expect(screen.getByTestId('watch-metadata').className).toMatch(/\bmax-md:order-3\b/)
     expect(badge.closest('[data-testid="watch-metadata"]')).toBe(screen.getByTestId('watch-metadata'))
     expect(badge.className.split(/\s+/)).toContain('text-xs')
     if (availabilityStatus === 'on_order') {
@@ -299,18 +303,28 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('orders mobile title, media, badges, price, share, description, notes and characteristics (CATREF-13)', () => {
     renderWatchPage()
-    const ordered = [screen.getByTestId('watch-metadata'), screen.getByRole('heading', { name: 'Seculus' }), screen.getByTestId('watch-carousel'), screen.getByTestId('price-block'), screen.getByRole('heading', { name: 'Descrição' }), screen.getByRole('heading', { name: 'Observações' }), screen.getByRole('heading', { name: 'Características do produto' }), screen.getByRole('link', { name: 'Compartilhar' })]
-    for (let index = 1; index < ordered.length; index++) expect(follows(ordered[index - 1], ordered[index])).toBe(true)
+    expect(screen.getByTestId('watch-carousel').parentElement?.className).toMatch(/\bmax-md:order-1\b/)
+    expect(screen.getByRole('heading', { name: 'Seculus' }).className).toMatch(/\bmax-md:order-2\b/)
+    expect(screen.getByTestId('watch-metadata').className).toMatch(/\bmax-md:order-3\b/)
+    expect(screen.getByTestId('watch-commerce').parentElement?.className).toMatch(/\bmax-md:order-4\b/)
+    expect(screen.getByRole('link', { name: 'Compartilhar' }).parentElement?.className).toMatch(/\bmax-md:order-6\b/)
+    expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.className).toMatch(/\bmax-md:order-7\b/)
+    expect(screen.getByRole('heading', { name: 'Observações' }).parentElement?.className).toMatch(/\bmax-md:order-8\b/)
+    expect(screen.getByRole('heading', { name: 'Características do produto' }).parentElement?.className).toMatch(/\bmax-md:order-8\b/)
+    expect(follows(screen.getByTestId('price-current'), screen.getByTestId('price-installments'))).toBe(true)
+    expect(follows(screen.getByTestId('price-pix'), screen.getByTestId('price-installments'))).toBe(true)
     expect(screen.getByRole('img', { name: 'Seculus' }).getAttribute('src')).toBe('/catalog/products/seculus-kit/img/foto.webp')
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
     expect(screen.getByTestId('watch-page-column').classList.contains('catalog-column')).toBe(true)
     expect(screen.getByTestId('watch-page-column').classList.contains('watch-page-column')).toBe(true)
-    expect(screen.getByTestId('watch-page-column').className).toMatch(/\bpt-2\b/)
+    expect(screen.getByTestId('watch-page-column').className).not.toMatch(/\bpt-2\b/)
+    expect(screen.getByTestId('watch-page-column').className).toMatch(/\bpb-8\b/)
     expect(screen.getByTestId('watch-page-column').className).toMatch(/\bmd:py-8\b/)
     expect(screen.getByTestId('top-bar-inner').classList.contains('watch-page-column')).toBe(true)
     const intro = screen.getByTestId('watch-intro')
-    expect(intro.className).toMatch(/\bgap-2\b/)
-    expect(intro.className).toMatch(/\bmd:contents\b/)
+    expect(intro.className).toMatch(/\bcontents\b/)
+    expect(intro.parentElement?.className).toMatch(/\bmax-md:gap-0\b/)
+    expect(intro.parentElement?.className).toMatch(/\bgap-8\b/)
     expect(intro.contains(screen.getByTestId('watch-identity'))).toBe(true)
     expect(intro.contains(screen.getByTestId('watch-carousel'))).toBe(true)
     expect(intro.contains(screen.getByTestId('watch-commerce'))).toBe(true)
@@ -323,7 +337,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(share.className).toMatch(/color-mix\(in_srgb,var\(--primary\)_16%,white\)/)
     expect(screen.getByTestId('watch-offer').className).toMatch(/\bflex-col\b/)
     expect(screen.getByTestId('watch-offer').contains(share)).toBe(false)
-    expect(follows(screen.getByRole('heading', { name: 'Características do produto' }), share)).toBe(true)
+    expect(share.parentElement?.className).toMatch(/\bmax-md:order-6\b/)
+    expect(screen.getByRole('heading', { name: 'Características do produto' }).parentElement?.className).toMatch(/\bmax-md:order-8\b/)
     expect(share.textContent).toBe('Compartilhar')
   })
 
@@ -657,19 +672,26 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       expect(screen.queryByTestId('watch-carousel')).toBeNull()
     } else {
       expect(screen.queryByTestId('watch-left-column')).toBeNull()
-      expect(follows(screen.getByTestId('watch-metadata'), heading)).toBe(true)
-      expect(follows(screen.getByTestId('watch-metadata'), screen.getByTestId('watch-offer'))).toBe(true)
       const share = screen.getByRole('link', { name: 'Compartilhar' })
       expect(screen.getByTestId('watch-offer').contains(share)).toBe(false)
       expect(screen.getByTestId('watch-offer').className).toMatch(/\bflex-col\b/)
-      expect(follows(screen.getByRole('heading', { name: 'Características do produto' }), share)).toBe(true)
       if (viewport >= 768) {
+        expect(follows(screen.getByTestId('watch-metadata'), heading)).toBe(true)
+        expect(follows(screen.getByTestId('watch-metadata'), screen.getByTestId('watch-offer'))).toBe(true)
+        expect(follows(screen.getByRole('heading', { name: 'Características do produto' }), share)).toBe(true)
         expect(screen.getByRole('group', { name: 'Miniaturas do produto' })).toBeDefined()
         expect(screen.queryByTestId('watch-carousel')).toBeNull()
         expect(screen.queryByRole('button', { name: 'Anterior' })).toBeNull()
         expect(screen.queryByTestId('carousel-dots')).toBeNull()
       } else {
-        expect(screen.getByTestId('watch-carousel')).toBeDefined()
+        expect(screen.getByTestId('watch-carousel').parentElement?.className).toMatch(/\bmax-md:order-1\b/)
+        expect(heading.className).toMatch(/\bmax-md:order-2\b/)
+        expect(screen.getByTestId('watch-metadata').className).toMatch(/\bmax-md:order-3\b/)
+        expect(screen.getByTestId('watch-commerce').parentElement?.className).toMatch(/\bmax-md:order-4\b/)
+        expect(screen.getByTestId('axis-selectors').parentElement?.className).toMatch(/\bmax-md:order-5\b/)
+        expect(share.parentElement?.className).toMatch(/\bmax-md:order-6\b/)
+        expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.className).toMatch(/\bmax-md:order-7\b/)
+        expect(screen.getByRole('heading', { name: 'Características do produto' }).parentElement?.className).toMatch(/\bmax-md:order-8\b/)
       }
     }
   })
@@ -1080,8 +1102,10 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.queryByTestId('variant-strip')).toBeNull()
     expect(screen.queryByTestId('variant-name')).toBeNull()
     expect(screen.queryByTestId('axis-line')).toBeNull()
-    expect(follows(screen.getByTestId('watch-identity'), carousel)).toBe(true)
-    expect(follows(carousel, price)).toBe(true)
+    expect(carousel.parentElement?.className).toMatch(/\bmax-md:order-1\b/)
+    expect(screen.getByRole('heading', { level: 1 }).className).toMatch(/\bmax-md:order-2\b/)
+    expect(screen.getByTestId('watch-commerce').parentElement?.className).toMatch(/\bmax-md:order-4\b/)
+    expect(selectors.parentElement?.className).toMatch(/\bmax-md:order-5\b/)
     expect(follows(price, selectors)).toBe(true)
     expect(within(selectors).getAllByTestId('axis-selector-group').map((group) => group.textContent)).toEqual([
       'Cor: Azul marinhoAzul marinhoPreto',

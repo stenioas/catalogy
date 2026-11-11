@@ -61,12 +61,12 @@ export function WatchCard({ product, card }: WatchCardProps) {
               data-testid="watch-card-link"
               className="flex min-w-0 flex-1 flex-col items-start gap-1 md:gap-2"
             >
+              {!isOnOrder && card.offers.length > 0 ? <OfferRow offers={card.offers} /> : null}
               <ProductConditionLine state={listing.state} availabilityStatus={listing.availabilityStatus} />
-              <h2 className="m-0 line-clamp-2 w-full min-w-0 text-[13px] leading-snug font-medium text-foreground md:font-display md:text-base md:leading-snug md:font-semibold md:line-clamp-none">
+              <h2 className="m-0 line-clamp-1 w-full min-w-0 truncate overflow-hidden text-ellipsis whitespace-nowrap text-xs leading-snug font-medium text-foreground md:font-display md:text-sm md:leading-snug md:font-semibold">
                 {card.title}
               </h2>
               <div className="flex w-full flex-col items-start gap-1 md:gap-2">
-                {!isOnOrder && card.offers.length > 0 ? <OfferRow offers={card.offers} /> : null}
                 {isOnOrder ? (
                   <p data-testid="consult-label" className="m-0 text-base font-semibold text-foreground md:text-xl">
                     Sob consulta
@@ -76,7 +76,7 @@ export function WatchCard({ product, card }: WatchCardProps) {
                 )}
               </div>
             </Link>
-            <div data-testid="watch-card-mobile-action" className="shrink-0">
+            <div data-testid="watch-card-mobile-action" className="shrink-0 pr-1">
               <WantIconLink slug={product.slug} title={card.title} href={`https://wa.me/?text=${encodeURIComponent(shareText)}`} />
             </div>
           </div>

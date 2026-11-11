@@ -94,7 +94,11 @@ function variantQuery(product: Product, variant: Variant): string | null {
 }
 
 function ProductTitle({ title }: { title: string }) {
-  return <h1 className="m-0 min-w-0 break-words font-display text-base font-semibold text-foreground">{title}</h1>
+  return (
+    <h1 className="m-0 max-md:order-2 max-md:mt-3 min-w-0 break-words font-display text-[15px] font-semibold text-foreground md:text-base">
+      {title}
+    </h1>
+  )
 }
 
 function ProductIdentity({
@@ -106,8 +110,8 @@ function ProductIdentity({
   availabilityLabel: string
   title: string
 }) {
-  return <div data-testid="watch-identity" className="flex w-full min-w-0 flex-col items-start gap-0.5 md:gap-2">
-    <div data-testid="watch-metadata">
+  return <div data-testid="watch-identity" className="flex w-full min-w-0 flex-col items-start gap-0.5 max-md:contents md:gap-2">
+    <div data-testid="watch-metadata" className="max-md:order-3 max-md:mt-2">
       <p data-testid="product-condition" className="m-0 flex flex-wrap items-center gap-1.5 text-xs leading-none text-muted-foreground">
         <span data-testid="state-label">{stateLabel}</span>
         <span data-testid="availability-badge" className="text-xs">{availabilityLabel}</span>
@@ -146,18 +150,26 @@ function ProductCommerce({
   </div>
 }
 
-function TextSection({ title, value }: { title: string; value?: string }) {
+function TextSection({ title, value, className }: { title: string; value?: string; className?: string }) {
   if (!hasText(value)) return null
-  return <section className="flex w-full min-w-0 flex-col gap-2">
+  return <section className={`flex w-full min-w-0 flex-col gap-2${className ? ` ${className}` : ''}`}>
     <h2 className="m-0 font-display text-lg font-semibold text-foreground">{title}</h2>
     <p className="m-0 break-words text-[var(--ink-primary)]">{value}</p>
   </section>
 }
 
-function SpecificationSheet({ title, rows }: { title: string; rows: { label: string; value: string }[] }) {
+function SpecificationSheet({
+  title,
+  rows,
+  className,
+}: {
+  title: string
+  rows: { label: string; value: string }[]
+  className?: string
+}) {
   const specifications = orderSpecificationRows(rows.filter((row) => hasText(row.value)))
   if (specifications.length === 0) return null
-  return <section className="w-full min-w-0">
+  return <section className={`w-full min-w-0${className ? ` ${className}` : ''}`}>
     <h2 className="m-0 font-display text-lg font-semibold text-foreground">{title}</h2>
     <Table className="table-fixed text-left">
       <TableBody>
@@ -176,15 +188,17 @@ function ProductDetails({
   observations,
   productSpecifications,
   listingSpecifications,
+  className,
 }: {
   observations?: string
   productSpecifications: { label: string; value: string }[]
   listingSpecifications: { label: string; value: string }[]
+  className?: string
 }) {
   return <>
-    <TextSection title="Observações" value={observations} />
-    <SpecificationSheet title="Características do produto" rows={productSpecifications} />
-    <SpecificationSheet title="Características do anúncio" rows={listingSpecifications} />
+    <TextSection className={className} title="Observações" value={observations} />
+    <SpecificationSheet className={className} title="Características do produto" rows={productSpecifications} />
+    <SpecificationSheet className={className} title="Características do anúncio" rows={listingSpecifications} />
   </>
 }
 
@@ -233,6 +247,7 @@ function WatchColumn({
     observations={observations}
     productSpecifications={productSpecifications}
     listingSpecifications={listingSpecifications}
+    className="max-md:order-8 max-md:mt-8"
   />
   const identity = <ProductIdentity stateLabel={stateLabel} availabilityLabel={availabilityLabel} title={title} />
   const commerce = <ProductCommerce
@@ -269,16 +284,16 @@ function WatchColumn({
           </div>
         </div>
       ) : (
-        <div className="flex w-full min-w-0 flex-col gap-8">
-          <div data-testid="watch-intro" className="flex w-full min-w-0 flex-col gap-2 md:contents">
+        <div className="flex w-full min-w-0 flex-col gap-8 max-md:gap-0">
+          <div data-testid="watch-intro" className="contents">
             {identity}
-            {media}
-            {commerce}
-            {axes}
+            <div className="max-md:order-1 md:contents">{media}</div>
+            <div className="max-md:order-4 max-md:mt-3 md:contents">{commerce}</div>
+            {axes ? <div className="max-md:order-5 max-md:mt-3 md:contents">{axes}</div> : null}
           </div>
-          <TextSection title="Descrição" value={description} />
+          <TextSection className="max-md:order-7 max-md:mt-8" title="Descrição" value={description} />
           {details}
-          {share}
+          <div className="max-md:order-6 max-md:mt-3 md:contents">{share}</div>
         </div>
       )}
     </ProductMedia>
@@ -313,7 +328,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
       <>
         <TopBar catalogHref={catalogHref} />
         <main className="max-w-full min-w-0 overflow-x-clip">
-          <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pt-2 pb-8 text-left md:py-8">
+          <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pb-8 text-left md:py-8">
             <p className="m-0 text-[var(--ink-primary)]">{MISSING_WATCH_MESSAGE}</p>
           </div>
         </main>
@@ -335,7 +350,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
     <>
       <TopBar catalogHref={catalogHref} />
       <main className="max-w-full min-w-0 overflow-x-clip">
-        <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pt-2 pb-8 text-left md:py-8">
+        <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pb-8 text-left md:py-8">
           <WatchColumn
             slug={product.slug}
             title={product.title}

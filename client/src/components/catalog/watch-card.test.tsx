@@ -458,18 +458,21 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(body.className).toMatch(/\bflex-1\b/)
   })
 
-  it('clamps a long title to two compact lines while keeping its full text available', () => {
+  it('keeps a long title on one line with ellipsis and its full text available', () => {
     const title = 'Relógio masculino automático de aço com mostrador azul e calendário'
     const product = baseProduct({ title })
     renderWatchCard(product)
     const heading = screen.getByRole('heading', { name: title })
 
     expect(heading.textContent).toBe(title)
-    expect(heading.className).toMatch(/\bline-clamp-2\b/)
-    expect(heading.className).toMatch(/\bmd:line-clamp-none\b/)
-    expect(heading.className).toMatch(/text-\[13px\]/)
+    expect(heading.className).toMatch(/\bline-clamp-1\b/)
+    expect(heading.className).toMatch(/\btruncate\b/)
+    expect(heading.className).toMatch(/\boverflow-hidden\b/)
+    expect(heading.className).toMatch(/\btext-ellipsis\b/)
+    expect(heading.className).toMatch(/\bwhitespace-nowrap\b/)
+    expect(heading.className).toMatch(/\btext-xs\b/)
     expect(heading.className).toMatch(/\bfont-medium\b/)
-    expect(heading.className).toMatch(/\bmd:text-base\b/)
+    expect(heading.className).toMatch(/\bmd:text-sm\b/)
     expect(heading.className).toMatch(/\bmd:font-semibold\b/)
   })
 
@@ -605,7 +608,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.getByTestId('price-current').className).not.toMatch(/\btext-destructive\b/)
   })
 
-  it('OSC-33: places the offer row in the card body above the price', () => {
+  it('OSC-33: places the offer row in the card body above the title and the price', () => {
     const product = baseProduct({
       listings: [
         baseListing(
@@ -626,10 +629,14 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     renderWatchCard(product)
     const offerRow = screen.getByTestId('offer-row')
     const priceBlock = screen.getByTestId('price-block')
+    const condition = screen.getByTestId('product-condition')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
     expect(offerRow.textContent).toContain('Promo crua')
     expect(
-      heading.compareDocumentPosition(offerRow) & Node.DOCUMENT_POSITION_FOLLOWING,
+      offerRow.compareDocumentPosition(condition) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).not.toBe(0)
+    expect(
+      offerRow.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).not.toBe(0)
     expect(
       offerRow.compareDocumentPosition(priceBlock) & Node.DOCUMENT_POSITION_FOLLOWING,
