@@ -1,0 +1,114 @@
+{
+  "slug": "naviforce-nf8052",
+  "title": "Relógio Naviforce Richard Mille",
+  "description": "Relógio masculino de quartzo com caixa em formato tonneau, pulseira de silicone, cronógrafo, exibição de data e ponteiros luminosos.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "variadas",
+          "value": "Variadas"
+        }
+      ]
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "NAVIFORCE"
+    },
+    {
+      "label": "Modelo",
+      "value": "NF8052"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico"
+    },
+    {
+      "label": "Funções",
+      "value": "Cronógrafo, exibição de data e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Liga metálica"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Silicone"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Vidro mineral endurecido"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "3 ATM"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "15 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "new",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "naviforce-nf8052-1.png",
+        "naviforce-nf8052-2.png",
+        "naviforce-nf8052-3.png",
+        "naviforce-nf8052-4.png",
+        "naviforce-nf8052-5.png",
+        "naviforce-nf8052-6.png",
+        "naviforce-nf8052-7.png",
+        "naviforce-nf8052-8.png",
+        "naviforce-nf8052-9.png",
+        "naviforce-nf8052-10.png",
+        "naviforce-nf8052-11.png",
+        "naviforce-nf8052-12.png",
+        "naviforce-nf8052-13.png",
+        "naviforce-nf8052-14.png",
+        "naviforce-nf8052-15.png",
+        "naviforce-nf8052-16.png",
+        "naviforce-nf8052-17.png",
+        "naviforce-nf8052-18.png",
+        "naviforce-nf8052-19.png",
+        "naviforce-nf8052-20.png",
+        "naviforce-nf8052-21.png",
+        "naviforce-nf8052-22.png",
+        "naviforce-nf8052-23.png",
+        "naviforce-nf8052-24.png",
+        "naviforce-nf8052-25.png",
+        "naviforce-nf8052-26.png",
+        "naviforce-nf8052-27.png",
+        "naviforce-nf8052-28.png",
+        "naviforce-nf8052-29.png",
+        "naviforce-nf8052-30.png",
+        "naviforce-nf8052-31.png",
+        "naviforce-nf8052-32.png",
+        "naviforce-nf8052-33.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "variadas"
+            }
+          ],
+          "price": 249.9,
+          "mainImage": "naviforce-nf8052-1.png"
+        }
+      ]
+    }
+  ]
+}
