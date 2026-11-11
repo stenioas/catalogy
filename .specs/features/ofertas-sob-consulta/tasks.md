@@ -396,6 +396,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T12: Separar eixo de imagem e eixo de texto
 
+**Status**: done
+
 **What**: O seletor mostra `{label}: {value}` e o controle abaixo. `text` quebra linha e não rola. `image` usa miniatura de 64px, rolagem horizontal, a borda e o anel da faixa atual, visível com um único valor. Opção impossível ou indisponível continua visível e desabilitada. Trocar a opção habilitada continua trocando a variante.
 **Where**: `client/src/components/catalog/axis-selectors.tsx`
 **Depends on**: T11
@@ -410,9 +412,9 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] O teste cobre miniatura de 64px, um único valor, badges que quebram linha e opção desabilitada
-- [ ] O rótulo usa o `value`, não o `alias`
-- [ ] Gate: `pnpm --filter client exec vitest run src/components/catalog/axis-selectors.test.tsx`
+- [x] O teste cobre miniatura de 64px, um único valor, badges que quebram linha e opção desabilitada
+- [x] O rótulo usa o `value`, não o `alias`
+- [x] Gate: `pnpm --filter client exec vitest run src/components/catalog/axis-selectors.test.tsx`
 
 **Tests**: integration
 **Gate**: quick

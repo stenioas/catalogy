@@ -227,11 +227,11 @@ O anúncio sob encomenda ainda mostra preço, a oferta é um booleano com badge 
 | OSC-38 | P1: Eixos da página | Tasks | Pending · T13 |
 | OSC-39 | P1: Eixos da página | Tasks | Pending · T13 |
 | OSC-40 | P1: Eixos da página | Tasks | Pending · T13 |
-| OSC-41 | P1: Eixos da página | Tasks | Pending · T12 |
-| OSC-42 | P1: Eixos da página | Tasks | Pending · T12 |
-| OSC-43 | P1: Eixos da página | Tasks | Pending · T12 |
-| OSC-44 | P1: Eixos da página | Tasks | Pending · T12 |
-| OSC-45 | P1: Eixos da página | Tasks | Pending · T12 |
+| OSC-41 | P1: Eixos da página | Tasks | Done · T12 |
+| OSC-42 | P1: Eixos da página | Tasks | Done · T12 |
+| OSC-43 | P1: Eixos da página | Tasks | Done · T12 |
+| OSC-44 | P1: Eixos da página | Tasks | Done · T12 |
+| OSC-45 | P1: Eixos da página | Tasks | Done · T12 |
 | OSC-46 | P1: Eixos da página | Tasks | Pending · T13 |
 
 **Coverage:** 46 total, 46 mapped to tasks, 0 unmapped.
