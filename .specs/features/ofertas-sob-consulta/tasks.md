@@ -425,6 +425,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T13: Reordenar a página e remover a faixa
 
+**Status**: done
+
 **What**: Abaixo de 920px a ordem é identidade, mídia, ofertas, preço ou **Sob consulta**, eixos. De 920px em diante a mídia fica à esquerda e a direita segue identidade, ofertas, preço ou **Sob consulta**, eixos, descrição e compartilhar. Saem a linha do nome da variante, a repetição do eixo acima do preço e `variant-strip.tsx`. Anúncio `on_order` mostra **Sob consulta** sem preço, com a fileira acima quando houver ofertas.
 **Where**: `client/src/routes/watch-page.tsx`
 **Depends on**: T12
@@ -439,9 +441,9 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] O teste da página cobre 919px e 920px, **Sob consulta**, **Indisponível** e a ausência da faixa
-- [ ] `variant-strip.tsx` e o teste dele não existem
-- [ ] Gate: `pnpm --filter client exec vitest run src/routes/watch-page.test.tsx`
+- [x] O teste da página cobre 919px e 920px, **Sob consulta**, **Indisponível** e a ausência da faixa
+- [x] `variant-strip.tsx` e o teste dele não existem
+- [x] Gate: `pnpm --filter client exec vitest run src/routes/watch-page.test.tsx`
 
 **Tests**: integration
 **Gate**: quick

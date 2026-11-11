@@ -213,26 +213,26 @@ O anúncio sob encomenda ainda mostra preço, a oferta é um booleano com badge 
 | OSC-24 | P1: Abas e card | Tasks | Done · T2 |
 | OSC-25 | P1: Abas e card | Tasks | Done · T10 |
 | OSC-26 | P1: Abas e card | Tasks | Pending · T14 |
-| OSC-27 | P1: Sob consulta e fileira | Tasks | In progress · T11 · T13 |
-| OSC-28 | P1: Sob consulta e fileira | Tasks | In progress · T11 · T13 |
-| OSC-29 | P1: Sob consulta e fileira | Tasks | In progress · T11 · T13 |
+| OSC-27 | P1: Sob consulta e fileira | Tasks | Done · T11 · T13 |
+| OSC-28 | P1: Sob consulta e fileira | Tasks | Done · T11 · T13 |
+| OSC-29 | P1: Sob consulta e fileira | Tasks | Done · T11 · T13 |
 | OSC-30 | P1: Sob consulta e fileira | Tasks | Done · T8 |
 | OSC-31 | P1: Sob consulta e fileira | Tasks | Done · T8 |
 | OSC-32 | P1: Sob consulta e fileira | Tasks | Done · T8 |
 | OSC-33 | P1: Sob consulta e fileira | Tasks | Done · T10 |
 | OSC-34 | P1: Sob consulta e fileira | Tasks | Done · T9 |
-| OSC-35 | P1: Eixos da página | Tasks | Pending · T13 |
-| OSC-36 | P1: Eixos da página | Tasks | Pending · T13 |
-| OSC-37 | P1: Eixos da página | Tasks | Pending · T13 |
-| OSC-38 | P1: Eixos da página | Tasks | Pending · T13 |
-| OSC-39 | P1: Eixos da página | Tasks | Pending · T13 |
-| OSC-40 | P1: Eixos da página | Tasks | Pending · T13 |
+| OSC-35 | P1: Eixos da página | Tasks | Done · T13 |
+| OSC-36 | P1: Eixos da página | Tasks | Done · T13 |
+| OSC-37 | P1: Eixos da página | Tasks | Done · T13 |
+| OSC-38 | P1: Eixos da página | Tasks | Done · T13 |
+| OSC-39 | P1: Eixos da página | Tasks | Done · T13 |
+| OSC-40 | P1: Eixos da página | Tasks | Done · T13 |
 | OSC-41 | P1: Eixos da página | Tasks | Done · T12 |
 | OSC-42 | P1: Eixos da página | Tasks | Done · T12 |
 | OSC-43 | P1: Eixos da página | Tasks | Done · T12 |
 | OSC-44 | P1: Eixos da página | Tasks | Done · T12 |
 | OSC-45 | P1: Eixos da página | Tasks | Done · T12 |
-| OSC-46 | P1: Eixos da página | Tasks | Pending · T13 |
+| OSC-46 | P1: Eixos da página | Tasks | Done · T13 |
 
 **Coverage:** 46 total, 46 mapped to tasks, 0 unmapped.
 

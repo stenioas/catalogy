@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import {
   listingByPath,
-  listingForDisplay,
   listingPath,
   resolveVariant,
   shareMessage,
@@ -18,10 +17,9 @@ import { products } from '../catalog/products.generated'
 import { AxisSelectors } from '../components/catalog/axis-selectors'
 import { ProductMedia } from '../components/catalog/product-media'
 import { PriceBlock } from '../components/catalog/price-block'
-import { UnmissableOfferBadge } from '../components/catalog/product-badges'
+import { OfferRow } from '../components/catalog/product-badges'
 import { StickyBar } from '../components/catalog/sticky-bar'
 import { TopBar } from '../components/catalog/top-bar'
-import { buildVariantStripItems, VariantStrip } from '../components/catalog/variant-strip'
 import { ProductShareButton } from '../components/catalog/want-link'
 import { productImageSrc } from '../components/catalog/watch-card'
 
@@ -95,26 +93,6 @@ function variantQuery(product: Product, variant: Variant): string | null {
     .join(',')
 }
 
-function variantName(product: Product, variant: Variant): string | null {
-  if (product.axes.length === 0) return null
-  const parts = product.axes.flatMap((axis) => {
-    const selected = axis.values.find((item) => item.id === activeValueId(variant, axis.id))
-    if (selected === undefined) return []
-    return [selected.alias ?? selected.value]
-  })
-  if (parts.length === 0) return null
-  return parts.join(' ')
-}
-
-function axisLines(product: Product, variant: Variant): { axisId: string; label: string; value: string }[] {
-  if (product.axes.length === 0) return []
-  return product.axes.flatMap((axis) => {
-    const selected = axis.values.find((item) => item.id === activeValueId(variant, axis.id))
-    if (selected === undefined) return []
-    return [{ axisId: axis.id, label: axis.label, value: selected.value }]
-  })
-}
-
 function ProductTitle({ title }: { title: string }) {
   return <h1 className="m-0 min-w-0 break-words font-display text-base font-semibold text-foreground">{title}</h1>
 }
@@ -123,12 +101,10 @@ function ProductIdentity({
   stateLabel,
   availabilityLabel,
   title,
-  name,
 }: {
   stateLabel: string
   availabilityLabel: string
   title: string
-  name: string | null
 }) {
   return <div data-testid="watch-identity" className="flex w-full min-w-0 flex-col items-start gap-0.5 md:gap-2">
     <div data-testid="watch-metadata">
@@ -138,47 +114,35 @@ function ProductIdentity({
       </p>
     </div>
     <ProductTitle title={title} />
-    {name !== null ? <p data-testid="variant-name" className="m-0 break-words text-[var(--ink-primary)]">{name}</p> : null}
   </div>
 }
 
-function AxisLines({ lines }: { lines: { axisId: string; label: string; value: string }[] }) {
-  if (lines.length === 0) return null
-  return <>
-    {lines.map((line) => (
-      <p key={line.axisId} data-testid="axis-line" className="m-0 break-words text-[var(--ink-primary)]">
-        {line.label}: {line.value}
-      </p>
-    ))}
-  </>
-}
-
 function ProductCommerce({
-  lines,
   price,
   listPrice,
-  unmissableOffer,
-  shareHref,
+  offers,
+  onOrder,
   commerceRef,
-  share,
 }: {
-  lines: { axisId: string; label: string; value: string }[]
   price: number
   listPrice?: number
-  unmissableOffer: boolean
-  shareHref: string
+  offers: NonNullable<Variant['offers']>
+  onOrder: boolean
   commerceRef: (element: HTMLDivElement | null) => void
-  share: 'beside-price' | 'below-description'
 }) {
   return <div ref={commerceRef} data-testid="watch-commerce" className="flex w-full min-w-0 flex-col items-start gap-1 md:gap-2">
-    <AxisLines lines={lines} />
-    {unmissableOffer ? <UnmissableOfferBadge /> : null}
-    <div data-testid="watch-offer" className="flex w-full min-w-0 flex-col items-stretch gap-3 md:max-[919px]:grid md:max-[919px]:grid-cols-2 md:max-[919px]:items-end">
-      <div className="min-w-0 flex-1">
-        <PriceBlock price={price} listPrice={listPrice} unmissableOffer={unmissableOffer} />
+    {offers.length > 0 ? <OfferRow offers={offers} /> : null}
+    {onOrder ? (
+      <p data-testid="consult-label" className="m-0 text-base font-semibold text-foreground md:text-xl">
+        Sob consulta
+      </p>
+    ) : (
+      <div data-testid="watch-offer" className="flex w-full min-w-0 flex-col items-stretch gap-3">
+        <div className="min-w-0 flex-1">
+          <PriceBlock price={price} listPrice={listPrice} />
+        </div>
       </div>
-      {share === 'beside-price' ? <ProductShareButton slug="" title="" href={shareHref} /> : null}
-    </div>
+    )}
   </div>
 }
 
@@ -229,11 +193,10 @@ function WatchColumn({
   title,
   stateLabel,
   availabilityLabel,
-  name,
-  lines,
+  availabilityStatus,
   price,
   listPrice,
-  unmissableOffer,
+  offers,
   observations,
   description,
   productSpecifications,
@@ -241,7 +204,6 @@ function WatchColumn({
   images,
   imageIndex,
   shareHref,
-  strip,
   selectors,
   activeV,
   onSelect,
@@ -250,11 +212,10 @@ function WatchColumn({
   title: string
   stateLabel: string
   availabilityLabel: string
-  name: string | null
-  lines: { axisId: string; label: string; value: string }[]
+  availabilityStatus: 'available' | 'coming_soon' | 'on_order'
   price: number
   listPrice?: number
-  unmissableOffer: boolean
+  offers: NonNullable<Variant['offers']>
   observations?: string
   description?: string
   productSpecifications: { label: string; value: string }[]
@@ -262,17 +223,29 @@ function WatchColumn({
   images: string[]
   imageIndex: number
   shareHref: string
-  strip: ReturnType<typeof buildVariantStripItems>
   selectors: Parameters<typeof AxisSelectors>[0]['selectors']
   activeV: string | null
   onSelect: (nextV: string | null) => void
 }) {
   const [commerceTarget, setCommerceTarget] = useState<HTMLDivElement | null>(null)
+  const onOrder = availabilityStatus === 'on_order'
   const details = <ProductDetails
     observations={observations}
     productSpecifications={productSpecifications}
     listingSpecifications={listingSpecifications}
   />
+  const identity = <ProductIdentity stateLabel={stateLabel} availabilityLabel={availabilityLabel} title={title} />
+  const commerce = <ProductCommerce
+    price={price}
+    listPrice={listPrice}
+    offers={offers}
+    onOrder={onOrder}
+    commerceRef={setCommerceTarget}
+  />
+  const axes = selectors.length > 0
+    ? <AxisSelectors selectors={selectors} activeV={activeV} onSelect={onSelect} slug={slug} />
+    : null
+  const share = <ProductShareButton slug={slug} title={title} href={shareHref} />
 
   return <>
     <ProductMedia
@@ -288,46 +261,33 @@ function WatchColumn({
             {details}
           </div>
           <div data-testid="watch-right-column" className="flex min-w-0 flex-col gap-4">
-            <ProductIdentity stateLabel={stateLabel} availabilityLabel={availabilityLabel} title={title} name={name} />
-            <ProductCommerce
-              lines={lines}
-              price={price}
-              listPrice={listPrice}
-              unmissableOffer={unmissableOffer}
-              shareHref={shareHref}
-              commerceRef={setCommerceTarget}
-              share="below-description"
-            />
-            {selectors.length > 0 ? <AxisSelectors selectors={selectors} activeV={activeV} onSelect={onSelect} /> : null}
+            {identity}
+            {commerce}
+            {axes}
             <TextSection title="Descrição" value={description} />
-            <ProductShareButton slug={slug} title={title} href={shareHref} />
+            {share}
           </div>
         </div>
       ) : (
         <div className="flex w-full min-w-0 flex-col gap-8">
           <div data-testid="watch-intro" className="flex w-full min-w-0 flex-col gap-2 md:contents">
-            <ProductIdentity stateLabel={stateLabel} availabilityLabel={availabilityLabel} title={title} name={name} />
+            {identity}
             {media}
-            <VariantStrip slug={slug} items={strip} onSelect={onSelect} />
-            <ProductCommerce
-              lines={lines}
-              price={price}
-              listPrice={listPrice}
-              unmissableOffer={unmissableOffer}
-              shareHref={shareHref}
-              commerceRef={setCommerceTarget}
-              share="beside-price"
-            />
+            {commerce}
+            {axes}
           </div>
           <TextSection title="Descrição" value={description} />
           {details}
+          {share}
         </div>
       )}
     </ProductMedia>
     <StickyBar
       price={price}
       listPrice={listPrice}
-      unmissableOffer={unmissableOffer}
+      availabilityStatus={availabilityStatus}
+      availabilityLabel={availabilityLabel}
+      offers={offers}
       slug={slug}
       title={title}
       shareHref={shareHref}
@@ -345,12 +305,9 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   const resolvedListingId = listingId === undefined || listingId === '' ? null : listingId
   const view = listingByPath(products, slug, resolvedListingId, requestedV)
   const product = products.find((item) => item.slug === slug)
-  const source = view.missing || product === undefined
+  const listing = view.missing || product === undefined
     ? undefined
     : product.listings.find((item) => item.id === view.listingId)
-  const listing = source === undefined || product === undefined
-    ? undefined
-    : listingForDisplay(product, source)
   if (view.missing || product === undefined || listing === undefined) {
     return (
       <>
@@ -368,8 +325,6 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   const activeV = variantQuery(product, variant)
   const message = shareMessage(product, listing, variant, window.location.origin)
   const shareHref = `https://wa.me/?text=${encodeURIComponent(message)}`
-  const name = variantName(product, variant)
-  const lines = axisLines(product, variant)
 
   function selectVariant(nextV: string | null) {
     const valueIds = nextV === null || nextV.trim() === '' ? [] : nextV.split(',')
@@ -386,11 +341,10 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
             title={product.title}
             stateLabel={view.stateLabel}
             availabilityLabel={view.availabilityLabel}
-            name={name}
-            lines={lines}
+            availabilityStatus={view.availabilityStatus}
             price={view.price}
             listPrice={view.listPrice}
-            unmissableOffer={view.unmissableOffer}
+            offers={view.offers}
             observations={view.observations}
             description={view.description}
             productSpecifications={view.productSpecifications}
@@ -398,7 +352,6 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
             images={view.images}
             imageIndex={view.imageIndex}
             shareHref={shareHref}
-            strip={buildVariantStripItems(product, listing, activeV)}
             selectors={view.selectors}
             activeV={activeV}
             onSelect={selectVariant}
