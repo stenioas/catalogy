@@ -163,6 +163,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T4: Normalizar a oferta legada
 
+**Status**: done
+
 **What**: `normalizeProductJson`, no produto antigo sem `listings`, transforma `unmissableOffer: true` na oferta `OFERTA IMPERDÍVEL` / `Gift` / `#0066cc` / `#ffffff` e não emite a chave. `false` ou ausente não emite `offers`.
 **Where**: `client/scripts/catalog.ts`
 **Depends on**: T3
@@ -177,8 +179,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] O teste do normalizador cobre `true`, `false` e ausente
-- [ ] Gate: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
+- [x] O teste do normalizador cobre `true`, `false` e ausente
+- [x] Gate: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
 
 **Tests**: integration
 **Gate**: quick

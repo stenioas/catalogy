@@ -136,7 +136,14 @@ export function normalizeProductJson(raw: unknown): unknown {
     v0.listPrice = o.listPrice
   }
   if (o.unmissableOffer === true) {
-    v0.unmissableOffer = true
+    v0.offers = [
+      {
+        text: 'OFERTA IMPERDÍVEL',
+        icon: 'Gift',
+        background: '#0066cc',
+        color: '#ffffff',
+      },
+    ]
   }
   if (typeof o.observations === 'string') {
     v0.observations = o.observations

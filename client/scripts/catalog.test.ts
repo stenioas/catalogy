@@ -288,7 +288,64 @@ describe('validateCatalog', () => {
   })
 })
 
+const LEGACY_UNMISSABLE_OFFER = {
+  text: 'OFERTA IMPERDÍVEL',
+  icon: 'Gift',
+  background: '#0066cc',
+  color: '#ffffff',
+} as const
+
+function flatLegacyProduct(
+  unmissableOffer?: boolean,
+): Record<string, unknown> {
+  const base = {
+    slug: 'legacy-watch',
+    state: 'Novo',
+    title: 'Legacy',
+    price: 100,
+    images: ['a.png'],
+    availabilityStatus: 'available',
+  }
+  if (unmissableOffer === undefined) {
+    return base
+  }
+  return { ...base, unmissableOffer }
+}
+
+function variantFromNormalized(normalized: unknown): Record<string, unknown> {
+  const listings = (normalized as { listings: Array<{ variants: unknown[] }> })
+    .listings
+  return listings[0].variants[0] as Record<string, unknown>
+}
+
 describe('normalizeProductJson', () => {
+  it('OSC-13: maps legacy unmissableOffer true to the Gift offer row and drops the flag', () => {
+    const normalized = normalizeProductJson(flatLegacyProduct(true))
+    const variant = variantFromNormalized(normalized)
+
+    expect(variant).not.toHaveProperty('unmissableOffer')
+    expect(variant.offers).toEqual([LEGACY_UNMISSABLE_OFFER])
+
+    const parsed = ProductSchema.safeParse(normalized)
+    expect(parsed.success).toBe(true)
+  })
+
+  it('OSC-14: legacy unmissableOffer false omits offers and the flag', () => {
+    const normalized = normalizeProductJson(flatLegacyProduct(false))
+    const variant = variantFromNormalized(normalized)
+
+    expect(variant).not.toHaveProperty('unmissableOffer')
+    expect(variant).not.toHaveProperty('offers')
+  })
+
+  it('OSC-14: absent unmissableOffer omits offers and the flag', () => {
+    const normalized = normalizeProductJson(flatLegacyProduct())
+    const variant = variantFromNormalized(normalized)
+
+    expect(variant).not.toHaveProperty('unmissableOffer')
+    expect(variant).not.toHaveProperty('offers')
+  })
+
   it('reshapes flat legacy product.json into listings the schema accepts (VAR-25 bridge)', () => {
     const legacy = {
       slug: 'legacy-watch',
