@@ -454,6 +454,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T14: Abrir Encomendar quando só há sob consulta
 
+**Status**: done
+
 **What**: Com o catálogo só de anúncios `on_order`, a aba **Todos** não mostra card e fica desabilitada. A home abre **Encomendar**.
 **Where**: `client/src/routes/catalog-page.test.tsx`
 **Depends on**: T13
@@ -468,9 +470,9 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] O teste abre a home só com `on_order` e encontra **Encomendar** selecionada e **Todos** desabilitada
-- [ ] Gate: `pnpm test`
-- [ ] Gate: `pnpm build`
+- [x] O teste abre a home só com `on_order` e encontra **Encomendar** selecionada e **Todos** desabilitada
+- [x] Gate: `pnpm test`
+- [x] Gate: `pnpm build`
 
 **Tests**: integration
 **Gate**: full

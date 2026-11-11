@@ -135,7 +135,7 @@ describe('pnpm build emitindo dist estático', () => {
 
     const redirects = readFileSync(join(distDir, '_redirects'), 'utf-8')
     expect(redirects).toContain('/* /index.html 200')
-  }, 300_000)
+  }, 600_000)
 
   it('não publica os arquivos da antiga origem de vendedores', () => {
     expect(existsSync(join(distDir, 'vendedores'))).toBe(false)

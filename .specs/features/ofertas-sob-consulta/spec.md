@@ -212,7 +212,7 @@ O anúncio sob encomenda ainda mostra preço, a oferta é um booleano com badge 
 | OSC-23 | P1: Abas e card | Tasks | Done · T2 |
 | OSC-24 | P1: Abas e card | Tasks | Done · T2 |
 | OSC-25 | P1: Abas e card | Tasks | Done · T10 |
-| OSC-26 | P1: Abas e card | Tasks | Pending · T14 |
+| OSC-26 | P1: Abas e card | Tasks | Done · T14 |
 | OSC-27 | P1: Sob consulta e fileira | Tasks | Done · T11 · T13 |
 | OSC-28 | P1: Sob consulta e fileira | Tasks | Done · T11 · T13 |
 | OSC-29 | P1: Sob consulta e fileira | Tasks | Done · T11 · T13 |

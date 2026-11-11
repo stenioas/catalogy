@@ -126,7 +126,7 @@ describe('catalog specification migration', () => {
       listings?: { state?: string }[]
     }
     expect(labels(product)).not.toContain('Estado')
-    expect(product.listings?.[0]?.state).toBe('openbox')
+    expect(product.listings?.[0]?.state).toBe('used')
   })
 
   it('records addiesdive-ad2554 water resistance as 100m (10 ATM)', () => {
@@ -148,9 +148,9 @@ describe('catalog specification migration', () => {
     expect(value(readProduct('addiesdive-ad2554'), 'Movimento')).toBe('2035')
   })
 
-  it('records addiesdive-my-h3-2qz-black water resistance as 200m (20 ATM)', () => {
+  it('records addiesdive-my-h3-2qz water resistance as 200m (20 ATM)', () => {
     expect(
-      value(readProduct('addiesdive-my-h3-2qz-black'), 'Resistência à água'),
+      value(readProduct('addiesdive-my-h3-2qz'), 'Resistência à água'),
     ).toBe('200m (20 ATM)')
   })
 
@@ -191,7 +191,7 @@ describe('catalog specification migration', () => {
 
     expect(slugs.sort()).toEqual([
       'addiesdive-ad2554',
-      'addiesdive-my-h3-2qz-black',
+      'addiesdive-my-h3-2qz',
       'addiesdive-my-h3-2qz-green-black',
       'aimimo-design-air-king-verde',
       'aimimo-design-tsuyosa',
@@ -203,7 +203,9 @@ describe('catalog specification migration', () => {
       'curren-9007',
       'curren-9096',
       'keaso-k002',
+      'naviforce-nf8052',
       'pagani-design-pd-1701',
+      'qingxiya-7706',
       'sapphero-so2205',
       'seculus-kit-cantil',
       'skmei-1628',

@@ -490,6 +490,30 @@ describe('CatalogPage sections', () => {
     expect(empty.state.location.search).toBe('')
   })
 
+  it('opens Encomendar with Todos disabled when every card listing is on_order (OSC-26)', () => {
+    mockProductsRef.current = [
+      catalogProduct({
+        slug: 'encomenda-a',
+        title: 'Encomenda A',
+        listings: [listing('encomenda-a', { availabilityStatus: 'on_order' })],
+      }),
+      catalogProduct({
+        slug: 'encomenda-b',
+        title: 'Encomenda B',
+        listings: [listing('encomenda-b', { availabilityStatus: 'on_order' })],
+      }),
+    ]
+    const router = renderHome('/')
+    expect(screen.getByRole('tab', { name: 'Encomendar', selected: true })).toBeDefined()
+    expect(screen.getByRole('tab', { name: 'Todos' })).toHaveProperty('disabled', true)
+    expect(screen.getByRole('tab', { name: 'Pronta entrega' })).toHaveProperty('disabled', true)
+    expect(screen.getByRole('tab', { name: 'A caminho' })).toHaveProperty('disabled', true)
+    expect(screen.getByRole('heading', { name: 'Encomenda A' })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Encomenda B' })).toBeDefined()
+    expect(screen.queryByTestId('price-block')).toBeNull()
+    expect(router.state.location.search).toBe('')
+  })
+
   it('writes the section token for the chosen label and keeps the card status text', () => {
     mockProductsRef.current = [
       catalogProduct({
