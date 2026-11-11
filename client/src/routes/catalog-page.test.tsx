@@ -415,7 +415,7 @@ describe('CatalogPage sections', () => {
     mockProductsRef.current = []
   })
 
-  it('opens Todos with every section card and does not write section', () => {
+  it('opens Todos with priced-section cards only and does not write section', () => {
     mockProductsRef.current = [
       catalogProduct({
         slug: 'encomenda',
@@ -433,9 +433,13 @@ describe('CatalogPage sections', () => {
     expect(screen.getByRole('tab', { name: 'Pronta entrega', selected: false })).toHaveProperty('disabled', true)
     expect(screen.getByRole('tab', { name: 'Encomendar' })).toHaveProperty('disabled', false)
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
     expect(router.state.location.search).toBe('')
     expect(searchParamsOf(router.state.location.search).has('section')).toBe(false)
+    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Encomendar' }))
+    expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
+    expect(screen.getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(screen.queryByTestId('price-block')).toBeNull()
   })
 
   it('disables an empty section and opens Todos as the first section that has a card', () => {
@@ -508,14 +512,17 @@ describe('CatalogPage sections', () => {
     expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Agora' })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'A caminho' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('coming-soon')
     expect(within(screen.getByRole('heading', { name: 'Breve' }).closest('li')!).getByText('Chega em breve')).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Agora' })).toBeNull()
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Encomendar' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
-    expect(within(screen.getByRole('heading', { name: 'Encomenda' }).closest('li')!).getByText('Sob encomenda')).toBeDefined()
+    const encomendaCard = screen.getByRole('heading', { name: 'Encomenda' }).closest('li')!
+    expect(within(encomendaCard).getByText('Sob encomenda')).toBeDefined()
+    expect(within(encomendaCard).getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(within(encomendaCard).queryByTestId('price-block')).toBeNull()
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Pronta entrega' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('available')
     expect(within(screen.getByRole('heading', { name: 'Agora' }).closest('li')!).getByText('Disponível')).toBeDefined()
@@ -523,7 +530,7 @@ describe('CatalogPage sections', () => {
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('all')
     expect(screen.getByRole('heading', { name: 'Agora' })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
   })
 
 })

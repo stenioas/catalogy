@@ -337,6 +337,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T10: Trocar o preço do card sob consulta
 
+**Status**: done
+
 **What**: O card deixa de usar `listingForDisplay` e a badge sobre a foto. No card com preço, `OfferRow` fica no corpo, acima do preço, em qualquer largura. No card `on_order`, o bloco de preço sai, entra **Sob consulta** e a fileira não aparece.
 **Where**: `client/src/components/catalog/watch-card.tsx`
 **Depends on**: T9
@@ -351,10 +353,10 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] O teste do card cobre ofertas acima do preço e **Sob consulta** sem preço, pix ou parcelamento
-- [ ] A foto não contém a badge
-- [ ] O teste da home que quebrar com o card novo é atualizado para o resultado do spec
-- [ ] Gate: `pnpm --filter client exec vitest run src/components/catalog/watch-card.test.tsx src/routes/catalog-page.test.tsx`
+- [x] O teste do card cobre ofertas acima do preço e **Sob consulta** sem preço, pix ou parcelamento
+- [x] A foto não contém a badge
+- [x] O teste da home que quebrar com o card novo é atualizado para o resultado do spec
+- [x] Gate: `pnpm --filter client exec vitest run src/components/catalog/watch-card.test.tsx src/routes/catalog-page.test.tsx`
 
 **Tests**: integration
 **Gate**: quick

@@ -188,7 +188,11 @@ describe('WatchCard (SV-13, SV-14)', () => {
       ]),
     )
     expect(badge.className).not.toMatch(/\brounded-full\b/)
-    expect(screen.getByTestId('price-block').contains(badge)).toBe(false)
+    if (availabilityStatus === 'on_order') {
+      expect(screen.queryByTestId('price-block')).toBeNull()
+    } else {
+      expect(screen.getByTestId('price-block').contains(badge)).toBe(false)
+    }
   })
 
   it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {
@@ -569,53 +573,101 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.getByTestId('price-installments').className).toMatch(/\btext-xs\b/)
   })
 
-  it('hides the unmissable offer line unless unmissableOffer is true', () => {
+  it('OSC-33: draws no offer row on the photo or when offers is empty', () => {
     renderWatchCard()
-    expect(screen.queryByTestId('unmissable-offer')).toBeNull()
+    const frame = screen.getByTestId('watch-card-image')
+    expect(screen.queryByTestId('offer-row')).toBeNull()
+    expect(frame.querySelector('[data-testid="offer-badge"]')).toBeNull()
 
     cleanup()
     const product = baseProduct({
-      listings: [baseListing({}, { unmissableOffer: false })],
+      listings: [
+        baseListing(
+          {},
+          {
+            offers: [
+              {
+                text: 'OFERTA IMPERDÍVEL',
+                icon: 'Gift',
+                background: '#0066cc',
+                color: '#ffffff',
+              },
+            ],
+          },
+        ),
+      ],
     })
     renderWatchCard(product)
-    expect(screen.queryByTestId('unmissable-offer')).toBeNull()
+    const offerRow = screen.getByTestId('offer-row')
+    const body = screen.getByTestId('watch-card-body')
+    expect(body.contains(offerRow)).toBe(true)
+    expect(frame.contains(offerRow)).toBe(false)
+    expect(screen.getByTestId('price-current').className).not.toMatch(/\btext-destructive\b/)
   })
 
-  it('places OFERTA IMPERDÍVEL above the title on mobile and on the photo from md', () => {
+  it('OSC-33: places the offer row in the card body above the price', () => {
     const product = baseProduct({
-      listings: [baseListing({}, { unmissableOffer: true })],
+      listings: [
+        baseListing(
+          {},
+          {
+            offers: [
+              {
+                text: 'Promo crua',
+                icon: 'Gift',
+                background: '#111111',
+                color: '#eeeeee',
+              },
+            ],
+          },
+        ),
+      ],
     })
     renderWatchCard(product)
-    const offers = screen.getAllByTestId('unmissable-offer')
-    const frame = screen.getByTestId('watch-card-image')
-    const body = screen.getByTestId('watch-card-body')
+    const offerRow = screen.getByTestId('offer-row')
+    const priceBlock = screen.getByTestId('price-block')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
-    const aboveTitle = offers.find((offer) => offer.className.includes('md:hidden'))
-    const onPhoto = offers.find((offer) => offer.className.includes('md:inline-flex'))
+    expect(offerRow.textContent).toContain('Promo crua')
+    expect(
+      heading.compareDocumentPosition(offerRow) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).not.toBe(0)
+    expect(
+      offerRow.compareDocumentPosition(priceBlock) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).not.toBe(0)
+  })
 
-    expect(offers).toHaveLength(2)
-    expect(screen.getByTestId('price-current').className).toMatch(/\btext-destructive\b/)
-    expect(aboveTitle?.textContent).toBe('OFERTA IMPERDÍVEL')
-    expect(body.contains(aboveTitle as Node)).toBe(true)
-    expect(frame.contains(aboveTitle as Node)).toBe(false)
-    expect(aboveTitle?.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
-    expect(onPhoto?.textContent).toBe('OFERTA IMPERDÍVEL')
-    expect(frame.contains(onPhoto as Node)).toBe(true)
-    expect(body.contains(onPhoto as Node)).toBe(false)
-    for (const offer of offers) {
-      const icon = offer.querySelector('svg')
-      expect(icon?.getAttribute('aria-hidden')).toBe('true')
-      expect(icon?.classList.contains('lucide-gift')).toBe(true)
-      expect(offer.firstElementChild).toBe(icon)
-      expect(offer.className).toMatch(/rounded-\[4px\]/)
-      expect(offer.className).not.toMatch(/\brounded-full\b/)
-      expect(offer.className).toMatch(/\bh-5\b/)
-      expect(offer.className).toMatch(/\bpx-1.5\b/)
-      expect(offer.className).toMatch(/\btext-xs\b/)
-      expect(offer.className).toMatch(/\bbg-primary\b/)
-      expect(offer.className).toMatch(/\btext-primary-foreground\b/)
-    }
-    expect(onPhoto?.className.split(/\s+/)).toEqual(expect.arrayContaining(['absolute', 'left-3', 'bottom-3', 'hidden']))
+  it('OSC-25 OSC-27: on_order card shows Sob consulta without price, pix or installments', () => {
+    const product = baseProduct({
+      listings: [
+        baseListing({
+          availabilityStatus: 'on_order',
+          variants: [
+            {
+              axes: [],
+              price: 999,
+              mainImage: 'foto-principal.webp',
+              offers: [
+                {
+                  text: 'OFERTA IMPERDÍVEL',
+                  icon: 'Gift',
+                  background: '#0066cc',
+                  color: '#ffffff',
+                },
+              ],
+            },
+          ],
+        }),
+      ],
+    })
+    const card = cardFor(product, 'on-order')
+    renderWatchCard(product, 'on-order')
+    expect(screen.getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(screen.queryByTestId('price-block')).toBeNull()
+    expect(screen.queryByTestId('price-pix')).toBeNull()
+    expect(screen.queryByTestId('price-installments')).toBeNull()
+    expect(screen.queryByTestId('offer-row')).toBeNull()
+    expect(card.path).not.toMatch(/\?v=/)
+    expect(card.offers).toEqual([])
   })
 
   it('renders the same 128px image frame with short and long product titles', () => {

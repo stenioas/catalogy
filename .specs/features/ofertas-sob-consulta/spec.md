@@ -211,15 +211,15 @@ O anúncio sob encomenda ainda mostra preço, a oferta é um booleano com badge 
 | OSC-22 | P1: Abas e card | Tasks | Done · T2 |
 | OSC-23 | P1: Abas e card | Tasks | Done · T2 |
 | OSC-24 | P1: Abas e card | Tasks | Done · T2 |
-| OSC-25 | P1: Abas e card | Tasks | Pending · T10 |
+| OSC-25 | P1: Abas e card | Tasks | Done · T10 |
 | OSC-26 | P1: Abas e card | Tasks | Pending · T14 |
-| OSC-27 | P1: Sob consulta e fileira | Tasks | Pending · T10 · T11 · T13 |
+| OSC-27 | P1: Sob consulta e fileira | Tasks | Pending · T11 · T13 |
 | OSC-28 | P1: Sob consulta e fileira | Tasks | Pending · T11 · T13 |
 | OSC-29 | P1: Sob consulta e fileira | Tasks | Pending · T11 · T13 |
 | OSC-30 | P1: Sob consulta e fileira | Tasks | Done · T8 |
 | OSC-31 | P1: Sob consulta e fileira | Tasks | Done · T8 |
 | OSC-32 | P1: Sob consulta e fileira | Tasks | Done · T8 |
-| OSC-33 | P1: Sob consulta e fileira | Tasks | Pending · T10 |
+| OSC-33 | P1: Sob consulta e fileira | Tasks | Done · T10 |
 | OSC-34 | P1: Sob consulta e fileira | Tasks | Done · T9 |
 | OSC-35 | P1: Eixos da página | Tasks | Pending · T13 |
 | OSC-36 | P1: Eixos da página | Tasks | Pending · T13 |
