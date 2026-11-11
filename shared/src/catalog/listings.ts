@@ -117,9 +117,10 @@ export type CatalogCard = {
   listingId: string
   title: string
   image: string
-  price: number
+  price?: number
   listPrice?: number
-  unmissableOffer: boolean
+  offers: NonNullable<Variant['offers']>
+  availabilityStatus: Listing['availabilityStatus']
   statusLabel: string
   path: string
 }
@@ -138,38 +139,10 @@ function availabilityForSection(section: StatusSectionId): Listing['availability
 
 function listingInSection(listing: Listing, section: SectionId): boolean {
   if (!canGenerateCard(listing)) return false
-  if (section === 'all') return true
-  return listing.availabilityStatus === availabilityForSection(section)
-}
-
-function variantKey(product: Product, variant: Variant): string {
-  return valueIdsInAxisOrder(product, variant).join(',')
-}
-
-function coveredVariantKeys(product: Product): Set<string> {
-  const keys = new Set<string>()
-  for (const listing of product.listings) {
-    if (listing.enabled === false) continue
-    if (listing.availabilityStatus !== 'available' && listing.availabilityStatus !== 'coming_soon') continue
-    for (const variant of listing.variants) {
-      if (!canVariantRepresentCard(variant)) continue
-      keys.add(variantKey(product, variant))
-    }
+  if (section === 'all') {
+    return listing.availabilityStatus === 'available' || listing.availabilityStatus === 'coming_soon'
   }
-  return keys
-}
-
-/**
- * On-order rendering hides a variant that the same product already sells
- * as available or coming soon. The catalog file is left unchanged.
- */
-export function listingForDisplay(product: Product, listing: Listing): Listing {
-  if (listing.availabilityStatus !== 'on_order') return listing
-  const covered = coveredVariantKeys(product)
-  if (covered.size === 0) return listing
-  const variants = listing.variants.filter((variant) => !covered.has(variantKey(product, variant)))
-  if (variants.length === listing.variants.length) return listing
-  return { ...listing, variants }
+  return listing.availabilityStatus === availabilityForSection(section)
 }
 
 /** Visible listing with at least one variant that can represent a card. */
@@ -181,8 +154,7 @@ function listingsInSection(products: Product[], section: SectionId): Listing[] {
   const found: Listing[] = []
   for (const product of products) {
     for (const listing of product.listings) {
-      const shown = listingForDisplay(product, listing)
-      if (listingInSection(shown, section)) found.push(shown)
+      if (listingInSection(listing, section)) found.push(listing)
     }
   }
   return found
@@ -198,9 +170,13 @@ export function activeSection(products: Product[], section: string | null): Sect
   return 'all'
 }
 
-function representativeVariant(listing: Listing): Variant | null {
-  const candidates = variantQueue(listing).filter((variant) => canVariantRepresentCard(variant))
-  return candidates.find((variant) => variant.unmissableOffer === true) ?? candidates[0] ?? null
+function lowestPricedOrderableVariant(listing: Listing): Variant | null {
+  let chosen: Variant | null = null
+  for (const variant of listing.variants) {
+    if (variant.orderable === false) continue
+    if (chosen === null || variant.price < chosen.price) chosen = variant
+  }
+  return chosen
 }
 
 export function listingPath(slug: string, listingId: string, valueIds: string[]): string {
@@ -217,7 +193,7 @@ function valueIdsInAxisOrder(product: Product, variant: Variant): string[] {
   })
 }
 
-function toCard(
+function toPricedCard(
   product: Product,
   listing: Listing,
   variant: Variant,
@@ -229,13 +205,28 @@ function toCard(
     title: product.title,
     image: variant.mainImage,
     price: variant.price,
-    unmissableOffer: variant.unmissableOffer === true,
+    offers: variant.offers ?? [],
+    availabilityStatus: listing.availabilityStatus,
     statusLabel: AVAILABILITY_LABEL[listing.availabilityStatus],
     path: listingPath(product.slug, listing.id, valueIdsInAxisOrder(product, variant)),
     listingIndex,
   }
   if (variant.listPrice !== undefined) card.listPrice = variant.listPrice
   return card
+}
+
+function toOnOrderCard(product: Product, listing: Listing, listingIndex: number): SortableCard {
+  return {
+    slug: product.slug,
+    listingId: listing.id,
+    title: product.title,
+    image: listing.images[0] ?? '',
+    offers: [],
+    availabilityStatus: listing.availabilityStatus,
+    statusLabel: AVAILABILITY_LABEL[listing.availabilityStatus],
+    path: listingPath(product.slug, listing.id, []),
+    listingIndex,
+  }
 }
 
 function compareCards(a: SortableCard, b: SortableCard): number {
@@ -250,11 +241,14 @@ export function homeCards(products: Product[], section: string | null): CatalogC
   const cards: SortableCard[] = []
   for (const product of products) {
     product.listings.forEach((listing, listingIndex) => {
-      const shown = listingForDisplay(product, listing)
-      if (!listingInSection(shown, resolved)) return
-      const variant = representativeVariant(shown)
+      if (!listingInSection(listing, resolved)) return
+      if (listing.availabilityStatus === 'on_order') {
+        cards.push(toOnOrderCard(product, listing, listingIndex))
+        return
+      }
+      const variant = lowestPricedOrderableVariant(listing)
       if (variant === null) return
-      cards.push(toCard(product, shown, variant, listingIndex))
+      cards.push(toPricedCard(product, listing, variant, listingIndex))
     })
   }
   cards.sort(compareCards)
@@ -270,11 +264,13 @@ export type ListingSelectorOption = {
   /** true when a valid combination exists but the target variant is not orderable (Indisponível) */
   unavailable: boolean
   v: string | null
+  imageFile?: string
 }
 
 export type ListingSelector = {
   axisId: string
   label: string
+  presentation: 'image' | 'text'
   options: ListingSelectorOption[]
 }
 
@@ -287,7 +283,8 @@ export type OpenListingView = {
   price: number
   listPrice?: number
   observations?: string
-  unmissableOffer: boolean
+  offers: NonNullable<Variant['offers']>
+  availabilityStatus: Listing['availabilityStatus']
   description?: string
   productSpecifications: NonNullable<Product['specifications']>
   listingSpecifications: NonNullable<Listing['specifications']>
@@ -302,8 +299,7 @@ function firstListingForSlug(product: Product): Listing | null {
   for (const section of STATUS_SECTION_IDS) {
     const status = availabilityForSection(section)
     for (const listing of product.listings) {
-      const shown = listingForDisplay(product, listing)
-      if (listing.availabilityStatus === status && canGenerateCard(shown)) return shown
+      if (listing.availabilityStatus === status && canGenerateCard(listing)) return listing
     }
   }
   return null
@@ -328,39 +324,37 @@ function compatibleWithOtherAxes(variant: Variant, active: Variant, axisId: stri
 
 function selectorsFor(
   product: Product,
-  source: Listing,
   listing: Listing,
   active: Variant,
 ): ListingSelector[] {
   const queue = variantQueue(listing)
-  return product.axes.map((axis) => ({
-    axisId: axis.id,
-    label: axis.label,
-    options: axis.values.flatMap((axisValue) => {
-      const onSource = source.variants.some((variant) =>
-        variantContains(variant, axis.id, axisValue.id),
-      )
-      const onShown = listing.variants.some((variant) =>
-        variantContains(variant, axis.id, axisValue.id),
-      )
-      if (onSource && !onShown) return []
-      const possible = listing.variants.some(
-        (variant) =>
-          variantContains(variant, axis.id, axisValue.id) &&
-          compatibleWithOtherAxes(variant, active, axis.id),
-      )
-      const landing = queue.find((variant) => variantContains(variant, axis.id, axisValue.id))
-      const unavailable =
-        possible && landing !== undefined && landing.orderable === false
-      return [{
-        valueId: axisValue.id,
-        value: axisValue.value,
-        disabled: !possible,
-        unavailable,
-        v: possible && landing !== undefined ? variantQuery(product, landing) : null,
-      }]
-    }),
-  }))
+  return product.axes.map((axis) => {
+    const presentation = axis.presentation ?? 'text'
+    return {
+      axisId: axis.id,
+      label: axis.label,
+      presentation,
+      options: axis.values.flatMap((axisValue) => {
+        const possible = listing.variants.some(
+          (variant) =>
+            variantContains(variant, axis.id, axisValue.id) &&
+            compatibleWithOtherAxes(variant, active, axis.id),
+        )
+        const landing = queue.find((variant) => variantContains(variant, axis.id, axisValue.id))
+        const unavailable =
+          possible && landing !== undefined && landing.orderable === false
+        const option: ListingSelectorOption = {
+          valueId: axisValue.id,
+          value: axisValue.value,
+          disabled: !possible,
+          unavailable,
+          v: possible && landing !== undefined ? variantQuery(product, landing) : null,
+        }
+        if (presentation === 'image') option.imageFile = landing?.mainImage ?? ''
+        return [option]
+      }),
+    }
+  })
 }
 
 function pageTitle(product: Product, variant: Variant): string {
@@ -393,9 +387,7 @@ export function shareMessage(
 }
 
 function openListing(product: Product, listing: Listing, v: string | null): OpenListingView {
-  const source = product.listings.find((item) => item.id === listing.id) ?? listing
-  const shown = listingForDisplay(product, source)
-  const variant = resolveVariant(shown, v)
+  const variant = resolveVariant(listing, v)
   const view: OpenListingView = {
     missing: false,
     listingId: listing.id,
@@ -404,12 +396,13 @@ function openListing(product: Product, listing: Listing, v: string | null): Open
     availabilityLabel:
       variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[listing.availabilityStatus],
     price: variant.price,
-    unmissableOffer: variant.unmissableOffer === true,
+    offers: variant.offers ?? [],
+    availabilityStatus: listing.availabilityStatus,
     productSpecifications: product.specifications ?? [],
     listingSpecifications: listing.specifications ?? [],
-    images: shown.images,
-    imageIndex: shown.images.indexOf(variant.mainImage),
-    selectors: selectorsFor(product, source, shown, variant),
+    images: listing.images,
+    imageIndex: listing.images.indexOf(variant.mainImage),
+    selectors: selectorsFor(product, listing, variant),
   }
   if (product.description !== undefined) view.description = product.description
   if (variant.listPrice !== undefined) view.listPrice = variant.listPrice
@@ -434,9 +427,8 @@ export function listingByPath(
 
   const listing = product.listings.find((item) => item.id === listingId)
   if (listing === undefined || listing.enabled === false) return { missing: true }
-  const shown = listingForDisplay(product, listing)
-  if (shown.variants.length === 0) return { missing: true }
-  return openListing(product, shown, v)
+  if (listing.variants.length === 0) return { missing: true }
+  return openListing(product, listing, v)
 }
 
 export function homeEmptyText(products: Product[], section: string | null): string | null {

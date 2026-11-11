@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Listing, Product, Variant } from '../schemas/product.ts'
+import * as listingModule from './listings.ts'
+import * as shared from '../index.ts'
 import {
   MISSING_LISTING_TEXT,
   activeSection,
@@ -286,27 +288,37 @@ describe('homeCards', () => {
     ],
   }
 
-  function colored(id: string): Product {
+  const cheapOffer = {
+    text: 'Leve 2',
+    background: '#abc',
+    color: '#fff',
+    icon: 'Gift',
+  }
+
+  function pricedListing(status: 'available' | 'coming_soon'): Product {
+    const listingId = status === 'available' ? 'novo' : 'breve'
     return productOf(
       'seculus',
       'Seculus',
       [
-        listingOf(id, {
+        listingOf(listingId, {
+          availabilityStatus: status,
           variants: [
-            variantOf(10, {
-              mainImage: 'barato.jpg',
+            variantOf(50, {
+              mainImage: 'caro.jpg',
               unmissableOffer: true,
               axes: [{ axisId: 'cor', valueId: 'preto' }],
             }),
-            variantOf(30, {
-              mainImage: 'oferta.jpg',
-              listPrice: 40,
-              unmissableOffer: true,
-              axes: [{ axisId: 'cor', valueId: 'azul' }],
+            variantOf(1, {
+              mainImage: 'bloqueado.jpg',
+              orderable: false,
+              axes: [{ axisId: 'cor', valueId: 'amarelo' }],
             }),
-            variantOf(20, {
-              mainImage: 'comum.jpg',
-              axes: [{ axisId: 'cor', valueId: 'verde' }],
+            variantOf(12, {
+              mainImage: 'barato.jpg',
+              listPrice: 30,
+              offers: [cheapOffer],
+              axes: [{ axisId: 'cor', valueId: 'azul' }],
             }),
           ],
         }),
@@ -315,39 +327,85 @@ describe('homeCards', () => {
     )
   }
 
-  it('renders one card from the first unmissable variant that can represent the card', () => {
-    const cards = homeCards([colored('novo')], 'available')
-    expect(cards).toEqual([
+  it('chooses the lowest price among variants whose orderable is not false', () => {
+    const available = homeCards([pricedListing('available')], 'available')
+    expect(available).toEqual([
       {
         slug: 'seculus',
         listingId: 'novo',
         title: 'Seculus',
         image: 'barato.jpg',
-        price: 10,
-        unmissableOffer: true,
+        price: 12,
+        listPrice: 30,
+        offers: [cheapOffer],
+        availabilityStatus: 'available',
         statusLabel: 'Disponível',
-        path: '/product/seculus/novo?v=preto',
+        path: '/product/seculus/novo?v=azul',
       },
     ])
-    expect(cards[0].title).not.toContain('Az')
-    expect(cards[0].title).not.toContain('Preto fosco')
+    expect(available[0].title).not.toContain('Az')
+    expect(available[0].title).not.toContain('Preto fosco')
+
+    expect(homeCards([pricedListing('coming_soon')], 'coming-soon')).toEqual([
+      {
+        slug: 'seculus',
+        listingId: 'breve',
+        title: 'Seculus',
+        image: 'barato.jpg',
+        price: 12,
+        listPrice: 30,
+        offers: [cheapOffer],
+        availabilityStatus: 'coming_soon',
+        statusLabel: 'Chega em breve',
+        path: '/product/seculus/breve?v=azul',
+      },
+    ])
   })
 
-  it('uses the first variant in queue order when none of them is unmissable', () => {
-    const product = colored('novo')
-    for (const variant of product.listings[0].variants) {
-      delete variant.unmissableOffer
+  it('breaks a lowest-price tie with the earlier variant in listing.variants', () => {
+    const tiedOffer = {
+      text: 'Primeiro do arquivo',
+      background: '#111111',
+      color: '#ffffff',
+      icon: 'Tag',
     }
+    const product = productOf(
+      'seculus',
+      'Seculus',
+      [
+        listingOf('novo', {
+          variants: [
+            variantOf(40, {
+              mainImage: 'caro.jpg',
+              axes: [{ axisId: 'cor', valueId: 'preto' }],
+            }),
+            variantOf(15, {
+              mainImage: 'primeiro.jpg',
+              offers: [tiedOffer],
+              axes: [{ axisId: 'cor', valueId: 'azul' }],
+            }),
+            variantOf(15, {
+              mainImage: 'segundo.jpg',
+              unmissableOffer: true,
+              axes: [{ axisId: 'cor', valueId: 'verde' }],
+            }),
+          ],
+        }),
+      ],
+      { axes: [color] },
+    )
+
     expect(homeCards([product], 'available')).toEqual([
       {
         slug: 'seculus',
         listingId: 'novo',
         title: 'Seculus',
-        image: 'barato.jpg',
-        price: 10,
-        unmissableOffer: false,
+        image: 'primeiro.jpg',
+        price: 15,
+        offers: [tiedOffer],
+        availabilityStatus: 'available',
         statusLabel: 'Disponível',
-        path: '/product/seculus/novo?v=preto',
+        path: '/product/seculus/novo?v=azul',
       },
     ])
   })
@@ -384,14 +442,14 @@ describe('homeCards', () => {
         slug: 'seculus',
         listingId: 'encomenda',
         title: 'Seculus',
-        image: 'venda.jpg',
-        price: 80,
-        listPrice: 90,
-        unmissableOffer: false,
+        image: img,
+        offers: [],
+        availabilityStatus: 'on_order',
         statusLabel: 'Sob encomenda',
-        path: '/product/seculus/encomenda?v=azul',
+        path: '/product/seculus/encomenda',
       },
     ])
+    expect(homeCards(products, 'all')).toEqual([])
   })
 
   it('uses the listing availability label, including Chega em breve', () => {
@@ -407,7 +465,8 @@ describe('homeCards', () => {
       title: 'Av',
       image: img,
       price: 100,
-      unmissableOffer: false,
+      offers: [],
+      availabilityStatus: 'available',
       statusLabel: 'Disponível',
       path: '/product/av/av',
     })
@@ -417,7 +476,8 @@ describe('homeCards', () => {
       title: 'Breve',
       image: img,
       price: 100,
-      unmissableOffer: false,
+      offers: [],
+      availabilityStatus: 'coming_soon',
       statusLabel: 'Chega em breve',
       path: '/product/breve/breve',
     })
@@ -492,10 +552,10 @@ describe('homeCards', () => {
     expect(homeCards(products, 'on-order')).toEqual([])
   })
 
-  it('lists every status together for all or null, sorted by title, with each availability label', () => {
+  it('lists available and coming soon together for all or null, and keeps on_order off Todos', () => {
     const products = [
       productOf('zulu', 'Zebra', [
-        listingOf('z', { availabilityStatus: 'on_order' }),
+        listingOf('z', { availabilityStatus: 'on_order', images: ['capa-zebra.jpg'] }),
       ]),
       productOf('alfa', 'Águia', [listingOf('a')]),
       productOf('meio', 'bola', [
@@ -509,7 +569,8 @@ describe('homeCards', () => {
         title: 'Águia',
         image: img,
         price: 100,
-        unmissableOffer: false,
+        offers: [],
+        availabilityStatus: 'available',
         statusLabel: 'Disponível',
         path: '/product/alfa/a',
       },
@@ -519,28 +580,45 @@ describe('homeCards', () => {
         title: 'bola',
         image: img,
         price: 100,
-        unmissableOffer: false,
+        offers: [],
+        availabilityStatus: 'coming_soon',
         statusLabel: 'Chega em breve',
         path: '/product/meio/breve',
-      },
-      {
-        slug: 'zulu',
-        listingId: 'z',
-        title: 'Zebra',
-        image: img,
-        price: 100,
-        unmissableOffer: false,
-        statusLabel: 'Sob encomenda',
-        path: '/product/zulu/z',
       },
     ]
     expect(homeCards(products, null)).toEqual(expected)
     expect(homeCards(products, 'all')).toEqual(expected)
+    expect(homeCards(products, 'all').map((card) => card.availabilityStatus)).not.toContain('on_order')
     expect(homeCards(products, 'available').map((card) => card.listingId)).toEqual(['a'])
     expect(sectionHasCards(products, 'all')).toBe(true)
+    expect(homeCards(products, 'on-order')).toEqual([
+      {
+        slug: 'zulu',
+        listingId: 'z',
+        title: 'Zebra',
+        image: 'capa-zebra.jpg',
+        offers: [],
+        availabilityStatus: 'on_order',
+        statusLabel: 'Sob encomenda',
+        path: '/product/zulu/z',
+      },
+    ])
   })
 
-  it('hides an on-order variant already stocked or arriving and keeps the other colors', () => {
+  it('leaves Todos without cards when every listing that generates a card is on_order', () => {
+    const products = [
+      productOf('so', 'Só', [
+        listingOf('enc', { availabilityStatus: 'on_order', images: ['capa.jpg'] }),
+      ]),
+    ]
+    expect(homeCards(products, 'all')).toEqual([])
+    expect(homeCards(products, null)).toEqual([])
+    expect(sectionHasCards(products, 'all')).toBe(false)
+    expect(sectionHasCards(products, 'on-order')).toBe(true)
+    expect(homeEmptyText(products, 'all')).toBeNull()
+  })
+
+  it('keeps a repeated on-order combination on Encomendar and opens it from ?v=', () => {
     const axes = [{
       id: 'cor',
       label: 'Cor',
@@ -556,9 +634,11 @@ describe('homeCards', () => {
         [
           listingOf('encomenda', {
             availabilityStatus: 'on_order',
+            images: ['capa.jpg'],
             variants: [
               variantOf(139.9, {
                 mainImage: 'gold.jpg',
+                offers: [{ text: 'Não entra no card', background: '#111111', color: '#ffffff', icon: 'Gift' }],
                 axes: [{ axisId: 'cor', valueId: 'amarelo' }],
               }),
               variantOf(139.9, {
@@ -580,36 +660,40 @@ describe('homeCards', () => {
         { axes },
       ),
     ]
-    const stored = products[0]!.listings.map((listing) => listing.variants.length)
+    const stored = structuredClone(products)
 
     expect(homeCards(products, 'on-order')).toEqual([
       {
         slug: 'curren',
         listingId: 'encomenda',
         title: 'Curren',
-        image: 'gold.jpg',
-        price: 139.9,
-        unmissableOffer: false,
+        image: 'capa.jpg',
+        offers: [],
+        availabilityStatus: 'on_order',
         statusLabel: 'Sob encomenda',
-        path: '/product/curren/encomenda?v=amarelo',
+        path: '/product/curren/encomenda',
       },
     ])
     expect(sectionHasCards(products, 'on-order')).toBe(true)
+    expect(homeCards(products, 'all').map((card) => card.listingId)).toEqual(['caminho'])
     expect(homeCards(products, 'coming-soon')[0]?.path).toBe('/product/curren/caminho?v=verde')
+    expect(homeCards(products, 'coming-soon')[0]?.image).toBe('rose.jpg')
 
     const orderView = requireOpen(listingByPath(products, 'curren', 'encomenda', 'verde'))
     expect(orderView.price).toBe(139.9)
-    expect(orderView.title).toBe('Curren Amarelo')
+    expect(orderView.title).toBe('Curren Verde')
+    expect(orderView.availabilityStatus).toBe('on_order')
     const orderColors = orderView.selectors.find((selector) => selector.axisId === 'cor')?.options
-    expect(orderColors?.map((option) => option.valueId)).not.toContain('verde')
+    expect(orderColors?.map((option) => option.valueId)).toEqual(['amarelo', 'verde'])
+    expect(orderColors?.find((option) => option.valueId === 'verde')?.disabled).toBe(false)
     expect(orderColors?.find((option) => option.valueId === 'amarelo')?.disabled).toBe(false)
 
     const soonView = requireOpen(listingByPath(products, 'curren', 'caminho', null))
     expect(soonView.selectors.find((selector) => selector.axisId === 'cor')?.options.map((option) => option.valueId)).toContain('verde')
-    expect(products[0]!.listings.map((listing) => listing.variants.length)).toEqual(stored)
+    expect(products).toEqual(stored)
   })
 
-  it('drops the on-order card when every variant is already available or arriving', () => {
+  it('keeps the on-order card and opens the direct link when every combination is already stocked or arriving', () => {
     const products = [
       productOf(
         'curren',
@@ -634,10 +718,24 @@ describe('homeCards', () => {
       ),
     ]
 
-    expect(homeCards(products, 'on-order')).toEqual([])
-    expect(sectionHasCards(products, 'on-order')).toBe(false)
+    expect(homeCards(products, 'on-order')).toEqual([
+      {
+        slug: 'curren',
+        listingId: 'encomenda',
+        title: 'Curren',
+        image: img,
+        offers: [],
+        availabilityStatus: 'on_order',
+        statusLabel: 'Sob encomenda',
+        path: '/product/curren/encomenda',
+      },
+    ])
+    expect(sectionHasCards(products, 'on-order')).toBe(true)
     expect(homeCards(products, 'all').map((card) => card.listingId)).toEqual(['caminho'])
-    expect(listingByPath(products, 'curren', 'encomenda', 'preto')).toEqual({ missing: true })
+    const opened = requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto'))
+    expect(opened.price).toBe(10)
+    expect(opened.title).toBe('Curren Preto fosco')
+    expect(opened.availabilityStatus).toBe('on_order')
   })
 
   it('keeps an on-order variant when the matching stock listing is disabled', () => {
@@ -660,8 +758,12 @@ describe('homeCards', () => {
     ]
 
     expect(homeCards(products, 'on-order').map((card) => card.path)).toEqual([
-      '/product/curren/encomenda?v=preto',
+      '/product/curren/encomenda',
     ])
+    expect(requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto')).price).toBe(10)
+    expect(requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto')).title).toBe(
+      'Curren Preto fosco',
+    )
   })
 })
 
@@ -727,7 +829,11 @@ describe('listingByPath', () => {
       listingOf('b', { enabled: false }),
     ])
 
-    expect(listingByPath([product], 'relogio', 'dead', null)).toEqual({ missing: true })
+    const deadView = requireOpen(listingByPath([product], 'relogio', 'dead', null))
+    expect(deadView.price).toBe(1)
+    expect(deadView.availabilityLabel).toBe('Indisponível')
+    expect(deadView.availabilityStatus).toBe('on_order')
+    expect(deadView.offers).toEqual([])
     expect(requireOpen(listingByPath([product], 'relogio', null, null)).listingId).toBe('stock')
     expect(listingByPath([product], 'relogio', 'hidden', null)).toEqual({ missing: true })
     expect(listingByPath([product], 'relogio', 'ausente', null)).toEqual({ missing: true })
@@ -760,6 +866,10 @@ describe('listingByPath', () => {
     const color = view.selectors.find((selector) => selector.axisId === 'color')
     const size = view.selectors.find((selector) => selector.axisId === 'size')
     expect(view.selectors.map((selector) => selector.label)).toEqual(['Cor', 'Tamanho'])
+    expect(color?.presentation).toBe('text')
+    expect(size?.presentation).toBe('text')
+    expect(color?.options[0]).not.toHaveProperty('imageFile')
+    expect(size?.options[0]).not.toHaveProperty('imageFile')
     expect(color?.options.map((option) => option.value)).toEqual(['Preto', 'Azul'])
     expect(color?.options).toEqual([
       { valueId: 'preto', value: 'Preto', disabled: false, unavailable: false, v: 'preto,m' },
@@ -873,11 +983,16 @@ describe('listingByPath', () => {
     expect(current.price).toBe(20)
     expect(current.listPrice).toBe(40)
     expect(current.observations).toBe('Caixa')
-    expect(current.unmissableOffer).toBe(true)
+    expect(current.offers).toEqual([
+      { text: 'OFERTA IMPERDÍVEL', background: '#0066cc', color: '#ffffff', icon: 'Gift' },
+    ])
+    expect(current).not.toHaveProperty('unmissableOffer')
+    expect(current.availabilityStatus).toBe('available')
     expect(next.price).toBe(10)
     expect(next.listPrice).toBeUndefined()
     expect(next.observations).toBeUndefined()
-    expect(next.unmissableOffer).toBe(false)
+    expect(next.offers).toEqual([])
+    expect(next).not.toHaveProperty('unmissableOffer')
     expect(current.listingId).toBe('vista')
   })
 
@@ -920,6 +1035,7 @@ describe('listingByPath', () => {
     const view = requireOpen(listingByPath([product], 'encomenda', 'dead', 'b'))
     expect(view.price).toBe(70)
     expect(view.availabilityLabel).toBe('Indisponível')
+    expect(view.availabilityStatus).toBe('on_order')
     expect(view.stateLabel).toBe('Novo')
     expect(view.images[view.imageIndex]).toBe(img)
 
@@ -937,6 +1053,107 @@ describe('listingByPath', () => {
     const available = requireOpen(listingByPath([vistaProduct()], 'vista', 'vista', 'preto,m'))
     expect(available.availabilityLabel).toBe('Disponível')
     expect(available.stateLabel).toBe('Usado')
+  })
+
+  it('treats an omitted axis presentation as text and copies imageFile from the first variantQueue variant', () => {
+    const product = productOf(
+      'eixos',
+      'Eixos',
+      [
+        listingOf('item', {
+          images: ['capa.jpg'],
+          variants: [
+            variantOf(99, {
+              orderable: false,
+              mainImage: 'morta.jpg',
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'p' },
+              ],
+            }),
+            variantOf(20, {
+              mainImage: 'fila.jpg',
+              axes: [
+                { axisId: 'color', valueId: 'azul' },
+                { axisId: 'size', valueId: 'm' },
+              ],
+            }),
+            variantOf(30, {
+              mainImage: 'preto.jpg',
+              axes: [
+                { axisId: 'color', valueId: 'preto' },
+                { axisId: 'size', valueId: 'm' },
+              ],
+            }),
+          ],
+        }),
+      ],
+      {
+        axes: [
+          {
+            id: 'color',
+            label: 'Cor',
+            presentation: 'image',
+            values: [
+              { id: 'preto', value: 'Preto' },
+              { id: 'azul', value: 'Azul' },
+              { id: 'verde', value: 'Verde' },
+            ],
+          },
+          {
+            id: 'size',
+            label: 'Tamanho',
+            values: [
+              { id: 'p', value: 'P' },
+              { id: 'm', value: 'M' },
+            ],
+          },
+        ],
+      },
+    )
+
+    const view = requireOpen(listingByPath([product], 'eixos', 'item', 'preto,m'))
+    const color = view.selectors.find((selector) => selector.axisId === 'color')
+    const size = view.selectors.find((selector) => selector.axisId === 'size')
+
+    expect(color?.presentation).toBe('image')
+    expect(size?.presentation).toBe('text')
+    expect(size?.options.every((option) => !('imageFile' in option))).toBe(true)
+    expect(color?.options).toEqual([
+      {
+        valueId: 'preto',
+        value: 'Preto',
+        disabled: false,
+        unavailable: false,
+        v: 'preto,m',
+        imageFile: 'preto.jpg',
+      },
+      {
+        valueId: 'azul',
+        value: 'Azul',
+        disabled: false,
+        unavailable: false,
+        v: 'azul,m',
+        imageFile: 'fila.jpg',
+      },
+      {
+        valueId: 'verde',
+        value: 'Verde',
+        disabled: true,
+        unavailable: false,
+        v: null,
+        imageFile: '',
+      },
+    ])
+  })
+})
+
+describe('published catalog module', () => {
+  it('does not export listingForDisplay or coveredVariantKeys', () => {
+    expect('listingForDisplay' in listingModule).toBe(false)
+    expect('coveredVariantKeys' in listingModule).toBe(false)
+    expect('listingForDisplay' in shared).toBe(false)
+    expect('coveredVariantKeys' in shared).toBe(false)
   })
 })
 
@@ -1027,6 +1244,9 @@ function vistaProduct(): Product {
               mainImage: 'b.jpg',
               listPrice: 40,
               unmissableOffer: true,
+              offers: [
+                { text: 'OFERTA IMPERDÍVEL', background: '#0066cc', color: '#ffffff', icon: 'Gift' },
+              ],
               observations: 'Caixa',
               axes: [
                 { axisId: 'color', valueId: 'preto' },
