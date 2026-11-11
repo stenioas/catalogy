@@ -86,10 +86,10 @@
           "observations": "Acompanha caixa de metal e cantil",
           "offers": [
             {
-              "text": "OFERTA IMPERDÍVEL",
+              "text": "Black Friday",
               "icon": "Gift",
-              "background": "#0066cc",
-              "color": "#ffffff"
+              "background": "#000000",
+              "color": "#FFFFFF"
             }
           ]
         }

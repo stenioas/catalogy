@@ -15,10 +15,10 @@ import {
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 const MIGRATED_OFFER = {
-  text: 'OFERTA IMPERDÍVEL',
+  text: 'Black Friday',
   icon: 'Gift',
-  background: '#0066cc',
-  color: '#ffffff',
+  background: '#000000',
+  color: '#FFFFFF',
 }
 
 function publishedProductJsonPaths(catalogDir: string): string[] {

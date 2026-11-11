@@ -309,10 +309,10 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
       availabilityStatus: 'on_order',
       offers: [
         {
-          text: 'OFERTA IMPERDÍVEL',
+          text: 'Black Friday',
           icon: 'Gift',
-          background: '#0066cc',
-          color: '#ffffff',
+          background: '#000000',
+          color: '#FFFFFF',
         },
       ],
     })
@@ -322,7 +322,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const consult = within(bar).getByTestId('consult-label')
 
     expect(consult.textContent).toBe('Sob consulta')
-    expect(offerRow.textContent).toContain('OFERTA IMPERDÍVEL')
+    expect(offerRow.textContent).toContain('Black Friday')
     expect(offerRow.compareDocumentPosition(consult) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(within(bar).queryByTestId('price-block')).toBeNull()
     expect(within(bar).queryByTestId('price-pix')).toBeNull()

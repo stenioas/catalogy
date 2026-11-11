@@ -143,7 +143,15 @@
           ],
           "price": 144.9,
           "listPrice": 179.9,
-          "mainImage": "qingxiya-7706-17.png"
+          "mainImage": "qingxiya-7706-17.png",
+          "offers": [
+            {
+              "text": "Black Friday",
+              "icon": "Gift",
+              "background": "#000000",
+              "color": "#FFFFFF"
+            }
+          ]
         }
       ]
     }

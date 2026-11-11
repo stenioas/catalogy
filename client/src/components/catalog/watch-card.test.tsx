@@ -590,10 +590,10 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
           {
             offers: [
               {
-                text: 'OFERTA IMPERDÍVEL',
+                text: 'Black Friday',
                 icon: 'Gift',
-                background: '#0066cc',
-                color: '#ffffff',
+                background: '#000000',
+                color: '#FFFFFF',
               },
             ],
           },
@@ -655,10 +655,10 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
               mainImage: 'foto-principal.webp',
               offers: [
                 {
-                  text: 'OFERTA IMPERDÍVEL',
+                  text: 'Black Friday',
                   icon: 'Gift',
-                  background: '#0066cc',
-                  color: '#ffffff',
+                  background: '#000000',
+                  color: '#FFFFFF',
                 },
               ],
             },

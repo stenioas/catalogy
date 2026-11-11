@@ -344,10 +344,10 @@ describe('validateCatalog', () => {
                 mainImage: 'frente.png',
                 offers: [
                   {
-                    text: 'OFERTA IMPERDÍVEL',
+                    text: 'Black Friday',
                     icon: 'Gift',
-                    background: '#0066cc',
-                    color: '#ffffff',
+                    background: '#000000',
+                    color: '#FFFFFF',
                   },
                 ],
               },
@@ -365,10 +365,10 @@ describe('validateCatalog', () => {
 })
 
 const LEGACY_UNMISSABLE_OFFER = {
-  text: 'OFERTA IMPERDÍVEL',
+  text: 'Black Friday',
   icon: 'Gift',
-  background: '#0066cc',
-  color: '#ffffff',
+  background: '#000000',
+  color: '#FFFFFF',
 } as const
 
 function flatLegacyProduct(

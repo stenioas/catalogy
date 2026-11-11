@@ -10,9 +10,9 @@ import {
 } from './product-badges'
 
 const sampleOffer = {
-  text: 'OFERTA IMPERDÍVEL',
-  background: '#0066cc',
-  color: '#ffffff',
+  text: 'Black Friday',
+  background: '#000000',
+  color: '#FFFFFF',
   icon: 'Gift',
 } as const
 
@@ -65,7 +65,7 @@ describe('OfferRow (OSC-30, OSC-31, OSC-32)', () => {
   it('OSC-31: applies background and color from JSON as inline styles in both themes', () => {
     render(<OfferRow offers={[sampleOffer]} />)
     const badge = screen.getByTestId('offer-badge') as HTMLElement
-    expect(badge.style.backgroundColor).toBe('rgb(0, 102, 204)')
+    expect(badge.style.backgroundColor).toBe('rgb(0, 0, 0)')
     expect(badge.style.color).toBe('rgb(255, 255, 255)')
   })
 

@@ -782,9 +782,9 @@ describe('ProductSchema axes identity (VAR-22, VAR-23)', () => {
 })
 
 const validOffer = {
-  text: 'OFERTA IMPERDÍVEL',
-  background: '#0066cc',
-  color: '#ffffff',
+  text: 'Black Friday',
+  background: '#000000',
+  color: '#FFFFFF',
   icon: 'Gift',
 }
 

@@ -183,10 +183,10 @@ export function normalizeProductJson(raw: unknown): unknown {
   if (o.unmissableOffer === true) {
     v0.offers = [
       {
-        text: 'OFERTA IMPERDÍVEL',
+        text: 'Black Friday',
         icon: 'Gift',
-        background: '#0066cc',
-        color: '#ffffff',
+        background: '#000000',
+        color: '#FFFFFF',
       },
     ]
   }

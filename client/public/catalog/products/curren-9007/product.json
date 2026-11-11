@@ -140,10 +140,10 @@
           "mainImage": "curren-9007-4.png",
           "offers": [
             {
-              "text": "OFERTA IMPERDÍVEL",
+              "text": "Black Friday",
               "icon": "Gift",
-              "background": "#0066cc",
-              "color": "#ffffff"
+              "background": "#000000",
+              "color": "#FFFFFF"
             }
           ]
         }

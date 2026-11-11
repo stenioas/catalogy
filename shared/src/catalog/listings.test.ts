@@ -981,7 +981,7 @@ describe('listingByPath', () => {
     expect(current.listPrice).toBe(40)
     expect(current.observations).toBe('Caixa')
     expect(current.offers).toEqual([
-      { text: 'OFERTA IMPERDÍVEL', background: '#0066cc', color: '#ffffff', icon: 'Gift' },
+      { text: 'Black Friday', background: '#000000', color: '#FFFFFF', icon: 'Gift' },
     ])
     expect(current.availabilityStatus).toBe('available')
     expect(next.price).toBe(10)
@@ -1239,7 +1239,7 @@ function vistaProduct(): Product {
               mainImage: 'b.jpg',
               listPrice: 40,
               offers: [
-                { text: 'OFERTA IMPERDÍVEL', background: '#0066cc', color: '#ffffff', icon: 'Gift' },
+                { text: 'Black Friday', background: '#000000', color: '#FFFFFF', icon: 'Gift' },
               ],
               observations: 'Caixa',
               axes: [
