@@ -220,7 +220,7 @@ O anúncio sob encomenda ainda mostra preço, a oferta é um booleano com badge 
 | OSC-31 | P1: Sob consulta e fileira | Tasks | Done · T8 |
 | OSC-32 | P1: Sob consulta e fileira | Tasks | Done · T8 |
 | OSC-33 | P1: Sob consulta e fileira | Tasks | Pending · T10 |
-| OSC-34 | P1: Sob consulta e fileira | Tasks | Pending · T9 |
+| OSC-34 | P1: Sob consulta e fileira | Tasks | Done · T9 |
 | OSC-35 | P1: Eixos da página | Tasks | Pending · T13 |
 | OSC-36 | P1: Eixos da página | Tasks | Pending · T13 |
 | OSC-37 | P1: Eixos da página | Tasks | Pending · T13 |

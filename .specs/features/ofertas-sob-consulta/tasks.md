@@ -308,6 +308,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T9: Devolver a cor normal ao preço
 
+**Status**: done
+
 **What**: `PriceBlock` perde `unmissableOffer` e a classe `text-destructive`. De, percentual, pix e parcelamento ficam.
 **Where**: `client/src/components/catalog/price-block.tsx`
 **Depends on**: T8
@@ -322,9 +324,9 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] O preço não muda de cor por causa de oferta
-- [ ] De, percentual, pix e parcelamento continuam no teste
-- [ ] Gate: `pnpm --filter client exec vitest run src/components/catalog/price-block.test.tsx`
+- [x] O preço não muda de cor por causa de oferta
+- [x] De, percentual, pix e parcelamento continuam no teste
+- [x] Gate: `pnpm --filter client exec vitest run src/components/catalog/price-block.test.tsx`
 
 **Tests**: integration
 **Gate**: quick

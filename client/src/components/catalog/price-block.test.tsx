@@ -244,11 +244,15 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
 
-  it.each([false, true])('paints the current price red only for an unmissable offer when showcase is %s', (showcase) => {
-    renderPriceBlock({ price: 369.9, showcase, unmissableOffer: true })
-    expect(screen.getByTestId('price-current').className).toMatch(/\btext-destructive\b/)
-    cleanup()
-    renderPriceBlock({ price: 369.9, showcase })
-    expect(screen.getByTestId('price-current').className).not.toMatch(/\btext-destructive\b/)
-  })
+  it.each([false, true])(
+    'OSC-34: keeps the current price in the normal tone with De, discount, pix and installments when showcase is %s',
+    (showcase) => {
+      renderPriceBlock({ price: 369.9, listPrice: 450, showcase })
+      expect(screen.getByTestId('price-current').className).not.toMatch(/\btext-destructive\b/)
+      expect(screen.getByTestId('price-list').textContent).toBe('De R$ 450,00')
+      expect(screen.getByTestId('price-badge').textContent).toBe('−17%')
+      expect(screen.getByTestId('price-pix').textContent).toBe('no pix')
+      expect(screen.getByTestId('price-installments').textContent).toBe(creditInstallmentLabel(369.9))
+    },
+  )
 })

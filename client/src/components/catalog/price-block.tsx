@@ -7,7 +7,6 @@ export type PriceBlockProps = {
   listPrice?: number
   wrapListPriceOnMobile?: boolean
   showcase?: boolean
-  unmissableOffer?: boolean
 }
 
 const currentPriceClassName = 'text-2xl font-semibold'
@@ -17,11 +16,9 @@ export function PriceBlock({
   listPrice,
   wrapListPriceOnMobile = false,
   showcase = false,
-  unmissableOffer = false,
 }: PriceBlockProps) {
   const currentLabel = formatBrl(price)
   const installmentLabel = creditInstallmentLabel(price)
-  const currentPriceTone = unmissableOffer ? 'text-destructive' : ''
 
   const percent = listPrice === undefined ? 0 : discountPercent(price, listPrice)
   const showBadge = percent >= 1
@@ -52,7 +49,7 @@ export function PriceBlock({
         ) : null}
         <span
           data-testid="price-current"
-          className={`col-start-1 text-base font-semibold md:text-xl ${priceRow} ${currentPriceTone}`}
+          className={`col-start-1 text-base font-semibold md:text-xl ${priceRow}`}
         >
           {currentLabel}
         </span>
@@ -99,7 +96,7 @@ export function PriceBlock({
         </div>
       ) : null}
       <div className="flex flex-wrap items-baseline gap-x-1.5">
-        <span data-testid="price-current" className={`${currentPriceClassName} ${currentPriceTone}`}>
+        <span data-testid="price-current" className={currentPriceClassName}>
           {currentLabel}
         </span>
         <span data-testid="price-pix" className="text-sm text-muted-foreground">
