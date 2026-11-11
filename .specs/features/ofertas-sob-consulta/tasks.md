@@ -250,6 +250,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T7: Documentar offers no README
 
+**Status**: done
+
 **What**: O trecho que descreve `unmissableOffer` e a badge sobre a foto passa a descrever `offers` e a fileira no corpo do card.
 **Where**: `README.md`
 **Depends on**: T6
@@ -264,8 +266,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] `README.md` não contém `unmissableOffer`
-- [ ] O README descreve a fileira no corpo do card, não sobre a foto
+- [x] `README.md` não contém `unmissableOffer`
+- [x] O README descreve a fileira no corpo do card, não sobre a foto
 
 **Tests**: none
 **Gate**: quick

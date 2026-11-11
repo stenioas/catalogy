@@ -47,7 +47,7 @@ O `slug` da pasta e o `slug` do JSON são o mesmo, em minúsculas, com hífens. 
 | `state` | sim | `"Novo"`, `"Usado"` ou `"Openbox"`; a badge aparece só para Usado e Openbox |
 | `availabilityStatus` | sim | `"available"`, `"on_order"`, `"unavailable"` ou `"sold_out"`; define o texto e a cor da disponibilidade |
 | `enabled` | não | Ausente ou `true` mostra o produto; `false` esconde da vitrine e do link direto |
-| `unmissableOffer` | não | `true` mostra a badge **OFERTA IMPERDÍVEL** no card da vitrine; ausente ou `false` não mostra |
+| `offers` (na variante) | não | Lista opcional de `{ "text", "background", "color", "icon" }`. A vitrine desenha uma badge por item, na ordem do array, em fileira no corpo do card acima do preço; ausente ou `[]` não mostra ofertas |
 
 **Novo**: produto novo, lacrado e nunca usado. **Openbox**: caixa aberta, sem uso ou com uso muito breve. **Usado**: produto que foi usado. No card, o estado aparece em texto, acima do título, separado da disponibilidade por um espaço: `Novo` e depois **Em estoque**.
 
@@ -82,7 +82,7 @@ A ordem no `product.json` pode ser outra; a página do relógio mostra essas lab
 
 Disponibilidade: `available` mostra **Em estoque** em verde claro; `on_order`, **Sob encomenda** em laranja claro; `unavailable`, **Indisponível** em cinza; `sold_out`, **Esgotado** em vermelho. As badges usam cantos menores que uma pílula, fundos suaves e nenhuma borda, com cores ajustadas para os temas claro e escuro. No card, a disponibilidade fica na mesma linha do estado, acima do título. O campo `availability` foi substituído por `availabilityStatus`; o texto é gerado pela interface.
 
-`unmissableOffer` liga a badge **OFERTA IMPERDÍVEL** acima do título no card mobile e no canto inferior esquerdo da foto a partir de 768px. O texto da badge é fixo; o JSON só decide se ela aparece. Nenhum produto precisa receber a prop para continuar válido.
+`offers` fica em cada variante de `listings[].variants[]`. Cada oferta exige `text` não vazio, `background` e `color` em hex `#RGB` ou `#RRGGBB`, e `icon` com o nome de um export do Lucide (por exemplo `Gift`); o build recusa ícone desconhecido. O texto, as cores e o ícone saem do JSON; a fileira não altera `price` nem `listPrice`. No card com preço, as badges aparecem no corpo, acima do preço, lado a lado com quebra de linha; a foto não recebe badge de oferta. Lista vazia ou campo ausente não desenha fileira.
 
 Ao salvar um `product.json` com o servidor de desenvolvimento aberto, a lista do catálogo é atualizada. O build recusa um JSON que fure esse contrato ou uma foto citada que não esteja em `img/`.
 

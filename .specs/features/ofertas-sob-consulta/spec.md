@@ -202,7 +202,7 @@ O anúncio sob encomenda ainda mostra preço, a oferta é um booleano com badge 
 | OSC-13 | P1: Migração | Tasks | Done · T4 |
 | OSC-14 | P1: Migração | Tasks | Done · T4 |
 | OSC-15 | P1: Migração | Tasks | Done · T5 |
-| OSC-16 | P1: Migração | Tasks | Pending · T7 |
+| OSC-16 | P1: Migração | Tasks | Done · T7 |
 | OSC-17 | P1: Abas e card | Tasks | Done · T2 |
 | OSC-18 | P1: Abas e card | Tasks | Done · T2 |
 | OSC-19 | P1: Abas e card | Tasks | Done · T2 |
