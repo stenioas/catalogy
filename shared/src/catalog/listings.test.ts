@@ -306,7 +306,6 @@ describe('homeCards', () => {
           variants: [
             variantOf(50, {
               mainImage: 'caro.jpg',
-              unmissableOffer: true,
               axes: [{ axisId: 'cor', valueId: 'preto' }],
             }),
             variantOf(1, {
@@ -386,7 +385,6 @@ describe('homeCards', () => {
             }),
             variantOf(15, {
               mainImage: 'segundo.jpg',
-              unmissableOffer: true,
               axes: [{ axisId: 'cor', valueId: 'verde' }],
             }),
           ],
@@ -422,7 +420,6 @@ describe('homeCards', () => {
             variants: [
               variantOf(10, {
                 mainImage: 'fora.jpg',
-                unmissableOffer: true,
                 orderable: false,
                 axes: [{ axisId: 'cor', valueId: 'preto' }],
               }),
@@ -986,13 +983,11 @@ describe('listingByPath', () => {
     expect(current.offers).toEqual([
       { text: 'OFERTA IMPERDÍVEL', background: '#0066cc', color: '#ffffff', icon: 'Gift' },
     ])
-    expect(current).not.toHaveProperty('unmissableOffer')
     expect(current.availabilityStatus).toBe('available')
     expect(next.price).toBe(10)
     expect(next.listPrice).toBeUndefined()
     expect(next.observations).toBeUndefined()
     expect(next.offers).toEqual([])
-    expect(next).not.toHaveProperty('unmissableOffer')
     expect(current.listingId).toBe('vista')
   })
 
@@ -1243,7 +1238,6 @@ function vistaProduct(): Product {
             variantOf(20, {
               mainImage: 'b.jpg',
               listPrice: 40,
-              unmissableOffer: true,
               offers: [
                 { text: 'OFERTA IMPERDÍVEL', background: '#0066cc', color: '#ffffff', icon: 'Gift' },
               ],

@@ -238,13 +238,13 @@ describe('ProductSchema omitted flags (VAR-06, VAR-11, VAR-12)', () => {
     ).toBe(false)
   })
 
-  it('treats omitted orderable as orderable and omitted unmissableOffer as not an offer', () => {
+  it('treats omitted orderable as orderable', () => {
     const omitted = ProductSchema.safeParse(product())
     const explicit = ProductSchema.safeParse(
       product({
         listings: [
           listing({
-            variants: [variant({ orderable: true, unmissableOffer: false })],
+            variants: [variant({ orderable: true })],
           }),
         ],
       }),
@@ -257,20 +257,10 @@ describe('ProductSchema omitted flags (VAR-06, VAR-11, VAR-12)', () => {
     }
     expect(omitted.data.listings[0].variants[0].orderable).toBeUndefined()
     expect(omitted.data.listings[0].variants[0].orderable === false).toBe(false)
-    expect(omitted.data.listings[0].variants[0].unmissableOffer).toBeUndefined()
-    expect(omitted.data.listings[0].variants[0].unmissableOffer).not.toBe(true)
     expect(explicit.data.listings[0].variants[0].orderable).toBe(true)
-    expect(explicit.data.listings[0].variants[0].unmissableOffer).toBe(false)
     expect(
       ProductSchema.safeParse(
         product({ listings: [listing({ variants: [variant({ orderable: 'false' })] })] }),
-      ).success,
-    ).toBe(false)
-    expect(
-      ProductSchema.safeParse(
-        product({
-          listings: [listing({ variants: [variant({ unmissableOffer: 'true' })] })],
-        }),
       ).success,
     ).toBe(false)
   })
@@ -817,6 +807,19 @@ function productWithOneAxis(axisOverrides: Record<string, unknown> = {}) {
     ],
   })
 }
+
+describe('ProductSchema unmissableOffer (OSC-03)', () => {
+  it.each([true, false] as const)(
+    'rejects a variant whose unmissableOffer is %s',
+    (unmissableOffer) => {
+      expect(
+        ProductSchema.safeParse(
+          product({ listings: [listing({ variants: [variant({ unmissableOffer })] })] }),
+        ).success,
+      ).toBe(false)
+    },
+  )
+})
 
 describe('ProductSchema axis presentation (OSC-01)', () => {
   it.each(['image', 'text'] as const)('accepts axis presentation %s', (presentation) => {

@@ -132,6 +132,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T3: Rejeitar unmissableOffer
 
+**Status**: done
+
 **What**: `VariantSchema` passa a `.strict()` e o campo `unmissableOffer` sai do shape. A chave passa a ser erro do schema.
 **Where**: `shared/src/schemas/product.ts`
 **Depends on**: T2
@@ -146,9 +148,9 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] Variante com `unmissableOffer` é rejeitada
-- [ ] Nenhum teste de `shared` ainda grava ou lê esse campo
-- [ ] Gate: `pnpm --filter @catalogo/shared test`
+- [x] Variante com `unmissableOffer` é rejeitada
+- [x] Nenhum teste de `shared` ainda grava ou lê esse campo
+- [x] Gate: `pnpm --filter @catalogo/shared test`
 
 **Tests**: unit
 **Gate**: quick

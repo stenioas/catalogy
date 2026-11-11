@@ -84,11 +84,11 @@ const VariantSchema = z
     price: positiveReais,
     listPrice: positiveReais.optional(),
     offers: z.array(OfferSchema).optional(),
-    unmissableOffer: z.boolean().optional(),
     mainImage: z.string(),
     observations: z.string().optional(),
     orderable: z.boolean().optional(),
   })
+  .strict()
   .superRefine((variant, context) => {
     if (variant.listPrice !== undefined && variant.listPrice <= variant.price) {
       context.addIssue({
