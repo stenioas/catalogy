@@ -221,6 +221,8 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 ### T6: Falhar o prebuild com ícone desconhecido
 
+**Status**: done
+
 **What**: `validateCatalog` rejeita `icon` que não é função exportada de `lucide-react` ou cuja forma kebab não existe em `dynamicIconImports`. `Gift` continua válido. `shared` segue sem a dependência.
 **Where**: `client/scripts/catalog.ts`
 **Depends on**: T5
@@ -235,9 +237,9 @@ T8 -> T9 -> T10 -> T11 -> T12 -> T13 -> T14
 
 **Done when**:
 
-- [ ] Um catálogo temporário com ícone desconhecido faz `validateCatalog` lançar
-- [ ] O catálogo publicado continua passando no prebuild
-- [ ] Gate: `pnpm --filter client exec vitest run scripts/catalog.test.ts scripts/prebuild-catalog.test.ts`
+- [x] Um catálogo temporário com ícone desconhecido faz `validateCatalog` lançar
+- [x] O catálogo publicado continua passando no prebuild
+- [x] Gate: `pnpm --filter client exec vitest run scripts/catalog.test.ts scripts/prebuild-catalog.test.ts`
 
 **Tests**: integration
 **Gate**: build

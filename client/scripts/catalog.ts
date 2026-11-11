@@ -7,9 +7,54 @@ import {
   writeFileSync,
 } from 'node:fs'
 import { dirname, join } from 'node:path'
+import * as lucideIcons from 'lucide-react'
+import dynamicIconImports from 'lucide-react/dynamicIconImports'
 import { ProductSchema, type Product } from '@catalogo/shared'
 
 const imageExtensions = new Set(['jpg', 'jpeg', 'png', 'webp', 'avif'])
+
+/** PascalCase Lucide export name to `dynamicIconImports` kebab key. */
+function lucideExportNameToKebab(exportName: string): string {
+  return exportName
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+    .toLowerCase()
+}
+
+function isLucideIconExport(exported: unknown): boolean {
+  if (typeof exported === 'function') {
+    return true
+  }
+  if (typeof exported === 'object' && exported !== null && 'render' in exported) {
+    return true
+  }
+  return false
+}
+
+function assertOfferIconIsValid(iconName: string, slug: string): void {
+  const exported = (lucideIcons as Record<string, unknown>)[iconName]
+  if (!isLucideIconExport(exported)) {
+    throw new Error(
+      `Unknown Lucide icon "${iconName}" in ${slug}/product.json`,
+    )
+  }
+  const kebab = lucideExportNameToKebab(iconName)
+  if (!(kebab in dynamicIconImports)) {
+    throw new Error(
+      `Lucide icon "${iconName}" has no dynamic import for "${kebab}" in ${slug}/product.json`,
+    )
+  }
+}
+
+function validateOfferIcons(product: Product, slug: string): void {
+  for (const listing of product.listings) {
+    for (const variant of listing.variants) {
+      for (const offer of variant.offers ?? []) {
+        assertOfferIconIsValid(offer.icon, slug)
+      }
+    }
+  }
+}
 
 /** Matches listing and axis ids in ProductSchema (duplicated to avoid coupling legacy bridge to exports). */
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
@@ -211,6 +256,8 @@ export function validateCatalog(catalogDir: string): Product[] {
     if (!parsed.success) {
       throw new Error(`${entry.name}/product.json failed the shared contract`)
     }
+
+    validateOfferIcons(parsed.data, entry.name)
 
     const imgDir = join(productDir, 'img')
     const imageFilesOnDisk = existsSync(imgDir)

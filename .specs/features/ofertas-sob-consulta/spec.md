@@ -195,7 +195,7 @@ O anúncio sob encomenda ainda mostra preço, a oferta é um booleano com badge 
 | OSC-06 | P1: Contrato | Tasks | Done · T1 |
 | OSC-07 | P1: Contrato | Tasks | Done · T1 |
 | OSC-08 | P1: Contrato | Tasks | Done · T1 |
-| OSC-09 | P1: Contrato | Tasks | Pending · T6 |
+| OSC-09 | P1: Contrato | Tasks | Done · T6 |
 | OSC-10 | P1: Contrato | Tasks | Done · T1 |
 | OSC-11 | P1: Migração | Tasks | Done · T5 |
 | OSC-12 | P1: Migração | Tasks | Done · T5 |

@@ -286,6 +286,82 @@ describe('validateCatalog', () => {
     const products = validateCatalog(catalogDir)
     expect(products).toHaveLength(1)
   })
+
+  it('OSC-09: rejects offer icon that is not a Lucide export', () => {
+    const catalogDir = tempDir()
+    writeProduct(
+      catalogDir,
+      'unknown-icon',
+      productFixture({
+        slug: 'unknown-icon',
+        listings: [
+          {
+            id: 'listing',
+            state: 'new',
+            availabilityStatus: 'available',
+            images: ['frente.png'],
+            variants: [
+              {
+                axes: [],
+                price: 369.9,
+                mainImage: 'frente.png',
+                offers: [
+                  {
+                    text: 'Promo',
+                    icon: 'DefinitelyNotALucideExportName',
+                    background: '#0066cc',
+                    color: '#ffffff',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      }),
+      { 'frente.png': photoBytes },
+    )
+
+    expect(() => validateCatalog(catalogDir)).toThrow(/Lucide icon/)
+  })
+
+  it('OSC-09: accepts Gift as a known Lucide export', () => {
+    const catalogDir = tempDir()
+    writeProduct(
+      catalogDir,
+      'gift-offer',
+      productFixture({
+        slug: 'gift-offer',
+        listings: [
+          {
+            id: 'listing',
+            state: 'new',
+            availabilityStatus: 'available',
+            images: ['frente.png'],
+            variants: [
+              {
+                axes: [],
+                price: 369.9,
+                mainImage: 'frente.png',
+                offers: [
+                  {
+                    text: 'OFERTA IMPERDÍVEL',
+                    icon: 'Gift',
+                    background: '#0066cc',
+                    color: '#ffffff',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      }),
+      { 'frente.png': photoBytes },
+    )
+
+    expect(() => validateCatalog(catalogDir)).not.toThrow()
+    const products = validateCatalog(catalogDir)
+    expect(products[0].listings[0].variants[0].offers?.[0]?.icon).toBe('Gift')
+  })
 })
 
 const LEGACY_UNMISSABLE_OFFER = {
