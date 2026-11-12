@@ -2,6 +2,14 @@
 
 Use somente o texto fornecido no HTML e as informações explícitas do operador. Fotos não fundamentam características técnicas. Não invente homage, calibre, público ou medida ausentes. Informação incerta fica omitida; o operador pode revisar depois.
 
+## Título do produto
+
+Todo novo cadastro deve ter `title` descritivo em português, sem referência ou código do modelo, mesmo quando o título de origem os contiver. Informe o que o produto é, a marca quando identificada e um estilo ou função sustentado pelo texto fornecido. Prefira nomes curtos e naturais, como `Relógio OPK Casual`, `Relógio SKMEI Digital Esportivo` ou `Relógio STEELFLIER Clássico`.
+
+Não use títulos como `OPK 6003`, `Relógio OPK 6003 Casual` ou `STEELFLIER SF741`. Não substitua a referência por nomes de coleção ou características inventadas. Se o estilo não estiver claro, use apenas o tipo de produto e a marca, como `Relógio OPK`.
+
+A regra vale para `product.json.title`. Preserve o modelo na especificação Modelo e use marca e modelo para o slug conforme `SKILL.md`. O título original extraído em `info.md` permanece como registro da fonte. Esta mudança orienta os próximos cadastros; não altera produtos existentes automaticamente.
+
 ## Descrição e público
 
 Preencha `description` com texto pertinente ao relógio que exista na descrição ou resumo, sem CSS, scripts ou instruções da página. Omita texto vazio. `audience` é opcional: `male`, `female`, `unisex`, `child`, somente quando o texto permitir inferir o público; não deduza por aparência.
