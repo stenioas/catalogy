@@ -1,5 +1,7 @@
 # Catalog Layout Refactor Tasks
 
+> Referência histórica: os caminhos de skills foram atualizados para `product-register`. Fluxos antigos e números de linha abaixo registram a implementação da época; para o cadastro atual, siga `.agents/skills/product-register/SKILL.md`.
+
 ## Execution Protocol (MANDATORY -- do not skip)
 
 Implement these tasks with the `tlc-spec-driven` skill: **activate it by name and follow its Execute flow and Critical Rules.** Do not search for skill files by filesystem path. The skill is the source of truth for the full flow (per-task cycle, sub-agent delegation, adequacy review, Verifier, discrimination sensor).
@@ -25,7 +27,7 @@ Uma tarefa entrega um componente, uma função ou um arquivo de documentação. 
 | Componentes de mídia/modal/barra | integration | Happy path, limites, foto única, estado/foco, ponteiros e troca de breakpoint; preservar regressões existentes | client/src/components/catalog/*.test.tsx | pnpm --filter client test |
 | Vitrine e página | integration + browser | Conteúdo e navegação por AC; renderização/overflow/ordem real nas larguras e temas aprovados | client/src/routes/*.test.tsx; client/src/components/catalog/watch-card.test.tsx | pnpm --filter client test; revisão em navegador |
 | Identidade e geometria visual | browser | 32 combinações de rota/largura/tema, recorte correspondente, frame contido, desktop da vitrine preservado | evidências em .specs/features/catalog-layout-refactor/ | pnpm --filter client dev e navegador disponível |
-| Documentação e skill de cadastro | none | Conferência de contrato e instruções; nenhum teste automatizado novo | README.md; .agents/skills/cadastrar-relogio/SKILL.md | Documentation gate |
+| Documentação e skill de cadastro | none | Conferência de contrato e instruções; nenhum teste automatizado novo | README.md; .agents/skills/product-register/SKILL.md | Documentation gate |
 | Relatório de revisão | browser + regression | Evidência visual, saída real de testes/build e nenhum produto alterado | ui-review.md | Build gate e navegador |
 
 ## Gate Check Commands
@@ -189,7 +191,7 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 
 **What**: Incluir color opcional na leitura completa e no cadastro, omitindo ausente/vazio e evitando repetição em specifications; preservar a confirmação de cadastro existente.
 
-**Where**: `.agents/skills/cadastrar-relogio/SKILL.md`
+**Where**: `.agents/skills/product-register/SKILL.md`
 
 **Depends on**: T1
 
@@ -213,7 +215,7 @@ Após o último commit, um Verifier novo executa automaticamente a checagem por 
 - [x] Pelo menos 0 cenários novos; cobertura atual preservada ou, para documentação, revisão manual registrada.
 - [x] Gate Documentation aprovado; tarefas e rastreabilidade atualizadas antes do commit.
 
-**Revisão manual**: `.agents/skills/cadastrar-relogio/SKILL.md:76-80,110-118` — `color` é opcional, texto livre com uma única cor; ausente e `""` são omitidos, a regra existente preserva strings só com espaços, a leitura completa inclui `color` se houver, e a cor não é inferida nem repetida em `specifications`. A confirmação exata `sim` e os demais campos da skill permanecem intactos. Nenhum produto foi cadastrado ou editado. `git diff --check` e revisão manual passaram; 0 testes automatizados novos.
+**Revisão manual**: `.agents/skills/product-register/SKILL.md:76-80,110-118` — `color` é opcional, texto livre com uma única cor; ausente e `""` são omitidos, a regra existente preserva strings só com espaços, a leitura completa inclui `color` se houver, e a cor não é inferida nem repetida em `specifications`. A confirmação exata `sim` e os demais campos da skill permanecem intactos. Nenhum produto foi cadastrado ou editado. `git diff --check` e revisão manual passaram; 0 testes automatizados novos.
 
 **Validação auxiliar**: `quick_validate.py` apontou `<`/`>` na descrição preexistente do frontmatter (`client/public/catalog/products/<slug>/`). O campo ficou inalterado por estar fora do escopo T3.
 

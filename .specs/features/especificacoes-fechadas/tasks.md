@@ -1,5 +1,7 @@
 # Especificações fechadas — Tasks
 
+> Referência histórica: os caminhos de skills foram atualizados para `product-register`. Fluxos antigos e números de linha abaixo registram a implementação da época; para o cadastro atual, siga `.agents/skills/product-register/SKILL.md`.
+
 ## Execution Protocol (MANDATORY -- do not skip)
 
 Implement these tasks with the `tlc-spec-driven` skill: **activate it by name and follow its Execute flow and Critical Rules.** Do not search for skill files by filesystem path. The skill is the source of truth for the full flow (per-task cycle, sub-agent delegation, adequacy review, Verifier, discrimination sensor).
@@ -22,7 +24,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 | Schema | unit | All branches; 1:1 to SPEC-01–SPEC-08; empty, whitespace, duplicate, and unknown label covered | `shared/src/schemas/product.test.ts` | `pnpm --filter @catalogo/shared test` |
 | Watch page | unit | SPEC-09–SPEC-13; order, outside labels, blank value, color field, http(s) link | `client/src/routes/watch-page.test.tsx` | `pnpm --filter client exec vitest run src/routes/watch-page.test.tsx` |
 | Catalog JSON | integration | SPEC-14–SPEC-37; each migrated value and each removed label; prebuild accepts the real catalog | `client/scripts/specification-migration.test.ts` and `client/scripts/prebuild-catalog.test.ts` | `pnpm --filter client test` |
-| Skill and README | none | Read the files against SPEC-38–SPEC-43. The spec keeps the skill out of Vitest | `.agents/skills/cadastrar-relogio/SKILL.md`, `README.md` | none |
+| Skill and README | none | Read the files against SPEC-38–SPEC-43. The spec keeps the skill out of Vitest | `.agents/skills/product-register/SKILL.md`, `README.md` | none |
 
 ## Gate Check Commands
 
@@ -177,7 +179,7 @@ T4 → T5
 ### T4: Teach the registration skill the closed labels
 
 **What**: A skill `cadastrar-relogio` passa a usar as 20 labels, a ordem do schema e as regras de inferência e de água.
-**Where**: `.agents/skills/cadastrar-relogio/SKILL.md`
+**Where**: `.agents/skills/product-register/SKILL.md`
 **Depends on**: T1
 **Complexity**: medium
 **Reuses**: a lista da spec

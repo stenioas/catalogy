@@ -1,5 +1,7 @@
 # Especificações fechadas
 
+> Referência histórica: os caminhos de skills foram atualizados para `product-register`. Fluxos antigos e números de linha abaixo registram a implementação da época; para o cadastro atual, siga `.agents/skills/product-register/SKILL.md`.
+
 ## Problem Statement
 
 Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com nomes diferentes, e a ficha segue a ordem de cada arquivo. O catálogo precisa de uma lista fechada de labels, uma ordem de exibição única e valores de resistência à água no mesmo formato. O contrato vive no `ProductSchema`, que o `pnpm build` já aplica aos `product.json`.
@@ -141,7 +143,7 @@ Cada relógio grava `specifications` com labels livres. O mesmo fato aparece com
 5. The skill instructions SHALL tell the agent to infer specifications only from the operator text, not from photos and not from a newly fetched listing.
 6. The README SHALL state that a specification label must be one of the 20 exported labels and that the watch page shows those labels in the exported order.
 
-**Independent Test**: Ler `.agents/skills/cadastrar-relogio/SKILL.md` e o trecho de `specifications` no `README.md`. A skill não entra no Vitest.
+**Independent Test**: Ler `.agents/skills/product-register/SKILL.md` e o trecho de `specifications` no `README.md`. A skill não entra no Vitest.
 
 ---
 

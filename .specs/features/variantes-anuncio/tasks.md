@@ -1,5 +1,7 @@
 # Variantes no anúncio — Tasks
 
+> Referência histórica: os caminhos de skills foram atualizados para `product-register`. Fluxos antigos e números de linha abaixo registram a implementação da época; para o cadastro atual, siga `.agents/skills/product-register/SKILL.md`.
+
 ## Execution Protocol (MANDATORY -- do not skip)
 
 Implement these tasks with the `tlc-spec-driven` skill: **activate it by name and follow its Execute flow and Critical Rules.** Do not search for skill files by filesystem path. The skill is the source of truth for the full flow (per-task cycle, sub-agent delegation, adequacy review, Verifier, discrimination sensor).
@@ -24,7 +26,7 @@ Do T1 ao fim da T15, `pnpm test` na raiz pode falhar: o JSON novo e a página ve
 | Schema e regras de anúncio | unit | Todos os ramos. Um teste por AC de contrato, fila, home, filtro, página e borda listada | `shared/src/**/*.test.ts` | `pnpm --filter @catalogo/shared test` |
 | Prebuild e dist | integration | JSON inválido falha. Foto citada ausente falha. Foto não citada fica na fonte e sai do dist | `client/scripts/**/*.test.ts` | `pnpm --filter client exec vitest run scripts/catalog.test.ts scripts/prebuild-catalog.test.ts scripts/dist.test.ts` |
 | Home, card, página, faixa e seletores | integration | Cada rota e largura do spec: caminho feliz, borda e erro. A suíte existente não perde asserção sem equivalente | `client/src/**/*.test.tsx` | `pnpm --filter client exec vitest run <arquivo da tarefa>` |
-| Skill de cadastro | none | O texto da skill cumpre o spec. A suíte Vitest não executa a skill | `.agents/skills/product-register/SKILL.md` e `.agents/skills/product-scrapper/SKILL.md` | gate da tarefa, sem Vitest da skill |
+| Skill de cadastro | none | O texto da skill cumpre o spec. A suíte Vitest não executa a skill | `.agents/skills/product-register/SKILL.md` | gate da tarefa, sem Vitest da skill |
 
 ## Gate Check Commands
 
@@ -610,7 +612,7 @@ T17 -> T18
 ### T18: Insumos do product-scrapper
 
 **What**: O scrapper prepara insumos no formato novo e não grava `product.json`.
-**Where**: `.agents/skills/product-scrapper/SKILL.md`
+**Where**: `.agents/skills/product-register/SKILL.md`
 **Depends on**: T17
 **Reuses**: o fluxo atual de `info.md` e `media/`
 **Requirement**: VAR-100, VAR-101
