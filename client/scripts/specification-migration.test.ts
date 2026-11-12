@@ -209,7 +209,9 @@ describe('catalog specification migration', () => {
       'sapphero-so2205',
       'seculus-kit-cantil',
       'skmei-1628',
+      'skmei-1988',
       'skmei-2126',
+      'steelflier-sf741',
     ])
     for (const slug of slugs) {
       const parsed = ProductSchema.safeParse(

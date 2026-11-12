@@ -6,6 +6,7 @@
     {
       "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
           "id": "silver-mintblue",
@@ -16,12 +17,12 @@
           "value": "Silver Green"
         },
         {
-          "id": "silver-blue",
-          "value": "Silver Blue"
-        },
-        {
           "id": "silver-white",
           "value": "Silver White"
+        },
+        {
+          "id": "silver-blue",
+          "value": "Silver Blue"
         }
       ]
     }
@@ -127,8 +128,40 @@
           ],
           "price": 399.9,
           "listPrice": 499.9,
-          "mainImage": "aimimo-design-tsuyosa-1.png",
-          "observations": "Cores disponíveis: silver mint blue, silver green, silver blue e silver white."
+          "mainImage": "aimimo-design-tsuyosa-1.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-green"
+            }
+          ],
+          "price": 399.9,
+          "listPrice": 499.9,
+          "mainImage": "aimimo-design-tsuyosa-2.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white"
+            }
+          ],
+          "price": 399.9,
+          "listPrice": 499.9,
+          "mainImage": "aimimo-design-tsuyosa-3.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "price": 399.9,
+          "listPrice": 499.9,
+          "mainImage": "aimimo-design-tsuyosa-9.png"
         }
       ]
     }
