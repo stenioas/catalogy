@@ -147,7 +147,7 @@ function ProductCommerce({
   share,
   beforeShare,
 }: {
-  price: number
+  price?: number
   listPrice?: number
   offers: NonNullable<Variant['offers']>
   onOrder: boolean
@@ -155,7 +155,9 @@ function ProductCommerce({
   share?: ReactNode
   beforeShare?: ReactNode
 }) {
-  const priceNode = onOrder ? <ConsultPrice /> : <PriceBlock price={price} listPrice={listPrice} />
+  const priceNode = onOrder
+    ? <ConsultPrice />
+    : price !== undefined ? <PriceBlock price={price} listPrice={listPrice} /> : null
   const stacked = (
     <>
       <div className="min-w-0 flex-1">{priceNode}</div>
@@ -254,7 +256,7 @@ function WatchColumn({
   stateLabel: string
   availabilityLabel: string
   availabilityStatus: 'available' | 'coming_soon' | 'on_order'
-  price: number
+  price?: number
   listPrice?: number
   offers: NonNullable<Variant['offers']>
   observations?: string

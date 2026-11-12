@@ -239,6 +239,21 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(follows(badge, installments)).toBe(true)
   })
 
+  it.each([undefined, 369.9])('renders on_order with price %s as Sob consulta in page and sticky bar', (price) => {
+    const product = makeProduct({ availabilityStatus: 'on_order' })
+    const variant = product.listings[0].variants[0]
+    if (price === undefined) delete variant.price
+    else variant.price = price
+    mockProductsRef.current = [product]
+    installObserver(0)
+    renderWatchPage()
+    expect(within(screen.getByTestId('watch-commerce')).getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(within(screen.getByTestId('sticky-bar')).getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(screen.queryByTestId('price-block')).toBeNull()
+    expect(screen.queryByTestId('price-installments')).toBeNull()
+    expect(screen.queryByTestId('price-pix')).toBeNull()
+  })
+
   it('places the stored offer text above the price and draws no row when offers is omitted', () => {
     renderWatchPage()
     expect(screen.queryByTestId('offer-row')).toBeNull()

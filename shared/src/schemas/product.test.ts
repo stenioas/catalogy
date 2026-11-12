@@ -434,6 +434,44 @@ describe('ProductSchema variant price (VAR-13, VAR-14)', () => {
   })
 })
 
+describe('ProductSchema on_order prices', () => {
+  it.each([undefined, 369.999])('accepts on_order with price %s', (price) => {
+    const value = variant()
+    delete (value as Partial<typeof value>).price
+    const result = ProductSchema.safeParse(product({ listings: [listing({
+      availabilityStatus: 'on_order',
+      variants: [{ ...value, ...(price === undefined ? {} : { price }) }],
+    })] }))
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].price).toBe(price === undefined ? undefined : 369.99)
+    }
+  })
+
+  it.each(['available', 'coming_soon'])('rejects %s when any variant omits price', (availabilityStatus) => {
+    const value = variant()
+    delete (value as Partial<typeof value>).price
+    expect(ProductSchema.safeParse(product({ listings: [listing({
+      availabilityStatus,
+      variants: [value],
+    })] })).success).toBe(false)
+  })
+
+  it('rejects listPrice without price even on_order', () => {
+    const value = variant({ listPrice: 450 })
+    delete (value as Partial<typeof value>).price
+    expect(ProductSchema.safeParse(product({ listings: [listing({
+      availabilityStatus: 'on_order', variants: [value],
+    })] })).success).toBe(false)
+  })
+
+  it.each([[369.999, false], [450.009, true]] as const)('validates on_order listPrice %s after truncation', (listPrice, valid) => {
+    expect(ProductSchema.safeParse(product({ listings: [listing({
+      availabilityStatus: 'on_order', variants: [variant({ price: 369.999, listPrice })],
+    })] })).success).toBe(valid)
+  })
+})
+
 describe('ProductSchema axis combinations (VAR-15, VAR-16)', () => {
   it('rejects a listing that repeats one axis-value combination', () => {
     const repeated = productWithAxes()

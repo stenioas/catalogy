@@ -81,7 +81,7 @@ const VariantSchema = z
         valueId: z.string(),
       }),
     ),
-    price: positiveReais,
+    price: positiveReais.optional(),
     listPrice: positiveReais.optional(),
     offers: z.array(OfferSchema).optional(),
     mainImage: z.string(),
@@ -90,10 +90,11 @@ const VariantSchema = z
   })
   .strict()
   .superRefine((variant, context) => {
-    if (variant.listPrice !== undefined && variant.listPrice <= variant.price) {
+    if (variant.listPrice !== undefined &&
+        (variant.price === undefined || variant.listPrice <= variant.price)) {
       context.addIssue({
         code: 'custom',
-        message: 'listPrice must be greater than price after truncation',
+        message: 'listPrice requires price and must be greater than price after truncation',
         path: ['listPrice'],
       })
     }
@@ -286,6 +287,12 @@ export const ProductSchema = z
       const combinations = new Set<string>()
       listing.variants.forEach((variant, variantIndex) => {
         const variantPath = ['listings', listingIndex, 'variants', variantIndex]
+        if (listing.availabilityStatus !== 'on_order' && variant.price === undefined) {
+          addIssue(context, 'price is required unless availabilityStatus is on_order', [
+            ...variantPath,
+            'price',
+          ])
+        }
         if (variant.orderable === false && listing.availabilityStatus !== 'on_order') {
           addIssue(context, 'orderable false is only valid when availabilityStatus is on_order', [
             ...variantPath,

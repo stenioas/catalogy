@@ -173,8 +173,8 @@ export function activeSection(products: Product[], section: string | null): Sect
 function lowestPricedOrderableVariant(listing: Listing): Variant | null {
   let chosen: Variant | null = null
   for (const variant of listing.variants) {
-    if (variant.orderable === false) continue
-    if (chosen === null || variant.price < chosen.price) chosen = variant
+    if (variant.orderable === false || variant.price === undefined) continue
+    if (chosen === null || chosen.price === undefined || variant.price < chosen.price) chosen = variant
   }
   return chosen
 }
@@ -280,7 +280,7 @@ export type OpenListingView = {
   title: string
   stateLabel: string
   availabilityLabel: string
-  price: number
+  price?: number
   listPrice?: number
   observations?: string
   offers: NonNullable<Variant['offers']>
@@ -395,7 +395,6 @@ function openListing(product: Product, listing: Listing, v: string | null): Open
     stateLabel: STATE_LABEL[listing.state],
     availabilityLabel:
       variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[listing.availabilityStatus],
-    price: variant.price,
     offers: variant.offers ?? [],
     availabilityStatus: listing.availabilityStatus,
     productSpecifications: product.specifications ?? [],
@@ -405,6 +404,7 @@ function openListing(product: Product, listing: Listing, v: string | null): Open
     selectors: selectorsFor(product, listing, variant),
   }
   if (product.description !== undefined) view.description = product.description
+  if (variant.price !== undefined) view.price = variant.price
   if (variant.listPrice !== undefined) view.listPrice = variant.listPrice
   if (variant.observations !== undefined) view.observations = variant.observations
   return view

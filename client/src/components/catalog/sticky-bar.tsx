@@ -10,7 +10,7 @@ const frostedBarStyle =
   'background-color: color-mix(in srgb, var(--canvas-parchment) 80%, transparent); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);'
 
 export type StickyBarProps = {
-  price: number
+  price?: number
   listPrice?: number
   availabilityStatus?: 'available' | 'coming_soon' | 'on_order'
   availabilityLabel?: string
@@ -135,7 +135,7 @@ export function StickyBar({
             ) : (
               <>
                 {offers.length > 0 ? <OfferRow offers={offers} /> : null}
-                <PriceBlock price={price} listPrice={listPrice} />
+                {price !== undefined ? <PriceBlock price={price} listPrice={listPrice} /> : null}
               </>
             )}
           </div>

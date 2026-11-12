@@ -1286,3 +1286,26 @@ function vistaProduct(): Product {
     specifications: [{ label: 'Marca', value: 'Seiko' }],
   }
 }
+
+
+describe('on_order without a required price', () => {
+  it.each([undefined, 100])('omits card prices and opens a variant with optional price %s', (price) => {
+    const listing = listingOf('sob-encomenda', {
+      availabilityStatus: 'on_order',
+      images: ['cover.png', 'variant.png'],
+      variants: [{ axes: [], mainImage: 'variant.png', ...(price === undefined ? {} : { price }) }],
+    })
+    const product = productOf('watch', 'Watch', [listing])
+    const cards = homeCards([product], 'on-order')
+    expect(cards).toHaveLength(1)
+    expect(cards[0].image).toBe('cover.png')
+    expect(cards[0].price).toBeUndefined()
+    const view = listingByPath([product], 'watch', 'sob-encomenda', null)
+    expect(view.missing).toBe(false)
+    if (!view.missing) {
+      expect(view.price).toBe(price)
+      expect(view.imageIndex).toBe(1)
+      expect(view.availabilityLabel).toBe('Sob encomenda')
+    }
+  })
+})
