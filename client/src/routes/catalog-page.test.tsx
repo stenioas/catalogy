@@ -439,6 +439,7 @@ describe('CatalogPage sections', () => {
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Encomendar' }))
     expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
     expect(screen.getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(screen.getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
     expect(screen.queryByTestId('price-block')).toBeNull()
   })
 
@@ -546,6 +547,7 @@ describe('CatalogPage sections', () => {
     const encomendaCard = screen.getByRole('heading', { name: 'Encomenda' }).closest('li')!
     expect(within(encomendaCard).getByText('Sob encomenda')).toBeDefined()
     expect(within(encomendaCard).getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(within(encomendaCard).getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
     expect(within(encomendaCard).queryByTestId('price-block')).toBeNull()
     fireEvent.mouseDown(screen.getByRole('tab', { name: 'Pronta entrega' }))
     expect(searchParamsOf(router.state.location.search).get('section')).toBe('available')

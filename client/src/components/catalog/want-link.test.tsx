@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { waUrl, WantIconLink, WantLink } from './want-link'
+import { ProductShareButton, waUrl, WantIconLink, WantLink } from './want-link'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -149,6 +149,28 @@ describe('WantIconLink (catalog compact action)', () => {
 
     expect(link.getAttribute('target')).toBe('_blank')
     expect(link.getAttribute('rel')).toBe('noopener noreferrer')
+  })
+})
+
+describe('ProductShareButton (product page)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('keeps the pre-feature labeled button: 44px, full width, 16px inline padding', () => {
+    render(<ProductShareButton slug="seculus" title="Seculus" href="https://wa.me/?text=ola" />)
+    const link = screen.getByRole('link', { name: 'Compartilhar' })
+
+    expect(link.className).toMatch(/\bh-11\b/)
+    expect(link.className).toMatch(/\bw-full\b/)
+    expect(link.className).toMatch(/\bpx-4\b/)
+    expect(link.className).toMatch(/\bgap-2\b/)
+    expect(link.className).toMatch(/\brounded-lg\b/)
+    expect(link.className).toMatch(/\btext-base\b/)
+    expect(link.className).not.toMatch(/\bsize-8\b/)
+    expect(link.className).not.toMatch(/\bsize-10\b/)
+    expect(link.className).not.toMatch(/\bp-0\b/)
+    expect(link.textContent).toBe('Compartilhar')
   })
 })
 

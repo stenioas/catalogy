@@ -1,5 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
+import { Badge } from '@/components/ui/badge'
+
 import { PriceBlock } from './price-block'
 import { OfferRow, type OfferBadge } from './product-badges'
 import { ProductShareButton } from './want-link'
@@ -120,8 +122,14 @@ export function StickyBar({
                     Indisponível
                   </p>
                 ) : null}
-                <p data-testid="consult-label" className="m-0 text-base font-semibold text-foreground md:text-xl">
-                  Sob consulta
+                <p className="m-0 flex items-center gap-1.5">
+                  <span className="text-2xl font-semibold text-foreground">R$</span>
+                  <Badge
+                    data-testid="consult-label"
+                    className="h-8 rounded-[4px] border-0 bg-orange-200 px-2 py-0 text-base font-medium leading-none text-orange-950 dark:bg-orange-300 dark:text-orange-950"
+                  >
+                    Sob consulta
+                  </Badge>
                 </p>
               </>
             ) : (

@@ -322,6 +322,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const consult = within(bar).getByTestId('consult-label')
 
     expect(consult.textContent).toBe('Sob consulta')
+    expect(consult.previousElementSibling?.textContent).toBe('R$')
     expect(offerRow.textContent).toContain('Black Friday')
     expect(offerRow.compareDocumentPosition(consult) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(within(bar).queryByTestId('price-block')).toBeNull()
@@ -340,6 +341,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
 
     expect(within(bar).getByTestId('sticky-unavailable-label').textContent).toBe('Indisponível')
     expect(within(bar).getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(within(bar).getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
     expect(within(bar).queryByTestId('price-block')).toBeNull()
     expect(within(bar).queryByTestId('price-current')).toBeNull()
   })

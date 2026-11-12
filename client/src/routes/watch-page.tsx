@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import {
@@ -11,6 +11,7 @@ import {
   type Variant,
 } from '@catalogo/shared'
 
+import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 import { products } from '../catalog/products.generated'
@@ -121,30 +122,56 @@ function ProductIdentity({
   </div>
 }
 
+const offerWithShareClassName = 'flex w-full min-w-0 flex-col items-stretch gap-3'
+
+function ConsultPrice() {
+  return (
+    <p className="m-0 flex items-center gap-1.5">
+      <span className="text-2xl font-semibold text-foreground">R$</span>
+      <Badge
+        data-testid="consult-label"
+        className="h-8 rounded-[4px] border-0 bg-orange-200 px-2 py-0 text-base font-medium leading-none text-orange-950 dark:bg-orange-300 dark:text-orange-950"
+      >
+        Sob consulta
+      </Badge>
+    </p>
+  )
+}
+
 function ProductCommerce({
   price,
   listPrice,
   offers,
   onOrder,
   commerceRef,
+  share,
+  beforeShare,
 }: {
   price: number
   listPrice?: number
   offers: NonNullable<Variant['offers']>
   onOrder: boolean
   commerceRef: (element: HTMLDivElement | null) => void
+  share?: ReactNode
+  beforeShare?: ReactNode
 }) {
+  const priceNode = onOrder ? <ConsultPrice /> : <PriceBlock price={price} listPrice={listPrice} />
+  const stacked = (
+    <>
+      <div className="min-w-0 flex-1">{priceNode}</div>
+      {beforeShare}
+      {share}
+    </>
+  )
   return <div ref={commerceRef} data-testid="watch-commerce" className="flex w-full min-w-0 flex-col items-start gap-1 md:gap-2">
     {offers.length > 0 ? <OfferRow offers={offers} /> : null}
     {onOrder ? (
-      <p data-testid="consult-label" className="m-0 text-base font-semibold text-foreground md:text-xl">
-        Sob consulta
-      </p>
+      share === undefined && beforeShare === undefined ? priceNode : (
+        <div className={offerWithShareClassName}>{stacked}</div>
+      )
     ) : (
-      <div data-testid="watch-offer" className="flex w-full min-w-0 flex-col items-stretch gap-3">
-        <div className="min-w-0 flex-1">
-          <PriceBlock price={price} listPrice={listPrice} />
-        </div>
+      <div data-testid="watch-offer" className={offerWithShareClassName}>
+        {stacked}
       </div>
     )}
   </div>
@@ -250,13 +277,6 @@ function WatchColumn({
     className="max-md:order-8 max-md:mt-8"
   />
   const identity = <ProductIdentity stateLabel={stateLabel} availabilityLabel={availabilityLabel} title={title} />
-  const commerce = <ProductCommerce
-    price={price}
-    listPrice={listPrice}
-    offers={offers}
-    onOrder={onOrder}
-    commerceRef={setCommerceTarget}
-  />
   const axes = selectors.length > 0
     ? <AxisSelectors selectors={selectors} activeV={activeV} onSelect={onSelect} slug={slug} />
     : null
@@ -269,7 +289,17 @@ function WatchColumn({
       alt={title}
       startIndex={imageIndex < 0 ? 0 : imageIndex}
     >
-      {({ media, isDesktop }) => isDesktop ? (
+      {({ media, isDesktop }) => {
+        const commerce = <ProductCommerce
+          price={price}
+          listPrice={listPrice}
+          offers={offers}
+          onOrder={onOrder}
+          commerceRef={setCommerceTarget}
+          share={isDesktop ? undefined : <div className="pt-2">{share}</div>}
+          beforeShare={isDesktop ? undefined : axes}
+        />
+        return isDesktop ? (
         <div className="grid w-full min-w-0 grid-cols-[fit-content(calc(476px+3.5rem+0.75rem))_minmax(220px,1fr)] items-start gap-6">
           <div data-testid="watch-left-column" className="flex min-w-0 flex-col gap-8">
             {media}
@@ -289,13 +319,12 @@ function WatchColumn({
             {identity}
             <div className="max-md:order-1 md:contents">{media}</div>
             <div className="max-md:order-4 max-md:mt-3 md:contents">{commerce}</div>
-            {axes ? <div className="max-md:order-5 max-md:mt-3 md:contents">{axes}</div> : null}
           </div>
           <TextSection className="max-md:order-7 max-md:mt-8" title="Descrição" value={description} />
           {details}
-          <div className="max-md:order-6 max-md:mt-3 md:contents">{share}</div>
         </div>
-      )}
+      )
+      }}
     </ProductMedia>
     <StickyBar
       price={price}
