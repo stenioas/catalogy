@@ -1,0 +1,189 @@
+{
+  "slug": "skmei-1988",
+  "title": "SKMEI 1988",
+  "description": "Relógio digital esportivo masculino SKMEI 1988 com iluminação EL, dois horários, cronógrafo, alarme, data, dia da semana, formato 12/24 horas e contagem regressiva. Caixa em ABS, pulseira em TPU, visor de resina e fivela de aço inoxidável. Resistência à água de 50 m (5 ATM). Alimentação por bateria CR2032. Comprimento total de 270 mm e peso de 47,8 g.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "army-green",
+          "value": "army green"
+        },
+        {
+          "id": "black",
+          "value": "black"
+        },
+        {
+          "id": "dark-green",
+          "value": "dark green"
+        },
+        {
+          "id": "red-blue",
+          "value": "red blue"
+        },
+        {
+          "id": "blue",
+          "value": "blue"
+        },
+        {
+          "id": "gold",
+          "value": "gold"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "SKMEI"
+    },
+    {
+      "label": "Modelo",
+      "value": "1988"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Digital esportivo"
+    },
+    {
+      "label": "Funções",
+      "value": "Dois horários, cronógrafo, alarme, data, dia da semana, iluminação EL, formato 12/24 horas e contagem regressiva"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Digital"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "ABS"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "TPU"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Resina"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "19 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "45,4 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "13,8 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "skmei-1988-1.png",
+        "skmei-1988-2.png",
+        "skmei-1988-3.png",
+        "skmei-1988-4.png",
+        "skmei-1988-5.png",
+        "skmei-1988-6.png",
+        "skmei-1988-7.png",
+        "skmei-1988-8.png",
+        "skmei-1988-9.png",
+        "skmei-1988-10.png",
+        "skmei-1988-11.png",
+        "skmei-1988-12.png",
+        "skmei-1988-13.png",
+        "skmei-1988-14.png",
+        "skmei-1988-15.png",
+        "skmei-1988-16.png",
+        "skmei-1988-17.png",
+        "skmei-1988-18.png",
+        "skmei-1988-19.png",
+        "skmei-1988-20.png",
+        "skmei-1988-21.png",
+        "skmei-1988-22.png",
+        "skmei-1988-23.png",
+        "skmei-1988-24.png",
+        "skmei-1988-25.png",
+        "skmei-1988-26.png",
+        "skmei-1988-27.png",
+        "skmei-1988-28.png",
+        "skmei-1988-29.png",
+        "skmei-1988-30.png",
+        "skmei-1988-31.png",
+        "skmei-1988-32.png",
+        "skmei-1988-33.png",
+        "skmei-1988-34.png",
+        "skmei-1988-35.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "army-green"
+            }
+          ],
+          "mainImage": "skmei-1988-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black"
+            }
+          ],
+          "mainImage": "skmei-1988-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "dark-green"
+            }
+          ],
+          "mainImage": "skmei-1988-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "red-blue"
+            }
+          ],
+          "mainImage": "skmei-1988-10.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "blue"
+            }
+          ],
+          "mainImage": "skmei-1988-11.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "gold"
+            }
+          ],
+          "mainImage": "skmei-1988-12.png"
+        }
+      ]
+    }
+  ]
+}

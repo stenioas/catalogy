@@ -1,0 +1,229 @@
+{
+  "slug": "steelflier-sf741",
+  "title": "STEELFLIER SF741",
+  "description": "Relógio de quartzo STEELFLIER SF741 com movimento VH31 de origem japonesa, três ponteiros e segundos contínuos. Caixa de aço inoxidável 316L com diâmetro de 39 mm sem a coroa e espessura de 12,5 mm, vidro de safira sintética e ponteiros luminosos. Resistência à água de 200 m (20 ATM) e bateria SR920SW inclusa. A descrição apresenta opções de pulseira em couro, borracha, nylon e aço inoxidável.",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "sf741-kn",
+          "value": "SF741-KN"
+        },
+        {
+          "id": "sf741-ss",
+          "value": "SF741-SS"
+        },
+        {
+          "id": "sf741-hg",
+          "value": "SF741-HG"
+        },
+        {
+          "id": "sf741-og",
+          "value": "SF741-OG"
+        },
+        {
+          "id": "sf741-zp",
+          "value": "SF741-ZP"
+        },
+        {
+          "id": "sf741-hr",
+          "value": "SF741-HR"
+        }
+      ],
+      "presentation": "image"
+    },
+    {
+      "id": "e-personalizado",
+      "label": "É personalizado",
+      "values": [
+        {
+          "id": "nao",
+          "value": "Não"
+        }
+      ]
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "STEELFLIER"
+    },
+    {
+      "label": "Modelo",
+      "value": "SF741"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico esportivo"
+    },
+    {
+      "label": "Funções",
+      "value": "Horas, minutos, segundos contínuos e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "VH31"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Couro, borracha, nylon ou aço inoxidável, conforme a variante"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Safira sintética"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "200m (20 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "12,5 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "steelflier-sf741-1.png",
+        "steelflier-sf741-2.png",
+        "steelflier-sf741-3.png",
+        "steelflier-sf741-4.png",
+        "steelflier-sf741-5.png",
+        "steelflier-sf741-6.png",
+        "steelflier-sf741-7.png",
+        "steelflier-sf741-8.png",
+        "steelflier-sf741-9.png",
+        "steelflier-sf741-10.png",
+        "steelflier-sf741-11.png",
+        "steelflier-sf741-12.png",
+        "steelflier-sf741-13.png",
+        "steelflier-sf741-14.png",
+        "steelflier-sf741-15.png",
+        "steelflier-sf741-16.png",
+        "steelflier-sf741-17.png",
+        "steelflier-sf741-18.png",
+        "steelflier-sf741-19.png",
+        "steelflier-sf741-20.png",
+        "steelflier-sf741-21.png",
+        "steelflier-sf741-22.png",
+        "steelflier-sf741-23.png",
+        "steelflier-sf741-24.png",
+        "steelflier-sf741-25.png",
+        "steelflier-sf741-26.png",
+        "steelflier-sf741-27.png",
+        "steelflier-sf741-28.png",
+        "steelflier-sf741-29.png",
+        "steelflier-sf741-30.png",
+        "steelflier-sf741-31.png",
+        "steelflier-sf741-32.png",
+        "steelflier-sf741-33.png",
+        "steelflier-sf741-34.png",
+        "steelflier-sf741-35.png",
+        "steelflier-sf741-36.png",
+        "steelflier-sf741-37.png",
+        "steelflier-sf741-38.png",
+        "steelflier-sf741-39.png",
+        "steelflier-sf741-40.png",
+        "steelflier-sf741-41.png",
+        "steelflier-sf741-42.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "sf741-kn"
+            },
+            {
+              "axisId": "e-personalizado",
+              "valueId": "nao"
+            }
+          ],
+          "mainImage": "steelflier-sf741-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "sf741-ss"
+            },
+            {
+              "axisId": "e-personalizado",
+              "valueId": "nao"
+            }
+          ],
+          "mainImage": "steelflier-sf741-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "sf741-hg"
+            },
+            {
+              "axisId": "e-personalizado",
+              "valueId": "nao"
+            }
+          ],
+          "mainImage": "steelflier-sf741-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "sf741-og"
+            },
+            {
+              "axisId": "e-personalizado",
+              "valueId": "nao"
+            }
+          ],
+          "mainImage": "steelflier-sf741-10.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "sf741-zp"
+            },
+            {
+              "axisId": "e-personalizado",
+              "valueId": "nao"
+            }
+          ],
+          "mainImage": "steelflier-sf741-11.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "sf741-hr"
+            },
+            {
+              "axisId": "e-personalizado",
+              "valueId": "nao"
+            }
+          ],
+          "mainImage": "steelflier-sf741-12.png"
+        }
+      ]
+    }
+  ]
+}
