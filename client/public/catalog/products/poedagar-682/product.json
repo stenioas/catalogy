@@ -1,0 +1,265 @@
+{
+  "slug": "poedagar-682",
+  "title": "Relógio POEDAGAR Casual",
+  "description": "Relógio masculino de quartzo com caixa e pulseira em aço inoxidável, exibição de data e dia da semana e ponteiros luminosos. Vidro Hardlex, caixa redonda com espessura de 14 mm e pulseira de 22 cm com fecho oculto com botão de pressão. Resistência à água informada de 3 bar. Inclui bateria, caixa POEDAGAR, ferramenta para ajustar a pulseira, pano de limpeza e cartão de garantia.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "cor",
+      "values": [
+        {
+          "id": "682-silver-mintblue",
+          "value": "682 Silver MintBlue"
+        },
+        {
+          "id": "682-silver-blue",
+          "value": "682 Silver Blue"
+        },
+        {
+          "id": "682-silver-black",
+          "value": "682 Silver Black"
+        },
+        {
+          "id": "682-silver-green",
+          "value": "682 Silver Green"
+        },
+        {
+          "id": "682-silver-brown",
+          "value": "682 Silver Brown"
+        },
+        {
+          "id": "682-blue-blue",
+          "value": "682 Blue Blue"
+        },
+        {
+          "id": "682-black-black",
+          "value": "682 Black Black"
+        },
+        {
+          "id": "682-gold-black",
+          "value": "682 Gold Black"
+        },
+        {
+          "id": "682-gold-green",
+          "value": "682 Gold Green"
+        },
+        {
+          "id": "682-gold-mintblue",
+          "value": "682 Gold MintBlue"
+        },
+        {
+          "id": "682-gold-blue",
+          "value": "682 Gold Blue"
+        },
+        {
+          "id": "682-gold-brown",
+          "value": "682 Gold Brown"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "POEDAGAR"
+    },
+    {
+      "label": "Modelo",
+      "value": "682"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Casual"
+    },
+    {
+      "label": "Funções",
+      "value": "Data, dia da semana e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "45 a 49 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "14 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "poedagar-682-1.png",
+        "poedagar-682-2.png",
+        "poedagar-682-3.png",
+        "poedagar-682-4.png",
+        "poedagar-682-5.png",
+        "poedagar-682-6.png",
+        "poedagar-682-7.png",
+        "poedagar-682-8.png",
+        "poedagar-682-9.png",
+        "poedagar-682-10.png",
+        "poedagar-682-11.png",
+        "poedagar-682-12.png",
+        "poedagar-682-13.png",
+        "poedagar-682-14.png",
+        "poedagar-682-15.png",
+        "poedagar-682-16.png",
+        "poedagar-682-17.png",
+        "poedagar-682-18.png",
+        "poedagar-682-19.png",
+        "poedagar-682-20.png",
+        "poedagar-682-21.png",
+        "poedagar-682-22.png",
+        "poedagar-682-23.png",
+        "poedagar-682-24.png",
+        "poedagar-682-25.png",
+        "poedagar-682-26.png",
+        "poedagar-682-27.png",
+        "poedagar-682-28.png",
+        "poedagar-682-29.png",
+        "poedagar-682-30.png",
+        "poedagar-682-31.png",
+        "poedagar-682-32.png",
+        "poedagar-682-34.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-silver-mintblue"
+            }
+          ],
+          "mainImage": "poedagar-682-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-silver-blue"
+            }
+          ],
+          "mainImage": "poedagar-682-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-silver-black"
+            }
+          ],
+          "mainImage": "poedagar-682-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-silver-green"
+            }
+          ],
+          "mainImage": "poedagar-682-10.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-silver-brown"
+            }
+          ],
+          "mainImage": "poedagar-682-11.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-blue-blue"
+            }
+          ],
+          "mainImage": "poedagar-682-12.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-black-black"
+            }
+          ],
+          "mainImage": "poedagar-682-13.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-gold-black"
+            }
+          ],
+          "mainImage": "poedagar-682-14.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-gold-green"
+            }
+          ],
+          "mainImage": "poedagar-682-15.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-gold-mintblue"
+            }
+          ],
+          "mainImage": "poedagar-682-16.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-gold-blue"
+            }
+          ],
+          "mainImage": "poedagar-682-17.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "682-gold-brown"
+            }
+          ],
+          "mainImage": "poedagar-682-18.png"
+        }
+      ]
+    }
+  ]
+}

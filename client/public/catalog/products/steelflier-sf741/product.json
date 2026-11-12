@@ -1,6 +1,6 @@
 {
   "slug": "steelflier-sf741",
-  "title": "STEELFLIER SF741",
+  "title": "Relógio STEELFLIER Clássico",
   "description": "Relógio de quartzo STEELFLIER SF741 com movimento VH31 de origem japonesa, três ponteiros e segundos contínuos. Caixa de aço inoxidável 316L com diâmetro de 39 mm sem a coroa e espessura de 12,5 mm, vidro de safira sintética e ponteiros luminosos. Resistência à água de 200 m (20 ATM) e bateria SR920SW inclusa. A descrição apresenta opções de pulseira em couro, borracha, nylon e aço inoxidável.",
   "axes": [
     {
@@ -136,13 +136,7 @@
         "steelflier-sf741-33.png",
         "steelflier-sf741-34.png",
         "steelflier-sf741-35.png",
-        "steelflier-sf741-36.png",
-        "steelflier-sf741-37.png",
-        "steelflier-sf741-38.png",
-        "steelflier-sf741-39.png",
-        "steelflier-sf741-40.png",
-        "steelflier-sf741-41.png",
-        "steelflier-sf741-42.png"
+        "steelflier-sf741-36.png"
       ],
       "variants": [
         {
@@ -156,7 +150,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-7.png"
+          "mainImage": "steelflier-sf741-3.png"
         },
         {
           "axes": [
@@ -169,7 +163,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-8.png"
+          "mainImage": "steelflier-sf741-1.png"
         },
         {
           "axes": [
@@ -182,7 +176,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-9.png"
+          "mainImage": "steelflier-sf741-4.png"
         },
         {
           "axes": [
@@ -195,7 +189,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-10.png"
+          "mainImage": "steelflier-sf741-5.png"
         },
         {
           "axes": [
@@ -208,7 +202,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-11.png"
+          "mainImage": "steelflier-sf741-2.png"
         },
         {
           "axes": [
@@ -221,7 +215,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-12.png"
+          "mainImage": "steelflier-sf741-6.png"
         }
       ]
     }

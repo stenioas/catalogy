@@ -1,0 +1,106 @@
+{
+  "slug": "addiesdive-my-h3-c",
+  "title": "Relógio ADDIESDIVE de Mergulho",
+  "description": "Relógio masculino de quartzo com caixa e pulseira em aço inoxidável, bisel de cerâmica e resistência à água de 200m (20 ATM). Possui vidro Hardlex com ampliação e luminosidade azul BGW9 para facilitar a leitura em ambientes escuros.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "silvery",
+          "value": "silvery"
+        },
+        {
+          "id": "black",
+          "value": "black"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "ADDIESDIVE"
+    },
+    {
+      "label": "Modelo",
+      "value": "MY-H3-C"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Mergulho"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex com ampliação"
+    },
+    {
+      "label": "Material do bisel",
+      "value": "Cerâmica"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "200m (20 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "13 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "addiesdive-my-h3-c-1.png",
+        "addiesdive-my-h3-c-2.png",
+        "addiesdive-my-h3-c-3.png",
+        "addiesdive-my-h3-c-4.png",
+        "addiesdive-my-h3-c-5.png",
+        "addiesdive-my-h3-c-6.png",
+        "addiesdive-my-h3-c-7.png",
+        "addiesdive-my-h3-c-8.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "silvery"
+            }
+          ],
+          "mainImage": "addiesdive-my-h3-c-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black"
+            }
+          ],
+          "mainImage": "addiesdive-my-h3-c-8.png"
+        }
+      ]
+    }
+  ]
+}
