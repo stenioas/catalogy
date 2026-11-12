@@ -1,0 +1,77 @@
+{
+  "slug": "trisjem-porta-cartoes-ultrafino",
+  "title": "Porta-cartões TRISJEM Ultrafino",
+  "description": "Porta-cartões compacto em couro sintético PU, com nove espaços para cartões e documentos em formato de cartão. Sem compartimento para notas e sem zíper. Mede aproximadamente 11 × 8 × 0,7 cm. A embalagem contém uma unidade.",
+  "audience": "unisex",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "cor",
+      "values": [
+        {
+          "id": "cafe",
+          "value": "CAFÉ"
+        },
+        {
+          "id": "preto",
+          "value": "Preto"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "TRISJEM"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "trisjem-porta-cartoes-ultrafino-1.png",
+        "trisjem-porta-cartoes-ultrafino-2.png",
+        "trisjem-porta-cartoes-ultrafino-3.png",
+        "trisjem-porta-cartoes-ultrafino-4.png",
+        "trisjem-porta-cartoes-ultrafino-5.png",
+        "trisjem-porta-cartoes-ultrafino-6.png",
+        "trisjem-porta-cartoes-ultrafino-7.png",
+        "trisjem-porta-cartoes-ultrafino-8.png",
+        "trisjem-porta-cartoes-ultrafino-9.png",
+        "trisjem-porta-cartoes-ultrafino-10.png",
+        "trisjem-porta-cartoes-ultrafino-11.png",
+        "trisjem-porta-cartoes-ultrafino-12.png",
+        "trisjem-porta-cartoes-ultrafino-13.png",
+        "trisjem-porta-cartoes-ultrafino-14.png",
+        "trisjem-porta-cartoes-ultrafino-15.png",
+        "trisjem-porta-cartoes-ultrafino-16.png",
+        "trisjem-porta-cartoes-ultrafino-17.png",
+        "trisjem-porta-cartoes-ultrafino-18.png",
+        "trisjem-porta-cartoes-ultrafino-19.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "cafe"
+            }
+          ],
+          "mainImage": "trisjem-porta-cartoes-ultrafino-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "preto"
+            }
+          ],
+          "mainImage": "trisjem-porta-cartoes-ultrafino-8.png"
+        }
+      ]
+    }
+  ]
+}
