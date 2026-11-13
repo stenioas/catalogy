@@ -1,0 +1,148 @@
+{
+  "slug": "tpw-k3048",
+  "title": "Relógio TPW Piloto Vintage",
+  "description": "Relógio de inspiração aeronáutica vintage, com números grandes para facilitar a leitura, exibição de 24 horas e ponteiros luminosos. Movimento de quartzo. Não é resistente à água. O pacote inclui um relógio de pulso, sem caixa.",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "black",
+          "value": "Black"
+        },
+        {
+          "id": "silver",
+          "value": "Silver"
+        },
+        {
+          "id": "black-weave",
+          "value": "Black Weave"
+        },
+        {
+          "id": "stainless-steel",
+          "value": "Stainless Steel"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "TPW"
+    },
+    {
+      "label": "Modelo",
+      "value": "K3048"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Piloto"
+    },
+    {
+      "label": "Funções",
+      "value": "Exibição de 24 horas e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Liga"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Vidro"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "22mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "8,5mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "tpw-k3048-1.png",
+        "tpw-k3048-2.png",
+        "tpw-k3048-3.png",
+        "tpw-k3048-4.png",
+        "tpw-k3048-5.png",
+        "tpw-k3048-6.png",
+        "tpw-k3048-7.png",
+        "tpw-k3048-8.png",
+        "tpw-k3048-9.png",
+        "tpw-k3048-10.png",
+        "tpw-k3048-11.png",
+        "tpw-k3048-12.png",
+        "tpw-k3048-13.png",
+        "tpw-k3048-14.png",
+        "tpw-k3048-15.png",
+        "tpw-k3048-16.png",
+        "tpw-k3048-17.png",
+        "tpw-k3048-18.png",
+        "tpw-k3048-19.png",
+        "tpw-k3048-20.png",
+        "tpw-k3048-21.png",
+        "tpw-k3048-22.png",
+        "tpw-k3048-23.png",
+        "tpw-k3048-24.png",
+        "tpw-k3048-25.png",
+        "tpw-k3048-26.png",
+        "tpw-k3048-27.png",
+        "tpw-k3048-28.png",
+        "tpw-k3048-29.png",
+        "tpw-k3048-30.png",
+        "tpw-k3048-31.png",
+        "tpw-k3048-32.png",
+        "tpw-k3048-33.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black"
+            }
+          ],
+          "mainImage": "tpw-k3048-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "silver"
+            }
+          ],
+          "mainImage": "tpw-k3048-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-weave"
+            }
+          ],
+          "mainImage": "tpw-k3048-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "stainless-steel"
+            }
+          ],
+          "mainImage": "tpw-k3048-10.png"
+        }
+      ]
+    }
+  ]
+}

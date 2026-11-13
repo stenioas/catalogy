@@ -1,0 +1,227 @@
+{
+  "slug": "poedagar-970s-wh",
+  "title": "Relógio POEDAGAR Clássico com Cronógrafo",
+  "description": "Relógio masculino de quartzo com design clássico, cronógrafo, data e ponteiros luminosos. Caixa e pulseira em aço inoxidável, vidro Hardlex e resistência à água de 30m (3 ATM). Acompanha caixa POEDAGAR, ferramenta para ajustar a pulseira, pano de limpeza e cartão de garantia.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "silver-white-black",
+          "value": "Silver White Black"
+        },
+        {
+          "id": "silver-white-blue",
+          "value": "Silver White Blue"
+        },
+        {
+          "id": "silver-blue-white",
+          "value": "Silver Blue White"
+        },
+        {
+          "id": "silver-black-white",
+          "value": "Silver Black White"
+        },
+        {
+          "id": "gold-black-white",
+          "value": "Gold Black White"
+        },
+        {
+          "id": "black-black-white",
+          "value": "Black Black White"
+        },
+        {
+          "id": "gold-white-blue",
+          "value": "Gold White Blue"
+        },
+        {
+          "id": "gold-green-white",
+          "value": "Gold Green White"
+        },
+        {
+          "id": "gold-blue-white",
+          "value": "Gold Blue White"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "POEDAGAR"
+    },
+    {
+      "label": "Modelo",
+      "value": "970S-WH"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Clássico / Casual"
+    },
+    {
+      "label": "Funções",
+      "value": "Cronógrafo, data e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "25 a 29 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "40 a 44 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "11 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "poedagar-970s-wh-1.png",
+        "poedagar-970s-wh-2.png",
+        "poedagar-970s-wh-3.png",
+        "poedagar-970s-wh-4.png",
+        "poedagar-970s-wh-5.png",
+        "poedagar-970s-wh-6.png",
+        "poedagar-970s-wh-7.png",
+        "poedagar-970s-wh-8.png",
+        "poedagar-970s-wh-9.png",
+        "poedagar-970s-wh-10.png",
+        "poedagar-970s-wh-11.png",
+        "poedagar-970s-wh-12.png",
+        "poedagar-970s-wh-13.png",
+        "poedagar-970s-wh-14.png",
+        "poedagar-970s-wh-15.png",
+        "poedagar-970s-wh-16.png",
+        "poedagar-970s-wh-17.png",
+        "poedagar-970s-wh-18.png",
+        "poedagar-970s-wh-19.png",
+        "poedagar-970s-wh-20.png",
+        "poedagar-970s-wh-21.png",
+        "poedagar-970s-wh-22.png",
+        "poedagar-970s-wh-23.png",
+        "poedagar-970s-wh-24.png",
+        "poedagar-970s-wh-25.png",
+        "poedagar-970s-wh-26.png",
+        "poedagar-970s-wh-27.png",
+        "poedagar-970s-wh-28.png",
+        "poedagar-970s-wh-29.png",
+        "poedagar-970s-wh-30.png",
+        "poedagar-970s-wh-31.png",
+        "poedagar-970s-wh-32.png",
+        "poedagar-970s-wh-33.png",
+        "poedagar-970s-wh-34.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "silver-white-black"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "silver-white-blue"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "silver-blue-white"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "silver-black-white"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-10.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "gold-black-white"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-11.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-black-white"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-12.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "gold-white-blue"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-13.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "gold-green-white"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-14.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "gold-blue-white"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-15.png"
+        }
+      ]
+    }
+  ]
+}

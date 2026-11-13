@@ -1,0 +1,123 @@
+{
+  "slug": "x-gear-2232g",
+  "title": "Relógio X-GEAR Analógico-Digital Esportivo",
+  "description": "Relógio unissex X-GEAR com visor analógico-digital e iluminação LED. Possui cronômetro, alarme, calendário completo e exibição da semana. Caixa e pulseira em aço inoxidável, vidro Hardlex, diâmetro do mostrador de 48 mm e espessura da caixa de 15 mm. Resistência à água de 50m (5 ATM), pulseira de 22 cm com fecho oculto de botão de pressão e bateria inclusa.",
+  "audience": "unisex",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "silver-black",
+          "value": "Silver Black"
+        },
+        {
+          "id": "silver",
+          "value": "Silver"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "X-GEAR"
+    },
+    {
+      "label": "Modelo",
+      "value": "2232G"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico-digital esportivo"
+    },
+    {
+      "label": "Funções",
+      "value": "Cronômetro, alarme, calendário completo, exibição da semana e iluminação LED"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Digital"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "48 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "15 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "x-gear-2232g-1.png",
+        "x-gear-2232g-2.png",
+        "x-gear-2232g-3.png",
+        "x-gear-2232g-4.png",
+        "x-gear-2232g-5.png",
+        "x-gear-2232g-6.png",
+        "x-gear-2232g-7.png",
+        "x-gear-2232g-8.png",
+        "x-gear-2232g-9.png",
+        "x-gear-2232g-10.png",
+        "x-gear-2232g-11.png",
+        "x-gear-2232g-12.png",
+        "x-gear-2232g-13.png",
+        "x-gear-2232g-14.png",
+        "x-gear-2232g-15.png",
+        "x-gear-2232g-16.png",
+        "x-gear-2232g-17.png",
+        "x-gear-2232g-18.png",
+        "x-gear-2232g-19.png",
+        "x-gear-2232g-20.png",
+        "x-gear-2232g-21.png",
+        "x-gear-2232g-22.png",
+        "x-gear-2232g-23.png",
+        "x-gear-2232g-24.png",
+        "x-gear-2232g-25.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "silver-black"
+            }
+          ],
+          "mainImage": "x-gear-2232g-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "silver"
+            }
+          ],
+          "mainImage": "x-gear-2232g-5.png"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "slug": "pochete-nylon-ajustavel",
+  "title": "Pochete de Nylon com Alça Ajustável",
+  "description": "Pochete masculina de nylon com alça ajustável, indicada para viagens, corrida, caminhadas e ciclismo. Mede aproximadamente 31 cm de comprimento, 17 cm de largura e 5 cm de altura, com variação de 0,5 a 2 cm informada pelo fornecedor. Embalagem com uma unidade.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "black",
+          "value": "black"
+        },
+        {
+          "id": "gray",
+          "value": "gray"
+        },
+        {
+          "id": "blue",
+          "value": "Blue"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "pochete-nylon-ajustavel-1.png",
+        "pochete-nylon-ajustavel-2.png",
+        "pochete-nylon-ajustavel-3.png",
+        "pochete-nylon-ajustavel-4.png",
+        "pochete-nylon-ajustavel-5.png",
+        "pochete-nylon-ajustavel-6.png",
+        "pochete-nylon-ajustavel-7.png",
+        "pochete-nylon-ajustavel-8.png",
+        "pochete-nylon-ajustavel-9.png",
+        "pochete-nylon-ajustavel-10.png",
+        "pochete-nylon-ajustavel-11.png",
+        "pochete-nylon-ajustavel-12.png",
+        "pochete-nylon-ajustavel-13.png",
+        "pochete-nylon-ajustavel-14.png",
+        "pochete-nylon-ajustavel-15.png",
+        "pochete-nylon-ajustavel-16.png",
+        "pochete-nylon-ajustavel-17.png",
+        "pochete-nylon-ajustavel-18.png",
+        "pochete-nylon-ajustavel-19.png",
+        "pochete-nylon-ajustavel-20.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black"
+            }
+          ],
+          "mainImage": "pochete-nylon-ajustavel-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "gray"
+            }
+          ],
+          "mainImage": "pochete-nylon-ajustavel-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "blue"
+            }
+          ],
+          "mainImage": "pochete-nylon-ajustavel-9.png"
+        }
+      ]
+    }
+  ]
+}

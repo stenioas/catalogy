@@ -1,0 +1,221 @@
+{
+  "slug": "poedagar-786",
+  "title": "Relógio POEDAGAR Feminino Casual",
+  "description": "Relógio feminino de quartzo com data, dia da semana e ponteiros luminosos. Caixa e pulseira em aço inoxidável, com fecho oculto com botão de pressão. Acompanha caixa POEDAGAR, ferramenta para ajuste da pulseira, pano de limpeza e cartão de garantia.",
+  "audience": "female",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "786-silver-white",
+          "value": "786 Silver White"
+        },
+        {
+          "id": "786-silver-green",
+          "value": "786 Silver Green"
+        },
+        {
+          "id": "786-silver-blue",
+          "value": "786 Silver Blue"
+        },
+        {
+          "id": "786-rose-gold-white",
+          "value": "786 Rose Gold White"
+        },
+        {
+          "id": "786-silver-black",
+          "value": "786 Silver Black"
+        },
+        {
+          "id": "786-rose-gold-green",
+          "value": "786 Rose Gold Green"
+        },
+        {
+          "id": "786-gold-gold",
+          "value": "786 Gold Gold"
+        },
+        {
+          "id": "786-rose-gold-black",
+          "value": "786 Rose Gold Black"
+        },
+        {
+          "id": "786-rose-gold-blue",
+          "value": "786 Rose Gold Blue"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "POEDAGAR"
+    },
+    {
+      "label": "Modelo",
+      "value": "786"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Casual"
+    },
+    {
+      "label": "Funções",
+      "value": "Data, dia da semana e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "24mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "35mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "11mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "poedagar-786-1.png",
+        "poedagar-786-2.png",
+        "poedagar-786-3.png",
+        "poedagar-786-4.png",
+        "poedagar-786-5.png",
+        "poedagar-786-6.png",
+        "poedagar-786-7.png",
+        "poedagar-786-8.png",
+        "poedagar-786-9.png",
+        "poedagar-786-10.png",
+        "poedagar-786-11.png",
+        "poedagar-786-12.png",
+        "poedagar-786-13.png",
+        "poedagar-786-14.png",
+        "poedagar-786-15.png",
+        "poedagar-786-16.png",
+        "poedagar-786-17.png",
+        "poedagar-786-18.png",
+        "poedagar-786-19.png",
+        "poedagar-786-20.png",
+        "poedagar-786-21.png",
+        "poedagar-786-22.png",
+        "poedagar-786-23.png",
+        "poedagar-786-24.png",
+        "poedagar-786-25.png",
+        "poedagar-786-26.png",
+        "poedagar-786-27.png",
+        "poedagar-786-28.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-silver-white"
+            }
+          ],
+          "mainImage": "poedagar-786-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-silver-green"
+            }
+          ],
+          "mainImage": "poedagar-786-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-silver-blue"
+            }
+          ],
+          "mainImage": "poedagar-786-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-rose-gold-white"
+            }
+          ],
+          "mainImage": "poedagar-786-10.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-silver-black"
+            }
+          ],
+          "mainImage": "poedagar-786-11.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-rose-gold-green"
+            }
+          ],
+          "mainImage": "poedagar-786-12.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-gold-gold"
+            }
+          ],
+          "mainImage": "poedagar-786-13.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-rose-gold-black"
+            }
+          ],
+          "mainImage": "poedagar-786-14.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-rose-gold-blue"
+            }
+          ],
+          "mainImage": "poedagar-786-15.png"
+        }
+      ]
+    }
+  ]
+}
