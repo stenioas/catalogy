@@ -1,0 +1,158 @@
+{
+  "slug": "north-edge-abyss",
+  "title": "Relógio NORTH EDGE Solar de Mergulho",
+  "description": "Relógio masculino de mergulho com movimento de quartzo alimentado por energia solar, caixa em aço inoxidável 316L e resistência à água de 200 metros. O mostrador inspirado na textura de geleiras conta com grandes marcadores e ponteiros luminosos. Possui luneta de cerâmica com rotação unidirecional e opções de pulseira de borracha ou aço.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "black-rubber",
+          "value": "Black Rubber"
+        },
+        {
+          "id": "blue-rubber",
+          "value": "Blue Rubber"
+        },
+        {
+          "id": "blue-steel",
+          "value": "Blue Steel"
+        },
+        {
+          "id": "black-steel",
+          "value": "Black Steel"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "NORTH EDGE"
+    },
+    {
+      "label": "Modelo",
+      "value": "ABYSS"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Mergulho / Esportivo"
+    },
+    {
+      "label": "Funções",
+      "value": "Ponteiros e marcadores luminosos, cronômetro e luz de fundo"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo solar"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Borracha ou aço, conforme a variante"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Material do bisel",
+      "value": "Cerâmica"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "200m (20 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "40 a 44 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "13,9 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "north-edge-abyss-1.png",
+        "north-edge-abyss-2.png",
+        "north-edge-abyss-3.png",
+        "north-edge-abyss-4.png",
+        "north-edge-abyss-5.png",
+        "north-edge-abyss-6.png",
+        "north-edge-abyss-7.png",
+        "north-edge-abyss-8.png",
+        "north-edge-abyss-9.png",
+        "north-edge-abyss-10.png",
+        "north-edge-abyss-11.png",
+        "north-edge-abyss-12.png",
+        "north-edge-abyss-13.png",
+        "north-edge-abyss-14.png",
+        "north-edge-abyss-15.png",
+        "north-edge-abyss-16.png",
+        "north-edge-abyss-17.png",
+        "north-edge-abyss-18.png",
+        "north-edge-abyss-19.png",
+        "north-edge-abyss-20.png",
+        "north-edge-abyss-21.png",
+        "north-edge-abyss-22.png",
+        "north-edge-abyss-23.png",
+        "north-edge-abyss-24.png",
+        "north-edge-abyss-25.png",
+        "north-edge-abyss-26.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-rubber"
+            }
+          ],
+          "mainImage": "north-edge-abyss-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "blue-rubber"
+            }
+          ],
+          "mainImage": "north-edge-abyss-1.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "blue-steel"
+            }
+          ],
+          "mainImage": "north-edge-abyss-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-steel"
+            }
+          ],
+          "mainImage": "north-edge-abyss-9.png"
+        }
+      ]
+    }
+  ]
+}

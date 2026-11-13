@@ -1,0 +1,205 @@
+{
+  "slug": "sapphero-so2110p",
+  "title": "Relógio SAPPHERO Clássico",
+  "description": "Relógio masculino clássico com design de negócios, caixa e pulseira em aço inoxidável, movimento de quartzo Seiko PC32, janela de data e ponteiros luminosos. Acompanha caixa, ferramenta de ajuste da pulseira e manual.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "so2110p-02",
+          "value": "SO2110P-02"
+        },
+        {
+          "id": "so2110p-08",
+          "value": "SO2110P-08"
+        },
+        {
+          "id": "so2110p-03",
+          "value": "SO2110P-03"
+        },
+        {
+          "id": "so2110p-01",
+          "value": "SO2110P-01"
+        },
+        {
+          "id": "so2110p-04",
+          "value": "SO2110P-04"
+        },
+        {
+          "id": "so2110p-06",
+          "value": "SO2110P-06"
+        },
+        {
+          "id": "so2110p-07",
+          "value": "SO2110P-07"
+        },
+        {
+          "id": "so2110p-05",
+          "value": "SO2110P-05"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "SAPPHERO"
+    },
+    {
+      "label": "Modelo",
+      "value": "SO2110P"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Clássico / Negócios"
+    },
+    {
+      "label": "Funções",
+      "value": "Hora, data e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "Seiko PC32"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do bisel",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "42 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "10 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "12 meses"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "sapphero-so2110p-1.png",
+        "sapphero-so2110p-2.png",
+        "sapphero-so2110p-3.png",
+        "sapphero-so2110p-4.png",
+        "sapphero-so2110p-5.png",
+        "sapphero-so2110p-6.png",
+        "sapphero-so2110p-7.png",
+        "sapphero-so2110p-8.png",
+        "sapphero-so2110p-9.png",
+        "sapphero-so2110p-10.png",
+        "sapphero-so2110p-11.png",
+        "sapphero-so2110p-12.png",
+        "sapphero-so2110p-13.png",
+        "sapphero-so2110p-14.png",
+        "sapphero-so2110p-15.png",
+        "sapphero-so2110p-16.png",
+        "sapphero-so2110p-17.png",
+        "sapphero-so2110p-18.png",
+        "sapphero-so2110p-19.png",
+        "sapphero-so2110p-20.png",
+        "sapphero-so2110p-21.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "so2110p-02"
+            }
+          ],
+          "mainImage": "sapphero-so2110p-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "so2110p-08"
+            }
+          ],
+          "mainImage": "sapphero-so2110p-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "so2110p-03"
+            }
+          ],
+          "mainImage": "sapphero-so2110p-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "so2110p-01"
+            }
+          ],
+          "mainImage": "sapphero-so2110p-10.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "so2110p-04"
+            }
+          ],
+          "mainImage": "sapphero-so2110p-11.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "so2110p-06"
+            }
+          ],
+          "mainImage": "sapphero-so2110p-12.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "so2110p-07"
+            }
+          ],
+          "mainImage": "sapphero-so2110p-13.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "so2110p-05"
+            }
+          ],
+          "mainImage": "sapphero-so2110p-14.png"
+        }
+      ]
+    }
+  ]
+}
