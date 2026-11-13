@@ -10,7 +10,7 @@ import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router-d
 
 import { writeProductsModule } from '../../scripts/catalog'
 import { ThemeProvider } from '../components/theme-provider'
-import { CatalogPage } from './catalog-page'
+import { CatalogPage, eagerHomeCardCount } from './catalog-page'
 import { ON_ORDER_PRICE_NOTE } from '../components/catalog/price-block'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
@@ -231,6 +231,36 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
       /@media\s*\(min-width:\s*768px\)\s*\{[\s\S]*?\.catalog-vitrine\s*\{([^}]*)\}/,
     )?.[1]
     expect(desktop).toMatch(/padding-inline:\s*24px/)
+  })
+
+  it('keeps the first screen eager and lazy-loads the card covers below it', () => {
+    expect(eagerHomeCardCount(390, 700)).toBe(5)
+    expect(eagerHomeCardCount(1280, 800)).toBe(6)
+    const previousWidth = window.innerWidth
+    const previousHeight = window.innerHeight
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 390 })
+    Object.defineProperty(window, 'innerHeight', { configurable: true, value: 700 })
+    mockProductsRef.current = Array.from({ length: 8 }, (_, index) =>
+      makeProduct(`watch-${index}`, `Watch ${index}`),
+    )
+    try {
+      renderCatalogPage()
+      const images = within(screen.getByTestId('catalog-grid')).getAllByRole('img')
+      expect(images.map((img) => img.getAttribute('loading'))).toEqual([
+        'eager',
+        'eager',
+        'eager',
+        'eager',
+        'eager',
+        'lazy',
+        'lazy',
+        'lazy',
+      ])
+      expect(images[5].getAttribute('src')).toBe('/catalog/products/watch-5/img/thumbs/foto.webp')
+    } finally {
+      Object.defineProperty(window, 'innerWidth', { configurable: true, value: previousWidth })
+      Object.defineProperty(window, 'innerHeight', { configurable: true, value: previousHeight })
+    }
   })
 
   it('lists each watch in the product grid (SV-01, AC1)', () => {

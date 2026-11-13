@@ -83,12 +83,12 @@ Se tiver alguma dúvida, entre em contato conosco e faremos o possível para aju
 
 ## Variantes
 
-- Cor: 910 Silver Blue — mainImage: `poedagar-910-7.png`
-- Cor: 910 Silver White — mainImage: `poedagar-910-8.png`
-- Cor: 910 Gold Blue — mainImage: `poedagar-910-1.png`
-- Cor: 910 Gold Green — mainImage: `poedagar-910-9.png`
-- Cor: 910 Silver Black — mainImage: `poedagar-910-10.png`
-- Cor: 910 Gold White — mainImage: `poedagar-910-11.png`
-- Cor: 910 Black Black — mainImage: `poedagar-910-12.png`
-- Cor: 910 Gold Black — mainImage: `poedagar-910-13.png`
-- Cor: 910 Gold Gold — mainImage: `poedagar-910-14.png`
+- Cor: 910 Silver Blue — mainImage: `poedagar-910-7.webp`
+- Cor: 910 Silver White — mainImage: `poedagar-910-8.webp`
+- Cor: 910 Gold Blue — mainImage: `poedagar-910-1.webp`
+- Cor: 910 Gold Green — mainImage: `poedagar-910-9.webp`
+- Cor: 910 Silver Black — mainImage: `poedagar-910-10.webp`
+- Cor: 910 Gold White — mainImage: `poedagar-910-11.webp`
+- Cor: 910 Black Black — mainImage: `poedagar-910-12.webp`
+- Cor: 910 Gold Black — mainImage: `poedagar-910-13.webp`
+- Cor: 910 Gold Gold — mainImage: `poedagar-910-14.webp`

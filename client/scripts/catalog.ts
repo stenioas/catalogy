@@ -3,6 +3,7 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
+  rmSync,
   unlinkSync,
   writeFileSync,
 } from 'node:fs'
@@ -233,6 +234,29 @@ export function isImageFile(name: string): boolean {
   return imageExtensions.has(name.slice(dot + 1).toLowerCase())
 }
 
+/**
+ * Files copied from `public/catalog` into the published site.
+ * `media/` stays on disk for registration and is omitted from dist.
+ * Uncited photos under `img/` and `img/thumbs/` are omitted too.
+ */
+export function isPublishedCatalogFile(
+  relPath: string,
+  citedBySlug: ReadonlyMap<string, ReadonlySet<string>>,
+): boolean {
+  const normalized = relPath.split('\\').join('/')
+  if (/^products\/[^/]+\/media(?:\/|$)/.test(normalized)) {
+    return false
+  }
+  const image = normalized.match(/^products\/([^/]+)\/img\/(?:thumbs\/)?([^/]+)$/)
+  if (image !== null && isImageFile(image[2])) {
+    const cited = citedBySlug.get(image[1])
+    if (cited !== undefined && !cited.has(image[2])) {
+      return false
+    }
+  }
+  return true
+}
+
 /** Union of every file name listed in `listings[].images` (for dist and validation). */
 export function citedImageNames(product: Product): string[] {
   const names = new Set<string>()
@@ -312,11 +336,37 @@ export function omitUncitedImages(
     }
     const cited = new Set(citedImageNames(product))
     for (const name of readdirSync(imgDir)) {
+      const full = join(imgDir, name)
+      if (name === 'thumbs') {
+        for (const thumb of readdirSync(full)) {
+          if (!isImageFile(thumb) || cited.has(thumb)) {
+            continue
+          }
+          unlinkSync(join(full, thumb))
+        }
+        continue
+      }
       if (!isImageFile(name) || cited.has(name)) {
         continue
       }
-      unlinkSync(join(imgDir, name))
+      unlinkSync(full)
     }
+  }
+}
+
+/** Drops each product's `media/` from dist. Does not modify source `public/`. */
+export function omitCatalogMedia(distCatalogProductsDir: string): void {
+  if (!existsSync(distCatalogProductsDir)) {
+    return
+  }
+  for (const entry of readdirSync(distCatalogProductsDir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) {
+      continue
+    }
+    rmSync(join(distCatalogProductsDir, entry.name, 'media'), {
+      recursive: true,
+      force: true,
+    })
   }
 }
 

@@ -2,6 +2,7 @@ import { useRef, type MouseEvent, type PointerEvent } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { HoverZoom } from './hover-zoom'
+import { catalogThumbSrc } from './watch-card'
 
 type DesktopProductMediaProps = {
   images: string[]
@@ -81,7 +82,7 @@ export function DesktopProductMedia({
               className={`size-14 shrink-0 cursor-pointer p-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${selected ? 'border-primary ring-1 ring-primary' : ''}`}
               onClick={() => onIndexChange(imageIndex)}
             >
-              <img src={src} alt="" aria-hidden="true" draggable={false} className="size-full rounded-md object-contain" />
+              <img src={catalogThumbSrc(src)} alt="" aria-hidden="true" draggable={false} className="size-full rounded-md object-contain" />
             </Button>
           )
         })}

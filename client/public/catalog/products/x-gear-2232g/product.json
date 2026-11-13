@@ -72,31 +72,31 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "x-gear-2232g-1.png",
-        "x-gear-2232g-2.png",
-        "x-gear-2232g-3.png",
-        "x-gear-2232g-4.png",
-        "x-gear-2232g-5.png",
-        "x-gear-2232g-6.png",
-        "x-gear-2232g-7.png",
-        "x-gear-2232g-8.png",
-        "x-gear-2232g-9.png",
-        "x-gear-2232g-10.png",
-        "x-gear-2232g-11.png",
-        "x-gear-2232g-12.png",
-        "x-gear-2232g-13.png",
-        "x-gear-2232g-14.png",
-        "x-gear-2232g-15.png",
-        "x-gear-2232g-16.png",
-        "x-gear-2232g-17.png",
-        "x-gear-2232g-18.png",
-        "x-gear-2232g-19.png",
-        "x-gear-2232g-20.png",
-        "x-gear-2232g-21.png",
-        "x-gear-2232g-22.png",
-        "x-gear-2232g-23.png",
-        "x-gear-2232g-24.png",
-        "x-gear-2232g-25.png"
+        "x-gear-2232g-1.webp",
+        "x-gear-2232g-2.webp",
+        "x-gear-2232g-3.webp",
+        "x-gear-2232g-4.webp",
+        "x-gear-2232g-5.webp",
+        "x-gear-2232g-6.webp",
+        "x-gear-2232g-7.webp",
+        "x-gear-2232g-8.webp",
+        "x-gear-2232g-9.webp",
+        "x-gear-2232g-10.webp",
+        "x-gear-2232g-11.webp",
+        "x-gear-2232g-12.webp",
+        "x-gear-2232g-13.webp",
+        "x-gear-2232g-14.webp",
+        "x-gear-2232g-15.webp",
+        "x-gear-2232g-16.webp",
+        "x-gear-2232g-17.webp",
+        "x-gear-2232g-18.webp",
+        "x-gear-2232g-19.webp",
+        "x-gear-2232g-20.webp",
+        "x-gear-2232g-21.webp",
+        "x-gear-2232g-22.webp",
+        "x-gear-2232g-23.webp",
+        "x-gear-2232g-24.webp",
+        "x-gear-2232g-25.webp"
       ],
       "variants": [
         {
@@ -106,7 +106,7 @@
               "valueId": "silver-black"
             }
           ],
-          "mainImage": "x-gear-2232g-7.png"
+          "mainImage": "x-gear-2232g-7.webp"
         },
         {
           "axes": [
@@ -115,7 +115,7 @@
               "valueId": "silver"
             }
           ],
-          "mainImage": "x-gear-2232g-5.png"
+          "mainImage": "x-gear-2232g-5.webp"
         }
       ]
     }

@@ -110,12 +110,12 @@ Seu feedback é importante para o desenvolvimento do nosso negócio. Se você es
 
 Eixos: Cor (`cor`), apresentação por imagem; É personalizado (`e-personalizado`), valor Não (`nao`).
 
-- Cor: SF741-KN (`sf741-kn`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-3.png`.
-- Cor: SF741-SS (`sf741-ss`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-1.png`.
-- Cor: SF741-HG (`sf741-hg`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-4.png`.
-- Cor: SF741-OG (`sf741-og`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-5.png`.
-- Cor: SF741-ZP (`sf741-zp`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-2.png`.
-- Cor: SF741-HR (`sf741-hr`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-6.png`.
+- Cor: SF741-KN (`sf741-kn`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-3.webp`.
+- Cor: SF741-SS (`sf741-ss`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-1.webp`.
+- Cor: SF741-HG (`sf741-hg`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-4.webp`.
+- Cor: SF741-OG (`sf741-og`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-5.webp`.
+- Cor: SF741-ZP (`sf741-zp`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-2.webp`.
+- Cor: SF741-HR (`sf741-hr`); É personalizado: Não (`nao`); mainImage: `steelflier-sf741-6.webp`.
 
 Observações da origem: SF741-ZP e SF741-HR constavam como esgotadas no seletor. Todas as variantes foram cadastradas sob encomenda, sem preço. A descrição identifica SF741-SS com pulseira de aço inoxidável, SF741-ZP com couro e SF741-HR com borracha; não foi inferido o material específico das demais opções.
 
@@ -125,39 +125,39 @@ O HTML fornecido contém marcação danificada na abertura da lista de especific
 
 Fotos em `img/`, renumeradas após a reordenação manual. A seção Mídias registra os arquivos originais de `media/`.
 
-- steelflier-sf741-1.png
-- steelflier-sf741-2.png
-- steelflier-sf741-3.png
-- steelflier-sf741-4.png
-- steelflier-sf741-5.png
-- steelflier-sf741-6.png
-- steelflier-sf741-7.png
-- steelflier-sf741-8.png
-- steelflier-sf741-9.png
-- steelflier-sf741-10.png
-- steelflier-sf741-11.png
-- steelflier-sf741-12.png
-- steelflier-sf741-13.png
-- steelflier-sf741-14.png
-- steelflier-sf741-15.png
-- steelflier-sf741-16.png
-- steelflier-sf741-17.png
-- steelflier-sf741-18.png
-- steelflier-sf741-19.png
-- steelflier-sf741-20.png
-- steelflier-sf741-21.png
-- steelflier-sf741-22.png
-- steelflier-sf741-23.png
-- steelflier-sf741-24.png
-- steelflier-sf741-25.png
-- steelflier-sf741-26.png
-- steelflier-sf741-27.png
-- steelflier-sf741-28.png
-- steelflier-sf741-29.png
-- steelflier-sf741-30.png
-- steelflier-sf741-31.png
-- steelflier-sf741-32.png
-- steelflier-sf741-33.png
-- steelflier-sf741-34.png
-- steelflier-sf741-35.png
-- steelflier-sf741-36.png
+- steelflier-sf741-1.webp
+- steelflier-sf741-2.webp
+- steelflier-sf741-3.webp
+- steelflier-sf741-4.webp
+- steelflier-sf741-5.webp
+- steelflier-sf741-6.webp
+- steelflier-sf741-7.webp
+- steelflier-sf741-8.webp
+- steelflier-sf741-9.webp
+- steelflier-sf741-10.webp
+- steelflier-sf741-11.webp
+- steelflier-sf741-12.webp
+- steelflier-sf741-13.webp
+- steelflier-sf741-14.webp
+- steelflier-sf741-15.webp
+- steelflier-sf741-16.webp
+- steelflier-sf741-17.webp
+- steelflier-sf741-18.webp
+- steelflier-sf741-19.webp
+- steelflier-sf741-20.webp
+- steelflier-sf741-21.webp
+- steelflier-sf741-22.webp
+- steelflier-sf741-23.webp
+- steelflier-sf741-24.webp
+- steelflier-sf741-25.webp
+- steelflier-sf741-26.webp
+- steelflier-sf741-27.webp
+- steelflier-sf741-28.webp
+- steelflier-sf741-29.webp
+- steelflier-sf741-30.webp
+- steelflier-sf741-31.webp
+- steelflier-sf741-32.webp
+- steelflier-sf741-33.webp
+- steelflier-sf741-34.webp
+- steelflier-sf741-35.webp
+- steelflier-sf741-36.webp

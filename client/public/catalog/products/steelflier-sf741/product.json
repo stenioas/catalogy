@@ -101,42 +101,42 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "steelflier-sf741-1.png",
-        "steelflier-sf741-2.png",
-        "steelflier-sf741-3.png",
-        "steelflier-sf741-4.png",
-        "steelflier-sf741-5.png",
-        "steelflier-sf741-6.png",
-        "steelflier-sf741-7.png",
-        "steelflier-sf741-8.png",
-        "steelflier-sf741-9.png",
-        "steelflier-sf741-10.png",
-        "steelflier-sf741-11.png",
-        "steelflier-sf741-12.png",
-        "steelflier-sf741-13.png",
-        "steelflier-sf741-14.png",
-        "steelflier-sf741-15.png",
-        "steelflier-sf741-16.png",
-        "steelflier-sf741-17.png",
-        "steelflier-sf741-18.png",
-        "steelflier-sf741-19.png",
-        "steelflier-sf741-20.png",
-        "steelflier-sf741-21.png",
-        "steelflier-sf741-22.png",
-        "steelflier-sf741-23.png",
-        "steelflier-sf741-24.png",
-        "steelflier-sf741-25.png",
-        "steelflier-sf741-26.png",
-        "steelflier-sf741-27.png",
-        "steelflier-sf741-28.png",
-        "steelflier-sf741-29.png",
-        "steelflier-sf741-30.png",
-        "steelflier-sf741-31.png",
-        "steelflier-sf741-32.png",
-        "steelflier-sf741-33.png",
-        "steelflier-sf741-34.png",
-        "steelflier-sf741-35.png",
-        "steelflier-sf741-36.png"
+        "steelflier-sf741-1.webp",
+        "steelflier-sf741-2.webp",
+        "steelflier-sf741-3.webp",
+        "steelflier-sf741-4.webp",
+        "steelflier-sf741-5.webp",
+        "steelflier-sf741-6.webp",
+        "steelflier-sf741-7.webp",
+        "steelflier-sf741-8.webp",
+        "steelflier-sf741-9.webp",
+        "steelflier-sf741-10.webp",
+        "steelflier-sf741-11.webp",
+        "steelflier-sf741-12.webp",
+        "steelflier-sf741-13.webp",
+        "steelflier-sf741-14.webp",
+        "steelflier-sf741-15.webp",
+        "steelflier-sf741-16.webp",
+        "steelflier-sf741-17.webp",
+        "steelflier-sf741-18.webp",
+        "steelflier-sf741-19.webp",
+        "steelflier-sf741-20.webp",
+        "steelflier-sf741-21.webp",
+        "steelflier-sf741-22.webp",
+        "steelflier-sf741-23.webp",
+        "steelflier-sf741-24.webp",
+        "steelflier-sf741-25.webp",
+        "steelflier-sf741-26.webp",
+        "steelflier-sf741-27.webp",
+        "steelflier-sf741-28.webp",
+        "steelflier-sf741-29.webp",
+        "steelflier-sf741-30.webp",
+        "steelflier-sf741-31.webp",
+        "steelflier-sf741-32.webp",
+        "steelflier-sf741-33.webp",
+        "steelflier-sf741-34.webp",
+        "steelflier-sf741-35.webp",
+        "steelflier-sf741-36.webp"
       ],
       "variants": [
         {
@@ -150,7 +150,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-3.png"
+          "mainImage": "steelflier-sf741-3.webp"
         },
         {
           "axes": [
@@ -163,7 +163,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-1.png"
+          "mainImage": "steelflier-sf741-1.webp"
         },
         {
           "axes": [
@@ -176,7 +176,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-4.png"
+          "mainImage": "steelflier-sf741-4.webp"
         },
         {
           "axes": [
@@ -189,7 +189,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-5.png"
+          "mainImage": "steelflier-sf741-5.webp"
         },
         {
           "axes": [
@@ -202,7 +202,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-2.png"
+          "mainImage": "steelflier-sf741-2.webp"
         },
         {
           "axes": [
@@ -215,7 +215,7 @@
               "valueId": "nao"
             }
           ],
-          "mainImage": "steelflier-sf741-6.png"
+          "mainImage": "steelflier-sf741-6.webp"
         }
       ]
     }

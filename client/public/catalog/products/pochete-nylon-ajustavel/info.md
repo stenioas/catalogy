@@ -55,6 +55,6 @@ Note:Due tothe size may have an error of 0.5-2 cm. Different screens may cause a
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: black (`black`); mainImage: `pochete-nylon-ajustavel-7.png`; sem fallback.
-- Cor: gray (`gray`); mainImage: `pochete-nylon-ajustavel-8.png`; sem fallback.
-- Cor: Blue (`blue`); mainImage: `pochete-nylon-ajustavel-9.png`; sem fallback.
+- Cor: black (`black`); mainImage: `pochete-nylon-ajustavel-7.webp`; sem fallback.
+- Cor: gray (`gray`); mainImage: `pochete-nylon-ajustavel-8.webp`; sem fallback.
+- Cor: Blue (`blue`); mainImage: `pochete-nylon-ajustavel-9.webp`; sem fallback.

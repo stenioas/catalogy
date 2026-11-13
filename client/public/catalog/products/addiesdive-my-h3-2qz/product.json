@@ -79,14 +79,14 @@
       "state": "used",
       "availabilityStatus": "available",
       "images": [
-        "addiesdive-1.png",
-        "addiesdive-2.png",
-        "addiesdive-3.png",
-        "addiesdive-4.png",
-        "addiesdive-5.png",
-        "addiesdive-6.png",
-        "addiesdive-7.png",
-        "addiesdive-8.png"
+        "addiesdive-1.webp",
+        "addiesdive-2.webp",
+        "addiesdive-3.webp",
+        "addiesdive-4.webp",
+        "addiesdive-5.webp",
+        "addiesdive-6.webp",
+        "addiesdive-7.webp",
+        "addiesdive-8.webp"
       ],
       "variants": [
         {
@@ -98,7 +98,7 @@
           ],
           "price": 329.9,
           "listPrice": 519.9,
-          "mainImage": "addiesdive-1.png",
+          "mainImage": "addiesdive-1.webp",
           "offers": [
             {
               "text": "Black Friday",

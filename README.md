@@ -87,11 +87,13 @@ client/public/catalog/products/curren-8455/
   product.json
   info.md
   img/
-    curren-8455-1.png
+    curren-8455-1.webp
+    thumbs/
+      curren-8455-1.webp
   media/
 ```
 
-O `slug` da pasta e o `slug` do JSON são o mesmo, em minúsculas, com hífens. Os nomes em `images` são só o arquivo, e cada um precisa existir em `img/`. Extensões aceitas: jpg, jpeg, png, webp e avif. `info.md` e `media/` registram a fonte do cadastro. O site lê `product.json` e `img/`.
+O `slug` da pasta e o `slug` do JSON são o mesmo, em minúsculas, com hífens. Os nomes em `images` são só o arquivo, e cada um precisa existir em `img/`. Extensões aceitas: jpg, jpeg, png, webp e avif. A foto de `img/` tem lado maior de até 768 px e serve a galeria e o zoom. `img/thumbs/` repete o mesmo nome com lado maior de até 400 px, para o card e as miniaturas. `info.md` e `media/` registram a fonte do cadastro; `media/` não entra no site publicado. O site lê `product.json`, `img/` e `img/thumbs/`.
 
 O JSON descreve um produto com anúncios em `listings`. O catálogo aceita relógios e outros produtos. O formato e a lista fechada de características estão em [docs/contrato-relogio.md](docs/contrato-relogio.md). `ProductSchema`, em `shared`, aplica esse formato. O carregador do Vite não chama o schema: confere as fotos citadas e os ícones das ofertas. Um JSON antigo, ainda sem `listings`, é convertido na leitura quando tem `images` e `price`.
 
@@ -99,6 +101,6 @@ Disponibilidade: `available` mostra **Disponível**; `coming_soon`, **Chega em b
 
 ## Cadastro pelo HTML do AliExpress
 
-Use `product-register` com o fragmento `<div id="root">...</div>`. A skill baixa mídias, grava `info.md` e cria um anúncio `sob-encomenda` sem preço. Fotos PNG ficam em `media/` e `img/`; vídeos convertidos para MP4 ficam apenas em `media/`. O objeto gravado passa por `ProductSchema` antes de ir para o disco.
+Use `product-register` com o fragmento `<div id="root">...</div>`. A skill baixa mídias, grava `info.md` e cria um anúncio `sob-encomenda` sem preço. Fotos WebP ficam em `media/` e `img/`, com a miniatura de 400 px em `img/thumbs/`; vídeos convertidos para MP4 ficam apenas em `media/`. O objeto gravado passa por `ProductSchema` antes de ir para o disco.
 
 Pasta livre é gravada direto. Pasta com `product.json` só é substituída após a resposta exata `substituir`; a substituição recria o produto e suas fotos. As instruções ficam em `.agents/skills/product-register/SKILL.md`. O parser pode ser verificado com `python3 -m pytest -q .agents/skills/product-register/tests`, usando os requisitos Python da pasta da skill e `ffmpeg`/`ffprobe` para vídeos.

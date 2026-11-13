@@ -74,21 +74,21 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "curren-9007-1.png",
-        "curren-9007-2.png",
-        "curren-9007-3.png",
-        "curren-9007-4.png",
-        "curren-9007-5.png",
-        "curren-9007-6.png",
-        "curren-9007-7.png",
-        "curren-9007-8.png",
-        "curren-9007-9.png",
-        "curren-9007-10.png",
-        "curren-9007-11.png",
-        "curren-9007-12.png",
-        "curren-9007-13.png",
-        "curren-9007-14.png",
-        "curren-9007-15.png"
+        "curren-9007-1.webp",
+        "curren-9007-2.webp",
+        "curren-9007-3.webp",
+        "curren-9007-4.webp",
+        "curren-9007-5.webp",
+        "curren-9007-6.webp",
+        "curren-9007-7.webp",
+        "curren-9007-8.webp",
+        "curren-9007-9.webp",
+        "curren-9007-10.webp",
+        "curren-9007-11.webp",
+        "curren-9007-12.webp",
+        "curren-9007-13.webp",
+        "curren-9007-14.webp",
+        "curren-9007-15.webp"
       ],
       "variants": [
         {
@@ -100,7 +100,7 @@
           ],
           "price": 139.9,
           "listPrice": 154.9,
-          "mainImage": "curren-9007-1.png"
+          "mainImage": "curren-9007-1.webp"
         },
         {
           "axes": [
@@ -111,7 +111,7 @@
           ],
           "price": 139.9,
           "listPrice": 154.9,
-          "mainImage": "curren-9007-4.png"
+          "mainImage": "curren-9007-4.webp"
         }
       ]
     },
@@ -120,12 +120,12 @@
       "state": "new",
       "availabilityStatus": "coming_soon",
       "images": [
-        "curren-9007-4.png",
-        "curren-9007-5.png",
-        "curren-9007-6.png",
-        "curren-9007-13.png",
-        "curren-9007-14.png",
-        "curren-9007-15.png"
+        "curren-9007-4.webp",
+        "curren-9007-5.webp",
+        "curren-9007-6.webp",
+        "curren-9007-13.webp",
+        "curren-9007-14.webp",
+        "curren-9007-15.webp"
       ],
       "variants": [
         {
@@ -137,7 +137,7 @@
           ],
           "price": 109.9,
           "listPrice": 154.9,
-          "mainImage": "curren-9007-4.png",
+          "mainImage": "curren-9007-4.webp",
           "offers": [
             {
               "text": "Black Friday",

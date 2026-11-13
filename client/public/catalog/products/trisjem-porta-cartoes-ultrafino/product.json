@@ -32,22 +32,22 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "trisjem-porta-cartoes-ultrafino-1.png",
-        "trisjem-porta-cartoes-ultrafino-2.png",
-        "trisjem-porta-cartoes-ultrafino-3.png",
-        "trisjem-porta-cartoes-ultrafino-4.png",
-        "trisjem-porta-cartoes-ultrafino-5.png",
-        "trisjem-porta-cartoes-ultrafino-6.png",
-        "trisjem-porta-cartoes-ultrafino-7.png",
-        "trisjem-porta-cartoes-ultrafino-8.png",
-        "trisjem-porta-cartoes-ultrafino-9.png",
-        "trisjem-porta-cartoes-ultrafino-10.png",
-        "trisjem-porta-cartoes-ultrafino-11.png",
-        "trisjem-porta-cartoes-ultrafino-12.png",
-        "trisjem-porta-cartoes-ultrafino-13.png",
-        "trisjem-porta-cartoes-ultrafino-14.png",
-        "trisjem-porta-cartoes-ultrafino-15.png",
-        "trisjem-porta-cartoes-ultrafino-16.png"
+        "trisjem-porta-cartoes-ultrafino-1.webp",
+        "trisjem-porta-cartoes-ultrafino-2.webp",
+        "trisjem-porta-cartoes-ultrafino-3.webp",
+        "trisjem-porta-cartoes-ultrafino-4.webp",
+        "trisjem-porta-cartoes-ultrafino-5.webp",
+        "trisjem-porta-cartoes-ultrafino-6.webp",
+        "trisjem-porta-cartoes-ultrafino-7.webp",
+        "trisjem-porta-cartoes-ultrafino-8.webp",
+        "trisjem-porta-cartoes-ultrafino-9.webp",
+        "trisjem-porta-cartoes-ultrafino-10.webp",
+        "trisjem-porta-cartoes-ultrafino-11.webp",
+        "trisjem-porta-cartoes-ultrafino-12.webp",
+        "trisjem-porta-cartoes-ultrafino-13.webp",
+        "trisjem-porta-cartoes-ultrafino-14.webp",
+        "trisjem-porta-cartoes-ultrafino-15.webp",
+        "trisjem-porta-cartoes-ultrafino-16.webp"
       ],
       "variants": [
         {
@@ -57,7 +57,7 @@
               "valueId": "cafe"
             }
           ],
-          "mainImage": "trisjem-porta-cartoes-ultrafino-7.png"
+          "mainImage": "trisjem-porta-cartoes-ultrafino-7.webp"
         },
         {
           "axes": [
@@ -66,7 +66,7 @@
               "valueId": "preto"
             }
           ],
-          "mainImage": "trisjem-porta-cartoes-ultrafino-8.png"
+          "mainImage": "trisjem-porta-cartoes-ultrafino-8.webp"
         }
       ]
     }

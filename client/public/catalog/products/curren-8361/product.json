@@ -74,30 +74,30 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "curren-8361-1.png",
-        "curren-8361-2.png",
-        "curren-8361-3.png",
-        "curren-8361-4.png",
-        "curren-8361-5.png",
-        "curren-8361-6.png",
-        "curren-8361-7.png",
-        "curren-8361-8.png",
-        "curren-8361-9.png",
-        "curren-8361-10.png",
-        "curren-8361-11.png",
-        "curren-8361-12.png",
-        "curren-8361-13.png",
-        "curren-8361-14.png",
-        "curren-8361-15.png",
-        "curren-8361-16.png",
-        "curren-8361-17.png",
-        "curren-8361-18.png",
-        "curren-8361-19.png",
-        "curren-8361-20.png",
-        "curren-8361-21.png",
-        "curren-8361-22.png",
-        "curren-8361-23.png",
-        "curren-8361-24.png"
+        "curren-8361-1.webp",
+        "curren-8361-2.webp",
+        "curren-8361-3.webp",
+        "curren-8361-4.webp",
+        "curren-8361-5.webp",
+        "curren-8361-6.webp",
+        "curren-8361-7.webp",
+        "curren-8361-8.webp",
+        "curren-8361-9.webp",
+        "curren-8361-10.webp",
+        "curren-8361-11.webp",
+        "curren-8361-12.webp",
+        "curren-8361-13.webp",
+        "curren-8361-14.webp",
+        "curren-8361-15.webp",
+        "curren-8361-16.webp",
+        "curren-8361-17.webp",
+        "curren-8361-18.webp",
+        "curren-8361-19.webp",
+        "curren-8361-20.webp",
+        "curren-8361-21.webp",
+        "curren-8361-22.webp",
+        "curren-8361-23.webp",
+        "curren-8361-24.webp"
       ],
       "variants": [
         {
@@ -108,7 +108,7 @@
             }
           ],
           "price": 269.9,
-          "mainImage": "curren-8361-1.png"
+          "mainImage": "curren-8361-1.webp"
         }
       ]
     }

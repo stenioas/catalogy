@@ -92,41 +92,41 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "skmei-1988-1.png",
-        "skmei-1988-2.png",
-        "skmei-1988-3.png",
-        "skmei-1988-4.png",
-        "skmei-1988-5.png",
-        "skmei-1988-6.png",
-        "skmei-1988-7.png",
-        "skmei-1988-8.png",
-        "skmei-1988-9.png",
-        "skmei-1988-10.png",
-        "skmei-1988-11.png",
-        "skmei-1988-12.png",
-        "skmei-1988-13.png",
-        "skmei-1988-14.png",
-        "skmei-1988-15.png",
-        "skmei-1988-16.png",
-        "skmei-1988-17.png",
-        "skmei-1988-18.png",
-        "skmei-1988-19.png",
-        "skmei-1988-20.png",
-        "skmei-1988-21.png",
-        "skmei-1988-22.png",
-        "skmei-1988-23.png",
-        "skmei-1988-24.png",
-        "skmei-1988-25.png",
-        "skmei-1988-26.png",
-        "skmei-1988-27.png",
-        "skmei-1988-28.png",
-        "skmei-1988-29.png",
-        "skmei-1988-30.png",
-        "skmei-1988-31.png",
-        "skmei-1988-32.png",
-        "skmei-1988-33.png",
-        "skmei-1988-34.png",
-        "skmei-1988-35.png"
+        "skmei-1988-1.webp",
+        "skmei-1988-2.webp",
+        "skmei-1988-3.webp",
+        "skmei-1988-4.webp",
+        "skmei-1988-5.webp",
+        "skmei-1988-6.webp",
+        "skmei-1988-7.webp",
+        "skmei-1988-8.webp",
+        "skmei-1988-9.webp",
+        "skmei-1988-10.webp",
+        "skmei-1988-11.webp",
+        "skmei-1988-12.webp",
+        "skmei-1988-13.webp",
+        "skmei-1988-14.webp",
+        "skmei-1988-15.webp",
+        "skmei-1988-16.webp",
+        "skmei-1988-17.webp",
+        "skmei-1988-18.webp",
+        "skmei-1988-19.webp",
+        "skmei-1988-20.webp",
+        "skmei-1988-21.webp",
+        "skmei-1988-22.webp",
+        "skmei-1988-23.webp",
+        "skmei-1988-24.webp",
+        "skmei-1988-25.webp",
+        "skmei-1988-26.webp",
+        "skmei-1988-27.webp",
+        "skmei-1988-28.webp",
+        "skmei-1988-29.webp",
+        "skmei-1988-30.webp",
+        "skmei-1988-31.webp",
+        "skmei-1988-32.webp",
+        "skmei-1988-33.webp",
+        "skmei-1988-34.webp",
+        "skmei-1988-35.webp"
       ],
       "variants": [
         {
@@ -136,7 +136,7 @@
               "valueId": "army-green"
             }
           ],
-          "mainImage": "skmei-1988-7.png"
+          "mainImage": "skmei-1988-7.webp"
         },
         {
           "axes": [
@@ -145,7 +145,7 @@
               "valueId": "black"
             }
           ],
-          "mainImage": "skmei-1988-8.png"
+          "mainImage": "skmei-1988-8.webp"
         },
         {
           "axes": [
@@ -154,7 +154,7 @@
               "valueId": "dark-green"
             }
           ],
-          "mainImage": "skmei-1988-9.png"
+          "mainImage": "skmei-1988-9.webp"
         },
         {
           "axes": [
@@ -163,7 +163,7 @@
               "valueId": "red-blue"
             }
           ],
-          "mainImage": "skmei-1988-10.png"
+          "mainImage": "skmei-1988-10.webp"
         },
         {
           "axes": [
@@ -172,7 +172,7 @@
               "valueId": "blue"
             }
           ],
-          "mainImage": "skmei-1988-11.png"
+          "mainImage": "skmei-1988-11.webp"
         },
         {
           "axes": [
@@ -181,7 +181,7 @@
               "valueId": "gold"
             }
           ],
-          "mainImage": "skmei-1988-12.png"
+          "mainImage": "skmei-1988-12.webp"
         }
       ]
     }

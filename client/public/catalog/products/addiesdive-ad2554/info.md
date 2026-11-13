@@ -96,9 +96,9 @@ Anúncio existente `listing-coming-soon` preservado integralmente, incluindo sua
 
 Anúncio `sob-encomenda`: novo, sob encomenda, sem preços.
 
-- Cor: Azul (color: blue); mainImage: addiesdive-ad2554-7.png
-- Cor: cinza (color: cinza); mainImage: addiesdive-ad2554-8.png
-- Cor: orange (color: orange); mainImage: addiesdive-ad2554-9.png
+- Cor: Azul (color: blue); mainImage: addiesdive-ad2554-7.webp
+- Cor: cinza (color: cinza); mainImage: addiesdive-ad2554-8.webp
+- Cor: orange (color: orange); mainImage: addiesdive-ad2554-9.webp
 
 ## Notas do recadastro
 

@@ -107,16 +107,16 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "aimimo-design-tsuyosa-1.png",
-        "aimimo-design-tsuyosa-2.png",
-        "aimimo-design-tsuyosa-3.png",
-        "aimimo-design-tsuyosa-4.png",
-        "aimimo-design-tsuyosa-5.png",
-        "aimimo-design-tsuyosa-6.png",
-        "aimimo-design-tsuyosa-7.png",
-        "aimimo-design-tsuyosa-8.png",
-        "aimimo-design-tsuyosa-9.png",
-        "aimimo-design-tsuyosa-10.png"
+        "aimimo-design-tsuyosa-1.webp",
+        "aimimo-design-tsuyosa-2.webp",
+        "aimimo-design-tsuyosa-3.webp",
+        "aimimo-design-tsuyosa-4.webp",
+        "aimimo-design-tsuyosa-5.webp",
+        "aimimo-design-tsuyosa-6.webp",
+        "aimimo-design-tsuyosa-7.webp",
+        "aimimo-design-tsuyosa-8.webp",
+        "aimimo-design-tsuyosa-9.webp",
+        "aimimo-design-tsuyosa-10.webp"
       ],
       "variants": [
         {
@@ -128,7 +128,7 @@
           ],
           "price": 399.9,
           "listPrice": 499.9,
-          "mainImage": "aimimo-design-tsuyosa-1.png"
+          "mainImage": "aimimo-design-tsuyosa-1.webp"
         },
         {
           "axes": [
@@ -139,7 +139,7 @@
           ],
           "price": 399.9,
           "listPrice": 499.9,
-          "mainImage": "aimimo-design-tsuyosa-2.png"
+          "mainImage": "aimimo-design-tsuyosa-2.webp"
         },
         {
           "axes": [
@@ -150,7 +150,7 @@
           ],
           "price": 399.9,
           "listPrice": 499.9,
-          "mainImage": "aimimo-design-tsuyosa-3.png"
+          "mainImage": "aimimo-design-tsuyosa-3.webp"
         },
         {
           "axes": [
@@ -161,7 +161,7 @@
           ],
           "price": 399.9,
           "listPrice": 499.9,
-          "mainImage": "aimimo-design-tsuyosa-9.png"
+          "mainImage": "aimimo-design-tsuyosa-9.webp"
         }
       ]
     }

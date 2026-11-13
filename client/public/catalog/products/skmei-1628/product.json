@@ -59,24 +59,24 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "skmei-1628-1.png",
-        "skmei-1628-2.png",
-        "skmei-1628-3.png",
-        "skmei-1628-4.png",
-        "skmei-1628-5.png",
-        "skmei-1628-6.png",
-        "skmei-1628-7.png",
-        "skmei-1628-8.png",
-        "skmei-1628-9.png",
-        "skmei-1628-10.png",
-        "skmei-1628-11.png"
+        "skmei-1628-1.webp",
+        "skmei-1628-2.webp",
+        "skmei-1628-3.webp",
+        "skmei-1628-4.webp",
+        "skmei-1628-5.webp",
+        "skmei-1628-6.webp",
+        "skmei-1628-7.webp",
+        "skmei-1628-8.webp",
+        "skmei-1628-9.webp",
+        "skmei-1628-10.webp",
+        "skmei-1628-11.webp"
       ],
       "variants": [
         {
           "axes": [],
           "price": 104.9,
           "listPrice": 129.9,
-          "mainImage": "skmei-1628-1.png"
+          "mainImage": "skmei-1628-1.webp"
         }
       ]
     }

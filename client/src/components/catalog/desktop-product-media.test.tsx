@@ -147,6 +147,17 @@ describe('DesktopProductMedia (CATREF-16, CATREF-21–30, CATREF-51, CATREF-71)'
     expect(more.getAttribute('aria-pressed')).toBe('true')
   })
 
+  it('loads thumbnails from img/thumbs and keeps the zoom photo at full size', () => {
+    const full = '/catalog/products/seculus/img/foto.webp'
+    renderMedia([full])
+    const group = screen.getByRole('group', { name: 'Miniaturas do produto' })
+    const thumbs = [...group.querySelectorAll('img')]
+    expect(thumbs.map((img) => img.getAttribute('src'))).toEqual([
+      '/catalog/products/seculus/img/thumbs/foto.webp',
+    ])
+    expect(screen.getByRole('img', { name: 'Relógio de teste' }).getAttribute('src')).toBe(full)
+  })
+
   it('opens the selected main photo and exposes an accessible current-photo name', () => {
     const { onOpenGallery, primaryRef } = renderControlledMedia(photos(7), 3)
     const main = screen.getByRole('button', { name: 'Abrir galeria na foto 4' })

@@ -88,32 +88,32 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "north-edge-abyss-1.png",
-        "north-edge-abyss-2.png",
-        "north-edge-abyss-3.png",
-        "north-edge-abyss-4.png",
-        "north-edge-abyss-5.png",
-        "north-edge-abyss-6.png",
-        "north-edge-abyss-7.png",
-        "north-edge-abyss-8.png",
-        "north-edge-abyss-9.png",
-        "north-edge-abyss-10.png",
-        "north-edge-abyss-11.png",
-        "north-edge-abyss-12.png",
-        "north-edge-abyss-13.png",
-        "north-edge-abyss-14.png",
-        "north-edge-abyss-15.png",
-        "north-edge-abyss-16.png",
-        "north-edge-abyss-17.png",
-        "north-edge-abyss-18.png",
-        "north-edge-abyss-19.png",
-        "north-edge-abyss-20.png",
-        "north-edge-abyss-21.png",
-        "north-edge-abyss-22.png",
-        "north-edge-abyss-23.png",
-        "north-edge-abyss-24.png",
-        "north-edge-abyss-25.png",
-        "north-edge-abyss-26.png"
+        "north-edge-abyss-1.webp",
+        "north-edge-abyss-2.webp",
+        "north-edge-abyss-3.webp",
+        "north-edge-abyss-4.webp",
+        "north-edge-abyss-5.webp",
+        "north-edge-abyss-6.webp",
+        "north-edge-abyss-7.webp",
+        "north-edge-abyss-8.webp",
+        "north-edge-abyss-9.webp",
+        "north-edge-abyss-10.webp",
+        "north-edge-abyss-11.webp",
+        "north-edge-abyss-12.webp",
+        "north-edge-abyss-13.webp",
+        "north-edge-abyss-14.webp",
+        "north-edge-abyss-15.webp",
+        "north-edge-abyss-16.webp",
+        "north-edge-abyss-17.webp",
+        "north-edge-abyss-18.webp",
+        "north-edge-abyss-19.webp",
+        "north-edge-abyss-20.webp",
+        "north-edge-abyss-21.webp",
+        "north-edge-abyss-22.webp",
+        "north-edge-abyss-23.webp",
+        "north-edge-abyss-24.webp",
+        "north-edge-abyss-25.webp",
+        "north-edge-abyss-26.webp"
       ],
       "variants": [
         {
@@ -123,7 +123,7 @@
               "valueId": "black-rubber"
             }
           ],
-          "mainImage": "north-edge-abyss-7.png"
+          "mainImage": "north-edge-abyss-7.webp"
         },
         {
           "axes": [
@@ -132,7 +132,7 @@
               "valueId": "blue-rubber"
             }
           ],
-          "mainImage": "north-edge-abyss-1.png"
+          "mainImage": "north-edge-abyss-1.webp"
         },
         {
           "axes": [
@@ -141,7 +141,7 @@
               "valueId": "blue-steel"
             }
           ],
-          "mainImage": "north-edge-abyss-8.png"
+          "mainImage": "north-edge-abyss-8.webp"
         },
         {
           "axes": [
@@ -150,7 +150,7 @@
               "valueId": "black-steel"
             }
           ],
-          "mainImage": "north-edge-abyss-9.png"
+          "mainImage": "north-edge-abyss-9.webp"
         }
       ]
     }

@@ -75,11 +75,11 @@
       "availabilityStatus": "available",
       "enabled": false,
       "images": [
-        "curren-8498l-1.png",
-        "curren-8498l-2.png",
-        "curren-8498l-3.png",
-        "curren-8498l-4.png",
-        "curren-8498l-5.png"
+        "curren-8498l-1.webp",
+        "curren-8498l-2.webp",
+        "curren-8498l-3.webp",
+        "curren-8498l-4.webp",
+        "curren-8498l-5.webp"
       ],
       "variants": [
         {
@@ -91,7 +91,7 @@
           ],
           "price": 134.9,
           "listPrice": 159.9,
-          "mainImage": "curren-8498l-1.png"
+          "mainImage": "curren-8498l-1.webp"
         }
       ]
     }

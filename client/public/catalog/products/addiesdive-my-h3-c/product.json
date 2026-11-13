@@ -72,14 +72,14 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "addiesdive-my-h3-c-1.png",
-        "addiesdive-my-h3-c-2.png",
-        "addiesdive-my-h3-c-3.png",
-        "addiesdive-my-h3-c-4.png",
-        "addiesdive-my-h3-c-5.png",
-        "addiesdive-my-h3-c-6.png",
-        "addiesdive-my-h3-c-7.png",
-        "addiesdive-my-h3-c-8.png"
+        "addiesdive-my-h3-c-1.webp",
+        "addiesdive-my-h3-c-2.webp",
+        "addiesdive-my-h3-c-3.webp",
+        "addiesdive-my-h3-c-4.webp",
+        "addiesdive-my-h3-c-5.webp",
+        "addiesdive-my-h3-c-6.webp",
+        "addiesdive-my-h3-c-7.webp",
+        "addiesdive-my-h3-c-8.webp"
       ],
       "variants": [
         {
@@ -89,7 +89,7 @@
               "valueId": "silvery"
             }
           ],
-          "mainImage": "addiesdive-my-h3-c-7.png"
+          "mainImage": "addiesdive-my-h3-c-7.webp"
         },
         {
           "axes": [
@@ -98,7 +98,7 @@
               "valueId": "black"
             }
           ],
-          "mainImage": "addiesdive-my-h3-c-8.png"
+          "mainImage": "addiesdive-my-h3-c-8.webp"
         }
       ]
     }

@@ -13,7 +13,9 @@ import { fileURLToPath } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
 import { ProductSchema } from '@catalogo/shared'
 import {
+  isPublishedCatalogFile,
   normalizeProductJson,
+  omitCatalogMedia,
   omitUncitedImages,
   validateCatalog,
   writeProductsModule,
@@ -468,12 +470,45 @@ describe('omitUncitedImages', () => {
     const srcImg = join(catalogDir, 'products', 'seculus-kit', 'img')
     copyFileSync(join(srcImg, 'frente.png'), join(distImg, 'frente.png'))
     copyFileSync(join(srcImg, 'extra-uncited.png'), join(distImg, 'extra-uncited.png'))
+    const thumbDir = join(distImg, 'thumbs')
+    mkdirSync(thumbDir, { recursive: true })
+    copyFileSync(join(srcImg, 'frente.png'), join(thumbDir, 'frente.png'))
+    copyFileSync(join(srcImg, 'extra-uncited.png'), join(thumbDir, 'extra-uncited.png'))
 
     omitUncitedImages(distCatalogProductsDir, products)
 
     expect(existsSync(join(distImg, 'frente.png'))).toBe(true)
     expect(existsSync(join(distImg, 'extra-uncited.png'))).toBe(false)
+    expect(existsSync(join(thumbDir, 'frente.png'))).toBe(true)
+    expect(existsSync(join(thumbDir, 'extra-uncited.png'))).toBe(false)
     expect(existsSync(join(srcImg, 'extra-uncited.png'))).toBe(true)
+  })
+
+  it('drops media/ from dist and keeps the registration copy', () => {
+    const distProducts = tempDir()
+    const sourceMedia = tempDir()
+    const distMedia = join(distProducts, 'seculus-kit', 'media')
+    mkdirSync(distMedia, { recursive: true })
+    writeFileSync(join(sourceMedia, 'fonte.png'), 'fonte')
+    writeFileSync(join(distMedia, 'fonte.png'), 'fonte')
+    writeFileSync(join(distProducts, 'seculus-kit', 'info.md'), 'ficha')
+
+    omitCatalogMedia(distProducts)
+
+    expect(existsSync(distMedia)).toBe(false)
+    expect(existsSync(join(distProducts, 'seculus-kit', 'info.md'))).toBe(true)
+    expect(readFileSync(join(sourceMedia, 'fonte.png'), 'utf8')).toBe('fonte')
+  })
+
+  it('publishes cited thumbs and leaves media unpublished', () => {
+    const cited = new Map([['seculus-kit', new Set(['frente.webp'])]])
+    expect(isPublishedCatalogFile('products/seculus-kit/img/frente.webp', cited)).toBe(true)
+    expect(isPublishedCatalogFile('products/seculus-kit/img/thumbs/frente.webp', cited)).toBe(true)
+    expect(isPublishedCatalogFile('products/seculus-kit/img/extra.webp', cited)).toBe(false)
+    expect(isPublishedCatalogFile('products/seculus-kit/img/thumbs/extra.webp', cited)).toBe(false)
+    expect(isPublishedCatalogFile('products/seculus-kit/media/frente.png', cited)).toBe(false)
+    expect(isPublishedCatalogFile('products/seculus-kit/media/video.mp4', cited)).toBe(false)
+    expect(isPublishedCatalogFile('products/seculus-kit/info.md', cited)).toBe(true)
   })
 
   it('does not throw when the dist catalog products directory is absent', () => {

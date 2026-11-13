@@ -87,10 +87,10 @@ Conteúdo do pacote
 
 ## Variantes
 
-- Cor: Black — mainImage: `tpw-k3048-7.png`
-- Cor: Silver — mainImage: `tpw-k3048-8.png`
-- Cor: Black Weave — mainImage: `tpw-k3048-9.png`
-- Cor: Stainless Steel — mainImage: `tpw-k3048-10.png`
+- Cor: Black — mainImage: `tpw-k3048-7.webp`
+- Cor: Silver — mainImage: `tpw-k3048-8.webp`
+- Cor: Black Weave — mainImage: `tpw-k3048-9.webp`
+- Cor: Stainless Steel — mainImage: `tpw-k3048-10.webp`
 
 Opções esgotadas no HTML, excluídas das variantes: Black Brown, Marrom e cáqui.
 

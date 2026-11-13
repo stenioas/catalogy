@@ -70,12 +70,12 @@ Se tiver alguma dúvida, entre em contato conosco e faremos o possível para aju
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: Silver White Black (`silver-white-black`); mainImage: `poedagar-970s-wh-7.png`; sem fallback.
-- Cor: Silver White Blue (`silver-white-blue`); mainImage: `poedagar-970s-wh-8.png`; sem fallback.
-- Cor: Silver Blue White (`silver-blue-white`); mainImage: `poedagar-970s-wh-9.png`; sem fallback.
-- Cor: Silver Black White (`silver-black-white`); mainImage: `poedagar-970s-wh-10.png`; sem fallback.
-- Cor: Gold Black White (`gold-black-white`); mainImage: `poedagar-970s-wh-11.png`; sem fallback.
-- Cor: Black Black White (`black-black-white`); mainImage: `poedagar-970s-wh-12.png`; sem fallback.
-- Cor: Gold White Blue (`gold-white-blue`); mainImage: `poedagar-970s-wh-13.png`; sem fallback.
-- Cor: Gold Green White (`gold-green-white`); mainImage: `poedagar-970s-wh-14.png`; sem fallback.
-- Cor: Gold Blue White (`gold-blue-white`); mainImage: `poedagar-970s-wh-15.png`; sem fallback.
+- Cor: Silver White Black (`silver-white-black`); mainImage: `poedagar-970s-wh-7.webp`; sem fallback.
+- Cor: Silver White Blue (`silver-white-blue`); mainImage: `poedagar-970s-wh-8.webp`; sem fallback.
+- Cor: Silver Blue White (`silver-blue-white`); mainImage: `poedagar-970s-wh-9.webp`; sem fallback.
+- Cor: Silver Black White (`silver-black-white`); mainImage: `poedagar-970s-wh-10.webp`; sem fallback.
+- Cor: Gold Black White (`gold-black-white`); mainImage: `poedagar-970s-wh-11.webp`; sem fallback.
+- Cor: Black Black White (`black-black-white`); mainImage: `poedagar-970s-wh-12.webp`; sem fallback.
+- Cor: Gold White Blue (`gold-white-blue`); mainImage: `poedagar-970s-wh-13.webp`; sem fallback.
+- Cor: Gold Green White (`gold-green-white`); mainImage: `poedagar-970s-wh-14.webp`; sem fallback.
+- Cor: Gold Blue White (`gold-blue-white`); mainImage: `poedagar-970s-wh-15.webp`; sem fallback.

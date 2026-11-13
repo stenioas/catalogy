@@ -104,40 +104,40 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "poedagar-970s-wh-1.png",
-        "poedagar-970s-wh-2.png",
-        "poedagar-970s-wh-3.png",
-        "poedagar-970s-wh-4.png",
-        "poedagar-970s-wh-5.png",
-        "poedagar-970s-wh-6.png",
-        "poedagar-970s-wh-7.png",
-        "poedagar-970s-wh-8.png",
-        "poedagar-970s-wh-9.png",
-        "poedagar-970s-wh-10.png",
-        "poedagar-970s-wh-11.png",
-        "poedagar-970s-wh-12.png",
-        "poedagar-970s-wh-13.png",
-        "poedagar-970s-wh-14.png",
-        "poedagar-970s-wh-15.png",
-        "poedagar-970s-wh-16.png",
-        "poedagar-970s-wh-17.png",
-        "poedagar-970s-wh-18.png",
-        "poedagar-970s-wh-19.png",
-        "poedagar-970s-wh-20.png",
-        "poedagar-970s-wh-21.png",
-        "poedagar-970s-wh-22.png",
-        "poedagar-970s-wh-23.png",
-        "poedagar-970s-wh-24.png",
-        "poedagar-970s-wh-25.png",
-        "poedagar-970s-wh-26.png",
-        "poedagar-970s-wh-27.png",
-        "poedagar-970s-wh-28.png",
-        "poedagar-970s-wh-29.png",
-        "poedagar-970s-wh-30.png",
-        "poedagar-970s-wh-31.png",
-        "poedagar-970s-wh-32.png",
-        "poedagar-970s-wh-33.png",
-        "poedagar-970s-wh-34.png"
+        "poedagar-970s-wh-1.webp",
+        "poedagar-970s-wh-2.webp",
+        "poedagar-970s-wh-3.webp",
+        "poedagar-970s-wh-4.webp",
+        "poedagar-970s-wh-5.webp",
+        "poedagar-970s-wh-6.webp",
+        "poedagar-970s-wh-7.webp",
+        "poedagar-970s-wh-8.webp",
+        "poedagar-970s-wh-9.webp",
+        "poedagar-970s-wh-10.webp",
+        "poedagar-970s-wh-11.webp",
+        "poedagar-970s-wh-12.webp",
+        "poedagar-970s-wh-13.webp",
+        "poedagar-970s-wh-14.webp",
+        "poedagar-970s-wh-15.webp",
+        "poedagar-970s-wh-16.webp",
+        "poedagar-970s-wh-17.webp",
+        "poedagar-970s-wh-18.webp",
+        "poedagar-970s-wh-19.webp",
+        "poedagar-970s-wh-20.webp",
+        "poedagar-970s-wh-21.webp",
+        "poedagar-970s-wh-22.webp",
+        "poedagar-970s-wh-23.webp",
+        "poedagar-970s-wh-24.webp",
+        "poedagar-970s-wh-25.webp",
+        "poedagar-970s-wh-26.webp",
+        "poedagar-970s-wh-27.webp",
+        "poedagar-970s-wh-28.webp",
+        "poedagar-970s-wh-29.webp",
+        "poedagar-970s-wh-30.webp",
+        "poedagar-970s-wh-31.webp",
+        "poedagar-970s-wh-32.webp",
+        "poedagar-970s-wh-33.webp",
+        "poedagar-970s-wh-34.webp"
       ],
       "variants": [
         {
@@ -147,7 +147,7 @@
               "valueId": "silver-white-black"
             }
           ],
-          "mainImage": "poedagar-970s-wh-7.png"
+          "mainImage": "poedagar-970s-wh-7.webp"
         },
         {
           "axes": [
@@ -156,7 +156,7 @@
               "valueId": "silver-white-blue"
             }
           ],
-          "mainImage": "poedagar-970s-wh-8.png"
+          "mainImage": "poedagar-970s-wh-8.webp"
         },
         {
           "axes": [
@@ -165,7 +165,7 @@
               "valueId": "silver-blue-white"
             }
           ],
-          "mainImage": "poedagar-970s-wh-9.png"
+          "mainImage": "poedagar-970s-wh-9.webp"
         },
         {
           "axes": [
@@ -174,7 +174,7 @@
               "valueId": "silver-black-white"
             }
           ],
-          "mainImage": "poedagar-970s-wh-10.png"
+          "mainImage": "poedagar-970s-wh-10.webp"
         },
         {
           "axes": [
@@ -183,7 +183,7 @@
               "valueId": "gold-black-white"
             }
           ],
-          "mainImage": "poedagar-970s-wh-11.png"
+          "mainImage": "poedagar-970s-wh-11.webp"
         },
         {
           "axes": [
@@ -192,7 +192,7 @@
               "valueId": "black-black-white"
             }
           ],
-          "mainImage": "poedagar-970s-wh-12.png"
+          "mainImage": "poedagar-970s-wh-12.webp"
         },
         {
           "axes": [
@@ -201,7 +201,7 @@
               "valueId": "gold-white-blue"
             }
           ],
-          "mainImage": "poedagar-970s-wh-13.png"
+          "mainImage": "poedagar-970s-wh-13.webp"
         },
         {
           "axes": [
@@ -210,7 +210,7 @@
               "valueId": "gold-green-white"
             }
           ],
-          "mainImage": "poedagar-970s-wh-14.png"
+          "mainImage": "poedagar-970s-wh-14.webp"
         },
         {
           "axes": [
@@ -219,7 +219,7 @@
               "valueId": "gold-blue-white"
             }
           ],
-          "mainImage": "poedagar-970s-wh-15.png"
+          "mainImage": "poedagar-970s-wh-15.webp"
         }
       ]
     }

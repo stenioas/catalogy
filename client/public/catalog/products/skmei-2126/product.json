@@ -68,18 +68,18 @@
       "availabilityStatus": "available",
       "enabled": false,
       "images": [
-        "skmei-2126-1.png",
-        "skmei-2126-2.png",
-        "skmei-2126-3.png",
-        "skmei-2126-4.png",
-        "skmei-2126-5.png"
+        "skmei-2126-1.webp",
+        "skmei-2126-2.webp",
+        "skmei-2126-3.webp",
+        "skmei-2126-4.webp",
+        "skmei-2126-5.webp"
       ],
       "variants": [
         {
           "axes": [],
           "price": 89.9,
           "listPrice": 99.9,
-          "mainImage": "skmei-2126-1.png"
+          "mainImage": "skmei-2126-1.webp"
         }
       ]
     }

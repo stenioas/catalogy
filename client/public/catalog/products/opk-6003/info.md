@@ -64,11 +64,11 @@
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: HP Silver Black (`hp-silver-black`); mainImage: `opk-6003-7.png`.
-- Cor: GD Silver Blue (`gd-silver-blue`); mainImage: `opk-6003-8.png`.
-- Cor: GD Silver Black (`gd-silver-black`); mainImage: `opk-6003-9.png`.
-- Cor: ZP Silver Blue (`zp-silver-blue`); mainImage: `opk-6003-10.png`.
-- Cor: GD Silver White (`gd-silver-white`); mainImage: `opk-6003-11.png`.
-- Cor: ZP Silver White (`zp-silver-white`); mainImage: `opk-6003-12.png`.
+- Cor: HP Silver Black (`hp-silver-black`); mainImage: `opk-6003-7.webp`.
+- Cor: GD Silver Blue (`gd-silver-blue`); mainImage: `opk-6003-8.webp`.
+- Cor: GD Silver Black (`gd-silver-black`); mainImage: `opk-6003-9.webp`.
+- Cor: ZP Silver Blue (`zp-silver-blue`); mainImage: `opk-6003-10.webp`.
+- Cor: GD Silver White (`gd-silver-white`); mainImage: `opk-6003-11.webp`.
+- Cor: ZP Silver White (`zp-silver-white`); mainImage: `opk-6003-12.webp`.
 
 Observações: os prefixos HP, GD e ZP foram preservados no texto original do eixo. O HTML não identifica em texto o material da pulseira de cada opção; a ficha genérica diz aço inoxidável e uma avaliação menciona couro. Por isso, o material da pulseira foi omitido da ficha compartilhada, sem dedução pelas fotos. O calibre e o material do vidro não foram informados. As medidas de largura de pulseira e diâmetro do mostrador foram mantidas como faixas, conforme fornecidas.

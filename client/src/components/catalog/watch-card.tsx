@@ -11,10 +11,21 @@ import { WantIconLink } from './want-link'
 export type WatchCardProps = {
   product: Product
   card: CatalogCard
+  /** `lazy` for covers below the first screen. Defaults to eager. */
+  imageLoading?: 'eager' | 'lazy'
 }
 
 export function productImageSrc(slug: string, fileName: string): string {
   return `/catalog/products/${slug}/img/${fileName}`
+}
+
+/** ~400px file for cards and thumbnails. Gallery and zoom keep `productImageSrc`. */
+export function productThumbSrc(slug: string, fileName: string): string {
+  return `/catalog/products/${slug}/img/thumbs/${fileName}`
+}
+
+export function catalogThumbSrc(src: string): string {
+  return src.replace(/\/img\/([^/]+)$/, '/img/thumbs/$1')
 }
 
 function listingVariantForCard(product: Product, card: CatalogCard) {
@@ -27,7 +38,7 @@ function listingVariantForCard(product: Product, card: CatalogCard) {
   return { listing, variant }
 }
 
-export function WatchCard({ product, card }: WatchCardProps) {
+export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardProps) {
   const { search } = useLocation()
   const section = new URLSearchParams(search).get('section')
   const linkState = section === null ? { fromCatalog: true } : { fromCatalog: true, section }
@@ -44,8 +55,9 @@ export function WatchCard({ product, card }: WatchCardProps) {
             className="relative size-32 shrink-0 md:aspect-square md:size-auto md:w-full"
           >
             <img
-              src={productImageSrc(product.slug, card.image)}
+              src={productThumbSrc(product.slug, card.image)}
               alt={card.title}
+              loading={imageLoading}
               className="h-full w-full object-contain"
             />
             {listing.state === 'used' || listing.state === 'openbox' ? (
@@ -76,7 +88,7 @@ export function WatchCard({ product, card }: WatchCardProps) {
               >
                 <ProductAvailabilityBadge availabilityStatus={listing.availabilityStatus} compact />
               </p>
-              <h2 className="m-0 line-clamp-1 w-full min-w-0 truncate overflow-hidden text-ellipsis whitespace-nowrap text-xs leading-snug font-medium text-foreground md:font-display md:text-sm md:leading-snug md:font-semibold">
+              <h2 className="m-0 line-clamp-1 w-full min-w-0 truncate overflow-hidden text-ellipsis whitespace-nowrap text-[13px] leading-snug font-medium text-foreground md:font-display md:text-[15px] md:leading-snug md:font-semibold">
                 {card.title}
               </h2>
               <div className="flex w-full flex-col items-start gap-1 md:gap-2">

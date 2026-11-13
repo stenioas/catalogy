@@ -65,8 +65,8 @@ def test_aimimo(tmp_path, curl):
     assert '## Especificações' in info
     assert f'- {tmp_path.name}-video-1.mp4' in info and f'- {tmp_path.name}-video-2.mp4' in info
     assert (tmp_path / f'media/{tmp_path.name}-video-1.mp4').read_bytes() == b'converted-mp4'
-    with Image.open(tmp_path / f'media/{tmp_path.name}-1.png') as image:
-        assert image.format == 'PNG'
+    with Image.open(tmp_path / f'media/{tmp_path.name}-1.webp') as image:
+        assert image.format == 'WEBP'
         assert image.size == (32, 16)
     assert [url for url, _ in curl] == [url for _, url in product.media]
     assert all('adminAccountId' not in line and 'max-width' not in line for line in product.description)
@@ -154,8 +154,8 @@ def test_without_title_and_partial_download_failure(tmp_path, curl, monkeypatch)
     assert len(calls) == 5
     assert (output / 'info.md').read_text() == (
         '## Descrição\n\nTexto visível\nOutra linha\n\n## Mídias\n\n'
-        '- FALHA https://example.test/a.png\n- product-2.png\n- product-video-1.mp4\n')
-    assert sorted(p.name for p in (output / 'media').iterdir()) == ['product-2.png', 'product-video-1.mp4']
+        '- FALHA https://example.test/a.png\n- product-2.webp\n- product-video-1.mp4\n')
+    assert sorted(p.name for p in (output / 'media').iterdir()) == ['product-2.webp', 'product-video-1.mp4']
     assert sorted(p.name for p in output.iterdir()) == ['info.md', 'media']
 
 
@@ -214,7 +214,7 @@ def test_symlink_media_is_not_followed(tmp_path, curl):
     ((1536, 1536), (768, 768)),
     ((1001, 501), (768, 384)),
 ])
-def test_png_dimensions_and_folder_prefix(tmp_path, monkeypatch, size, expected):
+def test_webp_dimensions_and_folder_prefix(tmp_path, monkeypatch, size, expected):
     source = tmp_path / 'input.html'
     # The real format must be decoded, rather than inferred from the URL.
     source.write_text('<div id="product-description"><img src="https://example.test/image.bin"></div>')
@@ -227,11 +227,11 @@ def test_png_dimensions_and_folder_prefix(tmp_path, monkeypatch, size, expected)
 
     monkeypatch.setattr(scraper.subprocess, 'run', run)
     assert scraper.scrape(source, output) == 0
-    assert (output / 'info.md').read_text() == '## Mídias\n\n- aimimo-design-tsuyosa-1.png\n'
+    assert (output / 'info.md').read_text() == '## Mídias\n\n- aimimo-design-tsuyosa-1.webp\n'
     media = list((output / 'media').iterdir())
-    assert [p.name for p in media] == ['aimimo-design-tsuyosa-1.png']
+    assert [p.name for p in media] == ['aimimo-design-tsuyosa-1.webp']
     with Image.open(media[0]) as image:
-        assert image.format == 'PNG'
+        assert image.format == 'WEBP'
         assert image.size == expected
         assert max(image.size) <= 768
         assert image.getpixel((0, 0))[0] > 240
@@ -255,11 +255,11 @@ def test_conversion_preserves_transparency_and_orientation(tmp_path, monkeypatch
             Image.new('RGB', (1536, 384)).save(path, format='JPEG', exif=exif)
 
     monkeypatch.setattr(scraper.subprocess, 'run', run)
-    target = tmp_path / 'image.png'
+    target = tmp_path / 'image.webp'
     assert scraper.download_image('https://example.test/image', target)
     assert not target.with_suffix('.download').exists()
     with Image.open(target) as image:
-        assert image.format == 'PNG'
+        assert image.format == 'WEBP'
         if mode in {'RGBA', 'P'}:
             assert image.mode == 'RGBA'
             assert image.getpixel((0, 0))[3] == (64 if mode == 'RGBA' else 0)
@@ -268,6 +268,25 @@ def test_conversion_preserves_transparency_and_orientation(tmp_path, monkeypatch
             assert image.getexif().get(274, 1) == 1
         else:
             assert image.mode == 'RGB'
+
+
+def test_thumbnail_fits_inside_400_without_upscaling(tmp_path):
+    wide = tmp_path / 'wide.webp'
+    small = tmp_path / 'small.webp'
+    Image.new('RGB', (768, 200), 'red').save(wide, format='WEBP', quality=80)
+    Image.new('RGBA', (120, 80), (10, 20, 30, 64)).save(small, format='WEBP', lossless=True)
+    wide_thumb = tmp_path / 'thumbs' / 'wide.webp'
+    small_thumb = tmp_path / 'thumbs' / 'small.webp'
+    scraper.write_thumbnail(wide, wide_thumb)
+    scraper.write_thumbnail(small, small_thumb)
+    with Image.open(wide_thumb) as image:
+        assert image.format == 'WEBP'
+        assert image.size == (400, 104)
+        assert max(image.size) <= 400
+    with Image.open(small_thumb) as image:
+        assert image.size == (120, 80)
+        assert image.mode == 'RGBA'
+        assert image.getpixel((0, 0))[3] == 64
 
 
 def test_invalid_image_records_failure_and_continues(tmp_path, curl, monkeypatch):
@@ -290,21 +309,21 @@ def test_invalid_image_records_failure_and_continues(tmp_path, curl, monkeypatch
     assert scraper.scrape(source, output) == 1
     assert (output / 'info.md').read_text() == (
         '## Mídias\n\n- FALHA https://example.test/broken.jpg\n'
-        '- watch-2.png\n- watch-video-1.mp4\n')
-    assert sorted(p.name for p in (output / 'media').iterdir()) == ['watch-2.png', 'watch-video-1.mp4']
+        '- watch-2.webp\n- watch-video-1.mp4\n')
+    assert sorted(p.name for p in (output / 'media').iterdir()) == ['watch-2.webp', 'watch-video-1.mp4']
 
 
 def test_partial_conversion_is_removed(tmp_path, curl, monkeypatch):
     save = Image.Image.save
 
-    def fail_png(image, target, format=None, **kwargs):
-        if format == 'PNG':
-            Path(target).write_bytes(b'partial png')
+    def fail_webp(image, target, format=None, **kwargs):
+        if format == 'WEBP':
+            Path(target).write_bytes(b'partial webp')
             raise OSError('No space left')
         return save(image, target, format=format, **kwargs)
 
-    monkeypatch.setattr(Image.Image, 'save', fail_png)
-    assert not scraper.download_image('https://example.test/image.jpg', tmp_path / 'watch-1.png')
+    monkeypatch.setattr(Image.Image, 'save', fail_webp)
+    assert not scraper.download_image('https://example.test/image.jpg', tmp_path / 'watch-1.webp')
     assert list(tmp_path.iterdir()) == []
 
 
@@ -318,7 +337,7 @@ def test_image_retries_complete_cycles(tmp_path, monkeypatch, failure, failures)
         target = Path(command[command.index('--output') + 1])
         # Failed previous downloads/conversions must have been cleaned up.
         assert not target.exists()
-        assert not (tmp_path / 'photo.png').exists()
+        assert not (tmp_path / 'photo.webp').exists()
         calls.append(command)
         if len(calls) <= failures:
             target.write_bytes(b'partial or corrupt')
@@ -328,9 +347,9 @@ def test_image_retries_complete_cycles(tmp_path, monkeypatch, failure, failures)
             Image.new('RGB', (24, 16)).save(target, format='JPEG')
 
     monkeypatch.setattr(scraper.subprocess, 'run', run)
-    assert scraper.download_image('https://example.test/photo', tmp_path / 'photo.png') == (failures < 3)
+    assert scraper.download_image('https://example.test/photo', tmp_path / 'photo.webp') == (failures < 3)
     assert len(calls) == 3
-    assert sorted(p.name for p in tmp_path.iterdir()) == (['photo.png'] if failures < 3 else [])
+    assert sorted(p.name for p in tmp_path.iterdir()) == (['photo.webp'] if failures < 3 else [])
 
 
 @pytest.mark.parametrize('audio', [False, True])
@@ -397,8 +416,8 @@ def test_video_conversion_failure_is_not_retried_and_batch_continues(tmp_path, c
     assert sum(c[0] == 'ffmpeg' for c in calls) == 1
     assert sum(c[0] == 'curl' and c[-1].endswith('video.mp4') for c in calls) == 1
     assert (output / 'info.md').read_text() == (
-        '## Mídias\n\n- FALHA https://example.test/video.mp4\n- watch-1.png\n')
-    assert [p.name for p in (output / 'media').iterdir()] == ['watch-1.png']
+        '## Mídias\n\n- FALHA https://example.test/video.mp4\n- watch-1.webp\n')
+    assert [p.name for p in (output / 'media').iterdir()] == ['watch-1.webp']
 
 
 def test_video_download_exhaustion_records_failure_and_continues(tmp_path, curl, monkeypatch):
@@ -422,5 +441,5 @@ def test_video_download_exhaustion_records_failure_and_continues(tmp_path, curl,
     assert scraper.scrape(source, output) == 1
     assert len(downloads) == 3
     assert (output / 'info.md').read_text() == (
-        '## Mídias\n\n- FALHA https://example.test/missing.mp4\n- watch-1.png\n')
-    assert [p.name for p in (output / 'media').iterdir()] == ['watch-1.png']
+        '## Mídias\n\n- FALHA https://example.test/missing.mp4\n- watch-1.webp\n')
+    assert [p.name for p in (output / 'media').iterdir()] == ['watch-1.webp']

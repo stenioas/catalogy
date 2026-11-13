@@ -129,11 +129,11 @@ Design Leve | Ponteiros Luminosos Suíços | Pulseira Ajustável | Embalagem de 
 ## Variantes
 
 - Eixo: Cor (`cor`), apresentação por imagem.
-- Cor: SO2110P-02 — mainImage: sapphero-so2110p-7.png
-- Cor: SO2110P-08 — mainImage: sapphero-so2110p-8.png
-- Cor: SO2110P-03 — mainImage: sapphero-so2110p-9.png
-- Cor: SO2110P-01 — mainImage: sapphero-so2110p-10.png
-- Cor: SO2110P-04 — mainImage: sapphero-so2110p-11.png
-- Cor: SO2110P-06 — mainImage: sapphero-so2110p-12.png
-- Cor: SO2110P-07 — mainImage: sapphero-so2110p-13.png
-- Cor: SO2110P-05 — mainImage: sapphero-so2110p-14.png
+- Cor: SO2110P-02 — mainImage: sapphero-so2110p-7.webp
+- Cor: SO2110P-08 — mainImage: sapphero-so2110p-8.webp
+- Cor: SO2110P-03 — mainImage: sapphero-so2110p-9.webp
+- Cor: SO2110P-01 — mainImage: sapphero-so2110p-10.webp
+- Cor: SO2110P-04 — mainImage: sapphero-so2110p-11.webp
+- Cor: SO2110P-06 — mainImage: sapphero-so2110p-12.webp
+- Cor: SO2110P-07 — mainImage: sapphero-so2110p-13.webp
+- Cor: SO2110P-05 — mainImage: sapphero-so2110p-14.webp

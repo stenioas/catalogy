@@ -69,5 +69,5 @@ O produto contém: 1 * pacote de cartão
 
 Slug descritivo: `trisjem-porta-cartoes-ultrafino`. A fonte não informa um modelo.
 
-- cor: CAFÉ; mainImage: `trisjem-porta-cartoes-ultrafino-7.png`.
-- cor: Preto; mainImage: `trisjem-porta-cartoes-ultrafino-8.png`.
+- cor: CAFÉ; mainImage: `trisjem-porta-cartoes-ultrafino-7.webp`.
+- cor: Preto; mainImage: `trisjem-porta-cartoes-ultrafino-8.webp`.

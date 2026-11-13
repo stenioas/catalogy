@@ -30,26 +30,26 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "pochete-nylon-ajustavel-1.png",
-        "pochete-nylon-ajustavel-2.png",
-        "pochete-nylon-ajustavel-3.png",
-        "pochete-nylon-ajustavel-4.png",
-        "pochete-nylon-ajustavel-5.png",
-        "pochete-nylon-ajustavel-6.png",
-        "pochete-nylon-ajustavel-7.png",
-        "pochete-nylon-ajustavel-8.png",
-        "pochete-nylon-ajustavel-9.png",
-        "pochete-nylon-ajustavel-10.png",
-        "pochete-nylon-ajustavel-11.png",
-        "pochete-nylon-ajustavel-12.png",
-        "pochete-nylon-ajustavel-13.png",
-        "pochete-nylon-ajustavel-14.png",
-        "pochete-nylon-ajustavel-15.png",
-        "pochete-nylon-ajustavel-16.png",
-        "pochete-nylon-ajustavel-17.png",
-        "pochete-nylon-ajustavel-18.png",
-        "pochete-nylon-ajustavel-19.png",
-        "pochete-nylon-ajustavel-20.png"
+        "pochete-nylon-ajustavel-1.webp",
+        "pochete-nylon-ajustavel-2.webp",
+        "pochete-nylon-ajustavel-3.webp",
+        "pochete-nylon-ajustavel-4.webp",
+        "pochete-nylon-ajustavel-5.webp",
+        "pochete-nylon-ajustavel-6.webp",
+        "pochete-nylon-ajustavel-7.webp",
+        "pochete-nylon-ajustavel-8.webp",
+        "pochete-nylon-ajustavel-9.webp",
+        "pochete-nylon-ajustavel-10.webp",
+        "pochete-nylon-ajustavel-11.webp",
+        "pochete-nylon-ajustavel-12.webp",
+        "pochete-nylon-ajustavel-13.webp",
+        "pochete-nylon-ajustavel-14.webp",
+        "pochete-nylon-ajustavel-15.webp",
+        "pochete-nylon-ajustavel-16.webp",
+        "pochete-nylon-ajustavel-17.webp",
+        "pochete-nylon-ajustavel-18.webp",
+        "pochete-nylon-ajustavel-19.webp",
+        "pochete-nylon-ajustavel-20.webp"
       ],
       "variants": [
         {
@@ -59,7 +59,7 @@
               "valueId": "black"
             }
           ],
-          "mainImage": "pochete-nylon-ajustavel-7.png"
+          "mainImage": "pochete-nylon-ajustavel-7.webp"
         },
         {
           "axes": [
@@ -68,7 +68,7 @@
               "valueId": "gray"
             }
           ],
-          "mainImage": "pochete-nylon-ajustavel-8.png"
+          "mainImage": "pochete-nylon-ajustavel-8.webp"
         },
         {
           "axes": [
@@ -77,7 +77,7 @@
               "valueId": "blue"
             }
           ],
-          "mainImage": "pochete-nylon-ajustavel-9.png"
+          "mainImage": "pochete-nylon-ajustavel-9.webp"
         }
       ]
     },
@@ -86,26 +86,26 @@
       "state": "new",
       "availabilityStatus": "coming_soon",
       "images": [
-        "pochete-nylon-ajustavel-1.png",
-        "pochete-nylon-ajustavel-2.png",
-        "pochete-nylon-ajustavel-3.png",
-        "pochete-nylon-ajustavel-4.png",
-        "pochete-nylon-ajustavel-5.png",
-        "pochete-nylon-ajustavel-6.png",
-        "pochete-nylon-ajustavel-7.png",
-        "pochete-nylon-ajustavel-8.png",
-        "pochete-nylon-ajustavel-9.png",
-        "pochete-nylon-ajustavel-10.png",
-        "pochete-nylon-ajustavel-11.png",
-        "pochete-nylon-ajustavel-12.png",
-        "pochete-nylon-ajustavel-13.png",
-        "pochete-nylon-ajustavel-14.png",
-        "pochete-nylon-ajustavel-15.png",
-        "pochete-nylon-ajustavel-16.png",
-        "pochete-nylon-ajustavel-17.png",
-        "pochete-nylon-ajustavel-18.png",
-        "pochete-nylon-ajustavel-19.png",
-        "pochete-nylon-ajustavel-20.png"
+        "pochete-nylon-ajustavel-1.webp",
+        "pochete-nylon-ajustavel-2.webp",
+        "pochete-nylon-ajustavel-3.webp",
+        "pochete-nylon-ajustavel-4.webp",
+        "pochete-nylon-ajustavel-5.webp",
+        "pochete-nylon-ajustavel-6.webp",
+        "pochete-nylon-ajustavel-7.webp",
+        "pochete-nylon-ajustavel-8.webp",
+        "pochete-nylon-ajustavel-9.webp",
+        "pochete-nylon-ajustavel-10.webp",
+        "pochete-nylon-ajustavel-11.webp",
+        "pochete-nylon-ajustavel-12.webp",
+        "pochete-nylon-ajustavel-13.webp",
+        "pochete-nylon-ajustavel-14.webp",
+        "pochete-nylon-ajustavel-15.webp",
+        "pochete-nylon-ajustavel-16.webp",
+        "pochete-nylon-ajustavel-17.webp",
+        "pochete-nylon-ajustavel-18.webp",
+        "pochete-nylon-ajustavel-19.webp",
+        "pochete-nylon-ajustavel-20.webp"
       ],
       "variants": [
         {
@@ -125,7 +125,7 @@
               "color": "#FFFFFF"
             }
           ],
-          "mainImage": "pochete-nylon-ajustavel-7.png"
+          "mainImage": "pochete-nylon-ajustavel-7.webp"
         },
         {
           "axes": [
@@ -144,7 +144,7 @@
               "color": "#FFFFFF"
             }
           ],
-          "mainImage": "pochete-nylon-ajustavel-8.png"
+          "mainImage": "pochete-nylon-ajustavel-8.webp"
         },
         {
           "axes": [
@@ -163,7 +163,7 @@
               "color": "#FFFFFF"
             }
           ],
-          "mainImage": "pochete-nylon-ajustavel-9.png"
+          "mainImage": "pochete-nylon-ajustavel-9.webp"
         }
       ]
     }

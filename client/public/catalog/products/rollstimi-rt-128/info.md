@@ -65,5 +65,5 @@ Candidato alternativo de slug: `rollstimimi-rt-128` (grafia do título; especifi
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: Blue (`blue`); mainImage: `rollstimi-rt-128-7.png`; esgotada na fonte.
-- Cor: White (`white`); mainImage: `rollstimi-rt-128-8.png`; esgotada na fonte.
+- Cor: Blue (`blue`); mainImage: `rollstimi-rt-128-7.webp`; esgotada na fonte.
+- Cor: White (`white`); mainImage: `rollstimi-rt-128-8.webp`; esgotada na fonte.

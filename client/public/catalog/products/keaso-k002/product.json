@@ -78,17 +78,17 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "keaso-1.png",
-        "keaso-2.png",
-        "keaso-3.png",
-        "keaso-4.png",
-        "keaso-5.png",
-        "keaso-6.png",
-        "keaso-7.png",
-        "keaso-8.png",
-        "keaso-9.png",
-        "keaso-10.png",
-        "keaso-11.png"
+        "keaso-1.webp",
+        "keaso-2.webp",
+        "keaso-3.webp",
+        "keaso-4.webp",
+        "keaso-5.webp",
+        "keaso-6.webp",
+        "keaso-7.webp",
+        "keaso-8.webp",
+        "keaso-9.webp",
+        "keaso-10.webp",
+        "keaso-11.webp"
       ],
       "variants": [
         {
@@ -99,7 +99,7 @@
             }
           ],
           "price": 749.9,
-          "mainImage": "keaso-1.png"
+          "mainImage": "keaso-1.webp"
         }
       ]
     }

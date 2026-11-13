@@ -70,7 +70,7 @@
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: Silver Black (`silver-black`); mainImage: `x-gear-2232g-7.png`; sem fallback.
-- Cor: Silver (`silver`); mainImage: `x-gear-2232g-5.png`; sem fallback.
+- Cor: Silver Black (`silver-black`); mainImage: `x-gear-2232g-7.webp`; sem fallback.
+- Cor: Silver (`silver`); mainImage: `x-gear-2232g-5.webp`; sem fallback.
 
 Cores marcadas como esgotadas no HTML e não cadastradas como variantes: Rose, Black, Purple.

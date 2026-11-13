@@ -3,7 +3,7 @@ import type { ListingSelector, ListingSelectorOption } from '@catalogo/shared'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
-import { productImageSrc } from './watch-card'
+import { productThumbSrc } from './watch-card'
 
 export type AxisSelectorsProps = {
   selectors: ListingSelector[]
@@ -149,7 +149,7 @@ export function AxisSelectors({ selectors, activeV, onSelect, slug = '' }: AxisS
                     {image ? (
                       option.imageFile ? (
                         <img
-                          src={productImageSrc(slug, option.imageFile)}
+                          src={productThumbSrc(slug, option.imageFile)}
                           alt=""
                           className="h-full w-full object-contain"
                         />

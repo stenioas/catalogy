@@ -71,15 +71,15 @@
       "availabilityStatus": "available",
       "enabled": false,
       "images": [
-        "curren-8455-1.png",
-        "curren-8455-2.png",
-        "curren-8455-3.png",
-        "curren-8455-4.png",
-        "curren-8455-5.png",
-        "curren-8455-6.png",
-        "curren-8455-7.png",
-        "curren-8455-8.png",
-        "curren-8455-9.png"
+        "curren-8455-1.webp",
+        "curren-8455-2.webp",
+        "curren-8455-3.webp",
+        "curren-8455-4.webp",
+        "curren-8455-5.webp",
+        "curren-8455-6.webp",
+        "curren-8455-7.webp",
+        "curren-8455-8.webp",
+        "curren-8455-9.webp"
       ],
       "variants": [
         {
@@ -91,7 +91,7 @@
           ],
           "price": 119.9,
           "listPrice": 139.9,
-          "mainImage": "curren-8455-1.png"
+          "mainImage": "curren-8455-1.webp"
         }
       ]
     }

@@ -75,19 +75,19 @@
       "state": "new",
       "availabilityStatus": "available",
       "images": [
-        "sapphero-so2205-1.png",
-        "sapphero-so2205-2.png",
-        "sapphero-so2205-3.png",
-        "sapphero-so2205-4.png",
-        "sapphero-so2205-5.png",
-        "sapphero-so2205-6.png",
-        "sapphero-so2205-9.png",
-        "sapphero-so2205-13.png",
-        "sapphero-so2205-14.png",
-        "sapphero-so2205-15.png",
-        "sapphero-so2205-16.png",
-        "sapphero-so2205-17.png",
-        "sapphero-so2205-18.png"
+        "sapphero-so2205-1.webp",
+        "sapphero-so2205-2.webp",
+        "sapphero-so2205-3.webp",
+        "sapphero-so2205-4.webp",
+        "sapphero-so2205-5.webp",
+        "sapphero-so2205-6.webp",
+        "sapphero-so2205-9.webp",
+        "sapphero-so2205-13.webp",
+        "sapphero-so2205-14.webp",
+        "sapphero-so2205-15.webp",
+        "sapphero-so2205-16.webp",
+        "sapphero-so2205-17.webp",
+        "sapphero-so2205-18.webp"
       ],
       "variants": [
         {
@@ -99,7 +99,7 @@
           ],
           "price": 139.9,
           "listPrice": 199.9,
-          "mainImage": "sapphero-so2205-1.png",
+          "mainImage": "sapphero-so2205-1.webp",
           "offers": [
             {
               "text": "Black Friday",

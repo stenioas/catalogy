@@ -129,9 +129,9 @@ Conteúdo do pacote
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: Green Luminous 2 (`green-luminous-2`); mainImage: `tpw-k7101-7.png`.
-- Cor: Green Black 2 (`green-black-2`); mainImage: `tpw-k7101-8.png`.
-- Cor: Black White Num (`black-white-num`); mainImage: `tpw-k7101-9.png`.
-- Cor: Green White Num (`green-white-num`); mainImage: `tpw-k7101-10.png`.
-- Cor: Dark Blue (`dark-blue`); mainImage: `tpw-k7101-11.png`.
-- Cor: Green Luminous 1 (`green-luminous-1`); mainImage: `tpw-k7101-12.png`.
+- Cor: Green Luminous 2 (`green-luminous-2`); mainImage: `tpw-k7101-7.webp`.
+- Cor: Green Black 2 (`green-black-2`); mainImage: `tpw-k7101-8.webp`.
+- Cor: Black White Num (`black-white-num`); mainImage: `tpw-k7101-9.webp`.
+- Cor: Green White Num (`green-white-num`); mainImage: `tpw-k7101-10.webp`.
+- Cor: Dark Blue (`dark-blue`); mainImage: `tpw-k7101-11.webp`.
+- Cor: Green Luminous 1 (`green-luminous-1`); mainImage: `tpw-k7101-12.webp`.

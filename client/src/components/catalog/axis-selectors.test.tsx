@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen, within } from '@testing-library/rea
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { AxisSelectors } from './axis-selectors'
-import { productImageSrc } from './watch-card'
+import { productThumbSrc } from './watch-card'
 
 const img = 'watch.jpg'
 
@@ -289,7 +289,7 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
     expect(control.className).toMatch(/overflow-x-auto/)
     const thumb = within(control).getByRole('button')
     expect(thumb.className).toMatch(/size-16/)
-    expect(thumb.querySelector('img')?.getAttribute('src')).toBe(productImageSrc(product.slug, 'so.jpg'))
+    expect(thumb.querySelector('img')?.getAttribute('src')).toBe(productThumbSrc(product.slug, 'so.jpg'))
   })
 
   it('scrolls 64px thumbnails from the first queued photo and rings the selected one (OSC-43)', () => {
@@ -314,9 +314,9 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
 
     const srcs = thumbs.map((thumb) => thumb.querySelector('img')?.getAttribute('src') ?? null)
     expect(srcs).toEqual([
-      productImageSrc(product.slug, 'primeiro.jpg'),
-      productImageSrc(product.slug, 'branco.jpg'),
-      productImageSrc(product.slug, 'azul.jpg'),
+      productThumbSrc(product.slug, 'primeiro.jpg'),
+      productThumbSrc(product.slug, 'branco.jpg'),
+      productThumbSrc(product.slug, 'azul.jpg'),
     ])
 
     const selected = thumbs[0]!
@@ -347,7 +347,7 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
     const unavailable = thumbs[2]!
 
     expect(thumbs.map((thumb) => thumb.getAttribute('data-value-id'))).toEqual(['preto', 'branco', 'azul'])
-    expect(unavailable.querySelector('img')?.getAttribute('src')).toBe(productImageSrc(product.slug, 'azul.jpg'))
+    expect(unavailable.querySelector('img')?.getAttribute('src')).toBe(productThumbSrc(product.slug, 'azul.jpg'))
     expect(unavailable.hasAttribute('disabled')).toBe(true)
     expect(unavailable.className).toMatch(/size-16/)
     expect(unavailable.className).toMatch(/border-dashed/)

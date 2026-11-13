@@ -67,11 +67,11 @@
       "state": "used",
       "availabilityStatus": "available",
       "images": [
-        "seculus-1.png",
-        "seculus-2.png",
-        "seculus-3.png",
-        "seculus-4.png",
-        "seculus-5.png"
+        "seculus-1.webp",
+        "seculus-2.webp",
+        "seculus-3.webp",
+        "seculus-4.webp",
+        "seculus-5.webp"
       ],
       "variants": [
         {
@@ -83,7 +83,7 @@
           ],
           "price": 279.9,
           "listPrice": 369.9,
-          "mainImage": "seculus-1.png",
+          "mainImage": "seculus-1.webp",
           "observations": "Acompanha caixa de metal e cantil",
           "offers": [
             {

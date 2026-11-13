@@ -80,12 +80,12 @@ Se tiver alguma dúvida, entre em contato conosco e faremos o possível para aju
 
 ## Variantes
 
-- Cor: 786 Silver White — mainImage: `poedagar-786-7.png`
-- Cor: 786 Silver Green — mainImage: `poedagar-786-8.png`
-- Cor: 786 Silver Blue — mainImage: `poedagar-786-9.png`
-- Cor: 786 Rose Gold White — mainImage: `poedagar-786-10.png`
-- Cor: 786 Silver Black — mainImage: `poedagar-786-11.png`
-- Cor: 786 Rose Gold Green — mainImage: `poedagar-786-12.png`
-- Cor: 786 Gold Gold — mainImage: `poedagar-786-13.png`
-- Cor: 786 Rose Gold Black — mainImage: `poedagar-786-14.png`
-- Cor: 786 Rose Gold Blue — mainImage: `poedagar-786-15.png`
+- Cor: 786 Silver White — mainImage: `poedagar-786-7.webp`
+- Cor: 786 Silver Green — mainImage: `poedagar-786-8.webp`
+- Cor: 786 Silver Blue — mainImage: `poedagar-786-9.webp`
+- Cor: 786 Rose Gold White — mainImage: `poedagar-786-10.webp`
+- Cor: 786 Silver Black — mainImage: `poedagar-786-11.webp`
+- Cor: 786 Rose Gold Green — mainImage: `poedagar-786-12.webp`
+- Cor: 786 Gold Gold — mainImage: `poedagar-786-13.webp`
+- Cor: 786 Rose Gold Black — mainImage: `poedagar-786-14.webp`
+- Cor: 786 Rose Gold Blue — mainImage: `poedagar-786-15.webp`

@@ -116,39 +116,39 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "poedagar-682-1.png",
-        "poedagar-682-2.png",
-        "poedagar-682-3.png",
-        "poedagar-682-4.png",
-        "poedagar-682-5.png",
-        "poedagar-682-6.png",
-        "poedagar-682-7.png",
-        "poedagar-682-8.png",
-        "poedagar-682-9.png",
-        "poedagar-682-10.png",
-        "poedagar-682-11.png",
-        "poedagar-682-12.png",
-        "poedagar-682-13.png",
-        "poedagar-682-14.png",
-        "poedagar-682-15.png",
-        "poedagar-682-16.png",
-        "poedagar-682-17.png",
-        "poedagar-682-18.png",
-        "poedagar-682-19.png",
-        "poedagar-682-20.png",
-        "poedagar-682-21.png",
-        "poedagar-682-22.png",
-        "poedagar-682-23.png",
-        "poedagar-682-24.png",
-        "poedagar-682-25.png",
-        "poedagar-682-26.png",
-        "poedagar-682-27.png",
-        "poedagar-682-28.png",
-        "poedagar-682-29.png",
-        "poedagar-682-30.png",
-        "poedagar-682-31.png",
-        "poedagar-682-32.png",
-        "poedagar-682-34.png"
+        "poedagar-682-1.webp",
+        "poedagar-682-2.webp",
+        "poedagar-682-3.webp",
+        "poedagar-682-4.webp",
+        "poedagar-682-5.webp",
+        "poedagar-682-6.webp",
+        "poedagar-682-7.webp",
+        "poedagar-682-8.webp",
+        "poedagar-682-9.webp",
+        "poedagar-682-10.webp",
+        "poedagar-682-11.webp",
+        "poedagar-682-12.webp",
+        "poedagar-682-13.webp",
+        "poedagar-682-14.webp",
+        "poedagar-682-15.webp",
+        "poedagar-682-16.webp",
+        "poedagar-682-17.webp",
+        "poedagar-682-18.webp",
+        "poedagar-682-19.webp",
+        "poedagar-682-20.webp",
+        "poedagar-682-21.webp",
+        "poedagar-682-22.webp",
+        "poedagar-682-23.webp",
+        "poedagar-682-24.webp",
+        "poedagar-682-25.webp",
+        "poedagar-682-26.webp",
+        "poedagar-682-27.webp",
+        "poedagar-682-28.webp",
+        "poedagar-682-29.webp",
+        "poedagar-682-30.webp",
+        "poedagar-682-31.webp",
+        "poedagar-682-32.webp",
+        "poedagar-682-34.webp"
       ],
       "variants": [
         {
@@ -158,7 +158,7 @@
               "valueId": "682-silver-mintblue"
             }
           ],
-          "mainImage": "poedagar-682-7.png"
+          "mainImage": "poedagar-682-7.webp"
         },
         {
           "axes": [
@@ -167,7 +167,7 @@
               "valueId": "682-silver-blue"
             }
           ],
-          "mainImage": "poedagar-682-8.png"
+          "mainImage": "poedagar-682-8.webp"
         },
         {
           "axes": [
@@ -176,7 +176,7 @@
               "valueId": "682-silver-black"
             }
           ],
-          "mainImage": "poedagar-682-9.png"
+          "mainImage": "poedagar-682-9.webp"
         },
         {
           "axes": [
@@ -185,7 +185,7 @@
               "valueId": "682-silver-green"
             }
           ],
-          "mainImage": "poedagar-682-10.png"
+          "mainImage": "poedagar-682-10.webp"
         },
         {
           "axes": [
@@ -194,7 +194,7 @@
               "valueId": "682-silver-brown"
             }
           ],
-          "mainImage": "poedagar-682-11.png"
+          "mainImage": "poedagar-682-11.webp"
         },
         {
           "axes": [
@@ -203,7 +203,7 @@
               "valueId": "682-blue-blue"
             }
           ],
-          "mainImage": "poedagar-682-12.png"
+          "mainImage": "poedagar-682-12.webp"
         },
         {
           "axes": [
@@ -212,7 +212,7 @@
               "valueId": "682-black-black"
             }
           ],
-          "mainImage": "poedagar-682-13.png"
+          "mainImage": "poedagar-682-13.webp"
         },
         {
           "axes": [
@@ -221,7 +221,7 @@
               "valueId": "682-gold-black"
             }
           ],
-          "mainImage": "poedagar-682-14.png"
+          "mainImage": "poedagar-682-14.webp"
         },
         {
           "axes": [
@@ -230,7 +230,7 @@
               "valueId": "682-gold-green"
             }
           ],
-          "mainImage": "poedagar-682-15.png"
+          "mainImage": "poedagar-682-15.webp"
         },
         {
           "axes": [
@@ -239,7 +239,7 @@
               "valueId": "682-gold-mintblue"
             }
           ],
-          "mainImage": "poedagar-682-16.png"
+          "mainImage": "poedagar-682-16.webp"
         },
         {
           "axes": [
@@ -248,7 +248,7 @@
               "valueId": "682-gold-blue"
             }
           ],
-          "mainImage": "poedagar-682-17.png"
+          "mainImage": "poedagar-682-17.webp"
         },
         {
           "axes": [
@@ -257,7 +257,7 @@
               "valueId": "682-gold-brown"
             }
           ],
-          "mainImage": "poedagar-682-18.png"
+          "mainImage": "poedagar-682-18.webp"
         }
       ]
     }

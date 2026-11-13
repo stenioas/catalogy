@@ -130,6 +130,40 @@ def download(url, target, attempts=3):
     return False
 
 
+DISPLAY_MAX_PX = 768
+THUMB_MAX_PX = 400
+WEBP_QUALITY = 80
+
+
+def display_image(source):
+    """EXIF orientation, real alpha kept, longest side at most 768px, never upscaled."""
+    image = ImageOps.exif_transpose(source)
+    mode = 'RGBA' if 'A' in image.getbands() or 'transparency' in image.info else 'RGB'
+    image = image.convert(mode)
+    image.thumbnail((DISPLAY_MAX_PX, DISPLAY_MAX_PX), Image.Resampling.LANCZOS)
+    return image
+
+
+def save_webp(image, target):
+    """Lossy WebP at quality 80. Images with real transparency stay lossless so the alpha survives."""
+    if image.mode == 'RGBA' and image.getextrema()[-1][0] < 255:
+        image.save(target, format='WEBP', lossless=True, quality=WEBP_QUALITY)
+        return
+    if image.mode == 'RGBA':
+        image = image.convert('RGB')
+    image.save(target, format='WEBP', quality=WEBP_QUALITY)
+
+
+def write_thumbnail(source, target):
+    """Card and thumbnail file: longest side at most 400px, same WebP rule, never upscaled."""
+    target = Path(target)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with Image.open(source) as image:
+        thumb = image.copy()
+        thumb.thumbnail((THUMB_MAX_PX, THUMB_MAX_PX), Image.Resampling.LANCZOS)
+        save_webp(thumb, target)
+
+
 def download_image(url, target):
     """Try up to three download/conversion cycles, cleaning every failed attempt."""
     original = target.with_suffix('.download')
@@ -138,11 +172,7 @@ def download_image(url, target):
             if not download(url, original, attempts=1):
                 continue
             with Image.open(original) as source:
-                image = ImageOps.exif_transpose(source)
-                mode = 'RGBA' if 'A' in image.getbands() or 'transparency' in image.info else 'RGB'
-                image = image.convert(mode)
-                image.thumbnail((768, 768), Image.Resampling.LANCZOS)
-                image.save(target, format='PNG')
+                save_webp(display_image(source), target)
             return True
         except (OSError, ValueError, Image.DecompressionBombError):
             target.unlink(missing_ok=True)
@@ -220,7 +250,7 @@ def scrape(input_path, output, replace=False):
     for kind, url in product.media:
         counts[kind] += 1
         if kind == 'image':
-            filename = f'{output.name}-{counts[kind]}.png'
+            filename = f'{output.name}-{counts[kind]}.webp'
             succeeded = download_image(url, media_dir / filename)
         else:
             filename = f'{output.name}-video-{counts[kind]}.mp4'

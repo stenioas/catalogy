@@ -71,39 +71,39 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "tpw-k3048-1.png",
-        "tpw-k3048-2.png",
-        "tpw-k3048-3.png",
-        "tpw-k3048-4.png",
-        "tpw-k3048-5.png",
-        "tpw-k3048-6.png",
-        "tpw-k3048-7.png",
-        "tpw-k3048-8.png",
-        "tpw-k3048-9.png",
-        "tpw-k3048-10.png",
-        "tpw-k3048-11.png",
-        "tpw-k3048-12.png",
-        "tpw-k3048-13.png",
-        "tpw-k3048-14.png",
-        "tpw-k3048-15.png",
-        "tpw-k3048-16.png",
-        "tpw-k3048-17.png",
-        "tpw-k3048-18.png",
-        "tpw-k3048-19.png",
-        "tpw-k3048-20.png",
-        "tpw-k3048-21.png",
-        "tpw-k3048-22.png",
-        "tpw-k3048-23.png",
-        "tpw-k3048-24.png",
-        "tpw-k3048-25.png",
-        "tpw-k3048-26.png",
-        "tpw-k3048-27.png",
-        "tpw-k3048-28.png",
-        "tpw-k3048-29.png",
-        "tpw-k3048-30.png",
-        "tpw-k3048-31.png",
-        "tpw-k3048-32.png",
-        "tpw-k3048-33.png"
+        "tpw-k3048-1.webp",
+        "tpw-k3048-2.webp",
+        "tpw-k3048-3.webp",
+        "tpw-k3048-4.webp",
+        "tpw-k3048-5.webp",
+        "tpw-k3048-6.webp",
+        "tpw-k3048-7.webp",
+        "tpw-k3048-8.webp",
+        "tpw-k3048-9.webp",
+        "tpw-k3048-10.webp",
+        "tpw-k3048-11.webp",
+        "tpw-k3048-12.webp",
+        "tpw-k3048-13.webp",
+        "tpw-k3048-14.webp",
+        "tpw-k3048-15.webp",
+        "tpw-k3048-16.webp",
+        "tpw-k3048-17.webp",
+        "tpw-k3048-18.webp",
+        "tpw-k3048-19.webp",
+        "tpw-k3048-20.webp",
+        "tpw-k3048-21.webp",
+        "tpw-k3048-22.webp",
+        "tpw-k3048-23.webp",
+        "tpw-k3048-24.webp",
+        "tpw-k3048-25.webp",
+        "tpw-k3048-26.webp",
+        "tpw-k3048-27.webp",
+        "tpw-k3048-28.webp",
+        "tpw-k3048-29.webp",
+        "tpw-k3048-30.webp",
+        "tpw-k3048-31.webp",
+        "tpw-k3048-32.webp",
+        "tpw-k3048-33.webp"
       ],
       "variants": [
         {
@@ -113,7 +113,7 @@
               "valueId": "black"
             }
           ],
-          "mainImage": "tpw-k3048-7.png"
+          "mainImage": "tpw-k3048-7.webp"
         },
         {
           "axes": [
@@ -122,7 +122,7 @@
               "valueId": "silver"
             }
           ],
-          "mainImage": "tpw-k3048-8.png"
+          "mainImage": "tpw-k3048-8.webp"
         },
         {
           "axes": [
@@ -131,7 +131,7 @@
               "valueId": "black-weave"
             }
           ],
-          "mainImage": "tpw-k3048-9.png"
+          "mainImage": "tpw-k3048-9.webp"
         },
         {
           "axes": [
@@ -140,7 +140,7 @@
               "valueId": "stainless-steel"
             }
           ],
-          "mainImage": "tpw-k3048-10.png"
+          "mainImage": "tpw-k3048-10.webp"
         }
       ]
     }

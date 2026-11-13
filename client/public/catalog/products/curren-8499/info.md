@@ -78,16 +78,16 @@ Adequado para a limpeza diária do rosto, das mãos, etc.
 
 Eixo cor (`cor`), apresentação por imagem. As opções com e sem Box permanecem como valores originais deste único eixo.
 
-- cor: Gold Black (`gold-black`); mainImage: `curren-8499-7.png`.
-- cor: Silver Red Box (`silver-red-box`); mainImage: `curren-8499-8.png`.
-- cor: Gold Black Box (`gold-black-box`); mainImage: `curren-8499-9.png`.
-- cor: Gold Green Box (`gold-green-box`); mainImage: `curren-8499-1.png` (fallback: miniatura sem correspondência exata bem-sucedida na galeria).
-- cor: Gold Green (`gold-green`); mainImage: `curren-8499-11.png`.
-- cor: Silver Blue Box (`silver-blue-box`); mainImage: `curren-8499-12.png`.
-- cor: Silver Blue (`silver-blue`); mainImage: `curren-8499-13.png`.
-- cor: Silver Red (`silver-red`); mainImage: `curren-8499-14.png`.
-- cor: Black Box (`black-box`); mainImage: `curren-8499-15.png`.
-- cor: Black (`black`); mainImage: `curren-8499-16.png`.
+- cor: Gold Black (`gold-black`); mainImage: `curren-8499-7.webp`.
+- cor: Silver Red Box (`silver-red-box`); mainImage: `curren-8499-8.webp`.
+- cor: Gold Black Box (`gold-black-box`); mainImage: `curren-8499-9.webp`.
+- cor: Gold Green Box (`gold-green-box`); mainImage: `curren-8499-1.webp` (fallback: miniatura sem correspondência exata bem-sucedida na galeria).
+- cor: Gold Green (`gold-green`); mainImage: `curren-8499-11.webp`.
+- cor: Silver Blue Box (`silver-blue-box`); mainImage: `curren-8499-12.webp`.
+- cor: Silver Blue (`silver-blue`); mainImage: `curren-8499-13.webp`.
+- cor: Silver Red (`silver-red`); mainImage: `curren-8499-14.webp`.
+- cor: Black Box (`black-box`); mainImage: `curren-8499-15.webp`.
+- cor: Black (`black`); mainImage: `curren-8499-16.webp`.
 
 ## Observações da fonte
 

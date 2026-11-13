@@ -33,5 +33,5 @@
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: silvery (`silvery`); mainImage: `addiesdive-my-h3-c-7.png`; sem fallback.
-- Cor: black (`black`); mainImage: `addiesdive-my-h3-c-8.png`; sem fallback.
+- Cor: silvery (`silvery`); mainImage: `addiesdive-my-h3-c-7.webp`; sem fallback.
+- Cor: black (`black`); mainImage: `addiesdive-my-h3-c-8.webp`; sem fallback.

@@ -76,20 +76,20 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "rollstimi-rt-128-1.png",
-        "rollstimi-rt-128-2.png",
-        "rollstimi-rt-128-3.png",
-        "rollstimi-rt-128-4.png",
-        "rollstimi-rt-128-5.png",
-        "rollstimi-rt-128-6.png",
-        "rollstimi-rt-128-7.png",
-        "rollstimi-rt-128-8.png",
-        "rollstimi-rt-128-9.png",
-        "rollstimi-rt-128-10.png",
-        "rollstimi-rt-128-11.png",
-        "rollstimi-rt-128-12.png",
-        "rollstimi-rt-128-13.png",
-        "rollstimi-rt-128-14.png"
+        "rollstimi-rt-128-1.webp",
+        "rollstimi-rt-128-2.webp",
+        "rollstimi-rt-128-3.webp",
+        "rollstimi-rt-128-4.webp",
+        "rollstimi-rt-128-5.webp",
+        "rollstimi-rt-128-6.webp",
+        "rollstimi-rt-128-7.webp",
+        "rollstimi-rt-128-8.webp",
+        "rollstimi-rt-128-9.webp",
+        "rollstimi-rt-128-10.webp",
+        "rollstimi-rt-128-11.webp",
+        "rollstimi-rt-128-12.webp",
+        "rollstimi-rt-128-13.webp",
+        "rollstimi-rt-128-14.webp"
       ],
       "variants": [
         {
@@ -99,7 +99,7 @@
               "valueId": "blue"
             }
           ],
-          "mainImage": "rollstimi-rt-128-7.png"
+          "mainImage": "rollstimi-rt-128-7.webp"
         },
         {
           "axes": [
@@ -108,7 +108,7 @@
               "valueId": "white"
             }
           ],
-          "mainImage": "rollstimi-rt-128-8.png"
+          "mainImage": "rollstimi-rt-128-8.webp"
         }
       ]
     }

@@ -13,11 +13,13 @@ function omitUncitedCatalogImagesPlugin(): Plugin {
       outDirAbs = resolve(config.root, config.build.outDir)
     },
     async closeBundle() {
-      const { omitUncitedImages, validateCatalog } = await import('./scripts/catalog.ts')
+      const { omitCatalogMedia, omitUncitedImages, validateCatalog } = await import('./scripts/catalog.ts')
       const catalogDir =
         process.env.CATALOG_DIR ?? join(import.meta.dirname, 'public/catalog')
       const products = validateCatalog(catalogDir)
-      omitUncitedImages(join(outDirAbs, 'catalog', 'products'), products)
+      const distProducts = join(outDirAbs, 'catalog', 'products')
+      omitUncitedImages(distProducts, products)
+      omitCatalogMedia(distProducts)
     },
   }
 }

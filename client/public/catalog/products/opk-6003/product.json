@@ -84,28 +84,28 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "opk-6003-1.png",
-        "opk-6003-2.png",
-        "opk-6003-3.png",
-        "opk-6003-4.png",
-        "opk-6003-5.png",
-        "opk-6003-6.png",
-        "opk-6003-7.png",
-        "opk-6003-8.png",
-        "opk-6003-9.png",
-        "opk-6003-10.png",
-        "opk-6003-11.png",
-        "opk-6003-12.png",
-        "opk-6003-13.png",
-        "opk-6003-14.png",
-        "opk-6003-15.png",
-        "opk-6003-16.png",
-        "opk-6003-17.png",
-        "opk-6003-18.png",
-        "opk-6003-19.png",
-        "opk-6003-20.png",
-        "opk-6003-21.png",
-        "opk-6003-22.png"
+        "opk-6003-1.webp",
+        "opk-6003-2.webp",
+        "opk-6003-3.webp",
+        "opk-6003-4.webp",
+        "opk-6003-5.webp",
+        "opk-6003-6.webp",
+        "opk-6003-7.webp",
+        "opk-6003-8.webp",
+        "opk-6003-9.webp",
+        "opk-6003-10.webp",
+        "opk-6003-11.webp",
+        "opk-6003-12.webp",
+        "opk-6003-13.webp",
+        "opk-6003-14.webp",
+        "opk-6003-15.webp",
+        "opk-6003-16.webp",
+        "opk-6003-17.webp",
+        "opk-6003-18.webp",
+        "opk-6003-19.webp",
+        "opk-6003-20.webp",
+        "opk-6003-21.webp",
+        "opk-6003-22.webp"
       ],
       "variants": [
         {
@@ -115,7 +115,7 @@
               "valueId": "hp-silver-black"
             }
           ],
-          "mainImage": "opk-6003-7.png"
+          "mainImage": "opk-6003-7.webp"
         },
         {
           "axes": [
@@ -124,7 +124,7 @@
               "valueId": "gd-silver-blue"
             }
           ],
-          "mainImage": "opk-6003-8.png"
+          "mainImage": "opk-6003-8.webp"
         },
         {
           "axes": [
@@ -133,7 +133,7 @@
               "valueId": "gd-silver-black"
             }
           ],
-          "mainImage": "opk-6003-9.png"
+          "mainImage": "opk-6003-9.webp"
         },
         {
           "axes": [
@@ -142,7 +142,7 @@
               "valueId": "zp-silver-blue"
             }
           ],
-          "mainImage": "opk-6003-10.png"
+          "mainImage": "opk-6003-10.webp"
         },
         {
           "axes": [
@@ -151,7 +151,7 @@
               "valueId": "gd-silver-white"
             }
           ],
-          "mainImage": "opk-6003-11.png"
+          "mainImage": "opk-6003-11.webp"
         },
         {
           "axes": [
@@ -160,7 +160,7 @@
               "valueId": "zp-silver-white"
             }
           ],
-          "mainImage": "opk-6003-12.png"
+          "mainImage": "opk-6003-12.webp"
         }
       ]
     }

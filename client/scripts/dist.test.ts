@@ -14,7 +14,7 @@ import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { Product } from '@catalogo/shared'
 import { beforeAll, describe, expect, it } from 'vitest'
-import { citedImageNames, validateCatalog } from './catalog'
+import { citedImageNames, isPublishedCatalogFile, validateCatalog } from './catalog'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(clientRoot, 'dist')
@@ -50,10 +50,6 @@ function listRelativeFiles(root: string, dir = root): string[] {
   return found.sort()
 }
 
-function isCatalogImageFileName(name: string): boolean {
-  return /\.(jpe?g|png|webp|avif)$/i.test(name)
-}
-
 /** Paths under catalog/ that the published dist should contain (VAR-25 omits uncited images). */
 function expectedDistCatalogRelPaths(
   publicCatalogDir: string,
@@ -65,12 +61,7 @@ function expectedDistCatalogRelPaths(
   )
   const out: string[] = []
   for (const rel of sourceFiles) {
-    const m = rel.match(/^products\/([^/]+)\/img\/([^/]+)$/)
-    if (
-      m !== null &&
-      isCatalogImageFileName(m[2]) &&
-      citedBySlug.get(m[1])?.has(m[2]) === false
-    ) {
+    if (!isPublishedCatalogFile(rel, citedBySlug)) {
       continue
     }
     out.push(rel)

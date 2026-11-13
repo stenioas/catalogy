@@ -84,39 +84,39 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "curren-9093-1.png",
-        "curren-9093-2.png",
-        "curren-9093-3.png",
-        "curren-9093-4.png",
-        "curren-9093-5.png",
-        "curren-9093-6.png",
-        "curren-9093-7.png",
-        "curren-9093-8.png",
-        "curren-9093-9.png",
-        "curren-9093-10.png",
-        "curren-9093-11.png",
-        "curren-9093-12.png",
-        "curren-9093-13.png",
-        "curren-9093-14.png",
-        "curren-9093-15.png",
-        "curren-9093-16.png",
-        "curren-9093-17.png",
-        "curren-9093-18.png",
-        "curren-9093-19.png",
-        "curren-9093-20.png",
-        "curren-9093-21.png",
-        "curren-9093-22.png",
-        "curren-9093-23.png",
-        "curren-9093-24.png",
-        "curren-9093-25.png",
-        "curren-9093-26.png",
-        "curren-9093-27.png",
-        "curren-9093-28.png",
-        "curren-9093-29.png",
-        "curren-9093-30.png",
-        "curren-9093-31.png",
-        "curren-9093-32.png",
-        "curren-9093-33.png"
+        "curren-9093-1.webp",
+        "curren-9093-2.webp",
+        "curren-9093-3.webp",
+        "curren-9093-4.webp",
+        "curren-9093-5.webp",
+        "curren-9093-6.webp",
+        "curren-9093-7.webp",
+        "curren-9093-8.webp",
+        "curren-9093-9.webp",
+        "curren-9093-10.webp",
+        "curren-9093-11.webp",
+        "curren-9093-12.webp",
+        "curren-9093-13.webp",
+        "curren-9093-14.webp",
+        "curren-9093-15.webp",
+        "curren-9093-16.webp",
+        "curren-9093-17.webp",
+        "curren-9093-18.webp",
+        "curren-9093-19.webp",
+        "curren-9093-20.webp",
+        "curren-9093-21.webp",
+        "curren-9093-22.webp",
+        "curren-9093-23.webp",
+        "curren-9093-24.webp",
+        "curren-9093-25.webp",
+        "curren-9093-26.webp",
+        "curren-9093-27.webp",
+        "curren-9093-28.webp",
+        "curren-9093-29.webp",
+        "curren-9093-30.webp",
+        "curren-9093-31.webp",
+        "curren-9093-32.webp",
+        "curren-9093-33.webp"
       ],
       "variants": [
         {
@@ -126,7 +126,7 @@
               "valueId": "b"
             }
           ],
-          "mainImage": "curren-9093-7.png"
+          "mainImage": "curren-9093-7.webp"
         },
         {
           "axes": [
@@ -135,7 +135,7 @@
               "valueId": "d"
             }
           ],
-          "mainImage": "curren-9093-8.png"
+          "mainImage": "curren-9093-8.webp"
         },
         {
           "axes": [
@@ -144,7 +144,7 @@
               "valueId": "f"
             }
           ],
-          "mainImage": "curren-9093-9.png"
+          "mainImage": "curren-9093-9.webp"
         },
         {
           "axes": [
@@ -153,7 +153,7 @@
               "valueId": "c"
             }
           ],
-          "mainImage": "curren-9093-10.png"
+          "mainImage": "curren-9093-10.webp"
         },
         {
           "axes": [
@@ -162,7 +162,7 @@
               "valueId": "e"
             }
           ],
-          "mainImage": "curren-9093-11.png"
+          "mainImage": "curren-9093-11.webp"
         },
         {
           "axes": [
@@ -171,7 +171,7 @@
               "valueId": "a"
             }
           ],
-          "mainImage": "curren-9093-12.png"
+          "mainImage": "curren-9093-12.webp"
         }
       ]
     }

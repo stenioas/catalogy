@@ -70,12 +70,12 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "curren-9096-1.png",
-        "curren-9096-2.png",
-        "curren-9096-3.png",
-        "curren-9096-4.png",
-        "curren-9096-5.png",
-        "curren-9096-6.png"
+        "curren-9096-1.webp",
+        "curren-9096-2.webp",
+        "curren-9096-3.webp",
+        "curren-9096-4.webp",
+        "curren-9096-5.webp",
+        "curren-9096-6.webp"
       ],
       "variants": [
         {
@@ -86,7 +86,7 @@
             }
           ],
           "price": 149.9,
-          "mainImage": "curren-9096-1.png"
+          "mainImage": "curren-9096-1.webp"
         }
       ]
     }

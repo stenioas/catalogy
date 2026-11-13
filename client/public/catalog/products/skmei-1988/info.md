@@ -105,11 +105,11 @@ Contagem regressiva.
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: army green (`army-green`); mainImage: `skmei-1988-7.png`.
-- Cor: black (`black`); mainImage: `skmei-1988-8.png`.
-- Cor: dark green (`dark-green`); mainImage: `skmei-1988-9.png`.
-- Cor: red blue (`red-blue`); mainImage: `skmei-1988-10.png`.
-- Cor: blue (`blue`); mainImage: `skmei-1988-11.png`.
-- Cor: gold (`gold`); mainImage: `skmei-1988-12.png`.
+- Cor: army green (`army-green`); mainImage: `skmei-1988-7.webp`.
+- Cor: black (`black`); mainImage: `skmei-1988-8.webp`.
+- Cor: dark green (`dark-green`); mainImage: `skmei-1988-9.webp`.
+- Cor: red blue (`red-blue`); mainImage: `skmei-1988-10.webp`.
+- Cor: blue (`blue`); mainImage: `skmei-1988-11.webp`.
+- Cor: gold (`gold`); mainImage: `skmei-1988-12.webp`.
 
 Observações da origem: blue e gold constavam como esgotadas; a seleção gold também exibia restrição de envio ao endereço. O cadastro permanece sob encomenda. A descrição informa bateria CR2032; o campo genérico “Bateria recarregável incluída: Sim” não foi usado por ser inconsistente.

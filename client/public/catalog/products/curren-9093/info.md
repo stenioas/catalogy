@@ -98,9 +98,9 @@ Candidato alternativo de slug: `curren-currn-9093` (modelo literal “CURRN 9093
 
 Eixo: Cor (`cor`), apresentação por imagem.
 
-- Cor: B (`b`); mainImage: `curren-9093-7.png`.
-- Cor: D (`d`); mainImage: `curren-9093-8.png`.
-- Cor: F (`f`); mainImage: `curren-9093-9.png`.
-- Cor: C (`c`); mainImage: `curren-9093-10.png`.
-- Cor: E (`e`); mainImage: `curren-9093-11.png`.
-- Cor: A (`a`); mainImage: `curren-9093-12.png`.
+- Cor: B (`b`); mainImage: `curren-9093-7.webp`.
+- Cor: D (`d`); mainImage: `curren-9093-8.webp`.
+- Cor: F (`f`); mainImage: `curren-9093-9.webp`.
+- Cor: C (`c`); mainImage: `curren-9093-10.webp`.
+- Cor: E (`e`); mainImage: `curren-9093-11.webp`.
+- Cor: A (`a`); mainImage: `curren-9093-12.webp`.

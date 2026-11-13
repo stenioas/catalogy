@@ -92,19 +92,19 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "aimimo-design-daytona-1.png",
-        "aimimo-design-daytona-2.png",
-        "aimimo-design-daytona-3.png",
-        "aimimo-design-daytona-4.png",
-        "aimimo-design-daytona-5.png",
-        "aimimo-design-daytona-6.png",
-        "aimimo-design-daytona-7.png",
-        "aimimo-design-daytona-8.png",
-        "aimimo-design-daytona-9.png",
-        "aimimo-design-daytona-10.png",
-        "aimimo-design-daytona-11.png",
-        "aimimo-design-daytona-12.png",
-        "aimimo-design-daytona-13.png"
+        "aimimo-design-daytona-1.webp",
+        "aimimo-design-daytona-2.webp",
+        "aimimo-design-daytona-3.webp",
+        "aimimo-design-daytona-4.webp",
+        "aimimo-design-daytona-5.webp",
+        "aimimo-design-daytona-6.webp",
+        "aimimo-design-daytona-7.webp",
+        "aimimo-design-daytona-8.webp",
+        "aimimo-design-daytona-9.webp",
+        "aimimo-design-daytona-10.webp",
+        "aimimo-design-daytona-11.webp",
+        "aimimo-design-daytona-12.webp",
+        "aimimo-design-daytona-13.webp"
       ],
       "variants": [
         {
@@ -114,7 +114,7 @@
               "valueId": "black-bezel-black"
             }
           ],
-          "mainImage": "aimimo-design-daytona-7.png"
+          "mainImage": "aimimo-design-daytona-7.webp"
         },
         {
           "axes": [
@@ -123,7 +123,7 @@
               "valueId": "black-bezel-white"
             }
           ],
-          "mainImage": "aimimo-design-daytona-8.png"
+          "mainImage": "aimimo-design-daytona-8.webp"
         },
         {
           "axes": [
@@ -132,7 +132,7 @@
               "valueId": "steel-bezel-white"
             }
           ],
-          "mainImage": "aimimo-design-daytona-9.png"
+          "mainImage": "aimimo-design-daytona-9.webp"
         },
         {
           "axes": [
@@ -141,7 +141,7 @@
               "valueId": "steel-bezel-black"
             }
           ],
-          "mainImage": "aimimo-design-daytona-10.png"
+          "mainImage": "aimimo-design-daytona-10.webp"
         }
       ]
     }

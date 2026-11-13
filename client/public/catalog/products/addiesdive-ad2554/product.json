@@ -88,27 +88,27 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "addiesdive-ad2554-1.png",
-        "addiesdive-ad2554-2.png",
-        "addiesdive-ad2554-3.png",
-        "addiesdive-ad2554-4.png",
-        "addiesdive-ad2554-5.png",
-        "addiesdive-ad2554-6.png",
-        "addiesdive-ad2554-7.png",
-        "addiesdive-ad2554-8.png",
-        "addiesdive-ad2554-9.png",
-        "addiesdive-ad2554-10.png",
-        "addiesdive-ad2554-11.png",
-        "addiesdive-ad2554-12.png",
-        "addiesdive-ad2554-13.png",
-        "addiesdive-ad2554-14.png",
-        "addiesdive-ad2554-15.png",
-        "addiesdive-ad2554-16.png",
-        "addiesdive-ad2554-17.png",
-        "addiesdive-ad2554-18.png",
-        "addiesdive-ad2554-19.png",
-        "addiesdive-ad2554-20.png",
-        "addiesdive-ad2554-21.png"
+        "addiesdive-ad2554-1.webp",
+        "addiesdive-ad2554-2.webp",
+        "addiesdive-ad2554-3.webp",
+        "addiesdive-ad2554-4.webp",
+        "addiesdive-ad2554-5.webp",
+        "addiesdive-ad2554-6.webp",
+        "addiesdive-ad2554-7.webp",
+        "addiesdive-ad2554-8.webp",
+        "addiesdive-ad2554-9.webp",
+        "addiesdive-ad2554-10.webp",
+        "addiesdive-ad2554-11.webp",
+        "addiesdive-ad2554-12.webp",
+        "addiesdive-ad2554-13.webp",
+        "addiesdive-ad2554-14.webp",
+        "addiesdive-ad2554-15.webp",
+        "addiesdive-ad2554-16.webp",
+        "addiesdive-ad2554-17.webp",
+        "addiesdive-ad2554-18.webp",
+        "addiesdive-ad2554-19.webp",
+        "addiesdive-ad2554-20.webp",
+        "addiesdive-ad2554-21.webp"
       ],
       "variants": [
         {
@@ -118,7 +118,7 @@
               "valueId": "blue"
             }
           ],
-          "mainImage": "addiesdive-ad2554-7.png"
+          "mainImage": "addiesdive-ad2554-7.webp"
         },
         {
           "axes": [
@@ -127,7 +127,7 @@
               "valueId": "gray"
             }
           ],
-          "mainImage": "addiesdive-ad2554-8.png"
+          "mainImage": "addiesdive-ad2554-8.webp"
         },
         {
           "axes": [
@@ -136,7 +136,7 @@
               "valueId": "orange"
             }
           ],
-          "mainImage": "addiesdive-ad2554-9.png"
+          "mainImage": "addiesdive-ad2554-9.webp"
         }
       ]
     },
@@ -145,19 +145,19 @@
       "state": "new",
       "availabilityStatus": "available",
       "images": [
-        "addiesdive-ad2554-1.png",
-        "addiesdive-ad2554-2.png",
-        "addiesdive-ad2554-3.png",
-        "addiesdive-ad2554-4.png",
-        "addiesdive-ad2554-5.png",
-        "addiesdive-ad2554-7.png",
-        "addiesdive-ad2554-11.png",
-        "addiesdive-ad2554-13.png",
-        "addiesdive-ad2554-14.png",
-        "addiesdive-ad2554-15.png",
-        "addiesdive-ad2554-16.png",
-        "addiesdive-ad2554-20.png",
-        "addiesdive-ad2554-21.png"
+        "addiesdive-ad2554-1.webp",
+        "addiesdive-ad2554-2.webp",
+        "addiesdive-ad2554-3.webp",
+        "addiesdive-ad2554-4.webp",
+        "addiesdive-ad2554-5.webp",
+        "addiesdive-ad2554-7.webp",
+        "addiesdive-ad2554-11.webp",
+        "addiesdive-ad2554-13.webp",
+        "addiesdive-ad2554-14.webp",
+        "addiesdive-ad2554-15.webp",
+        "addiesdive-ad2554-16.webp",
+        "addiesdive-ad2554-20.webp",
+        "addiesdive-ad2554-21.webp"
       ],
       "variants": [
         {
@@ -177,7 +177,7 @@
               "icon": "Gift"
             }
           ],
-          "mainImage": "addiesdive-ad2554-7.png"
+          "mainImage": "addiesdive-ad2554-7.webp"
         }
       ]
     }

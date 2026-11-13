@@ -75,17 +75,17 @@
       "availabilityStatus": "on_order",
       "enabled": true,
       "images": [
-        "benyar-5229-1.png",
-        "benyar-5229-2.png",
-        "benyar-5229-3.png",
-        "benyar-5229-4.png",
-        "benyar-5229-5.png",
-        "benyar-5229-6.png",
-        "benyar-5229-7.png",
-        "benyar-5229-8.png",
-        "benyar-5229-9.png",
-        "benyar-5229-10.png",
-        "benyar-5229-11.png"
+        "benyar-5229-1.webp",
+        "benyar-5229-2.webp",
+        "benyar-5229-3.webp",
+        "benyar-5229-4.webp",
+        "benyar-5229-5.webp",
+        "benyar-5229-6.webp",
+        "benyar-5229-7.webp",
+        "benyar-5229-8.webp",
+        "benyar-5229-9.webp",
+        "benyar-5229-10.webp",
+        "benyar-5229-11.webp"
       ],
       "variants": [
         {
@@ -97,7 +97,7 @@
           ],
           "price": 259.9,
           "listPrice": 319.9,
-          "mainImage": "benyar-5229-1.png"
+          "mainImage": "benyar-5229-1.webp"
         }
       ]
     }

@@ -89,17 +89,17 @@ Se tiver alguma dúvida, entre em contato conosco e faremos o possível para aju
 
 Eixo: cor (`cor`), apresentação por imagem.
 
-- cor: 682 Silver MintBlue (`682-silver-mintblue`); mainImage: `poedagar-682-7.png`.
-- cor: 682 Silver Blue (`682-silver-blue`); mainImage: `poedagar-682-8.png`.
-- cor: 682 Silver Black (`682-silver-black`); mainImage: `poedagar-682-9.png`.
-- cor: 682 Silver Green (`682-silver-green`); mainImage: `poedagar-682-10.png`.
-- cor: 682 Silver Brown (`682-silver-brown`); mainImage: `poedagar-682-11.png`.
-- cor: 682 Blue Blue (`682-blue-blue`); mainImage: `poedagar-682-12.png`.
-- cor: 682 Black Black (`682-black-black`); mainImage: `poedagar-682-13.png`.
-- cor: 682 Gold Black (`682-gold-black`); mainImage: `poedagar-682-14.png`.
-- cor: 682 Gold Green (`682-gold-green`); mainImage: `poedagar-682-15.png`.
-- cor: 682 Gold MintBlue (`682-gold-mintblue`); mainImage: `poedagar-682-16.png`.
-- cor: 682 Gold Blue (`682-gold-blue`); mainImage: `poedagar-682-17.png`.
-- cor: 682 Gold Brown (`682-gold-brown`); mainImage: `poedagar-682-18.png`.
+- cor: 682 Silver MintBlue (`682-silver-mintblue`); mainImage: `poedagar-682-7.webp`.
+- cor: 682 Silver Blue (`682-silver-blue`); mainImage: `poedagar-682-8.webp`.
+- cor: 682 Silver Black (`682-silver-black`); mainImage: `poedagar-682-9.webp`.
+- cor: 682 Silver Green (`682-silver-green`); mainImage: `poedagar-682-10.webp`.
+- cor: 682 Silver Brown (`682-silver-brown`); mainImage: `poedagar-682-11.webp`.
+- cor: 682 Blue Blue (`682-blue-blue`); mainImage: `poedagar-682-12.webp`.
+- cor: 682 Black Black (`682-black-black`); mainImage: `poedagar-682-13.webp`.
+- cor: 682 Gold Black (`682-gold-black`); mainImage: `poedagar-682-14.webp`.
+- cor: 682 Gold Green (`682-gold-green`); mainImage: `poedagar-682-15.webp`.
+- cor: 682 Gold MintBlue (`682-gold-mintblue`); mainImage: `poedagar-682-16.webp`.
+- cor: 682 Gold Blue (`682-gold-blue`); mainImage: `poedagar-682-17.webp`.
+- cor: 682 Gold Brown (`682-gold-brown`); mainImage: `poedagar-682-18.webp`.
 
 As faixas de diâmetro do mostrador (45 a 49 mm) e largura da pulseira (20 a 24 mm) foram preservadas conforme as especificações. A resposta de comprador sobre diâmetro total de 49 mm não foi convertida em medida de mostrador. Não foi inferido calibre, coroa, tampa inferior ou prazo de garantia. A resistência foi normalizada de 3 bar para 30m (3 ATM), sem reproduzir recomendações de natação do resumo automático. Uma URL da descrição está truncada no HTML fornecido.

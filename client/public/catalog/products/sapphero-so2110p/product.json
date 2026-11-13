@@ -104,27 +104,27 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "sapphero-so2110p-1.png",
-        "sapphero-so2110p-2.png",
-        "sapphero-so2110p-3.png",
-        "sapphero-so2110p-4.png",
-        "sapphero-so2110p-5.png",
-        "sapphero-so2110p-6.png",
-        "sapphero-so2110p-7.png",
-        "sapphero-so2110p-8.png",
-        "sapphero-so2110p-9.png",
-        "sapphero-so2110p-10.png",
-        "sapphero-so2110p-11.png",
-        "sapphero-so2110p-12.png",
-        "sapphero-so2110p-13.png",
-        "sapphero-so2110p-14.png",
-        "sapphero-so2110p-15.png",
-        "sapphero-so2110p-16.png",
-        "sapphero-so2110p-17.png",
-        "sapphero-so2110p-18.png",
-        "sapphero-so2110p-19.png",
-        "sapphero-so2110p-20.png",
-        "sapphero-so2110p-21.png"
+        "sapphero-so2110p-1.webp",
+        "sapphero-so2110p-2.webp",
+        "sapphero-so2110p-3.webp",
+        "sapphero-so2110p-4.webp",
+        "sapphero-so2110p-5.webp",
+        "sapphero-so2110p-6.webp",
+        "sapphero-so2110p-7.webp",
+        "sapphero-so2110p-8.webp",
+        "sapphero-so2110p-9.webp",
+        "sapphero-so2110p-10.webp",
+        "sapphero-so2110p-11.webp",
+        "sapphero-so2110p-12.webp",
+        "sapphero-so2110p-13.webp",
+        "sapphero-so2110p-14.webp",
+        "sapphero-so2110p-15.webp",
+        "sapphero-so2110p-16.webp",
+        "sapphero-so2110p-17.webp",
+        "sapphero-so2110p-18.webp",
+        "sapphero-so2110p-19.webp",
+        "sapphero-so2110p-20.webp",
+        "sapphero-so2110p-21.webp"
       ],
       "variants": [
         {
@@ -134,7 +134,7 @@
               "valueId": "so2110p-02"
             }
           ],
-          "mainImage": "sapphero-so2110p-7.png"
+          "mainImage": "sapphero-so2110p-7.webp"
         },
         {
           "axes": [
@@ -143,7 +143,7 @@
               "valueId": "so2110p-08"
             }
           ],
-          "mainImage": "sapphero-so2110p-8.png"
+          "mainImage": "sapphero-so2110p-8.webp"
         },
         {
           "axes": [
@@ -152,7 +152,7 @@
               "valueId": "so2110p-03"
             }
           ],
-          "mainImage": "sapphero-so2110p-9.png"
+          "mainImage": "sapphero-so2110p-9.webp"
         },
         {
           "axes": [
@@ -161,7 +161,7 @@
               "valueId": "so2110p-01"
             }
           ],
-          "mainImage": "sapphero-so2110p-10.png"
+          "mainImage": "sapphero-so2110p-10.webp"
         },
         {
           "axes": [
@@ -170,7 +170,7 @@
               "valueId": "so2110p-04"
             }
           ],
-          "mainImage": "sapphero-so2110p-11.png"
+          "mainImage": "sapphero-so2110p-11.webp"
         },
         {
           "axes": [
@@ -179,7 +179,7 @@
               "valueId": "so2110p-06"
             }
           ],
-          "mainImage": "sapphero-so2110p-12.png"
+          "mainImage": "sapphero-so2110p-12.webp"
         },
         {
           "axes": [
@@ -188,7 +188,7 @@
               "valueId": "so2110p-07"
             }
           ],
-          "mainImage": "sapphero-so2110p-13.png"
+          "mainImage": "sapphero-so2110p-13.webp"
         },
         {
           "axes": [
@@ -197,7 +197,7 @@
               "valueId": "so2110p-05"
             }
           ],
-          "mainImage": "sapphero-so2110p-14.png"
+          "mainImage": "sapphero-so2110p-14.webp"
         }
       ]
     }

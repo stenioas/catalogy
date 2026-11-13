@@ -79,13 +79,13 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "curren-8106-1.png",
-        "curren-8106-2.png",
-        "curren-8106-3.png",
-        "curren-8106-4.png",
-        "curren-8106-5.png",
-        "curren-8106-6.png",
-        "curren-8106-7.png"
+        "curren-8106-1.webp",
+        "curren-8106-2.webp",
+        "curren-8106-3.webp",
+        "curren-8106-4.webp",
+        "curren-8106-5.webp",
+        "curren-8106-6.webp",
+        "curren-8106-7.webp"
       ],
       "variants": [
         {
@@ -96,7 +96,7 @@
             }
           ],
           "price": 149.9,
-          "mainImage": "curren-8106-1.png"
+          "mainImage": "curren-8106-1.webp"
         },
         {
           "axes": [
@@ -106,7 +106,7 @@
             }
           ],
           "price": 149.9,
-          "mainImage": "curren-8106-2.png"
+          "mainImage": "curren-8106-2.webp"
         }
       ]
     },
@@ -115,13 +115,13 @@
       "state": "new",
       "availabilityStatus": "coming_soon",
       "images": [
-        "curren-8106-1.png",
-        "curren-8106-2.png",
-        "curren-8106-3.png",
-        "curren-8106-4.png",
-        "curren-8106-5.png",
-        "curren-8106-6.png",
-        "curren-8106-7.png"
+        "curren-8106-1.webp",
+        "curren-8106-2.webp",
+        "curren-8106-3.webp",
+        "curren-8106-4.webp",
+        "curren-8106-5.webp",
+        "curren-8106-6.webp",
+        "curren-8106-7.webp"
       ],
       "variants": [
         {
@@ -133,7 +133,7 @@
           ],
           "price": 119.9,
           "listPrice": 149.9,
-          "mainImage": "curren-8106-1.png",
+          "mainImage": "curren-8106-1.webp",
           "offers": [
             {
               "text": "Black Friday",
@@ -152,7 +152,7 @@
           ],
           "price": 119.9,
           "listPrice": 149.9,
-          "mainImage": "curren-8106-2.png",
+          "mainImage": "curren-8106-2.webp",
           "offers": [
             {
               "text": "Black Friday",

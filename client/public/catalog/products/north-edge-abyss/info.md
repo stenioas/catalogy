@@ -98,7 +98,7 @@ A técnica de fabricação com camadas cria uma textura delicada e estruturada.
 ## Variantes
 
 - Eixo: Cor (`cor`), apresentação por imagem.
-- Cor: Black Rubber — mainImage: north-edge-abyss-7.png
-- Cor: Blue Rubber — mainImage: north-edge-abyss-1.png
-- Cor: Blue Steel — mainImage: north-edge-abyss-8.png
-- Cor: Black Steel — mainImage: north-edge-abyss-9.png
+- Cor: Black Rubber — mainImage: north-edge-abyss-7.webp
+- Cor: Blue Rubber — mainImage: north-edge-abyss-1.webp
+- Cor: Blue Steel — mainImage: north-edge-abyss-8.webp
+- Cor: Black Steel — mainImage: north-edge-abyss-9.webp

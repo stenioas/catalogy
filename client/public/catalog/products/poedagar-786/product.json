@@ -104,34 +104,34 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "poedagar-786-1.png",
-        "poedagar-786-2.png",
-        "poedagar-786-3.png",
-        "poedagar-786-4.png",
-        "poedagar-786-5.png",
-        "poedagar-786-6.png",
-        "poedagar-786-7.png",
-        "poedagar-786-8.png",
-        "poedagar-786-9.png",
-        "poedagar-786-10.png",
-        "poedagar-786-11.png",
-        "poedagar-786-12.png",
-        "poedagar-786-13.png",
-        "poedagar-786-14.png",
-        "poedagar-786-15.png",
-        "poedagar-786-16.png",
-        "poedagar-786-17.png",
-        "poedagar-786-18.png",
-        "poedagar-786-19.png",
-        "poedagar-786-20.png",
-        "poedagar-786-21.png",
-        "poedagar-786-22.png",
-        "poedagar-786-23.png",
-        "poedagar-786-24.png",
-        "poedagar-786-25.png",
-        "poedagar-786-26.png",
-        "poedagar-786-27.png",
-        "poedagar-786-28.png"
+        "poedagar-786-1.webp",
+        "poedagar-786-2.webp",
+        "poedagar-786-3.webp",
+        "poedagar-786-4.webp",
+        "poedagar-786-5.webp",
+        "poedagar-786-6.webp",
+        "poedagar-786-7.webp",
+        "poedagar-786-8.webp",
+        "poedagar-786-9.webp",
+        "poedagar-786-10.webp",
+        "poedagar-786-11.webp",
+        "poedagar-786-12.webp",
+        "poedagar-786-13.webp",
+        "poedagar-786-14.webp",
+        "poedagar-786-15.webp",
+        "poedagar-786-16.webp",
+        "poedagar-786-17.webp",
+        "poedagar-786-18.webp",
+        "poedagar-786-19.webp",
+        "poedagar-786-20.webp",
+        "poedagar-786-21.webp",
+        "poedagar-786-22.webp",
+        "poedagar-786-23.webp",
+        "poedagar-786-24.webp",
+        "poedagar-786-25.webp",
+        "poedagar-786-26.webp",
+        "poedagar-786-27.webp",
+        "poedagar-786-28.webp"
       ],
       "variants": [
         {
@@ -141,7 +141,7 @@
               "valueId": "786-silver-white"
             }
           ],
-          "mainImage": "poedagar-786-7.png"
+          "mainImage": "poedagar-786-7.webp"
         },
         {
           "axes": [
@@ -150,7 +150,7 @@
               "valueId": "786-silver-green"
             }
           ],
-          "mainImage": "poedagar-786-8.png"
+          "mainImage": "poedagar-786-8.webp"
         },
         {
           "axes": [
@@ -159,7 +159,7 @@
               "valueId": "786-silver-blue"
             }
           ],
-          "mainImage": "poedagar-786-9.png"
+          "mainImage": "poedagar-786-9.webp"
         },
         {
           "axes": [
@@ -168,7 +168,7 @@
               "valueId": "786-rose-gold-white"
             }
           ],
-          "mainImage": "poedagar-786-10.png"
+          "mainImage": "poedagar-786-10.webp"
         },
         {
           "axes": [
@@ -177,7 +177,7 @@
               "valueId": "786-silver-black"
             }
           ],
-          "mainImage": "poedagar-786-11.png"
+          "mainImage": "poedagar-786-11.webp"
         },
         {
           "axes": [
@@ -186,7 +186,7 @@
               "valueId": "786-rose-gold-green"
             }
           ],
-          "mainImage": "poedagar-786-12.png"
+          "mainImage": "poedagar-786-12.webp"
         },
         {
           "axes": [
@@ -195,7 +195,7 @@
               "valueId": "786-gold-gold"
             }
           ],
-          "mainImage": "poedagar-786-13.png"
+          "mainImage": "poedagar-786-13.webp"
         },
         {
           "axes": [
@@ -204,7 +204,7 @@
               "valueId": "786-rose-gold-black"
             }
           ],
-          "mainImage": "poedagar-786-14.png"
+          "mainImage": "poedagar-786-14.webp"
         },
         {
           "axes": [
@@ -213,7 +213,7 @@
               "valueId": "786-rose-gold-blue"
             }
           ],
-          "mainImage": "poedagar-786-15.png"
+          "mainImage": "poedagar-786-15.webp"
         }
       ]
     }

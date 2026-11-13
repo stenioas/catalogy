@@ -107,7 +107,7 @@ Drop Shipping
 
 Eixo: Cor (`cor`), apresentação por imagem. Nomes originais preservados.
 
-- Cor: black bezel black (`black-bezel-black`); mainImage: `aimimo-design-daytona-7.png`.
-- Cor: black bezel white (`black-bezel-white`); mainImage: `aimimo-design-daytona-8.png`.
-- Cor: steel bezel white (`steel-bezel-white`); mainImage: `aimimo-design-daytona-9.png`.
-- Cor: steel bezel black (`steel-bezel-black`); mainImage: `aimimo-design-daytona-10.png`.
+- Cor: black bezel black (`black-bezel-black`); mainImage: `aimimo-design-daytona-7.webp`.
+- Cor: black bezel white (`black-bezel-white`); mainImage: `aimimo-design-daytona-8.webp`.
+- Cor: steel bezel white (`steel-bezel-white`); mainImage: `aimimo-design-daytona-9.webp`.
+- Cor: steel bezel black (`steel-bezel-black`); mainImage: `aimimo-design-daytona-10.webp`.

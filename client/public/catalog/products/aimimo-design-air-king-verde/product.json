@@ -83,9 +83,9 @@
       "state": "new",
       "availabilityStatus": "available",
       "images": [
-        "aimimo-design-air-king-1.png",
-        "aimimo-design-air-king-2.png",
-        "aimimo-design-air-king-3.png"
+        "aimimo-design-air-king-1.webp",
+        "aimimo-design-air-king-2.webp",
+        "aimimo-design-air-king-3.webp"
       ],
       "variants": [
         {
@@ -97,7 +97,7 @@
           ],
           "price": 259.9,
           "listPrice": 359.9,
-          "mainImage": "aimimo-design-air-king-1.png",
+          "mainImage": "aimimo-design-air-king-1.webp",
           "offers": [
             {
               "text": "Black Friday",

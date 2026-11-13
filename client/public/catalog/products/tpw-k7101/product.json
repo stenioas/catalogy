@@ -83,39 +83,39 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "tpw-k7101-1.png",
-        "tpw-k7101-2.png",
-        "tpw-k7101-3.png",
-        "tpw-k7101-4.png",
-        "tpw-k7101-5.png",
-        "tpw-k7101-6.png",
-        "tpw-k7101-7.png",
-        "tpw-k7101-8.png",
-        "tpw-k7101-9.png",
-        "tpw-k7101-10.png",
-        "tpw-k7101-11.png",
-        "tpw-k7101-12.png",
-        "tpw-k7101-13.png",
-        "tpw-k7101-14.png",
-        "tpw-k7101-15.png",
-        "tpw-k7101-16.png",
-        "tpw-k7101-17.png",
-        "tpw-k7101-18.png",
-        "tpw-k7101-19.png",
-        "tpw-k7101-20.png",
-        "tpw-k7101-21.png",
-        "tpw-k7101-22.png",
-        "tpw-k7101-23.png",
-        "tpw-k7101-24.png",
-        "tpw-k7101-25.png",
-        "tpw-k7101-26.png",
-        "tpw-k7101-27.png",
-        "tpw-k7101-28.png",
-        "tpw-k7101-30.png",
-        "tpw-k7101-31.png",
-        "tpw-k7101-32.png",
-        "tpw-k7101-33.png",
-        "tpw-k7101-34.png"
+        "tpw-k7101-1.webp",
+        "tpw-k7101-2.webp",
+        "tpw-k7101-3.webp",
+        "tpw-k7101-4.webp",
+        "tpw-k7101-5.webp",
+        "tpw-k7101-6.webp",
+        "tpw-k7101-7.webp",
+        "tpw-k7101-8.webp",
+        "tpw-k7101-9.webp",
+        "tpw-k7101-10.webp",
+        "tpw-k7101-11.webp",
+        "tpw-k7101-12.webp",
+        "tpw-k7101-13.webp",
+        "tpw-k7101-14.webp",
+        "tpw-k7101-15.webp",
+        "tpw-k7101-16.webp",
+        "tpw-k7101-17.webp",
+        "tpw-k7101-18.webp",
+        "tpw-k7101-19.webp",
+        "tpw-k7101-20.webp",
+        "tpw-k7101-21.webp",
+        "tpw-k7101-22.webp",
+        "tpw-k7101-23.webp",
+        "tpw-k7101-24.webp",
+        "tpw-k7101-25.webp",
+        "tpw-k7101-26.webp",
+        "tpw-k7101-27.webp",
+        "tpw-k7101-28.webp",
+        "tpw-k7101-30.webp",
+        "tpw-k7101-31.webp",
+        "tpw-k7101-32.webp",
+        "tpw-k7101-33.webp",
+        "tpw-k7101-34.webp"
       ],
       "variants": [
         {
@@ -125,7 +125,7 @@
               "valueId": "green-luminous-2"
             }
           ],
-          "mainImage": "tpw-k7101-7.png"
+          "mainImage": "tpw-k7101-7.webp"
         },
         {
           "axes": [
@@ -134,7 +134,7 @@
               "valueId": "green-black-2"
             }
           ],
-          "mainImage": "tpw-k7101-8.png"
+          "mainImage": "tpw-k7101-8.webp"
         },
         {
           "axes": [
@@ -143,7 +143,7 @@
               "valueId": "black-white-num"
             }
           ],
-          "mainImage": "tpw-k7101-9.png"
+          "mainImage": "tpw-k7101-9.webp"
         },
         {
           "axes": [
@@ -152,7 +152,7 @@
               "valueId": "green-white-num"
             }
           ],
-          "mainImage": "tpw-k7101-10.png"
+          "mainImage": "tpw-k7101-10.webp"
         },
         {
           "axes": [
@@ -161,7 +161,7 @@
               "valueId": "dark-blue"
             }
           ],
-          "mainImage": "tpw-k7101-11.png"
+          "mainImage": "tpw-k7101-11.webp"
         },
         {
           "axes": [
@@ -170,7 +170,7 @@
               "valueId": "green-luminous-1"
             }
           ],
-          "mainImage": "tpw-k7101-12.png"
+          "mainImage": "tpw-k7101-12.webp"
         }
       ]
     }

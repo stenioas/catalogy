@@ -86,12 +86,13 @@ describe('WatchCard (SV-13, SV-14)', () => {
     cleanup()
   })
 
-  it('requests the card main image at /catalog/products/<slug>/img/<file> (CAT-28)', () => {
+  it('requests the card cover from img/thumbs so the 768px file stays on the gallery (CAT-28)', () => {
     const product = baseProduct()
     const card = cardFor(product)
     renderWatchCard(product)
     const img = screen.getByRole('img', { name: 'Seculus' })
-    expect(img.getAttribute('src')).toBe(`/catalog/products/${product.slug}/img/${card.image}`)
+    expect(img.getAttribute('src')).toBe(`/catalog/products/${product.slug}/img/thumbs/${card.image}`)
+    expect(img.getAttribute('loading')).toBe('eager')
   })
 
   it('uses object-contain in a square frame and the card image file (CAT-52, CAT-53)', () => {
@@ -506,9 +507,9 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(heading.className).toMatch(/\boverflow-hidden\b/)
     expect(heading.className).toMatch(/\btext-ellipsis\b/)
     expect(heading.className).toMatch(/\bwhitespace-nowrap\b/)
-    expect(heading.className).toMatch(/\btext-xs\b/)
+    expect(heading.className).toMatch(/\btext-\[13px\]/)
     expect(heading.className).toMatch(/\bfont-medium\b/)
-    expect(heading.className).toMatch(/\bmd:text-sm\b/)
+    expect(heading.className).toMatch(/\bmd:text-\[15px\]/)
     expect(heading.className).toMatch(/\bmd:font-semibold\b/)
   })
 
