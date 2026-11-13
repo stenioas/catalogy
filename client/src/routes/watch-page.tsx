@@ -38,15 +38,6 @@ export function catalogReturnHref(state: unknown): string {
   return `/?section=${encodeURIComponent(section)}`
 }
 
-function openedFromCatalog(state: unknown): boolean {
-  return (
-    state !== null &&
-    typeof state === 'object' &&
-    'fromCatalog' in state &&
-    state.fromCatalog === true
-  )
-}
-
 function stateAfterVariantChange(state: unknown): { section: string } | undefined {
   const section = readSection(state)
   return section === undefined ? undefined : { section }
@@ -376,11 +367,12 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   const activeV = variantQuery(product, variant)
   const message = shareMessage(product, listing, variant, window.location.origin)
   const shareHref = `https://wa.me/?text=${encodeURIComponent(message)}`
-  const imageIndex = openedFromCatalog(location.state) ? 0 : view.imageIndex
+  const imageIndex = view.imageIndex
 
   function selectVariant(nextV: string | null) {
     const valueIds = nextV === null || nextV.trim() === '' ? [] : nextV.split(',')
     navigate(listingPath(product!.slug, listing!.id, valueIds), {
+      flushSync: true,
       state: stateAfterVariantChange(location.state),
     })
   }

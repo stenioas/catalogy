@@ -170,13 +170,23 @@ export function activeSection(products: Product[], section: string | null): Sect
   return 'all'
 }
 
+function orderablePricedVariants(listing: Listing): Variant[] {
+  return listing.variants.filter(
+    (variant) => variant.orderable !== false && variant.price !== undefined,
+  )
+}
+
 function lowestPricedOrderableVariant(listing: Listing): Variant | null {
   let chosen: Variant | null = null
-  for (const variant of listing.variants) {
-    if (variant.orderable === false || variant.price === undefined) continue
-    if (chosen === null || chosen.price === undefined || variant.price < chosen.price) chosen = variant
+  for (const variant of orderablePricedVariants(listing)) {
+    if (chosen === null || chosen.price === undefined || variant.price! < chosen.price) chosen = variant
   }
   return chosen
+}
+
+function pricesAreUniform(variants: Variant[]): boolean {
+  const first = variants[0]?.price
+  return first !== undefined && variants.every((variant) => variant.price === first)
 }
 
 export function listingPath(slug: string, listingId: string, valueIds: string[]): string {
@@ -198,17 +208,22 @@ function toPricedCard(
   listing: Listing,
   variant: Variant,
   listingIndex: number,
+  useCover: boolean,
 ): SortableCard {
   const card: SortableCard = {
     slug: product.slug,
     listingId: listing.id,
     title: product.title,
-    image: variant.mainImage,
+    image: useCover ? (listing.images[0] ?? '') : variant.mainImage,
     price: variant.price,
     offers: variant.offers ?? [],
     availabilityStatus: listing.availabilityStatus,
     statusLabel: AVAILABILITY_LABEL[listing.availabilityStatus],
-    path: listingPath(product.slug, listing.id, valueIdsInAxisOrder(product, variant)),
+    path: listingPath(
+      product.slug,
+      listing.id,
+      useCover ? [] : valueIdsInAxisOrder(product, variant),
+    ),
     listingIndex,
   }
   if (variant.listPrice !== undefined) card.listPrice = variant.listPrice
@@ -248,7 +263,15 @@ export function homeCards(products: Product[], section: string | null): CatalogC
       }
       const variant = lowestPricedOrderableVariant(listing)
       if (variant === null) return
-      cards.push(toPricedCard(product, listing, variant, listingIndex))
+      cards.push(
+        toPricedCard(
+          product,
+          listing,
+          variant,
+          listingIndex,
+          pricesAreUniform(orderablePricedVariants(listing)),
+        ),
+      )
     })
   }
   cards.sort(compareCards)

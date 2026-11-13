@@ -408,6 +408,43 @@ describe('homeCards', () => {
     ])
   })
 
+  it('uses the listing cover and omits v when every orderable price is the same', () => {
+    const product = productOf(
+      'seculus',
+      'Seculus',
+      [
+        listingOf('novo', {
+          images: ['capa.jpg', 'azul.jpg', 'verde.jpg'],
+          variants: [
+            variantOf(15, {
+              mainImage: 'azul.jpg',
+              axes: [{ axisId: 'cor', valueId: 'azul' }],
+            }),
+            variantOf(15, {
+              mainImage: 'verde.jpg',
+              axes: [{ axisId: 'cor', valueId: 'verde' }],
+            }),
+          ],
+        }),
+      ],
+      { axes: [color] },
+    )
+
+    expect(homeCards([product], 'available')).toEqual([
+      {
+        slug: 'seculus',
+        listingId: 'novo',
+        title: 'Seculus',
+        image: 'capa.jpg',
+        price: 15,
+        offers: [],
+        availabilityStatus: 'available',
+        statusLabel: 'Disponível',
+        path: '/product/seculus/novo',
+      },
+    ])
+  })
+
   it('does not let an orderable false variant represent the card', () => {
     const products = [
       productOf(
@@ -511,6 +548,12 @@ describe('homeCards', () => {
                 axes: [
                   { axisId: 'tamanho', valueId: 'gg' },
                   { axisId: 'cor', valueId: 'preto' },
+                ],
+              }),
+              variantOf(20, {
+                axes: [
+                  { axisId: 'tamanho', valueId: 'gg' },
+                  { axisId: 'cor', valueId: 'azul' },
                 ],
               }),
             ],
@@ -673,8 +716,8 @@ describe('homeCards', () => {
     ])
     expect(sectionHasCards(products, 'on-order')).toBe(true)
     expect(homeCards(products, 'all').map((card) => card.listingId)).toEqual(['caminho'])
-    expect(homeCards(products, 'coming-soon')[0]?.path).toBe('/product/curren/caminho?v=verde')
-    expect(homeCards(products, 'coming-soon')[0]?.image).toBe('rose.jpg')
+    expect(homeCards(products, 'coming-soon')[0]?.path).toBe('/product/curren/caminho')
+    expect(homeCards(products, 'coming-soon')[0]?.image).toBe(img)
 
     const orderView = requireOpen(listingByPath(products, 'curren', 'encomenda', 'verde'))
     expect(orderView.price).toBe(139.9)

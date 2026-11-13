@@ -28,6 +28,11 @@ function isVisible(element: HTMLElement | null): element is HTMLElement {
 
 export function ProductMedia({ images, alt, startIndex = 0, children }: ProductMediaProps) {
   const [selectedIndex, setSelectedIndex] = useState(() => clampIndex(startIndex, images.length))
+  const [trackedStart, setTrackedStart] = useState(startIndex)
+  if (startIndex !== trackedStart) {
+    setTrackedStart(startIndex)
+    setSelectedIndex(clampIndex(startIndex, images.length))
+  }
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [useThumbnails, setUseThumbnails] = useState(() => window.matchMedia(THUMBNAIL_QUERY).matches)
   const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(DESKTOP_QUERY).matches)
@@ -50,17 +55,9 @@ export function ProductMedia({ images, alt, startIndex = 0, children }: ProductM
     }
   }, [])
 
-  const prevStartIndexRef = useRef(startIndex)
   useEffect(() => {
     setSelectedIndex((current) => clampIndex(current, images.length))
   }, [images.length])
-
-  useEffect(() => {
-    if (prevStartIndexRef.current !== startIndex) {
-      prevStartIndexRef.current = startIndex
-      setSelectedIndex(clampIndex(startIndex, images.length))
-    }
-  }, [startIndex, images.length])
 
   useEffect(() => {
     if (!galleryOpen) return

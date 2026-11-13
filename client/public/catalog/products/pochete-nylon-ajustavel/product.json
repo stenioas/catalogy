@@ -80,6 +80,92 @@
           "mainImage": "pochete-nylon-ajustavel-9.png"
         }
       ]
+    },
+    {
+      "id": "comming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "pochete-nylon-ajustavel-1.png",
+        "pochete-nylon-ajustavel-2.png",
+        "pochete-nylon-ajustavel-3.png",
+        "pochete-nylon-ajustavel-4.png",
+        "pochete-nylon-ajustavel-5.png",
+        "pochete-nylon-ajustavel-6.png",
+        "pochete-nylon-ajustavel-7.png",
+        "pochete-nylon-ajustavel-8.png",
+        "pochete-nylon-ajustavel-9.png",
+        "pochete-nylon-ajustavel-10.png",
+        "pochete-nylon-ajustavel-11.png",
+        "pochete-nylon-ajustavel-12.png",
+        "pochete-nylon-ajustavel-13.png",
+        "pochete-nylon-ajustavel-14.png",
+        "pochete-nylon-ajustavel-15.png",
+        "pochete-nylon-ajustavel-16.png",
+        "pochete-nylon-ajustavel-17.png",
+        "pochete-nylon-ajustavel-18.png",
+        "pochete-nylon-ajustavel-19.png",
+        "pochete-nylon-ajustavel-20.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black"
+            }
+          ],
+          "price": 29.9,
+          "listPrice": 39.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "icon": "Gift",
+              "background": "#000000",
+              "color": "#FFFFFF"
+            }
+          ],
+          "mainImage": "pochete-nylon-ajustavel-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "gray"
+            }
+          ],
+          "price": 29.9,
+          "listPrice": 39.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "icon": "Gift",
+              "background": "#000000",
+              "color": "#FFFFFF"
+            }
+          ],
+          "mainImage": "pochete-nylon-ajustavel-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "blue"
+            }
+          ],
+          "price": 29.9,
+          "listPrice": 39.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "icon": "Gift",
+              "background": "#000000",
+              "color": "#FFFFFF"
+            }
+          ],
+          "mainImage": "pochete-nylon-ajustavel-9.png"
+        }
+      ]
     }
   ]
 }

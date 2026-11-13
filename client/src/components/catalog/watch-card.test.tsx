@@ -284,7 +284,10 @@ describe('WatchCard listing card rules (VAR-42–VAR-50)', () => {
         {
           id: 'color',
           label: 'Cor',
-          values: [{ id: 'azul', value: 'Azul' }],
+          values: [
+            { id: 'azul', value: 'Azul' },
+            { id: 'preto', value: 'Preto' },
+          ],
         },
         {
           id: 'size',
@@ -303,6 +306,14 @@ describe('WatchCard listing card rules (VAR-42–VAR-50)', () => {
               price: 100,
               mainImage: 'foto-principal.webp',
             },
+            {
+              axes: [
+                { axisId: 'color', valueId: 'preto' },
+                { axisId: 'size', valueId: 'mm40' },
+              ],
+              price: 200,
+              mainImage: 'foto-extra.jpg',
+            },
           ],
         }),
       ],
@@ -311,6 +322,7 @@ describe('WatchCard listing card rules (VAR-42–VAR-50)', () => {
     renderWatchCard(product)
     expect(screen.getByTestId('watch-card-link').getAttribute('href')).toBe(card.path)
     expect(card.path).toMatch(/\?v=azul,mm40$/)
+    expect(card.image).toBe('foto-principal.webp')
   })
 
   it('uses shareMessage for the WhatsApp link (same sentence as listing page)', () => {

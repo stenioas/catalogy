@@ -1267,7 +1267,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.queryByTestId('price-block')).toBeNull()
   })
 
-  it('opens the listing cover from a card, the variant photo from a direct link, then the chosen variant photo', () => {
+  it('opens the cheaper variant from a card, that photo from a direct link, then the chosen variant photo', () => {
     const product: Product = {
       slug: 'capa',
       title: 'Capa',
@@ -1328,8 +1328,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     fireEvent.click(screen.getByTestId('watch-card-link'))
     expect(`${router.state.location.pathname}${router.state.location.search}`).toBe(card.path)
     expect(router.state.location.state).toEqual({ fromCatalog: true, section: 'available' })
-    expect(screen.getByRole('button', { name: 'Abrir galeria na foto 1' })).toBeDefined()
-    expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/cover.png')
+    expect(screen.getByRole('button', { name: 'Abrir galeria na foto 2' })).toBeDefined()
+    expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/azul.png')
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 10,00')
     expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/?section=available')
 
@@ -1353,6 +1353,71 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/azul.png')
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 10,00')
     expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/')
+  })
+
+  it('opens the listing cover from a card when every variant has the same price', () => {
+    const product: Product = {
+      slug: 'capa',
+      title: 'Capa',
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [
+            { id: 'azul', value: 'Azul' },
+            { id: 'preto', value: 'Preto' },
+          ],
+        },
+      ],
+      listings: [
+        {
+          id: 'anuncio',
+          state: 'new',
+          availabilityStatus: 'available',
+          images: ['cover.png', 'azul.png', 'preto.png'],
+          variants: [
+            {
+              axes: [{ axisId: 'color', valueId: 'azul' }],
+              price: 10,
+              mainImage: 'azul.png',
+            },
+            {
+              axes: [{ axisId: 'color', valueId: 'preto' }],
+              price: 10,
+              mainImage: 'preto.png',
+            },
+          ],
+        },
+      ],
+    }
+    mockProductsRef.current = [product]
+    const card = homeCards([product], 'available')[0]!
+    expect(card.image).toBe('cover.png')
+    expect(card.path).toBe('/product/capa/anuncio')
+
+    function WatchListingRoute() {
+      const { slug, listingId } = useParams()
+      return <WatchPage slug={slug ?? ''} listingId={listingId ?? ''} />
+    }
+
+    const router = createMemoryRouter(
+      [
+        { path: '/', element: <WatchCard product={product} card={card} /> },
+        { path: '/product/:slug/:listingId', element: <WatchListingRoute /> },
+      ],
+      { initialEntries: ['/?section=available'] },
+    )
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>,
+    )
+
+    fireEvent.click(screen.getByTestId('watch-card-link'))
+    expect(`${router.state.location.pathname}${router.state.location.search}`).toBe('/product/capa/anuncio')
+    expect(screen.getByRole('button', { name: 'Abrir galeria na foto 1' })).toBeDefined()
+    expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/cover.png')
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 10,00')
   })
 
   it.each([919, 920])('OSC-46: choosing another enabled option selects that variant at %i px', (viewport) => {
