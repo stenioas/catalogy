@@ -6,10 +6,11 @@
     {
       "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
-          "id": "black",
-          "value": "Black"
+          "id": "black-black",
+          "value": "Black Black"
         }
       ]
     }
@@ -92,7 +93,7 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "black"
+              "valueId": "black-black"
             }
           ],
           "price": 329.9,

@@ -79,20 +79,20 @@ Drop Shipping
 
 ## Mídias
 
-- aimimo-design-1.png
-- aimimo-design-2.png
-- aimimo-design-3.png
-- aimimo-design-4.png
-- aimimo-design-5.png
-- aimimo-design-6.png
-- aimimo-design-7.png
-- aimimo-design-8.png
-- aimimo-design-9.png
-- aimimo-design-10.png
+- aimimo-design-daytona-1.png
+- aimimo-design-daytona-2.png
+- aimimo-design-daytona-3.png
+- aimimo-design-daytona-4.png
+- aimimo-design-daytona-5.png
+- aimimo-design-daytona-6.png
+- aimimo-design-daytona-7.png
+- aimimo-design-daytona-8.png
+- aimimo-design-daytona-9.png
+- aimimo-design-daytona-10.png
 - aimimo-design-video-1.mp4
-- aimimo-design-11.png
-- aimimo-design-12.png
-- aimimo-design-13.png
+- aimimo-design-daytona-11.png
+- aimimo-design-daytona-12.png
+- aimimo-design-daytona-13.png
 
 ## Observações de inferência
 
@@ -107,7 +107,7 @@ Drop Shipping
 
 Eixo: Cor (`cor`), apresentação por imagem. Nomes originais preservados.
 
-- Cor: black bezel black (`black-bezel-black`); mainImage: `aimimo-design-7.png`.
-- Cor: black bezel white (`black-bezel-white`); mainImage: `aimimo-design-8.png`.
-- Cor: steel bezel white (`steel-bezel-white`); mainImage: `aimimo-design-9.png`.
-- Cor: steel bezel black (`steel-bezel-black`); mainImage: `aimimo-design-10.png`.
+- Cor: black bezel black (`black-bezel-black`); mainImage: `aimimo-design-daytona-7.png`.
+- Cor: black bezel white (`black-bezel-white`); mainImage: `aimimo-design-daytona-8.png`.
+- Cor: steel bezel white (`steel-bezel-white`); mainImage: `aimimo-design-daytona-9.png`.
+- Cor: steel bezel black (`steel-bezel-black`); mainImage: `aimimo-design-daytona-10.png`.

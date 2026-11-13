@@ -1,6 +1,6 @@
 {
-  "slug": "aimimo-design",
-  "title": "Relógio AIMIMO DESIGN Cronógrafo",
+  "slug": "aimimo-design-daytona",
+  "title": "Aimimo Design Daytona",
   "description": "Relógio masculino com movimento de quartzo PE60, cronógrafo, data e indicador de 24 horas. Possui caixa e pulseira em aço inoxidável 316L, cristal de safira e ponteiros luminosos. O mostrador não possui logotipo.",
   "audience": "male",
   "axes": [
@@ -30,12 +30,16 @@
   ],
   "specifications": [
     {
+      "label": "Homage de",
+      "value": "Rolex Daytona"
+    },
+    {
       "label": "Marca",
-      "value": "AIMIMO DESIGN"
+      "value": "Aimimo Design"
     },
     {
       "label": "Modelo",
-      "value": "aimimo design"
+      "value": "Daytona"
     },
     {
       "label": "Tipo do relógio",
@@ -88,19 +92,19 @@
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "aimimo-design-1.png",
-        "aimimo-design-2.png",
-        "aimimo-design-3.png",
-        "aimimo-design-4.png",
-        "aimimo-design-5.png",
-        "aimimo-design-6.png",
-        "aimimo-design-7.png",
-        "aimimo-design-8.png",
-        "aimimo-design-9.png",
-        "aimimo-design-10.png",
-        "aimimo-design-11.png",
-        "aimimo-design-12.png",
-        "aimimo-design-13.png"
+        "aimimo-design-daytona-1.png",
+        "aimimo-design-daytona-2.png",
+        "aimimo-design-daytona-3.png",
+        "aimimo-design-daytona-4.png",
+        "aimimo-design-daytona-5.png",
+        "aimimo-design-daytona-6.png",
+        "aimimo-design-daytona-7.png",
+        "aimimo-design-daytona-8.png",
+        "aimimo-design-daytona-9.png",
+        "aimimo-design-daytona-10.png",
+        "aimimo-design-daytona-11.png",
+        "aimimo-design-daytona-12.png",
+        "aimimo-design-daytona-13.png"
       ],
       "variants": [
         {
@@ -110,7 +114,7 @@
               "valueId": "black-bezel-black"
             }
           ],
-          "mainImage": "aimimo-design-7.png",
+          "mainImage": "aimimo-design-daytona-7.png",
           "observations": "Segundo a descrição do vendedor, o ponteiro central de segundos do cronógrafo para após cerca de 40 minutos, mas a contagem do cronógrafo continua até 60 minutos."
         },
         {
@@ -120,7 +124,7 @@
               "valueId": "black-bezel-white"
             }
           ],
-          "mainImage": "aimimo-design-8.png",
+          "mainImage": "aimimo-design-daytona-8.png",
           "observations": "Segundo a descrição do vendedor, o ponteiro central de segundos do cronógrafo para após cerca de 40 minutos, mas a contagem do cronógrafo continua até 60 minutos."
         },
         {
@@ -130,7 +134,7 @@
               "valueId": "steel-bezel-white"
             }
           ],
-          "mainImage": "aimimo-design-9.png",
+          "mainImage": "aimimo-design-daytona-9.png",
           "observations": "Segundo a descrição do vendedor, o ponteiro central de segundos do cronógrafo para após cerca de 40 minutos, mas a contagem do cronógrafo continua até 60 minutos."
         },
         {
@@ -140,7 +144,7 @@
               "valueId": "steel-bezel-black"
             }
           ],
-          "mainImage": "aimimo-design-10.png",
+          "mainImage": "aimimo-design-daytona-10.png",
           "observations": "Segundo a descrição do vendedor, o ponteiro central de segundos do cronógrafo para após cerca de 40 minutos, mas a contagem do cronógrafo continua até 60 minutos."
         }
       ]

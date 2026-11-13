@@ -9,8 +9,8 @@
       "presentation": "image",
       "values": [
         {
-          "id": "azul",
-          "value": "Azul"
+          "id": "blue",
+          "value": "Blue"
         }
       ]
     }
@@ -93,7 +93,7 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "azul"
+              "valueId": "blue"
             }
           ],
           "price": 399.9,
