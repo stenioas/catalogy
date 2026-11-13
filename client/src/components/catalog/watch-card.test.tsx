@@ -15,6 +15,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 
 import { WatchCard } from './watch-card'
+import { ON_ORDER_PRICE_NOTE } from './price-block'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 
@@ -123,7 +124,12 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
-  it.each(['new', 'openbox', 'used'] as const)('shows %s and availability as one line above the title', (state) => {
+  it.each([
+    ['new', null],
+    ['openbox', 'Openbox'],
+    ['used', 'Usado'],
+    ['defective', null],
+  ] as const)('shows availability without state text and an image badge only for %s', (state, badgeLabel) => {
     const product = baseProduct({
       listings: [
         baseListing({
@@ -134,21 +140,38 @@ describe('WatchCard (SV-13, SV-14)', () => {
     renderWatchCard(product)
     const line = screen.getByTestId('product-condition')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
-    const stateLabel = within(line).getByTestId('state-label')
     const availability = within(line).getByTestId('availability-badge')
+    const image = screen.getByTestId('watch-card-image')
+    const imageBadge = within(image).queryByTestId('card-image-state-badge')
 
+    expect(within(line).queryByTestId('state-label')).toBeNull()
+    expect(screen.queryByTestId('state-label')).toBeNull()
     expect(screen.queryByTestId('state-badge')).toBeNull()
-    expect(stateLabel.textContent).not.toBe('')
-    expect(stateLabel.className).not.toMatch(/rounded/)
-    expect(line.className).toMatch(/\bgap-1\.5\b/)
-    expect(stateLabel.nextElementSibling).toBe(availability)
+    expect(line.textContent).not.toMatch(/Novo|Usado|Openbox|Com defeito/)
+    expect(screen.getByTestId('watch-card-body').textContent).not.toMatch(/Novo|Usado|Openbox|Com defeito/)
     expect(availability.className).toMatch(/rounded-\[4px\]/)
     expect(availability.className).not.toMatch(/\brounded-full\b/)
     expect(line.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(
       line.compareDocumentPosition(screen.getByTestId('price-block')) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).not.toBe(0)
-    expect(screen.getByTestId('watch-card-image').contains(line)).toBe(false)
+    expect(image.contains(line)).toBe(false)
+    if (badgeLabel === null) {
+      expect(imageBadge).toBeNull()
+    } else {
+      expect(imageBadge?.textContent).toBe(badgeLabel)
+      expect(imageBadge?.className).toMatch(/\bpointer-events-none\b/)
+      expect(imageBadge?.className).toMatch(/\babsolute\b/)
+      expect(imageBadge?.className).toMatch(/\btop-0\b/)
+      expect(imageBadge?.className).toMatch(/\bright-0\b/)
+      expect(imageBadge?.className).toMatch(/rounded-bl-\[4px\]/)
+      expect(imageBadge?.className).toMatch(/\bmd:text-sm\b/)
+      expect(imageBadge?.className).toMatch(/\bmd:px-2\.5\b/)
+      expect(imageBadge?.className).toMatch(/\bmd:py-1\b/)
+      expect(imageBadge?.className).toMatch(/\bbg-orange-600\b/)
+      expect(imageBadge?.className).toMatch(/\btext-white\b/)
+      expect(imageBadge?.className).toMatch(/\btext-xs\b/)
+    }
   })
 
   it.each([
@@ -681,8 +704,13 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     const card = cardFor(product, 'on-order')
     renderWatchCard(product, 'on-order')
     const consult = screen.getByTestId('consult-label')
-    expect(consult.textContent).toBe('Sob consulta')
-    expect(consult.previousElementSibling?.textContent).toBe('R$')
+    expect(consult.textContent).toBe(ON_ORDER_PRICE_NOTE)
+    expect(consult.className).toMatch(/\btext-xs\b/)
+    expect(consult.className).toMatch(/\bmd:text-sm\b/)
+    expect(consult.className).toMatch(/\bfont-medium\b/)
+    expect(consult.className).toMatch(/\bmd:font-semibold\b/)
+    expect(consult.className).toMatch(/\btext-destructive\b/)
+    expect(consult.textContent).not.toMatch(/R\$/)
     expect(screen.queryByTestId('price-block')).toBeNull()
     expect(screen.queryByTestId('price-pix')).toBeNull()
     expect(screen.queryByTestId('price-installments')).toBeNull()

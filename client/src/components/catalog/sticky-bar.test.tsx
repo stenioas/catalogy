@@ -11,6 +11,7 @@ import { creditInstallmentLabel } from '@catalogo/shared'
 
 import { waUrl } from './want-link'
 import { StickyBar } from './sticky-bar'
+import { ON_ORDER_PRICE_NOTE } from './price-block'
 
 const clientSrc = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -321,8 +322,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const offerRow = within(bar).getByTestId('offer-row')
     const consult = within(bar).getByTestId('consult-label')
 
-    expect(consult.textContent).toBe('Sob consulta')
-    expect(consult.previousElementSibling?.textContent).toBe('R$')
+    expect(consult.textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(offerRow.textContent).toContain('Black Friday')
     expect(offerRow.compareDocumentPosition(consult) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(within(bar).queryByTestId('price-block')).toBeNull()
@@ -340,8 +340,7 @@ describe('StickyBar (SV-16, SV-20, CAT-89–CAT-94, CAT-151)', () => {
     const bar = screen.getByTestId('sticky-bar')
 
     expect(within(bar).getByTestId('sticky-unavailable-label').textContent).toBe('Indisponível')
-    expect(within(bar).getByTestId('consult-label').textContent).toBe('Sob consulta')
-    expect(within(bar).getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
+    expect(within(bar).getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(within(bar).queryByTestId('price-block')).toBeNull()
     expect(within(bar).queryByTestId('price-current')).toBeNull()
   })

@@ -324,11 +324,10 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
 
     const selected = thumbs[0]!
     expect(selected.getAttribute('aria-pressed')).toBe('true')
-    expect(selected.className).toMatch(/border-2/)
+    expect(selected.className).toMatch(/border-\[3px\]/)
     expect(selected.className).toMatch(/border-primary/)
-    expect(selected.className).toMatch(/ring-2/)
-    expect(selected.className).toMatch(/ring-primary/)
-    expect(selected.className).toMatch(/ring-offset-1/)
+    expect(selected.className).not.toMatch(/ring-2/)
+    expect(selected.className).not.toMatch(/ring-offset/)
 
     fireEvent.click(thumbs[1]!)
     expect(onSelect).toHaveBeenCalledOnce()
@@ -405,16 +404,29 @@ function stubImageRow(
   return scrollTo
 }
 
-describe('AxisSelectors image row advances to the next variant', () => {
+describe('AxisSelectors image row aligns the clicked variant first', () => {
   function renderImageRow() {
-    const product = imageAndTextProduct()
     const onSelect = vi.fn()
     render(
       <AxisSelectors
-        slug={product.slug}
-        selectors={openSelectors(product, 'preto,m')}
-        activeV="preto,m"
+        slug="fila"
+        activeV="v1"
         onSelect={onSelect}
+        selectors={[
+          {
+            axisId: 'color',
+            label: 'Cor',
+            presentation: 'image',
+            options: ['v1', 'v2', 'v3', 'v4', 'v5'].map((valueId) => ({
+              valueId,
+              value: valueId,
+              disabled: false,
+              unavailable: false,
+              v: valueId,
+              imageFile: `${valueId}.jpg`,
+            })),
+          },
+        ]}
       />,
     )
     const row = within(groupByAxis('color')).getByRole('group')
@@ -422,71 +434,51 @@ describe('AxisSelectors image row advances to the next variant', () => {
     return { onSelect, row, buttons }
   }
 
-  it('scrolls by the distance to the next thumbnail when one sits to the right', () => {
+  it('scrolls a middle thumbnail so it becomes the first visible one', () => {
     const { onSelect, row, buttons } = renderImageRow()
-    const scrollTo = stubImageRow(row, buttons, [8, 80, 152, 224], {
-      scrollLeft: 10,
+    const scrollTo = stubImageRow(row, buttons, [6, 78, 150, 222, 294], {
+      scrollLeft: 0,
       scrollWidth: 1000,
       clientWidth: 300,
     })
 
-    fireEvent.click(buttons[1]!)
+    fireEvent.click(buttons[2]!)
 
     expect(scrollTo).toHaveBeenCalledOnce()
-    expect(scrollTo).toHaveBeenCalledWith({ left: 82, behavior: 'smooth' })
+    expect(scrollTo).toHaveBeenCalledWith({ left: 144, behavior: 'smooth' })
     expect(onSelect).toHaveBeenCalledOnce()
-    expect(onSelect).toHaveBeenCalledWith('branco,m')
+    expect(onSelect).toHaveBeenCalledWith('v3')
   })
 
-  it('does not scroll when the clicked thumbnail is the last one', () => {
-    const onSelect = vi.fn()
-    render(
-      <AxisSelectors
-        slug="fila"
-        activeV="a"
-        onSelect={onSelect}
-        selectors={[
-          {
-            axisId: 'color',
-            label: 'Cor',
-            presentation: 'image',
-            options: [
-              { valueId: 'a', value: 'A', disabled: false, unavailable: false, v: 'a', imageFile: 'a.jpg' },
-              { valueId: 'b', value: 'B', disabled: false, unavailable: false, v: 'b', imageFile: 'b.jpg' },
-            ],
-          },
-        ]}
-      />,
-    )
-    const row = within(groupByAxis('color')).getByRole('group')
-    const buttons = within(row).getAllByRole('button')
-    const scrollTo = stubImageRow(row, buttons, [0, 72], {
-      scrollLeft: 40,
+  it('does not scroll when the clicked thumbnail is already the first visible', () => {
+    const { onSelect, row, buttons } = renderImageRow()
+    const scrollTo = stubImageRow(row, buttons, [6, 78, 150, 222, 294], {
+      scrollLeft: 0,
       scrollWidth: 1000,
       clientWidth: 300,
     })
 
-    fireEvent.click(buttons[1]!)
+    fireEvent.click(buttons[0]!)
 
     expect(scrollTo).not.toHaveBeenCalled()
     expect(onSelect).toHaveBeenCalledOnce()
-    expect(onSelect).toHaveBeenCalledWith('b')
+    expect(onSelect).toHaveBeenCalledWith('v1')
   })
 
   it('clamps the scroll to the end of the row and still selects', () => {
     const { onSelect, row, buttons } = renderImageRow()
-    const scrollTo = stubImageRow(row, buttons, [0, 144, 216, 288], {
-      scrollLeft: 180,
+    const scrollTo = stubImageRow(row, buttons, [6, 78, 150, 222, 294], {
+      scrollLeft: 40,
       scrollWidth: 400,
       clientWidth: 200,
     })
 
-    fireEvent.click(buttons[1]!)
+    fireEvent.click(buttons[4]!)
 
     expect(scrollTo).toHaveBeenCalledOnce()
     expect(scrollTo).toHaveBeenCalledWith({ left: 200, behavior: 'smooth' })
     expect(onSelect).toHaveBeenCalledOnce()
-    expect(onSelect).toHaveBeenCalledWith('branco,m')
+    expect(onSelect).toHaveBeenCalledWith('v5')
   })
 
   it('does not scroll a wrapping text axis', () => {

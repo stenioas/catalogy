@@ -9,6 +9,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createMemoryRouter, MemoryRouter, RouterProvider, useParams } from 'react-router-dom'
 
 import { WatchCard } from '../components/catalog/watch-card'
+import { ON_ORDER_PRICE_NOTE } from '../components/catalog/price-block'
 
 import {
   applyThemeClass,
@@ -231,8 +232,11 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       expect(screen.queryByTestId('price-block')).toBeNull()
       expect(screen.queryByTestId('price-pix')).toBeNull()
       expect(screen.queryByTestId('price-installments')).toBeNull()
-      expect(screen.getByTestId('consult-label').textContent).toBe('Sob consulta')
-      expect(screen.getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
+      expect(screen.getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
+      expect(screen.getByTestId('consult-label').className).toMatch(/text-\[15px\]/)
+      expect(screen.getByTestId('consult-label').className).toMatch(/\bmd:text-base\b/)
+      expect(screen.getByTestId('consult-label').className).toMatch(/\bfont-semibold\b/)
+      expect(screen.getByTestId('consult-label').className).toMatch(/\btext-destructive\b/)
       expect(follows(heading, screen.getByTestId('consult-label'))).toBe(true)
       return
     }
@@ -249,8 +253,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     mockProductsRef.current = [product]
     installObserver(0)
     renderWatchPage()
-    expect(within(screen.getByTestId('watch-commerce')).getByTestId('consult-label').textContent).toBe('Sob consulta')
-    expect(within(screen.getByTestId('sticky-bar')).getByTestId('consult-label').textContent).toBe('Sob consulta')
+    expect(within(screen.getByTestId('watch-commerce')).getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
+    expect(within(screen.getByTestId('sticky-bar')).getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(screen.queryByTestId('price-block')).toBeNull()
     expect(screen.queryByTestId('price-installments')).toBeNull()
     expect(screen.queryByTestId('price-pix')).toBeNull()
@@ -1002,8 +1006,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Oculto' })).toBeDefined()
     expect(screen.getByTestId('state-label').textContent).toBe('Usado')
     expect(screen.getByTestId('availability-badge').textContent).toBe('Indisponível')
-    expect(screen.getByTestId('consult-label').textContent).toBe('Sob consulta')
-    expect(screen.getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
+    expect(screen.getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(screen.queryByTestId('price-block')).toBeNull()
     expect(screen.queryByTestId('price-pix')).toBeNull()
     expect(screen.queryByTestId('price-installments')).toBeNull()
@@ -1205,8 +1208,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const offer = screen.getByTestId('offer-row')
     const consult = screen.getByTestId('consult-label')
     const axes = screen.getByTestId('axis-selectors')
-    expect(consult.textContent).toBe('Sob consulta')
-    expect(consult.previousElementSibling?.textContent).toBe('R$')
+    expect(consult.textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(offer.textContent).toBe('leve 2')
     expect(screen.queryByTestId('price-block')).toBeNull()
     expect(screen.queryByTestId('price-pix')).toBeNull()
@@ -1249,8 +1251,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     mockProductsRef.current = [consultProduct(false, [consultOffer])]
     renderWatchPage('seculus-kit', false, 'listing')
     expect(screen.getByTestId('availability-badge').textContent).toBe('Indisponível')
-    expect(screen.getByTestId('consult-label').textContent).toBe('Sob consulta')
-    expect(screen.getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
+    expect(screen.getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(follows(screen.getByTestId('offer-row'), screen.getByTestId('consult-label'))).toBe(true)
     expect(screen.queryByTestId('price-block')).toBeNull()
     expect(screen.queryByTestId('price-pix')).toBeNull()
@@ -1261,8 +1262,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   it('OSC-29: on_order without offers draws no offer row above Sob consulta', () => {
     mockProductsRef.current = [consultProduct(true)]
     renderWatchPage()
-    expect(screen.getByTestId('consult-label').textContent).toBe('Sob consulta')
-    expect(screen.getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
+    expect(screen.getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(screen.queryByTestId('offer-row')).toBeNull()
     expect(screen.queryByTestId('price-block')).toBeNull()
   })

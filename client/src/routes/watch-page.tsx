@@ -11,13 +11,12 @@ import {
   type Variant,
 } from '@catalogo/shared'
 
-import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 import { products } from '../catalog/products.generated'
 import { AxisSelectors } from '../components/catalog/axis-selectors'
 import { ProductMedia } from '../components/catalog/product-media'
-import { PriceBlock } from '../components/catalog/price-block'
+import { OnOrderPriceNote, PriceBlock } from '../components/catalog/price-block'
 import { OfferRow } from '../components/catalog/product-badges'
 import { StickyBar } from '../components/catalog/sticky-bar'
 import { TopBar } from '../components/catalog/top-bar'
@@ -144,20 +143,6 @@ function ProductIdentity({
 
 const offerWithShareClassName = 'flex w-full min-w-0 flex-col items-stretch gap-3'
 
-function ConsultPrice() {
-  return (
-    <p className="m-0 flex items-center gap-1.5">
-      <span className="text-2xl font-semibold text-foreground">R$</span>
-      <Badge
-        data-testid="consult-label"
-        className="h-8 rounded-[4px] border-0 bg-orange-200 px-2 py-0 text-base font-medium leading-none text-orange-950 dark:bg-orange-300 dark:text-orange-950"
-      >
-        Sob consulta
-      </Badge>
-    </p>
-  )
-}
-
 function ProductCommerce({
   price,
   listPrice,
@@ -176,7 +161,7 @@ function ProductCommerce({
   beforeShare?: ReactNode
 }) {
   const priceNode = onOrder
-    ? <ConsultPrice />
+    ? <OnOrderPriceNote />
     : price !== undefined ? <PriceBlock price={price} listPrice={listPrice} /> : null
   const stacked = (
     <>

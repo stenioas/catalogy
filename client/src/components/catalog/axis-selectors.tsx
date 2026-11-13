@@ -44,10 +44,9 @@ export function advanceVariantScrollLeft(metrics: {
   scrollWidth: number
   clientWidth: number
   clickedOffsetLeft: number
-  nextOffsetLeft: number | null
+  firstOffsetLeft: number
 }): number | null {
-  if (metrics.nextOffsetLeft === null) return null
-  const target = metrics.scrollLeft + (metrics.nextOffsetLeft - metrics.clickedOffsetLeft)
+  const target = metrics.clickedOffsetLeft - metrics.firstOffsetLeft
   const max = Math.max(0, metrics.scrollWidth - metrics.clientWidth)
   const clamped = Math.min(max, Math.max(0, target))
   if (clamped === metrics.scrollLeft) return null
@@ -57,13 +56,14 @@ export function advanceVariantScrollLeft(metrics: {
 function scrollImageRowToNext(clicked: HTMLElement) {
   const row = clicked.parentElement
   if (!(row instanceof HTMLElement)) return
-  const next = clicked.nextElementSibling
+  const first = row.firstElementChild
+  if (!(first instanceof HTMLElement)) return
   const left = advanceVariantScrollLeft({
     scrollLeft: row.scrollLeft,
     scrollWidth: row.scrollWidth,
     clientWidth: row.clientWidth,
     clickedOffsetLeft: clicked.offsetLeft,
-    nextOffsetLeft: next instanceof HTMLElement ? next.offsetLeft : null,
+    firstOffsetLeft: first.offsetLeft,
   })
   if (left === null) return
   row.scrollTo({ left, behavior: 'smooth' })
@@ -72,14 +72,14 @@ function scrollImageRowToNext(clicked: HTMLElement) {
 function imageButtonClass(option: ListingSelectorOption, pressed: boolean): string {
   const orderable = !option.disabled && !option.unavailable
   return cn(
-    'size-16 shrink-0 overflow-hidden rounded-md border-2 p-0',
+    'size-16 shrink-0 overflow-hidden rounded-md p-0',
     orderable
       ? pressed
-        ? 'border-primary ring-2 ring-primary ring-offset-1'
-        : 'border-transparent opacity-100'
+        ? 'border-[3px] border-primary'
+        : 'border-2 border-transparent'
       : cn(
           'border-dashed opacity-60',
-          pressed ? 'border-primary ring-2 ring-primary ring-offset-1' : 'border-muted-foreground',
+          pressed ? 'border-[3px] border-primary' : 'border-2 border-muted-foreground',
         ),
   )
 }
@@ -134,13 +134,9 @@ export function AxisSelectors({ selectors, activeV, onSelect, slug = '' }: AxisS
                             isUnavailable &&
                               cn(
                                 'border-dashed opacity-60',
-                                isPressed
-                                  ? 'border-primary ring-2 ring-primary ring-offset-1'
-                                  : 'border-muted-foreground',
+                                isPressed ? 'border-[3px] border-primary' : 'border-muted-foreground',
                               ),
-                            !isUnavailable &&
-                              isPressed &&
-                              'border-primary ring-2 ring-primary ring-offset-1',
+                            !isUnavailable && isPressed && 'border-[3px] border-primary',
                           )
                     }
                     onClick={(event) => {

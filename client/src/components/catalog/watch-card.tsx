@@ -1,12 +1,11 @@
 import type { CatalogCard, Product } from '@catalogo/shared'
-import { resolveVariant, shareMessage } from '@catalogo/shared'
+import { resolveVariant, shareMessage, STATE_LABEL } from '@catalogo/shared'
 import { Link, useLocation } from 'react-router-dom'
 
-import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 
-import { OfferRow, ProductConditionLine } from './product-badges'
-import { PriceBlock } from './price-block'
+import { OfferRow, ProductAvailabilityBadge } from './product-badges'
+import { OnOrderPriceNote, PriceBlock } from './price-block'
 import { WantIconLink } from './want-link'
 
 export type WatchCardProps = {
@@ -49,6 +48,14 @@ export function WatchCard({ product, card }: WatchCardProps) {
               alt={card.title}
               className="h-full w-full object-contain"
             />
+            {listing.state === 'used' || listing.state === 'openbox' ? (
+              <span
+                data-testid="card-image-state-badge"
+                className="pointer-events-none absolute top-0 right-0 rounded-bl-[4px] bg-orange-600 px-1.5 py-0.5 text-xs font-medium leading-none text-white md:px-2.5 md:py-1 md:text-sm"
+              >
+                {STATE_LABEL[listing.state]}
+              </span>
+            ) : null}
           </div>
         </Link>
         <div
@@ -63,21 +70,18 @@ export function WatchCard({ product, card }: WatchCardProps) {
               className="flex min-w-0 flex-1 flex-col items-start self-start gap-1 md:gap-2"
             >
               {!isOnOrder && card.offers.length > 0 ? <OfferRow offers={card.offers} /> : null}
-              <ProductConditionLine state={listing.state} availabilityStatus={listing.availabilityStatus} />
+              <p
+                data-testid="product-condition"
+                className="m-0 flex flex-wrap items-center gap-1.5 text-xs leading-none text-muted-foreground"
+              >
+                <ProductAvailabilityBadge availabilityStatus={listing.availabilityStatus} compact />
+              </p>
               <h2 className="m-0 line-clamp-1 w-full min-w-0 truncate overflow-hidden text-ellipsis whitespace-nowrap text-xs leading-snug font-medium text-foreground md:font-display md:text-sm md:leading-snug md:font-semibold">
                 {card.title}
               </h2>
               <div className="flex w-full flex-col items-start gap-1 md:gap-2">
                 {isOnOrder ? (
-                  <p className="m-0 flex items-center gap-1.5">
-                    <span className="text-base font-semibold text-foreground md:text-xl">R$</span>
-                    <Badge
-                      data-testid="consult-label"
-                      className="h-6 rounded-[4px] border-0 bg-orange-200 px-1.5 py-0 text-sm font-medium leading-none text-orange-950 md:h-7 md:text-base dark:bg-orange-300 dark:text-orange-950"
-                    >
-                      Sob consulta
-                    </Badge>
-                  </p>
+                  <OnOrderPriceNote showcase />
                 ) : (
                   <PriceBlock price={card.price!} listPrice={card.listPrice} showcase />
                 )}

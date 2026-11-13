@@ -11,6 +11,23 @@ export type PriceBlockProps = {
 
 const currentPriceClassName = 'text-2xl font-semibold'
 
+export const ON_ORDER_PRICE_NOTE = 'Preço sob consulta'
+
+export function OnOrderPriceNote({ showcase = false }: { showcase?: boolean }) {
+  return (
+    <p
+      data-testid="consult-label"
+      className={
+        showcase
+          ? 'm-0 text-xs font-medium leading-snug text-destructive md:font-display md:text-sm md:font-semibold'
+          : 'm-0 font-display text-[15px] font-semibold leading-snug text-destructive md:text-base'
+      }
+    >
+      {ON_ORDER_PRICE_NOTE}
+    </p>
+  )
+}
+
 export function PriceBlock({
   price,
   listPrice,
