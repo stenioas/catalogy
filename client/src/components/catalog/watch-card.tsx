@@ -31,7 +31,7 @@ function listingVariantForCard(product: Product, card: CatalogCard) {
 export function WatchCard({ product, card }: WatchCardProps) {
   const { search } = useLocation()
   const section = new URLSearchParams(search).get('section')
-  const linkState = section === null ? undefined : { section }
+  const linkState = section === null ? { fromCatalog: true } : { fromCatalog: true, section }
   const { listing, variant } = listingVariantForCard(product, card)
   const shareText = shareMessage(product, listing, variant, window.location.origin)
   const isOnOrder = card.availabilityStatus === 'on_order'

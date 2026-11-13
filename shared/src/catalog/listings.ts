@@ -400,7 +400,8 @@ function openListing(product: Product, listing: Listing, v: string | null): Open
     productSpecifications: product.specifications ?? [],
     listingSpecifications: listing.specifications ?? [],
     images: listing.images,
-    imageIndex: listing.images.indexOf(variant.mainImage),
+    imageIndex:
+      v === null || v.trim() === '' ? 0 : listing.images.indexOf(variant.mainImage),
     selectors: selectorsFor(product, listing, variant),
   }
   if (product.description !== undefined) view.description = product.description

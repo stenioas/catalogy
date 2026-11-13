@@ -3,10 +3,12 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { creditInstallmentLabel, SPECIFICATION_LABELS, type Listing, type Product, type Variant } from '@catalogo/shared'
+import { creditInstallmentLabel, homeCards, SPECIFICATION_LABELS, type Listing, type Product, type Variant } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { MemoryRouter } from 'react-router-dom'
+import { createMemoryRouter, MemoryRouter, RouterProvider, useParams } from 'react-router-dom'
+
+import { WatchCard } from '../components/catalog/watch-card'
 
 import {
   applyThemeClass,
@@ -1263,6 +1265,94 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByTestId('consult-label').previousElementSibling?.textContent).toBe('R$')
     expect(screen.queryByTestId('offer-row')).toBeNull()
     expect(screen.queryByTestId('price-block')).toBeNull()
+  })
+
+  it('opens the listing cover from a card, the variant photo from a direct link, then the chosen variant photo', () => {
+    const product: Product = {
+      slug: 'capa',
+      title: 'Capa',
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [
+            { id: 'azul', value: 'Azul' },
+            { id: 'preto', value: 'Preto' },
+          ],
+        },
+      ],
+      listings: [
+        {
+          id: 'anuncio',
+          state: 'new',
+          availabilityStatus: 'available',
+          images: ['cover.png', 'azul.png', 'preto.png'],
+          variants: [
+            {
+              axes: [{ axisId: 'color', valueId: 'azul' }],
+              price: 10,
+              mainImage: 'azul.png',
+            },
+            {
+              axes: [{ axisId: 'color', valueId: 'preto' }],
+              price: 30,
+              mainImage: 'preto.png',
+            },
+          ],
+        },
+      ],
+    }
+    mockProductsRef.current = [product]
+    const card = homeCards([product], 'available')[0]!
+    expect(card.image).toBe('azul.png')
+    expect(card.path).toBe('/product/capa/anuncio?v=azul')
+
+    function WatchListingRoute() {
+      const { slug, listingId } = useParams()
+      return <WatchPage slug={slug ?? ''} listingId={listingId ?? ''} />
+    }
+
+    const router = createMemoryRouter(
+      [
+        { path: '/', element: <WatchCard product={product} card={card} /> },
+        { path: '/product/:slug/:listingId', element: <WatchListingRoute /> },
+      ],
+      { initialEntries: ['/?section=available'] },
+    )
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>,
+    )
+
+    fireEvent.click(screen.getByTestId('watch-card-link'))
+    expect(`${router.state.location.pathname}${router.state.location.search}`).toBe(card.path)
+    expect(router.state.location.state).toEqual({ fromCatalog: true, section: 'available' })
+    expect(screen.getByRole('button', { name: 'Abrir galeria na foto 1' })).toBeDefined()
+    expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/cover.png')
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 10,00')
+    expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/?section=available')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Preto' }))
+    expect(screen.getByRole('button', { name: 'Abrir galeria na foto 3' })).toBeDefined()
+    expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/preto.png')
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 30,00')
+    expect(router.state.location.state).toEqual({ section: 'available' })
+    expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/?section=available')
+
+    cleanup()
+    mockProductsRef.current = [product]
+    render(
+      <ThemeProvider>
+        <MemoryRouter initialEntries={[card.path]}>
+          <WatchPage slug="capa" listingId="anuncio" />
+        </MemoryRouter>
+      </ThemeProvider>,
+    )
+    expect(screen.getByRole('button', { name: 'Abrir galeria na foto 2' })).toBeDefined()
+    expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/azul.png')
+    expect(screen.getByTestId('price-current').textContent).toBe('R$ 10,00')
+    expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/')
   })
 
   it.each([919, 920])('OSC-46: choosing another enabled option selects that variant at %i px', (viewport) => {

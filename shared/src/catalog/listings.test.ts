@@ -1304,8 +1304,16 @@ describe('on_order without a required price', () => {
     expect(view.missing).toBe(false)
     if (!view.missing) {
       expect(view.price).toBe(price)
-      expect(view.imageIndex).toBe(1)
+      expect(view.imageIndex).toBe(0)
+      expect(view.images[view.imageIndex]).toBe('cover.png')
       expect(view.availabilityLabel).toBe('Sob encomenda')
+    }
+    const direct = listingByPath([product], 'watch', 'sob-encomenda', 'variant')
+    expect(direct.missing).toBe(false)
+    if (!direct.missing) {
+      expect(direct.price).toBe(price)
+      expect(direct.imageIndex).toBe(1)
+      expect(direct.images[direct.imageIndex]).toBe('variant.png')
     }
   })
 })

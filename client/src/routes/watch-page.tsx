@@ -26,11 +26,31 @@ import { productImageSrc } from '../components/catalog/watch-card'
 
 export const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
 
-export function catalogReturnHref(state: unknown): string {
-  if (state === null || typeof state !== 'object' || !('section' in state)) return '/'
+function readSection(state: unknown): string | undefined {
+  if (state === null || typeof state !== 'object' || !('section' in state)) return undefined
   const section = state.section
-  if (typeof section !== 'string' || section === '') return '/'
+  if (typeof section !== 'string' || section === '') return undefined
+  return section
+}
+
+export function catalogReturnHref(state: unknown): string {
+  const section = readSection(state)
+  if (section === undefined) return '/'
   return `/?section=${encodeURIComponent(section)}`
+}
+
+function openedFromCatalog(state: unknown): boolean {
+  return (
+    state !== null &&
+    typeof state === 'object' &&
+    'fromCatalog' in state &&
+    state.fromCatalog === true
+  )
+}
+
+function stateAfterVariantChange(state: unknown): { section: string } | undefined {
+  const section = readSection(state)
+  return section === undefined ? undefined : { section }
 }
 
 export type WatchPageProps = {
@@ -371,10 +391,13 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   const activeV = variantQuery(product, variant)
   const message = shareMessage(product, listing, variant, window.location.origin)
   const shareHref = `https://wa.me/?text=${encodeURIComponent(message)}`
+  const imageIndex = openedFromCatalog(location.state) ? 0 : view.imageIndex
 
   function selectVariant(nextV: string | null) {
     const valueIds = nextV === null || nextV.trim() === '' ? [] : nextV.split(',')
-    navigate(listingPath(product!.slug, listing!.id, valueIds), { state: location.state })
+    navigate(listingPath(product!.slug, listing!.id, valueIds), {
+      state: stateAfterVariantChange(location.state),
+    })
   }
 
   return (
@@ -396,7 +419,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
             productSpecifications={view.productSpecifications}
             listingSpecifications={view.listingSpecifications}
             images={view.images}
-            imageIndex={view.imageIndex}
+            imageIndex={imageIndex}
             shareHref={shareHref}
             selectors={view.selectors}
             activeV={activeV}

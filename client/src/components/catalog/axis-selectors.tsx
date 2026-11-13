@@ -39,6 +39,36 @@ function axisLine(group: ListingSelector, activeByAxis: Record<string, string>):
   return `${group.label}: ${selected.value}`
 }
 
+export function advanceVariantScrollLeft(metrics: {
+  scrollLeft: number
+  scrollWidth: number
+  clientWidth: number
+  clickedOffsetLeft: number
+  nextOffsetLeft: number | null
+}): number | null {
+  if (metrics.nextOffsetLeft === null) return null
+  const target = metrics.scrollLeft + (metrics.nextOffsetLeft - metrics.clickedOffsetLeft)
+  const max = Math.max(0, metrics.scrollWidth - metrics.clientWidth)
+  const clamped = Math.min(max, Math.max(0, target))
+  if (clamped === metrics.scrollLeft) return null
+  return clamped
+}
+
+function scrollImageRowToNext(clicked: HTMLElement) {
+  const row = clicked.parentElement
+  if (!(row instanceof HTMLElement)) return
+  const next = clicked.nextElementSibling
+  const left = advanceVariantScrollLeft({
+    scrollLeft: row.scrollLeft,
+    scrollWidth: row.scrollWidth,
+    clientWidth: row.clientWidth,
+    clickedOffsetLeft: clicked.offsetLeft,
+    nextOffsetLeft: next instanceof HTMLElement ? next.offsetLeft : null,
+  })
+  if (left === null) return
+  row.scrollTo({ left, behavior: 'smooth' })
+}
+
 function imageButtonClass(option: ListingSelectorOption, pressed: boolean): string {
   const orderable = !option.disabled && !option.unavailable
   return cn(
@@ -75,7 +105,7 @@ export function AxisSelectors({ selectors, activeV, onSelect, slug = '' }: AxisS
           >
             <span className="text-xs font-medium text-muted-foreground">{line}</span>
             <div
-              className={image ? 'flex w-full gap-2 overflow-x-auto py-2' : 'flex flex-wrap gap-2'}
+              className={image ? 'flex w-full gap-2 overflow-x-auto px-1.5 py-2' : 'flex flex-wrap gap-2 px-1.5 py-1'}
               role="group"
               aria-label={line}
             >
@@ -113,8 +143,9 @@ export function AxisSelectors({ selectors, activeV, onSelect, slug = '' }: AxisS
                               'border-primary ring-2 ring-primary ring-offset-1',
                           )
                     }
-                    onClick={() => {
+                    onClick={(event) => {
                       if (controlDisabled || option.v === null) return
+                      if (image) scrollImageRowToNext(event.currentTarget)
                       onSelect(option.v)
                     }}
                   >

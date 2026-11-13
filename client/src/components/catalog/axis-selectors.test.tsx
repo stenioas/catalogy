@@ -308,6 +308,7 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
 
     const control = within(groupByAxis('color')).getByRole('group')
     expect(control.className).toMatch(/overflow-x-auto/)
+    expect(control.className).toMatch(/px-1\.5/)
     expect(control.className).not.toMatch(/flex-wrap/)
     const thumbs = within(control).getAllByRole('button')
     expect(thumbs).toHaveLength(4)
@@ -378,10 +379,138 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
 
     const control = within(groupByAxis('size')).getByRole('group')
     expect(control.className).toMatch(/flex-wrap/)
+    expect(control.className).toMatch(/px-1\.5/)
     expect(control.className).not.toMatch(/overflow-x/)
     expect(within(control).getByRole('button', { name: 'P' })).toBeTruthy()
     expect(within(control).getByRole('button', { name: 'M' })).toBeTruthy()
     expect(control.textContent).not.toContain('Pequeno')
     expect(control.textContent).not.toContain('Médio')
+  })
+})
+
+function stubImageRow(
+  row: HTMLElement,
+  buttons: HTMLElement[],
+  offsets: number[],
+  layout: { scrollLeft: number; scrollWidth: number; clientWidth: number },
+) {
+  Object.defineProperty(row, 'scrollLeft', { configurable: true, value: layout.scrollLeft })
+  Object.defineProperty(row, 'scrollWidth', { configurable: true, value: layout.scrollWidth })
+  Object.defineProperty(row, 'clientWidth', { configurable: true, value: layout.clientWidth })
+  const scrollTo = vi.fn()
+  row.scrollTo = scrollTo
+  buttons.forEach((button, index) => {
+    Object.defineProperty(button, 'offsetLeft', { configurable: true, value: offsets[index] })
+  })
+  return scrollTo
+}
+
+describe('AxisSelectors image row advances to the next variant', () => {
+  function renderImageRow() {
+    const product = imageAndTextProduct()
+    const onSelect = vi.fn()
+    render(
+      <AxisSelectors
+        slug={product.slug}
+        selectors={openSelectors(product, 'preto,m')}
+        activeV="preto,m"
+        onSelect={onSelect}
+      />,
+    )
+    const row = within(groupByAxis('color')).getByRole('group')
+    const buttons = within(row).getAllByRole('button')
+    return { onSelect, row, buttons }
+  }
+
+  it('scrolls by the distance to the next thumbnail when one sits to the right', () => {
+    const { onSelect, row, buttons } = renderImageRow()
+    const scrollTo = stubImageRow(row, buttons, [8, 80, 152, 224], {
+      scrollLeft: 10,
+      scrollWidth: 1000,
+      clientWidth: 300,
+    })
+
+    fireEvent.click(buttons[1]!)
+
+    expect(scrollTo).toHaveBeenCalledOnce()
+    expect(scrollTo).toHaveBeenCalledWith({ left: 82, behavior: 'smooth' })
+    expect(onSelect).toHaveBeenCalledOnce()
+    expect(onSelect).toHaveBeenCalledWith('branco,m')
+  })
+
+  it('does not scroll when the clicked thumbnail is the last one', () => {
+    const onSelect = vi.fn()
+    render(
+      <AxisSelectors
+        slug="fila"
+        activeV="a"
+        onSelect={onSelect}
+        selectors={[
+          {
+            axisId: 'color',
+            label: 'Cor',
+            presentation: 'image',
+            options: [
+              { valueId: 'a', value: 'A', disabled: false, unavailable: false, v: 'a', imageFile: 'a.jpg' },
+              { valueId: 'b', value: 'B', disabled: false, unavailable: false, v: 'b', imageFile: 'b.jpg' },
+            ],
+          },
+        ]}
+      />,
+    )
+    const row = within(groupByAxis('color')).getByRole('group')
+    const buttons = within(row).getAllByRole('button')
+    const scrollTo = stubImageRow(row, buttons, [0, 72], {
+      scrollLeft: 40,
+      scrollWidth: 1000,
+      clientWidth: 300,
+    })
+
+    fireEvent.click(buttons[1]!)
+
+    expect(scrollTo).not.toHaveBeenCalled()
+    expect(onSelect).toHaveBeenCalledOnce()
+    expect(onSelect).toHaveBeenCalledWith('b')
+  })
+
+  it('clamps the scroll to the end of the row and still selects', () => {
+    const { onSelect, row, buttons } = renderImageRow()
+    const scrollTo = stubImageRow(row, buttons, [0, 144, 216, 288], {
+      scrollLeft: 180,
+      scrollWidth: 400,
+      clientWidth: 200,
+    })
+
+    fireEvent.click(buttons[1]!)
+
+    expect(scrollTo).toHaveBeenCalledOnce()
+    expect(scrollTo).toHaveBeenCalledWith({ left: 200, behavior: 'smooth' })
+    expect(onSelect).toHaveBeenCalledOnce()
+    expect(onSelect).toHaveBeenCalledWith('branco,m')
+  })
+
+  it('does not scroll a wrapping text axis', () => {
+    const product = imageAndTextProduct()
+    const onSelect = vi.fn()
+    render(
+      <AxisSelectors
+        slug={product.slug}
+        selectors={openSelectors(product, 'preto,m')}
+        activeV="preto,m"
+        onSelect={onSelect}
+      />,
+    )
+    const row = within(groupByAxis('size')).getByRole('group')
+    const buttons = within(row).getAllByRole('button')
+    const scrollTo = stubImageRow(row, buttons, [0, 80], {
+      scrollLeft: 0,
+      scrollWidth: 400,
+      clientWidth: 120,
+    })
+
+    fireEvent.click(buttons[0]!)
+
+    expect(scrollTo).not.toHaveBeenCalled()
+    expect(onSelect).toHaveBeenCalledOnce()
   })
 })
