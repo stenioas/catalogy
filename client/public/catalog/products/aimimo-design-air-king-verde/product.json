@@ -6,10 +6,11 @@
     {
       "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
-          "id": "verde",
-          "value": "Verde"
+          "id": "green",
+          "value": "Green"
         }
       ]
     }
@@ -81,7 +82,6 @@
       "id": "listing",
       "state": "new",
       "availabilityStatus": "available",
-      "enabled": false,
       "images": [
         "aimimo-design-air-king-1.png",
         "aimimo-design-air-king-2.png",
@@ -92,10 +92,10 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "verde"
+              "valueId": "green"
             }
           ],
-          "price": 269.9,
+          "price": 259.9,
           "listPrice": 359.9,
           "mainImage": "aimimo-design-air-king-1.png",
           "offers": [
