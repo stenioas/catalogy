@@ -22,15 +22,24 @@ function lucideExportNameToKebab(exportName: string): string {
     .toLowerCase()
 }
 
-function OfferIcon({ name }: { name: string }) {
+const offerIcons = new Map<string, ComponentType<SVGProps<SVGSVGElement>>>()
+
+function offerIcon(name: string): ComponentType<SVGProps<SVGSVGElement>> | null {
   const kebab = lucideExportNameToKebab(name)
+  const cached = offerIcons.get(kebab)
+  if (cached !== undefined) return cached
   const importer = dynamicIconImports[kebab as keyof typeof dynamicIconImports]
-  if (!importer) {
-    return null
-  }
+  if (!importer) return null
   const LucideIcon = lazy(
     importer as () => Promise<{ default: ComponentType<SVGProps<SVGSVGElement>> }>,
   )
+  offerIcons.set(kebab, LucideIcon)
+  return LucideIcon
+}
+
+function OfferIcon({ name }: { name: string }) {
+  const LucideIcon = offerIcon(name)
+  if (LucideIcon === null) return null
   return (
     <Suspense fallback={null}>
       <LucideIcon aria-hidden="true" className="size-3" />

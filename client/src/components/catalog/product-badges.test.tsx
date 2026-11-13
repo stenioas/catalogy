@@ -75,6 +75,16 @@ describe('OfferRow (OSC-30, OSC-31, OSC-32)', () => {
       expect(screen.getByTestId('offer-badge').querySelector('svg')).not.toBeNull()
     })
   })
+
+  it('keeps the loaded icon mounted when the offer row rerenders', async () => {
+    const { rerender } = render(<OfferRow offers={[sampleOffer]} />)
+    await waitFor(() => {
+      expect(screen.getByTestId('offer-badge').querySelector('svg')).not.toBeNull()
+    })
+    const icon = screen.getByTestId('offer-badge').querySelector('svg')
+    rerender(<OfferRow offers={[{ ...sampleOffer }]} />)
+    expect(screen.getByTestId('offer-badge').querySelector('svg')).toBe(icon)
+  })
 })
 
 describe('ProductAvailabilityBadge (VAR-38, listing availability tokens)', () => {
