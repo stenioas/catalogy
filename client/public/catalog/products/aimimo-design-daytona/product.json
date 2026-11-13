@@ -1,7 +1,7 @@
 {
   "slug": "aimimo-design-daytona",
   "title": "Aimimo Design Daytona",
-  "description": "Relógio masculino com movimento de quartzo PE60, cronógrafo, data e indicador de 24 horas. Possui caixa e pulseira em aço inoxidável 316L, cristal de safira e ponteiros luminosos. O mostrador não possui logotipo.",
+  "description": "Uma homenagem ao Rolex Daytona, é um relógio masculino com movimento de quartzo PE60, cronógrafo, data e indicador de 24 horas. Possui caixa e pulseira em aço inoxidável 316L, cristal de safira e ponteiros luminosos. O mostrador não possui logotipo.",
   "audience": "male",
   "axes": [
     {
@@ -10,19 +10,19 @@
       "values": [
         {
           "id": "black-bezel-black",
-          "value": "black bezel black"
+          "value": "Black Bezel Black"
         },
         {
           "id": "black-bezel-white",
-          "value": "black bezel white"
+          "value": "Black Bezel White"
         },
         {
           "id": "steel-bezel-white",
-          "value": "steel bezel white"
+          "value": "Steel Bezel White"
         },
         {
           "id": "steel-bezel-black",
-          "value": "steel bezel black"
+          "value": "Steel Bezel Black"
         }
       ],
       "presentation": "image"
@@ -55,7 +55,7 @@
     },
     {
       "label": "Movimento",
-      "value": "PE60"
+      "value": "Sunon PE60"
     },
     {
       "label": "Material da caixa",
@@ -88,7 +88,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -103,8 +103,7 @@
         "aimimo-design-daytona-9.webp",
         "aimimo-design-daytona-10.webp",
         "aimimo-design-daytona-11.webp",
-        "aimimo-design-daytona-12.webp",
-        "aimimo-design-daytona-13.webp"
+        "aimimo-design-daytona-12.webp"
       ],
       "variants": [
         {
@@ -142,6 +141,40 @@
             }
           ],
           "mainImage": "aimimo-design-daytona-10.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "aimimo-design-daytona-1.webp",
+        "aimimo-design-daytona-5.webp",
+        "aimimo-design-daytona-6.webp",
+        "aimimo-design-daytona-8.webp",
+        "aimimo-design-daytona-11.webp",
+        "aimimo-design-daytona-12.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-bezel-white"
+            }
+          ],
+          "price": 299.9,
+          "listPrice": 399.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "aimimo-design-daytona-8.webp"
         }
       ]
     }
