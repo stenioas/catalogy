@@ -83,7 +83,7 @@ function variantQuery(product: Product, variant: Variant): string | null {
 
 function ProductTitle({ title }: { title: string }) {
   return (
-    <h1 className="m-0 max-md:order-2 max-md:mt-3 min-w-0 break-words font-display text-[15px] font-semibold text-foreground md:text-base">
+    <h1 className="m-0 max-md:order-2 max-md:mt-3 min-w-0 break-words font-display text-[16px] font-semibold text-foreground md:text-[17px]">
       {title}
     </h1>
   )
