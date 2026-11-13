@@ -1,6 +1,8 @@
 # Contrato de relógio
 
-Referência para revisar um `product.json` quando o produto for um relógio. O servidor e o build não aplicam estas regras. Um produto que fuja da lista sobe do mesmo jeito.
+Formato de um `product.json`. `ProductSchema`, em `@catalogo/shared`, aplica estas regras quando o objeto é validado, inclusive no cadastro pela skill `product-register`.
+
+O carregador do Vite, no desenvolvimento e no build, não chama o schema. Ele exige que cada arquivo citado em `images` exista em `img/` e que cada `icon` de oferta seja um export do Lucide com import dinâmico. Um produto que fuja do restante da lista ainda pode ser lido por esse carregador.
 
 A página mostra as características na ordem em que estão no `product.json`.
 
@@ -9,11 +11,11 @@ A página mostra as características na ordem em que estão no `product.json`.
 | Campo | Quando usar | Efeito |
 | --- | --- | --- |
 | `slug` | sempre | Minúsculas, hífens, igual ao nome da pasta |
-| `title` | sempre | Título do produto |
-| `axes` | quando houver opções | Sem seletor, `axes: []` |
+| `title` | sempre | Título do produto. Na ficha, os valores dos eixos são acrescentados depois |
+| `axes` | sempre | Sem seletor, `axes: []` |
 | `listings` | sempre | Pelo menos um anúncio |
 | `description` | opcional | Texto do produto |
-| `audience` | opcional | `male`, `female`, `unisex` ou `child` |
+| `audience` | opcional | `male`, `female`, `unisex` ou `child`. Não aparece na página |
 | `specifications` | opcional | Características compartilhadas |
 
 `slug`, id de anúncio, id de eixo e id de valor usam só letras minúsculas, números e hífens. Não começam nem terminam com hífen.
@@ -22,7 +24,7 @@ A página mostra as características na ordem em que estão no `product.json`.
 
 | Campo | Quando usar | Efeito |
 | --- | --- | --- |
-| `id` | sempre | Identidade do anúncio na URL |
+| `id` | sempre | Identidade do anúncio na URL `/product/:slug/:listingId` |
 | `state` | sempre | `new`, `openbox`, `used` ou `defective` |
 | `availabilityStatus` | sempre | `available`, `coming_soon` ou `on_order` |
 | `images` | sempre | Pelo menos um arquivo em `img/` |
@@ -32,13 +34,13 @@ A página mostra as características na ordem em que estão no `product.json`.
 
 Sob encomenda usa `state: "new"`. O preço da variante pode existir ou faltar. `orderable: false` só faz sentido em sob encomenda.
 
-Cada nome em `images` é só o arquivo, sem pasta. Extensões: jpg, jpeg, png, webp e avif. A foto precisa existir em `img/`. Essa checagem de arquivo continua ativa na subida, fora deste contrato.
+Cada nome em `images` é só o arquivo, sem pasta. Extensões: jpg, jpeg, png, webp e avif. A foto precisa existir em `img/`. Essa checagem de arquivo continua ativa na subida.
 
 ## Variante
 
 | Campo | Quando usar | Efeito |
 | --- | --- | --- |
-| `axes` | sempre | Uma escolha para cada eixo declarado no produto, na ordem dos eixos |
+| `axes` | sempre | Uma escolha para cada eixo declarado no produto |
 | `mainImage` | sempre | Um dos arquivos de `images` do mesmo anúncio |
 | `price` | exceto sob encomenda | Número positivo em reais, truncado em duas casas |
 | `listPrice` | opcional | Exige `price` e precisa ser maior depois do truncamento |
@@ -48,11 +50,9 @@ Cada nome em `images` é só o arquivo, sem pasta. Extensões: jpg, jpeg, png, w
 
 O anúncio não repete a mesma combinação de eixos. Id e rótulo de eixo são únicos no produto. Id de valor é único dentro do eixo.
 
-## Especificações de relógio
+## Especificações
 
-Cada item tem `label` e `value`. O valor tem texto além de espaços. O mesmo rótulo não se repete no produto nem entre o produto e o anúncio.
-
-Rótulos usados nos relógios já cadastrados:
+Cada item tem `label` e `value`. O valor tem texto além de espaços. O mesmo rótulo não se repete no produto nem entre o produto e o anúncio. O schema só aceita os rótulos abaixo:
 
 1. Marca
 2. Modelo
@@ -78,8 +78,10 @@ Rótulos usados nos relógios já cadastrados:
 
 ## Ofertas
 
-Cada oferta tem `text` não vazio, `background` e `color` em `#RGB` ou `#RRGGBB`, e `icon` com o nome de um export do Lucide, por exemplo `Gift`. A oferta não altera `price` nem `listPrice`. Um ícone desconhecido ainda impede a subida, fora deste contrato.
+Cada oferta tem `text` não vazio, `background` e `color` em `#RGB` ou `#RRGGBB`, e `icon` com o nome de um export do Lucide, por exemplo `Gift`. A oferta não altera `price` nem `listPrice`. Um ícone desconhecido impede a subida.
 
 ## Eixos
 
 `presentation` é `image` ou `text`. Sem o campo, o seletor usa texto.
+
+Cada valor tem `id` e `value`. `alias` é opcional. Quando existe, a ficha e a mensagem do WhatsApp usam o alias no lugar de `value`. O seletor continua mostrando `value`.
