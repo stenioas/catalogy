@@ -6,7 +6,6 @@ import {
   listingPath,
   resolveVariant,
   shareMessage,
-  SPECIFICATION_LABELS,
   type Product,
   type Variant,
 } from '@catalogo/shared'
@@ -55,28 +54,6 @@ function hasText(value: string | undefined): value is string {
 
 function isSimilarAdUrl(value: string): boolean {
   return value.startsWith('http://') || value.startsWith('https://')
-}
-
-const specificationLabelRank = new Map(
-  SPECIFICATION_LABELS.map((label, index) => [label, index]),
-)
-
-function orderSpecificationRows<T extends { label: string; value: string }>(rows: T[]): T[] {
-  const canonical: T[] = []
-  const outside: T[] = []
-  for (const row of rows) {
-    if (specificationLabelRank.has(row.label)) {
-      canonical.push(row)
-    } else {
-      outside.push(row)
-    }
-  }
-  canonical.sort(
-    (left, right) =>
-      (specificationLabelRank.get(left.label) ?? 0) -
-      (specificationLabelRank.get(right.label) ?? 0),
-  )
-  return [...canonical, ...outside]
 }
 
 function SpecificationValue({ value }: { value: string }) {
@@ -192,7 +169,7 @@ function SpecificationSheet({
   rows: { label: string; value: string }[]
   className?: string
 }) {
-  const specifications = orderSpecificationRows(rows.filter((row) => hasText(row.value)))
+  const specifications = rows.filter((row) => hasText(row.value))
   if (specifications.length === 0) return null
   return <section className={`w-full min-w-0${className ? ` ${className}` : ''}`}>
     <h2 className="m-0 font-display text-lg font-semibold text-foreground">{title}</h2>

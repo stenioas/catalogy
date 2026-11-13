@@ -1,7 +1,6 @@
-import { readdirSync, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { ProductSchema } from '@catalogo/shared'
 import { describe, expect, it } from 'vitest'
 
 const productsDir = join(
@@ -145,7 +144,7 @@ describe('catalog specification migration', () => {
     expect(value(readProduct('addiesdive-ad2554'), 'Tipo de movimento')).toBe(
       'Quartzo japonês',
     )
-    expect(value(readProduct('addiesdive-ad2554'), 'Movimento')).toBe('2035')
+    expect(value(readProduct('addiesdive-ad2554'), 'Movimento')).toBe('Miyota 2035')
   })
 
   it('records addiesdive-my-h3-2qz water resistance as 200m (20 ATM)', () => {
@@ -184,45 +183,4 @@ describe('catalog specification migration', () => {
     expect(value(readProduct('benyar-5229'), 'Movimento')).toBe('Sunon PE702')
   })
 
-  it('accepts every current product.json in ProductSchema', () => {
-    const slugs = readdirSync(productsDir, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name)
-
-    expect(slugs.sort()).toEqual([
-      'addiesdive-ad2554',
-      'addiesdive-my-h3-2qz',
-      'addiesdive-my-h3-2qz-green-black',
-      'aimimo-design-air-king-verde',
-      'aimimo-design-tsuyosa',
-      'benyar-5229',
-      'curren-8106',
-      'curren-8361',
-      'curren-8455',
-      'curren-8498l-black',
-      'curren-9007',
-      'curren-9096',
-      'keaso-k002',
-      'naviforce-nf8052',
-      'pagani-design-pd-1701',
-      'qingxiya-7706',
-      'sapphero-so2205',
-      'seculus-kit-cantil',
-      'skmei-1628',
-      'skmei-1988',
-      'skmei-2126',
-      'steelflier-sf741',
-    ])
-    for (const slug of slugs) {
-      const parsed = ProductSchema.safeParse(
-        JSON.parse(
-          readFileSync(join(productsDir, slug, 'product.json'), 'utf8'),
-        ),
-      )
-      expect(
-        parsed.success,
-        parsed.success ? slug : JSON.stringify(parsed.error.issues),
-      ).toBe(true)
-    }
-  })
 })

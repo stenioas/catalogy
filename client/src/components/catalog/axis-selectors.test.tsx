@@ -93,11 +93,11 @@ describe('AxisSelectors (VAR-68, VAR-75, VAR-76)', () => {
 
     const sizeGroup = groups.find((node) => node.getAttribute('data-axis-id') === 'size')
     expect(sizeGroup).toBeDefined()
-    expect(within(sizeGroup!).getByRole('button', { name: 'P' })).toBeTruthy()
+    expect(within(sizeGroup!).queryByRole('button', { name: 'P' })).toBeNull()
     expect(within(sizeGroup!).getByRole('button', { name: 'M' })).toBeTruthy()
   })
 
-  it('keeps an impossible combination visible and disabled (VAR-75)', () => {
+  it('omits an axis value that no variant of the listing uses (VAR-75)', () => {
     const product = axisProduct()
     const view = listingByPath([product], product.slug, 'item', 'preto,m')
     if (view.missing) throw new Error('expected open listing')
@@ -106,9 +106,7 @@ describe('AxisSelectors (VAR-68, VAR-75, VAR-76)', () => {
       <AxisSelectors selectors={view.selectors} activeV="preto,m" onSelect={() => {}} />,
     )
 
-    const p = screen.getByRole('button', { name: 'P' })
-    expect(p.hasAttribute('disabled')).toBe(true)
-    expect(p.getAttribute('data-disabled')).toBe('true')
+    expect(screen.queryByRole('button', { name: 'P' })).toBeNull()
   })
 
   it('keeps an unavailable combination clickable, dimmed, with dashed border (VAR-76)', () => {
@@ -311,7 +309,7 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
     expect(control.className).toMatch(/px-1\.5/)
     expect(control.className).not.toMatch(/flex-wrap/)
     const thumbs = within(control).getAllByRole('button')
-    expect(thumbs).toHaveLength(4)
+    expect(thumbs).toHaveLength(3)
     expect(thumbs.map((thumb) => thumb.className).every((className) => /size-16/.test(className))).toBe(true)
 
     const srcs = thumbs.map((thumb) => thumb.querySelector('img')?.getAttribute('src') ?? null)
@@ -319,7 +317,6 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
       productImageSrc(product.slug, 'primeiro.jpg'),
       productImageSrc(product.slug, 'branco.jpg'),
       productImageSrc(product.slug, 'azul.jpg'),
-      null,
     ])
 
     const selected = thumbs[0]!
@@ -334,7 +331,7 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
     expect(onSelect).toHaveBeenCalledWith('branco,m')
   })
 
-  it('keeps an impossible or unavailable image option visible and disabled (OSC-44)', () => {
+  it('keeps an unavailable image option visible and disabled, and omits a value absent from the listing (OSC-44)', () => {
     const product = imageAndTextProduct()
     const onSelect = vi.fn()
     render(
@@ -348,20 +345,15 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
 
     const thumbs = within(within(groupByAxis('color')).getByRole('group')).getAllByRole('button')
     const unavailable = thumbs[2]!
-    const impossible = thumbs[3]!
 
+    expect(thumbs.map((thumb) => thumb.getAttribute('data-value-id'))).toEqual(['preto', 'branco', 'azul'])
     expect(unavailable.querySelector('img')?.getAttribute('src')).toBe(productImageSrc(product.slug, 'azul.jpg'))
     expect(unavailable.hasAttribute('disabled')).toBe(true)
     expect(unavailable.className).toMatch(/size-16/)
     expect(unavailable.className).toMatch(/border-dashed/)
     expect(unavailable.className).toMatch(/opacity-60/)
 
-    expect(impossible.querySelector('img')).toBeNull()
-    expect(impossible.hasAttribute('disabled')).toBe(true)
-    expect(impossible.className).toMatch(/size-16/)
-
     fireEvent.click(unavailable)
-    fireEvent.click(impossible)
     expect(onSelect).not.toHaveBeenCalled()
   })
 

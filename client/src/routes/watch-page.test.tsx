@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { creditInstallmentLabel, homeCards, SPECIFICATION_LABELS, type Listing, type Product, type Variant } from '@catalogo/shared'
+import { creditInstallmentLabel, homeCards, type Listing, type Product, type Variant } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createMemoryRouter, MemoryRouter, RouterProvider, useParams } from 'react-router-dom'
@@ -570,9 +570,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const table = screen.getByRole('table')
     const rows = within(table).getAllByRole('row')
     expect(rows.map((row) => within(row).getAllByRole('cell')[0].textContent)).toEqual([
-      'Marca',
       'Anúncio',
       'Espelho',
+      'Marca',
     ])
     const links = screen.getAllByRole('link', { name: 'Ver anúncio similar' })
     expect(links).toHaveLength(2)
@@ -788,7 +788,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   })
 
   describe('closed specification labels on the watch page (SPEC-09–SPEC-13)', () => {
-    it('shows canonical labels in exported order regardless of product array order (SPEC-09)', () => {
+    it('shows specifications in registration order (SPEC-09)', () => {
       mockProductsRef.current = [
         makeProduct({
           specifications: [
@@ -800,16 +800,14 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
         }),
       ]
       renderWatchPage()
-      const labels = within(screen.getByRole('table'))
-        .getAllByRole('row')
-        .map((row) => within(row).getAllByRole('cell')[0].textContent)
-      const canonicalInTable = labels.filter((label) =>
-        (SPECIFICATION_LABELS as readonly string[]).includes(label ?? ''),
-      )
-      expect(canonicalInTable).toEqual(['Marca', 'Modelo', 'Resistência à água', 'Garantia'])
+      expect(
+        within(screen.getByRole('table'))
+          .getAllByRole('row')
+          .map((row) => within(row).getAllByRole('cell')[0].textContent),
+      ).toEqual(['Garantia', 'Marca', 'Resistência à água', 'Modelo'])
     })
 
-    it('renders labels outside the exported list after canonical rows, preserving outside relative order (SPEC-10)', () => {
+    it('keeps labels outside the old watch list in registration order (SPEC-10)', () => {
       mockProductsRef.current = [
         makeProduct({
           specifications: [
@@ -826,10 +824,10 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
           .getAllByRole('row')
           .map((row) => within(row).getAllByRole('cell').map((cell) => cell.textContent)),
       ).toEqual([
-        ['Marca', 'Seculus'],
-        ['Garantia', '90 dias.'],
         ['Fora Z', 'último-fora'],
+        ['Garantia', '90 dias.'],
         ['Fora A', 'primeiro-fora'],
+        ['Marca', 'Seculus'],
       ])
     })
 

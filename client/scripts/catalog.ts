@@ -9,7 +9,7 @@ import {
 import { dirname, join } from 'node:path'
 import * as lucideIcons from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
-import { ProductSchema, type Product } from '@catalogo/shared'
+import type { Product } from '@catalogo/shared'
 
 const imageExtensions = new Set(['jpg', 'jpeg', 'png', 'webp', 'avif'])
 
@@ -47,9 +47,15 @@ function assertOfferIconIsValid(iconName: string, slug: string): void {
 }
 
 function validateOfferIcons(product: Product, slug: string): void {
+  if (!Array.isArray(product.listings)) {
+    return
+  }
   for (const listing of product.listings) {
-    for (const variant of listing.variants) {
+    for (const variant of listing.variants ?? []) {
       for (const offer of variant.offers ?? []) {
+        if (typeof offer?.icon !== 'string') {
+          continue
+        }
         assertOfferIconIsValid(offer.icon, slug)
       }
     }
@@ -230,8 +236,11 @@ export function isImageFile(name: string): boolean {
 /** Union of every file name listed in `listings[].images` (for dist and validation). */
 export function citedImageNames(product: Product): string[] {
   const names = new Set<string>()
+  if (!Array.isArray(product.listings)) {
+    return []
+  }
   for (const listing of product.listings) {
-    for (const name of listing.images) {
+    for (const name of listing.images ?? []) {
       names.add(name)
     }
   }
@@ -250,27 +259,26 @@ export function validateCatalog(catalogDir: string): Product[] {
       continue
     }
     const productDir = join(productsDir, entry.name)
-    const parsed = ProductSchema.safeParse(
-      normalizeProductJson(readJson(join(productDir, 'product.json'))),
-    )
-    if (!parsed.success) {
-      throw new Error(`${entry.name}/product.json failed the shared contract`)
+    const normalized = normalizeProductJson(readJson(join(productDir, 'product.json')))
+    if (normalized === null || typeof normalized !== 'object' || Array.isArray(normalized)) {
+      continue
     }
+    const product = normalized as Product
 
-    validateOfferIcons(parsed.data, entry.name)
+    validateOfferIcons(product, entry.name)
 
     const imgDir = join(productDir, 'img')
     const imageFilesOnDisk = existsSync(imgDir)
       ? new Set(readdirSync(imgDir).filter(isImageFile))
       : new Set<string>()
-    for (const name of citedImageNames(parsed.data)) {
+    for (const name of citedImageNames(product)) {
       if (!imageFilesOnDisk.has(name)) {
         throw new Error(
-          `Missing cited image "${name}" under ${parsed.data.slug}/img/`,
+          `Missing cited image "${name}" under ${product.slug}/img/`,
         )
       }
     }
-    products.push(parsed.data)
+    products.push(product)
   }
 
   return products

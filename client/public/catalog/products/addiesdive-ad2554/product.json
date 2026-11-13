@@ -1,18 +1,27 @@
 {
   "slug": "addiesdive-ad2554",
-  "title": "Relógio Addiesdive Ranger",
-  "description": "O Addiesdive Ranger é um homage do Tudor Ranger, de estilo analógico retrô, com movimento de quartzo japonês calibre 2035. A caixa e a pulseira são de aço inoxidável 316L. A caixa mede 36 mm de diâmetro sem a coroa, 46 mm de comprimento e 10 mm de espessura, com encaixe de pulseira de 20 mm. O vidro é de safira, os ponteiros e marcadores são luminosos, e a coroa e a tampa do fundo são rosqueadas. A resistência à água é de 100 m (10 bar). O peso é de 113,6 g e o comprimento total do relógio é de 220 mm.",
+  "title": "Addiesdive Ranger",
+  "description": "O Addiesdive Ranger é uma homenagem ao Tudor Ranger. É um relógio masculino retrô com movimento de quartzo japonês calibre Miyota 2035, caixa e pulseira de aço inoxidável 316L e vidro de safira. A caixa mede 36 mm de diâmetro sem a coroa e 10 mm de espessura, com encaixe de pulseira de 20 mm. Os ponteiros e marcadores são luminosos. Possui resistência à água de 100m (10 ATM), peso de 113,6g e comprimento total de 220 mm.",
+  "audience": "male",
   "axes": [
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "blue",
-          "value": "Blue"
+          "value": "blue"
+        },
+        {
+          "id": "gray",
+          "value": "gray"
+        },
+        {
+          "id": "orange",
+          "value": "orange"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -25,7 +34,7 @@
       "value": "AD2554"
     },
     {
-      "label": "Homage de",
+      "label": "Homenagem",
       "value": "Tudor Ranger"
     },
     {
@@ -33,12 +42,16 @@
       "value": "Analógico retrô"
     },
     {
+      "label": "Funções",
+      "value": "Ponteiros e marcadores luminosos"
+    },
+    {
       "label": "Tipo de movimento",
       "value": "Quartzo japonês"
     },
     {
       "label": "Movimento",
-      "value": "2035"
+      "value": "Miyota 2035"
     },
     {
       "label": "Material da caixa",
@@ -57,36 +70,94 @@
       "value": "100m (10 ATM)"
     },
     {
-      "label": "Diâmetro do mostrador",
-      "value": "36 mm"
-    },
-    {
-      "label": "Espessura da caixa",
-      "value": "10 mm"
-    },
-    {
       "label": "Largura da pulseira",
       "value": "20 mm no encaixe da caixa"
     },
     {
-      "label": "Garantia",
-      "value": "90 dias"
+      "label": "Diâmetro do mostrador",
+      "value": "36 mm (sem coroa)"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "10 mm"
     }
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "addiesdive-ad2554-1.png",
+        "addiesdive-ad2554-2.png",
+        "addiesdive-ad2554-3.png",
+        "addiesdive-ad2554-4.png",
+        "addiesdive-ad2554-5.png",
+        "addiesdive-ad2554-6.png",
+        "addiesdive-ad2554-7.png",
+        "addiesdive-ad2554-8.png",
+        "addiesdive-ad2554-9.png",
+        "addiesdive-ad2554-10.png",
+        "addiesdive-ad2554-11.png",
+        "addiesdive-ad2554-12.png",
+        "addiesdive-ad2554-13.png",
+        "addiesdive-ad2554-14.png",
+        "addiesdive-ad2554-15.png",
+        "addiesdive-ad2554-16.png",
+        "addiesdive-ad2554-17.png",
+        "addiesdive-ad2554-18.png",
+        "addiesdive-ad2554-19.png",
+        "addiesdive-ad2554-20.png",
+        "addiesdive-ad2554-21.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue"
+            }
+          ],
+          "mainImage": "addiesdive-ad2554-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gray"
+            }
+          ],
+          "mainImage": "addiesdive-ad2554-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "orange"
+            }
+          ],
+          "mainImage": "addiesdive-ad2554-9.png"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
       "state": "new",
       "availabilityStatus": "available",
       "images": [
-        "addiesdive-1.png",
-        "addiesdive-2.png",
-        "addiesdive-3.png",
-        "addiesdive-4.png",
-        "addiesdive-5.png",
-        "addiesdive-6.png",
-        "addiesdive-7.png",
-        "addiesdive-8.png"
+        "addiesdive-ad2554-1.png",
+        "addiesdive-ad2554-2.png",
+        "addiesdive-ad2554-3.png",
+        "addiesdive-ad2554-4.png",
+        "addiesdive-ad2554-5.png",
+        "addiesdive-ad2554-7.png",
+        "addiesdive-ad2554-11.png",
+        "addiesdive-ad2554-13.png",
+        "addiesdive-ad2554-14.png",
+        "addiesdive-ad2554-15.png",
+        "addiesdive-ad2554-16.png",
+        "addiesdive-ad2554-20.png",
+        "addiesdive-ad2554-21.png"
       ],
       "variants": [
         {
@@ -98,15 +169,15 @@
           ],
           "price": 399.9,
           "listPrice": 539.9,
-          "mainImage": "addiesdive-1.png",
           "offers": [
             {
               "text": "Black Friday",
-              "icon": "Gift",
               "background": "#000000",
-              "color": "#FFFFFF"
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
-          ]
+          ],
+          "mainImage": "addiesdive-ad2554-7.png"
         }
       ]
     }

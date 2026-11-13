@@ -72,7 +72,7 @@ function scrollImageRowToNext(clicked: HTMLElement) {
 function imageButtonClass(option: ListingSelectorOption, pressed: boolean): string {
   const orderable = !option.disabled && !option.unavailable
   return cn(
-    'size-16 shrink-0 overflow-hidden rounded-md p-0',
+    'size-16 shrink-0 cursor-pointer overflow-hidden rounded-md p-0',
     orderable
       ? pressed
         ? 'border-[3px] border-primary'
@@ -131,6 +131,7 @@ export function AxisSelectors({ selectors, activeV, onSelect, slug = '' }: AxisS
                       image
                         ? imageButtonClass(option, isPressed)
                         : cn(
+                            'cursor-pointer',
                             isUnavailable &&
                               cn(
                                 'border-dashed opacity-60',

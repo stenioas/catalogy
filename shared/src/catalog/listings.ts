@@ -351,32 +351,36 @@ function selectorsFor(
   active: Variant,
 ): ListingSelector[] {
   const queue = variantQueue(listing)
-  return product.axes.map((axis) => {
+  return product.axes.flatMap((axis) => {
     const presentation = axis.presentation ?? 'text'
-    return {
-      axisId: axis.id,
-      label: axis.label,
-      presentation,
-      options: axis.values.flatMap((axisValue) => {
-        const possible = listing.variants.some(
-          (variant) =>
-            variantContains(variant, axis.id, axisValue.id) &&
-            compatibleWithOtherAxes(variant, active, axis.id),
-        )
-        const landing = queue.find((variant) => variantContains(variant, axis.id, axisValue.id))
-        const unavailable =
-          possible && landing !== undefined && landing.orderable === false
-        const option: ListingSelectorOption = {
-          valueId: axisValue.id,
-          value: axisValue.value,
-          disabled: !possible,
-          unavailable,
-          v: possible && landing !== undefined ? variantQuery(product, landing) : null,
-        }
-        if (presentation === 'image') option.imageFile = landing?.mainImage ?? ''
-        return [option]
-      }),
-    }
+    const options = axis.values.flatMap((axisValue) => {
+      const landing = queue.find((variant) => variantContains(variant, axis.id, axisValue.id))
+      if (landing === undefined) return []
+      const possible = listing.variants.some(
+        (variant) =>
+          variantContains(variant, axis.id, axisValue.id) &&
+          compatibleWithOtherAxes(variant, active, axis.id),
+      )
+      const unavailable = possible && landing.orderable === false
+      const option: ListingSelectorOption = {
+        valueId: axisValue.id,
+        value: axisValue.value,
+        disabled: !possible,
+        unavailable,
+        v: possible ? variantQuery(product, landing) : null,
+      }
+      if (presentation === 'image') option.imageFile = landing.mainImage
+      return [option]
+    })
+    if (options.length === 0) return []
+    return [
+      {
+        axisId: axis.id,
+        label: axis.label,
+        presentation,
+        options,
+      },
+    ]
   })
 }
 

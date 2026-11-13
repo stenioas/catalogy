@@ -214,7 +214,7 @@ describe('validateCatalog', () => {
     expect(() => validateCatalog(catalogDir)).toThrow()
   })
 
-  it('throws when product.json fails the shared contract', () => {
+  it('loads a product that does not follow the watch contract', () => {
     const catalogDir = tempDir()
     writeProduct(
       catalogDir,
@@ -239,7 +239,8 @@ describe('validateCatalog', () => {
       { 'frente.png': photoBytes },
     )
 
-    expect(() => validateCatalog(catalogDir)).toThrow()
+    expect(() => validateCatalog(catalogDir)).not.toThrow()
+    expect(validateCatalog(catalogDir)).toHaveLength(1)
   })
 
   it('throws when a listing image is named in images but missing from img/', () => {

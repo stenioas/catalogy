@@ -1174,14 +1174,6 @@ describe('listingByPath', () => {
         v: 'azul,m',
         imageFile: 'fila.jpg',
       },
-      {
-        valueId: 'verde',
-        value: 'Verde',
-        disabled: true,
-        unavailable: false,
-        v: null,
-        imageFile: '',
-      },
     ])
   })
 })
