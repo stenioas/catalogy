@@ -1,0 +1,116 @@
+{
+  "slug": "rollstimi-rt-128",
+  "title": "Relógio Rollstimi Automático Esportivo",
+  "description": "Relógio masculino de estilo esportivo com movimento mecânico automático e corda manual. Possui caixa redonda e pulseira de aço inoxidável, cristal de safira, marcadores arábicos e calendário completo. A pulseira utiliza fecho dobrável com segurança.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "blue",
+          "value": "Blue"
+        },
+        {
+          "id": "white",
+          "value": "White"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Rollstimi"
+    },
+    {
+      "label": "Modelo",
+      "value": "RT-128"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico esportivo"
+    },
+    {
+      "label": "Funções",
+      "value": "Calendário completo"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Mecânico automático com corda manual"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Cristal de safira"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "40 a 44 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "11 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "rollstimi-rt-128-1.png",
+        "rollstimi-rt-128-2.png",
+        "rollstimi-rt-128-3.png",
+        "rollstimi-rt-128-4.png",
+        "rollstimi-rt-128-5.png",
+        "rollstimi-rt-128-6.png",
+        "rollstimi-rt-128-7.png",
+        "rollstimi-rt-128-8.png",
+        "rollstimi-rt-128-9.png",
+        "rollstimi-rt-128-10.png",
+        "rollstimi-rt-128-11.png",
+        "rollstimi-rt-128-12.png",
+        "rollstimi-rt-128-13.png",
+        "rollstimi-rt-128-14.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "blue"
+            }
+          ],
+          "mainImage": "rollstimi-rt-128-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "white"
+            }
+          ],
+          "mainImage": "rollstimi-rt-128-8.png"
+        }
+      ]
+    }
+  ]
+}

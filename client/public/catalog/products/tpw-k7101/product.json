@@ -1,0 +1,178 @@
+{
+  "slug": "tpw-k7101",
+  "title": "Relógio TPW de Campo",
+  "description": "Relógio de campo com movimento de quartzo, algarismos arábicos e escala de 24 horas. Possui pulseira de nylon ajustável com fecho de fivela, caixa redonda em liga metálica, vidro Hardlex e ponteiros luminosos.",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "green-luminous-2",
+          "value": "Green Luminous 2"
+        },
+        {
+          "id": "green-black-2",
+          "value": "Green Black 2"
+        },
+        {
+          "id": "black-white-num",
+          "value": "Black White Num"
+        },
+        {
+          "id": "green-white-num",
+          "value": "Green White Num"
+        },
+        {
+          "id": "dark-blue",
+          "value": "Dark Blue"
+        },
+        {
+          "id": "green-luminous-1",
+          "value": "Green Luminous 1"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "TPW"
+    },
+    {
+      "label": "Modelo",
+      "value": "K7101"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico de campo"
+    },
+    {
+      "label": "Funções",
+      "value": "Exibição de horas com escala de 24 horas e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Liga metálica"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Nylon"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "40 a 44 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "tpw-k7101-1.png",
+        "tpw-k7101-2.png",
+        "tpw-k7101-3.png",
+        "tpw-k7101-4.png",
+        "tpw-k7101-5.png",
+        "tpw-k7101-6.png",
+        "tpw-k7101-7.png",
+        "tpw-k7101-8.png",
+        "tpw-k7101-9.png",
+        "tpw-k7101-10.png",
+        "tpw-k7101-11.png",
+        "tpw-k7101-12.png",
+        "tpw-k7101-13.png",
+        "tpw-k7101-14.png",
+        "tpw-k7101-15.png",
+        "tpw-k7101-16.png",
+        "tpw-k7101-17.png",
+        "tpw-k7101-18.png",
+        "tpw-k7101-19.png",
+        "tpw-k7101-20.png",
+        "tpw-k7101-21.png",
+        "tpw-k7101-22.png",
+        "tpw-k7101-23.png",
+        "tpw-k7101-24.png",
+        "tpw-k7101-25.png",
+        "tpw-k7101-26.png",
+        "tpw-k7101-27.png",
+        "tpw-k7101-28.png",
+        "tpw-k7101-30.png",
+        "tpw-k7101-31.png",
+        "tpw-k7101-32.png",
+        "tpw-k7101-33.png",
+        "tpw-k7101-34.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "green-luminous-2"
+            }
+          ],
+          "mainImage": "tpw-k7101-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "green-black-2"
+            }
+          ],
+          "mainImage": "tpw-k7101-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-white-num"
+            }
+          ],
+          "mainImage": "tpw-k7101-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "green-white-num"
+            }
+          ],
+          "mainImage": "tpw-k7101-10.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "dark-blue"
+            }
+          ],
+          "mainImage": "tpw-k7101-11.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "green-luminous-1"
+            }
+          ],
+          "mainImage": "tpw-k7101-12.png"
+        }
+      ]
+    }
+  ]
+}

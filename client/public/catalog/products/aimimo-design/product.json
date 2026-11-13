@@ -1,0 +1,149 @@
+{
+  "slug": "aimimo-design",
+  "title": "Relógio AIMIMO DESIGN Cronógrafo",
+  "description": "Relógio masculino com movimento de quartzo PE60, cronógrafo, data e indicador de 24 horas. Possui caixa e pulseira em aço inoxidável 316L, cristal de safira e ponteiros luminosos. O mostrador não possui logotipo.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "black-bezel-black",
+          "value": "black bezel black"
+        },
+        {
+          "id": "black-bezel-white",
+          "value": "black bezel white"
+        },
+        {
+          "id": "steel-bezel-white",
+          "value": "steel bezel white"
+        },
+        {
+          "id": "steel-bezel-black",
+          "value": "steel bezel black"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "AIMIMO DESIGN"
+    },
+    {
+      "label": "Modelo",
+      "value": "aimimo design"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Cronógrafo analógico para negócios"
+    },
+    {
+      "label": "Funções",
+      "value": "Cronógrafo, data, indicador de 24 horas e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "PE60"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Cristal de safira"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "Aproximadamente 20 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "40 a 44 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "13 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "aimimo-design-1.png",
+        "aimimo-design-2.png",
+        "aimimo-design-3.png",
+        "aimimo-design-4.png",
+        "aimimo-design-5.png",
+        "aimimo-design-6.png",
+        "aimimo-design-7.png",
+        "aimimo-design-8.png",
+        "aimimo-design-9.png",
+        "aimimo-design-10.png",
+        "aimimo-design-11.png",
+        "aimimo-design-12.png",
+        "aimimo-design-13.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-bezel-black"
+            }
+          ],
+          "mainImage": "aimimo-design-7.png",
+          "observations": "Segundo a descrição do vendedor, o ponteiro central de segundos do cronógrafo para após cerca de 40 minutos, mas a contagem do cronógrafo continua até 60 minutos."
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-bezel-white"
+            }
+          ],
+          "mainImage": "aimimo-design-8.png",
+          "observations": "Segundo a descrição do vendedor, o ponteiro central de segundos do cronógrafo para após cerca de 40 minutos, mas a contagem do cronógrafo continua até 60 minutos."
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "steel-bezel-white"
+            }
+          ],
+          "mainImage": "aimimo-design-9.png",
+          "observations": "Segundo a descrição do vendedor, o ponteiro central de segundos do cronógrafo para após cerca de 40 minutos, mas a contagem do cronógrafo continua até 60 minutos."
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "steel-bezel-black"
+            }
+          ],
+          "mainImage": "aimimo-design-10.png",
+          "observations": "Segundo a descrição do vendedor, o ponteiro central de segundos do cronógrafo para após cerca de 40 minutos, mas a contagem do cronógrafo continua até 60 minutos."
+        }
+      ]
+    }
+  ]
+}

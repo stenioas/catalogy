@@ -1,0 +1,179 @@
+{
+  "slug": "curren-9093",
+  "title": "Relógio Curren Feminino Casual",
+  "description": "Relógio feminino de estilo casual com caixa retangular, movimento de quartzo e exibição analógica. Possui caixa em liga metálica, pulseira de aço inoxidável e vidro Hardlex. Fornecido sem caixa de presente.",
+  "audience": "female",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "b",
+          "value": "B"
+        },
+        {
+          "id": "d",
+          "value": "D"
+        },
+        {
+          "id": "f",
+          "value": "F"
+        },
+        {
+          "id": "c",
+          "value": "C"
+        },
+        {
+          "id": "e",
+          "value": "E"
+        },
+        {
+          "id": "a",
+          "value": "A"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Curren"
+    },
+    {
+      "label": "Modelo",
+      "value": "9093"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico casual com caixa retangular"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Liga metálica"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Hardlex"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "23 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "9 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "curren-9093-1.png",
+        "curren-9093-2.png",
+        "curren-9093-3.png",
+        "curren-9093-4.png",
+        "curren-9093-5.png",
+        "curren-9093-6.png",
+        "curren-9093-7.png",
+        "curren-9093-8.png",
+        "curren-9093-9.png",
+        "curren-9093-10.png",
+        "curren-9093-11.png",
+        "curren-9093-12.png",
+        "curren-9093-13.png",
+        "curren-9093-14.png",
+        "curren-9093-15.png",
+        "curren-9093-16.png",
+        "curren-9093-17.png",
+        "curren-9093-18.png",
+        "curren-9093-19.png",
+        "curren-9093-20.png",
+        "curren-9093-21.png",
+        "curren-9093-22.png",
+        "curren-9093-23.png",
+        "curren-9093-24.png",
+        "curren-9093-25.png",
+        "curren-9093-26.png",
+        "curren-9093-27.png",
+        "curren-9093-28.png",
+        "curren-9093-29.png",
+        "curren-9093-30.png",
+        "curren-9093-31.png",
+        "curren-9093-32.png",
+        "curren-9093-33.png"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "b"
+            }
+          ],
+          "mainImage": "curren-9093-7.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "d"
+            }
+          ],
+          "mainImage": "curren-9093-8.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "f"
+            }
+          ],
+          "mainImage": "curren-9093-9.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "c"
+            }
+          ],
+          "mainImage": "curren-9093-10.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "e"
+            }
+          ],
+          "mainImage": "curren-9093-11.png"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "a"
+            }
+          ],
+          "mainImage": "curren-9093-12.png"
+        }
+      ]
+    }
+  ]
+}
