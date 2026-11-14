@@ -245,6 +245,24 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
   })
 
   it.each([false, true])(
+    'paints the current price red when the displayed discount is at least 20% and showcase is %s',
+    (showcase) => {
+      renderPriceBlock({ price: 80, listPrice: 100, showcase })
+      expect(screen.getByTestId('price-current').className).toMatch(/\btext-destructive\b/)
+      expect(screen.getByTestId('price-badge').textContent).toBe('−20%')
+    },
+  )
+
+  it.each([false, true])(
+    'keeps the current price in the normal tone when the displayed discount is 19% and showcase is %s',
+    (showcase) => {
+      renderPriceBlock({ price: 81, listPrice: 100, showcase })
+      expect(screen.getByTestId('price-current').className).not.toMatch(/\btext-destructive\b/)
+      expect(screen.getByTestId('price-badge').textContent).toBe('−19%')
+    },
+  )
+
+  it.each([false, true])(
     'OSC-34: keeps the current price in the normal tone with De, discount, pix and installments when showcase is %s',
     (showcase) => {
       renderPriceBlock({ price: 369.9, listPrice: 450, showcase })

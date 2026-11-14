@@ -11,6 +11,9 @@ export type PriceBlockProps = {
 
 const currentPriceClassName = 'text-2xl font-semibold'
 
+// Temporário até a fórmula de precificação: o preço atual fica vermelho quando o desconto exibido é de 20% ou mais.
+const HIGH_DISCOUNT_THRESHOLD = 20
+
 export const ON_ORDER_PRICE_NOTE = 'Preço sob consulta'
 
 export function OnOrderPriceNote({ showcase = false }: { showcase?: boolean }) {
@@ -39,6 +42,7 @@ export function PriceBlock({
 
   const percent = listPrice === undefined ? 0 : discountPercent(price, listPrice)
   const showBadge = percent >= 1
+  const currentPriceTone = percent >= HIGH_DISCOUNT_THRESHOLD ? 'text-destructive' : ''
   const priceRow = listPrice === undefined ? 'row-start-1' : 'row-start-2'
   const installmentRow = listPrice === undefined ? 'row-start-2' : 'row-start-3'
 
@@ -66,7 +70,7 @@ export function PriceBlock({
         ) : null}
         <span
           data-testid="price-current"
-          className={`col-start-1 text-base font-semibold md:text-xl ${priceRow}`}
+          className={`col-start-1 text-base font-semibold md:text-xl ${priceRow} ${currentPriceTone}`}
         >
           {currentLabel}
         </span>
@@ -113,7 +117,7 @@ export function PriceBlock({
         </div>
       ) : null}
       <div className="flex flex-wrap items-baseline gap-x-1.5">
-        <span data-testid="price-current" className={currentPriceClassName}>
+        <span data-testid="price-current" className={`${currentPriceClassName} ${currentPriceTone}`}>
           {currentLabel}
         </span>
         <span data-testid="price-pix" className="text-sm text-muted-foreground">
