@@ -1,6 +1,6 @@
 # Inferência dos campos do catálogo
 
-Use somente o texto fornecido no HTML e as informações explícitas do operador. Fotos não fundamentam características técnicas. Não invente homage, calibre, público ou medida ausentes. Informação incerta fica omitida; o operador pode revisar depois.
+Use somente o texto fornecido no HTML e as informações explícitas do operador, incluindo a garantia padrão do catálogo definida em `SKILL.md`, que independe do HTML. Fotos não fundamentam características técnicas. Não invente homage, calibre, público ou medida ausentes. Informação incerta fica omitida; o operador pode revisar depois.
 
 ## Título do produto
 
