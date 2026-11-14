@@ -1,24 +1,24 @@
 {
   "slug": "cadisen-c7068",
-  "title": "Relógio CADISEN Cronógrafo em Titânio",
-  "description": "Relógio masculino com caixa de titânio e revestimento AF, movimento de quartzo Seiko TMI VK63 e cronógrafo com indicação de 24 horas. Cristal de safira com tratamento antirreflexo, mostrador com acabamento em esmalte de alto brilho e ponteiros luminosos. Pulseira de lona de alta densidade combinada com couro genuíno. Diâmetro de 40 mm, espessura de 11,5 mm, peso de 56,5 g e resistência à água de 100 metros.",
-  "audience": "male",
+  "title": "Cadisen TI-7 Multisync",
+  "description": "O Cadisen TI-7 Multisync é um relógio masculino com caixa de titânio, movimento de quartzo Seiko TMI VK63 e cronógrafo com indicação de 24 horas. Cristal de safira com tratamento antirreflexo, mostrador com acabamento em esmalte de alto brilho e ponteiros luminosos. Pulseira de lona de alta densidade combinada com couro genuíno. Diâmetro de 40 mm, espessura de 11,5 mm, peso de 56,5 g e resistência à água de 100 metros.",
+  "audience": "unisex",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
       "values": [
         {
-          "id": "azul",
-          "value": "Azul"
+          "id": "blue",
+          "value": "Blue"
         },
         {
-          "id": "cinza",
-          "value": "cinza"
+          "id": "gray",
+          "value": "Gray"
         },
         {
-          "id": "branco",
-          "value": "BRANCO"
+          "id": "white",
+          "value": "White"
         }
       ],
       "presentation": "image"
@@ -27,7 +27,7 @@
   "specifications": [
     {
       "label": "Marca",
-      "value": "CADISEN"
+      "value": "Cadisen"
     },
     {
       "label": "Modelo",
@@ -35,15 +35,15 @@
     },
     {
       "label": "Tipo do relógio",
-      "value": "Analógico com cronógrafo"
+      "value": "Cronógrafo"
     },
     {
       "label": "Funções",
-      "value": "Horas, minutos, segundos, cronógrafo, indicador de 24 horas e ponteiros luminosos"
+      "value": "Cronógrafo e ponteiros luminosos"
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo"
+      "value": "Quartzo japonês"
     },
     {
       "label": "Movimento",
@@ -51,11 +51,11 @@
     },
     {
       "label": "Material da caixa",
-      "value": "Titânio com revestimento AF"
+      "value": "Titânio"
     },
     {
       "label": "Material da pulseira",
-      "value": "Lona combinada com couro genuíno"
+      "value": "Lona de alta densidade combinada com couro genuíno"
     },
     {
       "label": "Material do vidro",
@@ -124,8 +124,8 @@
         {
           "axes": [
             {
-              "axisId": "cor",
-              "valueId": "azul"
+              "axisId": "color",
+              "valueId": "blue"
             }
           ],
           "mainImage": "cadisen-c7068-7.webp"
@@ -133,8 +133,8 @@
         {
           "axes": [
             {
-              "axisId": "cor",
-              "valueId": "cinza"
+              "axisId": "color",
+              "valueId": "gray"
             }
           ],
           "mainImage": "cadisen-c7068-8.webp"
@@ -142,8 +142,8 @@
         {
           "axes": [
             {
-              "axisId": "cor",
-              "valueId": "branco"
+              "axisId": "color",
+              "valueId": "white"
             }
           ],
           "mainImage": "cadisen-c7068-9.webp"
