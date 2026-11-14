@@ -1,11 +1,11 @@
 {
   "slug": "north-edge-abyss",
-  "title": "Relógio NORTH EDGE Solar de Mergulho",
-  "description": "Relógio masculino de mergulho com movimento de quartzo alimentado por energia solar, caixa em aço inoxidável 316L e resistência à água de 200 metros. O mostrador inspirado na textura de geleiras conta com grandes marcadores e ponteiros luminosos. Possui luneta de cerâmica com rotação unidirecional e opções de pulseira de borracha ou aço.",
+  "title": "North Edge Abyss Solar",
+  "description": "O North Edge Abyss é um relógio masculino de mergulho com movimento de quartzo alimentado por energia solar, caixa em aço inoxidável 316L e resistência à água de 200 metros. O mostrador inspirado na textura de geleiras conta com grandes marcadores e ponteiros luminosos. Possui bisel de cerâmica com rotação unidirecional e opções de pulseira de borracha ou aço.",
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
       "values": [
         {
@@ -31,11 +31,11 @@
   "specifications": [
     {
       "label": "Marca",
-      "value": "NORTH EDGE"
+      "value": "North Edge"
     },
     {
       "label": "Modelo",
-      "value": "ABYSS"
+      "value": "Abyss"
     },
     {
       "label": "Tipo do relógio",
@@ -43,7 +43,7 @@
     },
     {
       "label": "Funções",
-      "value": "Ponteiros e marcadores luminosos, cronômetro e luz de fundo"
+      "value": "Ponteiros e marcadores luminosos"
     },
     {
       "label": "Tipo de movimento",
@@ -55,15 +55,15 @@
     },
     {
       "label": "Material da pulseira",
-      "value": "Borracha ou aço, conforme a variante"
+      "value": "Borracha ou aço inoxidável 316L"
     },
     {
       "label": "Material do vidro",
-      "value": "Hardlex"
+      "value": "Vidro mineral"
     },
     {
       "label": "Material do bisel",
-      "value": "Cerâmica"
+      "value": "Cerâmica com rotação unidirecional"
     },
     {
       "label": "Resistência à água",
@@ -123,7 +123,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "black-rubber"
             }
           ],
@@ -132,7 +132,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "blue-rubber"
             }
           ],
@@ -141,7 +141,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "blue-steel"
             }
           ],
@@ -150,7 +150,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "black-steel"
             }
           ],
