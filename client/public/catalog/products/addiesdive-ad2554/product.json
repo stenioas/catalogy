@@ -7,21 +7,21 @@
     {
       "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
           "id": "blue",
-          "value": "blue"
+          "value": "Blue"
         },
         {
           "id": "gray",
-          "value": "gray"
+          "value": "Gray"
         },
         {
           "id": "orange",
-          "value": "orange"
+          "value": "Orange"
         }
-      ],
-      "presentation": "image"
+      ]
     }
   ],
   "specifications": [
@@ -88,7 +88,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "id": "listing-coming-soon",
+      "id": "listing-available",
       "state": "new",
       "availabilityStatus": "available",
       "images": [
