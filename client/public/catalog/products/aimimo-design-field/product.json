@@ -1,0 +1,119 @@
+{
+  "slug": "aimimo-design-field",
+  "title": "Aimimo Design Pilot Vintage",
+  "description": "O Aimimo Design Pilot Vintage é um relógio masculino de estilo piloto vintage, com movimento de quartzo japonês Miyota 2035. Caixa de aço inoxidável 316L com acabamento escovado, diâmetro de 38 mm e espessura de 10,8 mm. Cristal de safira, ponteiros e indicadores luminosos e resistência à água de 50 metros. Pulseira de aço inoxidável com largura de 20 mm e comprimento de 22 cm, com fecho oculto de botão de pressão.",
+  "audience": "unisex",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "black",
+          "value": "Black"
+        },
+        {
+          "id": "white",
+          "value": "White"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Aimimo Design"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Piloto vintage"
+    },
+    {
+      "label": "Funções",
+      "value": "Ponteiros e indicadores luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo japonês"
+    },
+    {
+      "label": "Movimento",
+      "value": "Miyota 2035"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável 316L com acabamento escovado"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Cristal de safira"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "35 a 39 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "10,8 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "aimimo-design-field-1.webp",
+        "aimimo-design-field-2.webp",
+        "aimimo-design-field-3.webp",
+        "aimimo-design-field-4.webp",
+        "aimimo-design-field-5.webp",
+        "aimimo-design-field-6.webp",
+        "aimimo-design-field-7.webp",
+        "aimimo-design-field-8.webp",
+        "aimimo-design-field-9.webp",
+        "aimimo-design-field-10.webp",
+        "aimimo-design-field-11.webp",
+        "aimimo-design-field-12.webp",
+        "aimimo-design-field-13.webp",
+        "aimimo-design-field-14.webp",
+        "aimimo-design-field-15.webp",
+        "aimimo-design-field-16.webp",
+        "aimimo-design-field-17.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "mainImage": "aimimo-design-field-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "white"
+            }
+          ],
+          "mainImage": "aimimo-design-field-8.webp"
+        }
+      ]
+    }
+  ]
+}
