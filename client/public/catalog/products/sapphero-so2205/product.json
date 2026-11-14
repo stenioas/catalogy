@@ -18,7 +18,7 @@
   "specifications": [
     {
       "label": "Marca",
-      "value": "SAPPHERO"
+      "value": "Sapphero"
     },
     {
       "label": "Modelo",
@@ -97,7 +97,7 @@
               "valueId": "silver-black"
             }
           ],
-          "price": 139.9,
+          "price": 149.9,
           "listPrice": 199.9,
           "mainImage": "sapphero-so2205-1.webp",
           "offers": [
