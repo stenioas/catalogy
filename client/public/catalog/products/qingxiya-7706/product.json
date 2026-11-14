@@ -7,6 +7,7 @@
     {
       "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
           "id": "silver-white",
@@ -146,7 +147,7 @@
             }
           ],
           "price": 144.9,
-          "listPrice": 179.9,
+          "listPrice": 199.9,
           "mainImage": "qingxiya-7706-17.webp",
           "offers": [
             {
