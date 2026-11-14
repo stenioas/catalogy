@@ -75,6 +75,10 @@
     {
       "label": "Diâmetro do mostrador",
       "value": "40 a 44 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
     }
   ],
   "listings": [

@@ -93,6 +93,10 @@
     {
       "label": "Espessura da caixa",
       "value": "12,5 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
     }
   ],
   "listings": [

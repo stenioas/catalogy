@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
@@ -136,8 +136,19 @@ describe('catalog specification migration', () => {
     )
   })
 
-  it('keeps curren-8455 Garantia as 90 dias.', () => {
-    expect(value(readProduct('curren-8455'), 'Garantia')).toBe('90 dias.')
+  it('gives every product a 90 dias Garantia except the Seculus kit', () => {
+    const slugs = readdirSync(productsDir, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+    expect(slugs.length).toBeGreaterThan(0)
+    for (const slug of slugs) {
+      const garantia = value(readProduct(slug), 'Garantia')
+      if (slug === 'seculus-kit-cantil') {
+        expect(garantia, slug).toBe('1 ano e 6 meses.')
+      } else {
+        expect(garantia, slug).toBe('90 dias')
+      }
+    }
   })
 
   it('records curren-8498l-black water resistance as 30m (3 ATM)', () => {

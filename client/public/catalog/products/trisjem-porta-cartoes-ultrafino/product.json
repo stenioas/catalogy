@@ -24,6 +24,10 @@
     {
       "label": "Marca",
       "value": "TRISJEM"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
     }
   ],
   "listings": [

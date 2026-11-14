@@ -24,6 +24,12 @@
       "presentation": "image"
     }
   ],
+  "specifications": [
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
   "listings": [
     {
       "id": "sob-encomenda",
