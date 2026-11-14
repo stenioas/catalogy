@@ -1,0 +1,116 @@
+{
+  "slug": "addiesdive-ad2035",
+  "title": "Addiesdive Black Bay Pro GMT",
+  "description": "O Addiesdive Black Bay Pro GMT é uma homenagem ao Tudor Black Bay Pro GMT. É um relógio masculino esportivo com movimento de quartzo suíço Ronda 515-24H e função GMT para acompanhar dois fusos horários. Caixa de aço inoxidável 316L com acabamento escovado e polido, pulseira de aço 316L e vidro mineral abaulado com revestimento antirreflexo azul. Mostrador preto, ponteiros e marcadores luminosos BGW9 com emissão azul. Caixa de 39 mm de diâmetro, espessura de 12,8 mm e resistência à água de 200 metros.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "steel",
+          "value": "Steel"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Addiesdive"
+    },
+    {
+      "label": "Modelo",
+      "value": "AD2035"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico esportivo GMT"
+    },
+    {
+      "label": "Homage de",
+      "value": "Tudor Black Bay Pro"
+    },
+    {
+      "label": "Funções",
+      "value": "GMT, calendário e ponteiros e marcadores luminosos BGW9 com emissão azul"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "Ronda 515-24H (suíço)"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Vidro mineral abaulado com revestimento antirreflexo azul"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "200m (20 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "12,8 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "addiesdive-ad2035-1.webp",
+        "addiesdive-ad2035-2.webp",
+        "addiesdive-ad2035-3.webp",
+        "addiesdive-ad2035-4.webp",
+        "addiesdive-ad2035-5.webp",
+        "addiesdive-ad2035-6.webp",
+        "addiesdive-ad2035-7.webp",
+        "addiesdive-ad2035-8.webp",
+        "addiesdive-ad2035-9.webp",
+        "addiesdive-ad2035-10.webp",
+        "addiesdive-ad2035-11.webp",
+        "addiesdive-ad2035-12.webp",
+        "addiesdive-ad2035-13.webp",
+        "addiesdive-ad2035-14.webp",
+        "addiesdive-ad2035-15.webp",
+        "addiesdive-ad2035-16.webp",
+        "addiesdive-ad2035-17.webp",
+        "addiesdive-ad2035-18.webp",
+        "addiesdive-ad2035-19.webp",
+        "addiesdive-ad2035-20.webp",
+        "addiesdive-ad2035-21.webp",
+        "addiesdive-ad2035-22.webp",
+        "addiesdive-ad2035-23.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "steel"
+            }
+          ],
+          "mainImage": "addiesdive-ad2035-7.webp"
+        }
+      ]
+    }
+  ]
+}
