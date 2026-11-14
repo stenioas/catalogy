@@ -1,17 +1,47 @@
 {
   "slug": "curren-8455",
-  "title": "Curren 8455 Azul",
-  "description": "O Curren 8455 é um relógio analógico de estilo casual e esportivo, com movimento de quartzo alimentado por bateria. A caixa é de liga metálica, com 42 mm de diâmetro e 11 mm de espessura, e a pulseira é de aço inoxidável, com largura de 22 mm. O vidro é mineral endurecido e a resistência à água é de 30 m (3 bar).",
+  "title": "Curren Casual",
+  "description": "Relógio masculino de estilo casual e elegante, com movimento de quartzo e bateria inclusa. Caixa redonda em liga metálica, vidro mineral endurecido e mostrador grande com diâmetro de 40 mm, espessura de 11 mm e pulseira de aço inoxidável com comprimento de 24 cm e fecho de pulseira. Resistência à água de 30 metros (3 ATM), adequado a respingos e chuva, sem indicação para banho ou natação.",
+  "audience": "male",
   "axes": [
     {
       "id": "color",
       "label": "Cor",
       "values": [
         {
-          "id": "azul",
-          "value": "Azul"
+          "id": "silver-black",
+          "value": "Silver Black"
+        },
+        {
+          "id": "silver-blue",
+          "value": "Silver Blue"
+        },
+        {
+          "id": "all-black",
+          "value": "All Black"
+        },
+        {
+          "id": "black-light-blue",
+          "value": "Black Light Blue"
+        },
+        {
+          "id": "all-black-with-box",
+          "value": "All Black with box"
+        },
+        {
+          "id": "silver-black-with-box",
+          "value": "Silver Black with box"
+        },
+        {
+          "id": "black-light-blue-with-box",
+          "value": "Black Light Blue with box"
+        },
+        {
+          "id": "silver-blue-with-box",
+          "value": "Silver Blue with box"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -25,11 +55,11 @@
     },
     {
       "label": "Tipo do relógio",
-      "value": "Analógico casual e esportivo"
+      "value": "Analógico casual"
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo, alimentado por bateria"
+      "value": "Quartzo"
     },
     {
       "label": "Material da caixa",
@@ -48,16 +78,16 @@
       "value": "30m (3 ATM)"
     },
     {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
       "label": "Diâmetro do mostrador",
-      "value": "42 mm"
+      "value": "40 a 44 mm"
     },
     {
       "label": "Espessura da caixa",
       "value": "11 mm"
-    },
-    {
-      "label": "Largura da pulseira",
-      "value": "22 mm"
     },
     {
       "label": "Garantia",
@@ -66,10 +96,9 @@
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "sob-encomenda",
       "state": "new",
-      "availabilityStatus": "available",
-      "enabled": false,
+      "availabilityStatus": "on_order",
       "images": [
         "curren-8455-1.webp",
         "curren-8455-2.webp",
@@ -79,19 +108,99 @@
         "curren-8455-6.webp",
         "curren-8455-7.webp",
         "curren-8455-8.webp",
-        "curren-8455-9.webp"
+        "curren-8455-9.webp",
+        "curren-8455-10.webp",
+        "curren-8455-11.webp",
+        "curren-8455-12.webp",
+        "curren-8455-13.webp",
+        "curren-8455-14.webp",
+        "curren-8455-15.webp",
+        "curren-8455-16.webp",
+        "curren-8455-17.webp",
+        "curren-8455-18.webp",
+        "curren-8455-19.webp",
+        "curren-8455-20.webp",
+        "curren-8455-21.webp",
+        "curren-8455-22.webp",
+        "curren-8455-23.webp",
+        "curren-8455-24.webp",
+        "curren-8455-25.webp",
+        "curren-8455-26.webp",
+        "curren-8455-27.webp",
+        "curren-8455-28.webp"
       ],
       "variants": [
         {
           "axes": [
             {
               "axisId": "color",
-              "valueId": "azul"
+              "valueId": "silver-black"
             }
           ],
-          "price": 119.9,
-          "listPrice": 139.9,
-          "mainImage": "curren-8455-1.webp"
+          "mainImage": "curren-8455-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "mainImage": "curren-8455-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "all-black"
+            }
+          ],
+          "mainImage": "curren-8455-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-light-blue"
+            }
+          ],
+          "mainImage": "curren-8455-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "all-black-with-box"
+            }
+          ],
+          "mainImage": "curren-8455-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-black-with-box"
+            }
+          ],
+          "mainImage": "curren-8455-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-light-blue-with-box"
+            }
+          ],
+          "mainImage": "curren-8455-13.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue-with-box"
+            }
+          ],
+          "mainImage": "curren-8455-14.webp"
         }
       ]
     }
