@@ -13,11 +13,12 @@ import { tmpdir } from 'node:os'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { Product } from '@catalogo/shared'
-import { beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { citedImageNames, isPublishedCatalogFile, validateCatalog } from './catalog'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
-const distDir = join(clientRoot, 'dist')
+const distDir = mkdtempSync(join(tmpdir(), 'catalog-dist-'))
+const buildCommand = `pnpm build --outDir ${distDir} --emptyOutDir`
 const redirectsPath = join(clientRoot, 'public', '_redirects')
 
 function collectIndexHtmlFiles(dir: string): string[] {
@@ -91,12 +92,16 @@ describe('Cloudflare SPA fallback (_redirects)', () => {
 
 describe('pnpm build emitindo dist estático', () => {
   beforeAll(() => {
-    execSync('pnpm build', { cwd: clientRoot, stdio: 'pipe' })
+    execSync(buildCommand, { cwd: clientRoot, stdio: 'pipe' })
   }, 300_000)
+
+  afterAll(() => {
+    rmSync(distDir, { recursive: true, force: true })
+  })
 
   it('termina com código zero quando o catálogo não tem produtos', () => {
     expect(() =>
-      execSync('pnpm build', { cwd: clientRoot, stdio: 'pipe' }),
+      execSync(buildCommand, { cwd: clientRoot, stdio: 'pipe' }),
     ).not.toThrow()
   }, 300_000)
 
@@ -186,7 +191,7 @@ describe('pnpm build emitindo dist estático', () => {
     writeFileSync(join(productDir, 'img', 'frente.png'), 'not-a-real-png')
     let status = 0
     try {
-      execSync('pnpm build', {
+      execSync(buildCommand, {
         cwd: clientRoot,
         env: { ...process.env, CATALOG_DIR: catalogDir },
         encoding: 'utf-8',
