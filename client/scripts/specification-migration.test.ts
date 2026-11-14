@@ -123,13 +123,11 @@ describe('catalog specification migration', () => {
     ).toBe('200m (20 ATM)')
   })
 
-  it('records addiesdive-my-h3-2qz-green-black water resistance as 200m (20 ATM)', () => {
-    expect(
-      value(
-        readProduct('addiesdive-my-h3-2qz-green-black'),
-        'Resistência à água',
-      ),
-    ).toBe('200m (20 ATM)')
+  it('keeps the specifications consolidated from the previous Addiesdive products', () => {
+    const product = readProduct('addiesdive-my-h3-2qz')
+    expect(value(product, 'Homage de')).toBe('Rolex Submariner Date')
+    expect(value(product, 'Material do vidro')).toBe('Vidro mineral endurecido')
+    expect(value(product, 'Largura da pulseira')).toBe('20 mm no encaixe da caixa')
   })
 
   it('records curren-8455 water resistance as 30m (3 ATM)', () => {

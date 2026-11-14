@@ -63,6 +63,14 @@ function watchTitle(): string {
   return product.title
 }
 
+function watchListingId(): string {
+  const product = catalogProducts[0]
+  if (!product) throw new Error('catalog fixture has no watch')
+  const listing = product.listings[0]
+  if (!listing) throw new Error('catalog fixture watch has no listing')
+  return listing.id
+}
+
 beforeEach(() => {
   vi.stubGlobal('matchMedia', vi.fn((query: string) => ({
     matches: false,
@@ -310,13 +318,14 @@ describe('rotas sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {
 
   it('associa /product/:slug/:listingId à rota com listingId e abre o anúncio (VAR-82, VAR-83)', async () => {
     const slug = watchSlug()
-    const matches = matchRoutes(appRoutes, `/product/${slug}/listing`)
+    const listingId = watchListingId()
+    const matches = matchRoutes(appRoutes, `/product/${slug}/${listingId}`)
     expect(matches).toHaveLength(1)
     expect(matches![0].route.path).toBe('/product/:slug/:listingId')
     expect(matches![0].params.slug).toBe(slug)
-    expect(matches![0].params.listingId).toBe('listing')
+    expect(matches![0].params.listingId).toBe(listingId)
 
-    const fetchMock = renderAt(`/product/${slug}/listing`)
+    const fetchMock = renderAt(`/product/${slug}/${listingId}`)
     expect(await screen.findByRole('heading', { name: watchTitle() })).toBeDefined()
     expect(screen.getByTestId('watch-page-column')).toBeDefined()
     expect(screen.queryByText(MISSING_WATCH_MESSAGE)).toBeNull()
@@ -332,7 +341,11 @@ describe('rotas sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {
   })
 
   it('mostra a frase de ausente quando o anúncio está oculto (VAR-85)', async () => {
-    const fetchMock = renderAt('/product/addiesdive-my-h3-2qz-green-black/listing')
+    const product = structuredClone(catalogProducts[0]!)
+    const listing = product.listings[0]!
+    listing.enabled = false
+    mockProductsRef.current = [product]
+    const fetchMock = renderAt(`/product/${product.slug}/${listing.id}`)
     expect(await screen.findByText(MISSING_WATCH_MESSAGE)).toBeDefined()
     expect(screen.queryByRole('link', { name: 'Compartilhar' })).toBeNull()
     expect(didRequestSellers(fetchMock)).toBe(false)

@@ -74,10 +74,8 @@ describe('published catalog migration (OSC-11, OSC-12, OSC-15)', () => {
       'pagani-design-pd-1701',
       'aimimo-design-air-king',
       'sapphero-so2205',
-      'addiesdive-my-h3-2qz',
       'seculus-kit-cantil',
       'addiesdive-ad2554',
-      'addiesdive-my-h3-2qz-green-black',
     ]
     for (const slug of slugsWithMigratedOffer) {
       const variants = variantsInProductJson(
