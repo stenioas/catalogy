@@ -1,0 +1,154 @@
+{
+  "slug": "cadisen-c7068",
+  "title": "Relógio CADISEN Cronógrafo em Titânio",
+  "description": "Relógio masculino com caixa de titânio e revestimento AF, movimento de quartzo Seiko TMI VK63 e cronógrafo com indicação de 24 horas. Cristal de safira com tratamento antirreflexo, mostrador com acabamento em esmalte de alto brilho e ponteiros luminosos. Pulseira de lona de alta densidade combinada com couro genuíno. Diâmetro de 40 mm, espessura de 11,5 mm, peso de 56,5 g e resistência à água de 100 metros.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "azul",
+          "value": "Azul"
+        },
+        {
+          "id": "cinza",
+          "value": "cinza"
+        },
+        {
+          "id": "branco",
+          "value": "BRANCO"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "CADISEN"
+    },
+    {
+      "label": "Modelo",
+      "value": "C7068 / TI-7 MULTISYNC"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico com cronógrafo"
+    },
+    {
+      "label": "Funções",
+      "value": "Horas, minutos, segundos, cronógrafo, indicador de 24 horas e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "Seiko TMI VK63"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Titânio com revestimento AF"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Lona combinada com couro genuíno"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Cristal de safira com revestimento antirreflexo"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "100m (10 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "40 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "11,5 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "cadisen-c7068-1.webp",
+        "cadisen-c7068-2.webp",
+        "cadisen-c7068-3.webp",
+        "cadisen-c7068-4.webp",
+        "cadisen-c7068-5.webp",
+        "cadisen-c7068-6.webp",
+        "cadisen-c7068-7.webp",
+        "cadisen-c7068-8.webp",
+        "cadisen-c7068-9.webp",
+        "cadisen-c7068-10.webp",
+        "cadisen-c7068-11.webp",
+        "cadisen-c7068-12.webp",
+        "cadisen-c7068-13.webp",
+        "cadisen-c7068-14.webp",
+        "cadisen-c7068-15.webp",
+        "cadisen-c7068-16.webp",
+        "cadisen-c7068-17.webp",
+        "cadisen-c7068-18.webp",
+        "cadisen-c7068-19.webp",
+        "cadisen-c7068-20.webp",
+        "cadisen-c7068-21.webp",
+        "cadisen-c7068-22.webp",
+        "cadisen-c7068-23.webp",
+        "cadisen-c7068-24.webp",
+        "cadisen-c7068-25.webp",
+        "cadisen-c7068-26.webp",
+        "cadisen-c7068-27.webp",
+        "cadisen-c7068-28.webp",
+        "cadisen-c7068-29.webp",
+        "cadisen-c7068-30.webp",
+        "cadisen-c7068-31.webp",
+        "cadisen-c7068-32.webp",
+        "cadisen-c7068-33.webp",
+        "cadisen-c7068-34.webp",
+        "cadisen-c7068-35.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "azul"
+            }
+          ],
+          "mainImage": "cadisen-c7068-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "cinza"
+            }
+          ],
+          "mainImage": "cadisen-c7068-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "branco"
+            }
+          ],
+          "mainImage": "cadisen-c7068-9.webp"
+        }
+      ]
+    }
+  ]
+}
