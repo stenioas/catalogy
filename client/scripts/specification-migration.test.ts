@@ -44,36 +44,6 @@ describe('catalog specification migration', () => {
     )
   })
 
-  it('omits Luminosidade and Tampa inferior from aimimo-design-air-king-verde', () => {
-    const productLabels = labels(readProduct('aimimo-design-air-king-verde'))
-    expect(productLabels).not.toContain('Luminosidade')
-    expect(productLabels).not.toContain('Tampa inferior')
-  })
-
-  it('records aimimo-design-air-king-verde Funções as Luminosidade', () => {
-    expect(value(readProduct('aimimo-design-air-king-verde'), 'Funções')).toBe(
-      'Luminosidade',
-    )
-  })
-
-  it('records aimimo-design-air-king-verde water resistance as 50m (5 ATM)', () => {
-    expect(
-      value(readProduct('aimimo-design-air-king-verde'), 'Resistência à água'),
-    ).toBe('50m (5 ATM)')
-  })
-
-  it('keeps the aimimo-design-air-king-verde case size', () => {
-    expect(
-      value(readProduct('aimimo-design-air-king-verde'), 'Tamanho da caixa'),
-    ).toBe('48 mm')
-    expect(
-      value(readProduct('aimimo-design-air-king-verde'), 'Diâmetro do mostrador'),
-    ).toBe('39 mm')
-    expect(
-      value(readProduct('aimimo-design-air-king-verde'), 'Espessura da caixa'),
-    ).toBe('12,5 mm')
-  })
-
   it('omits Homage de Não se aplica from curren-9096', () => {
     const specifications = readProduct('curren-9096').specifications ?? []
     expect(

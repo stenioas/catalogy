@@ -72,7 +72,7 @@ describe('published catalog migration (OSC-11, OSC-12, OSC-15)', () => {
       'curren-9007',
       'curren-8106',
       'pagani-design-pd-1701',
-      'aimimo-design-air-king-verde',
+      'aimimo-design-air-king',
       'sapphero-so2205',
       'addiesdive-my-h3-2qz',
       'seculus-kit-cantil',

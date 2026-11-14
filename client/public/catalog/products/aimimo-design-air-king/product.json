@@ -1,0 +1,218 @@
+{
+  "slug": "aimimo-design-air-king",
+  "title": "Aimimo Design Air King",
+  "description": "O Aimimo Design Air King é uma homenagem ao Rolex Air King, é um relógiomasculino com caixa de aço inoxidável 316L, acabamento polido e fundo escovado, e pulseira de aço inoxidável. O diâmetro é de 39 mm sem a coroa, o comprimento lug to lug é de 48 mm e a espessura é de 12,5 mm. O vidro é de cristal de safira, a coroa é parafusada. O movimento é de quartzo japonês, com três ponteiros, calendário e luminosidade. A resistência à água é de 50 m (5 ATM) e a pulseira tem 20 mm de largura. O mostrador não traz logotipo.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "cor",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "a-no-logo",
+          "value": "A (no logo)"
+        },
+        {
+          "id": "b-no-logo",
+          "value": "B (no logo)"
+        },
+        {
+          "id": "c-blue-no-logo",
+          "value": "C blue  (no logo)"
+        },
+        {
+          "id": "c-green-no-logo",
+          "value": "C green (no logo)"
+        },
+        {
+          "id": "c-black-no-logo",
+          "value": "C black (no logo)"
+        },
+        {
+          "id": "c-sscolor-no-logo",
+          "value": "C sscolor (no logo)"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Aimimo Design"
+    },
+    {
+      "label": "Modelo",
+      "value": "Air King"
+    },
+    {
+      "label": "Homage de",
+      "value": "Rolex Air King"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Relógio de pulso de quartzo de luxo"
+    },
+    {
+      "label": "Funções",
+      "value": "Três ponteiros, calendário e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo japonês"
+    },
+    {
+      "label": "Movimento",
+      "value": "Miyota 2035"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável 316L, acabamento polido e fundo escovado"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Cristal de safira"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
+    },
+    {
+      "label": "Tamanho da caixa",
+      "value": "48 mm"
+    },
+    {
+      "label": "Coroa",
+      "value": "Parafusada"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "39 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "12,5 mm"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "aimimo-design-air-king-1.webp",
+        "aimimo-design-air-king-2.webp",
+        "aimimo-design-air-king-3.webp",
+        "aimimo-design-air-king-4.webp",
+        "aimimo-design-air-king-5.webp",
+        "aimimo-design-air-king-6.webp",
+        "aimimo-design-air-king-7.webp",
+        "aimimo-design-air-king-8.webp",
+        "aimimo-design-air-king-9.webp",
+        "aimimo-design-air-king-10.webp",
+        "aimimo-design-air-king-11.webp",
+        "aimimo-design-air-king-12.webp",
+        "aimimo-design-air-king-13.webp",
+        "aimimo-design-air-king-14.webp",
+        "aimimo-design-air-king-15.webp",
+        "aimimo-design-air-king-16.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "a-no-logo"
+            }
+          ],
+          "mainImage": "aimimo-design-air-king-2.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "b-no-logo"
+            }
+          ],
+          "mainImage": "aimimo-design-air-king-1.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "c-blue-no-logo"
+            }
+          ],
+          "mainImage": "aimimo-design-air-king-6.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "c-green-no-logo"
+            }
+          ],
+          "mainImage": "aimimo-design-air-king-5.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "c-black-no-logo"
+            }
+          ],
+          "mainImage": "aimimo-design-air-king-4.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "c-sscolor-no-logo"
+            }
+          ],
+          "mainImage": "aimimo-design-air-king-3.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "openbox",
+      "availabilityStatus": "available",
+      "images": [
+        "aimimo-design-air-king-2.webp",
+        "aimimo-design-air-king-13.webp",
+        "aimimo-design-air-king-16.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "b-no-logo"
+            }
+          ],
+          "price": 259.9,
+          "listPrice": 359.9,
+          "mainImage": "aimimo-design-air-king-2.webp",
+          "offers": [
+            {
+              "text": "Black Friday",
+              "icon": "Gift",
+              "background": "#000000",
+              "color": "#FFFFFF"
+            }
+          ],
+          "observations": "Produto não foi usado. A embalagem foi aberta e o plástico foi removido."
+        }
+      ]
+    }
+  ]
+}
