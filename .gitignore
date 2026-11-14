@@ -8,5 +8,6 @@ dist/
 coverage/
 .vitest/
 client/src/catalog/products.generated.ts
+media/
 
 __pycache__/
