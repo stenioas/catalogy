@@ -1,12 +1,13 @@
 {
   "slug": "rollstimi-rt-128",
-  "title": "Relógio Rollstimi Automático Esportivo",
-  "description": "Relógio masculino de estilo esportivo com movimento mecânico automático e corda manual. Possui caixa redonda e pulseira de aço inoxidável, cristal de safira, marcadores arábicos e calendário completo. A pulseira utiliza fecho dobrável com segurança.",
+  "title": "Rollstimi Datejust Automático",
+  "description": "O Rollstimi Datejust Automático é uma homenagem ao Rolex Datejust, com movimento mecânico automático e corda manual. Possui caixa redonda e pulseira de aço inoxidável, cristal de safira, marcadores arábicos e calendário completo. A pulseira utiliza fecho dobrável com segurança. Possui resistência à água de 50m (5 ATM).",
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
           "id": "blue",
@@ -16,8 +17,7 @@
           "id": "white",
           "value": "White"
         }
-      ],
-      "presentation": "image"
+      ]
     }
   ],
   "specifications": [
@@ -30,6 +30,10 @@
       "value": "RT-128"
     },
     {
+      "label": "Homage de",
+      "value": "Rolex Datejust"
+    },
+    {
       "label": "Tipo do relógio",
       "value": "Analógico esportivo"
     },
@@ -39,7 +43,7 @@
     },
     {
       "label": "Tipo de movimento",
-      "value": "Mecânico automático com corda manual"
+      "value": "Mecânico automático com corda manual japonês"
     },
     {
       "label": "Material da caixa",
@@ -99,7 +103,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "blue"
             }
           ],
@@ -108,7 +112,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "white"
             }
           ],
