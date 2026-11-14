@@ -1,17 +1,35 @@
 {
   "slug": "keaso-k002",
-  "title": "Relógio Keaso 5 Sports",
-  "description": "O KEASO K002 é um homage do Seiko SKX 5 Sports, do tipo diver (mergulho), com movimento de quartzo Miyota 2035 de origem japonesa. A caixa é de aço inoxidável 316L, com 13 mm de espessura, e a pulseira é de aço inoxidável com fecho dobrável com segurança. Possui vidro de safira, luminosidade C3 e resistência à água de 200 m (20 bar).",
+  "title": "Keaso SKX 5 Sports",
+  "description": "O Keaso SKX 5 Sports é uma homenagem ao Seiko SKX 5 Sports, do tipo diver (mergulho), com movimento de quartzo Miyota 2035 de origem japonesa. A caixa é de aço inoxidável 316L, com 13 mm de espessura, e a pulseira é de aço inoxidável com fecho dobrável com segurança. Possui vidro de safira, luminosidade C3 e resistência à água de 200 m (20 bar).",
+  "audience": "male",
   "axes": [
     {
       "id": "color",
       "label": "Cor",
       "values": [
         {
-          "id": "variados",
-          "value": "Variados"
+          "id": "green",
+          "value": "Green"
+        },
+        {
+          "id": "orange",
+          "value": "Orange"
+        },
+        {
+          "id": "yellow",
+          "value": "Yellow"
+        },
+        {
+          "id": "black",
+          "value": "Black"
+        },
+        {
+          "id": "blue",
+          "value": "Blue"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -29,7 +47,11 @@
     },
     {
       "label": "Tipo do relógio",
-      "value": "Diver (mergulho)"
+      "value": "Esportivo de mergulho"
+    },
+    {
+      "label": "Funções",
+      "value": "Luminoso C3"
     },
     {
       "label": "Tipo de movimento",
@@ -45,7 +67,7 @@
     },
     {
       "label": "Material da pulseira",
-      "value": "Aço inoxidável"
+      "value": "Aço inoxidável 316L"
     },
     {
       "label": "Material do vidro",
@@ -56,6 +78,10 @@
       "value": "200m (20 ATM)"
     },
     {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
       "label": "Diâmetro do mostrador",
       "value": "42,5 mm"
     },
@@ -64,42 +90,89 @@
       "value": "13 mm"
     },
     {
-      "label": "Largura da pulseira",
-      "value": "20 a 24 mm"
-    },
-    {
       "label": "Garantia",
       "value": "90 dias"
     }
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "sob-encomenda",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "keaso-1.webp",
-        "keaso-2.webp",
-        "keaso-3.webp",
-        "keaso-4.webp",
-        "keaso-5.webp",
-        "keaso-6.webp",
-        "keaso-7.webp",
-        "keaso-8.webp",
-        "keaso-9.webp",
-        "keaso-10.webp",
-        "keaso-11.webp"
+        "keaso-k002-1.webp",
+        "keaso-k002-2.webp",
+        "keaso-k002-3.webp",
+        "keaso-k002-4.webp",
+        "keaso-k002-5.webp",
+        "keaso-k002-6.webp",
+        "keaso-k002-7.webp",
+        "keaso-k002-8.webp",
+        "keaso-k002-9.webp",
+        "keaso-k002-10.webp",
+        "keaso-k002-11.webp",
+        "keaso-k002-12.webp",
+        "keaso-k002-13.webp",
+        "keaso-k002-14.webp",
+        "keaso-k002-15.webp",
+        "keaso-k002-16.webp",
+        "keaso-k002-17.webp",
+        "keaso-k002-18.webp",
+        "keaso-k002-19.webp",
+        "keaso-k002-20.webp",
+        "keaso-k002-21.webp",
+        "keaso-k002-22.webp",
+        "keaso-k002-23.webp",
+        "keaso-k002-24.webp",
+        "keaso-k002-25.webp",
+        "keaso-k002-26.webp",
+        "keaso-k002-27.webp"
       ],
       "variants": [
         {
           "axes": [
             {
               "axisId": "color",
-              "valueId": "variados"
+              "valueId": "green"
             }
           ],
-          "price": 749.9,
-          "mainImage": "keaso-1.webp"
+          "mainImage": "keaso-k002-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "orange"
+            }
+          ],
+          "mainImage": "keaso-k002-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "yellow"
+            }
+          ],
+          "mainImage": "keaso-k002-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "mainImage": "keaso-k002-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue"
+            }
+          ],
+          "mainImage": "keaso-k002-11.webp"
         }
       ]
     }
