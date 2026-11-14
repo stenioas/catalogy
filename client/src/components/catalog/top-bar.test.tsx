@@ -19,14 +19,23 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
     cleanup()
   })
 
-  it('shows the fixed title Catálogo on the catalog route (SV-01)', () => {
+  it('shows the Achavio logo on the catalog route (SV-01)', () => {
     renderTopBar()
-    expect(screen.getByText('Catálogo de Produtos')).toBeDefined()
+    const logo = screen.getByAltText('Achavio')
+    expect(logo.getAttribute('src')).toBe('/achavio_logo.webp')
   })
 
-  it('shows Catálogo on the watch route when catalogHref is set (SV-12)', () => {
+  it('links the logo to the catalog on the watch route when catalogHref is set (SV-12)', () => {
     renderTopBar('/')
-    expect(screen.getByRole('link', { name: 'Catálogo de Produtos' })).toBeDefined()
+    expect(screen.getByRole('link', { name: 'Achavio' }).getAttribute('href')).toBe('/')
+  })
+
+  it('fits the logo inside the 64px bar with a fixed 20px height', () => {
+    renderTopBar()
+    const logo = screen.getByAltText('Achavio')
+    expect(logo.className).toMatch(/\bh-5\b/)
+    expect(logo.className).toMatch(/\bw-auto\b/)
+    expect(logo.getAttribute('height')).toBe('20')
   })
 
   it('does not show an accessible back control on the catalog grade route (CAT-37)', () => {
@@ -35,14 +44,14 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
     expect(screen.queryByRole('button', { name: 'Voltar' })).toBeNull()
   })
 
-  it('keeps Catálogo centered and hides the theme control (CAT-38)', () => {
+  it('keeps the logo centered and hides the theme control (CAT-38)', () => {
     const { container } = renderTopBar()
     const row = container.querySelector(
       '[data-testid="top-bar-inner"]',
     ) as HTMLElement
     expect(row).not.toBeNull()
     expect(row.className).toMatch(/grid-cols-\[1fr_auto_1fr\]/)
-    expect(row.children[1]?.textContent).toContain('Catálogo de Produtos')
+    expect(row.children[1]?.querySelector('img')?.getAttribute('alt')).toBe('Achavio')
     expect(row.lastElementChild?.querySelector('button')).toBeNull()
     expect(within(row).queryByRole('button', { name: /Usar tema/ })).toBeNull()
   })

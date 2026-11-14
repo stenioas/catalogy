@@ -4,14 +4,24 @@ import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 
-export const TOP_BAR_TITLE = 'Catálogo de Produtos'
+export const TOP_BAR_LOGO_ALT = 'Achavio'
+export const TOP_BAR_LOGO_SRC = '/achavio_logo.webp'
 
 export type TopBarProps = {
   catalogHref?: string
 }
 
-const titleClassName =
-  'm-0 min-w-0 truncate font-[family-name:var(--font-sans)] text-base font-normal tracking-[-0.12px] text-inherit'
+const logoSlotClassName = 'm-0 flex min-w-0 items-center justify-self-center'
+
+const logo = (
+  <img
+    src={TOP_BAR_LOGO_SRC}
+    alt={TOP_BAR_LOGO_ALT}
+    width={136}
+    height={20}
+    className="block h-5 w-auto max-w-full"
+  />
+)
 
 const SCROLL_DELTA = 8
 
@@ -71,11 +81,11 @@ export function TopBar({ catalogHref }: TopBarProps) {
             ) : null}
           </div>
           {catalogHref ? (
-            <Link to={catalogHref} className={`${titleClassName} justify-self-center text-center`}>
-              {TOP_BAR_TITLE}
+            <Link to={catalogHref} className={logoSlotClassName}>
+              {logo}
             </Link>
           ) : (
-            <p className={`${titleClassName} justify-self-center text-center`}>{TOP_BAR_TITLE}</p>
+            <p className={logoSlotClassName}>{logo}</p>
           )}
           <div className="justify-self-end" />
         </div>

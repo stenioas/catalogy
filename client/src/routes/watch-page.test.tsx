@@ -288,7 +288,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     renderWatchPage()
     const bar = screen.getByTestId('top-bar')
     const back = within(bar).getByRole('link', { name: 'Voltar' })
-    const catalog = within(bar).getByRole('link', { name: 'Catálogo de Produtos' })
+    const catalog = within(bar).getByRole('link', { name: 'Achavio' })
     expect(back.getAttribute('href')).toBe(catalogHref)
     expect(back.querySelector('svg')).not.toBeNull()
     expect(follows(back, catalog)).toBe(true)
@@ -296,7 +296,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('links Catálogo to the same / href as Voltar (SV-12, CAT-60)', () => {
     renderWatchPage()
-    const catalog = screen.getByRole('link', { name: 'Catálogo de Produtos' })
+    const catalog = screen.getByRole('link', { name: 'Achavio' })
     expect(catalog.getAttribute('href')).toBe(catalogHref)
   })
 
@@ -309,7 +309,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     )
     renderWatchPage()
     const back = screen.getByRole('link', { name: 'Voltar' })
-    const catalog = screen.getByRole('link', { name: 'Catálogo de Produtos' })
+    const catalog = screen.getByRole('link', { name: 'Achavio' })
     expect(back.getAttribute('href')).toBe('/')
     expect(catalog.getAttribute('href')).toBe('/')
     expect(back.tagName).toBe('A')

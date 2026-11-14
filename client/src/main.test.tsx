@@ -12,7 +12,7 @@ const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 const INCOMPLETE_LINK_MESSAGE =
   'Este link está incompleto ou o vendedor não existe.'
 const SELLERS_URL = '/catalog/sellers.json'
-const TOP_BAR_TITLE = 'Catálogo de Produtos'
+const TOP_BAR_LOGO_ALT = 'Achavio'
 
 function watchTitle(): string {
   const product = products[0]
@@ -70,7 +70,9 @@ describe('entrada da aplicação sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11
   it('abre / com a vitrine e sem buscar sellers.json (SV-05)', async () => {
     const fetchMock = await renderApp('/')
     expect(await screen.findByText(watchTitle())).toBeDefined()
-    expect(screen.getByTestId('top-bar').textContent).toContain(TOP_BAR_TITLE)
+    expect(screen.getByTestId('top-bar').querySelector('img')?.getAttribute('alt')).toBe(
+      TOP_BAR_LOGO_ALT,
+    )
     expect(screen.getByTestId('top-bar').textContent).not.toContain('Alexandre')
     expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
     expect(didRequestSellers(fetchMock)).toBe(false)

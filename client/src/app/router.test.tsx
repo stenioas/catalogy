@@ -13,7 +13,7 @@ const INCOMPLETE_LINK_MESSAGE =
 const EMPTY_VITRINE_MESSAGE = 'Não temos nenhum anúncio ativo.'
 const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
 const SELLERS_URL = '/catalog/sellers.json'
-const TOP_BAR_TITLE = 'Catálogo de Produtos'
+const TOP_BAR_LOGO_ALT = 'Achavio'
 
 const { mockProductsRef } = vi.hoisted(() => ({
   mockProductsRef: { current: null as Product[] | null },
@@ -269,7 +269,9 @@ describe('rotas sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11)', () => {
 
     const fetchMock = renderAt('/')
     expect(await screen.findByText(watchTitle())).toBeDefined()
-    expect(screen.getByTestId('top-bar').textContent).toContain(TOP_BAR_TITLE)
+    expect(screen.getByTestId('top-bar').querySelector('img')?.getAttribute('alt')).toBe(
+      TOP_BAR_LOGO_ALT,
+    )
     expect(screen.getByTestId('top-bar').textContent).not.toContain('Alexandre')
     expect(screen.queryByText(INCOMPLETE_LINK_MESSAGE)).toBeNull()
     expect(didRequestSellers(fetchMock)).toBe(false)
