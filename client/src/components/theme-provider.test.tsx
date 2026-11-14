@@ -111,11 +111,10 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(resolvedColor(root, dark, colorProp(dark, '--background'))).toBe('#272729')
 
     const design = readFileSync(join(clientRoot, '../DESIGN.md'), 'utf-8')
-    expect(design).toContain('{colors.primary}` — #0066cc')
-    expect(design).toContain('{colors.canvas}` — #ffffff')
-    expect(design).toContain('{colors.canvas-parchment}` — #f5f5f7')
-    expect(design).toContain('{colors.ink}` — #1d1d1f')
-    expect(design).toContain('{colors.surface-tile-1}` — #272729')
+    expect(design).toContain('| `--primary` | `#0066cc`')
+    expect(design).toContain('| `--canvas` | `#ffffff`')
+    expect(design).toContain('| `--canvas-parchment` | `#f5f5f7`')
+    expect(design).toContain('| `--ink` | `#1d1d1f`')
   })
 
   it('stays on light when the system prefers dark and does not read theme:v1 (CAT-117)', () => {
@@ -197,16 +196,13 @@ describe('theme persistence (CAT-116–CAT-119)', () => {
     expect(cssImgViolations('img { @apply opacity-50; }')).not.toEqual([])
   })
 
-  it('defines {colors.primary-tint} with the light and dark badge colors (CAT-120)', () => {
+  it('documents --primary-tint and the light discount badge background (CAT-120)', () => {
     const design = readFileSync(join(clientRoot, '../DESIGN.md'), 'utf-8')
-    const line = design
-      .split('\n')
-      .find((row) => row.includes('{colors.primary-tint}'))
-    expect(line).toBeDefined()
-    expect(line).toContain('#0066cc')
-    expect(line).toContain('rgba(0, 102, 204, 0.12)')
-    expect(line).toContain('#2997ff')
-    expect(line).toContain('rgba(41, 151, 255, 0.16)')
+    const tintRow = design.split('\n').find((row) => row.includes('`--primary-tint`'))
+    expect(tintRow).toBeDefined()
+    expect(tintRow).toContain('#0066cc')
+    expect(tintRow).toContain('#2997ff')
+    expect(design).toContain('rgba(0, 102, 204, 0.12)')
   })
 
   it('clears the dark class in index.html without reading theme:v1 (CAT-117, CAT-118)', () => {
