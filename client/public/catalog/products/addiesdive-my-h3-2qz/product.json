@@ -1,7 +1,7 @@
 {
   "slug": "addiesdive-my-h3-2qz",
   "title": "Addiesdive Submariner Date",
-  "description": "O Addiesdive Submariner Date é uma homenagem ao Rolex Submariner Date, é um relógio masculino de quartzo com movimento japonês Miyota 2115 e calendário. Caixa em aço inoxidável 316L, pulseira de aço e bisel de cerâmica com rotação unidirecional. A descrição informa resistência à água de 200 metros e luminosidade azul no bisel e verde no mostrador e nos ponteiros.",
+  "description": "O Addiesdive Submariner Date é uma homenagem ao Rolex Submariner Date, é um relógio masculino de quartzo com movimento japonês Miyota 2115 e calendário. Caixa em aço inoxidável 316L, pulseira de aço, bisel de cerâmica com rotação unidirecional, resistência à água de 200 metros e luminosidade azul no bisel e verde no mostrador e nos ponteiros.",
   "audience": "male",
   "axes": [
     {
@@ -47,11 +47,11 @@
     },
     {
       "label": "Funções",
-      "value": "Horas, minutos, segundos, calendário e luminosidade"
+      "value": "Calendário e luminosidade"
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo"
+      "value": "Quartzo japonês"
     },
     {
       "label": "Movimento",
@@ -63,7 +63,7 @@
     },
     {
       "label": "Material da pulseira",
-      "value": "Aço inoxidável"
+      "value": "Aço inoxidável 316L"
     },
     {
       "label": "Material do vidro",
@@ -84,6 +84,10 @@
     {
       "label": "Diâmetro do mostrador",
       "value": "41 mm (diâmetro da caixa, sem coroa)"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "13,5 mm"
     },
     {
       "label": "Garantia",

@@ -1,6 +1,6 @@
 Candidato alternativo de slug no título: `addiesdive-my-h3-2`. O modelo completo nas especificações e na descrição é MY-H3-2QZ.
 
-Observações de extração: vidro descrito como Hardlex nas especificações, mineral na descrição e safira no resumo de IA; espessura de 13,5 mm nas especificações e 13 mm na descrição. A espessura foi omitida da ficha por divergência. O material do vidro foi posteriormente consolidado como vidro mineral endurecido com base nos dois cadastros locais anteriores do mesmo modelo. Diâmetro de 41 mm e encaixe da pulseira de 20 mm conforme descrição detalhada.
+Observações de extração: vidro descrito como Hardlex nas especificações, mineral na descrição e safira no resumo de IA. O material do vidro foi posteriormente consolidado como vidro mineral endurecido com base nos dois cadastros locais anteriores do mesmo modelo. A descrição cita 13 mm de espessura e as especificações citam 13,5 mm; a ficha ficou com 13,5 mm por confirmação do operador. Diâmetro de 41 mm e encaixe da pulseira de 20 mm conforme descrição detalhada.
 
 # Addiesdive relógio clássico masculino com moldura de cerâmica 200m resistente à água relógio de quartzo casual bgw9 azul luminoso presente relógio MY-H3-2
 
