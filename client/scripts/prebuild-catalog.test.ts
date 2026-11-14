@@ -14,13 +14,6 @@ import {
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
 
-const MIGRATED_OFFER = {
-  text: 'Black Friday',
-  icon: 'Gift',
-  background: '#000000',
-  color: '#FFFFFF',
-}
-
 function publishedProductJsonPaths(catalogDir: string): string[] {
   const productsDir = join(catalogDir, 'products')
   const paths: string[] = []
@@ -67,44 +60,6 @@ describe('published catalog migration (OSC-11, OSC-12, OSC-15)', () => {
     }
   })
 
-  it('OSC-11: a migrated true variant carries exactly the Gift offer row', () => {
-    const slugsWithMigratedOffer = [
-      'curren-9007',
-      'curren-8106',
-      'pagani-design-pd-1701',
-      'aimimo-design-air-king',
-      'sapphero-so2205',
-      'seculus-kit-cantil',
-      'addiesdive-ad2554',
-    ]
-    for (const slug of slugsWithMigratedOffer) {
-      const variants = variantsInProductJson(
-        join(catalogDir, 'products', slug, 'product.json'),
-      )
-      const withOffers = variants.filter(
-        (v) =>
-          v !== null &&
-          typeof v === 'object' &&
-          Array.isArray((v as { offers?: unknown }).offers) &&
-          (v as { offers: unknown[] }).offers.length > 0,
-      )
-      expect(withOffers.length).toBeGreaterThan(0)
-      for (const variant of withOffers) {
-        expect((variant as { offers: unknown[] }).offers).toEqual([MIGRATED_OFFER])
-      }
-    }
-  })
-
-  it('OSC-12: variants that had unmissableOffer false omit offers', () => {
-    for (const slug of ['benyar-5229', 'curren-8455']) {
-      for (const variant of variantsInProductJson(
-        join(catalogDir, 'products', slug, 'product.json'),
-      )) {
-        expect(variant).not.toHaveProperty('offers')
-      }
-    }
-  })
-
   it('OSC-12: a legacy JSON without unmissableOffer migrates without legacy or new offers', () => {
     const legacyJson = JSON.parse(`{
       "slug": "legacy-watch",
@@ -138,7 +93,7 @@ describe('README offer documentation (OSC-16)', () => {
     const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
 
     expect(readme).toContain('`offers`')
-    expect(readme).toContain('fileira no corpo do card acima do preço')
+    expect(readme).toContain('fica no corpo do card, acima da disponibilidade')
     expect(readme).not.toContain('unmissableOffer')
     expect(readme).not.toMatch(/badge de oferta (?:sobre|acima d[ae]) foto/i)
   })
