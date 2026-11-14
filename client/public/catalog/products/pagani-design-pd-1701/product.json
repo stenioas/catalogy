@@ -1,16 +1,12 @@
 {
   "slug": "pagani-design-pd-1701",
-  "title": "Relógio Pagani Design Speedmaster Moonwatch",
-  "description": "Relógio esportivo com cronógrafo e movimento de quartzo japonês TMI VK63. Caixa e pulseira em aço inoxidável, vidro de safira com revestimento antirreflexo, bisel de cerâmica e ponteiros luminosos.",
+  "title": "Pagani Design Speedmaster Moonwatch",
+  "description": "O Pagani Design Speedmaster Moonwatch é uma homenagem ao Omega Speedmaster Moonwatch, é um relógio esportivo com cronógrafo e movimento de quartzo japonês TMI VK63. Caixa e pulseira em aço inoxidável, vidro de safira com revestimento antirreflexo, bisel de cerâmica e ponteiros luminosos.",
   "axes": [
     {
       "id": "color",
       "label": "Cor",
       "values": [
-        {
-          "id": "varias-cores",
-          "value": "Várias cores"
-        },
         {
           "id": "gold-green",
           "value": "Gold Green"
@@ -73,7 +69,7 @@
   "specifications": [
     {
       "label": "Marca",
-      "value": "PAGANI DESIGN"
+      "value": "Pagani Design"
     },
     {
       "label": "Modelo",
