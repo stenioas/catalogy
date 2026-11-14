@@ -40,7 +40,7 @@ A skill de cadastro não entra nessa suíte. O parser dela se verifica com `pyth
 
 ## Vitrine
 
-A barra do topo mostra **Catálogo de Produtos**, some ao rolar para baixo e volta ao rolar para cima. A interface permanece no tema claro.
+A barra do topo mostra a logo **Achavio**, some ao rolar para baixo e volta ao rolar para cima. A interface permanece no tema claro.
 
 As abas são **Todos**, **Pronta entrega**, **A caminho** e **Encomendar**. Aba sem card fica desabilitada. Todos reúne disponível e chega em breve. Encomendar fica só na própria aba. Anúncio com `enabled: false`, ou sem variante encomendável, não gera card.
 

@@ -23,7 +23,7 @@ Disponibilidade usa fundos suaves: verde para disponível, azul para chega em br
 
 ## Barra do topo
 
-Faixa fixa de 64px, com fundo de pergaminho a 80% e `backdrop-filter: saturate(180%) blur(20px)`. O título é **Catálogo de Produtos**, centralizado, 16px, tracking −0,12px. Na ficha, a esquerda tem o botão circular de voltar. A barra sobe para fora da tela depois de rolar mais de 8px para baixo, a partir de 64px, e volta ao rolar para cima.
+Faixa fixa de 64px, com fundo de pergaminho a 80% e `backdrop-filter: saturate(180%) blur(20px)`. No centro fica a logo Achavio (`/achavio_logo.webp`), com 20px de altura e largura proporcional; na ficha ela leva de volta à vitrine. Na ficha, a esquerda tem o botão circular de voltar. A barra sobe para fora da tela depois de rolar mais de 8px para baixo, a partir de 64px, e volta ao rolar para cima.
 
 A coluna do conteúdo tem no máximo 1120px. Na vitrine o respiro lateral some no celular e volta a 24px a partir de 768px. Na ficha o respiro lateral é 16px abaixo de 768px e 24px acima disso.
 
