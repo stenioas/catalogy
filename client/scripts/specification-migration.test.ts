@@ -151,8 +151,8 @@ describe('catalog specification migration', () => {
     }
   })
 
-  it('records curren-8498l-black water resistance as 30m (3 ATM)', () => {
-    expect(value(readProduct('curren-8498l-black'), 'Resistência à água')).toBe(
+  it('records curren-8498l water resistance as 30m (3 ATM)', () => {
+    expect(value(readProduct('curren-8498l'), 'Resistência à água')).toBe(
       '30m (3 ATM)',
     )
   })

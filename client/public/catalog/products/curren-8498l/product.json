@@ -1,0 +1,206 @@
+{
+  "slug": "curren-8498l",
+  "title": "Curren com Calendário",
+  "description": "O Curren com Calendário é um relógio feminino analógico de quartzo com design redondo e minimalista, ideal para ocasiões casuais e formais. Possui data automática, luminosidade, caixa de liga metálica, pulseira de aço inoxidável e vidro mineral endurecido.",
+  "audience": "female",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "silver-blue",
+          "value": "Silver Blue"
+        },
+        {
+          "id": "silver-gold",
+          "value": "Silver Gold"
+        },
+        {
+          "id": "goldn-silver",
+          "value": "Goldn Silver"
+        },
+        {
+          "id": "silver",
+          "value": "Silver"
+        },
+        {
+          "id": "black",
+          "value": "Black"
+        },
+        {
+          "id": "gold",
+          "value": "Gold"
+        },
+        {
+          "id": "silver-black",
+          "value": "Silver Black"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Curren"
+    },
+    {
+      "label": "Modelo",
+      "value": "8498L"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Analógico feminino, casual"
+    },
+    {
+      "label": "Funções",
+      "value": "Calendário e luminosidade"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo japonês"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Liga metálica"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Vidro mineral endurecido"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "14 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "33 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "10 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "sob-encomenda",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "curren-8498l-1.webp",
+        "curren-8498l-2.webp",
+        "curren-8498l-3.webp",
+        "curren-8498l-4.webp",
+        "curren-8498l-5.webp",
+        "curren-8498l-6.webp",
+        "curren-8498l-7.webp",
+        "curren-8498l-8.webp",
+        "curren-8498l-9.webp",
+        "curren-8498l-10.webp",
+        "curren-8498l-11.webp",
+        "curren-8498l-12.webp",
+        "curren-8498l-13.webp",
+        "curren-8498l-14.webp",
+        "curren-8498l-15.webp",
+        "curren-8498l-16.webp",
+        "curren-8498l-17.webp",
+        "curren-8498l-18.webp",
+        "curren-8498l-19.webp",
+        "curren-8498l-20.webp",
+        "curren-8498l-21.webp",
+        "curren-8498l-22.webp",
+        "curren-8498l-23.webp",
+        "curren-8498l-24.webp",
+        "curren-8498l-25.webp",
+        "curren-8498l-26.webp",
+        "curren-8498l-27.webp",
+        "curren-8498l-28.webp",
+        "curren-8498l-29.webp",
+        "curren-8498l-31.webp",
+        "curren-8498l-32.webp",
+        "curren-8498l-33.webp",
+        "curren-8498l-34.webp",
+        "curren-8498l-35.webp",
+        "curren-8498l-36.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "mainImage": "curren-8498l-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-gold"
+            }
+          ],
+          "mainImage": "curren-8498l-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "goldn-silver"
+            }
+          ],
+          "mainImage": "curren-8498l-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver"
+            }
+          ],
+          "mainImage": "curren-8498l-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "mainImage": "curren-8498l-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold"
+            }
+          ],
+          "mainImage": "curren-8498l-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-black"
+            }
+          ],
+          "mainImage": "curren-8498l-13.webp"
+        }
+      ]
+    }
+  ]
+}
