@@ -1,20 +1,29 @@
 {
   "slug": "curren-8106",
-  "title": "Relógio Curren Casual Minimalist Masculino",
-  "description": "Relógio masculino CURREN 8106 de estilo casual, com movimento de quartzo e calendário. Caixa e pulseira em aço inoxidável, vidro Hardlex e pulseira ajustável de 20 cm. Acompanha 1 relógio CURREN original.",
+  "title": "Curren Casual com Calendário",
+  "description": "Relógio masculino de quartzo calendário completo, caixa redonda em aço inoxidável e vidro mineral endurecido. Pulseira ajustável em aço inoxidável com comprimento de 20 cm. Caixa com espessura de 9 mm.",
   "audience": "male",
   "axes": [
     {
       "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
           "id": "silver-white",
           "value": "Silver White"
         },
         {
+          "id": "black-black",
+          "value": "Black Black"
+        },
+        {
           "id": "silver-black",
           "value": "Silver Black"
+        },
+        {
+          "id": "black-white",
+          "value": "Black White"
         }
       ]
     }
@@ -30,11 +39,11 @@
     },
     {
       "label": "Tipo do relógio",
-      "value": "Relógio de pulso masculino, casual"
+      "value": "Casual"
     },
     {
       "label": "Funções",
-      "value": "Data automática e calendário completo"
+      "value": "Calendário completo"
     },
     {
       "label": "Tipo de movimento",
@@ -50,7 +59,7 @@
     },
     {
       "label": "Material do vidro",
-      "value": "Hardlex"
+      "value": "Vidro mineral endurecido"
     },
     {
       "label": "Resistência à água",
@@ -58,15 +67,15 @@
     },
     {
       "label": "Largura da pulseira",
-      "value": "20 mm"
+      "value": "20mm"
     },
     {
       "label": "Diâmetro do mostrador",
-      "value": "40 mm"
+      "value": "40 a 44 mm"
     },
     {
       "label": "Espessura da caixa",
-      "value": "9 mm"
+      "value": "9mm"
     },
     {
       "label": "Garantia",
@@ -85,7 +94,25 @@
         "curren-8106-4.webp",
         "curren-8106-5.webp",
         "curren-8106-6.webp",
-        "curren-8106-7.webp"
+        "curren-8106-7.webp",
+        "curren-8106-8.webp",
+        "curren-8106-9.webp",
+        "curren-8106-10.webp",
+        "curren-8106-11.webp",
+        "curren-8106-12.webp",
+        "curren-8106-13.webp",
+        "curren-8106-14.webp",
+        "curren-8106-15.webp",
+        "curren-8106-16.webp",
+        "curren-8106-17.webp",
+        "curren-8106-18.webp",
+        "curren-8106-19.webp",
+        "curren-8106-20.webp",
+        "curren-8106-21.webp",
+        "curren-8106-22.webp",
+        "curren-8106-23.webp",
+        "curren-8106-24.webp",
+        "curren-8106-25.webp"
       ],
       "variants": [
         {
@@ -95,8 +122,16 @@
               "valueId": "silver-white"
             }
           ],
-          "price": 149.9,
-          "mainImage": "curren-8106-1.webp"
+          "mainImage": "curren-8106-6.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-black"
+            }
+          ],
+          "mainImage": "curren-8106-7.webp"
         },
         {
           "axes": [
@@ -105,8 +140,16 @@
               "valueId": "silver-black"
             }
           ],
-          "price": 149.9,
-          "mainImage": "curren-8106-2.webp"
+          "mainImage": "curren-8106-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-white"
+            }
+          ],
+          "mainImage": "curren-8106-9.webp"
         }
       ]
     },
@@ -115,13 +158,13 @@
       "state": "new",
       "availabilityStatus": "coming_soon",
       "images": [
-        "curren-8106-1.webp",
-        "curren-8106-2.webp",
-        "curren-8106-3.webp",
-        "curren-8106-4.webp",
-        "curren-8106-5.webp",
         "curren-8106-6.webp",
-        "curren-8106-7.webp"
+        "curren-8106-8.webp",
+        "curren-8106-12.webp",
+        "curren-8106-22.webp",
+        "curren-8106-23.webp",
+        "curren-8106-24.webp",
+        "curren-8106-25.webp"
       ],
       "variants": [
         {
@@ -133,7 +176,7 @@
           ],
           "price": 119.9,
           "listPrice": 149.9,
-          "mainImage": "curren-8106-1.webp",
+          "mainImage": "curren-8106-6.webp",
           "offers": [
             {
               "text": "Black Friday",
@@ -152,7 +195,7 @@
           ],
           "price": 119.9,
           "listPrice": 149.9,
-          "mainImage": "curren-8106-2.webp",
+          "mainImage": "curren-8106-8.webp",
           "offers": [
             {
               "text": "Black Friday",
