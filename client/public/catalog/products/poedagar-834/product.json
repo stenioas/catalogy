@@ -1,0 +1,285 @@
+{
+  "slug": "poedagar-834",
+  "title": "Poedagar Nautilus Cronógrafo",
+  "description": "O Poedagar Nautilus Cronógrafo é uma homenagem ao Patek Philippe Nautilus, um relógio masculino de quartzo com caixa quadrada, cronógrafo, data e ponteiros luminosos. Caixa e pulseira em aço inoxidável, vidro mineral endurecido e fecho oculto com botão de pressão. Acompanha caixa Poedagar, ferramenta para ajuste da pulseira, pano de limpeza e cartão de garantia.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "834-silver-green",
+          "value": "Silver Green"
+        },
+        {
+          "id": "834-silver-mintblue",
+          "value": "Silver MintBlue"
+        },
+        {
+          "id": "834-silver-blue",
+          "value": "Silver Blue"
+        },
+        {
+          "id": "834-silver-black",
+          "value": "Silver Black"
+        },
+        {
+          "id": "834-gold-gold",
+          "value": "Gold Gold"
+        },
+        {
+          "id": "834-black-black",
+          "value": "Black Black"
+        },
+        {
+          "id": "834-silver-white",
+          "value": "Silver White"
+        },
+        {
+          "id": "834-blue-blue",
+          "value": "Blue Blue"
+        },
+        {
+          "id": "834-gold-blue",
+          "value": "Gold Blue"
+        },
+        {
+          "id": "834-gold-black",
+          "value": "Gold Black"
+        },
+        {
+          "id": "834-gold-white",
+          "value": "Gold White"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Poedagar"
+    },
+    {
+      "label": "Modelo",
+      "value": "834"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Esportivo, negócios"
+    },
+    {
+      "label": "Funções",
+      "value": "Cronógrafo, calendário e ponteiros luminosos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo japonês"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Vidro mineral endurecido"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "30m (3 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "25 a 29 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "45 a 49 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "12mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "listing-on-order",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "poedagar-834-1.webp",
+        "poedagar-834-2.webp",
+        "poedagar-834-3.webp",
+        "poedagar-834-4.webp",
+        "poedagar-834-5.webp",
+        "poedagar-834-6.webp",
+        "poedagar-834-7.webp",
+        "poedagar-834-8.webp",
+        "poedagar-834-9.webp",
+        "poedagar-834-10.webp",
+        "poedagar-834-11.webp",
+        "poedagar-834-12.webp",
+        "poedagar-834-13.webp",
+        "poedagar-834-14.webp",
+        "poedagar-834-15.webp",
+        "poedagar-834-16.webp",
+        "poedagar-834-18.webp",
+        "poedagar-834-19.webp",
+        "poedagar-834-20.webp",
+        "poedagar-834-21.webp",
+        "poedagar-834-22.webp",
+        "poedagar-834-23.webp",
+        "poedagar-834-24.webp",
+        "poedagar-834-25.webp",
+        "poedagar-834-26.webp",
+        "poedagar-834-27.webp",
+        "poedagar-834-28.webp",
+        "poedagar-834-29.webp",
+        "poedagar-834-30.webp",
+        "poedagar-834-31.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-silver-green"
+            }
+          ],
+          "mainImage": "poedagar-834-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-silver-mintblue"
+            }
+          ],
+          "mainImage": "poedagar-834-1.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-silver-blue"
+            }
+          ],
+          "mainImage": "poedagar-834-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-silver-black"
+            }
+          ],
+          "mainImage": "poedagar-834-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-gold-gold"
+            }
+          ],
+          "mainImage": "poedagar-834-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-black-black"
+            }
+          ],
+          "mainImage": "poedagar-834-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-silver-white"
+            }
+          ],
+          "mainImage": "poedagar-834-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-blue-blue"
+            }
+          ],
+          "mainImage": "poedagar-834-13.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-gold-blue"
+            }
+          ],
+          "mainImage": "poedagar-834-14.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-gold-black"
+            }
+          ],
+          "mainImage": "poedagar-834-15.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-gold-white"
+            }
+          ],
+          "mainImage": "poedagar-834-16.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "poedagar-834-9.webp",
+        "poedagar-834-23.webp",
+        "poedagar-834-27.webp",
+        "poedagar-834-28.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "834-silver-black"
+            }
+          ],
+          "price": 134.9,
+          "listPrice": 224.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "poedagar-834-9.webp"
+        }
+      ]
+    }
+  ]
+}
