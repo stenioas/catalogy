@@ -1,11 +1,11 @@
 {
   "slug": "pochete-nylon-ajustavel",
   "title": "Pochete de Nylon com Alça Ajustável",
-  "description": "Pochete masculina de nylon com alça ajustável, indicada para viagens, corrida, caminhadas e ciclismo. Mede aproximadamente 31 cm de comprimento, 17 cm de largura e 5 cm de altura, com variação de 0,5 a 2 cm informada pelo fornecedor. Embalagem com uma unidade.",
-  "audience": "male",
+  "description": "Pochete unissex de nylon com alça ajustável, indicada para viagens, corrida, caminhadas e ciclismo. Mede aproximadamente 31 cm de comprimento, 17 cm de largura e 5 cm de altura, com variação de 0,5 a 2 cm informada pelo fornecedor. Embalagem com uma unidade.",
+  "audience": "unisex",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
       "values": [
         {
@@ -32,7 +32,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -61,7 +61,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "black"
             }
           ],
@@ -70,7 +70,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gray"
             }
           ],
@@ -79,7 +79,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "blue"
             }
           ],
@@ -88,7 +88,7 @@
       ]
     },
     {
-      "id": "comming-soon",
+      "id": "listing-coming-soon",
       "state": "new",
       "availabilityStatus": "coming_soon",
       "images": [
@@ -117,7 +117,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "black"
             }
           ],
@@ -136,7 +136,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gray"
             }
           ],
@@ -155,7 +155,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "blue"
             }
           ],
