@@ -1,31 +1,53 @@
 {
   "slug": "benyar-5229",
-  "title": "Relógio Benyar Chronograph",
-  "description": "O BENYAR 5229 é um relógio masculino de quartzo com estilo moderno para o dia a dia e ambientes de negócios. Possui caixa e pulseira de aço inoxidável, vidro mineral endurecido, cronógrafo, calendário e ponteiros e marcadores luminosos. A resistência à água é de 3 bar.",
+  "title": "Benyar Cronógrafo",
+  "description": "O Benyar Cronógrafo combina estilo sofisticado com funcionalidade, ideal para uso em ambientes profissionais. Equipado com funções de cronógrafo e calendário completo. Possui caixa e pulseira de aço inoxidável, vidro Hardlex e movimento de quartzo.",
+  "audience": "male",
   "axes": [
     {
       "id": "color",
       "label": "Cor",
       "values": [
         {
-          "id": "prata-azul",
-          "value": "Prata/Azul"
+          "id": "silver-black",
+          "value": "Silver Black"
+        },
+        {
+          "id": "silver-pink",
+          "value": "Silver Pink"
+        },
+        {
+          "id": "silver-blue",
+          "value": "Silver Blue"
+        },
+        {
+          "id": "silver-green",
+          "value": "Silver Green"
+        },
+        {
+          "id": "silver-white",
+          "value": "Silver White"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
     {
       "label": "Marca",
-      "value": "BENYAR"
+      "value": "Benyar"
     },
     {
       "label": "Modelo",
       "value": "5229"
     },
     {
+      "label": "Tipo do relógio",
+      "value": "Analógico"
+    },
+    {
       "label": "Funções",
-      "value": "Cronógrafo e calendário"
+      "value": "Cronógrafo, calendário e luminosidade"
     },
     {
       "label": "Tipo de movimento",
@@ -40,20 +62,8 @@
       "value": "Aço inoxidável"
     },
     {
-      "label": "Diâmetro do mostrador",
-      "value": "42 mm"
-    },
-    {
-      "label": "Espessura da caixa",
-      "value": "8 mm"
-    },
-    {
       "label": "Material da pulseira",
       "value": "Aço inoxidável"
-    },
-    {
-      "label": "Largura da pulseira",
-      "value": "20 a 24 mm"
     },
     {
       "label": "Material do vidro",
@@ -64,16 +74,27 @@
       "value": "30m (3 ATM)"
     },
     {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "42 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "8 mm"
+    },
+    {
       "label": "Garantia",
       "value": "90 dias"
     }
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
-      "enabled": true,
       "images": [
         "benyar-5229-1.webp",
         "benyar-5229-2.webp",
@@ -85,19 +106,67 @@
         "benyar-5229-8.webp",
         "benyar-5229-9.webp",
         "benyar-5229-10.webp",
-        "benyar-5229-11.webp"
+        "benyar-5229-11.webp",
+        "benyar-5229-12.webp",
+        "benyar-5229-13.webp",
+        "benyar-5229-14.webp",
+        "benyar-5229-15.webp",
+        "benyar-5229-16.webp",
+        "benyar-5229-17.webp",
+        "benyar-5229-18.webp",
+        "benyar-5229-19.webp",
+        "benyar-5229-20.webp",
+        "benyar-5229-21.webp",
+        "benyar-5229-22.webp",
+        "benyar-5229-23.webp",
+        "benyar-5229-24.webp",
+        "benyar-5229-25.webp"
       ],
       "variants": [
         {
           "axes": [
             {
               "axisId": "color",
-              "valueId": "prata-azul"
+              "valueId": "silver-black"
             }
           ],
-          "price": 259.9,
-          "listPrice": 319.9,
-          "mainImage": "benyar-5229-1.webp"
+          "mainImage": "benyar-5229-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-pink"
+            }
+          ],
+          "mainImage": "benyar-5229-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "mainImage": "benyar-5229-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-green"
+            }
+          ],
+          "mainImage": "benyar-5229-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white"
+            }
+          ],
+          "mainImage": "benyar-5229-11.webp"
         }
       ]
     }
