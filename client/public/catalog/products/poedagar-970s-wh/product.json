@@ -1,12 +1,13 @@
 {
   "slug": "poedagar-970s-wh",
-  "title": "Relógio POEDAGAR Clássico com Cronógrafo",
-  "description": "Relógio masculino de quartzo com design clássico, cronógrafo, data e ponteiros luminosos. Caixa e pulseira em aço inoxidável, vidro Hardlex e resistência à água de 30m (3 ATM). Acompanha caixa POEDAGAR, ferramenta para ajustar a pulseira, pano de limpeza e cartão de garantia.",
+  "title": "Poedagar PRX Cronógrafo",
+  "description": "O Poedagar PRX Cronógrafo é uma homenagem ao Tissot PRX Cronograph, é um relógio masculino de quartzo com design clássico, cronógrafo, data e ponteiros luminosos. Caixa e pulseira em aço inoxidável, vidro mineral endurecido e resistência à água de 30m (3 ATM).",
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
           "id": "silver-white-black",
@@ -44,22 +45,25 @@
           "id": "gold-blue-white",
           "value": "Gold Blue White"
         }
-      ],
-      "presentation": "image"
+      ]
     }
   ],
   "specifications": [
     {
       "label": "Marca",
-      "value": "POEDAGAR"
+      "value": "Poedagar"
     },
     {
       "label": "Modelo",
       "value": "970S-WH"
     },
     {
+      "label": "Homage de",
+      "value": "Tissot PRX Cronograph"
+    },
+    {
       "label": "Tipo do relógio",
-      "value": "Clássico / Casual"
+      "value": "Casual"
     },
     {
       "label": "Funções",
@@ -104,7 +108,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -123,7 +127,6 @@
         "poedagar-970s-wh-13.webp",
         "poedagar-970s-wh-14.webp",
         "poedagar-970s-wh-15.webp",
-        "poedagar-970s-wh-16.webp",
         "poedagar-970s-wh-17.webp",
         "poedagar-970s-wh-18.webp",
         "poedagar-970s-wh-19.webp",
@@ -140,14 +143,13 @@
         "poedagar-970s-wh-30.webp",
         "poedagar-970s-wh-31.webp",
         "poedagar-970s-wh-32.webp",
-        "poedagar-970s-wh-33.webp",
-        "poedagar-970s-wh-34.webp"
+        "poedagar-970s-wh-33.webp"
       ],
       "variants": [
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "silver-white-black"
             }
           ],
@@ -156,7 +158,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "silver-white-blue"
             }
           ],
@@ -165,7 +167,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "silver-blue-white"
             }
           ],
@@ -174,7 +176,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "silver-black-white"
             }
           ],
@@ -183,7 +185,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gold-black-white"
             }
           ],
@@ -192,7 +194,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "black-black-white"
             }
           ],
@@ -201,7 +203,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gold-white-blue"
             }
           ],
@@ -210,7 +212,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gold-green-white"
             }
           ],
@@ -219,11 +221,63 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gold-blue-white"
             }
           ],
           "mainImage": "poedagar-970s-wh-15.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "poedagar-970s-wh-1.webp",
+        "poedagar-970s-wh-2.webp",
+        "poedagar-970s-wh-3.webp",
+        "poedagar-970s-wh-4.webp",
+        "poedagar-970s-wh-5.webp",
+        "poedagar-970s-wh-6.webp",
+        "poedagar-970s-wh-7.webp",
+        "poedagar-970s-wh-8.webp",
+        "poedagar-970s-wh-17.webp",
+        "poedagar-970s-wh-18.webp",
+        "poedagar-970s-wh-19.webp",
+        "poedagar-970s-wh-20.webp",
+        "poedagar-970s-wh-21.webp",
+        "poedagar-970s-wh-22.webp",
+        "poedagar-970s-wh-23.webp",
+        "poedagar-970s-wh-24.webp",
+        "poedagar-970s-wh-25.webp",
+        "poedagar-970s-wh-27.webp",
+        "poedagar-970s-wh-28.webp",
+        "poedagar-970s-wh-29.webp",
+        "poedagar-970s-wh-30.webp",
+        "poedagar-970s-wh-31.webp",
+        "poedagar-970s-wh-32.webp",
+        "poedagar-970s-wh-33.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white-black"
+            }
+          ],
+          "price": 124.9,
+          "listPrice": 174.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "icon": "Gift",
+              "background": "#000000",
+              "color": "#FFFFFF"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-17.webp"
         }
       ]
     }
