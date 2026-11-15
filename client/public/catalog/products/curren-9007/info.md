@@ -7,6 +7,8 @@
 - Diâmetro de 30mm e espessura de 8mm Com um diâmetro de 30mm e espessura de 8mm, o relógio possui um tamanho equilibrado para pulsos femininos. O design compacto é perfeito para quem busca um modelo discreto, mas com presença marcante.
 - Resistência à água até 3 bar O relógio possui resistência à água de 3 bar, permitindo uso seguro em atividades diárias como lavar as mãos ou exposição à chuva leve. Ideal para quem busca praticidade sem abrir mão da proteção.
 - Quartz com origem japonesa para precisão Equipado com movimento quartz de origem japonesa, o relógio garante alta precisão no tempo. O mecanismo confiável e silencioso oferece desempenho superior em comparação com movimentos convencionais.
+- Pulseira de 12mm com fecho de bracelete A pulseira tem largura de 12mm e fecho de bracelete, proporcionando ajuste seguro e conforto durante o uso prolongado. O design é adequado para diferentes tamanhos de pulso, com comprimento de 20cm.
+- Inclui bateria e é vendido por unidade O produto vem com bateria inclusa e é vendido como uma unidade por pacote. A embalagem compacta de 20x20x20cm facilita armazenamento e transporte, sendo ideal para presentes ou uso pessoal.
 
 ## Especificações
 
@@ -29,7 +31,6 @@
 - Material da caixa: Liga
 - Movimento: QUARTZO
 - Nome da marca: Curren
-- Origem: CN (Origem)
 
 ## Descrição
 
@@ -54,16 +55,58 @@ Nosso produto e serviço. Obrigado!
 
 ## Mídias
 
-- curren-9007-1.png
-- curren-9007-2.png
-- curren-9007-3.png
-- curren-9007-4.png
-- curren-9007-5.png
-- curren-9007-6.png
-- curren-9007-7.png
-- curren-9007-8.png
-- curren-9007-9.png
-- curren-9007-10.png
-- curren-9007-11.png
-- curren-9007-12.png
-- curren-9007-13.png
+- curren-9007-1.webp
+- curren-9007-2.webp
+- curren-9007-3.webp
+- curren-9007-4.webp
+- curren-9007-5.webp
+- curren-9007-6.webp
+- curren-9007-7.webp
+- curren-9007-8.webp
+- curren-9007-9.webp
+- curren-9007-10.webp
+- curren-9007-11.webp
+- curren-9007-12.webp
+- curren-9007-13.webp
+- curren-9007-14.webp
+- curren-9007-15.webp
+- curren-9007-16.webp
+- curren-9007-17.webp
+- curren-9007-18.webp
+- curren-9007-19.webp
+- curren-9007-20.webp
+- curren-9007-21.webp
+- curren-9007-22.webp
+- curren-9007-23.webp
+- curren-9007-24.webp
+- curren-9007-25.webp
+- curren-9007-26.webp
+- curren-9007-27.webp
+- curren-9007-28.webp
+- curren-9007-29.webp
+- curren-9007-30.webp
+- curren-9007-31.webp
+- curren-9007-32.webp
+- curren-9007-33.webp
+- curren-9007-34.webp
+- curren-9007-35.webp
+- curren-9007-36.webp
+- curren-9007-37.webp
+- curren-9007-38.webp
+- curren-9007-39.webp
+- curren-9007-40.webp
+- curren-9007-41.webp
+- curren-9007-42.webp
+- curren-9007-43.webp
+- curren-9007-44.webp
+- curren-9007-45.webp
+- curren-9007-46.webp
+
+## Variantes
+
+- color: ouro (ouro); mainImage: curren-9007-7.webp
+- color: dourado-branco (dourado branco); mainImage: curren-9007-8.webp
+- color: ouro-rosa (Ouro rosa); mainImage: curren-9007-9.webp
+- color: prata (prata); mainImage: curren-9007-10.webp
+- color: ouro-rosa-branco (Ouro rosa branco); mainImage: curren-9007-11.webp
+- color: azul (azul); mainImage: curren-9007-12.webp

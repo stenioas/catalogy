@@ -1,7 +1,8 @@
 {
   "slug": "curren-9007",
-  "title": "Relógio Curren Casual Minimalist Feminino",
-  "description": "Relógio feminino Curren 9007 com caixa redonda, pulseira de aço inoxidável e movimento de quartzo de origem japonesa.",
+  "title": "Curren Casual Feminino",
+  "description": "Relógio feminino com movimento de quartzo de origem japonesa, caixa redonda em liga e pulseira de aço inoxidável. Possui vidro mineral endurecido, diâmetro de 30 mm e espessura de 8 mm. A pulseira tem 12 mm de largura, 20 cm de comprimento e fecho de pulseira.",
+  "audience": "female",
   "axes": [
     {
       "id": "color",
@@ -12,10 +13,27 @@
           "value": "Gold"
         },
         {
+          "id": "gold-white",
+          "value": "Gold White"
+        },
+        {
           "id": "rose-gold",
-          "value": "Rosé Gold"
+          "value": "Rose Gold"
+        },
+        {
+          "id": "silver",
+          "value": "Silver"
+        },
+        {
+          "id": "rose-gold-white",
+          "value": "Rose Gold White"
+        },
+        {
+          "id": "blue",
+          "value": "Blue"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -28,16 +46,12 @@
       "value": "9007"
     },
     {
-      "label": "Tipo do relógio",
-      "value": "Feminino"
-    },
-    {
       "label": "Tipo de movimento",
       "value": "Quartzo"
     },
     {
       "label": "Material da caixa",
-      "value": "Liga"
+      "value": "Liga metálica"
     },
     {
       "label": "Material da pulseira",
@@ -45,7 +59,7 @@
     },
     {
       "label": "Material do vidro",
-      "value": "Hardlex"
+      "value": "Vidro mineral endurecido"
     },
     {
       "label": "Resistência à água",
@@ -70,7 +84,7 @@
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -88,7 +102,13 @@
         "curren-9007-12.webp",
         "curren-9007-13.webp",
         "curren-9007-14.webp",
-        "curren-9007-15.webp"
+        "curren-9007-15.webp",
+        "curren-9007-16.webp",
+        "curren-9007-17.webp",
+        "curren-9007-18.webp",
+        "curren-9007-19.webp",
+        "curren-9007-20.webp",
+        "curren-9007-21.webp"
       ],
       "variants": [
         {
@@ -98,9 +118,16 @@
               "valueId": "gold"
             }
           ],
-          "price": 139.9,
-          "listPrice": 154.9,
-          "mainImage": "curren-9007-1.webp"
+          "mainImage": "curren-9007-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold-white"
+            }
+          ],
+          "mainImage": "curren-9007-8.webp"
         },
         {
           "axes": [
@@ -109,23 +136,51 @@
               "valueId": "rose-gold"
             }
           ],
-          "price": 139.9,
-          "listPrice": 154.9,
-          "mainImage": "curren-9007-4.webp"
+          "mainImage": "curren-9007-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver"
+            }
+          ],
+          "mainImage": "curren-9007-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "rose-gold-white"
+            }
+          ],
+          "mainImage": "curren-9007-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue"
+            }
+          ],
+          "mainImage": "curren-9007-12.webp"
         }
       ]
     },
     {
-      "id": "listing-rose-gold",
+      "id": "listing-coming-soon",
       "state": "new",
       "availabilityStatus": "coming_soon",
       "images": [
         "curren-9007-4.webp",
         "curren-9007-5.webp",
         "curren-9007-6.webp",
+        "curren-9007-9.webp",
         "curren-9007-13.webp",
         "curren-9007-14.webp",
-        "curren-9007-15.webp"
+        "curren-9007-16.webp",
+        "curren-9007-18.webp",
+        "curren-9007-21.webp"
       ],
       "variants": [
         {
@@ -137,7 +192,6 @@
           ],
           "price": 109.9,
           "listPrice": 154.9,
-          "mainImage": "curren-9007-4.webp",
           "offers": [
             {
               "text": "Black Friday",
@@ -145,7 +199,8 @@
               "background": "#000000",
               "color": "#FFFFFF"
             }
-          ]
+          ],
+          "mainImage": "curren-9007-9.webp"
         }
       ]
     }
