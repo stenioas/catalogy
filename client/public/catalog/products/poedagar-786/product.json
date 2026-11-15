@@ -1,7 +1,7 @@
 {
   "slug": "poedagar-786",
-  "title": "Relógio POEDAGAR Feminino Casual",
-  "description": "Relógio feminino de quartzo com data, dia da semana e ponteiros luminosos. Caixa e pulseira em aço inoxidável, com fecho oculto com botão de pressão. Acompanha caixa POEDAGAR, ferramenta para ajuste da pulseira, pano de limpeza e cartão de garantia.",
+  "title": "Poedagar PRX Feminino",
+  "description": "O Poedagar PRX é uma homenagem ao Tissot PRX, é um relógio feminino de quartzo com data, dia da semana e ponteiros luminosos. Caixa e pulseira em aço inoxidável, com fecho oculto com botão de pressão.",
   "audience": "female",
   "axes": [
     {
@@ -10,39 +10,39 @@
       "values": [
         {
           "id": "786-silver-white",
-          "value": "786 Silver White"
+          "value": "Silver White"
         },
         {
           "id": "786-silver-green",
-          "value": "786 Silver Green"
+          "value": "Silver Green"
         },
         {
           "id": "786-silver-blue",
-          "value": "786 Silver Blue"
+          "value": "Silver Blue"
         },
         {
           "id": "786-rose-gold-white",
-          "value": "786 Rose Gold White"
+          "value": "Rose Gold White"
         },
         {
           "id": "786-silver-black",
-          "value": "786 Silver Black"
+          "value": "Silver Black"
         },
         {
           "id": "786-rose-gold-green",
-          "value": "786 Rose Gold Green"
+          "value": "Rose Gold Green"
         },
         {
           "id": "786-gold-gold",
-          "value": "786 Gold Gold"
+          "value": "Gold Gold"
         },
         {
           "id": "786-rose-gold-black",
-          "value": "786 Rose Gold Black"
+          "value": "Rose Gold Black"
         },
         {
           "id": "786-rose-gold-blue",
-          "value": "786 Rose Gold Blue"
+          "value": "Rose Gold Blue"
         }
       ],
       "presentation": "image"
@@ -51,15 +51,19 @@
   "specifications": [
     {
       "label": "Marca",
-      "value": "POEDAGAR"
+      "value": "Poedagar"
     },
     {
       "label": "Modelo",
       "value": "786"
     },
     {
+      "label": "Homage de",
+      "value": "Tissot PRX"
+    },
+    {
       "label": "Tipo do relógio",
-      "value": "Casual"
+      "value": "Feminino, casual"
     },
     {
       "label": "Funções",
@@ -79,7 +83,7 @@
     },
     {
       "label": "Material do vidro",
-      "value": "Hardlex"
+      "value": "Vidro mineral endurecido"
     },
     {
       "label": "Resistência à água",
@@ -104,7 +108,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -123,7 +127,6 @@
         "poedagar-786-13.webp",
         "poedagar-786-14.webp",
         "poedagar-786-15.webp",
-        "poedagar-786-16.webp",
         "poedagar-786-17.webp",
         "poedagar-786-18.webp",
         "poedagar-786-19.webp",
@@ -134,8 +137,7 @@
         "poedagar-786-24.webp",
         "poedagar-786-25.webp",
         "poedagar-786-26.webp",
-        "poedagar-786-27.webp",
-        "poedagar-786-28.webp"
+        "poedagar-786-27.webp"
       ],
       "variants": [
         {
@@ -218,6 +220,35 @@
             }
           ],
           "mainImage": "poedagar-786-15.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "poedagar-786-12.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-rose-gold-green"
+            }
+          ],
+          "price": 114.9,
+          "listPrice": 154.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "poedagar-786-12.webp"
         }
       ]
     }
