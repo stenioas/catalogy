@@ -1,60 +1,60 @@
 {
   "slug": "poedagar-682",
-  "title": "Relógio POEDAGAR Casual",
-  "description": "Relógio masculino de quartzo com caixa e pulseira em aço inoxidável, exibição de data e dia da semana e ponteiros luminosos. Vidro Hardlex, caixa redonda com espessura de 14 mm e pulseira de 22 cm com fecho oculto com botão de pressão. Resistência à água informada de 3 bar. Inclui bateria, caixa POEDAGAR, ferramenta para ajustar a pulseira, pano de limpeza e cartão de garantia.",
+  "title": "Poedagar Capitão Willard",
+  "description": "O Poedagar Capitão Willard é uma homenagem ao Seiko 6105 Capitain Willard, é um relógio masculino de quartzo com caixa e pulseira em aço inoxidável, exibição de data e dia da semana e ponteiros luminosos. Vidro mineral endurecido, caixa redonda com espessura de 14 mm e pulseira de 22 cm com fecho oculto com botão de pressão. Resistência à água de 3 bar.",
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
-      "label": "cor",
+      "id": "color",
+      "label": "Cor",
       "values": [
         {
           "id": "682-silver-mintblue",
-          "value": "682 Silver MintBlue"
+          "value": "Silver MintBlue"
         },
         {
           "id": "682-silver-blue",
-          "value": "682 Silver Blue"
+          "value": "Silver Blue"
         },
         {
           "id": "682-silver-black",
-          "value": "682 Silver Black"
+          "value": "Silver Black"
         },
         {
           "id": "682-silver-green",
-          "value": "682 Silver Green"
+          "value": "Silver Green"
         },
         {
           "id": "682-silver-brown",
-          "value": "682 Silver Brown"
+          "value": "Silver Brown"
         },
         {
           "id": "682-blue-blue",
-          "value": "682 Blue Blue"
+          "value": "Blue Blue"
         },
         {
           "id": "682-black-black",
-          "value": "682 Black Black"
+          "value": "Black Black"
         },
         {
           "id": "682-gold-black",
-          "value": "682 Gold Black"
+          "value": "Gold Black"
         },
         {
           "id": "682-gold-green",
-          "value": "682 Gold Green"
+          "value": "Gold Green"
         },
         {
           "id": "682-gold-mintblue",
-          "value": "682 Gold MintBlue"
+          "value": "Gold MintBlue"
         },
         {
           "id": "682-gold-blue",
-          "value": "682 Gold Blue"
+          "value": "Gold Blue"
         },
         {
           "id": "682-gold-brown",
-          "value": "682 Gold Brown"
+          "value": "Gold Brown"
         }
       ],
       "presentation": "image"
@@ -63,11 +63,15 @@
   "specifications": [
     {
       "label": "Marca",
-      "value": "POEDAGAR"
+      "value": "Poedagar"
     },
     {
       "label": "Modelo",
       "value": "682"
+    },
+    {
+      "label": "Homage de",
+      "value": "Seiko 6105 Capitain Willard"
     },
     {
       "label": "Tipo do relógio",
@@ -91,7 +95,7 @@
     },
     {
       "label": "Material do vidro",
-      "value": "Hardlex"
+      "value": "Vidro mineral endurecido"
     },
     {
       "label": "Resistência à água",
@@ -116,7 +120,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -138,7 +142,6 @@
         "poedagar-682-16.webp",
         "poedagar-682-17.webp",
         "poedagar-682-18.webp",
-        "poedagar-682-19.webp",
         "poedagar-682-20.webp",
         "poedagar-682-21.webp",
         "poedagar-682-22.webp",
@@ -151,14 +154,13 @@
         "poedagar-682-29.webp",
         "poedagar-682-30.webp",
         "poedagar-682-31.webp",
-        "poedagar-682-32.webp",
-        "poedagar-682-34.webp"
+        "poedagar-682-32.webp"
       ],
       "variants": [
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-silver-mintblue"
             }
           ],
@@ -167,7 +169,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-silver-blue"
             }
           ],
@@ -176,7 +178,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-silver-black"
             }
           ],
@@ -185,7 +187,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-silver-green"
             }
           ],
@@ -194,7 +196,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-silver-brown"
             }
           ],
@@ -203,7 +205,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-blue-blue"
             }
           ],
@@ -212,7 +214,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-black-black"
             }
           ],
@@ -221,7 +223,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-gold-black"
             }
           ],
@@ -230,7 +232,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-gold-green"
             }
           ],
@@ -239,7 +241,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-gold-mintblue"
             }
           ],
@@ -248,7 +250,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-gold-blue"
             }
           ],
@@ -257,11 +259,43 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "682-gold-brown"
             }
           ],
           "mainImage": "poedagar-682-18.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "poedagar-682-8.webp",
+        "poedagar-682-27.webp",
+        "poedagar-682-29.webp",
+        "poedagar-682-30.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "682-silver-blue"
+            }
+          ],
+          "price": 114.9,
+          "listPrice": 184.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "poedagar-682-8.webp"
         }
       ]
     }
