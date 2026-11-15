@@ -1,11 +1,11 @@
 {
   "slug": "steelflier-sf741",
-  "title": "Relógio STEELFLIER Clássico",
-  "description": "Relógio de quartzo STEELFLIER SF741 com movimento VH31 de origem japonesa, três ponteiros e segundos contínuos. Caixa de aço inoxidável 316L com diâmetro de 39 mm sem a coroa e espessura de 12,5 mm, vidro de safira sintética e ponteiros luminosos. Resistência à água de 200 m (20 ATM) e bateria SR920SW inclusa. A descrição apresenta opções de pulseira em couro, borracha, nylon e aço inoxidável.",
+  "title": "Steelflier Khaki Field Pioneer",
+  "description": "O Steelflier Khaki Field Pioneer é uma homenagem ao Hamilton Khaki Field Pioneer, é um relógio de quartzo com movimento Seiko TMI VH31 de origem japonesa, três ponteiros e segundos contínuos. Caixa de aço inoxidável 316L com diâmetro de 39 mm sem a coroa e espessura de 12,5 mm, vidro de safira sintética e ponteiros luminosos. Resistência à água de 200 m (20 ATM) e bateria SR920SW inclusa.",
   "axes": [
     {
-      "id": "cor",
-      "label": "Cor",
+      "id": "variantion",
+      "label": "Variante",
       "values": [
         {
           "id": "sf741-kn",
@@ -33,42 +33,36 @@
         }
       ],
       "presentation": "image"
-    },
-    {
-      "id": "e-personalizado",
-      "label": "É personalizado",
-      "values": [
-        {
-          "id": "nao",
-          "value": "Não"
-        }
-      ]
     }
   ],
   "specifications": [
     {
       "label": "Marca",
-      "value": "STEELFLIER"
+      "value": "SteelFlier"
     },
     {
       "label": "Modelo",
       "value": "SF741"
     },
     {
+      "label": "Homage de",
+      "value": "Hamilton Khaki Field Pioneer"
+    },
+    {
       "label": "Tipo do relógio",
-      "value": "Analógico esportivo"
+      "value": "Field"
     },
     {
       "label": "Funções",
-      "value": "Horas, minutos, segundos contínuos e ponteiros luminosos"
+      "value": "Ponteiros luminosos, segundos contínuos"
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo"
+      "value": "Quartzo japonês"
     },
     {
       "label": "Movimento",
-      "value": "VH31"
+      "value": "Seiko TMI VH31"
     },
     {
       "label": "Material da caixa",
@@ -101,7 +95,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -146,12 +140,8 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "variantion",
               "valueId": "sf741-kn"
-            },
-            {
-              "axisId": "e-personalizado",
-              "valueId": "nao"
             }
           ],
           "mainImage": "steelflier-sf741-3.webp"
@@ -159,12 +149,8 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "variantion",
               "valueId": "sf741-ss"
-            },
-            {
-              "axisId": "e-personalizado",
-              "valueId": "nao"
             }
           ],
           "mainImage": "steelflier-sf741-1.webp"
@@ -172,12 +158,8 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "variantion",
               "valueId": "sf741-hg"
-            },
-            {
-              "axisId": "e-personalizado",
-              "valueId": "nao"
             }
           ],
           "mainImage": "steelflier-sf741-4.webp"
@@ -185,12 +167,8 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "variantion",
               "valueId": "sf741-og"
-            },
-            {
-              "axisId": "e-personalizado",
-              "valueId": "nao"
             }
           ],
           "mainImage": "steelflier-sf741-5.webp"
@@ -198,12 +176,8 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "variantion",
               "valueId": "sf741-zp"
-            },
-            {
-              "axisId": "e-personalizado",
-              "valueId": "nao"
             }
           ],
           "mainImage": "steelflier-sf741-2.webp"
@@ -211,15 +185,50 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "variantion",
               "valueId": "sf741-hr"
-            },
-            {
-              "axisId": "e-personalizado",
-              "valueId": "nao"
             }
           ],
           "mainImage": "steelflier-sf741-6.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "steelflier-sf741-2.webp",
+        "steelflier-sf741-7.webp",
+        "steelflier-sf741-20.webp",
+        "steelflier-sf741-21.webp",
+        "steelflier-sf741-22.webp",
+        "steelflier-sf741-23.webp",
+        "steelflier-sf741-24.webp",
+        "steelflier-sf741-25.webp",
+        "steelflier-sf741-26.webp",
+        "steelflier-sf741-27.webp",
+        "steelflier-sf741-36.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "variantion",
+              "valueId": "sf741-zp"
+            }
+          ],
+          "price": 479.9,
+          "listPrice": 599.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "steelflier-sf741-2.webp"
         }
       ]
     }
