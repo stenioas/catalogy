@@ -1,61 +1,65 @@
 {
   "slug": "poedagar-910",
-  "title": "Relógio POEDAGAR Masculino Social",
-  "description": "Relógio masculino de quartzo com data, ponteiros luminosos e mostrador com números romanos. Caixa e pulseira em aço inoxidável, com fecho oculto com botão de pressão. Acompanha caixa POEDAGAR, ferramenta para ajuste da pulseira, pano de limpeza e cartão de garantia.",
+  "title": "Poedagar Datejust",
+  "description": "O Poedagar Datejust é uma homenagem ao Rolex Datejust. É um relógio masculino de quartzo com data, ponteiros luminosos e mostrador com números romanos. Caixa e pulseira em aço inoxidável, com fecho oculto com botão de pressão.",
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
           "id": "910-silver-blue",
-          "value": "910 Silver Blue"
+          "value": "Silver Blue"
         },
         {
           "id": "910-silver-white",
-          "value": "910 Silver White"
+          "value": "Silver White"
         },
         {
           "id": "910-gold-blue",
-          "value": "910 Gold Blue"
+          "value": "Gold Blue"
         },
         {
           "id": "910-gold-green",
-          "value": "910 Gold Green"
+          "value": "Gold Green"
         },
         {
           "id": "910-silver-black",
-          "value": "910 Silver Black"
+          "value": "Silver Black"
         },
         {
           "id": "910-gold-white",
-          "value": "910 Gold White"
+          "value": "Gold White"
         },
         {
           "id": "910-black-black",
-          "value": "910 Black Black"
+          "value": "Black Black"
         },
         {
           "id": "910-gold-black",
-          "value": "910 Gold Black"
+          "value": "Gold Black"
         },
         {
           "id": "910-gold-gold",
-          "value": "910 Gold Gold"
+          "value": "Gold Gold"
         }
-      ],
-      "presentation": "image"
+      ]
     }
   ],
   "specifications": [
     {
       "label": "Marca",
-      "value": "POEDAGAR"
+      "value": "Poedagar"
     },
     {
       "label": "Modelo",
       "value": "910"
+    },
+    {
+      "label": "Homage de",
+      "value": "Rolex Datejust"
     },
     {
       "label": "Tipo do relógio",
@@ -79,7 +83,7 @@
     },
     {
       "label": "Material do vidro",
-      "value": "Hardlex"
+      "value": "Vidro mineral endurecido"
     },
     {
       "label": "Resistência à água",
@@ -133,7 +137,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-silver-blue"
             }
           ],
@@ -142,7 +146,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-silver-white"
             }
           ],
@@ -151,7 +155,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-gold-blue"
             }
           ],
@@ -160,7 +164,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-gold-green"
             }
           ],
@@ -169,7 +173,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-silver-black"
             }
           ],
@@ -178,7 +182,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-gold-white"
             }
           ],
@@ -187,7 +191,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-black-black"
             }
           ],
@@ -196,7 +200,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-gold-black"
             }
           ],
@@ -205,7 +209,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "910-gold-gold"
             }
           ],
