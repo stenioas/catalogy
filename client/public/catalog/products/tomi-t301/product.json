@@ -1,0 +1,253 @@
+{
+  "slug": "tomi-t301",
+  "title": "Kit Presente Tomi",
+  "description": "Relógio masculino de quartzo com estilo casual, caixa redonda em liga e pulseira de aço inoxidável com fecho oculto com botão de pressão. Possui calendário, vidro e espessura de caixa de 9 mm. O conjunto inclui relógio, anel, broche, ajustador de pulseira e caixa de presente.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "gold",
+          "value": "Gold"
+        },
+        {
+          "id": "silver-blue",
+          "value": "Silver Blue"
+        },
+        {
+          "id": "all-black",
+          "value": "All Black"
+        },
+        {
+          "id": "silver",
+          "value": "Silver"
+        },
+        {
+          "id": "black-rose-gold",
+          "value": "Black Rose Gold"
+        },
+        {
+          "id": "silver-gold",
+          "value": "Silver Gold"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Tomi"
+    },
+    {
+      "label": "Modelo",
+      "value": "T301"
+    },
+    {
+      "label": "Funções",
+      "value": "Calendário"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Quartzo"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Liga metálica"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Vidro"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "Sem resistência à água"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "40 a 44 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "9 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "listing-on-order",
+      "state": "new",
+      "availabilityStatus": "on_order",
+      "images": [
+        "tomi-t301-2.webp",
+        "tomi-t301-1.webp",
+        "tomi-t301-3.webp",
+        "tomi-t301-4.webp",
+        "tomi-t301-5.webp",
+        "tomi-t301-6.webp",
+        "tomi-t301-7.webp",
+        "tomi-t301-8.webp",
+        "tomi-t301-9.webp",
+        "tomi-t301-10.webp",
+        "tomi-t301-11.webp",
+        "tomi-t301-12.webp",
+        "tomi-t301-13.webp",
+        "tomi-t301-14.webp",
+        "tomi-t301-15.webp",
+        "tomi-t301-16.webp",
+        "tomi-t301-17.webp",
+        "tomi-t301-18.webp",
+        "tomi-t301-19.webp",
+        "tomi-t301-20.webp",
+        "tomi-t301-21.webp",
+        "tomi-t301-22.webp",
+        "tomi-t301-23.webp",
+        "tomi-t301-24.webp",
+        "tomi-t301-26.webp",
+        "tomi-t301-27.webp",
+        "tomi-t301-28.webp",
+        "tomi-t301-29.webp",
+        "tomi-t301-30.webp",
+        "tomi-t301-31.webp",
+        "tomi-t301-32.webp",
+        "tomi-t301-33.webp",
+        "tomi-t301-34.webp",
+        "tomi-t301-35.webp",
+        "tomi-t301-36.webp",
+        "tomi-t301-37.webp",
+        "tomi-t301-38.webp",
+        "tomi-t301-39.webp",
+        "tomi-t301-40.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold"
+            }
+          ],
+          "mainImage": "tomi-t301-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "mainImage": "tomi-t301-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "all-black"
+            }
+          ],
+          "mainImage": "tomi-t301-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver"
+            }
+          ],
+          "mainImage": "tomi-t301-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-rose-gold"
+            }
+          ],
+          "mainImage": "tomi-t301-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-gold"
+            }
+          ],
+          "mainImage": "tomi-t301-12.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "tomi-t301-2.webp",
+        "tomi-t301-1.webp",
+        "tomi-t301-3.webp",
+        "tomi-t301-5.webp",
+        "tomi-t301-6.webp",
+        "tomi-t301-8.webp",
+        "tomi-t301-12.webp",
+        "tomi-t301-26.webp",
+        "tomi-t301-27.webp",
+        "tomi-t301-28.webp",
+        "tomi-t301-29.webp",
+        "tomi-t301-36.webp",
+        "tomi-t301-37.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "price": 104.9,
+          "listPrice": 144.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "tomi-t301-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-gold"
+            }
+          ],
+          "price": 104.9,
+          "listPrice": 144.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "tomi-t301-12.webp"
+        }
+      ]
+    }
+  ]
+}
