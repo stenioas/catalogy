@@ -1,11 +1,11 @@
 {
   "slug": "opk-6003",
-  "title": "Relógio OPK Casual",
-  "description": "Relógio masculino OPK 6003 de quartzo, com estilo de negócios, caixa redonda em aço inoxidável e mostrador com números romanos. Modelo luminoso com resistência à água de 3 bar (30 m), espessura de caixa de 9 mm e pulseira com comprimento informado de 20,5 cm.",
+  "title": "OPK Social Clássico",
+  "description": "Relógio masculino de quartzo, com estilo de negócios, caixa redonda em liga metálica e mostrador com números romanos. Modelo luminoso com resistência à água de 3 bar (30 m), espessura de caixa de 9 mm e pulseira com comprimento de 20,5 cm.",
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
       "values": [
         {
@@ -47,7 +47,7 @@
     },
     {
       "label": "Tipo do relógio",
-      "value": "Analógico social"
+      "value": "Dress Watch"
     },
     {
       "label": "Funções",
@@ -59,7 +59,7 @@
     },
     {
       "label": "Material da caixa",
-      "value": "Aço inoxidável"
+      "value": "Liga metálica"
     },
     {
       "label": "Resistência à água",
@@ -84,7 +84,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -115,7 +115,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "hp-silver-black"
             }
           ],
@@ -124,7 +124,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gd-silver-blue"
             }
           ],
@@ -133,7 +133,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gd-silver-black"
             }
           ],
@@ -142,7 +142,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "zp-silver-blue"
             }
           ],
@@ -151,7 +151,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gd-silver-white"
             }
           ],
@@ -160,8 +160,113 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "zp-silver-white"
+            }
+          ],
+          "mainImage": "opk-6003-12.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "opk-6003-1.webp",
+        "opk-6003-2.webp",
+        "opk-6003-3.webp",
+        "opk-6003-4.webp",
+        "opk-6003-5.webp",
+        "opk-6003-6.webp",
+        "opk-6003-7.webp",
+        "opk-6003-8.webp",
+        "opk-6003-10.webp",
+        "opk-6003-12.webp",
+        "opk-6003-13.webp",
+        "opk-6003-14.webp",
+        "opk-6003-15.webp",
+        "opk-6003-16.webp",
+        "opk-6003-17.webp",
+        "opk-6003-18.webp",
+        "opk-6003-19.webp",
+        "opk-6003-20.webp",
+        "opk-6003-21.webp",
+        "opk-6003-22.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "hp-silver-black"
+            }
+          ],
+          "price": 99.9,
+          "listPrice": 144.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "opk-6003-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gd-silver-blue"
+            }
+          ],
+          "price": 109.9,
+          "listPrice": 154.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "opk-6003-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "zp-silver-blue"
+            }
+          ],
+          "price": 99.9,
+          "listPrice": 144.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "opk-6003-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "zp-silver-white"
+            }
+          ],
+          "price": 99.9,
+          "listPrice": 149.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
           ],
           "mainImage": "opk-6003-12.webp"
