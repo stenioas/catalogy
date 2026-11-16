@@ -1,15 +1,53 @@
 {
   "slug": "curren-8361",
-  "title": "Relógio Curren Chronograph Masculino",
-  "description": "O Curren 8361 é um relógio masculino de quartzo, de estilo fashion e casual, com dia, cronógrafo, ponteiros luminosos e resistência a choques. A caixa é redonda, de liga, com 48 mm de diâmetro e 14 mm de espessura. A coroa é de aço inoxidável. A pulseira é de aço inoxidável, com 24 mm de largura e 240 mm de comprimento, e fecho de pulseira. O vidro é Hardlex. A resistência à água é de 30 m (3 ATM) e cobre respingos, chuva e lavagem das mãos. A bateria está inclusa e o peso é de 170,6 g. Está disponível em várias cores e a embalagem é de papel.",
+  "title": "Curren Cronógrafo Esportivo",
+  "description": "Relógio masculino de quartzo de origem japonesa, com cronógrafo, calendário e ponteiros luminosos. Possui caixa redonda em liga metálica, pulseira de aço inoxidável e vidro mineral endurecido. A descrição informa diâmetro do mostrador de 48 mm, espessura de 14 mm, pulseira de 240 mm de comprimento e 24 mm de largura, e peso de 170,6 g. Resistência à água de 30m (3 ATM).",
+  "audience": "male",
   "axes": [
     {
       "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
-          "id": "varias-cores",
-          "value": "Várias cores"
+          "id": "gold",
+          "value": "Gold"
+        },
+        {
+          "id": "gold-box",
+          "value": "Gold box"
+        },
+        {
+          "id": "blue",
+          "value": "Blue"
+        },
+        {
+          "id": "blue-box",
+          "value": "Blue box"
+        },
+        {
+          "id": "silver-white",
+          "value": "Silver white"
+        },
+        {
+          "id": "silver-white-box",
+          "value": "Silver white box"
+        },
+        {
+          "id": "black",
+          "value": "Black"
+        },
+        {
+          "id": "black-box",
+          "value": "Black box"
+        },
+        {
+          "id": "silver-coffee",
+          "value": "Silver coffee"
+        },
+        {
+          "id": "silver-coffee-box",
+          "value": "Silver coffee box"
         }
       ]
     }
@@ -24,20 +62,16 @@
       "value": "8361"
     },
     {
-      "label": "Tipo do relógio",
-      "value": "Masculino, fashion e casual"
-    },
-    {
       "label": "Funções",
-      "value": "Dia, cronógrafo, ponteiros luminosos, resistente a choques"
+      "value": "Cronógrafo, calendário e ponteiros luminosos"
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo japonês"
+      "value": "Quartzo"
     },
     {
       "label": "Material da caixa",
-      "value": "Liga"
+      "value": "Liga metálica"
     },
     {
       "label": "Material da pulseira",
@@ -45,7 +79,7 @@
     },
     {
       "label": "Material do vidro",
-      "value": "Hardlex"
+      "value": "Vidro mineral endurecido"
     },
     {
       "label": "Resistência à água",
@@ -54,10 +88,6 @@
     {
       "label": "Largura da pulseira",
       "value": "24 mm"
-    },
-    {
-      "label": "Coroa",
-      "value": "Aço inoxidável"
     },
     {
       "label": "Diâmetro do mostrador",
@@ -74,12 +104,12 @@
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
-        "curren-8361-1.webp",
         "curren-8361-2.webp",
+        "curren-8361-1.webp",
         "curren-8361-3.webp",
         "curren-8361-4.webp",
         "curren-8361-5.webp",
@@ -101,18 +131,151 @@
         "curren-8361-21.webp",
         "curren-8361-22.webp",
         "curren-8361-23.webp",
-        "curren-8361-24.webp"
+        "curren-8361-24.webp",
+        "curren-8361-25.webp",
+        "curren-8361-26.webp",
+        "curren-8361-27.webp",
+        "curren-8361-28.webp",
+        "curren-8361-29.webp",
+        "curren-8361-30.webp",
+        "curren-8361-31.webp",
+        "curren-8361-32.webp",
+        "curren-8361-33.webp",
+        "curren-8361-34.webp",
+        "curren-8361-35.webp",
+        "curren-8361-36.webp",
+        "curren-8361-37.webp",
+        "curren-8361-38.webp",
+        "curren-8361-39.webp"
       ],
       "variants": [
         {
           "axes": [
             {
               "axisId": "color",
-              "valueId": "varias-cores"
+              "valueId": "gold"
             }
           ],
-          "price": 269.9,
-          "mainImage": "curren-8361-1.webp"
+          "mainImage": "curren-8361-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold-box"
+            }
+          ],
+          "mainImage": "curren-8361-3.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue"
+            }
+          ],
+          "mainImage": "curren-8361-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white"
+            }
+          ],
+          "mainImage": "curren-8361-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue-box"
+            }
+          ],
+          "mainImage": "curren-8361-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-box"
+            }
+          ],
+          "mainImage": "curren-8361-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "mainImage": "curren-8361-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-coffee"
+            }
+          ],
+          "mainImage": "curren-8361-13.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-coffee-box"
+            }
+          ],
+          "mainImage": "curren-8361-14.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white-box"
+            }
+          ],
+          "mainImage": "curren-8361-15.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "curren-8361-2.webp",
+        "curren-8361-1.webp",
+        "curren-8361-3.webp",
+        "curren-8361-4.webp",
+        "curren-8361-5.webp",
+        "curren-8361-6.webp",
+        "curren-8361-7.webp",
+        "curren-8361-28.webp",
+        "curren-8361-29.webp",
+        "curren-8361-30.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold-box"
+            }
+          ],
+          "price": 239.9,
+          "listPrice": 299.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "curren-8361-3.webp"
         }
       ]
     }
