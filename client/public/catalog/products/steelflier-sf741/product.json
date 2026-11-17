@@ -70,15 +70,31 @@
     },
     {
       "label": "Material da pulseira",
-      "value": "Couro, borracha, nylon ou aço inoxidável, conforme a variante"
+      "value": "Couro, borracha, nylon ou aço inoxidável 316L, conforme a variante"
     },
     {
       "label": "Material do vidro",
       "value": "Safira sintética"
     },
     {
+      "label": "Material do bisel",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Coroa",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tampa inferior",
+      "value": "Rosqueada"
+    },
+    {
       "label": "Resistência à água",
       "value": "200m (20 ATM)"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "39 mm"
     },
     {
       "label": "Largura da pulseira",
@@ -194,9 +210,9 @@
       ]
     },
     {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
+      "id": "listing-available",
+      "state": "openbox",
+      "availabilityStatus": "available",
       "images": [
         "steelflier-sf741-2.webp",
         "steelflier-sf741-7.webp",
@@ -218,8 +234,8 @@
               "valueId": "sf741-zp"
             }
           ],
-          "price": 479.9,
-          "listPrice": 599.9,
+          "price": 499.9,
+          "listPrice": 629.9,
           "offers": [
             {
               "text": "Black Friday",
@@ -228,7 +244,8 @@
               "icon": "Gift"
             }
           ],
-          "mainImage": "steelflier-sf741-2.webp"
+          "mainImage": "steelflier-sf741-2.webp",
+          "observations": "Foi aberto para inspeção e teste. Não foi utilizado."
         }
       ]
     }
