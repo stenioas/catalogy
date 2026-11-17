@@ -175,7 +175,6 @@
         "curren-9007-4.webp",
         "curren-9007-5.webp",
         "curren-9007-6.webp",
-        "curren-9007-9.webp",
         "curren-9007-13.webp",
         "curren-9007-14.webp",
         "curren-9007-16.webp",
@@ -190,7 +189,7 @@
               "valueId": "rose-gold"
             }
           ],
-          "price": 109.9,
+          "price": 119.9,
           "listPrice": 154.9,
           "offers": [
             {
@@ -200,7 +199,7 @@
               "color": "#FFFFFF"
             }
           ],
-          "mainImage": "curren-9007-9.webp"
+          "mainImage": "curren-9007-4.webp"
         }
       ]
     }

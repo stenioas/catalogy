@@ -1,12 +1,12 @@
 # Relatório de auditoria do contrato de relógio
 
-Data da auditoria inicial: **16/11/2026**. Última varredura completa: **17/11/2026**, após os ajustes do Addiesdive MY-H3-C, Aimimo Design Field e Aimimo Design Tsuyosa. Base normativa: [docs/contrato-relogio.md](docs/contrato-relogio.md).
-
-Nesta atualização, os 43 cadastros foram revalidados. As contagens e tabelas refletem os arquivos locais atuais, incluindo os três relógios alterados.
+Data da auditoria inicial: **16/11/2026**. Última varredura completa: **17/11/2026**. Base normativa: [docs/contrato-relogio.md](docs/contrato-relogio.md).
 
 ## Resultado
 
-**1 relógio quebra o contrato:** Pagani Design PD-1701, por uma variante que referencia um valor de eixo inexistente. **Nenhum relógio tem item de especificação inválido.** Há ausências de preenchimento, mas o contrato torna `specifications` opcional e não exige nenhum dos 19 rótulos individualmente.
+**Nenhum dos 43 produtos apresenta violação do contrato nesta varredura.** A pendência do Pagani Design PD-1701 foi corrigida. Não há especificações com rótulos proibidos, repetições ou valores vazios.
+
+Permanecem **191 ausências de especificações**, distribuídas por 31 dos 41 relógios. São lacunas de preenchimento: `specifications` é opcional, e nenhum dos 19 rótulos é obrigatório individualmente. **10 relógios possuem os 19 rótulos preenchidos.**
 
 | Indicador | Resultado |
 | --- | ---: |
@@ -14,42 +14,44 @@ Nesta atualização, os 43 cadastros foram revalidados. As contagens e tabelas r
 | Relógios, incluindo kits com relógio | 41 |
 | Acessórios sem relógio | 2 |
 | Anúncios de todo o catálogo | 65 |
-| Variantes de todo o catálogo | 242 |
-| Produtos com violação | 1 |
-| Relógios sem violação encontrada | 40 |
+| Variantes de todo o catálogo | 257 |
+| Produtos com violação | 0 |
+| Relógios sem violação encontrada | 41 |
 | Itens de especificação de todo o catálogo | 591 |
 | Itens de especificação nos relógios | 588 |
 | Itens de especificação inválidos | 0 |
-| Referências a imagens conferidas (inclui repetições entre anúncios) | 1294 |
-| Ofertas conferidas | 33 |
+| Referências a imagens conferidas (inclui repetições entre anúncios) | 1293 |
+| Ofertas conferidas | 31 |
+
+## Alterações verificadas nesta atualização
+
+| Produto | Alteração | Resultado |
+| --- | --- | --- |
+| [curren-9007](client/public/catalog/products/curren-9007/product.json) | Variante Rose Gold disponível: preço de R$ 119,90; imagem principal alterada para `curren-9007-4.webp`; foto 9 removida da galeria desse anúncio. | Schema, imagens e ofertas válidos |
+| [pagani-design-pd-1701](client/public/catalog/products/pagani-design-pd-1701/product.json) | Título Pagani Design Moonwatch; público masculino; movimento Seiko TMI VK63; 17 cores declaradas e 17 variantes em `listing-on-order`, com imagens correspondentes nas primeiras posições da galeria. Anúncio `listing-coming-soon` preservado. | Schema, imagens e ofertas válidos |
+| [poedagar-682](client/public/catalog/products/poedagar-682/product.json) | Variante 682 Silver Blue: preço atualizado para R$ 129,90. | Schema, imagens e ofertas válidos |
+| [poedagar-786](client/public/catalog/products/poedagar-786/product.json) | Variante 786 Rose Gold Green: preço atualizado para R$ 119,90. | Schema, imagens e ofertas válidos |
+| [qingxiya-7706](client/public/catalog/products/qingxiya-7706/product.json) | Título Qingxiya Moonwatch; descrição informa homenagem ao Omega Speedmaster Moonwatch; variante Silver White com preço de R$ 149,90. | Schema, imagens e ofertas válidos |
+
+O novo catálogo mantém 65 anúncios e passa de 242 para 257 variantes. As referências a imagens passam de 1.294 para 1.293 pela retirada de uma foto da galeria do Curren 9007. As ofertas passam de 33 para 31: as variantes sob encomenda do Pagani deixaram de ter as duas ofertas antigas. A contagem de especificações e suas ausências não mudou.
+
+## Pendência do Pagani Design PD-1701 resolvida
+
+A variante genérica que referenciava `valueId: "varias-cores"`, inexistente no eixo `color`, foi substituída por variantes com IDs declarados. O anúncio sob encomenda tem 17 variantes, uma para cada valor do eixo, sem combinações repetidas. As imagens principais pertencem à galeria do anúncio e existem no disco. As duas opções originalmente chamadas `White` têm IDs distintos: `white` e `white-200000080`.
+
+A ordem das variantes e das primeiras 17 imagens da galeria corresponde à ordem dos valores do eixo. O anúncio em breve seleciona `gold-green`, valor válido. O produto passa integralmente pelo `ProductSchema`.
 
 ## Escopo e método
 
-Foram lidos todos os `client/public/catalog/products/*/product.json`, incluindo anúncios ocultos, sob encomenda, disponíveis e em breve. Nenhuma pasta de produto ficou sem `product.json`. Os kits Seculus e Tomi foram incluídos como relógios; a pochete e o porta-cartões foram separados como acessórios.
+Foram lidos todos os `client/public/catalog/products/*/product.json`, incluindo todos os anúncios e variantes. Nenhuma pasta de produto ficou sem `product.json`. Os kits Seculus e Tomi foram incluídos como relógios; a pochete e o porta-cartões foram separados como acessórios.
 
-A auditoria executou o `ProductSchema.safeParse` real de [shared/src/schemas/product.ts](shared/src/schemas/product.ts) sobre o JSON original de cada arquivo, sem normalização legada. Complementou essa validação com comparação entre slug e pasta, existência física das imagens e verificação dos exports e imports dinâmicos dos ícones Lucide instalados, conforme [client/scripts/catalog.ts](client/scripts/catalog.ts). Rótulos, valores vazios e duplicidades de especificação também foram percorridos diretamente, para não depender da execução dos refinamentos do schema em objetos já inválidos.
+A auditoria executou o `ProductSchema.safeParse` real de [shared/src/schemas/product.ts](shared/src/schemas/product.ts) sobre o JSON original de cada arquivo, sem normalização legada. Conferiu também slug igual à pasta, existência física de todas as imagens citadas e exports e imports dinâmicos dos ícones Lucide instalados, conforme [client/scripts/catalog.ts](client/scripts/catalog.ts). Rótulos, valores vazios e duplicidades de especificação foram percorridos diretamente, além da validação do schema.
 
-As ausências consideram a ficha efetiva de cada anúncio: especificações do produto mais as do próprio anúncio. Neste levantamento, nenhum anúncio possui especificações próprias; por isso, a lista de ausências é igual em todos os anúncios de cada produto. Texto em `description` ou em `info.md` não conta como item estruturado de especificação.
+As ausências consideram especificações do produto e do anúncio. Nenhum anúncio tem especificações próprias nesta varredura; portanto, as ausências são iguais em todos os anúncios de cada produto. Texto em `description` ou `info.md` não conta como item estruturado. Por exemplo, a homenagem descrita no Qingxiya ainda não preenche o rótulo `Homage de` na ficha.
 
-A conferência trata da conformidade dos arquivos com o contrato. Não verifica a veracidade das características físicas junto a fabricantes, vendedores ou fontes externas. `info.md`, existência de miniaturas e arquivos de mídia não citados não são exigências desse contrato.
+Esta auditoria verifica a conformidade dos arquivos com o contrato. Não verifica características físicas junto a fabricantes ou vendedores, nem certifica a correspondência visual de todas as fotos do catálogo. `info.md`, miniaturas e mídias não citadas não são exigências desse contrato.
 
-## Violação confirmada
-
-### Pagani Design PD-1701 — Pagani Design Speedmaster Moonwatch
-
-- Arquivo: [product.json](client/public/catalog/products/pagani-design-pd-1701/product.json), linha **198**.
-- Anúncio: `listing-varias-cores` (`listings[0]`), primeira variante (`variants[0]`).
-- Caminho exato: `listings[0].variants[0].axes[0].valueId`.
-- Valor encontrado: `"varias-cores"`, associado ao eixo `color`.
-- Problema: `axes[0].values` declara 14 cores, mas nenhuma tem `id: "varias-cores"`.
-- Regra: a variante precisa escolher um valor declarado para cada eixo do produto.
-- Erro retornado pelo schema: `variant references an axis value the product does not declare`.
-- Impacto: o produto é rejeitado pelo `ProductSchema`. O carregador pode deixá-lo passar, pois não aplica o schema; o valor não tem correspondência no seletor de cores.
-- Correção sugerida: identificar a cor real dessa variante e usar seu ID declarado, ou remover a variante genérica caso ela não represente uma combinação real. Declarar um valor adicional só é adequado se ele for uma opção de seleção intencional. É necessário decidir com base no cadastro; a auditoria não escolhe uma cor por suposição.
-
-Não foram encontradas outras violações nos 43 produtos. Os arquivos de cadastro não foram alterados.
-
-## Itens de especificação que quebram o contrato
+## Especificações que quebram o contrato
 
 | Verificação | Ocorrências |
 | --- | ---: |
@@ -60,66 +62,13 @@ Não foram encontradas outras violações nos 43 produtos. Os arquivos de cadast
 | Rótulo repetido entre produto e anúncio | 0 |
 | Item sem label/value válido | 0 |
 
-Todos os 591 itens cadastrados usam rótulos aceitos e valores textuais com conteúdo. Destes, 588 pertencem aos relógios e 3 aos acessórios. Não há item inválido de especificação para listar por relógio.
-
-## Atualização de 16/11/2026 — Addiesdive AD2035 e Steelflier SF741
-
-Os dois cadastros passaram novamente pelo `ProductSchema`. As imagens citadas e os exports e imports dinâmicos dos ícones das ofertas foram conferidos. Nenhuma violação foi encontrada nesses relógios; ambos possuem os 19 rótulos de especificação preenchidos.
-
-### Addiesdive AD2035
-
-- Foram acrescentados `Material do bisel` (aço inoxidável 316L), `Coroa` (rosqueada), `Tampa inferior` (rosqueada), `Tamanho da caixa` (48,5 mm) e `Diâmetro do mostrador` (39 mm). A ficha passou de 14 para 19 especificações.
-- O eixo de cor passou de `cor` para `color`, com as referências das variantes atualizadas. O anúncio sob encomenda passou a se chamar `listing-on-order`.
-- Foi acrescentado o anúncio `listing-available`, com `state: "used"`, `availabilityStatus: "available"`, preço de R$ 499,90, `listPrice` de R$ 689,90 e oferta Black Friday. O anúncio cita 23 imagens existentes e possui uma variante válida.
-
-### Steelflier SF741
-
-- Em relação à auditoria inicial, foram acrescentados `Material do bisel` (aço inoxidável 316L), `Coroa` (rosqueada), `Tampa inferior` (rosqueada), `Diâmetro do mostrador` (39 mm) e, neste último ajuste, `Tamanho da caixa` (48 mm). A ficha passou de 14 para 19 especificações.
-- O material da pulseira especifica aço inoxidável 316L nas variantes correspondentes.
-- O anúncio disponível permanece como `listing-available`, com `state: "openbox"`, `availabilityStatus: "available"`, preço de R$ 499,90, `listPrice` de R$ 629,90 e observação de abertura para inspeção e teste, sem uso.
-
-Em relação à versão anterior do relatório, as ausências consolidadas caíram de 228 para 222, e as especificações cadastradas passaram de 554 para 560. O novo anúncio do Addiesdive acrescentou um anúncio, uma variante, 23 referências a imagens e uma oferta.
-
-## Atualização de 17/11/2026 — Addiesdive AD2554 e MY-H3-2QZ
-
-Os dois cadastros passaram pelo `ProductSchema`. As imagens citadas e os exports e imports dinâmicos dos ícones das ofertas foram conferidos. Nenhuma violação foi encontrada nesses relógios.
-
-- **Addiesdive AD2554 (Ranger):** foram acrescentados `Material do bisel` (aço inoxidável 316L), `Coroa` (rosqueada), `Tampa inferior` (rosqueada) e `Tamanho da caixa` (46 mm). A ficha passou de 15 para 19 especificações, sem rótulos ausentes.
-- **Addiesdive MY-H3-2QZ (Submariner Date):** foram acrescentados `Coroa` (rosqueada), `Tampa inferior` (rosqueada) e `Tamanho da caixa` (48 mm). A ficha passou de 16 para 19 especificações, sem rótulos ausentes.
-- As ausências consolidadas caíram de 222 para 215. As especificações cadastradas passaram de 560 para 567. As quantidades de anúncios, variantes, referências a imagens e ofertas permaneceram iguais.
-
-## Atualização anterior de 17/11/2026 — quatro relógios
-
-Os quatro cadastros passaram pelo `ProductSchema`, com imagens e ícones das ofertas válidos. A varredura completa confirmou que não foram introduzidas novas violações no catálogo.
-
-| Relógio | Ajuste | Especificações preenchidas | Ausentes |
-| --- | --- | ---: | --- |
-| Addiesdive MY-H3-C | Acrescentados Funções, Movimento (Miyota 2115), Coroa, Tampa inferior e Tamanho da caixa (48 mm) | 18 | Diâmetro do mostrador |
-| Aimimo Design Air King | Acrescentados Material do bisel e Tampa inferior; Coroa alterada para Rosqueada, sem duplicação do rótulo | 19 | Nenhuma |
-| Aimimo Design Daytona | Acrescentados Material do bisel, Coroa, Tampa inferior e Tamanho da caixa (48 mm); Homage de reposicionado | 19 | Nenhuma |
-| Cadisen C7068 | Título alterado para Cadisen Cronógrafo Titânio; acrescentados Homage de (Formex), Material do bisel (titânio), Coroa, Tampa inferior e Tamanho da caixa (49 mm) | 19 | Nenhuma |
-
-As ausências caíram de 215 para 199 e as especificações cadastradas passaram de 567 para 583. Permaneceram 64 anúncios, 241 variantes, 1.289 referências a imagens e 32 ofertas. Sete relógios possuem os 19 rótulos preenchidos. A única violação contratual continua sendo a referência `varias-cores` do Pagani Design PD-1701.
-
-## Última atualização de 17/11/2026 — três relógios
-
-Os três cadastros passaram pelo `ProductSchema`, com imagens e ícones das ofertas válidos. Agora, todos possuem os 19 rótulos de especificação preenchidos.
-
-| Relógio | Ajuste | Especificações preenchidas | Ausentes |
-| --- | --- | ---: | --- |
-| Addiesdive MY-H3-C | Acrescentado Diâmetro do mostrador (41 mm) | 19 | Nenhuma |
-| Aimimo Design Field | Acrescentados Modelo (Field), Homage de (Hamilton Khaki Field Mechanical), Material do bisel, Coroa, Tampa inferior (pressão) e Tamanho da caixa (46 mm); atualizados os materiais e o diâmetro para 38.5 mm | 19 | Nenhuma |
-| Aimimo Design Tsuyosa | Acrescentado Material do bisel; atualizados título, descrição, marca, modelo e audience; criado anúncio em breve | 19 | Nenhuma |
-
-O Tsuyosa passou a ter `listing-on-order` sem preços, o que é permitido pelo contrato, e `listing-coming-soon` com uma variante a R$ 399,90, `listPrice` de R$ 499,90 e oferta Black Friday. As cinco imagens citadas pelo novo anúncio existem no disco, e a variante seleciona uma cor declarada.
-
-As ausências caíram de 199 para 191 e as especificações cadastradas passaram de 583 para 591. O catálogo passou a ter 65 anúncios, 242 variantes, 1.294 referências a imagens e 33 ofertas. Dez relógios possuem os 19 rótulos preenchidos. A única violação contratual continua sendo a referência `varias-cores` do Pagani Design PD-1701.
+Todos os 591 itens cadastrados têm rótulos aceitos e valores textuais com conteúdo. Destes, 588 pertencem aos relógios e 3 aos acessórios.
 
 ## Especificações ausentes por relógio
 
-**Estas são lacunas de preenchimento, não violações contratuais.** O contrato permite omitir especificações. Campos como `Homage de`, `Movimento`, `Material do bisel`, `Coroa` e `Tampa inferior` podem não se aplicar ou não ter informação disponível. Ausência não significa que a característica física não existe.
+**Estas são lacunas de preenchimento, não violações contratuais.** O contrato permite omitir especificações. Alguns campos podem não se aplicar ou não ter informação disponível. Ausência não significa que a característica física não existe. Valores não devem ser inventados para completar a ficha.
 
-São **191 ausências de rótulos** distribuídas por 31 dos 41 relógios; dez possuem os 19 rótulos preenchidos.
+São **191 ausências de rótulos** em 31 dos 41 relógios; 10 possuem os 19 rótulos preenchidos.
 
 | Relógio / arquivo | Título | Especificações ausentes |
 | --- | --- | --- |
@@ -145,13 +94,13 @@ São **191 ausências de rótulos** distribuídas por 31 dos 41 relógios; dez p
 | [naviforce-nf8052](client/public/catalog/products/naviforce-nf8052/product.json) | Relógio Naviforce Richard Mille | Homage de; Movimento; Material do bisel; Largura da pulseira; Tamanho da caixa; Coroa; Tampa inferior; Diâmetro do mostrador |
 | [north-edge-abyss](client/public/catalog/products/north-edge-abyss/product.json) | North Edge Abyss Solar | Homage de; Movimento; Tamanho da caixa; Coroa; Tampa inferior |
 | [opk-6003](client/public/catalog/products/opk-6003/product.json) | OPK Social Clássico | Homage de; Movimento; Material da pulseira; Material do vidro; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
-| [pagani-design-pd-1701](client/public/catalog/products/pagani-design-pd-1701/product.json) | Pagani Design Speedmaster Moonwatch | Tamanho da caixa; Coroa; Tampa inferior |
+| [pagani-design-pd-1701](client/public/catalog/products/pagani-design-pd-1701/product.json) | Pagani Design Moonwatch | Tamanho da caixa; Coroa; Tampa inferior |
 | [poedagar-682](client/public/catalog/products/poedagar-682/product.json) | Poedagar Capitão Willard | Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
 | [poedagar-786](client/public/catalog/products/poedagar-786/product.json) | Poedagar PRX Feminino | Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
 | [poedagar-834](client/public/catalog/products/poedagar-834/product.json) | Poedagar Nautilus Cronógrafo | Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
 | [poedagar-910](client/public/catalog/products/poedagar-910/product.json) | Poedagar Datejust | Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
 | [poedagar-970s-wh](client/public/catalog/products/poedagar-970s-wh/product.json) | Poedagar PRX Cronógrafo | Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
-| [qingxiya-7706](client/public/catalog/products/qingxiya-7706/product.json) | Relógio Qingxiya Speedmaster Moonwatch | Homage de; Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
+| [qingxiya-7706](client/public/catalog/products/qingxiya-7706/product.json) | Qingxiya Moonwatch | Homage de; Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
 | [rollstimi-rt-128](client/public/catalog/products/rollstimi-rt-128/product.json) | Rollstimi Datejust Automático | Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
 | [sapphero-so2110p](client/public/catalog/products/sapphero-so2110p/product.json) | Relógio SAPPHERO Clássico | Homage de; Material do vidro; Resistência à água; Tamanho da caixa; Coroa; Tampa inferior |
 | [sapphero-so2205](client/public/catalog/products/sapphero-so2205/product.json) | Relógio Sapphero Social | Homage de; Movimento; Material do bisel; Tamanho da caixa; Coroa; Tampa inferior |
@@ -167,7 +116,7 @@ São **191 ausências de rótulos** distribuídas por 31 dos 41 relógios; dez p
 
 ## Especificações ausentes: índice por item
 
-Este índice apresenta as mesmas ausências da tabela anterior, agrupadas por rótulo. As contagens excluem os dois acessórios.
+Este índice agrupa as mesmas ausências da tabela anterior por rótulo, excluindo os acessórios.
 
 | Especificação | Relógios sem o item | Em quais relógios falta |
 | --- | ---: | --- |
@@ -195,21 +144,18 @@ Este índice apresenta as mesmas ausências da tabela anterior, agrupadas por r�
 
 | Grupo | Resultado |
 | --- | --- |
-| Campos obrigatórios e tipos de produto/anúncio/variante | Sem ocorrência de ausência ou tipo inválido. |
-| Slug e identificadores | Slugs válidos e iguais às pastas; nenhum ID inválido ou repetido nos escopos exigidos. |
+| Campos obrigatórios e tipos | Sem campos obrigatórios ausentes ou tipos inválidos. |
+| Slug e identificadores | Slugs válidos e iguais às pastas; IDs únicos nos escopos exigidos. |
 | Estados e disponibilidade | Valores aceitos; anúncios sob encomenda usam state new. |
-| Eixos e apresentações | IDs, rótulos, IDs de valores e presentation válidos. A única referência de variante inválida é a descrita no Pagani. |
-| Combinações de variantes | Nenhuma combinação válida duplicada no mesmo anúncio. A combinação inválida do Pagani foi reportada separadamente. |
-| Imagens | Todas as 1.294 referências usam nomes/extensões permitidos e apontam para arquivos existentes em img/; todas as mainImage pertencem às images do anúncio. |
+| Eixos e variantes | Referências declaradas, seleção exata dos eixos e nenhuma combinação duplicada no mesmo anúncio. |
+| Imagens | Todas as 1293 referências usam nomes e extensões permitidos e apontam para arquivos existentes; mainImage pertence às images do anúncio. |
 | Preços | Nenhum preço obrigatório ausente, valor não positivo ou listPrice incompatível após truncamento. Preço omitido sob encomenda é permitido. |
 | orderable | Nenhum orderable false fora de anúncios sob encomenda. |
-| Ofertas | 33 ofertas com texto preenchido, cores hexadecimais aceitas e ícone Gift com export e import dinâmico válidos. |
-| Ordem das especificações | Não tratada como violação: o contrato informa que a página respeita a ordem do JSON, sem exigir a ordem da lista de rótulos. |
+| Ofertas | 31 ofertas com texto preenchido, cores hexadecimais válidas e ícone Gift com export e import dinâmico válidos. |
+| Ordem das especificações | A página respeita a ordem do JSON; o contrato não exige a ordem da lista de rótulos. |
 | Campos opcionais | Ausência de description, audience, specifications, offers ou alias não configura violação. |
 
 ## Acessórios encontrados
-
-Foram incluídos nas verificações estruturais, de imagens, ofertas e especificações, mas excluídos das tabelas de completude dos relógios.
 
 | Produto | Especificações cadastradas | Conformidade estrutural |
 | --- | --- | --- |
@@ -218,13 +164,11 @@ Foram incluídos nas verificações estruturais, de imagens, ofertas e especific
 
 ## Encaminhamento
 
-1. Corrigir a referência de cor inexistente no Pagani Design PD-1701.
-2. Revisar as lacunas de preenchimento usando as duas tabelas de ausências, priorizando dados úteis à comparação, como modelo, materiais, resistência à água e dimensões, quando confirmados.
-3. Se algum rótulo precisar ser obrigatório, registrar essa exigência no contrato e no schema. O contrato atual não permite reprovar um relógio apenas pela ausência de uma especificação.
+Não há correção contratual pendente. As tabelas de ausências podem orientar o preenchimento de informações confirmadas. Se um rótulo precisar ser obrigatório, essa exigência deve ser registrada no contrato e no schema.
 
 ## Identificação do levantamento
 
-Resultado da varredura completa dos 43 arquivos locais em 17/11/2026. As seções anteriores de atualização documentam os ajustes históricos; os indicadores e tabelas de ausências refletem esta última varredura.
+Resultado da varredura completa dos 43 arquivos locais em 17/11/2026. Alterações posteriores nos cadastros podem mudar as contagens.
 
 - SHA-256 de docs/contrato-relogio.md: `b2574755cb80f56d47a5fd8b44f9841a7fe8a82a766f4b6161531150cbbe2cad`.
-- SHA-256 agregado dos 43 product.json (caminho relativo, byte nulo, conteúdo, byte nulo; caminhos ordenados): `ec90002e7292f48a94bd3f75b42a61dd3d413048af6c9484bbd86bec40975a34`.
+- SHA-256 agregado dos 43 product.json (caminho relativo, byte nulo, conteúdo, byte nulo; caminhos ordenados): `ba5c0fdee1a91586d259010d8ec828933d5fa7083eea2755c0f9952937a213b4`.
