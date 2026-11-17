@@ -5,7 +5,7 @@
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
       "values": [
         {
@@ -58,8 +58,28 @@
       "value": "Vidro mineral abaulado com revestimento antirreflexo azul"
     },
     {
+      "label": "Material do bisel",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Coroa",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tampa inferior",
+      "value": "Rosqueada"
+    },
+    {
       "label": "Resistência à água",
       "value": "200m (20 ATM)"
+    },
+    {
+      "label": "Tamanho da caixa",
+      "value": "48,5 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "39 mm"
     },
     {
       "label": "Largura da pulseira",
@@ -76,7 +96,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -108,8 +128,59 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "steel"
+            }
+          ],
+          "mainImage": "addiesdive-ad2035-7.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-available",
+      "state": "used",
+      "availabilityStatus": "available",
+      "images": [
+        "addiesdive-ad2035-1.webp",
+        "addiesdive-ad2035-2.webp",
+        "addiesdive-ad2035-3.webp",
+        "addiesdive-ad2035-4.webp",
+        "addiesdive-ad2035-5.webp",
+        "addiesdive-ad2035-6.webp",
+        "addiesdive-ad2035-7.webp",
+        "addiesdive-ad2035-8.webp",
+        "addiesdive-ad2035-9.webp",
+        "addiesdive-ad2035-10.webp",
+        "addiesdive-ad2035-11.webp",
+        "addiesdive-ad2035-12.webp",
+        "addiesdive-ad2035-13.webp",
+        "addiesdive-ad2035-14.webp",
+        "addiesdive-ad2035-15.webp",
+        "addiesdive-ad2035-16.webp",
+        "addiesdive-ad2035-17.webp",
+        "addiesdive-ad2035-18.webp",
+        "addiesdive-ad2035-19.webp",
+        "addiesdive-ad2035-20.webp",
+        "addiesdive-ad2035-21.webp",
+        "addiesdive-ad2035-22.webp",
+        "addiesdive-ad2035-23.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "steel"
+            }
+          ],
+          "price": 499.9,
+          "listPrice": 689.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
           ],
           "mainImage": "addiesdive-ad2035-7.webp"

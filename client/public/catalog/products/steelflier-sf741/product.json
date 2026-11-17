@@ -93,6 +93,10 @@
       "value": "200m (20 ATM)"
     },
     {
+      "label": "Tamanho da caixa",
+      "value": "48 mm"
+    },
+    {
       "label": "Diâmetro do mostrador",
       "value": "39 mm"
     },
