@@ -1,7 +1,8 @@
 {
   "slug": "aimimo-design-tsuyosa",
-  "title": "Relógio Aimimo Design Tsuyosa",
-  "description": "Relógio masculino analógico com movimento de quartzo japonês Miyota 2115, três ponteiros, calendário e ponteiros luminosos. Caixa e pulseira de aço inoxidável, vidro de cristal de safira e resistência à água de 50m (5 ATM). A caixa tem 40 mm de diâmetro sem a coroa, 45 mm de lug to lug e 13 mm de espessura. A pulseira tem 20 mm de largura e o comprimento total do relógio, incluindo a caixa, é de 19 cm.",
+  "title": "Aimimo Design Tsuyosa",
+  "description": "O Aimimo Design Tsuyosa é uma homanagem ao Citizen Tsuyosa. É um relógio masculino analógico com movimento de quartzo japonês Miyota 2115, três ponteiros, calendário e ponteiros luminosos. Caixa e pulseira de aço inoxidável, vidro de cristal de safira e resistência à água de 50m (5 ATM). A caixa tem 40 mm de diâmetro sem a coroa, 45 mm de lug to lug e 13 mm de espessura. A pulseira tem 20 mm de largura e o comprimento total do relógio, incluindo a caixa, é de 19 cm.",
+  "audience": "male",
   "axes": [
     {
       "id": "color",
@@ -30,11 +31,11 @@
   "specifications": [
     {
       "label": "Marca",
-      "value": "AIMIMO DESIGN"
+      "value": "Aimimo Design"
     },
     {
       "label": "Modelo",
-      "value": "DD40MM"
+      "value": "Tsuyosa"
     },
     {
       "label": "Homage de",
@@ -67,6 +68,10 @@
     {
       "label": "Material do vidro",
       "value": "Cristal de safira"
+    },
+    {
+      "label": "Material do bisel",
+      "value": "Aço inoxidável"
     },
     {
       "label": "Resistência à água",
@@ -103,7 +108,7 @@
   ],
   "listings": [
     {
-      "id": "listing",
+      "id": "listing-on-order",
       "state": "new",
       "availabilityStatus": "on_order",
       "images": [
@@ -126,8 +131,6 @@
               "valueId": "silver-mintblue"
             }
           ],
-          "price": 399.9,
-          "listPrice": 499.9,
           "mainImage": "aimimo-design-tsuyosa-1.webp"
         },
         {
@@ -137,8 +140,6 @@
               "valueId": "silver-green"
             }
           ],
-          "price": 399.9,
-          "listPrice": 499.9,
           "mainImage": "aimimo-design-tsuyosa-2.webp"
         },
         {
@@ -148,8 +149,6 @@
               "valueId": "silver-white"
             }
           ],
-          "price": 399.9,
-          "listPrice": 499.9,
           "mainImage": "aimimo-design-tsuyosa-3.webp"
         },
         {
@@ -159,9 +158,40 @@
               "valueId": "silver-blue"
             }
           ],
+          "mainImage": "aimimo-design-tsuyosa-9.webp"
+        }
+      ]
+    },
+    {
+      "id": "listing-coming-soon",
+      "state": "new",
+      "availabilityStatus": "coming_soon",
+      "images": [
+        "aimimo-design-tsuyosa-1.webp",
+        "aimimo-design-tsuyosa-4.webp",
+        "aimimo-design-tsuyosa-5.webp",
+        "aimimo-design-tsuyosa-6.webp",
+        "aimimo-design-tsuyosa-8.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-mintblue"
+            }
+          ],
           "price": 399.9,
           "listPrice": 499.9,
-          "mainImage": "aimimo-design-tsuyosa-9.webp"
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "aimimo-design-tsuyosa-1.webp"
         }
       ]
     }

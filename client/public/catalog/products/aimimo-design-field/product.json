@@ -26,6 +26,14 @@
       "value": "Aimimo Design"
     },
     {
+      "label": "Modelo",
+      "value": "Field"
+    },
+    {
+      "label": "Homage de",
+      "value": "Hamilton Khaki Field Mechanical"
+    },
+    {
       "label": "Tipo do relógio",
       "value": "Piloto vintage"
     },
@@ -43,27 +51,43 @@
     },
     {
       "label": "Material da caixa",
-      "value": "Aço inoxidável 316L com acabamento escovado"
+      "value": "Aço inoxidável 316L"
     },
     {
       "label": "Material da pulseira",
-      "value": "Aço inoxidável"
+      "value": "Aço inoxidável 316L"
     },
     {
       "label": "Material do vidro",
       "value": "Cristal de safira"
     },
     {
+      "label": "Material do bisel",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Coroa",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tampa inferior",
+      "value": "Pressão"
+    },
+    {
       "label": "Resistência à água",
       "value": "50m (5 ATM)"
     },
     {
-      "label": "Largura da pulseira",
-      "value": "20 mm"
+      "label": "Tamanho da caixa",
+      "value": "46 mm"
     },
     {
       "label": "Diâmetro do mostrador",
-      "value": "35 a 39 mm"
+      "value": "38.5 mm"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
     },
     {
       "label": "Espessura da caixa",
