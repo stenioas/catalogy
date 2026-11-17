@@ -78,6 +78,18 @@
       "value": "Cristal de safira"
     },
     {
+      "label": "Material do bisel",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Coroa",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tampa inferior",
+      "value": "Rosqueada"
+    },
+    {
       "label": "Resistência à água",
       "value": "50m (5 ATM)"
     },
@@ -88,10 +100,6 @@
     {
       "label": "Tamanho da caixa",
       "value": "48 mm"
-    },
-    {
-      "label": "Coroa",
-      "value": "Parafusada"
     },
     {
       "label": "Diâmetro do mostrador",

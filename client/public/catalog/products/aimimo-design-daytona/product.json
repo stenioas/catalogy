@@ -30,16 +30,16 @@
   ],
   "specifications": [
     {
-      "label": "Homage de",
-      "value": "Rolex Daytona"
-    },
-    {
       "label": "Marca",
       "value": "Aimimo Design"
     },
     {
       "label": "Modelo",
       "value": "Daytona"
+    },
+    {
+      "label": "Homage de",
+      "value": "Rolex Daytona"
     },
     {
       "label": "Tipo do relógio",
@@ -70,12 +70,28 @@
       "value": "Cristal de safira"
     },
     {
+      "label": "Material do bisel",
+      "value": "Cerâmica"
+    },
+    {
+      "label": "Coroa",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tampa inferior",
+      "value": "Rosqueada"
+    },
+    {
       "label": "Resistência à água",
       "value": "50m (5 ATM)"
     },
     {
       "label": "Largura da pulseira",
       "value": "Aproximadamente 20 mm"
+    },
+    {
+      "label": "Tamanho da caixa",
+      "value": "48 mm"
     },
     {
       "label": "Diâmetro do mostrador",

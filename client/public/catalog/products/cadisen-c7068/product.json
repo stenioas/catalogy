@@ -1,12 +1,13 @@
 {
   "slug": "cadisen-c7068",
-  "title": "Cadisen TI-7 Multisync",
-  "description": "O Cadisen TI-7 Multisync é um relógio masculino com caixa de titânio, movimento de quartzo Seiko TMI VK63 e cronógrafo com indicação de 24 horas. Cristal de safira com tratamento antirreflexo, mostrador com acabamento em esmalte de alto brilho e ponteiros luminosos. Pulseira de lona de alta densidade combinada com couro genuíno. Diâmetro de 40 mm, espessura de 11,5 mm, peso de 56,5 g e resistência à água de 100 metros.",
+  "title": "Cadisen Cronógrafo Titânio",
+  "description": "O Cadisen Cronógrafo Titânio é um relógio masculino com caixa de titânio, movimento de quartzo Seiko TMI VK63 e cronógrafo com indicação de 24 horas. Cristal de safira com tratamento antirreflexo, mostrador com acabamento em esmalte de alto brilho e ponteiros luminosos. Pulseira de lona de alta densidade combinada com couro genuíno. Diâmetro de 40 mm, espessura de 11,5 mm, peso de 56,5 g e resistência à água de 100 metros.",
   "audience": "unisex",
   "axes": [
     {
       "id": "color",
       "label": "Cor",
+      "presentation": "image",
       "values": [
         {
           "id": "blue",
@@ -20,8 +21,7 @@
           "id": "white",
           "value": "White"
         }
-      ],
-      "presentation": "image"
+      ]
     }
   ],
   "specifications": [
@@ -32,6 +32,10 @@
     {
       "label": "Modelo",
       "value": "C7068 / TI-7 MULTISYNC"
+    },
+    {
+      "label": "Homage de",
+      "value": "Formex"
     },
     {
       "label": "Tipo do relógio",
@@ -62,12 +66,28 @@
       "value": "Cristal de safira com revestimento antirreflexo"
     },
     {
+      "label": "Material do bisel",
+      "value": "Titânio"
+    },
+    {
+      "label": "Coroa",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tampa inferior",
+      "value": "Rosqueada"
+    },
+    {
       "label": "Resistência à água",
       "value": "100m (10 ATM)"
     },
     {
       "label": "Largura da pulseira",
       "value": "20 mm"
+    },
+    {
+      "label": "Tamanho da caixa",
+      "value": "49 mm"
     },
     {
       "label": "Diâmetro do mostrador",

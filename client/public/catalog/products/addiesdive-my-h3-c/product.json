@@ -38,8 +38,16 @@
       "value": "Diver (Mergulho)"
     },
     {
+      "label": "Funções",
+      "value": "Ponteiros e marcadores luminosos"
+    },
+    {
       "label": "Tipo de movimento",
       "value": "Quartzo"
+    },
+    {
+      "label": "Movimento",
+      "value": "Miyota 2115"
     },
     {
       "label": "Material da caixa",
@@ -58,8 +66,20 @@
       "value": "Cerâmica"
     },
     {
+      "label": "Coroa",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tampa inferior",
+      "value": "Rosqueada"
+    },
+    {
       "label": "Resistência à água",
       "value": "200m (20 ATM)"
+    },
+    {
+      "label": "Tamanho da caixa",
+      "value": "48 mm"
     },
     {
       "label": "Largura da pulseira",
