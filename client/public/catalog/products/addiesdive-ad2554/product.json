@@ -66,6 +66,22 @@
       "value": "Cristal de safira"
     },
     {
+      "label": "Material do bisel",
+      "value": "Aço inoxidável 316L"
+    },
+    {
+      "label": "Coroa",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tampa inferior",
+      "value": "Rosqueada"
+    },
+    {
+      "label": "Tamanho da caixa",
+      "value": "46 mm"
+    },
+    {
       "label": "Resistência à água",
       "value": "100m (10 ATM)"
     },
