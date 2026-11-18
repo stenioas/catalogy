@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react'
 import type { ListingSelector, ListingSelectorOption } from '@catalogo/shared'
 
 import { cn } from '@/lib/utils'
@@ -68,7 +69,7 @@ export function advanceVariantScrollLeft(metrics: {
   return clamped
 }
 
-function scrollImageRowToNext(clicked: HTMLElement) {
+function scrollImageRow(clicked: HTMLElement, behavior: ScrollBehavior) {
   const row = clicked.parentElement
   if (!(row instanceof HTMLElement)) return
   const first = row.firstElementChild
@@ -81,7 +82,14 @@ function scrollImageRowToNext(clicked: HTMLElement) {
     firstOffsetLeft: first.offsetLeft,
   })
   if (left === null) return
-  row.scrollTo({ left, behavior: 'smooth' })
+  row.scrollTo({ left, behavior })
+}
+
+function alignPressedImageRows(root: HTMLElement, behavior: ScrollBehavior) {
+  for (const row of root.querySelectorAll<HTMLElement>('[data-variant-row="image"]')) {
+    const pressed = row.querySelector<HTMLElement>('[aria-pressed="true"]')
+    if (pressed) scrollImageRow(pressed, behavior)
+  }
 }
 
 function imageButtonClass(option: ListingSelectorOption, pressed: boolean): string {
@@ -107,6 +115,17 @@ export function AxisSelectors({
   onSelect,
   slug = '',
 }: AxisSelectorsProps) {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const initialAlign = useRef(true)
+
+  useLayoutEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    const behavior: ScrollBehavior = initialAlign.current ? 'auto' : 'smooth'
+    initialAlign.current = false
+    alignPressedImageRows(root, behavior)
+  }, [activeV, activeState, activeAvailability])
+
   if (selectors.length === 0) return null
 
   const axisSelectors = selectors.filter(
@@ -115,7 +134,7 @@ export function AxisSelectors({
   const activeByAxis = activeValueIdsFromV(axisSelectors, activeV)
 
   return (
-    <div data-testid="axis-selectors" className="flex w-full min-w-0 flex-col gap-3">
+    <div ref={rootRef} data-testid="axis-selectors" className="flex w-full min-w-0 flex-col gap-3">
       {selectors.map((group) => {
         const image = group.presentation === 'image'
         const line = axisLine(group, activeByAxis)
@@ -131,6 +150,7 @@ export function AxisSelectors({
           >
             <span className="text-xs font-medium text-muted-foreground">{line}</span>
             <div
+              data-variant-row={image ? 'image' : undefined}
               className={image ? 'flex w-full gap-2 overflow-x-auto px-1.5 py-2' : 'flex flex-wrap gap-2 px-1.5 py-1'}
               role="group"
               aria-label={line}
@@ -166,9 +186,8 @@ export function AxisSelectors({
                             !isUnavailable && isPressed && 'border-[3px] border-primary',
                           )
                     }
-                    onClick={(event) => {
+                    onClick={() => {
                       if (controlDisabled || option.v === null) return
-                      if (image) scrollImageRowToNext(event.currentTarget)
                       onSelect(option.v)
                     }}
                   >

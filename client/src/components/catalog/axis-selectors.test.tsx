@@ -397,37 +397,55 @@ function stubImageRow(
 }
 
 describe('AxisSelectors image row aligns the clicked variant first', () => {
-  function renderImageRow() {
+  function imageSelectors() {
+    return [
+      {
+        axisId: 'color',
+        label: 'Cor',
+        presentation: 'image' as const,
+        options: ['v1', 'v2', 'v3', 'v4', 'v5'].map((valueId) => ({
+          valueId,
+          value: valueId,
+          disabled: false,
+          unavailable: false,
+          v: valueId,
+          imageFile: `${valueId}.jpg`,
+        })),
+      },
+    ]
+  }
+
+  function renderImageRow(activeV = 'v1') {
     const onSelect = vi.fn()
-    render(
+    const view = render(
       <AxisSelectors
         slug="fila"
-        activeV="v1"
+        activeV={activeV}
         onSelect={onSelect}
-        selectors={[
-          {
-            axisId: 'color',
-            label: 'Cor',
-            presentation: 'image',
-            options: ['v1', 'v2', 'v3', 'v4', 'v5'].map((valueId) => ({
-              valueId,
-              value: valueId,
-              disabled: false,
-              unavailable: false,
-              v: valueId,
-              imageFile: `${valueId}.jpg`,
-            })),
-          },
-        ]}
+        selectors={imageSelectors()}
       />,
     )
     const row = within(groupByAxis('color')).getByRole('group')
     const buttons = within(row).getAllByRole('button')
-    return { onSelect, row, buttons }
+    return {
+      onSelect,
+      row,
+      buttons,
+      rerender: (nextV: string) => {
+        view.rerender(
+          <AxisSelectors
+            slug="fila"
+            activeV={nextV}
+            onSelect={onSelect}
+            selectors={imageSelectors()}
+          />,
+        )
+      },
+    }
   }
 
   it('scrolls a middle thumbnail so it becomes the first visible one', () => {
-    const { onSelect, row, buttons } = renderImageRow()
+    const { onSelect, row, buttons, rerender } = renderImageRow()
     const scrollTo = stubImageRow(row, buttons, [6, 78, 150, 222, 294], {
       scrollLeft: 0,
       scrollWidth: 1000,
@@ -435,6 +453,7 @@ describe('AxisSelectors image row aligns the clicked variant first', () => {
     })
 
     fireEvent.click(buttons[2]!)
+    rerender('v3')
 
     expect(scrollTo).toHaveBeenCalledOnce()
     expect(scrollTo).toHaveBeenCalledWith({ left: 144, behavior: 'smooth' })
@@ -458,7 +477,7 @@ describe('AxisSelectors image row aligns the clicked variant first', () => {
   })
 
   it('clamps the scroll to the end of the row and still selects', () => {
-    const { onSelect, row, buttons } = renderImageRow()
+    const { onSelect, row, buttons, rerender } = renderImageRow()
     const scrollTo = stubImageRow(row, buttons, [6, 78, 150, 222, 294], {
       scrollLeft: 40,
       scrollWidth: 400,
@@ -466,11 +485,61 @@ describe('AxisSelectors image row aligns the clicked variant first', () => {
     })
 
     fireEvent.click(buttons[4]!)
+    rerender('v5')
 
     expect(scrollTo).toHaveBeenCalledOnce()
     expect(scrollTo).toHaveBeenCalledWith({ left: 200, behavior: 'smooth' })
     expect(onSelect).toHaveBeenCalledOnce()
     expect(onSelect).toHaveBeenCalledWith('v5')
+  })
+
+  it('aligns the already selected thumbnail on open, without animation', () => {
+    const offsets = [6, 78, 150, 222, 294]
+    const scrollTo = vi.fn()
+    const originalScrollTo = HTMLElement.prototype.scrollTo
+    const descriptors = {
+      offsetLeft: Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetLeft'),
+      scrollWidth: Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollWidth'),
+      clientWidth: Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientWidth'),
+      scrollLeft: Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollLeft'),
+    }
+    Object.defineProperty(HTMLElement.prototype, 'offsetLeft', {
+      configurable: true,
+      get() {
+        const index = this.getAttribute?.('data-value-id')?.slice(1)
+        return index ? offsets[Number(index) - 1] ?? 0 : 0
+      },
+    })
+    Object.defineProperty(HTMLElement.prototype, 'scrollWidth', {
+      configurable: true,
+      get() {
+        return this.getAttribute?.('data-variant-row') === 'image' ? 1000 : 0
+      },
+    })
+    Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
+      configurable: true,
+      get() {
+        return this.getAttribute?.('data-variant-row') === 'image' ? 300 : 0
+      },
+    })
+    Object.defineProperty(HTMLElement.prototype, 'scrollLeft', {
+      configurable: true,
+      get() {
+        return 0
+      },
+    })
+    HTMLElement.prototype.scrollTo = scrollTo
+
+    try {
+      renderImageRow('v3')
+      expect(scrollTo).toHaveBeenCalledOnce()
+      expect(scrollTo).toHaveBeenCalledWith({ left: 144, behavior: 'auto' })
+    } finally {
+      HTMLElement.prototype.scrollTo = originalScrollTo
+      for (const [key, descriptor] of Object.entries(descriptors)) {
+        if (descriptor) Object.defineProperty(HTMLElement.prototype, key, descriptor)
+      }
+    }
   })
 
   it('does not scroll a wrapping text axis', () => {
