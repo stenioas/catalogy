@@ -163,26 +163,26 @@ export function normalizeProductJson(raw: unknown): unknown {
   }
 
   const listing: Record<string, unknown> = {
-    id: 'listing',
-    state: mapLegacyState(o.state),
+    id: 'main-listing',
     images,
     variants: [
       {
         axes: variantAxes,
+        state: mapLegacyState(o.state),
         price,
         mainImage,
       },
     ],
   }
 
+  const variant = listing.variants as Array<Record<string, unknown>>
   if (typeof o.availabilityStatus === 'string') {
-    listing.availabilityStatus = o.availabilityStatus
+    variant[0].availabilityStatus = o.availabilityStatus
   }
   if (typeof o.enabled === 'boolean') {
     listing.enabled = o.enabled
   }
 
-  const variant = listing.variants as Array<Record<string, unknown>>
   const v0 = variant[0]
   if (typeof o.listPrice === 'number') {
     v0.listPrice = o.listPrice

@@ -184,6 +184,8 @@ T11 -> T12 -> T13
 
 ### T4: Ponte do JSON legado
 
+**Status**: done
+
 **What**: `normalizeProductJson` emite `main-listing` com a condição na variante.
 **Where**: `client/scripts/catalog.ts`
 **Depends on**: T2

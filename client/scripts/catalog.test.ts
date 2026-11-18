@@ -425,7 +425,7 @@ describe('normalizeProductJson', () => {
     expect(variant).not.toHaveProperty('offers')
   })
 
-  it('reshapes flat legacy product.json into listings the schema accepts (VAR-25 bridge)', () => {
+  it('reshapes flat legacy product.json into a main-listing with variant condition (FILT-01)', () => {
     const legacy = {
       slug: 'legacy-watch',
       state: 'Novo',
@@ -445,6 +445,11 @@ describe('normalizeProductJson', () => {
       return
     }
     expect(parsed.data.listings).toHaveLength(1)
+    expect(parsed.data.listings[0].id).toBe('main-listing')
+    expect(parsed.data.listings[0]).not.toHaveProperty('state')
+    expect(parsed.data.listings[0]).not.toHaveProperty('availabilityStatus')
+    expect(parsed.data.listings[0].variants[0].state).toBe('new')
+    expect(parsed.data.listings[0].variants[0].availabilityStatus).toBe('available')
     expect(parsed.data.listings[0].images).toEqual(['a.png'])
     expect(parsed.data.specifications?.some((s) => s.label === 'Estado')).toBe(false)
   })
