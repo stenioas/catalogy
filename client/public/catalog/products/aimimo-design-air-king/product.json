@@ -116,12 +116,12 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
-        "aimimo-design-air-king-1.webp",
         "aimimo-design-air-king-2.webp",
+        "aimimo-design-air-king-13.webp",
+        "aimimo-design-air-king-16.webp",
+        "aimimo-design-air-king-1.webp",
         "aimimo-design-air-king-3.webp",
         "aimimo-design-air-king-4.webp",
         "aimimo-design-air-king-5.webp",
@@ -132,21 +132,10 @@
         "aimimo-design-air-king-10.webp",
         "aimimo-design-air-king-11.webp",
         "aimimo-design-air-king-12.webp",
-        "aimimo-design-air-king-13.webp",
         "aimimo-design-air-king-14.webp",
-        "aimimo-design-air-king-15.webp",
-        "aimimo-design-air-king-16.webp"
+        "aimimo-design-air-king-15.webp"
       ],
       "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "a-no-logo"
-            }
-          ],
-          "mainImage": "aimimo-design-air-king-2.webp"
-        },
         {
           "axes": [
             {
@@ -154,7 +143,31 @@
               "valueId": "b-no-logo"
             }
           ],
-          "mainImage": "aimimo-design-air-king-1.webp"
+          "state": "openbox",
+          "availabilityStatus": "available",
+          "price": 259.9,
+          "listPrice": 359.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "aimimo-design-air-king-2.webp",
+          "observations": "Produto não foi usado. A embalagem foi aberta e o plástico foi removido."
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "a-no-logo"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "aimimo-design-air-king-2.webp"
         },
         {
           "axes": [
@@ -163,6 +176,8 @@
               "valueId": "c-blue-no-logo"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "aimimo-design-air-king-6.webp"
         },
         {
@@ -172,6 +187,8 @@
               "valueId": "c-green-no-logo"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "aimimo-design-air-king-5.webp"
         },
         {
@@ -181,6 +198,8 @@
               "valueId": "c-black-no-logo"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "aimimo-design-air-king-4.webp"
         },
         {
@@ -190,39 +209,9 @@
               "valueId": "c-sscolor-no-logo"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "aimimo-design-air-king-3.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "openbox",
-      "availabilityStatus": "available",
-      "images": [
-        "aimimo-design-air-king-2.webp",
-        "aimimo-design-air-king-13.webp",
-        "aimimo-design-air-king-16.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "b-no-logo"
-            }
-          ],
-          "price": 259.9,
-          "listPrice": 359.9,
-          "mainImage": "aimimo-design-air-king-2.webp",
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ],
-          "observations": "Produto não foi usado. A embalagem foi aberta e o plástico foi removido."
         }
       ]
     }

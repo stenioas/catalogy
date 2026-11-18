@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "blue",
@@ -17,7 +16,8 @@
           "id": "white",
           "value": "White"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -80,9 +80,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "rollstimi-rt-128-1.webp",
         "rollstimi-rt-128-2.webp",
@@ -107,6 +105,8 @@
               "valueId": "blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "rollstimi-rt-128-7.webp"
         },
         {
@@ -116,6 +116,8 @@
               "valueId": "white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "rollstimi-rt-128-8.webp"
         }
       ]

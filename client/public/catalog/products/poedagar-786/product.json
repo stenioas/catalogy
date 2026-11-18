@@ -108,10 +108,9 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
+        "poedagar-786-12.webp",
         "poedagar-786-1.webp",
         "poedagar-786-2.webp",
         "poedagar-786-3.webp",
@@ -123,7 +122,6 @@
         "poedagar-786-9.webp",
         "poedagar-786-10.webp",
         "poedagar-786-11.webp",
-        "poedagar-786-12.webp",
         "poedagar-786-13.webp",
         "poedagar-786-14.webp",
         "poedagar-786-15.webp",
@@ -144,100 +142,11 @@
           "axes": [
             {
               "axisId": "cor",
-              "valueId": "786-silver-white"
-            }
-          ],
-          "mainImage": "poedagar-786-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "786-silver-green"
-            }
-          ],
-          "mainImage": "poedagar-786-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "786-silver-blue"
-            }
-          ],
-          "mainImage": "poedagar-786-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "786-rose-gold-white"
-            }
-          ],
-          "mainImage": "poedagar-786-10.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "786-silver-black"
-            }
-          ],
-          "mainImage": "poedagar-786-11.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
               "valueId": "786-rose-gold-green"
             }
           ],
-          "mainImage": "poedagar-786-12.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "786-gold-gold"
-            }
-          ],
-          "mainImage": "poedagar-786-13.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "786-rose-gold-black"
-            }
-          ],
-          "mainImage": "poedagar-786-14.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "786-rose-gold-blue"
-            }
-          ],
-          "mainImage": "poedagar-786-15.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "poedagar-786-12.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "786-rose-gold-green"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 119.9,
           "listPrice": 154.9,
           "offers": [
@@ -249,6 +158,94 @@
             }
           ],
           "mainImage": "poedagar-786-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-silver-white"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "poedagar-786-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-silver-green"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "poedagar-786-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-silver-blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "poedagar-786-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-rose-gold-white"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "poedagar-786-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-silver-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "poedagar-786-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-gold-gold"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "poedagar-786-13.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-rose-gold-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "poedagar-786-14.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "786-rose-gold-blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "poedagar-786-15.webp"
         }
       ]
     }

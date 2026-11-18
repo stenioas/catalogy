@@ -4,14 +4,17 @@ import * as listingModule from './listings.ts'
 import * as shared from '../index.ts'
 import {
   MISSING_LISTING_TEXT,
+  activeFilter,
   activeSection,
   canVariantRepresentCard,
+  filterHasCards,
   homeCards,
   homeEmptyText,
   sectionHasCards,
   listingByPath,
   resolveVariant,
   shareMessage,
+  variantQuery,
   variantQueue,
   type ListingView,
 } from './listings.ts'
@@ -142,6 +145,82 @@ describe('resolveVariant', () => {
       { availabilityStatus: 'on_order' },
     )
     expect(resolveVariant(listing, 'b').price).toBe(20)
+  })
+
+  it('uses state and availability to disambiguate v, ignoring invalid or unmatched tokens', () => {
+    const listing = listingWithVariants([
+      {
+        axes: [{ axisId: 'color', valueId: 'a' }],
+        state: 'used',
+        availabilityStatus: 'on_order',
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'a' }],
+        state: 'new',
+        availabilityStatus: 'coming_soon',
+        price: 20,
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'a' }],
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 30,
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'b' }],
+        state: 'new',
+        availabilityStatus: 'on_order',
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'b' }],
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 40,
+        mainImage: img,
+      },
+    ])
+
+    expect(resolveVariant(listing, { v: 'a', state: 'used', availability: 'on_order' }).price)
+      .toBeUndefined()
+    expect(resolveVariant(listing, { v: 'a', state: 'used', availability: null }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'a', state: 'invalid', availability: null }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'a', state: 'openbox', availability: null }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'a', state: null, availability: 'invalid' }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'a', state: null, availability: 'available' }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'b', state: null, availability: 'coming_soon' }).price).toBe(40)
+  })
+
+  it('falls back for absent or wrong-sized v and breaks equal availability ties by array order', () => {
+    const listing = listingWithVariants([
+      {
+        axes: [{ axisId: 'color', valueId: 'a' }],
+        availabilityStatus: 'available',
+        price: 10,
+        mainImage: img,
+        orderable: false,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'b' }],
+        availabilityStatus: 'available',
+        price: 20,
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'b' }],
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 30,
+        mainImage: img,
+      },
+    ])
+
+    expect(resolveVariant(listing, { v: null, state: null, availability: null }).price).toBe(20)
+    expect(resolveVariant(listing, { v: 'b,extra', state: null, availability: null }).price).toBe(20)
+    expect(resolveVariant(listing, { v: 'b', state: null, availability: null }).price).toBe(20)
   })
 })
 
@@ -807,6 +886,322 @@ describe('homeCards', () => {
   })
 })
 
+describe('homeCards filters', () => {
+  const offer = {
+    text: 'Oferta',
+    background: '#111111',
+    color: '#ffffff',
+    icon: 'Tag',
+  }
+
+  function filteredProduct(
+    audience: Product['audience'],
+    variants: Variant[],
+    listing: Partial<Listing> = {},
+  ): Product {
+    return {
+      slug: `watch-${audience ?? 'none'}`,
+      title: 'Watch',
+      audience,
+      axes: [],
+      listings: [
+        {
+          id: 'main-listing',
+          images: ['cover.jpg', 'variant.jpg'],
+          variants,
+          ...listing,
+        },
+      ],
+    }
+  }
+
+  function filteredVariant(overrides: Partial<Variant> = {}): Variant {
+    return {
+      axes: [],
+      mainImage: 'variant.jpg',
+      ...overrides,
+    }
+  }
+
+  it('orders cards by availability, then Portuguese title', () => {
+    const products = [
+      {
+        ...filteredProduct('unisex', [filteredVariant()]),
+        slug: 'encomenda',
+        title: 'Águia',
+      },
+      {
+        ...filteredProduct('unisex', [
+          filteredVariant({ availabilityStatus: 'available', price: 10 }),
+        ]),
+        slug: 'disponivel-z',
+        title: 'Zebra',
+      },
+      {
+        ...filteredProduct('unisex', [
+          filteredVariant({ availabilityStatus: 'coming_soon', price: 10 }),
+        ]),
+        slug: 'breve',
+        title: 'Bola',
+      },
+      {
+        ...filteredProduct('unisex', [
+          filteredVariant({ availabilityStatus: 'available', price: 10 }),
+        ]),
+        slug: 'disponivel-a',
+        title: 'Addiesdive',
+      },
+    ]
+
+    expect(homeCards(products, null).map((card) => card.title)).toEqual([
+      'Addiesdive',
+      'Zebra',
+      'Bola',
+      'Águia',
+    ])
+  })
+
+  it('shows enabled on-order listings in Todos and hides disabled or non-representable listings', () => {
+    const onOrder = filteredProduct('unisex', [filteredVariant()])
+    const disabled = filteredProduct('unisex', [filteredVariant()], { enabled: false })
+    const unavailable = filteredProduct('unisex', [filteredVariant({ orderable: false })])
+
+    expect(homeCards([onOrder, disabled, unavailable], null).map((card) => card.slug)).toEqual([
+      'watch-unisex',
+    ])
+    expect(homeCards([onOrder, disabled, unavailable], null)[0]).toMatchObject({
+      availabilityStatus: 'on_order',
+      statusLabel: 'Sob encomenda',
+    })
+  })
+
+  it('treats an absent or unknown filter as Todos and reports whether a filter has cards', () => {
+    const product = filteredProduct('unisex', [filteredVariant({ state: 'used' })])
+
+    expect(activeFilter(null)).toBe('all')
+    expect(activeFilter('unknown')).toBe('all')
+    expect(homeCards([product], 'unknown')).toEqual(homeCards([product], null))
+    expect(filterHasCards([product], 'used')).toBe(true)
+    expect(filterHasCards([product], 'new')).toBe(false)
+  })
+
+  it('applies the exact truncated 20 percent discount boundary and excludes on-order variants', () => {
+    const passing = filteredProduct('unisex', [
+      filteredVariant({
+        availabilityStatus: 'available',
+        price: 80,
+        listPrice: 100,
+      }),
+    ])
+    const below = {
+      ...filteredProduct('male', [
+        filteredVariant({
+          availabilityStatus: 'available',
+          price: 80.1,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'below',
+    }
+    const onOrder = {
+      ...filteredProduct('female', [
+        filteredVariant({
+          availabilityStatus: 'on_order',
+          price: 80,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'on-order',
+    }
+
+    expect(homeCards([passing, below, onOrder], 'discount').map((card) => card.slug)).toEqual([
+      'watch-unisex',
+    ])
+  })
+
+  it('matches female and male audiences through unisex, excluding child and missing audience', () => {
+    const products = [
+      filteredProduct('female', [filteredVariant()]),
+      filteredProduct('male', [filteredVariant()]),
+      filteredProduct('unisex', [filteredVariant()]),
+      filteredProduct('child', [filteredVariant()]),
+      filteredProduct(undefined, [filteredVariant()]),
+    ]
+
+    expect(homeCards(products, 'female').map((card) => card.slug)).toEqual([
+      'watch-female',
+      'watch-unisex',
+    ])
+    expect(homeCards(products, 'male').map((card) => card.slug)).toEqual([
+      'watch-male',
+      'watch-unisex',
+    ])
+  })
+
+  it('filters by effective state and excludes defective from the three state filters', () => {
+    const products = [
+      filteredProduct('unisex', [filteredVariant()]),
+      {
+        ...filteredProduct('female', [filteredVariant({ state: 'openbox' })]),
+        slug: 'openbox',
+      },
+      {
+        ...filteredProduct('male', [filteredVariant({ state: 'used' })]),
+        slug: 'used',
+      },
+      {
+        ...filteredProduct('child', [filteredVariant({ state: 'defective' })]),
+        slug: 'defective',
+      },
+    ]
+
+    expect(homeCards(products, 'new').map((card) => card.slug)).toEqual(['watch-unisex'])
+    expect(homeCards(products, 'openbox').map((card) => card.slug)).toEqual(['openbox'])
+    expect(homeCards(products, 'used').map((card) => card.slug)).toEqual(['used'])
+    expect(
+      ['new', 'openbox', 'used'].flatMap((filter) =>
+        homeCards(products, filter).map((card) => card.slug),
+      ),
+    ).not.toContain('defective')
+  })
+
+  it('uses every representable variant for Todos and gender cards, but only matching variants for state cards', () => {
+    const product = filteredProduct('female', [
+      filteredVariant({
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 20,
+        offers: [offer],
+      }),
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'coming_soon',
+        price: 50,
+      }),
+    ])
+
+    expect(homeCards([product], null)).toHaveLength(1)
+    expect(homeCards([product], null)[0]).toMatchObject({
+      price: 20,
+      availabilityStatus: 'available',
+      statusLabel: 'Disponível',
+      offers: [offer],
+    })
+    expect(homeCards([product], 'female')[0]?.price).toBe(20)
+    const male = filteredProduct('male', [
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'coming_soon',
+        price: 50,
+      }),
+      filteredVariant({
+        orderable: false,
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 5,
+      }),
+      filteredVariant({
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 20,
+        offers: [offer],
+      }),
+    ])
+    expect(homeCards([male], 'male')[0]?.price).toBe(20)
+    expect(homeCards([product], 'new')[0]).toMatchObject({
+      price: 50,
+      availabilityStatus: 'coming_soon',
+      statusLabel: 'Chega em breve',
+    })
+  })
+
+  it('limits the card pool to the variants that match discount, openbox, and used', () => {
+    const product = filteredProduct('unisex', [
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'available',
+        price: 10,
+      }),
+      filteredVariant({
+        state: 'openbox',
+        availabilityStatus: 'available',
+        price: 40,
+        listPrice: 45,
+      }),
+      filteredVariant({
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 60,
+        listPrice: 70,
+      }),
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'available',
+        price: 80,
+        listPrice: 100,
+      }),
+    ])
+
+    expect(homeCards([product], 'discount')[0]?.price).toBe(80)
+    expect(homeCards([product], 'openbox')[0]?.price).toBe(40)
+    expect(homeCards([product], 'used')[0]?.price).toBe(60)
+  })
+
+  it('uses the cover for equal lowest prices and for a pool without price', () => {
+    const tied = filteredProduct('unisex', [
+      filteredVariant({ availabilityStatus: 'available', price: 40 }),
+      filteredVariant({
+        availabilityStatus: 'coming_soon',
+        price: 40,
+        offers: [offer],
+      }),
+    ])
+    const noPrice = {
+      ...filteredProduct('unisex', [
+        filteredVariant({
+          availabilityStatus: 'on_order',
+          offers: [offer],
+        }),
+      ]),
+      slug: 'no-price',
+    }
+
+    expect(homeCards([tied], null)[0]).toMatchObject({
+      image: 'cover.jpg',
+      price: 40,
+    })
+    expect(homeCards([noPrice], null)[0]).toEqual({
+      slug: 'no-price',
+      listingId: 'main-listing',
+      title: 'Watch',
+      image: 'cover.jpg',
+      offers: [],
+      availabilityStatus: 'on_order',
+      statusLabel: 'Sob encomenda',
+      path: '/product/no-price/main-listing',
+    })
+  })
+
+  it('identifies the card with v when the axes repeat', () => {
+    const product = filteredProduct('unisex', [
+      filteredVariant({
+        axes: [{ axisId: 'color', valueId: 'steel' }],
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 30,
+      }),
+      filteredVariant({
+        axes: [{ axisId: 'color', valueId: 'steel' }],
+        state: 'new',
+        availabilityStatus: 'on_order',
+      }),
+    ])
+    product.axes = [{ id: 'color', label: 'Cor', values: [{ id: 'steel', value: 'Steel' }] }]
+
+    expect(homeCards([product], 'new')[0]?.path).toBe('/product/watch-unisex/main-listing?v=steel')
+  })
+})
+
 function requireOpen(view: ListingView) {
   expect(view.missing).toBe(false)
   if (view.missing) {
@@ -814,6 +1209,105 @@ function requireOpen(view: ListingView) {
   }
   return view
 }
+
+function conditionProduct(): Product {
+  return productOf(
+    'condition',
+    'Condition',
+    [
+      {
+        id: 'main-listing',
+        images: ['cover.jpg', 'red.jpg', 'blue.jpg'],
+        variants: [
+          {
+            axes: [{ axisId: 'color', valueId: 'red' }],
+            state: 'used',
+            availabilityStatus: 'available',
+            price: 30,
+            offers: [{ text: 'Oferta', background: '#111111', color: '#ffffff', icon: 'Tag' }],
+            mainImage: 'red.jpg',
+          },
+          {
+            axes: [{ axisId: 'color', valueId: 'red' }],
+            state: 'new',
+            availabilityStatus: 'available',
+            price: 40,
+            mainImage: 'red.jpg',
+          },
+          {
+            axes: [{ axisId: 'color', valueId: 'red' }],
+            state: 'used',
+            availabilityStatus: 'on_order',
+            offers: [{ text: 'Não mostrar', background: '#111111', color: '#ffffff', icon: 'Tag' }],
+            mainImage: 'red.jpg',
+          },
+          {
+            axes: [{ axisId: 'color', valueId: 'blue' }],
+            state: 'new',
+            availabilityStatus: 'coming_soon',
+            price: 50,
+            mainImage: 'blue.jpg',
+          },
+        ],
+      },
+    ],
+    {
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [
+            { id: 'red', value: 'Vermelho' },
+            { id: 'blue', value: 'Azul' },
+          ],
+        },
+      ],
+    },
+  )
+}
+
+describe('variant condition selectors and query', () => {
+  it('keeps selectors on the product axes when conditions share those axes', () => {
+    const product = conditionProduct()
+    const view = requireOpen(listingByPath([product], 'condition', 'main-listing', 'red'))
+    expect(view.selectors.map((selector) => selector.axisId)).toEqual(['color'])
+    expect(view.state).toBe('used')
+    expect(view.availability).toBe('available')
+    const unique = requireOpen(listingByPath([product], 'condition', 'main-listing', 'blue'))
+    expect(unique.selectors.map((selector) => selector.axisId)).toEqual(['color'])
+  })
+
+  it('keeps v axis-only', () => {
+    const product = conditionProduct()
+    const listing = product.listings[0]!
+
+    expect(variantQuery(product, listing.variants[0]!)).toEqual({ v: 'red' })
+    expect(variantQuery(product, listing.variants[3]!)).toEqual({ v: 'blue' })
+  })
+
+  it('uses effective labels and the axis query in the share message', () => {
+    const product = conditionProduct()
+    const listing = product.listings[0]!
+
+    expect(shareMessage(product, listing, listing.variants[0]!, 'https://loja.example')).toBe(
+      'Olá, tenho interesse no Condition Vermelho. Usado, Disponível. https://loja.example/product/condition/main-listing?v=red',
+    )
+  })
+
+  it('omits offers from an on-order listing view', () => {
+    const product = conditionProduct()
+    const listing = product.listings[0]!
+    const onOrder = listing.variants[2]!
+    const isolated = {
+      ...product,
+      listings: [{ ...listing, variants: [onOrder] }],
+    }
+
+    expect(requireOpen(listingByPath([isolated], 'condition', 'main-listing', 'red')).offers).toEqual(
+      [],
+    )
+  })
+})
 
 describe('listingByPath', () => {
   it('opens the first listing that would enter the home, by section then listings order', () => {

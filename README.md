@@ -30,11 +30,11 @@ A skill de cadastro não entra nessa suíte. O parser dela se verifica com `pyth
 
 | Endereço | Conteúdo |
 | --- | --- |
-| `/` | Vitrine. `?section=` escolhe a aba |
+| `/` | Vitrine. `?filter=` escolhe o filtro |
 | `/product/:slug` | Primeiro anúncio visível do produto, na ordem pronta entrega, a caminho, encomenda |
 | `/product/:slug/:listingId` | Anúncio indicado. `?v=` escolhe a variante |
 
-`section` aceita `all`, `available`, `coming-soon` e `on-order`. Um valor fora dessa lista abre Todos. O card guarda a aba no estado da navegação; a volta da ficha restaura `/?section=...`.
+A query `filter` aceita `discount`, `female`, `male`, `new`, `openbox` e `used`. **Todos** omite o parâmetro. Valor fora dessa lista, ou `section` sem `filter`, abre **Todos** sem reescrever a query. O card guarda `filter` no estado da navegação; a volta da ficha restaura `/?filter=...` quando havia filtro.
 
 `v` é a lista de ids de valor, na ordem dos eixos do produto, separados por vírgula. Valor ausente ou inválido abre a primeira variante encomendável. Se todas estiverem com `orderable: false`, abre a primeira do array.
 
@@ -42,9 +42,9 @@ A skill de cadastro não entra nessa suíte. O parser dela se verifica com `pyth
 
 A barra do topo mostra a logo **Achavio**, some ao rolar para baixo e volta ao rolar para cima. A interface permanece no tema claro.
 
-As abas são **Todos**, **Pronta entrega**, **A caminho** e **Encomendar**. Aba sem card fica desabilitada. Todos reúne disponível e chega em breve. Encomendar fica só na própria aba. Anúncio com `enabled: false`, ou sem variante encomendável, não gera card.
+Os filtros são sete botões em pílula, nesta ordem: **Todos**, **20%+ de desconto**, **Feminino**, **Masculino**, **Novos**, **Openbox** e **Usados**. O grupo tem `aria-label` **Filtros**; um botão fica pressionado por vez. A fileira rola na horizontal quando não couber na tela; o ativo usa o fundo primário e cantos totalmente arredondados. Filtro sem card fica desabilitado. Se o filtro da URL não tiver card, **Todos** fica pressionado, a lista mostra os cards de **Todos** e a query não muda. Apertar o filtro já ativo não altera a query. **Todos** inclui sob encomenda. Anúncio com `enabled: false`, ou sem variante encomendável, não gera card.
 
-Os cards saem em ordem de título (`pt-BR`), depois slug, depois a posição do anúncio no produto. No card com preço, o valor é o menor `price` entre as variantes encomendáveis. Se esses preços forem iguais, a foto é a capa (`images[0]`) e o link não leva `v`. Se diferirem, a foto é a `mainImage` da variante mais barata e o link leva `v`. Sob encomenda usa a capa, sem preço e sem ofertas.
+Os cards saem primeiro por disponibilidade (Disponível, Chega em breve, Sob encomenda) e, dentro de cada grupo, por título (`pt-BR`), depois slug, depois a posição do anúncio no produto. No card com preço, o valor é o menor `price` entre as variantes encomendáveis. Se esses preços forem iguais, a foto é a capa (`images[0]`) e o link não leva `v`. Se diferirem, a foto é a `mainImage` da variante mais barata e o link leva `v`. Sob encomenda usa a capa, sem preço e sem ofertas.
 
 No celular a lista é uma coluna, com foto à esquerda e uma linha entre os cards. A partir de 768px a grade passa a duas colunas; a partir de 1024px, a três. Cards da mesma linha acompanham a altura do mais alto. Usado e Openbox ganham um selo laranja sobre a foto. A oferta, quando existe, fica no corpo do card, acima da disponibilidade. O ícone de compartilhar monta a mesma frase da ficha.
 

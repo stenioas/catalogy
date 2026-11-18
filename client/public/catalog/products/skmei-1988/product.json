@@ -92,9 +92,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "skmei-1988-1.webp",
         "skmei-1988-2.webp",
@@ -140,6 +138,8 @@
               "valueId": "army-green"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "skmei-1988-7.webp"
         },
         {
@@ -149,6 +149,8 @@
               "valueId": "black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "skmei-1988-8.webp"
         },
         {
@@ -158,6 +160,8 @@
               "valueId": "dark-green"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "skmei-1988-9.webp"
         },
         {
@@ -167,6 +171,8 @@
               "valueId": "red-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "skmei-1988-10.webp"
         },
         {
@@ -176,6 +182,8 @@
               "valueId": "blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "skmei-1988-11.webp"
         },
         {
@@ -185,6 +193,8 @@
               "valueId": "gold"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "skmei-1988-12.webp"
         }
       ]

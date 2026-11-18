@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "gold",
@@ -49,7 +48,8 @@
           "id": "silver-coffee-box",
           "value": "Silver coffee box"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -104,9 +104,7 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "curren-8361-2.webp",
         "curren-8361-1.webp",
@@ -115,6 +113,9 @@
         "curren-8361-5.webp",
         "curren-8361-6.webp",
         "curren-8361-7.webp",
+        "curren-8361-28.webp",
+        "curren-8361-29.webp",
+        "curren-8361-30.webp",
         "curren-8361-8.webp",
         "curren-8361-9.webp",
         "curren-8361-10.webp",
@@ -135,9 +136,6 @@
         "curren-8361-25.webp",
         "curren-8361-26.webp",
         "curren-8361-27.webp",
-        "curren-8361-28.webp",
-        "curren-8361-29.webp",
-        "curren-8361-30.webp",
         "curren-8361-31.webp",
         "curren-8361-32.webp",
         "curren-8361-33.webp",
@@ -153,118 +151,11 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "gold"
-            }
-          ],
-          "mainImage": "curren-8361-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "gold-box"
             }
           ],
-          "mainImage": "curren-8361-3.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "blue"
-            }
-          ],
-          "mainImage": "curren-8361-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-white"
-            }
-          ],
-          "mainImage": "curren-8361-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "blue-box"
-            }
-          ],
-          "mainImage": "curren-8361-10.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black-box"
-            }
-          ],
-          "mainImage": "curren-8361-11.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black"
-            }
-          ],
-          "mainImage": "curren-8361-12.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-coffee"
-            }
-          ],
-          "mainImage": "curren-8361-13.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-coffee-box"
-            }
-          ],
-          "mainImage": "curren-8361-14.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-white-box"
-            }
-          ],
-          "mainImage": "curren-8361-15.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "curren-8361-2.webp",
-        "curren-8361-1.webp",
-        "curren-8361-3.webp",
-        "curren-8361-4.webp",
-        "curren-8361-5.webp",
-        "curren-8361-6.webp",
-        "curren-8361-7.webp",
-        "curren-8361-28.webp",
-        "curren-8361-29.webp",
-        "curren-8361-30.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gold-box"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 239.9,
           "listPrice": 299.9,
           "offers": [
@@ -276,6 +167,105 @@
             }
           ],
           "mainImage": "curren-8361-3.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-coffee"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-13.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-coffee-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-14.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8361-15.webp"
         }
       ]
     }

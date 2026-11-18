@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "silver-white",
@@ -25,7 +24,8 @@
           "id": "black-white",
           "value": "Black White"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -84,22 +84,24 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
+        "curren-8106-6.webp",
+        "curren-8106-8.webp",
+        "curren-8106-12.webp",
+        "curren-8106-22.webp",
+        "curren-8106-23.webp",
+        "curren-8106-24.webp",
+        "curren-8106-25.webp",
         "curren-8106-1.webp",
         "curren-8106-2.webp",
         "curren-8106-3.webp",
         "curren-8106-4.webp",
         "curren-8106-5.webp",
-        "curren-8106-6.webp",
         "curren-8106-7.webp",
-        "curren-8106-8.webp",
         "curren-8106-9.webp",
         "curren-8106-10.webp",
         "curren-8106-11.webp",
-        "curren-8106-12.webp",
         "curren-8106-13.webp",
         "curren-8106-14.webp",
         "curren-8106-15.webp",
@@ -108,11 +110,7 @@
         "curren-8106-18.webp",
         "curren-8106-19.webp",
         "curren-8106-20.webp",
-        "curren-8106-21.webp",
-        "curren-8106-22.webp",
-        "curren-8106-23.webp",
-        "curren-8106-24.webp",
-        "curren-8106-25.webp"
+        "curren-8106-21.webp"
       ],
       "variants": [
         {
@@ -120,6 +118,18 @@
             {
               "axisId": "color",
               "valueId": "silver-white"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 119.9,
+          "listPrice": 149.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
           ],
           "mainImage": "curren-8106-6.webp"
@@ -128,16 +138,19 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "black-black"
+              "valueId": "silver-black"
             }
           ],
-          "mainImage": "curren-8106-7.webp"
-        },
-        {
-          "axes": [
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 119.9,
+          "listPrice": 149.9,
+          "offers": [
             {
-              "axisId": "color",
-              "valueId": "silver-black"
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
           ],
           "mainImage": "curren-8106-8.webp"
@@ -146,64 +159,23 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "black-white"
+              "valueId": "black-black"
             }
           ],
-          "mainImage": "curren-8106-9.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-comming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "curren-8106-6.webp",
-        "curren-8106-8.webp",
-        "curren-8106-12.webp",
-        "curren-8106-22.webp",
-        "curren-8106-23.webp",
-        "curren-8106-24.webp",
-        "curren-8106-25.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-white"
-            }
-          ],
-          "price": 119.9,
-          "listPrice": 149.9,
-          "mainImage": "curren-8106-6.webp",
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ]
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8106-7.webp"
         },
         {
           "axes": [
             {
               "axisId": "color",
-              "valueId": "silver-black"
+              "valueId": "black-white"
             }
           ],
-          "price": 119.9,
-          "listPrice": 149.9,
-          "mainImage": "curren-8106-8.webp",
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ]
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8106-9.webp"
         }
       ]
     }

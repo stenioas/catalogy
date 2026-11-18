@@ -63,9 +63,7 @@
   ],
   "listings": [
     {
-      "id": "new",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "naviforce-nf8052-1.webp",
         "naviforce-nf8052-2.webp",
@@ -109,6 +107,8 @@
               "valueId": "variadas"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "price": 249.9,
           "mainImage": "naviforce-nf8052-1.webp"
         }

@@ -1418,6 +1418,106 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByTestId('price-current').textContent).toBe('R$ 10,00')
   })
 
+  function conditionProduct(): Product {
+    return {
+      slug: 'condition',
+      title: 'Condition',
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [{ id: 'red', value: 'Vermelho' }],
+        },
+      ],
+      listings: [
+        {
+          id: 'main-listing',
+          images: ['cover.webp', 'used.webp', 'order.webp'],
+          variants: [
+            {
+              axes: [{ axisId: 'color', valueId: 'red' }],
+              state: 'used',
+              availabilityStatus: 'available',
+              price: 100,
+              mainImage: 'used.webp',
+              offers: [{ text: 'Oferta', background: '#0066cc', color: '#ffffff', icon: 'Gift' }],
+            },
+            {
+              axes: [{ axisId: 'color', valueId: 'red' }],
+              state: 'new',
+              availabilityStatus: 'available',
+              price: 120,
+              mainImage: 'used.webp',
+            },
+            {
+              axes: [{ axisId: 'color', valueId: 'red' }],
+              state: 'new',
+              availabilityStatus: 'on_order',
+              mainImage: 'order.webp',
+              offers: [{ text: 'Oferta sob encomenda', background: '#0066cc', color: '#ffffff', icon: 'Gift' }],
+            },
+          ],
+        },
+      ],
+    }
+  }
+
+  it('reads state and availability from the query and shares the same variant', () => {
+    mockProductsRef.current = [conditionProduct()]
+    render(
+      <ThemeProvider>
+        <MemoryRouter initialEntries={['/product/condition/main-listing?v=red&state=new&availability=on_order']}>
+          <WatchPage slug="condition" listingId="main-listing" />
+        </MemoryRouter>
+      </ThemeProvider>,
+    )
+
+    const line = screen.getByTestId('product-condition')
+    expect(within(line).getByTestId('state-label').textContent).toBe('Novo')
+    expect(within(line).getByTestId('availability-badge').textContent).toBe('Sob encomenda')
+    expect(screen.getByTestId('consult-label').textContent).toBe('Preço sob consulta')
+    expect(screen.queryByTestId('price-block')).toBeNull()
+    expect(screen.queryByTestId('offer-row')).toBeNull()
+
+    const share = screen.getByRole('link', { name: 'Compartilhar' })
+    expect(share.getAttribute('href')).toBe(
+      `https://wa.me/?text=${encodeURIComponent(
+        `Olá, tenho interesse no Condition Vermelho. Novo, Sob encomenda. ${window.location.origin}/product/condition/main-listing?v=red`,
+      )}`,
+    )
+  })
+
+  it('shows the condition on one line and does not offer condition selectors', () => {
+    mockProductsRef.current = [conditionProduct()]
+    render(
+      <ThemeProvider>
+        <MemoryRouter initialEntries={['/product/condition/main-listing?v=red&state=used']}>
+          <WatchPage slug="condition" listingId="main-listing" />
+        </MemoryRouter>
+      </ThemeProvider>,
+    )
+
+    const line = screen.getByTestId('product-condition')
+    expect(within(line).getByTestId('state-label').textContent).toBe('Usado')
+    expect(within(line).getByTestId('availability-badge').textContent).toBe('Disponível')
+    expect(screen.queryByRole('group', { name: /Estado/ })).toBeNull()
+    expect(screen.queryByRole('group', { name: /Disponibilidade/ })).toBeNull()
+  })
+
+  it.each([
+    ['defective', 'Com defeito'],
+    ['available', 'Disponível'],
+    ['coming_soon', 'Chega em breve'],
+  ] as const)('shows the effective label %s', (condition, label) => {
+    const product = conditionProduct()
+    const variant = product.listings[0]!.variants[0]!
+    if (condition === 'defective') variant.state = condition
+    else variant.availabilityStatus = condition
+    mockProductsRef.current = [product]
+    renderWatchPage('condition', false, 'main-listing')
+    expect(screen.getByTestId(condition === 'defective' ? 'state-label' : 'availability-badge').textContent).toBe(label)
+  })
+
   it.each([919, 920])('OSC-46: choosing another enabled option selects that variant at %i px', (viewport) => {
     width = viewport
     mockProductsRef.current = [listingProduct()]

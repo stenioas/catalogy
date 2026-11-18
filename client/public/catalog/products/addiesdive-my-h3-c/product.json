@@ -100,9 +100,7 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "addiesdive-my-h3-c-1.webp",
         "addiesdive-my-h3-c-2.webp",
@@ -121,41 +119,8 @@
               "valueId": "silvery"
             }
           ],
-          "mainImage": "addiesdive-my-h3-c-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black"
-            }
-          ],
-          "mainImage": "addiesdive-my-h3-c-8.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "addiesdive-my-h3-c-1.webp",
-        "addiesdive-my-h3-c-2.webp",
-        "addiesdive-my-h3-c-3.webp",
-        "addiesdive-my-h3-c-4.webp",
-        "addiesdive-my-h3-c-5.webp",
-        "addiesdive-my-h3-c-6.webp",
-        "addiesdive-my-h3-c-7.webp",
-        "addiesdive-my-h3-c-8.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silvery"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 389.9,
           "listPrice": 499.9,
           "offers": [
@@ -167,6 +132,17 @@
             }
           ],
           "mainImage": "addiesdive-my-h3-c-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "addiesdive-my-h3-c-8.webp"
         }
       ]
     }

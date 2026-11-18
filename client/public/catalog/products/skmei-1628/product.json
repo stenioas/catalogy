@@ -59,9 +59,7 @@
   ],
   "listings": [
     {
-      "id": "listing",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "skmei-1628-1.webp",
         "skmei-1628-2.webp",
@@ -78,6 +76,8 @@
       "variants": [
         {
           "axes": [],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "price": 104.9,
           "listPrice": 129.9,
           "mainImage": "skmei-1628-1.webp"

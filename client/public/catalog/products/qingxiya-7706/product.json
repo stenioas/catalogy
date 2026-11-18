@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "silver-white",
@@ -17,7 +16,8 @@
           "id": "silver-black",
           "value": "Silver Black"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -76,59 +76,7 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
-      "images": [
-        "qingxiya-7706-1.webp",
-        "qingxiya-7706-2.webp",
-        "qingxiya-7706-3.webp",
-        "qingxiya-7706-4.webp",
-        "qingxiya-7706-5.webp",
-        "qingxiya-7706-6.webp",
-        "qingxiya-7706-7.webp",
-        "qingxiya-7706-8.webp",
-        "qingxiya-7706-9.webp",
-        "qingxiya-7706-10.webp",
-        "qingxiya-7706-11.webp",
-        "qingxiya-7706-12.webp",
-        "qingxiya-7706-13.webp",
-        "qingxiya-7706-14.webp",
-        "qingxiya-7706-15.webp",
-        "qingxiya-7706-16.webp",
-        "qingxiya-7706-17.webp",
-        "qingxiya-7706-18.webp",
-        "qingxiya-7706-19.webp",
-        "qingxiya-7706-20.webp",
-        "qingxiya-7706-21.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-black"
-            }
-          ],
-          "price": 179.9,
-          "mainImage": "qingxiya-7706-1.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-white"
-            }
-          ],
-          "price": 179.9,
-          "mainImage": "qingxiya-7706-7.webp"
-        }
-      ]
-    },
-    {
-      "id": "coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
+      "id": "main-listing",
       "images": [
         "qingxiya-7706-17.webp",
         "qingxiya-7706-7.webp",
@@ -136,7 +84,21 @@
         "qingxiya-7706-19.webp",
         "qingxiya-7706-20.webp",
         "qingxiya-7706-21.webp",
-        "qingxiya-7706-14.webp"
+        "qingxiya-7706-14.webp",
+        "qingxiya-7706-1.webp",
+        "qingxiya-7706-2.webp",
+        "qingxiya-7706-3.webp",
+        "qingxiya-7706-4.webp",
+        "qingxiya-7706-5.webp",
+        "qingxiya-7706-6.webp",
+        "qingxiya-7706-8.webp",
+        "qingxiya-7706-9.webp",
+        "qingxiya-7706-10.webp",
+        "qingxiya-7706-11.webp",
+        "qingxiya-7706-12.webp",
+        "qingxiya-7706-13.webp",
+        "qingxiya-7706-15.webp",
+        "qingxiya-7706-16.webp"
       ],
       "variants": [
         {
@@ -146,17 +108,31 @@
               "valueId": "silver-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 149.9,
           "listPrice": 199.9,
-          "mainImage": "qingxiya-7706-17.webp",
           "offers": [
             {
               "text": "Black Friday",
-              "icon": "Gift",
               "background": "#000000",
-              "color": "#FFFFFF"
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
-          ]
+          ],
+          "mainImage": "qingxiya-7706-17.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "price": 179.9,
+          "mainImage": "qingxiya-7706-1.webp"
         }
       ]
     }

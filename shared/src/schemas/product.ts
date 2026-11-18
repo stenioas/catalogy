@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { truncateReais } from '../money.ts'
+import { effectiveAvailability, variantKey } from '../catalog/variant-condition.ts'
 
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const imageExtensionPattern = /\.(jpe?g|png|webp|avif)$/i
@@ -81,6 +82,8 @@ const VariantSchema = z
         valueId: z.string(),
       }),
     ),
+    state: z.enum(['new', 'openbox', 'used', 'defective']).optional(),
+    availabilityStatus: z.enum(['available', 'coming_soon', 'on_order']).optional(),
     price: positiveReais.optional(),
     listPrice: positiveReais.optional(),
     offers: z.array(OfferSchema).optional(),
@@ -100,21 +103,44 @@ const VariantSchema = z
     }
   })
 
-const ListingSchema = z.object({
-  id: z.string().regex(idPattern),
-  state: z.enum(['new', 'openbox', 'used', 'defective']),
-  availabilityStatus: z.enum(['available', 'coming_soon', 'on_order']),
-  enabled: z.boolean().optional(),
-  images: z
-    .array(z.string())
-    .min(1)
-    .refine(
-      (names) => names.every(imageFileNameIsValid),
-      'Each image file name must use an allowed extension and must not contain path separators',
-    ),
-  specifications: z.array(SpecificationSchema).optional(),
-  variants: z.array(VariantSchema).min(1),
-})
+function liftListingCondition(value: unknown): unknown {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) return value
+  const listing = value as Record<string, unknown>
+  const state = listing.state
+  const availabilityStatus = listing.availabilityStatus
+  if (state === undefined && availabilityStatus === undefined) return value
+  if (!Array.isArray(listing.variants)) return value
+  const variants = listing.variants.map((variant) => {
+    if (variant === null || typeof variant !== 'object' || Array.isArray(variant)) return variant
+    const item = { ...(variant as Record<string, unknown>) }
+    if (item.state === undefined && state !== undefined) item.state = state
+    if (item.availabilityStatus === undefined && availabilityStatus !== undefined) {
+      item.availabilityStatus = availabilityStatus
+    }
+    return item
+  })
+  const next = { ...listing, variants }
+  delete next.state
+  delete next.availabilityStatus
+  return next
+}
+
+const ListingSchema = z.preprocess(
+  liftListingCondition,
+  z.object({
+    id: z.string().regex(idPattern),
+    enabled: z.boolean().optional(),
+    images: z
+      .array(z.string())
+      .min(1)
+      .refine(
+        (names) => names.every(imageFileNameIsValid),
+        'Each image file name must use an allowed extension and must not contain path separators',
+      ),
+    specifications: z.array(SpecificationSchema).optional(),
+    variants: z.array(VariantSchema).min(1),
+  }),
+)
 
 type Axis = z.infer<typeof AxisSchema>
 export type Variant = z.infer<typeof VariantSchema>
@@ -269,14 +295,6 @@ export const ProductSchema = z
         listingIds.add(listing.id)
       }
 
-      if (listing.availabilityStatus === 'on_order' && listing.state !== 'new') {
-        addIssue(context, 'on_order listings must use state new', [
-          'listings',
-          listingIndex,
-          'state',
-        ])
-      }
-
       checkSpecificationSheet(
         listing.specifications,
         ['listings', listingIndex, 'specifications'],
@@ -287,13 +305,14 @@ export const ProductSchema = z
       const combinations = new Set<string>()
       listing.variants.forEach((variant, variantIndex) => {
         const variantPath = ['listings', listingIndex, 'variants', variantIndex]
-        if (listing.availabilityStatus !== 'on_order' && variant.price === undefined) {
+        const availability = effectiveAvailability(variant)
+        if (availability !== 'on_order' && variant.price === undefined) {
           addIssue(context, 'price is required unless availabilityStatus is on_order', [
             ...variantPath,
             'price',
           ])
         }
-        if (variant.orderable === false && listing.availabilityStatus !== 'on_order') {
+        if (variant.orderable === false && availability !== 'on_order') {
           addIssue(context, 'orderable false is only valid when availabilityStatus is on_order', [
             ...variantPath,
             'orderable',
@@ -316,17 +335,13 @@ export const ProductSchema = z
           return
         }
 
-        const key = product.axes
-          .map((axis) => {
-            const selected = variant.axes.find((item) => item.axisId === axis.id)
-            return `${axis.id}:${selected?.valueId}`
-          })
-          .join('|')
+        const key = variantKey(product, variant)
         if (combinations.has(key)) {
           addIssue(context, 'listing repeats an axis-value combination', [...variantPath, 'axes'])
         } else {
           combinations.add(key)
         }
+
       })
     })
   })

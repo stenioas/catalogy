@@ -84,9 +84,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "curren-9093-1.webp",
         "curren-9093-2.webp",
@@ -130,6 +128,8 @@
               "valueId": "b"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9093-7.webp"
         },
         {
@@ -139,6 +139,8 @@
               "valueId": "d"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9093-8.webp"
         },
         {
@@ -148,6 +150,8 @@
               "valueId": "f"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9093-9.webp"
         },
         {
@@ -157,6 +161,8 @@
               "valueId": "c"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9093-10.webp"
         },
         {
@@ -166,6 +172,8 @@
               "valueId": "e"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9093-11.webp"
         },
         {
@@ -175,6 +183,8 @@
               "valueId": "a"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9093-12.webp"
         }
       ]

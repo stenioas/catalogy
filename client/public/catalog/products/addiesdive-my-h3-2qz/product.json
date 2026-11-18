@@ -108,39 +108,37 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "addiesdive-my-h3-2qz-1.webp",
-        "addiesdive-my-h3-2qz-2.webp",
-        "addiesdive-my-h3-2qz-3.webp",
         "addiesdive-my-h3-2qz-4.webp",
         "addiesdive-my-h3-2qz-5.webp",
         "addiesdive-my-h3-2qz-6.webp",
         "addiesdive-my-h3-2qz-7.webp",
-        "addiesdive-my-h3-2qz-8.webp",
-        "addiesdive-my-h3-2qz-9.webp",
-        "addiesdive-my-h3-2qz-10.webp",
         "addiesdive-my-h3-2qz-11.webp",
         "addiesdive-my-h3-2qz-12.webp",
-        "addiesdive-my-h3-2qz-13.webp",
-        "addiesdive-my-h3-2qz-14.webp",
         "addiesdive-my-h3-2qz-15.webp",
-        "addiesdive-my-h3-2qz-16.webp",
-        "addiesdive-my-h3-2qz-17.webp",
         "addiesdive-my-h3-2qz-18.webp",
         "addiesdive-my-h3-2qz-19.webp",
         "addiesdive-my-h3-2qz-20.webp",
         "addiesdive-my-h3-2qz-21.webp",
         "addiesdive-my-h3-2qz-22.webp",
+        "addiesdive-my-h3-2qz-28.webp",
+        "addiesdive-my-h3-2qz-29.webp",
+        "addiesdive-my-h3-2qz-2.webp",
+        "addiesdive-my-h3-2qz-3.webp",
+        "addiesdive-my-h3-2qz-8.webp",
+        "addiesdive-my-h3-2qz-9.webp",
+        "addiesdive-my-h3-2qz-10.webp",
+        "addiesdive-my-h3-2qz-13.webp",
+        "addiesdive-my-h3-2qz-14.webp",
+        "addiesdive-my-h3-2qz-16.webp",
+        "addiesdive-my-h3-2qz-17.webp",
         "addiesdive-my-h3-2qz-23.webp",
         "addiesdive-my-h3-2qz-24.webp",
         "addiesdive-my-h3-2qz-25.webp",
         "addiesdive-my-h3-2qz-26.webp",
-        "addiesdive-my-h3-2qz-27.webp",
-        "addiesdive-my-h3-2qz-28.webp",
-        "addiesdive-my-h3-2qz-29.webp"
+        "addiesdive-my-h3-2qz-27.webp"
       ],
       "variants": [
         {
@@ -150,7 +148,20 @@
               "valueId": "black-steel"
             }
           ],
-          "mainImage": "addiesdive-my-h3-2qz-7.webp"
+          "state": "used",
+          "availabilityStatus": "available",
+          "price": 329.9,
+          "listPrice": 499.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "addiesdive-my-h3-2qz-7.webp",
+          "observations": "Produto usado algumas vezes. Sem marcas de uso."
         },
         {
           "axes": [
@@ -159,6 +170,8 @@
               "valueId": "green-black-steel"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "addiesdive-my-h3-2qz-8.webp"
         },
         {
@@ -168,6 +181,8 @@
               "valueId": "green-steel"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "addiesdive-my-h3-2qz-9.webp"
         },
         {
@@ -177,51 +192,9 @@
               "valueId": "blue-steel"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "addiesdive-my-h3-2qz-10.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-available",
-      "state": "used",
-      "availabilityStatus": "available",
-      "images": [
-        "addiesdive-my-h3-2qz-1.webp",
-        "addiesdive-my-h3-2qz-4.webp",
-        "addiesdive-my-h3-2qz-5.webp",
-        "addiesdive-my-h3-2qz-6.webp",
-        "addiesdive-my-h3-2qz-7.webp",
-        "addiesdive-my-h3-2qz-11.webp",
-        "addiesdive-my-h3-2qz-12.webp",
-        "addiesdive-my-h3-2qz-15.webp",
-        "addiesdive-my-h3-2qz-18.webp",
-        "addiesdive-my-h3-2qz-19.webp",
-        "addiesdive-my-h3-2qz-20.webp",
-        "addiesdive-my-h3-2qz-21.webp",
-        "addiesdive-my-h3-2qz-22.webp",
-        "addiesdive-my-h3-2qz-28.webp",
-        "addiesdive-my-h3-2qz-29.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "black-steel"
-            }
-          ],
-          "mainImage": "addiesdive-my-h3-2qz-7.webp",
-          "price": 329.9,
-          "listPrice": 499.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ],
-          "observations": "Produto usado algumas vezes. Sem marcas de uso."
         }
       ]
     }

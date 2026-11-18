@@ -148,16 +148,20 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
+        "pagani-design-pd-1701-6.webp",
+        "pagani-design-pd-1701-31.webp",
+        "pagani-design-pd-1701-47.webp",
+        "pagani-design-pd-1701-48.webp",
+        "pagani-design-pd-1701-49.webp",
+        "pagani-design-pd-1701-50.webp",
+        "pagani-design-pd-1701-51.webp",
         "pagani-design-pd-1701-1.webp",
         "pagani-design-pd-1701-2.webp",
         "pagani-design-pd-1701-3.webp",
         "pagani-design-pd-1701-4.webp",
         "pagani-design-pd-1701-5.webp",
-        "pagani-design-pd-1701-6.webp",
         "pagani-design-pd-1701-9.webp",
         "pagani-design-pd-1701-11.webp",
         "pagani-design-pd-1701-7.webp",
@@ -182,7 +186,6 @@
         "pagani-design-pd-1701-28.webp",
         "pagani-design-pd-1701-29.webp",
         "pagani-design-pd-1701-30.webp",
-        "pagani-design-pd-1701-31.webp",
         "pagani-design-pd-1701-32.webp",
         "pagani-design-pd-1701-33.webp",
         "pagani-design-pd-1701-34.webp",
@@ -197,181 +200,7 @@
         "pagani-design-pd-1701-43.webp",
         "pagani-design-pd-1701-44.webp",
         "pagani-design-pd-1701-45.webp",
-        "pagani-design-pd-1701-46.webp",
-        "pagani-design-pd-1701-47.webp",
-        "pagani-design-pd-1701-48.webp",
-        "pagani-design-pd-1701-49.webp",
-        "pagani-design-pd-1701-50.webp",
-        "pagani-design-pd-1701-51.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "blue-j"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-1.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-2.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "white"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-3.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black-j"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-4.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "blue"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-5.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gold-green"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-6.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "white-200000080"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gold"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-11.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "white-v4"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "sky-blue"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-10.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "ice-blue-v4"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-12.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "panda"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-gold-black"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-13.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "red"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-14.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "brown"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-15.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "all-gold-black"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-17.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-gold"
-            }
-          ],
-          "mainImage": "pagani-design-pd-1701-16.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "pagani-design-pd-1701-6.webp",
-        "pagani-design-pd-1701-31.webp",
-        "pagani-design-pd-1701-47.webp",
-        "pagani-design-pd-1701-48.webp",
-        "pagani-design-pd-1701-49.webp",
-        "pagani-design-pd-1701-50.webp",
-        "pagani-design-pd-1701-51.webp"
+        "pagani-design-pd-1701-46.webp"
       ],
       "variants": [
         {
@@ -381,6 +210,8 @@
               "valueId": "gold-green"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 999.9,
           "listPrice": 1399.9,
           "offers": [
@@ -392,6 +223,182 @@
             }
           ],
           "mainImage": "pagani-design-pd-1701-6.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue-j"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-1.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-2.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "white"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-3.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-j"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-4.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-5.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "white-200000080"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "white-v4"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "sky-blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "ice-blue-v4"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "panda"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-gold-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-13.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "red"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-14.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "brown"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-15.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "all-gold-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-17.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-gold"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1701-16.webp"
         }
       ]
     }

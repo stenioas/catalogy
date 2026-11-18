@@ -98,3 +98,77 @@ describe('README offer documentation (OSC-16)', () => {
     expect(readme).not.toMatch(/badge de oferta (?:sobre|acima d[ae]) foto/i)
   })
 })
+
+describe('README home filters (FILT-05, T12)', () => {
+  it('documents the seven filter pills on the home', () => {
+    const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
+
+    expect(readme).toContain('**Todos**')
+    expect(readme).toContain('**20%+ de desconto**')
+    expect(readme).toContain('**Feminino**')
+    expect(readme).toContain('**Masculino**')
+    expect(readme).toContain('**Novos**')
+    expect(readme).toContain('**Openbox**')
+    expect(readme).toContain('**Usados**')
+  })
+
+  it('documents the filter query tokens', () => {
+    const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
+
+    expect(readme).toContain('`filter`')
+    expect(readme).toContain('`discount`')
+    expect(readme).toContain('`female`')
+    expect(readme).toContain('`male`')
+    expect(readme).toContain('`new`')
+    expect(readme).toContain('`openbox`')
+    expect(readme).toContain('`used`')
+  })
+})
+
+describe('contrato do relógio (FILT-05)', () => {
+  const contratoPath = join(clientRoot, '..', 'docs', 'contrato-relogio.md')
+
+  it('coloca state e availabilityStatus na variante com leitura new e on_order', () => {
+    const contrato = readFileSync(contratoPath, 'utf8')
+
+    expect(contrato).toContain('Na leitura, ausente vale `new`')
+    expect(contrato).toContain('Na leitura, ausente vale `on_order`')
+    expect(contrato).toContain(
+      'O anúncio não declara `state` nem `availabilityStatus`. A condição fica em cada variante.',
+    )
+  })
+
+  it('permite on_order com estado diferente de new', () => {
+    const contrato = readFileSync(contratoPath, 'utf8')
+
+    expect(contrato).toContain(
+      'uma variante com `availabilityStatus` `on_order` pode usar outro estado',
+    )
+  })
+
+  it('descreve o cadastro product-register em main-listing sem price', () => {
+    const contrato = readFileSync(contratoPath, 'utf8')
+
+    expect(contrato).toContain('`product-register`')
+    expect(contrato).toContain('id `main-listing`')
+    expect(contrato).toContain('`availabilityStatus` `on_order`')
+    expect(contrato).toContain('omite `price`')
+  })
+})
+
+describe('product-register skill (FILT-05)', () => {
+  it('grava main-listing com variantes on_order sem price', () => {
+    const skill = readFileSync(
+      join(clientRoot, '..', '.agents/skills/product-register/SKILL.md'),
+      'utf8',
+    )
+
+    expect(skill).toContain('id: "main-listing"')
+    expect(skill).toContain(
+      'Cada variante recebe `availabilityStatus` `on_order` e omite `price`',
+    )
+    expect(skill).toContain(
+      'Variante: `availabilityStatus` `on_order`; omita `price`',
+    )
+  })
+})

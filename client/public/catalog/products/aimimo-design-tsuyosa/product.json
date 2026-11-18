@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "silver-mintblue",
@@ -25,7 +24,8 @@
           "id": "silver-blue",
           "value": "Silver Blue"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -108,18 +108,16 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "aimimo-design-tsuyosa-1.webp",
-        "aimimo-design-tsuyosa-2.webp",
-        "aimimo-design-tsuyosa-3.webp",
         "aimimo-design-tsuyosa-4.webp",
         "aimimo-design-tsuyosa-5.webp",
         "aimimo-design-tsuyosa-6.webp",
-        "aimimo-design-tsuyosa-7.webp",
         "aimimo-design-tsuyosa-8.webp",
+        "aimimo-design-tsuyosa-2.webp",
+        "aimimo-design-tsuyosa-3.webp",
+        "aimimo-design-tsuyosa-7.webp",
         "aimimo-design-tsuyosa-9.webp",
         "aimimo-design-tsuyosa-10.webp"
       ],
@@ -131,56 +129,8 @@
               "valueId": "silver-mintblue"
             }
           ],
-          "mainImage": "aimimo-design-tsuyosa-1.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-green"
-            }
-          ],
-          "mainImage": "aimimo-design-tsuyosa-2.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-white"
-            }
-          ],
-          "mainImage": "aimimo-design-tsuyosa-3.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-blue"
-            }
-          ],
-          "mainImage": "aimimo-design-tsuyosa-9.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "aimimo-design-tsuyosa-1.webp",
-        "aimimo-design-tsuyosa-4.webp",
-        "aimimo-design-tsuyosa-5.webp",
-        "aimimo-design-tsuyosa-6.webp",
-        "aimimo-design-tsuyosa-8.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-mintblue"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 399.9,
           "listPrice": 499.9,
           "offers": [
@@ -192,6 +142,39 @@
             }
           ],
           "mainImage": "aimimo-design-tsuyosa-1.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-green"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "aimimo-design-tsuyosa-2.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "aimimo-design-tsuyosa-3.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "aimimo-design-tsuyosa-9.webp"
         }
       ]
     }

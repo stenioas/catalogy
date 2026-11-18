@@ -13,6 +13,8 @@ export {
   canVariantRepresentCard,
   shareMessage,
   homeCards,
+  filterHasCards,
+  activeFilter,
   sectionHasCards,
   activeSection,
   homeEmptyText,
@@ -23,9 +25,12 @@ export {
 } from './catalog/listings.ts'
 export type {
   CatalogCard,
+  FilterId,
   ListingSelector,
   SectionId,
 } from './catalog/listings.ts'
+export { mergeListings } from './catalog/merge-listings.ts'
+export { effectiveAvailability, effectiveState, variantKey } from './catalog/variant-condition.ts'
 export {
   truncateReais,
   formatBrl,

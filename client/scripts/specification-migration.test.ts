@@ -90,12 +90,12 @@ describe('catalog specification migration', () => {
     )
   })
 
-  it('omits Estado from seculus-kit-cantil product sheet; state lives on the listing', () => {
+  it('omits Estado from seculus-kit-cantil product sheet; state lives on the variant', () => {
     const product = readProduct('seculus-kit-cantil') as CatalogProduct & {
-      listings?: { state?: string }[]
+      listings?: { variants?: { state?: string }[] }[]
     }
     expect(labels(product)).not.toContain('Estado')
-    expect(product.listings?.[0]?.state).toBe('used')
+    expect(product.listings?.[0]?.variants?.[0]?.state).toBe('used')
   })
 
   it('records addiesdive-ad2554 water resistance as 100m (10 ATM)', () => {
@@ -104,10 +104,10 @@ describe('catalog specification migration', () => {
     )
   })
 
-  it('omits Coroa and Tampa inferior from addiesdive-ad2554', () => {
-    const productLabels = labels(readProduct('addiesdive-ad2554'))
-    expect(productLabels).not.toContain('Coroa')
-    expect(productLabels).not.toContain('Tampa inferior')
+  it('keeps Coroa and Tampa inferior on addiesdive-ad2554', () => {
+    const product = readProduct('addiesdive-ad2554')
+    expect(value(product, 'Coroa')).toBe('Rosqueada')
+    expect(value(product, 'Tampa inferior')).toBe('Rosqueada')
   })
 
   it('keeps the addiesdive-ad2554 movement caliber', () => {

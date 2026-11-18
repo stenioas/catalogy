@@ -88,28 +88,26 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "x-gear-2232g-1.webp",
         "x-gear-2232g-2.webp",
-        "x-gear-2232g-3.webp",
-        "x-gear-2232g-4.webp",
-        "x-gear-2232g-5.webp",
         "x-gear-2232g-6.webp",
         "x-gear-2232g-7.webp",
-        "x-gear-2232g-8.webp",
-        "x-gear-2232g-9.webp",
-        "x-gear-2232g-10.webp",
         "x-gear-2232g-11.webp",
         "x-gear-2232g-12.webp",
         "x-gear-2232g-14.webp",
         "x-gear-2232g-15.webp",
         "x-gear-2232g-16.webp",
         "x-gear-2232g-17.webp",
-        "x-gear-2232g-18.webp",
         "x-gear-2232g-19.webp",
+        "x-gear-2232g-3.webp",
+        "x-gear-2232g-4.webp",
+        "x-gear-2232g-5.webp",
+        "x-gear-2232g-8.webp",
+        "x-gear-2232g-9.webp",
+        "x-gear-2232g-10.webp",
+        "x-gear-2232g-18.webp",
         "x-gear-2232g-20.webp",
         "x-gear-2232g-21.webp",
         "x-gear-2232g-22.webp",
@@ -125,71 +123,8 @@
               "valueId": "silver-black"
             }
           ],
-          "mainImage": "x-gear-2232g-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "rose"
-            }
-          ],
-          "mainImage": "x-gear-2232g-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver"
-            }
-          ],
-          "mainImage": "x-gear-2232g-5.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black"
-            }
-          ],
-          "mainImage": "x-gear-2232g-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "purple"
-            }
-          ],
-          "mainImage": "x-gear-2232g-10.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "x-gear-2232g-1.webp",
-        "x-gear-2232g-2.webp",
-        "x-gear-2232g-6.webp",
-        "x-gear-2232g-7.webp",
-        "x-gear-2232g-11.webp",
-        "x-gear-2232g-12.webp",
-        "x-gear-2232g-14.webp",
-        "x-gear-2232g-15.webp",
-        "x-gear-2232g-16.webp",
-        "x-gear-2232g-17.webp",
-        "x-gear-2232g-19.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-black"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 199.9,
           "listPrice": 249.9,
           "offers": [
@@ -201,6 +136,50 @@
             }
           ],
           "mainImage": "x-gear-2232g-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "rose"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "x-gear-2232g-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "x-gear-2232g-5.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "x-gear-2232g-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "purple"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "x-gear-2232g-10.webp"
         }
       ]
     }

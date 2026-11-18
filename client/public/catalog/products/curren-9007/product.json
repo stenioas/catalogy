@@ -84,33 +84,52 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
-        "curren-9007-1.webp",
-        "curren-9007-2.webp",
-        "curren-9007-3.webp",
         "curren-9007-4.webp",
         "curren-9007-5.webp",
         "curren-9007-6.webp",
+        "curren-9007-13.webp",
+        "curren-9007-14.webp",
+        "curren-9007-16.webp",
+        "curren-9007-18.webp",
+        "curren-9007-21.webp",
+        "curren-9007-1.webp",
+        "curren-9007-2.webp",
+        "curren-9007-3.webp",
         "curren-9007-7.webp",
         "curren-9007-8.webp",
         "curren-9007-9.webp",
         "curren-9007-10.webp",
         "curren-9007-11.webp",
         "curren-9007-12.webp",
-        "curren-9007-13.webp",
-        "curren-9007-14.webp",
         "curren-9007-15.webp",
-        "curren-9007-16.webp",
         "curren-9007-17.webp",
-        "curren-9007-18.webp",
         "curren-9007-19.webp",
-        "curren-9007-20.webp",
-        "curren-9007-21.webp"
+        "curren-9007-20.webp"
       ],
       "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "rose-gold"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 119.9,
+          "listPrice": 154.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "curren-9007-4.webp"
+        },
         {
           "axes": [
             {
@@ -118,6 +137,8 @@
               "valueId": "gold"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9007-7.webp"
         },
         {
@@ -127,16 +148,9 @@
               "valueId": "gold-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9007-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "rose-gold"
-            }
-          ],
-          "mainImage": "curren-9007-9.webp"
         },
         {
           "axes": [
@@ -145,6 +159,8 @@
               "valueId": "silver"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9007-10.webp"
         },
         {
@@ -154,6 +170,8 @@
               "valueId": "rose-gold-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9007-11.webp"
         },
         {
@@ -163,43 +181,9 @@
               "valueId": "blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9007-12.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "curren-9007-4.webp",
-        "curren-9007-5.webp",
-        "curren-9007-6.webp",
-        "curren-9007-13.webp",
-        "curren-9007-14.webp",
-        "curren-9007-16.webp",
-        "curren-9007-18.webp",
-        "curren-9007-21.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "rose-gold"
-            }
-          ],
-          "price": 119.9,
-          "listPrice": 154.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ],
-          "mainImage": "curren-9007-4.webp"
         }
       ]
     }

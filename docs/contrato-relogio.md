@@ -25,14 +25,12 @@ A página mostra as características na ordem em que estão no `product.json`.
 | Campo | Quando usar | Efeito |
 | --- | --- | --- |
 | `id` | sempre | Identidade do anúncio na URL `/product/:slug/:listingId` |
-| `state` | sempre | `new`, `openbox`, `used` ou `defective` |
-| `availabilityStatus` | sempre | `available`, `coming_soon` ou `on_order` |
 | `images` | sempre | Pelo menos um arquivo em `img/` |
 | `variants` | sempre | Pelo menos uma variante |
 | `enabled` | opcional | `false` esconde o anúncio |
 | `specifications` | opcional | Características só desse anúncio |
 
-Sob encomenda usa `state: "new"`. O preço da variante pode existir ou faltar. `orderable: false` só faz sentido em sob encomenda.
+O anúncio não declara `state` nem `availabilityStatus`. A condição fica em cada variante.
 
 Cada nome em `images` é só o arquivo, sem pasta. Extensões: jpg, jpeg, png, webp e avif. A foto precisa existir em `img/`. Essa checagem de arquivo continua ativa na subida.
 
@@ -41,14 +39,22 @@ Cada nome em `images` é só o arquivo, sem pasta. Extensões: jpg, jpeg, png, w
 | Campo | Quando usar | Efeito |
 | --- | --- | --- |
 | `axes` | sempre | Uma escolha para cada eixo declarado no produto |
+| `state` | opcional | `new`, `openbox`, `used` ou `defective`. Na leitura, ausente vale `new` |
+| `availabilityStatus` | opcional | `available`, `coming_soon` ou `on_order`. Na leitura, ausente vale `on_order` |
 | `mainImage` | sempre | Um dos arquivos de `images` do mesmo anúncio |
-| `price` | exceto sob encomenda | Número positivo em reais, truncado em duas casas |
+| `price` | exceto sob encomenda | Número positivo em reais, truncado em duas casas. Sob encomenda omite o campo |
 | `listPrice` | opcional | Exige `price` e precisa ser maior depois do truncamento |
 | `observations` | opcional | Nota dessa combinação |
 | `offers` | opcional | Ofertas dessa combinação |
-| `orderable` | opcional | `false` marca a variante como indisponível |
+| `orderable` | opcional | `false` marca a variante como indisponível. Só faz sentido em sob encomenda |
+
+Sob encomenda não exige `state` `new`: uma variante com `availabilityStatus` `on_order` pode usar outro estado, por exemplo `used` ou `openbox`.
 
 O anúncio não repete a mesma combinação de eixos. Id e rótulo de eixo são únicos no produto. Id de valor é único dentro do eixo.
+
+## Cadastro sob encomenda
+
+A skill `product-register` grava um único anúncio com id `main-listing`. Cada variante recebe `availabilityStatus` `on_order` e omite `price`.
 
 ## Especificações
 

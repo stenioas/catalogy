@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "910-silver-blue",
@@ -45,7 +44,8 @@
           "id": "910-gold-gold",
           "value": "Gold Gold"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -108,9 +108,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "poedagar-910-1.webp",
         "poedagar-910-2.webp",
@@ -141,6 +139,8 @@
               "valueId": "910-silver-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-7.webp"
         },
         {
@@ -150,6 +150,8 @@
               "valueId": "910-silver-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-8.webp"
         },
         {
@@ -159,6 +161,8 @@
               "valueId": "910-gold-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-1.webp"
         },
         {
@@ -168,6 +172,8 @@
               "valueId": "910-gold-green"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-9.webp"
         },
         {
@@ -177,6 +183,8 @@
               "valueId": "910-silver-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-10.webp"
         },
         {
@@ -186,6 +194,8 @@
               "valueId": "910-gold-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-11.webp"
         },
         {
@@ -195,6 +205,8 @@
               "valueId": "910-black-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-12.webp"
         },
         {
@@ -204,6 +216,8 @@
               "valueId": "910-gold-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-13.webp"
         },
         {
@@ -213,6 +227,8 @@
               "valueId": "910-gold-gold"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-910-14.webp"
         }
       ]

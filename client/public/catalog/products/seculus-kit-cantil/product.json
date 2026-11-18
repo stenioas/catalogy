@@ -6,13 +6,13 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "blue",
           "value": "Blue"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -63,9 +63,7 @@
   ],
   "listings": [
     {
-      "id": "listing",
-      "state": "used",
-      "availabilityStatus": "available",
+      "id": "main-listing",
       "images": [
         "seculus-1.webp",
         "seculus-2.webp",
@@ -81,18 +79,20 @@
               "valueId": "blue"
             }
           ],
+          "state": "used",
+          "availabilityStatus": "available",
           "price": 279.9,
           "listPrice": 369.9,
-          "mainImage": "seculus-1.webp",
-          "observations": "Acompanha caixa de metal e cantil",
           "offers": [
             {
               "text": "Black Friday",
-              "icon": "Gift",
               "background": "#000000",
-              "color": "#FFFFFF"
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
-          ]
+          ],
+          "mainImage": "seculus-1.webp",
+          "observations": "Acompanha caixa de metal e cantil"
         }
       ]
     }

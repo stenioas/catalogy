@@ -1,5 +1,5 @@
 import type { CatalogCard, Product } from '@catalogo/shared'
-import { resolveVariant, shareMessage, STATE_LABEL } from '@catalogo/shared'
+import { effectiveState, resolveVariant, shareMessage, STATE_LABEL } from '@catalogo/shared'
 import { Link, useLocation } from 'react-router-dom'
 
 import { Card } from '@/components/ui/card'
@@ -33,17 +33,26 @@ function listingVariantForCard(product: Product, card: CatalogCard) {
   if (listing === undefined) {
     throw new Error(`WatchCard: listing ${card.listingId} not found on product ${product.slug}`)
   }
-  const vParam = new URL(card.path, 'http://localhost').searchParams.get('v')
-  const variant = resolveVariant(listing, vParam)
+  const params = new URL(card.path, 'http://localhost').searchParams
+  const variant = resolveVariant(listing, {
+    v: params.get('v'),
+    state: params.get('state'),
+    availability: params.get('availability'),
+  })
   return { listing, variant }
 }
 
 export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardProps) {
   const { search } = useLocation()
-  const section = new URLSearchParams(search).get('section')
-  const linkState = section === null ? { fromCatalog: true } : { fromCatalog: true, section }
+  const params = new URLSearchParams(search)
+  const section = params.get('section')
+  const filter = params.get('filter')
+  const linkState: { fromCatalog: true; section?: string; filter?: string } = { fromCatalog: true }
+  if (section !== null && section !== '') linkState.section = section
+  if (filter !== null && filter !== '') linkState.filter = filter
   const { listing, variant } = listingVariantForCard(product, card)
   const shareText = shareMessage(product, listing, variant, window.location.origin)
+  const condition = effectiveState(variant)
   const isOnOrder = card.availabilityStatus === 'on_order'
 
   return (
@@ -60,12 +69,12 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
               loading={imageLoading}
               className="h-full w-full object-contain"
             />
-            {listing.state === 'used' || listing.state === 'openbox' ? (
+            {condition === 'used' || condition === 'openbox' ? (
               <span
                 data-testid="card-image-state-badge"
                 className="pointer-events-none absolute top-0 right-0 rounded-bl-[4px] bg-orange-600 px-1.5 py-0.5 text-xs font-medium leading-none text-white md:px-2.5 md:py-1 md:text-sm"
               >
-                {STATE_LABEL[listing.state]}
+                {STATE_LABEL[condition]}
               </span>
             ) : null}
           </div>
@@ -86,7 +95,7 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
                 data-testid="product-condition"
                 className="m-0 flex flex-wrap items-center gap-1.5 text-xs leading-none text-muted-foreground"
               >
-                <ProductAvailabilityBadge availabilityStatus={listing.availabilityStatus} compact />
+                <ProductAvailabilityBadge availabilityStatus={card.availabilityStatus} compact />
               </p>
               <h2 className="m-0 line-clamp-1 w-full min-w-0 truncate overflow-hidden text-ellipsis whitespace-nowrap text-[13px] leading-snug font-medium text-foreground md:font-display md:text-[15px] md:leading-snug md:font-semibold">
                 {card.title}

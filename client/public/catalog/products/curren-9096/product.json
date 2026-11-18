@@ -88,9 +88,7 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "curren-9096-1.webp",
         "curren-9096-2.webp",
@@ -132,6 +130,8 @@
               "valueId": "black-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9096-7.webp"
         },
         {
@@ -141,6 +141,8 @@
               "valueId": "white-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9096-8.webp"
         },
         {
@@ -150,6 +152,8 @@
               "valueId": "green-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9096-9.webp"
         },
         {
@@ -159,6 +163,8 @@
               "valueId": "silver-blue-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9096-10.webp"
         },
         {
@@ -168,6 +174,8 @@
               "valueId": "rose-blue-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9096-11.webp"
         },
         {
@@ -177,6 +185,8 @@
               "valueId": "rose-white-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-9096-12.webp"
         }
       ]

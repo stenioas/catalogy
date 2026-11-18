@@ -6,13 +6,13 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "silver-black",
           "value": "Silver Black"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -71,9 +71,7 @@
   ],
   "listings": [
     {
-      "id": "listing",
-      "state": "new",
-      "availabilityStatus": "available",
+      "id": "main-listing",
       "images": [
         "sapphero-so2205-1.webp",
         "sapphero-so2205-2.webp",
@@ -97,17 +95,19 @@
               "valueId": "silver-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "price": 149.9,
           "listPrice": 199.9,
-          "mainImage": "sapphero-so2205-1.webp",
           "offers": [
             {
               "text": "Black Friday",
-              "icon": "Gift",
               "background": "#000000",
-              "color": "#FFFFFF"
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
-          ]
+          ],
+          "mainImage": "sapphero-so2205-1.webp"
         }
       ]
     }
