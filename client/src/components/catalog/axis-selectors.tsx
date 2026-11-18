@@ -169,13 +169,7 @@ export function AxisSelectors({
                     onClick={(event) => {
                       if (controlDisabled || option.v === null) return
                       if (image) scrollImageRowToNext(event.currentTarget)
-                      if (group.axisId === 'variant-state') {
-                        onSelect(activeV, { state: option.state })
-                      } else if (group.axisId === 'variant-availability') {
-                        onSelect(activeV, { availability: option.availability })
-                      } else {
-                        onSelect(option.v)
-                      }
+                      onSelect(option.v)
                     }}
                   >
                     {image ? (

@@ -70,7 +70,7 @@ export function CatalogPage() {
       <main className="max-w-full min-w-0 overflow-x-clip">
         <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-2 md:py-4">
           <div className="mb-2 md:mb-6">
-            <div role="group" aria-label="Filtros" className="flex flex-nowrap gap-2 overflow-x-auto">
+            <div role="group" aria-label="Filtros" className="catalog-filters flex flex-nowrap gap-2 overflow-x-auto px-1">
               {FILTERS.map((filter) => (
                 <Button
                   key={filter.id}

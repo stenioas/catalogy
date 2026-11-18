@@ -167,17 +167,6 @@
           "axes": [
             {
               "axisId": "cor",
-              "valueId": "black-steel"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "addiesdive-my-h3-2qz-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
               "valueId": "green-black-steel"
             }
           ],

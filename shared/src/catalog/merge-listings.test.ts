@@ -212,7 +212,7 @@ describe('mergeListings', () => {
     )
 
     expect(merged.listings[0]?.enabled).toBe(false)
-    expect(merged.listings[0]?.variants).toHaveLength(2)
+    expect(merged.listings[0]?.variants).toHaveLength(1)
     expect(merged.listings[0]?.variants[0]).toMatchObject({
       state: 'used',
       availabilityStatus: 'available',
@@ -220,7 +220,7 @@ describe('mergeListings', () => {
     })
   })
 
-  it('keeps the first complete key, preserves different states, and retains winner fields', () => {
+  it('keeps the first axes key and drops another condition on the same axes', () => {
     const firstOffers = [
       { text: 'Oferta', background: '#000000', color: '#FFFFFF', icon: 'Gift' },
     ]
@@ -264,7 +264,7 @@ describe('mergeListings', () => {
       ]) as Product,
     )
 
-    expect(merged.listings[0]?.variants).toHaveLength(2)
+    expect(merged.listings[0]?.variants).toHaveLength(1)
     expect(merged.listings[0]?.variants[0]).toEqual({
       axes: [{ axisId: 'color', valueId: 'black' }],
       state: 'used',
@@ -275,10 +275,6 @@ describe('mergeListings', () => {
       mainImage: 'first.webp',
       observations: 'Primeira',
       orderable: true,
-    })
-    expect(merged.listings[0]?.variants[1]).toMatchObject({
-      state: 'openbox',
-      availabilityStatus: 'available',
     })
   })
 

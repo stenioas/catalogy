@@ -923,6 +923,44 @@ describe('homeCards filters', () => {
     }
   }
 
+  it('orders cards by availability, then Portuguese title', () => {
+    const products = [
+      {
+        ...filteredProduct('unisex', [filteredVariant()]),
+        slug: 'encomenda',
+        title: 'Águia',
+      },
+      {
+        ...filteredProduct('unisex', [
+          filteredVariant({ availabilityStatus: 'available', price: 10 }),
+        ]),
+        slug: 'disponivel-z',
+        title: 'Zebra',
+      },
+      {
+        ...filteredProduct('unisex', [
+          filteredVariant({ availabilityStatus: 'coming_soon', price: 10 }),
+        ]),
+        slug: 'breve',
+        title: 'Bola',
+      },
+      {
+        ...filteredProduct('unisex', [
+          filteredVariant({ availabilityStatus: 'available', price: 10 }),
+        ]),
+        slug: 'disponivel-a',
+        title: 'Addiesdive',
+      },
+    ]
+
+    expect(homeCards(products, null).map((card) => card.title)).toEqual([
+      'Addiesdive',
+      'Zebra',
+      'Bola',
+      'Águia',
+    ])
+  })
+
   it('shows enabled on-order listings in Todos and hides disabled or non-representable listings', () => {
     const onOrder = filteredProduct('unisex', [filteredVariant()])
     const disabled = filteredProduct('unisex', [filteredVariant()], { enabled: false })
@@ -1144,7 +1182,7 @@ describe('homeCards filters', () => {
     })
   })
 
-  it('puts state and availability on the card link when the same axes match more than one variant', () => {
+  it('identifies the card with v when the axes repeat', () => {
     const product = filteredProduct('unisex', [
       filteredVariant({
         axes: [{ axisId: 'color', valueId: 'steel' }],
@@ -1160,19 +1198,7 @@ describe('homeCards filters', () => {
     ])
     product.axes = [{ id: 'color', label: 'Cor', values: [{ id: 'steel', value: 'Steel' }] }]
 
-    const card = homeCards([product], 'new')[0]
-    expect(card?.path).toBe(
-      '/product/watch-unisex/main-listing?v=steel&state=new&availability=on_order',
-    )
-    const opened = requireOpen(
-      listingByPath([product], product.slug, 'main-listing', {
-        v: 'steel',
-        state: 'new',
-        availability: 'on_order',
-      }),
-    )
-    expect(opened.availabilityStatus).toBe('on_order')
-    expect(opened.state).toBe('new')
+    expect(homeCards([product], 'new')[0]?.path).toBe('/product/watch-unisex/main-listing?v=steel')
   })
 })
 
@@ -1241,120 +1267,30 @@ function conditionProduct(): Product {
 }
 
 describe('variant condition selectors and query', () => {
-  it('adds condition selectors only for multiple effective values and disables incompatible options', () => {
+  it('keeps selectors on the product axes when conditions share those axes', () => {
     const product = conditionProduct()
     const view = requireOpen(listingByPath([product], 'condition', 'main-listing', 'red'))
-    expect(view.selectors.map((selector) => selector.axisId)).toEqual([
-      'color',
-      'variant-state',
-      'variant-availability',
-    ])
-    const state = view.selectors[1]
-    const availability = view.selectors[2]
-
-    expect(state).toEqual({
-      axisId: 'variant-state',
-      label: 'Estado',
-      presentation: 'text',
-      options: [
-        {
-          valueId: 'new',
-          value: 'Novo',
-          disabled: false,
-          unavailable: false,
-          v: 'red',
-          state: 'new',
-        },
-        {
-          valueId: 'used',
-          value: 'Usado',
-          disabled: false,
-          unavailable: false,
-          v: 'red',
-          state: 'used',
-        },
-      ],
-    })
-    expect(availability).toEqual({
-      axisId: 'variant-availability',
-      label: 'Disponibilidade',
-      presentation: 'text',
-      options: [
-        {
-          valueId: 'available',
-          value: 'Disponível',
-          disabled: false,
-          unavailable: false,
-          v: 'red',
-          availability: 'available',
-        },
-        {
-          valueId: 'coming_soon',
-          value: 'Chega em breve',
-          disabled: true,
-          unavailable: false,
-          v: null,
-          availability: 'coming_soon',
-        },
-        {
-          valueId: 'on_order',
-          value: 'Sob encomenda',
-          disabled: false,
-          unavailable: false,
-          v: 'red',
-          availability: 'on_order',
-        },
-      ],
-    })
-
+    expect(view.selectors.map((selector) => selector.axisId)).toEqual(['color'])
+    expect(view.state).toBe('used')
+    expect(view.availability).toBe('available')
     const unique = requireOpen(listingByPath([product], 'condition', 'main-listing', 'blue'))
     expect(unique.selectors.map((selector) => selector.axisId)).toEqual(['color'])
   })
 
-  it('places Disponibilidade after the product axes when Estado is absent', () => {
-    const product = conditionProduct()
-    product.listings[0]!.variants = [
-      {
-        axes: [{ axisId: 'color', valueId: 'red' }],
-        state: 'new',
-        availabilityStatus: 'available',
-        price: 40,
-        mainImage: 'red.jpg',
-      },
-      {
-        axes: [{ axisId: 'color', valueId: 'red' }],
-        state: 'new',
-        availabilityStatus: 'on_order',
-        mainImage: 'red.jpg',
-      },
-    ]
-
-    const view = requireOpen(listingByPath([product], 'condition', 'main-listing', 'red'))
-    expect(view.selectors.map((selector) => selector.axisId)).toEqual([
-      'color',
-      'variant-availability',
-    ])
-    expect(view.selectors[1]?.label).toBe('Disponibilidade')
-  })
-
-  it('keeps v axis-only and adds condition tokens only when that v is ambiguous', () => {
+  it('keeps v axis-only', () => {
     const product = conditionProduct()
     const listing = product.listings[0]!
 
-    expect(variantQuery(product, listing.variants[0]!)).toEqual({
-      v: 'red',
-      state: 'used',
-      availability: 'available',
-    })
+    expect(variantQuery(product, listing.variants[0]!)).toEqual({ v: 'red' })
     expect(variantQuery(product, listing.variants[3]!)).toEqual({ v: 'blue' })
   })
 
-  it('uses effective labels and the disambiguating query in the share message', () => {
+  it('uses effective labels and the axis query in the share message', () => {
     const product = conditionProduct()
     const listing = product.listings[0]!
 
     expect(shareMessage(product, listing, listing.variants[0]!, 'https://loja.example')).toBe(
-      'Olá, tenho interesse no Condition Vermelho. Usado, Disponível. https://loja.example/product/condition/main-listing?v=red&state=used&availability=available',
+      'Olá, tenho interesse no Condition Vermelho. Usado, Disponível. https://loja.example/product/condition/main-listing?v=red',
     )
   })
 

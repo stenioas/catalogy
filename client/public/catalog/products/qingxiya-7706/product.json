@@ -133,18 +133,6 @@
           "availabilityStatus": "on_order",
           "price": 179.9,
           "mainImage": "qingxiya-7706-1.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-white"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "price": 179.9,
-          "mainImage": "qingxiya-7706-7.webp"
         }
       ]
     }

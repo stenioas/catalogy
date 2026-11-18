@@ -159,34 +159,12 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "silver-white"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "curren-8106-6.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "black-black"
             }
           ],
           "state": "new",
           "availabilityStatus": "on_order",
           "mainImage": "curren-8106-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-black"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "curren-8106-8.webp"
         },
         {
           "axes": [

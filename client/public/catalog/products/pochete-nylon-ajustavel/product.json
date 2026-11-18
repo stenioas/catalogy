@@ -118,39 +118,6 @@
             }
           ],
           "mainImage": "pochete-nylon-ajustavel-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "pochete-nylon-ajustavel-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gray"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "pochete-nylon-ajustavel-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "blue"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "pochete-nylon-ajustavel-9.webp"
         }
       ]
     }

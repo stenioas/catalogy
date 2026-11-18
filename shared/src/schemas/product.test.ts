@@ -487,7 +487,7 @@ describe('ProductSchema variant condition (FILT-01)', () => {
     }
   })
 
-  it('rejects repeated effective condition and accepts a changed condition', () => {
+  it('rejects two variants that share axes even when the condition differs', () => {
     const repeated = product({
       listings: [
         listing({
@@ -510,7 +510,7 @@ describe('ProductSchema variant condition (FILT-01)', () => {
     })
 
     expect(ProductSchema.safeParse(repeated).success).toBe(false)
-    expect(ProductSchema.safeParse(changed).success).toBe(true)
+    expect(ProductSchema.safeParse(changed).success).toBe(false)
   })
 
   it('accepts an on_order variant with used state without price', () => {

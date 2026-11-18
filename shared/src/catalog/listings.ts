@@ -320,7 +320,16 @@ function toUnpricedCard(
   }
 }
 
+const AVAILABILITY_ORDER: Record<AvailabilityStatus, number> = {
+  available: 0,
+  coming_soon: 1,
+  on_order: 2,
+}
+
 function compareCards(a: SortableCard, b: SortableCard): number {
+  const byAvailability =
+    AVAILABILITY_ORDER[a.availabilityStatus] - AVAILABILITY_ORDER[b.availabilityStatus]
+  if (byAvailability !== 0) return byAvailability
   const byTitle = compareTitles(a.title, b.title)
   if (byTitle !== 0) return byTitle
   if (a.slug !== b.slug) return a.slug < b.slug ? -1 : 1
@@ -565,23 +574,7 @@ function variantPath(product: Product, listing: Listing, variant: Variant): stri
 }
 
 export function variantQuery(product: Product, variant: Variant): VariantQuery {
-  const v = axisQuery(product, variant)
-  const query: VariantQuery = { v }
-  const listing = product.listings.find((candidate) => candidate.variants.includes(variant))
-  if (listing === undefined || v === null) return query
-
-  const orderedAxisIds = product.axes.map((axis) => axis.id)
-  const valueIds = valueIdsInAxisOrder(product, variant)
-  const matches = listing.variants.filter((candidate) =>
-    variantMatchesValueIds(candidate, valueIds, orderedAxisIds),
-  )
-  if (new Set(matches.map(effectiveState)).size > 1) {
-    query.state = effectiveState(variant)
-  }
-  if (new Set(matches.map(effectiveAvailability)).size > 1) {
-    query.availability = effectiveAvailability(variant)
-  }
-  return query
+  return { v: axisQuery(product, variant) }
 }
 
 function variantContains(variant: Variant, axisId: string, valueId: string): boolean {
@@ -593,77 +586,6 @@ function compatibleWithOtherAxes(variant: Variant, active: Variant, axisId: stri
     if (selection.axisId === axisId) return true
     return variantContains(variant, selection.axisId, selection.valueId)
   })
-}
-
-function sameAxes(left: Variant, right: Variant): boolean {
-  return left.axes.every((selection) =>
-    variantContains(right, selection.axisId, selection.valueId),
-  )
-}
-
-function conditionSelectors(
-  product: Product,
-  listing: Listing,
-  active: Variant,
-): ListingSelector[] {
-  const axisMatches = listing.variants.filter((variant) => sameAxes(variant, active))
-  const selectors: ListingSelector[] = []
-
-  if (new Set(axisMatches.map(effectiveState)).size > 1) {
-    const values = STATE_IDS.filter((state) =>
-      listing.variants.some((variant) => effectiveState(variant) === state),
-    )
-    selectors.push({
-      axisId: 'variant-state',
-      label: 'Estado',
-      presentation: 'text',
-      options: values.map((state) => {
-        const landing = listing.variants.find(
-          (variant) =>
-            sameAxes(variant, active) &&
-            effectiveState(variant) === state &&
-            effectiveAvailability(variant) === effectiveAvailability(active),
-        )
-        return {
-          valueId: state,
-          value: STATE_LABEL[state],
-          disabled: landing === undefined,
-          unavailable: landing?.orderable === false,
-          v: landing === undefined ? null : axisQuery(product, active),
-          state,
-        }
-      }),
-    })
-  }
-
-  if (new Set(axisMatches.map(effectiveAvailability)).size > 1) {
-    const values = AVAILABILITY_IDS.filter((availability) =>
-      listing.variants.some((variant) => effectiveAvailability(variant) === availability),
-    )
-    selectors.push({
-      axisId: 'variant-availability',
-      label: 'Disponibilidade',
-      presentation: 'text',
-      options: values.map((availability) => {
-        const landing = listing.variants.find(
-          (variant) =>
-            sameAxes(variant, active) &&
-            effectiveAvailability(variant) === availability &&
-            effectiveState(variant) === effectiveState(active),
-        )
-        return {
-          valueId: availability,
-          value: AVAILABILITY_LABEL[availability],
-          disabled: landing === undefined,
-          unavailable: landing?.orderable === false,
-          v: landing === undefined ? null : axisQuery(product, active),
-          availability,
-        }
-      }),
-    })
-  }
-
-  return selectors
 }
 
 function selectorsFor(
@@ -703,7 +625,7 @@ function selectorsFor(
       },
     ]
   })
-  return [...axes, ...conditionSelectors(product, listing, active)]
+  return axes
 }
 
 function pageTitle(product: Product, variant: Variant): string {

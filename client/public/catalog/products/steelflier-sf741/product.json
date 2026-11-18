@@ -225,17 +225,6 @@
           "axes": [
             {
               "axisId": "variantion",
-              "valueId": "sf741-zp"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "steelflier-sf741-2.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "variantion",
               "valueId": "sf741-hr"
             }
           ],

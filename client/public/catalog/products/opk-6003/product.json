@@ -198,28 +198,6 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "hp-silver-black"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "opk-6003-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gd-silver-blue"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "opk-6003-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "gd-silver-black"
             }
           ],
@@ -231,34 +209,12 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "zp-silver-blue"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "opk-6003-10.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "gd-silver-white"
             }
           ],
           "state": "new",
           "availabilityStatus": "on_order",
           "mainImage": "opk-6003-11.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "zp-silver-white"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "opk-6003-12.webp"
         }
       ]
     }

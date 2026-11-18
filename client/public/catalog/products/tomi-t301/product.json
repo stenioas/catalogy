@@ -188,17 +188,6 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "silver-blue"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "tomi-t301-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "all-black"
             }
           ],
@@ -227,17 +216,6 @@
           "state": "new",
           "availabilityStatus": "on_order",
           "mainImage": "tomi-t301-11.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-gold"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "tomi-t301-12.webp"
         }
       ]
     }

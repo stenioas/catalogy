@@ -173,17 +173,6 @@
           "axes": [
             {
               "axisId": "cor",
-              "valueId": "b-no-logo"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "aimimo-design-air-king-1.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
               "valueId": "c-blue-no-logo"
             }
           ],

@@ -235,6 +235,21 @@
   padding-inline: 0;
 }
 
+.catalog-filters {
+  padding-bottom: 4px;
+}
+
+@media (pointer: coarse) {
+  .catalog-filters {
+    padding-bottom: 0;
+    scrollbar-width: none;
+  }
+
+  .catalog-filters::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .catalog-vitrine {
     padding-inline: 24px;

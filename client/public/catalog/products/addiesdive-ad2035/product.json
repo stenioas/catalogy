@@ -143,17 +143,6 @@
             }
           ],
           "mainImage": "addiesdive-ad2035-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "steel"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "addiesdive-ad2035-7.webp"
         }
       ]
     }

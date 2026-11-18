@@ -1482,12 +1482,12 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const share = screen.getByRole('link', { name: 'Compartilhar' })
     expect(share.getAttribute('href')).toBe(
       `https://wa.me/?text=${encodeURIComponent(
-        `Olá, tenho interesse no Condition Vermelho. Novo, Sob encomenda. ${window.location.origin}/product/condition/main-listing?v=red&state=new&availability=on_order`,
+        `Olá, tenho interesse no Condition Vermelho. Novo, Sob encomenda. ${window.location.origin}/product/condition/main-listing?v=red`,
       )}`,
     )
   })
 
-  it('writes the selected condition outside v and shows all effective labels', () => {
+  it('shows the condition on one line and does not offer condition selectors', () => {
     mockProductsRef.current = [conditionProduct()]
     render(
       <ThemeProvider>
@@ -1497,16 +1497,11 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       </ThemeProvider>,
     )
 
-    expect(screen.getByTestId('state-label').textContent).toBe('Usado')
-    expect(screen.getByTestId('availability-badge').textContent).toBe('Disponível')
-    fireEvent.click(screen.getByRole('button', { name: 'Novo' }))
-    expect(screen.getByTestId('state-label').textContent).toBe('Novo')
-    expect(screen.getByTestId('availability-badge').textContent).toBe('Disponível')
-    expect(screen.getByRole('link', { name: 'Compartilhar' }).getAttribute('href')).toBe(
-      `https://wa.me/?text=${encodeURIComponent(
-        `Olá, tenho interesse no Condition Vermelho. Novo, Disponível. ${window.location.origin}/product/condition/main-listing?v=red&state=new&availability=available`,
-      )}`,
-    )
+    const line = screen.getByTestId('product-condition')
+    expect(within(line).getByTestId('state-label').textContent).toBe('Usado')
+    expect(within(line).getByTestId('availability-badge').textContent).toBe('Disponível')
+    expect(screen.queryByRole('group', { name: /Estado/ })).toBeNull()
+    expect(screen.queryByRole('group', { name: /Disponibilidade/ })).toBeNull()
   })
 
   it.each([

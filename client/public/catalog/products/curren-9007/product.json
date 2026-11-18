@@ -156,17 +156,6 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "rose-gold"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "curren-9007-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "silver"
             }
           ],

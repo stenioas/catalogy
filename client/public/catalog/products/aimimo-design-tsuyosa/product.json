@@ -147,17 +147,6 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "silver-mintblue"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "aimimo-design-tsuyosa-1.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "silver-green"
             }
           ],

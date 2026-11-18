@@ -23,5 +23,5 @@ export function variantKey(product: Product, variant: VariantCondition): string 
     })
     .join('|')
 
-  return [axes, effectiveState(variant), effectiveAvailability(variant)].filter(Boolean).join('|')
+  return axes
 }

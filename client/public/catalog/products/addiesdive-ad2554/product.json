@@ -154,17 +154,6 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "blue"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "addiesdive-ad2554-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "gray"
             }
           ],

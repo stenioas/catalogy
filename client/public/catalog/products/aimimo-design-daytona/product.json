@@ -158,17 +158,6 @@
           "axes": [
             {
               "axisId": "cor",
-              "valueId": "black-bezel-white"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "aimimo-design-daytona-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
               "valueId": "steel-bezel-white"
             }
           ],

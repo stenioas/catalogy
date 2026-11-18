@@ -214,17 +214,6 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "gold-green"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "curren-8499-11.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "silver-blue-box"
             }
           ],

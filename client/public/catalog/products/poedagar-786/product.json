@@ -218,17 +218,6 @@
           "axes": [
             {
               "axisId": "cor",
-              "valueId": "786-rose-gold-green"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "poedagar-786-12.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
               "valueId": "786-gold-gold"
             }
           ],

@@ -208,17 +208,6 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "834-silver-black"
-            }
-          ],
-          "state": "new",
-          "availabilityStatus": "on_order",
-          "mainImage": "poedagar-834-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "834-gold-gold"
             }
           ],

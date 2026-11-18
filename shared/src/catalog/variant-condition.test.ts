@@ -49,10 +49,10 @@ describe('variant condition helpers', () => {
     expect(effectiveAvailability(variant({ availabilityStatus: 'available' }))).toBe('available')
   })
 
-  it('builds the key with product axis order and effective condition', () => {
-    expect(variantKey(product(), variant())).toBe('color:black|size:large|new|on_order')
+  it('builds the key from the axes in product order', () => {
+    expect(variantKey(product(), variant())).toBe('color:black|size:large')
     expect(
       variantKey(product(), variant({ state: 'openbox', availabilityStatus: 'available' })),
-    ).toBe('color:black|size:large|openbox|available')
+    ).toBe('color:black|size:large')
   })
 })
