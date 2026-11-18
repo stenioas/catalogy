@@ -424,6 +424,8 @@ T11 -> T12 -> T13
 
 ### T11: Contrato do relógio
 
+**Status**: done
+
 **What**: O contrato descreve a condição na variante e o que o cadastro grava.
 **Where**: `docs/contrato-relogio.md`
 **Depends on**: T2
@@ -438,11 +440,11 @@ T11 -> T12 -> T13
 
 **Done when**:
 
-- [ ] O documento diz que `state` e `availabilityStatus` ficam na variante, são opcionais e na leitura valem `new` e `on_order`
-- [ ] O documento diz que `on_order` pode usar estado diferente de `new`
-- [ ] O documento diz que product-register grava `main-listing`, `availabilityStatus` `on_order` em cada variante e omite `price`
-- [ ] Gate: `pnpm --filter client exec vitest run scripts/prebuild-catalog.test.ts` sai 0
-- [ ] Nenhum teste existente foi apagado ou afrouxado
+- [x] O documento diz que `state` e `availabilityStatus` ficam na variante, são opcionais e na leitura valem `new` e `on_order`
+- [x] O documento diz que `on_order` pode usar estado diferente de `new`
+- [x] O documento diz que product-register grava `main-listing`, `availabilityStatus` `on_order` em cada variante e omite `price`
+- [x] Gate: `pnpm --filter client exec vitest run scripts/prebuild-catalog.test.ts` sai 0
+- [x] Nenhum teste existente foi apagado ou afrouxado
 
 **Tests**: unit
 **Gate**: quick

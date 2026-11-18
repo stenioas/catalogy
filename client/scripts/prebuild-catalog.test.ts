@@ -98,3 +98,34 @@ describe('README offer documentation (OSC-16)', () => {
     expect(readme).not.toMatch(/badge de oferta (?:sobre|acima d[ae]) foto/i)
   })
 })
+
+describe('contrato do relógio (FILT-05)', () => {
+  const contratoPath = join(clientRoot, '..', 'docs', 'contrato-relogio.md')
+
+  it('coloca state e availabilityStatus na variante com leitura new e on_order', () => {
+    const contrato = readFileSync(contratoPath, 'utf8')
+
+    expect(contrato).toContain('Na leitura, ausente vale `new`')
+    expect(contrato).toContain('Na leitura, ausente vale `on_order`')
+    expect(contrato).toContain(
+      'O anúncio não declara `state` nem `availabilityStatus`. A condição fica em cada variante.',
+    )
+  })
+
+  it('permite on_order com estado diferente de new', () => {
+    const contrato = readFileSync(contratoPath, 'utf8')
+
+    expect(contrato).toContain(
+      'uma variante com `availabilityStatus` `on_order` pode usar outro estado',
+    )
+  })
+
+  it('descreve o cadastro product-register em main-listing sem price', () => {
+    const contrato = readFileSync(contratoPath, 'utf8')
+
+    expect(contrato).toContain('`product-register`')
+    expect(contrato).toContain('id `main-listing`')
+    expect(contrato).toContain('`availabilityStatus` `on_order`')
+    expect(contrato).toContain('omite `price`')
+  })
+})
