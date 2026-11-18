@@ -209,6 +209,8 @@ function WatchColumn({
   title,
   stateLabel,
   availabilityLabel,
+  activeState,
+  activeAvailability,
   availabilityStatus,
   price,
   listPrice,
@@ -228,6 +230,8 @@ function WatchColumn({
   title: string
   stateLabel: string
   availabilityLabel: string
+  activeState: NonNullable<Variant['state']>
+  activeAvailability: NonNullable<Variant['availabilityStatus']>
   availabilityStatus: 'available' | 'coming_soon' | 'on_order'
   price?: number
   listPrice?: number
@@ -253,7 +257,16 @@ function WatchColumn({
   />
   const identity = <ProductIdentity stateLabel={stateLabel} availabilityLabel={availabilityLabel} title={title} />
   const axes = selectors.length > 0
-    ? <AxisSelectors selectors={selectors} activeV={activeV} onSelect={onSelect} slug={slug} />
+    ? (
+      <AxisSelectors
+        selectors={selectors}
+        activeV={activeV}
+        activeState={activeState}
+        activeAvailability={activeAvailability}
+        onSelect={onSelect}
+        slug={slug}
+      />
+    )
     : null
   const share = <ProductShareButton slug={slug} title={title} href={shareHref} />
 
@@ -321,8 +334,13 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   const location = useLocation()
   const catalogHref = catalogReturnHref(location.state)
   const requestedV = params.get('v')
+  const resolutionQuery = {
+    v: requestedV,
+    state: params.get('state'),
+    availability: params.get('availability'),
+  }
   const resolvedListingId = listingId === undefined || listingId === '' ? null : listingId
-  const view = listingByPath(products, slug, resolvedListingId, requestedV)
+  const view = listingByPath(products, slug, resolvedListingId, resolutionQuery)
   const product = products.find((item) => item.slug === slug)
   const listing = view.missing || product === undefined
     ? undefined
@@ -340,15 +358,26 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
     )
   }
 
-  const variant = resolveVariant(listing, requestedV)
+  const variant = resolveVariant(listing, resolutionQuery)
   const activeV = variantQuery(product, variant)
   const message = shareMessage(product, listing, variant, window.location.origin)
   const shareHref = `https://wa.me/?text=${encodeURIComponent(message)}`
   const imageIndex = view.imageIndex
 
-  function selectVariant(nextV: string | null) {
+  function selectVariant(
+    nextV: string | null,
+    condition?: { state?: string; availability?: string },
+  ) {
     const valueIds = nextV === null || nextV.trim() === '' ? [] : nextV.split(',')
-    navigate(listingPath(product!.slug, listing!.id, valueIds), {
+    const path = listingPath(product!.slug, listing!.id, valueIds)
+    const nextParams = new URLSearchParams()
+    if (valueIds.length > 0) nextParams.set('v', valueIds.join(','))
+    if (condition?.state !== undefined) nextParams.set('state', condition.state)
+    if (condition?.availability !== undefined) {
+      nextParams.set('availability', condition.availability)
+    }
+    const query = nextParams.toString().replace(/%2C/gi, ',')
+    navigate(`${path.split('?')[0]}${query === '' ? '' : `?${query}`}`, {
       flushSync: true,
       state: stateAfterVariantChange(location.state),
     })
@@ -364,6 +393,8 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
             title={product.title}
             stateLabel={view.stateLabel}
             availabilityLabel={view.availabilityLabel}
+            activeState={view.state}
+            activeAvailability={view.availability}
             availabilityStatus={view.availabilityStatus}
             price={view.price}
             listPrice={view.listPrice}

@@ -491,6 +491,8 @@ export type OpenListingView = {
   missing: false
   listingId: string
   title: string
+  state: ReturnType<typeof effectiveState>
+  availability: ReturnType<typeof effectiveAvailability>
   stateLabel: string
   availabilityLabel: string
   price?: number
@@ -708,23 +710,33 @@ export function shareMessage(
   return `Olá, tenho interesse no ${title}. ${stateLabel}, ${availabilityLabel}. ${base}${path}`
 }
 
-function openListing(product: Product, listing: Listing, v: string | null): OpenListingView {
-  const variant = resolveVariant(listing, v)
+function openListing(
+  product: Product,
+  listing: Listing,
+  query: string | null | VariantResolutionQuery,
+): OpenListingView {
+  const variant = resolveVariant(listing, query)
   const availability = availabilityForView(listing, variant)
+  const isLegacyListing = 'availabilityStatus' in listing && variant.availabilityStatus === undefined
+  const requestedV = typeof query === 'string' ? query : query?.v
   const view: OpenListingView = {
     missing: false,
     listingId: listing.id,
     title: pageTitle(product, variant),
+    state: stateForView(listing, variant),
+    availability,
     stateLabel: STATE_LABEL[stateForView(listing, variant)],
     availabilityLabel:
       variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[availability],
-    offers: availability === 'on_order' ? [] : (variant.offers ?? []),
+    offers: availability === 'on_order' && !isLegacyListing ? [] : (variant.offers ?? []),
     availabilityStatus: availability,
     productSpecifications: product.specifications ?? [],
     listingSpecifications: listing.specifications ?? [],
     images: listing.images,
     imageIndex:
-      v === null || v.trim() === '' ? 0 : listing.images.indexOf(variant.mainImage),
+      requestedV === null || requestedV === undefined || requestedV.trim() === ''
+        ? 0
+        : listing.images.indexOf(variant.mainImage),
     selectors: selectorsFor(product, listing, variant),
   }
   if (product.description !== undefined) view.description = product.description
@@ -738,7 +750,7 @@ export function listingByPath(
   products: Product[],
   slug: string,
   listingId: string | null,
-  v: string | null,
+  query: string | null | VariantResolutionQuery,
 ): ListingView {
   const product = products.find((item) => item.slug === slug)
   if (product === undefined) return { missing: true }
@@ -746,13 +758,13 @@ export function listingByPath(
   if (listingId === null) {
     const listing = firstListingForSlug(product)
     if (listing === null) return { missing: true }
-    return openListing(product, listing, v)
+    return openListing(product, listing, query)
   }
 
   const listing = product.listings.find((item) => item.id === listingId)
   if (listing === undefined || listing.enabled === false) return { missing: true }
   if (listing.variants.length === 0) return { missing: true }
-  return openListing(product, listing, v)
+  return openListing(product, listing, query)
 }
 
 export function homeEmptyText(products: Product[], section: string | null): string | null {

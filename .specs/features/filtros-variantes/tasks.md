@@ -362,6 +362,8 @@ T11 -> T12 -> T13
 
 ### T9: Query da ficha
 
+**Status**: done
+
 **What**: A ficha lê `state` e `availability` e monta o link que reabre a mesma variante.
 **Where**: `client/src/routes/watch-page.tsx`
 **Depends on**: T6, T8
