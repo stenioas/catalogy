@@ -110,6 +110,8 @@ T11 -> T12 -> T13
 
 ### T2: Schema da variante
 
+**Status**: done
+
 **What**: Mover `state` e `availabilityStatus` para a variante e validar a chave efetiva.
 **Where**: `shared/src/schemas/product.ts`
 **Depends on**: T1

@@ -34,6 +34,8 @@ const canonicalLabelsInOrder = [
 function variant(overrides: Record<string, unknown> = {}) {
   return {
     axes: [] as { axisId: string; valueId: string }[],
+    state: 'new',
+    availabilityStatus: 'available',
     price: 369.9,
     mainImage: 'foto1.jpg',
     ...overrides,
@@ -41,13 +43,17 @@ function variant(overrides: Record<string, unknown> = {}) {
 }
 
 function listing(overrides: Record<string, unknown> = {}) {
+  const {
+    state: _state,
+    availabilityStatus: _availabilityStatus,
+    variants = [variant()],
+    ...listingOverrides
+  } = overrides
   return {
     id: 'listing',
-    state: 'new',
-    availabilityStatus: 'available',
     images: ['foto1.jpg'],
-    variants: [variant()],
-    ...overrides,
+    variants,
+    ...listingOverrides,
   }
 }
 
@@ -275,12 +281,12 @@ describe('ProductSchema availability and state tokens (VAR-07, VAR-08, VAR-102)'
     (availabilityStatus) => {
       const state = availabilityStatus === 'on_order' ? 'new' : 'used'
       const result = ProductSchema.safeParse(
-        product({ listings: [listing({ availabilityStatus, state })] }),
+        product({ listings: [listing({ variants: [variant({ availabilityStatus, state })] })] }),
       )
 
       expect(result.success).toBe(true)
       if (result.success) {
-        expect(result.data.listings[0].availabilityStatus).toBe(availabilityStatus)
+        expect(result.data.listings[0].variants[0].availabilityStatus).toBe(availabilityStatus)
       }
     },
   )
@@ -289,50 +295,49 @@ describe('ProductSchema availability and state tokens (VAR-07, VAR-08, VAR-102)'
     'rejects availabilityStatus %s',
     (availabilityStatus) => {
       expect(
-        ProductSchema.safeParse(product({ listings: [listing({ availabilityStatus })] })).success,
-      ).toBe(false)
-    },
-  )
-
-  it.each(['new', 'openbox', 'used', 'defective'])('stores state %s', (state) => {
-    const result = ProductSchema.safeParse(product({ listings: [listing({ state })] }))
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.listings[0].state).toBe(state)
-    }
-  })
-
-  it.each(['Novo', 'Openbox', 'Usado', 'Com defeito'])('rejects state %s', (state) => {
-    expect(ProductSchema.safeParse(product({ listings: [listing({ state })] })).success).toBe(false)
-  })
-})
-
-describe('ProductSchema on-order rules (VAR-09, VAR-10)', () => {
-  it.each(['openbox', 'used', 'defective'])(
-    'rejects on_order combined with state %s',
-    (state) => {
-      expect(
         ProductSchema.safeParse(
-          product({
-            listings: [listing({ availabilityStatus: 'on_order', state })],
-          }),
+          product({ listings: [listing({ variants: [variant({ availabilityStatus })] })] }),
         ).success,
       ).toBe(false)
     },
   )
 
-  it('accepts on_order only when state is new', () => {
+  it.each(['new', 'openbox', 'used', 'defective'])('stores state %s', (state) => {
+    const result = ProductSchema.safeParse(
+      product({ listings: [listing({ variants: [variant({ state })] })] }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].state).toBe(state)
+    }
+  })
+
+  it.each(['Novo', 'Openbox', 'Usado', 'Com defeito'])('rejects state %s', (state) => {
+    expect(
+      ProductSchema.safeParse(
+        product({ listings: [listing({ variants: [variant({ state })] })] }),
+      ).success,
+    ).toBe(false)
+  })
+})
+
+describe('ProductSchema on-order rules (VAR-09, VAR-10)', () => {
+  it('accepts on_order with a used state', () => {
     const result = ProductSchema.safeParse(
       product({
-        listings: [listing({ availabilityStatus: 'on_order', state: 'new' })],
+        listings: [
+          listing({
+            variants: [variant({ availabilityStatus: 'on_order', state: 'used', price: undefined })],
+          }),
+        ],
       }),
     )
 
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.listings[0].availabilityStatus).toBe('on_order')
-      expect(result.data.listings[0].state).toBe('new')
+      expect(result.data.listings[0].variants[0].availabilityStatus).toBe('on_order')
+      expect(result.data.listings[0].variants[0].state).toBe('used')
     }
   })
 
@@ -344,9 +349,7 @@ describe('ProductSchema on-order rules (VAR-09, VAR-10)', () => {
           product({
             listings: [
               listing({
-                availabilityStatus,
-                state: 'new',
-                variants: [variant({ orderable: false })],
+                variants: [variant({ availabilityStatus, orderable: false })],
               }),
             ],
           }),
@@ -360,9 +363,9 @@ describe('ProductSchema on-order rules (VAR-09, VAR-10)', () => {
       product({
         listings: [
           listing({
-            availabilityStatus: 'on_order',
-            state: 'new',
-            variants: [variant({ orderable: false })],
+            variants: [
+              variant({ availabilityStatus: 'on_order', orderable: false, price: undefined }),
+            ],
           }),
         ],
       }),
@@ -437,9 +440,9 @@ describe('ProductSchema variant price (VAR-13, VAR-14)', () => {
 describe('ProductSchema on_order prices', () => {
   it.each([undefined, 369.999])('accepts on_order with price %s', (price) => {
     const value = variant()
+    value.availabilityStatus = 'on_order'
     delete (value as Partial<typeof value>).price
     const result = ProductSchema.safeParse(product({ listings: [listing({
-      availabilityStatus: 'on_order',
       variants: [{ ...value, ...(price === undefined ? {} : { price }) }],
     })] }))
     expect(result.success).toBe(true)
@@ -449,26 +452,84 @@ describe('ProductSchema on_order prices', () => {
   })
 
   it.each(['available', 'coming_soon'])('rejects %s when any variant omits price', (availabilityStatus) => {
-    const value = variant()
+    const value = variant({ availabilityStatus })
     delete (value as Partial<typeof value>).price
-    expect(ProductSchema.safeParse(product({ listings: [listing({
-      availabilityStatus,
-      variants: [value],
-    })] })).success).toBe(false)
+    expect(ProductSchema.safeParse(product({ listings: [listing({ variants: [value] })] })).success).toBe(false)
   })
 
   it('rejects listPrice without price even on_order', () => {
-    const value = variant({ listPrice: 450 })
+    const value = variant({ availabilityStatus: 'on_order', listPrice: 450 })
     delete (value as Partial<typeof value>).price
-    expect(ProductSchema.safeParse(product({ listings: [listing({
-      availabilityStatus: 'on_order', variants: [value],
-    })] })).success).toBe(false)
+    expect(ProductSchema.safeParse(product({ listings: [listing({ variants: [value] })] })).success).toBe(false)
   })
 
   it.each([[369.999, false], [450.009, true]] as const)('validates on_order listPrice %s after truncation', (listPrice, valid) => {
     expect(ProductSchema.safeParse(product({ listings: [listing({
-      availabilityStatus: 'on_order', variants: [variant({ price: 369.999, listPrice })],
+      variants: [variant({ availabilityStatus: 'on_order', price: 369.999, listPrice })],
     })] })).success).toBe(valid)
+  })
+})
+
+describe('ProductSchema variant condition (FILT-01)', () => {
+  it('accepts omitted state and availability on a variant', () => {
+    const value = variant()
+    delete (value as Partial<typeof value>).state
+    delete (value as Partial<typeof value>).availabilityStatus
+
+    const result = ProductSchema.safeParse(product({ listings: [listing({ variants: [value] })] }))
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0]).not.toHaveProperty('state')
+      expect(result.data.listings[0]).not.toHaveProperty('availabilityStatus')
+      expect(result.data.listings[0].variants[0].state).toBeUndefined()
+      expect(result.data.listings[0].variants[0].availabilityStatus).toBeUndefined()
+    }
+  })
+
+  it('rejects repeated effective condition and accepts a changed condition', () => {
+    const repeated = product({
+      listings: [
+        listing({
+          variants: [
+            variant({ axes: [], state: 'new', availabilityStatus: 'available' }),
+            variant({ axes: [], state: 'new', availabilityStatus: 'available' }),
+          ],
+        }),
+      ],
+    })
+    const changed = product({
+      listings: [
+        listing({
+          variants: [
+            variant({ axes: [], state: 'new', availabilityStatus: 'available' }),
+            variant({ axes: [], state: 'used', availabilityStatus: 'available' }),
+          ],
+        }),
+      ],
+    })
+
+    expect(ProductSchema.safeParse(repeated).success).toBe(false)
+    expect(ProductSchema.safeParse(changed).success).toBe(true)
+  })
+
+  it('accepts an on_order variant with used state without price', () => {
+    const result = ProductSchema.safeParse(
+      product({
+        listings: [
+          listing({
+            variants: [variant({ state: 'used', availabilityStatus: 'on_order', price: undefined })],
+          }),
+        ],
+      }),
+    )
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.listings[0].variants[0].state).toBe('used')
+      expect(result.data.listings[0].variants[0].availabilityStatus).toBe('on_order')
+      expect(result.data.listings[0].variants[0].price).toBeUndefined()
+    }
   })
 })
 
