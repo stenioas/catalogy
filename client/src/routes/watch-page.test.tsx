@@ -695,7 +695,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       expect(share.className).toMatch(/color-mix\(in_srgb,var\(--primary\)_16%,white\)/)
       expect(share.textContent).toBe('Compartilhar')
       expect(share.querySelector('svg')?.classList.contains('lucide-share-2')).toBe(true)
-      expect(screen.getByTestId('price-list').className).toMatch(/\btext-sm\b/)
+      expect(screen.getByTestId('price-list').className).toMatch(/\btext-xs\b/)
       expect(screen.getByTestId('price-badge').className).toMatch(/\btext-xs\b/)
       expect(screen.getByTestId('price-current').className).toMatch(/\btext-2xl\b/)
       const sections = within(left).getAllByRole('heading').map((node) => node.textContent)

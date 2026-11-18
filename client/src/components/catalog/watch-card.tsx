@@ -1,10 +1,10 @@
 import type { CatalogCard, Product } from '@catalogo/shared'
-import { effectiveState, resolveVariant, shareMessage, STATE_LABEL } from '@catalogo/shared'
+import { AVAILABILITY_LABEL, effectiveState, resolveVariant, shareMessage, STATE_LABEL } from '@catalogo/shared'
 import { Link, useLocation } from 'react-router-dom'
 
 import { Card } from '@/components/ui/card'
 
-import { OfferRow, ProductAvailabilityBadge } from './product-badges'
+import { availabilityToneClassName, OfferRow } from './product-badges'
 import { OnOrderPriceNote, PriceBlock } from './price-block'
 import { WantIconLink } from './want-link'
 
@@ -77,6 +77,14 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
                 {STATE_LABEL[condition]}
               </span>
             ) : null}
+            {card.availabilityStatus !== 'available' ? (
+              <span
+                data-testid="availability-badge"
+                className={`pointer-events-none absolute bottom-0 left-0 rounded-tr-[4px] px-1.5 py-0.5 text-xs font-medium leading-none md:px-2.5 md:py-1 md:text-sm ${availabilityToneClassName[card.availabilityStatus]}`}
+              >
+                {AVAILABILITY_LABEL[card.availabilityStatus]}
+              </span>
+            ) : null}
           </div>
         </Link>
         <div
@@ -91,12 +99,6 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
               className="flex min-w-0 flex-1 flex-col items-start self-start gap-1 md:gap-2"
             >
               {!isOnOrder && card.offers.length > 0 ? <OfferRow offers={card.offers} /> : null}
-              <p
-                data-testid="product-condition"
-                className="m-0 flex flex-wrap items-center gap-1.5 text-xs leading-none text-muted-foreground"
-              >
-                <ProductAvailabilityBadge availabilityStatus={card.availabilityStatus} compact />
-              </p>
               <h2 className="m-0 line-clamp-1 w-full min-w-0 truncate overflow-hidden text-ellipsis whitespace-nowrap text-[13px] leading-snug font-medium text-foreground md:font-display md:text-[15px] md:leading-snug md:font-semibold">
                 {card.title}
               </h2>

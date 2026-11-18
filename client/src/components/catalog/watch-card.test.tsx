@@ -139,24 +139,16 @@ describe('WatchCard (SV-13, SV-14)', () => {
       ],
     })
     renderWatchCard(product)
-    const line = screen.getByTestId('product-condition')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
-    const availability = within(line).getByTestId('availability-badge')
     const image = screen.getByTestId('watch-card-image')
     const imageBadge = within(image).queryByTestId('card-image-state-badge')
 
-    expect(within(line).queryByTestId('state-label')).toBeNull()
+    expect(screen.queryByTestId('product-condition')).toBeNull()
+    expect(screen.queryByTestId('availability-badge')).toBeNull()
     expect(screen.queryByTestId('state-label')).toBeNull()
     expect(screen.queryByTestId('state-badge')).toBeNull()
-    expect(line.textContent).not.toMatch(/Novo|Usado|Openbox|Com defeito/)
-    expect(screen.getByTestId('watch-card-body').textContent).not.toMatch(/Novo|Usado|Openbox|Com defeito/)
-    expect(availability.className).toMatch(/rounded-\[4px\]/)
-    expect(availability.className).not.toMatch(/\brounded-full\b/)
-    expect(line.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
-    expect(
-      line.compareDocumentPosition(screen.getByTestId('price-block')) & Node.DOCUMENT_POSITION_FOLLOWING,
-    ).not.toBe(0)
-    expect(image.contains(line)).toBe(false)
+    expect(screen.getByTestId('watch-card-body').textContent).not.toMatch(/Novo|Usado|Openbox|Com defeito|Disponível/)
+    expect(heading.compareDocumentPosition(screen.getByTestId('price-block')) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     if (badgeLabel === null) {
       expect(imageBadge).toBeNull()
     } else {
@@ -179,7 +171,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     ['available', 'Disponível'],
     ['coming_soon', 'Chega em breve'],
     ['on_order', 'Sob encomenda'],
-  ] as const)('shows availability %s in the condition line above the title', (availabilityStatus, label) => {
+  ] as const)('places availability %s on the photo, hiding Disponível', (availabilityStatus, label) => {
     const section =
       availabilityStatus === 'available'
         ? 'available'
@@ -195,27 +187,44 @@ describe('WatchCard (SV-13, SV-14)', () => {
       ],
     })
     renderWatchCard(product, section)
-    const line = screen.getByTestId('product-condition')
-    const badge = within(line).getByTestId('availability-badge')
+    const image = screen.getByTestId('watch-card-image')
+    const body = screen.getByTestId('watch-card-body')
+
+    if (availabilityStatus === 'available') {
+      expect(within(image).queryByTestId('availability-badge')).toBeNull()
+      expect(body.textContent).not.toContain('Disponível')
+      return
+    }
+
+    const badge = within(image).getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
-    expect(badge.className.split(/\s+/)).toEqual(
-      expect.arrayContaining([
-        expect.stringMatching(/^bg-availability-/),
-        expect.stringMatching(/^text-availability-/),
-        'border-0',
-        'rounded-[4px]',
-        'h-5',
-        'px-1.5',
-        'text-xs',
-        'font-medium',
-        'leading-none',
-      ]),
-    )
-    expect(badge.className).not.toMatch(/\brounded-full\b/)
-    if (availabilityStatus === 'on_order') {
-      expect(screen.queryByTestId('price-block')).toBeNull()
+    expect(body.contains(badge)).toBe(false)
+    expect(badge.className).toMatch(/\babsolute\b/)
+    expect(badge.className).toMatch(/\bbottom-0\b/)
+    expect(badge.className).toMatch(/\bleft-0\b/)
+    expect(badge.className).toMatch(/rounded-tr-\[4px\]/)
+    expect(badge.className).not.toMatch(/\btop-0\b/)
+    expect(badge.className).not.toMatch(/\bright-0\b/)
+    expect(badge.className).toMatch(/\bpx-1\.5\b/)
+    expect(badge.className).toMatch(/\bpy-0\.5\b/)
+    expect(badge.className).toMatch(/\btext-xs\b/)
+    expect(badge.className).toMatch(/\bfont-medium\b/)
+    expect(badge.className).toMatch(/\bleading-none\b/)
+    expect(badge.className).toMatch(/\bmd:px-2\.5\b/)
+    expect(badge.className).toMatch(/\bmd:py-1\b/)
+    expect(badge.className).toMatch(/\bmd:text-sm\b/)
+    if (availabilityStatus === 'coming_soon') {
+      expect(badge.className).toMatch(/\bbg-availability-coming-soon\b/)
+      expect(badge.className).toMatch(/\btext-availability-coming-soon-foreground\b/)
+      const stateBadge = within(image).getByTestId('card-image-state-badge')
+      expect(stateBadge.textContent).toBe('Openbox')
+      expect(stateBadge.className).toMatch(/\btop-0\b/)
+      expect(stateBadge.className).toMatch(/\bright-0\b/)
     } else {
-      expect(screen.getByTestId('price-block').contains(badge)).toBe(false)
+      expect(badge.className).toMatch(/\bbg-availability-on-order\b/)
+      expect(badge.className).toMatch(/\btext-availability-on-order-foreground\b/)
+      expect(within(image).queryByTestId('card-image-state-badge')).toBeNull()
+      expect(screen.queryByTestId('price-block')).toBeNull()
     }
   })
 
@@ -604,22 +613,23 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     const body = screen.getByTestId('watch-card-body')
 
     expect(within(body).getByText('De R$ 450,00')).toBeDefined()
-    expect(within(body).getByText('−17%')).toBeDefined()
-    expect(within(body).getByText('R$ 369,90')).toBeDefined()
+    expect(within(body).getByText('17% OFF')).toBeDefined()
+    expect(within(body).getByTestId('price-current').textContent).toBe('R$ 369,90')
     expect(within(body).getByText('no pix')).toBeDefined()
     expect(within(body).getByText(creditInstallmentLabel(369.9))).toBeDefined()
-    expect(within(body).getByText('Disponível')).toBeDefined()
+    expect(within(body).queryByText('Disponível')).toBeNull()
     const list = screen.getByTestId('price-list')
     const badge = screen.getByTestId('price-badge')
     const current = screen.getByTestId('price-current')
     expect(list.className).toMatch(/\btext-xs\b/)
-    expect(list.className).toMatch(/\bmd:text-sm\b/)
+    expect(list.className).not.toMatch(/\bmd:text-sm\b/)
     expect(badge.className).toMatch(/text-\[11px\]/)
     expect(badge.className).not.toMatch(/\bmd:text-sm\b/)
     expect(current.className).toMatch(/\btext-base\b/)
     expect(current.className).toMatch(/\bmd:text-xl\b/)
-    expect(badge.className.split(/\s+/)).toContain('row-start-1')
-    expect(badge.className.split(/\s+/)).not.toContain('row-start-2')
+    expect(badge.className.split(/\s+/)).toContain('row-start-2')
+    expect(badge.className.split(/\s+/)).toContain('col-start-2')
+    expect(screen.getByTestId('price-pix').className.split(/\s+/)).toContain('col-start-3')
     expect(badge.className).not.toMatch(/rotate/)
     expect(screen.getByTestId('price-installments').className).toMatch(/\btext-xs\b/)
   })
@@ -677,12 +687,8 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     renderWatchCard(product)
     const offerRow = screen.getByTestId('offer-row')
     const priceBlock = screen.getByTestId('price-block')
-    const condition = screen.getByTestId('product-condition')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
     expect(offerRow.textContent).toContain('Promo crua')
-    expect(
-      offerRow.compareDocumentPosition(condition) & Node.DOCUMENT_POSITION_FOLLOWING,
-    ).not.toBe(0)
     expect(
       offerRow.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).not.toBe(0)

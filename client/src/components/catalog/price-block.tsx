@@ -9,7 +9,10 @@ export type PriceBlockProps = {
   showcase?: boolean
 }
 
-const currentPriceClassName = 'text-2xl font-semibold'
+const currentPriceClassName = 'text-2xl font-semibold leading-none'
+const discountBadgeClassName =
+  'h-auto rounded-[4px] bg-[#00A650] p-0.5 font-bold text-white'
+const pixClassName = 'font-bold text-[#00A650]'
 
 // Temporário até a fórmula de precificação: o preço atual fica vermelho quando o desconto exibido é de 20% ou mais.
 const HIGH_DISCOUNT_THRESHOLD = 20
@@ -31,6 +34,21 @@ export function OnOrderPriceNote({ showcase = false }: { showcase?: boolean }) {
   )
 }
 
+function CurrentPrice({ label, className }: { label: string; className: string }) {
+  const comma = label.lastIndexOf(',')
+  const reais = label.slice(0, comma)
+  const cents = label.slice(comma)
+
+  return (
+    <span data-testid="price-current" className={`inline-flex items-start ${className}`}>
+      <span data-testid="price-reais">{reais}</span>
+      <span data-testid="price-cents" className="text-[16px] leading-none">
+        {cents}
+      </span>
+    </span>
+  )
+}
+
 export function PriceBlock({
   price,
   listPrice,
@@ -42,9 +60,11 @@ export function PriceBlock({
 
   const percent = listPrice === undefined ? 0 : discountPercent(price, listPrice)
   const showBadge = percent >= 1
+  const discountLabel = `${percent}% OFF`
   const currentPriceTone = percent >= HIGH_DISCOUNT_THRESHOLD ? 'text-destructive' : ''
   const priceRow = listPrice === undefined ? 'row-start-1' : 'row-start-2'
   const installmentRow = listPrice === undefined ? 'row-start-2' : 'row-start-3'
+  const pixColumn = showBadge ? 'col-start-3' : 'col-start-2'
 
   if (showcase) {
     return (
@@ -55,28 +75,26 @@ export function PriceBlock({
         {listPrice !== undefined ? (
           <span
             data-testid="price-list"
-            className="row-start-1 text-xs text-ink-muted-48 line-through md:text-sm"
+            className="row-start-1 text-xs text-ink-muted-48 line-through"
           >
             De {formatBrl(listPrice)}
           </span>
         ) : null}
+        <CurrentPrice
+          label={currentLabel}
+          className={`col-start-1 text-base font-semibold leading-none md:text-xl ${priceRow} ${currentPriceTone}`}
+        />
         {showBadge ? (
           <Badge
             data-testid="price-badge"
-            className="col-start-2 row-start-1 h-auto rounded-[4px] bg-primary-tint-background px-1.5 py-0 text-[11px] font-medium text-primary-tint-foreground"
+            className={`col-start-2 text-[11px] ${discountBadgeClassName} ${priceRow}`}
           >
-            −{percent}%
+            {discountLabel}
           </Badge>
         ) : null}
         <span
-          data-testid="price-current"
-          className={`col-start-1 text-base font-semibold md:text-xl ${priceRow} ${currentPriceTone}`}
-        >
-          {currentLabel}
-        </span>
-        <span
           data-testid="price-pix"
-          className={`col-start-2 text-xs text-muted-foreground md:text-sm ${priceRow}`}
+          className={`${pixColumn} text-xs md:text-sm ${pixClassName} ${priceRow}`}
         >
           no pix
         </span>
@@ -102,25 +120,23 @@ export function PriceBlock({
         >
           <span
             data-testid="price-list"
-            className="text-sm text-ink-muted-48 line-through"
+            className="text-xs text-ink-muted-48 line-through"
           >
             De {formatBrl(listPrice)}
           </span>
-          {showBadge ? (
-            <Badge
-              data-testid="price-badge"
-              className="rounded-[4px] bg-primary-tint-background text-xs font-medium text-primary-tint-foreground"
-            >
-              −{percent}%
-            </Badge>
-          ) : null}
         </div>
       ) : null}
-      <div className="flex flex-wrap items-baseline gap-x-1.5">
-        <span data-testid="price-current" className={`${currentPriceClassName} ${currentPriceTone}`}>
-          {currentLabel}
-        </span>
-        <span data-testid="price-pix" className="text-sm text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-x-1.5">
+        <CurrentPrice label={currentLabel} className={`${currentPriceClassName} ${currentPriceTone}`} />
+        {showBadge ? (
+          <Badge
+            data-testid="price-badge"
+            className={`text-xs ${discountBadgeClassName}`}
+          >
+            {discountLabel}
+          </Badge>
+        ) : null}
+        <span data-testid="price-pix" className={`text-sm ${pixClassName}`}>
           no pix
         </span>
       </div>

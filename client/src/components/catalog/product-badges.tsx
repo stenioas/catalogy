@@ -102,18 +102,24 @@ export function ProductStateBadge({
   )
 }
 
+export const availabilityToneClassName = {
+  available: 'bg-availability-available text-availability-available-foreground',
+  coming_soon: 'bg-availability-coming-soon text-availability-coming-soon-foreground',
+  on_order: 'bg-availability-on-order text-availability-on-order-foreground',
+} satisfies Record<Listing['availabilityStatus'], string>
+
 const availabilityPresentation = {
   available: {
     label: AVAILABILITY_LABEL.available,
-    className: 'bg-availability-available text-availability-available-foreground',
+    className: availabilityToneClassName.available,
   },
   coming_soon: {
     label: AVAILABILITY_LABEL.coming_soon,
-    className: 'bg-availability-coming-soon text-availability-coming-soon-foreground',
+    className: availabilityToneClassName.coming_soon,
   },
   on_order: {
     label: AVAILABILITY_LABEL.on_order,
-    className: 'bg-availability-on-order text-availability-on-order-foreground',
+    className: availabilityToneClassName.on_order,
   },
 } satisfies Record<Listing['availabilityStatus'], { label: string; className: string }>
 
