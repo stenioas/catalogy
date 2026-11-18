@@ -331,6 +331,8 @@ T11 -> T12 -> T13
 
 ### T8: Seletores de condição
 
+**Status**: done
+
 **What**: Estado e Disponibilidade usam o seletor de texto sem entrar no `v`.
 **Where**: `client/src/components/catalog/axis-selectors.tsx`
 **Depends on**: T6

@@ -8,7 +8,12 @@ import { productThumbSrc } from './watch-card'
 export type AxisSelectorsProps = {
   selectors: ListingSelector[]
   activeV: string | null
-  onSelect: (v: string | null) => void
+  activeState?: ListingSelectorOption['state']
+  activeAvailability?: ListingSelectorOption['availability']
+  onSelect: (
+    v: string | null,
+    condition?: Pick<ListingSelectorOption, 'state' | 'availability'>,
+  ) => void
   slug?: string
 }
 
@@ -37,6 +42,16 @@ function axisLine(group: ListingSelector, activeByAxis: Record<string, string>):
   const selected = selectedOption(group, activeByAxis)
   if (selected === undefined) return group.label
   return `${group.label}: ${selected.value}`
+}
+
+function activeConditionValue(
+  group: ListingSelector,
+  activeState: ListingSelectorOption['state'],
+  activeAvailability: ListingSelectorOption['availability'],
+): string | undefined {
+  if (group.axisId === 'variant-state') return activeState
+  if (group.axisId === 'variant-availability') return activeAvailability
+  return undefined
 }
 
 export function advanceVariantScrollLeft(metrics: {
@@ -84,17 +99,28 @@ function imageButtonClass(option: ListingSelectorOption, pressed: boolean): stri
   )
 }
 
-export function AxisSelectors({ selectors, activeV, onSelect, slug = '' }: AxisSelectorsProps) {
+export function AxisSelectors({
+  selectors,
+  activeV,
+  activeState,
+  activeAvailability,
+  onSelect,
+  slug = '',
+}: AxisSelectorsProps) {
   if (selectors.length === 0) return null
 
-  const activeByAxis = activeValueIdsFromV(selectors, activeV)
+  const axisSelectors = selectors.filter(
+    (group) => group.axisId !== 'variant-state' && group.axisId !== 'variant-availability',
+  )
+  const activeByAxis = activeValueIdsFromV(axisSelectors, activeV)
 
   return (
     <div data-testid="axis-selectors" className="flex w-full min-w-0 flex-col gap-3">
       {selectors.map((group) => {
         const image = group.presentation === 'image'
         const line = axisLine(group, activeByAxis)
-        const activeValueId = activeByAxis[group.axisId]
+        const activeValueId =
+          activeConditionValue(group, activeState, activeAvailability) ?? activeByAxis[group.axisId]
 
         return (
           <div
@@ -143,7 +169,13 @@ export function AxisSelectors({ selectors, activeV, onSelect, slug = '' }: AxisS
                     onClick={(event) => {
                       if (controlDisabled || option.v === null) return
                       if (image) scrollImageRowToNext(event.currentTarget)
-                      onSelect(option.v)
+                      if (group.axisId === 'variant-state') {
+                        onSelect(activeV, { state: option.state })
+                      } else if (group.axisId === 'variant-availability') {
+                        onSelect(activeV, { availability: option.availability })
+                      } else {
+                        onSelect(option.v)
+                      }
                     }}
                   >
                     {image ? (
