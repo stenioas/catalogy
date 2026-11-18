@@ -1,5 +1,9 @@
-import { compareTitles } from '../money.ts'
+import { compareTitles, truncateReais } from '../money.ts'
 import type { Listing, Product, Variant } from '../schemas/product.ts'
+import {
+  effectiveAvailability,
+  effectiveState,
+} from './variant-condition.ts'
 
 /**
  * Puts every variant with orderable: false at the end, preserving relative order
@@ -120,7 +124,7 @@ export type CatalogCard = {
   price?: number
   listPrice?: number
   offers: NonNullable<Variant['offers']>
-  availabilityStatus: Listing['availabilityStatus']
+  availabilityStatus: ReturnType<typeof effectiveAvailability>
   statusLabel: string
   path: string
 }
@@ -217,8 +221,8 @@ function toPricedCard(
     image: useCover ? (listing.images[0] ?? '') : variant.mainImage,
     price: variant.price,
     offers: variant.offers ?? [],
-    availabilityStatus: listing.availabilityStatus,
-    statusLabel: AVAILABILITY_LABEL[listing.availabilityStatus],
+    availabilityStatus: effectiveAvailability(variant),
+    statusLabel: AVAILABILITY_LABEL[effectiveAvailability(variant)],
     path: listingPath(
       product.slug,
       listing.id,
@@ -230,15 +234,21 @@ function toPricedCard(
   return card
 }
 
-function toOnOrderCard(product: Product, listing: Listing, listingIndex: number): SortableCard {
+function toUnpricedCard(
+  product: Product,
+  listing: Listing,
+  variant: Variant,
+  listingIndex: number,
+): SortableCard {
+  const availabilityStatus = effectiveAvailability(variant)
   return {
     slug: product.slug,
     listingId: listing.id,
     title: product.title,
     image: listing.images[0] ?? '',
     offers: [],
-    availabilityStatus: listing.availabilityStatus,
-    statusLabel: AVAILABILITY_LABEL[listing.availabilityStatus],
+    availabilityStatus,
+    statusLabel: AVAILABILITY_LABEL[availabilityStatus],
     path: listingPath(product.slug, listing.id, []),
     listingIndex,
   }
@@ -251,20 +261,67 @@ function compareCards(a: SortableCard, b: SortableCard): number {
   return a.listingIndex - b.listingIndex
 }
 
-export function homeCards(products: Product[], section: string | null): CatalogCard[] {
+function hasLegacyListingCondition(products: Product[]): boolean {
+  return products.some((product) =>
+    product.listings.some((listing) => 'availabilityStatus' in listing),
+  )
+}
+
+function legacyPricedCard(
+  product: Product,
+  listing: Listing,
+  variant: Variant,
+  listingIndex: number,
+  useCover: boolean,
+): SortableCard {
+  const legacy = listing as Listing & {
+    availabilityStatus: ReturnType<typeof effectiveAvailability>
+  }
+  return {
+    ...toPricedCard(product, listing, variant, listingIndex, useCover),
+    availabilityStatus: legacy.availabilityStatus,
+    statusLabel: AVAILABILITY_LABEL[legacy.availabilityStatus],
+  }
+}
+
+function legacyOnOrderCard(
+  product: Product,
+  listing: Listing,
+  listingIndex: number,
+): SortableCard {
+  const legacy = listing as Listing & {
+    availabilityStatus: ReturnType<typeof effectiveAvailability>
+  }
+  return {
+    slug: product.slug,
+    listingId: listing.id,
+    title: product.title,
+    image: listing.images[0] ?? '',
+    offers: [],
+    availabilityStatus: legacy.availabilityStatus,
+    statusLabel: AVAILABILITY_LABEL[legacy.availabilityStatus],
+    path: listingPath(product.slug, listing.id, []),
+    listingIndex,
+  }
+}
+
+function legacyHomeCards(products: Product[], section: string | null): CatalogCard[] {
   const resolved = activeSection(products, section)
   const cards: SortableCard[] = []
   for (const product of products) {
     product.listings.forEach((listing, listingIndex) => {
       if (!listingInSection(listing, resolved)) return
-      if (listing.availabilityStatus === 'on_order') {
-        cards.push(toOnOrderCard(product, listing, listingIndex))
+      const legacy = listing as Listing & {
+        availabilityStatus: ReturnType<typeof effectiveAvailability>
+      }
+      if (legacy.availabilityStatus === 'on_order') {
+        cards.push(legacyOnOrderCard(product, listing, listingIndex))
         return
       }
       const variant = lowestPricedOrderableVariant(listing)
       if (variant === null) return
       cards.push(
-        toPricedCard(
+        legacyPricedCard(
           product,
           listing,
           variant,
@@ -276,6 +333,89 @@ export function homeCards(products: Product[], section: string | null): CatalogC
   }
   cards.sort(compareCards)
   return cards.map(({ listingIndex: _listingIndex, ...card }) => card)
+}
+
+const FILTER_IDS = ['all', 'discount', 'female', 'male', 'new', 'openbox', 'used'] as const
+
+export type FilterId = (typeof FILTER_IDS)[number]
+
+export function activeFilter(filter: string | null): FilterId {
+  return FILTER_IDS.some((candidate) => candidate === filter) ? (filter as FilterId) : 'all'
+}
+
+function matchesDiscount(variant: Variant): boolean {
+  if (
+    variant.price === undefined ||
+    variant.listPrice === undefined ||
+    effectiveAvailability(variant) === 'on_order'
+  ) {
+    return false
+  }
+  const price = truncateReais(variant.price)
+  const listPrice = truncateReais(variant.listPrice)
+  return (listPrice - price) / listPrice >= 0.2
+}
+
+function variantMatchesFilter(variant: Variant, filter: FilterId): boolean {
+  if (!canVariantRepresentCard(variant)) return false
+  if (filter === 'discount') return matchesDiscount(variant)
+  if (filter === 'new' || filter === 'openbox' || filter === 'used') {
+    return effectiveState(variant) === filter
+  }
+  return true
+}
+
+function productMatchesFilter(product: Product, filter: FilterId): boolean {
+  if (filter === 'female') {
+    return product.audience === 'female' || product.audience === 'unisex'
+  }
+  if (filter === 'male') {
+    return product.audience === 'male' || product.audience === 'unisex'
+  }
+  return true
+}
+
+export function homeCards(products: Product[], filter: string | null): CatalogCard[] {
+  if (
+    hasLegacyListingCondition(products) &&
+    (filter === null || filter === 'all' || isSectionId(filter))
+  ) {
+    return legacyHomeCards(products, filter)
+  }
+  const resolved = activeFilter(filter)
+  const cards: SortableCard[] = []
+  for (const product of products) {
+    if (!productMatchesFilter(product, resolved)) continue
+    product.listings.forEach((listing, listingIndex) => {
+      if (!canGenerateCard(listing)) return
+      const pool = listing.variants.filter((variant) => variantMatchesFilter(variant, resolved))
+      if (pool.length === 0) return
+      const priced = pool.filter((variant) => variant.price !== undefined)
+      if (priced.length === 0) {
+        cards.push(toUnpricedCard(product, listing, pool[0]!, listingIndex))
+        return
+      }
+      let variant = priced[0]!
+      for (const candidate of priced.slice(1)) {
+        if (candidate.price! < variant.price!) variant = candidate
+      }
+      cards.push(
+        toPricedCard(
+          product,
+          listing,
+          variant,
+          listingIndex,
+          pricesAreUniform(priced),
+        ),
+      )
+    })
+  }
+  cards.sort(compareCards)
+  return cards.map(({ listingIndex: _listingIndex, ...card }) => card)
+}
+
+export function filterHasCards(products: Product[], filter: FilterId): boolean {
+  return homeCards(products, filter).length > 0
 }
 
 export const MISSING_LISTING_TEXT = 'Este relógio não está no catálogo.'

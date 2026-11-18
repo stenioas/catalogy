@@ -215,6 +215,8 @@ T11 -> T12 -> T13
 
 ### T5: Filtros do card
 
+**Status**: done
+
 **What**: `homeCards` escolhe anúncios e a variante do card pelo `filter`.
 **Where**: `shared/src/catalog/listings.ts`
 **Depends on**: T1

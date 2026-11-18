@@ -13,6 +13,8 @@ export {
   canVariantRepresentCard,
   shareMessage,
   homeCards,
+  filterHasCards,
+  activeFilter,
   sectionHasCards,
   activeSection,
   homeEmptyText,
@@ -23,6 +25,7 @@ export {
 } from './catalog/listings.ts'
 export type {
   CatalogCard,
+  FilterId,
   ListingSelector,
   SectionId,
 } from './catalog/listings.ts'

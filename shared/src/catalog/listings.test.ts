@@ -4,8 +4,10 @@ import * as listingModule from './listings.ts'
 import * as shared from '../index.ts'
 import {
   MISSING_LISTING_TEXT,
+  activeFilter,
   activeSection,
   canVariantRepresentCard,
+  filterHasCards,
   homeCards,
   homeEmptyText,
   sectionHasCards,
@@ -804,6 +806,213 @@ describe('homeCards', () => {
     expect(requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto')).title).toBe(
       'Curren Preto fosco',
     )
+  })
+})
+
+describe('homeCards filters', () => {
+  const offer = {
+    text: 'Oferta',
+    background: '#111111',
+    color: '#ffffff',
+    icon: 'Tag',
+  }
+
+  function filteredProduct(
+    audience: Product['audience'],
+    variants: Variant[],
+    listing: Partial<Listing> = {},
+  ): Product {
+    return {
+      slug: `watch-${audience ?? 'none'}`,
+      title: 'Watch',
+      audience,
+      axes: [],
+      listings: [
+        {
+          id: 'main-listing',
+          images: ['cover.jpg', 'variant.jpg'],
+          variants,
+          ...listing,
+        },
+      ],
+    }
+  }
+
+  function filteredVariant(overrides: Partial<Variant> = {}): Variant {
+    return {
+      axes: [],
+      mainImage: 'variant.jpg',
+      ...overrides,
+    }
+  }
+
+  it('shows enabled on-order listings in Todos and hides disabled or non-representable listings', () => {
+    const onOrder = filteredProduct('unisex', [filteredVariant()])
+    const disabled = filteredProduct('unisex', [filteredVariant()], { enabled: false })
+    const unavailable = filteredProduct('unisex', [filteredVariant({ orderable: false })])
+
+    expect(homeCards([onOrder, disabled, unavailable], null).map((card) => card.slug)).toEqual([
+      'watch-unisex',
+    ])
+    expect(homeCards([onOrder, disabled, unavailable], null)[0]).toMatchObject({
+      availabilityStatus: 'on_order',
+      statusLabel: 'Sob encomenda',
+    })
+  })
+
+  it('treats an absent or unknown filter as Todos and reports whether a filter has cards', () => {
+    const product = filteredProduct('unisex', [filteredVariant({ state: 'used' })])
+
+    expect(activeFilter(null)).toBe('all')
+    expect(activeFilter('unknown')).toBe('all')
+    expect(homeCards([product], 'unknown')).toEqual(homeCards([product], null))
+    expect(filterHasCards([product], 'used')).toBe(true)
+    expect(filterHasCards([product], 'new')).toBe(false)
+  })
+
+  it('applies the exact truncated 20 percent discount boundary and excludes on-order variants', () => {
+    const passing = filteredProduct('unisex', [
+      filteredVariant({
+        availabilityStatus: 'available',
+        price: 80,
+        listPrice: 100,
+      }),
+    ])
+    const below = {
+      ...filteredProduct('male', [
+        filteredVariant({
+          availabilityStatus: 'available',
+          price: 80.1,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'below',
+    }
+    const onOrder = {
+      ...filteredProduct('female', [
+        filteredVariant({
+          availabilityStatus: 'on_order',
+          price: 80,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'on-order',
+    }
+
+    expect(homeCards([passing, below, onOrder], 'discount').map((card) => card.slug)).toEqual([
+      'watch-unisex',
+    ])
+  })
+
+  it('matches female and male audiences through unisex, excluding child and missing audience', () => {
+    const products = [
+      filteredProduct('female', [filteredVariant()]),
+      filteredProduct('male', [filteredVariant()]),
+      filteredProduct('unisex', [filteredVariant()]),
+      filteredProduct('child', [filteredVariant()]),
+      filteredProduct(undefined, [filteredVariant()]),
+    ]
+
+    expect(homeCards(products, 'female').map((card) => card.slug)).toEqual([
+      'watch-female',
+      'watch-unisex',
+    ])
+    expect(homeCards(products, 'male').map((card) => card.slug)).toEqual([
+      'watch-male',
+      'watch-unisex',
+    ])
+  })
+
+  it('filters by effective state and excludes defective from the three state filters', () => {
+    const products = [
+      filteredProduct('unisex', [filteredVariant()]),
+      {
+        ...filteredProduct('female', [filteredVariant({ state: 'openbox' })]),
+        slug: 'openbox',
+      },
+      {
+        ...filteredProduct('male', [filteredVariant({ state: 'used' })]),
+        slug: 'used',
+      },
+      {
+        ...filteredProduct('child', [filteredVariant({ state: 'defective' })]),
+        slug: 'defective',
+      },
+    ]
+
+    expect(homeCards(products, 'new').map((card) => card.slug)).toEqual(['watch-unisex'])
+    expect(homeCards(products, 'openbox').map((card) => card.slug)).toEqual(['openbox'])
+    expect(homeCards(products, 'used').map((card) => card.slug)).toEqual(['used'])
+    expect(
+      ['new', 'openbox', 'used'].flatMap((filter) =>
+        homeCards(products, filter).map((card) => card.slug),
+      ),
+    ).not.toContain('defective')
+  })
+
+  it('uses every representable variant for Todos and gender cards, but only matching variants for state cards', () => {
+    const product = filteredProduct('female', [
+      filteredVariant({
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 20,
+        offers: [offer],
+      }),
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'coming_soon',
+        price: 50,
+      }),
+    ])
+
+    expect(homeCards([product], null)).toHaveLength(1)
+    expect(homeCards([product], null)[0]).toMatchObject({
+      price: 20,
+      availabilityStatus: 'available',
+      statusLabel: 'Disponível',
+      offers: [offer],
+    })
+    expect(homeCards([product], 'female')[0]?.price).toBe(20)
+    expect(homeCards([product], 'new')[0]).toMatchObject({
+      price: 50,
+      availabilityStatus: 'coming_soon',
+      statusLabel: 'Chega em breve',
+    })
+  })
+
+  it('uses the cover for equal lowest prices and for a pool without price', () => {
+    const tied = filteredProduct('unisex', [
+      filteredVariant({ availabilityStatus: 'available', price: 40 }),
+      filteredVariant({
+        availabilityStatus: 'coming_soon',
+        price: 40,
+        offers: [offer],
+      }),
+    ])
+    const noPrice = {
+      ...filteredProduct('unisex', [
+        filteredVariant({
+          availabilityStatus: 'on_order',
+          offers: [offer],
+        }),
+      ]),
+      slug: 'no-price',
+    }
+
+    expect(homeCards([tied], null)[0]).toMatchObject({
+      image: 'cover.jpg',
+      price: 40,
+    })
+    expect(homeCards([noPrice], null)[0]).toEqual({
+      slug: 'no-price',
+      listingId: 'main-listing',
+      title: 'Watch',
+      image: 'cover.jpg',
+      offers: [],
+      availabilityStatus: 'on_order',
+      statusLabel: 'Sob encomenda',
+      path: '/product/no-price/main-listing',
+    })
   })
 })
 
