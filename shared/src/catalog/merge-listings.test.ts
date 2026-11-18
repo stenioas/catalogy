@@ -146,6 +146,32 @@ describe('mergeListings', () => {
     expect(variantByValue(merged, 'black').availabilityStatus).toBe('available')
   })
 
+  it('keeps source order inside the same availabilityStatus', () => {
+    const merged = mergeListings(
+      sourceProduct([
+        sourceListing('z-available', 'available'),
+        sourceListing('soon', 'coming_soon'),
+        sourceListing('a-available', 'available', {
+          variants: [
+            {
+              axes: [{ axisId: 'color', valueId: 'blue' }],
+              price: 110,
+              mainImage: 'a-available.webp',
+            },
+          ],
+        }),
+        sourceListing('on-order', 'on_order'),
+      ]) as Product,
+    )
+
+    expect(merged.listings[0]?.images).toEqual([
+      'z-available.webp',
+      'a-available.webp',
+      'soon.webp',
+      'on-order.webp',
+    ])
+  })
+
   it('drops disabled sources when any source is enabled', () => {
     const merged = mergeListings(
       sourceProduct([

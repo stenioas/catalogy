@@ -169,6 +169,19 @@ describe('resolveVariant', () => {
         price: 30,
         mainImage: img,
       },
+      {
+        axes: [{ axisId: 'color', valueId: 'b' }],
+        state: 'new',
+        availabilityStatus: 'on_order',
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'b' }],
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 40,
+        mainImage: img,
+      },
     ])
 
     expect(resolveVariant(listing, { v: 'a', state: 'used', availability: 'on_order' }).price)
@@ -178,6 +191,7 @@ describe('resolveVariant', () => {
     expect(resolveVariant(listing, { v: 'a', state: 'openbox', availability: null }).price).toBe(30)
     expect(resolveVariant(listing, { v: 'a', state: null, availability: 'invalid' }).price).toBe(30)
     expect(resolveVariant(listing, { v: 'a', state: null, availability: 'available' }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'b', state: null, availability: 'coming_soon' }).price).toBe(40)
   })
 
   it('falls back for absent or wrong-sized v and breaks equal availability ties by array order', () => {
@@ -1036,6 +1050,26 @@ describe('homeCards filters', () => {
       offers: [offer],
     })
     expect(homeCards([product], 'female')[0]?.price).toBe(20)
+    const male = filteredProduct('male', [
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'coming_soon',
+        price: 50,
+      }),
+      filteredVariant({
+        orderable: false,
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 5,
+      }),
+      filteredVariant({
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 20,
+        offers: [offer],
+      }),
+    ])
+    expect(homeCards([male], 'male')[0]?.price).toBe(20)
     expect(homeCards([product], 'new')[0]).toMatchObject({
       price: 50,
       availabilityStatus: 'coming_soon',

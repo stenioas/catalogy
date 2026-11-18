@@ -548,6 +548,7 @@ describe('CatalogPage filters', () => {
     cleanup()
     const section = renderHome('/?section=on-order')
     expect(screen.getByRole('button', { name: 'Todos', pressed: true })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Watch' })).toBeDefined()
     expect(section.state.location.search).toBe('?section=on-order')
     cleanup()
     const emptyFilter = renderHome('/?filter=male')
@@ -555,6 +556,12 @@ describe('CatalogPage filters', () => {
     expect(screen.getByRole('button', { name: 'Todos' })).toHaveProperty('disabled', false)
     expect(screen.getByRole('heading', { name: 'Watch' })).toBeDefined()
     expect(emptyFilter.state.location.search).toBe('?filter=male')
+    cleanup()
+    const emptyUsed = renderHome('/?filter=used')
+    expect(screen.getByRole('button', { name: 'Usados' })).toHaveProperty('disabled', true)
+    expect(screen.getByRole('button', { name: 'Todos', pressed: true })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Watch' })).toBeDefined()
+    expect(emptyUsed.state.location.search).toBe('?filter=used')
   })
 
   it('writes discount, male, new, and openbox when those pills are pressed', () => {
