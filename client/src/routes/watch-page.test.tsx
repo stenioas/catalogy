@@ -1472,9 +1472,10 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       </ThemeProvider>,
     )
 
-    expect(screen.getByTestId('state-label').textContent).toBe('Novo')
-    expect(screen.getByTestId('availability-badge').textContent).toBe('Sob encomenda')
-    expect(screen.getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
+    const line = screen.getByTestId('product-condition')
+    expect(within(line).getByTestId('state-label').textContent).toBe('Novo')
+    expect(within(line).getByTestId('availability-badge').textContent).toBe('Sob encomenda')
+    expect(screen.getByTestId('consult-label').textContent).toBe('Preço sob consulta')
     expect(screen.queryByTestId('price-block')).toBeNull()
     expect(screen.queryByTestId('offer-row')).toBeNull()
 

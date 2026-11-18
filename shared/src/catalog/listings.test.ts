@@ -1043,6 +1043,38 @@ describe('homeCards filters', () => {
     })
   })
 
+  it('limits the card pool to the variants that match discount, openbox, and used', () => {
+    const product = filteredProduct('unisex', [
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'available',
+        price: 10,
+      }),
+      filteredVariant({
+        state: 'openbox',
+        availabilityStatus: 'available',
+        price: 40,
+        listPrice: 45,
+      }),
+      filteredVariant({
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 60,
+        listPrice: 70,
+      }),
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'available',
+        price: 80,
+        listPrice: 100,
+      }),
+    ])
+
+    expect(homeCards([product], 'discount')[0]?.price).toBe(80)
+    expect(homeCards([product], 'openbox')[0]?.price).toBe(40)
+    expect(homeCards([product], 'used')[0]?.price).toBe(60)
+  })
+
   it('uses the cover for equal lowest prices and for a pool without price', () => {
     const tied = filteredProduct('unisex', [
       filteredVariant({ availabilityStatus: 'available', price: 40 }),
@@ -1178,10 +1210,13 @@ describe('variant condition selectors and query', () => {
   it('adds condition selectors only for multiple effective values and disables incompatible options', () => {
     const product = conditionProduct()
     const view = requireOpen(listingByPath([product], 'condition', 'main-listing', 'red'))
-    const state = view.selectors.find((selector) => selector.axisId === 'variant-state')
-    const availability = view.selectors.find(
-      (selector) => selector.axisId === 'variant-availability',
-    )
+    expect(view.selectors.map((selector) => selector.axisId)).toEqual([
+      'color',
+      'variant-state',
+      'variant-availability',
+    ])
+    const state = view.selectors[1]
+    const availability = view.selectors[2]
 
     expect(state).toEqual({
       axisId: 'variant-state',
@@ -1240,6 +1275,32 @@ describe('variant condition selectors and query', () => {
 
     const unique = requireOpen(listingByPath([product], 'condition', 'main-listing', 'blue'))
     expect(unique.selectors.map((selector) => selector.axisId)).toEqual(['color'])
+  })
+
+  it('places Disponibilidade after the product axes when Estado is absent', () => {
+    const product = conditionProduct()
+    product.listings[0]!.variants = [
+      {
+        axes: [{ axisId: 'color', valueId: 'red' }],
+        state: 'new',
+        availabilityStatus: 'available',
+        price: 40,
+        mainImage: 'red.jpg',
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'red' }],
+        state: 'new',
+        availabilityStatus: 'on_order',
+        mainImage: 'red.jpg',
+      },
+    ]
+
+    const view = requireOpen(listingByPath([product], 'condition', 'main-listing', 'red'))
+    expect(view.selectors.map((selector) => selector.axisId)).toEqual([
+      'color',
+      'variant-availability',
+    ])
+    expect(view.selectors[1]?.label).toBe('Disponibilidade')
   })
 
   it('keeps v axis-only and adds condition tokens only when that v is ambiguous', () => {

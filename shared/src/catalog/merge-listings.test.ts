@@ -88,14 +88,16 @@ describe('mergeListings', () => {
   it('keeps the available SF741 variant and the variants exclusive to on-order', () => {
     const merged = mergeListings(catalogProduct('steelflier-sf741') as Product)
     const available = variantByValue(merged, 'sf741-zp')
-    const onOrder = variantByValue(merged, 'sf741-kn')
 
     expect(merged.listings).toHaveLength(1)
     expect(merged.listings[0]?.id).toBe('main-listing')
     expect(available.state).toBe('openbox')
     expect(available.availabilityStatus).toBe('available')
-    expect(onOrder.state).toBe('new')
-    expect(onOrder.availabilityStatus).toBe('on_order')
+    for (const valueId of ['sf741-kn', 'sf741-ss', 'sf741-hg', 'sf741-og', 'sf741-hr']) {
+      const exclusive = variantByValue(merged, valueId)
+      expect(exclusive.state).toBe('new')
+      expect(exclusive.availabilityStatus).toBe('on_order')
+    }
     expect(ProductSchema.safeParse(merged).success).toBe(true)
   })
 

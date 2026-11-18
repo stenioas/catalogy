@@ -483,7 +483,12 @@ describe('CatalogPage filters', () => {
       'Usados',
     ])
     expect(within(group).getAllByRole('button', { pressed: true })).toHaveLength(1)
-    expect(screen.getByRole('button', { name: 'Todos', pressed: true }).classList.contains('rounded-full')).toBe(true)
+    expect(group.classList.contains('flex-nowrap')).toBe(true)
+    expect(group.classList.contains('overflow-x-auto')).toBe(true)
+    const pressed = screen.getByRole('button', { name: 'Todos', pressed: true })
+    expect(pressed.classList.contains('rounded-full')).toBe(true)
+    expect(pressed.classList.contains('bg-primary')).toBe(true)
+    expect(pressed).toHaveProperty('disabled', false)
     expect(screen.getByRole('heading', { name: 'Disponível' })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
     expect(router.state.location.search).toBe('')
@@ -547,7 +552,42 @@ describe('CatalogPage filters', () => {
     cleanup()
     const emptyFilter = renderHome('/?filter=male')
     expect(screen.getByRole('button', { name: 'Todos', pressed: true })).toBeDefined()
+    expect(screen.getByRole('button', { name: 'Todos' })).toHaveProperty('disabled', false)
+    expect(screen.getByRole('heading', { name: 'Watch' })).toBeDefined()
     expect(emptyFilter.state.location.search).toBe('?filter=male')
+  })
+
+  it('writes discount, male, new, and openbox when those pills are pressed', () => {
+    mockProductsRef.current = [
+      catalogProduct({
+        slug: 'discount',
+        title: 'Desconto',
+        audience: 'male',
+        listings: [
+          listing('discount', {
+            state: 'new',
+            availabilityStatus: 'available',
+            price: 80,
+            listPrice: 100,
+          }),
+        ],
+      }),
+      catalogProduct({
+        slug: 'openbox',
+        title: 'Caixa',
+        audience: 'male',
+        listings: [listing('openbox', { state: 'openbox', availabilityStatus: 'available', price: 50 })],
+      }),
+    ]
+    const router = renderHome('/')
+    fireEvent.click(screen.getByRole('button', { name: '20%+ de desconto' }))
+    expect(router.state.location.search).toBe('?filter=discount')
+    fireEvent.click(screen.getByRole('button', { name: 'Masculino' }))
+    expect(router.state.location.search).toBe('?filter=male')
+    fireEvent.click(screen.getByRole('button', { name: 'Novos' }))
+    expect(router.state.location.search).toBe('?filter=new')
+    fireEvent.click(screen.getByRole('button', { name: 'Openbox' }))
+    expect(router.state.location.search).toBe('?filter=openbox')
   })
 
   it('disables Todos and shows the empty text when there are no cards', () => {
