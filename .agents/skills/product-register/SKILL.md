@@ -7,7 +7,7 @@ description: Cadastra relógio sob encomenda no catálogo a partir do fragmento 
 
 Receba o `<div id="root">...</div>` colado e conclua o cadastro em `client/public/catalog/products/<slug>/`. Pasta livre é gravada direto; o operador revisa e corrige depois. Não há confirmação geral por `sim` nem leitura completa obrigatória antes de gravar.
 
-Esta skill cria **um** anúncio `sob-encomenda`, `state: "new"`, `availabilityStatus: "on_order"`, sem `price`, `listPrice` ou `orderable` nas variantes. Não extraia preço do AliExpress. Criar/anexar anúncio com preço, mudar para disponível, fundir anúncios, cadastrar/editar vendedor e fazer commit ficam fora deste fluxo.
+Esta skill cria **um** anúncio `main-listing`. Cada variante recebe `availabilityStatus` `on_order` e omite `price`, `listPrice` e `orderable`. Não extraia preço do AliExpress. Criar/anexar anúncio com preço, mudar para disponível, fundir anúncios, cadastrar/editar vendedor e fazer commit ficam fora deste fluxo.
 
 ## Entrada e destino
 
@@ -49,7 +49,8 @@ Monte o objeto usando `ProductSchema` de `@catalogo/shared` como contrato. Leia 
 - Produto: `slug`, `title`, `axes`, opcionais inferíveis, `listings` com **um** anúncio.
 - Garantia padrão do catálogo: inclua `{ "label": "Garantia", "value": "90 dias" }` em `product.specifications`, mesmo quando o HTML não informar garantia. Esta é uma regra do operador, não uma informação inferida do vendedor. A exceção é o kit Seculus + cantil (`seculus-kit-cantil`): não aplique o padrão nem altere sua garantia. Não duplique Garantia nos anúncios.
 - `title`: infira um nome descritivo em português que represente o produto e seu estilo ou função, sem referência ou código do modelo. Exemplo: `Relógio OPK Casual`, em vez de `OPK 6003`. Siga as regras de título de [references/inferencia.md](references/inferencia.md); a referência continua no slug e na especificação Modelo.
-- Anúncio: `id: "sob-encomenda"`, `state: "new"`, `availabilityStatus: "on_order"`, `images`, `variants`. Não anexe a anúncios anteriores: substituição autorizada recria o produto deste HTML.
+- Anúncio: `id: "main-listing"`, `images`, `variants`. Não anexe a anúncios anteriores: substituição autorizada recria o produto deste HTML.
+- Variante: `availabilityStatus` `on_order`; omita `price`, `listPrice` e `orderable`. O estado na leitura vale `new` quando o campo falta.
 - `listing.images`: **todas** as WebP bem-sucedidas em `media/`, só basenames, na ordem coletada. Copie-as para `img/` com o mesmo nome. Para cada uma, grave `img/thumbs/<mesmo nome>` com `write_thumbnail` do script: lado maior até 400 px, WebP qualidade 80, LANCZOS, sem ampliar. Vídeo nunca entra em `img/`, em `img/thumbs/` nem em `listing.images`; o MP4 fica só em `media/`. A capa do catálogo é `listing.images[0]`, primeira foto da ordem do slider; `mainImage` só troca a foto na ficha.
 - Cada propriedade de SKU vira um eixo: `id` em slug, `label` de exibição, valores com `id` em slug e `value` no texto original. Cada variante seleciona exatamente uma vez cada eixo via `{ axisId, valueId }`. Use somente combinações vendidas na página; **não** crie produto cartesiano de opções. Se o HTML não permitir determinar combinações, peça a informação que falta em vez de inventar.
 - Para a propriedade de cor (`cor`, `color` ou equivalente), use sempre `id: "color"` e `label: "Cor"`. Nas variantes, use `axisId: "color"`, inclusive na seção Variantes do `info.md`. Não derive o ID `cor` do rótulo em português. Preserve os textos originais em `value` e derive os IDs dos valores em slug conforme a regra acima; por exemplo, `Black` → `{ id: "black", value: "Black" }`.
