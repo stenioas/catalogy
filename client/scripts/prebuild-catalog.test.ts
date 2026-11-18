@@ -99,6 +99,32 @@ describe('README offer documentation (OSC-16)', () => {
   })
 })
 
+describe('README home filters (FILT-05, T12)', () => {
+  it('documents the seven filter pills on the home', () => {
+    const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
+
+    expect(readme).toContain('**Todos**')
+    expect(readme).toContain('**20%+ de desconto**')
+    expect(readme).toContain('**Feminino**')
+    expect(readme).toContain('**Masculino**')
+    expect(readme).toContain('**Novos**')
+    expect(readme).toContain('**Openbox**')
+    expect(readme).toContain('**Usados**')
+  })
+
+  it('documents the filter query tokens', () => {
+    const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
+
+    expect(readme).toContain('`filter`')
+    expect(readme).toContain('`discount`')
+    expect(readme).toContain('`female`')
+    expect(readme).toContain('`male`')
+    expect(readme).toContain('`new`')
+    expect(readme).toContain('`openbox`')
+    expect(readme).toContain('`used`')
+  })
+})
+
 describe('contrato do relógio (FILT-05)', () => {
   const contratoPath = join(clientRoot, '..', 'docs', 'contrato-relogio.md')
 
@@ -127,5 +153,22 @@ describe('contrato do relógio (FILT-05)', () => {
     expect(contrato).toContain('id `main-listing`')
     expect(contrato).toContain('`availabilityStatus` `on_order`')
     expect(contrato).toContain('omite `price`')
+  })
+})
+
+describe('product-register skill (FILT-05)', () => {
+  it('grava main-listing com variantes on_order sem price', () => {
+    const skill = readFileSync(
+      join(clientRoot, '..', '.agents/skills/product-register/SKILL.md'),
+      'utf8',
+    )
+
+    expect(skill).toContain('id: "main-listing"')
+    expect(skill).toContain(
+      'Cada variante recebe `availabilityStatus` `on_order` e omite `price`',
+    )
+    expect(skill).toContain(
+      'Variante: `availabilityStatus` `on_order`; omita `price`',
+    )
   })
 })

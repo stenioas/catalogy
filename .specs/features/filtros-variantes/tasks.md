@@ -455,6 +455,8 @@ T11 -> T12 -> T13
 
 ### T12: README dos filtros
 
+**Status**: done
+
 **What**: A seção da home descreve os sete botões e a query `filter`.
 **Where**: `README.md`
 **Depends on**: T7, T11
@@ -484,6 +486,8 @@ T11 -> T12 -> T13
 
 ### T13: Skill de cadastro
 
+**Status**: done
+
 **What**: product-register grava `main-listing` e `on_order` na variante, sem preço.
 **Where**: `.agents/skills/product-register/SKILL.md`
 **Depends on**: T12
@@ -498,11 +502,11 @@ T11 -> T12 -> T13
 
 **Done when**:
 
-- [ ] A skill manda gravar o anúncio `main-listing`
-- [ ] Cada variante do cadastro sob encomenda tem `availabilityStatus` `on_order` e não tem `price`
-- [ ] Uma asserção em `client/scripts/prebuild-catalog.test.ts` lê essas frases na skill
-- [ ] Gate: `pnpm test` sai 0
-- [ ] Nenhum teste existente foi apagado ou afrouxado
+- [x] A skill manda gravar o anúncio `main-listing`
+- [x] Cada variante do cadastro sob encomenda tem `availabilityStatus` `on_order` e não tem `price`
+- [x] Uma asserção em `client/scripts/prebuild-catalog.test.ts` lê essas frases na skill
+- [x] Gate: `pnpm test` sai 0
+- [x] Nenhum teste existente foi apagado ou afrouxado
 
 **Tests**: unit
 **Gate**: full
