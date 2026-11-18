@@ -253,6 +253,8 @@ T11 -> T12 -> T13
 
 ### T6: Resolução da ficha
 
+**Status**: done
+
 **What**: `resolveVariant`, os seletores e `shareMessage` desempatam por `state` e `availability`.
 **Where**: `shared/src/catalog/listings.ts`
 **Depends on**: T5

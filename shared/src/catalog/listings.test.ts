@@ -14,6 +14,7 @@ import {
   listingByPath,
   resolveVariant,
   shareMessage,
+  variantQuery,
   variantQueue,
   type ListingView,
 } from './listings.ts'
@@ -144,6 +145,68 @@ describe('resolveVariant', () => {
       { availabilityStatus: 'on_order' },
     )
     expect(resolveVariant(listing, 'b').price).toBe(20)
+  })
+
+  it('uses state and availability to disambiguate v, ignoring invalid or unmatched tokens', () => {
+    const listing = listingWithVariants([
+      {
+        axes: [{ axisId: 'color', valueId: 'a' }],
+        state: 'used',
+        availabilityStatus: 'on_order',
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'a' }],
+        state: 'new',
+        availabilityStatus: 'coming_soon',
+        price: 20,
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'a' }],
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 30,
+        mainImage: img,
+      },
+    ])
+
+    expect(resolveVariant(listing, { v: 'a', state: 'used', availability: 'on_order' }).price)
+      .toBeUndefined()
+    expect(resolveVariant(listing, { v: 'a', state: 'used', availability: null }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'a', state: 'invalid', availability: null }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'a', state: 'openbox', availability: null }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'a', state: null, availability: 'invalid' }).price).toBe(30)
+    expect(resolveVariant(listing, { v: 'a', state: null, availability: 'available' }).price).toBe(30)
+  })
+
+  it('falls back for absent or wrong-sized v and breaks equal availability ties by array order', () => {
+    const listing = listingWithVariants([
+      {
+        axes: [{ axisId: 'color', valueId: 'a' }],
+        availabilityStatus: 'available',
+        price: 10,
+        mainImage: img,
+        orderable: false,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'b' }],
+        availabilityStatus: 'available',
+        price: 20,
+        mainImage: img,
+      },
+      {
+        axes: [{ axisId: 'color', valueId: 'b' }],
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 30,
+        mainImage: img,
+      },
+    ])
+
+    expect(resolveVariant(listing, { v: null, state: null, availability: null }).price).toBe(20)
+    expect(resolveVariant(listing, { v: 'b,extra', state: null, availability: null }).price).toBe(20)
+    expect(resolveVariant(listing, { v: 'b', state: null, availability: null }).price).toBe(20)
   })
 })
 
@@ -1023,6 +1086,166 @@ function requireOpen(view: ListingView) {
   }
   return view
 }
+
+function conditionProduct(): Product {
+  return productOf(
+    'condition',
+    'Condition',
+    [
+      {
+        id: 'main-listing',
+        images: ['cover.jpg', 'red.jpg', 'blue.jpg'],
+        variants: [
+          {
+            axes: [{ axisId: 'color', valueId: 'red' }],
+            state: 'used',
+            availabilityStatus: 'available',
+            price: 30,
+            offers: [{ text: 'Oferta', background: '#111111', color: '#ffffff', icon: 'Tag' }],
+            mainImage: 'red.jpg',
+          },
+          {
+            axes: [{ axisId: 'color', valueId: 'red' }],
+            state: 'new',
+            availabilityStatus: 'available',
+            price: 40,
+            mainImage: 'red.jpg',
+          },
+          {
+            axes: [{ axisId: 'color', valueId: 'red' }],
+            state: 'used',
+            availabilityStatus: 'on_order',
+            offers: [{ text: 'Não mostrar', background: '#111111', color: '#ffffff', icon: 'Tag' }],
+            mainImage: 'red.jpg',
+          },
+          {
+            axes: [{ axisId: 'color', valueId: 'blue' }],
+            state: 'new',
+            availabilityStatus: 'coming_soon',
+            price: 50,
+            mainImage: 'blue.jpg',
+          },
+        ],
+      },
+    ],
+    {
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [
+            { id: 'red', value: 'Vermelho' },
+            { id: 'blue', value: 'Azul' },
+          ],
+        },
+      ],
+    },
+  )
+}
+
+describe('variant condition selectors and query', () => {
+  it('adds condition selectors only for multiple effective values and disables incompatible options', () => {
+    const product = conditionProduct()
+    const view = requireOpen(listingByPath([product], 'condition', 'main-listing', 'red'))
+    const state = view.selectors.find((selector) => selector.axisId === 'variant-state')
+    const availability = view.selectors.find(
+      (selector) => selector.axisId === 'variant-availability',
+    )
+
+    expect(state).toEqual({
+      axisId: 'variant-state',
+      label: 'Estado',
+      presentation: 'text',
+      options: [
+        {
+          valueId: 'new',
+          value: 'Novo',
+          disabled: false,
+          unavailable: false,
+          v: 'red',
+          state: 'new',
+        },
+        {
+          valueId: 'used',
+          value: 'Usado',
+          disabled: false,
+          unavailable: false,
+          v: 'red',
+          state: 'used',
+        },
+      ],
+    })
+    expect(availability).toEqual({
+      axisId: 'variant-availability',
+      label: 'Disponibilidade',
+      presentation: 'text',
+      options: [
+        {
+          valueId: 'available',
+          value: 'Disponível',
+          disabled: false,
+          unavailable: false,
+          v: 'red',
+          availability: 'available',
+        },
+        {
+          valueId: 'coming_soon',
+          value: 'Chega em breve',
+          disabled: true,
+          unavailable: false,
+          v: null,
+          availability: 'coming_soon',
+        },
+        {
+          valueId: 'on_order',
+          value: 'Sob encomenda',
+          disabled: false,
+          unavailable: false,
+          v: 'red',
+          availability: 'on_order',
+        },
+      ],
+    })
+
+    const unique = requireOpen(listingByPath([product], 'condition', 'main-listing', 'blue'))
+    expect(unique.selectors.map((selector) => selector.axisId)).toEqual(['color'])
+  })
+
+  it('keeps v axis-only and adds condition tokens only when that v is ambiguous', () => {
+    const product = conditionProduct()
+    const listing = product.listings[0]!
+
+    expect(variantQuery(product, listing.variants[0]!)).toEqual({
+      v: 'red',
+      state: 'used',
+      availability: 'available',
+    })
+    expect(variantQuery(product, listing.variants[3]!)).toEqual({ v: 'blue' })
+  })
+
+  it('uses effective labels and the disambiguating query in the share message', () => {
+    const product = conditionProduct()
+    const listing = product.listings[0]!
+
+    expect(shareMessage(product, listing, listing.variants[0]!, 'https://loja.example')).toBe(
+      'Olá, tenho interesse no Condition Vermelho. Usado, Disponível. https://loja.example/product/condition/main-listing?v=red&state=used&availability=available',
+    )
+  })
+
+  it('omits offers from an on-order listing view', () => {
+    const product = conditionProduct()
+    const listing = product.listings[0]!
+    const onOrder = listing.variants[2]!
+    const isolated = {
+      ...product,
+      listings: [{ ...listing, variants: [onOrder] }],
+    }
+
+    expect(requireOpen(listingByPath([isolated], 'condition', 'main-listing', 'red')).offers).toEqual(
+      [],
+    )
+  })
+})
 
 describe('listingByPath', () => {
   it('opens the first listing that would enter the home, by section then listings order', () => {

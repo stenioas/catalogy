@@ -63,34 +63,67 @@ function findVariantForV(queue: Variant[], v: string, orderedAxisIds: string[]):
   return queue.find((variant) => variantMatchesValueIds(variant, valueIds, orderedAxisIds)) ?? null
 }
 
+export type VariantResolutionQuery = {
+  v: string | null
+  state: string | null
+  availability: string | null
+}
+
+const STATE_IDS = ['new', 'openbox', 'used', 'defective'] as const
+const AVAILABILITY_IDS = ['available', 'coming_soon', 'on_order'] as const
+
+function isState(value: string | null): value is (typeof STATE_IDS)[number] {
+  return STATE_IDS.some((candidate) => candidate === value)
+}
+
+function isAvailability(value: string | null): value is (typeof AVAILABILITY_IDS)[number] {
+  return AVAILABILITY_IDS.some((candidate) => candidate === value)
+}
+
 /**
- * Resolves the active variant from the listing and the `v` query (VAR-69–VAR-72).
- * Invalid or absent `v` opens the first variant in queue order, except when every
- * variant is non-orderable: then the first variant of the original array is used.
+ * Resolves the active variant from axes, state, and availability.
  */
-export function resolveVariant(listing: Listing, v: string | null): Variant {
+export function resolveVariant(
+  listing: Listing,
+  input: string | null | VariantResolutionQuery,
+): Variant {
   const queue = variantQueue(listing)
   const original = listing.variants
   const orderedAxisIds = axisOrder(listing)
+  const query = typeof input === 'object' && input !== null
+    ? input
+    : { v: input, state: null, availability: null }
+  const v = query.v
 
   const vIsEmpty = v === null || v === undefined || v.trim() === ''
-
-  const hasAxes = orderedAxisIds.length > 0
-  let resolved: Variant | null = null
-  if (hasAxes && !vIsEmpty) {
-    resolved = findVariantForV(queue, v!, orderedAxisIds)
+  const valueIds = vIsEmpty ? null : parseValueIdsFromV(v, orderedAxisIds.length)
+  if (orderedAxisIds.length > 0 && valueIds !== null) {
+    let candidates = original.filter((variant) =>
+      variantMatchesValueIds(variant, valueIds, orderedAxisIds),
+    )
+    if (candidates.length > 0) {
+      if (isState(query.state)) {
+        const stateMatches = candidates.filter(
+          (variant) => effectiveState(variant) === query.state,
+        )
+        if (stateMatches.length > 0) candidates = stateMatches
+      }
+      if (isAvailability(query.availability)) {
+        const availabilityMatches = candidates.filter(
+          (variant) => effectiveAvailability(variant) === query.availability,
+        )
+        if (availabilityMatches.length > 0) candidates = availabilityMatches
+      }
+      for (const availability of AVAILABILITY_IDS) {
+        const winner = candidates.find(
+          (variant) => effectiveAvailability(variant) === availability,
+        )
+        if (winner !== undefined) return winner
+      }
+    }
   }
 
-  if (resolved !== null) {
-    return resolved
-  }
-
-  const everyNonOrderable = original.every((item) => item.orderable === false)
-  if (everyNonOrderable && original[0] !== undefined) {
-    return original[0]
-  }
-
-  return queue[0]!
+  return original.every((item) => item.orderable === false) ? original[0]! : queue[0]!
 }
 
 export const AVAILABILITY_LABEL = {
@@ -105,6 +138,21 @@ export const STATE_LABEL = {
   used: 'Usado',
   defective: 'Com defeito',
 } as const
+
+function stateForView(listing: Listing, variant: Variant): ReturnType<typeof effectiveState> {
+  const legacy = listing as Listing & { state?: ReturnType<typeof effectiveState> }
+  return variant.state ?? legacy.state ?? effectiveState(variant)
+}
+
+function availabilityForView(
+  listing: Listing,
+  variant: Variant,
+): ReturnType<typeof effectiveAvailability> {
+  const legacy = listing as Listing & {
+    availabilityStatus?: ReturnType<typeof effectiveAvailability>
+  }
+  return variant.availabilityStatus ?? legacy.availabilityStatus ?? effectiveAvailability(variant)
+}
 
 export const NO_ACTIVE_LISTING_TEXT = 'Não temos nenhum anúncio ativo.'
 
@@ -427,6 +475,8 @@ export type ListingSelectorOption = {
   /** true when a valid combination exists but the target variant is not orderable (Indisponível) */
   unavailable: boolean
   v: string | null
+  state?: ReturnType<typeof effectiveState>
+  availability?: ReturnType<typeof effectiveAvailability>
   imageFile?: string
 }
 
@@ -447,7 +497,7 @@ export type OpenListingView = {
   listPrice?: number
   observations?: string
   offers: NonNullable<Variant['offers']>
-  availabilityStatus: Listing['availabilityStatus']
+  availabilityStatus: ReturnType<typeof effectiveAvailability>
   description?: string
   productSpecifications: NonNullable<Product['specifications']>
   listingSpecifications: NonNullable<Listing['specifications']>
@@ -468,10 +518,36 @@ function firstListingForSlug(product: Product): Listing | null {
   return null
 }
 
-function variantQuery(product: Product, variant: Variant): string | null {
+function axisQuery(product: Product, variant: Variant): string | null {
   const ids = valueIdsInAxisOrder(product, variant)
   if (ids.length === 0) return null
   return ids.join(',')
+}
+
+export type VariantQuery = {
+  v: string | null
+  state?: ReturnType<typeof effectiveState>
+  availability?: ReturnType<typeof effectiveAvailability>
+}
+
+export function variantQuery(product: Product, variant: Variant): VariantQuery {
+  const v = axisQuery(product, variant)
+  const query: VariantQuery = { v }
+  const listing = product.listings.find((candidate) => candidate.variants.includes(variant))
+  if (listing === undefined || v === null) return query
+
+  const orderedAxisIds = product.axes.map((axis) => axis.id)
+  const valueIds = valueIdsInAxisOrder(product, variant)
+  const matches = listing.variants.filter((candidate) =>
+    variantMatchesValueIds(candidate, valueIds, orderedAxisIds),
+  )
+  if (new Set(matches.map(effectiveState)).size > 1) {
+    query.state = effectiveState(variant)
+  }
+  if (new Set(matches.map(effectiveAvailability)).size > 1) {
+    query.availability = effectiveAvailability(variant)
+  }
+  return query
 }
 
 function variantContains(variant: Variant, axisId: string, valueId: string): boolean {
@@ -485,13 +561,84 @@ function compatibleWithOtherAxes(variant: Variant, active: Variant, axisId: stri
   })
 }
 
+function sameAxes(left: Variant, right: Variant): boolean {
+  return left.axes.every((selection) =>
+    variantContains(right, selection.axisId, selection.valueId),
+  )
+}
+
+function conditionSelectors(
+  product: Product,
+  listing: Listing,
+  active: Variant,
+): ListingSelector[] {
+  const axisMatches = listing.variants.filter((variant) => sameAxes(variant, active))
+  const selectors: ListingSelector[] = []
+
+  if (new Set(axisMatches.map(effectiveState)).size > 1) {
+    const values = STATE_IDS.filter((state) =>
+      listing.variants.some((variant) => effectiveState(variant) === state),
+    )
+    selectors.push({
+      axisId: 'variant-state',
+      label: 'Estado',
+      presentation: 'text',
+      options: values.map((state) => {
+        const landing = listing.variants.find(
+          (variant) =>
+            sameAxes(variant, active) &&
+            effectiveState(variant) === state &&
+            effectiveAvailability(variant) === effectiveAvailability(active),
+        )
+        return {
+          valueId: state,
+          value: STATE_LABEL[state],
+          disabled: landing === undefined,
+          unavailable: landing?.orderable === false,
+          v: landing === undefined ? null : axisQuery(product, active),
+          state,
+        }
+      }),
+    })
+  }
+
+  if (new Set(axisMatches.map(effectiveAvailability)).size > 1) {
+    const values = AVAILABILITY_IDS.filter((availability) =>
+      listing.variants.some((variant) => effectiveAvailability(variant) === availability),
+    )
+    selectors.push({
+      axisId: 'variant-availability',
+      label: 'Disponibilidade',
+      presentation: 'text',
+      options: values.map((availability) => {
+        const landing = listing.variants.find(
+          (variant) =>
+            sameAxes(variant, active) &&
+            effectiveAvailability(variant) === availability &&
+            effectiveState(variant) === effectiveState(active),
+        )
+        return {
+          valueId: availability,
+          value: AVAILABILITY_LABEL[availability],
+          disabled: landing === undefined,
+          unavailable: landing?.orderable === false,
+          v: landing === undefined ? null : axisQuery(product, active),
+          availability,
+        }
+      }),
+    })
+  }
+
+  return selectors
+}
+
 function selectorsFor(
   product: Product,
   listing: Listing,
   active: Variant,
 ): ListingSelector[] {
   const queue = variantQueue(listing)
-  return product.axes.flatMap((axis) => {
+  const axes = product.axes.flatMap((axis) => {
     const presentation = axis.presentation ?? 'text'
     const options = axis.values.flatMap((axisValue) => {
       const landing = queue.find((variant) => variantContains(variant, axis.id, axisValue.id))
@@ -507,7 +654,7 @@ function selectorsFor(
         value: axisValue.value,
         disabled: !possible,
         unavailable,
-        v: possible ? variantQuery(product, landing) : null,
+        v: possible ? axisQuery(product, landing) : null,
       }
       if (presentation === 'image') option.imageFile = landing.mainImage
       return [option]
@@ -522,6 +669,7 @@ function selectorsFor(
       },
     ]
   })
+  return [...axes, ...conditionSelectors(product, listing, active)]
 }
 
 function pageTitle(product: Product, variant: Variant): string {
@@ -545,25 +693,33 @@ export function shareMessage(
   origin: string,
 ): string {
   const title = pageTitle(product, variant)
-  const stateLabel = STATE_LABEL[listing.state]
+  const stateLabel = STATE_LABEL[stateForView(listing, variant)]
+  const availability = availabilityForView(listing, variant)
   const availabilityLabel =
-    variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[listing.availabilityStatus]
-  const path = listingPath(product.slug, listing.id, valueIdsInAxisOrder(product, variant))
+    variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[availability]
+  const query = variantQuery(product, variant)
+  const params = new URLSearchParams()
+  if (query.v !== null) params.set('v', query.v)
+  if (query.state !== undefined) params.set('state', query.state)
+  if (query.availability !== undefined) params.set('availability', query.availability)
+  const queryString = params.toString().replace(/%2C/gi, ',')
+  const path = `/product/${product.slug}/${listing.id}${queryString === '' ? '' : `?${queryString}`}`
   const base = origin.replace(/\/$/, '')
   return `Olá, tenho interesse no ${title}. ${stateLabel}, ${availabilityLabel}. ${base}${path}`
 }
 
 function openListing(product: Product, listing: Listing, v: string | null): OpenListingView {
   const variant = resolveVariant(listing, v)
+  const availability = availabilityForView(listing, variant)
   const view: OpenListingView = {
     missing: false,
     listingId: listing.id,
     title: pageTitle(product, variant),
-    stateLabel: STATE_LABEL[listing.state],
+    stateLabel: STATE_LABEL[stateForView(listing, variant)],
     availabilityLabel:
-      variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[listing.availabilityStatus],
-    offers: variant.offers ?? [],
-    availabilityStatus: listing.availabilityStatus,
+      variant.orderable === false ? 'Indisponível' : AVAILABILITY_LABEL[availability],
+    offers: availability === 'on_order' ? [] : (variant.offers ?? []),
+    availabilityStatus: availability,
     productSpecifications: product.specifications ?? [],
     listingSpecifications: listing.specifications ?? [],
     images: listing.images,
