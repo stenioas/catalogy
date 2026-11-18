@@ -26,6 +26,7 @@ export type {
   ListingSelector,
   SectionId,
 } from './catalog/listings.ts'
+export { mergeListings } from './catalog/merge-listings.ts'
 export {
   truncateReais,
   formatBrl,

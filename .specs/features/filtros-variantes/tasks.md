@@ -146,6 +146,8 @@ T11 -> T12 -> T13
 
 ### T3: Função de fusão
 
+**Status**: done
+
 **What**: Fundir os anúncios de um produto em `main-listing`.
 **Where**: `shared/src/catalog/merge-listings.ts`
 **Depends on**: T2
