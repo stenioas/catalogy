@@ -490,6 +490,7 @@ describe('CatalogPage filters', () => {
     expect(group.classList.contains('pb-4')).toBe(false)
     const pressed = screen.getByRole('button', { name: 'Todos', pressed: true })
     expect(pressed.classList.contains('rounded-full')).toBe(true)
+    expect(pressed.classList.contains('cursor-pointer')).toBe(true)
     expect(pressed.classList.contains('bg-primary')).toBe(true)
     expect(pressed).toHaveProperty('disabled', false)
     expect(screen.getByRole('heading', { name: 'Disponível' })).toBeDefined()

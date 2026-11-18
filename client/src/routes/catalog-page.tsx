@@ -78,7 +78,7 @@ export function CatalogPage() {
                   variant={resolved === filter.id ? 'default' : 'outline'}
                   aria-pressed={resolved === filter.id}
                   disabled={filter.id === 'all' ? cards.length === 0 : !filterHasCards(products, filter.id)}
-                  className="flex-none rounded-full"
+                  className="flex-none cursor-pointer rounded-full"
                   onClick={() => selectFilter(filter.id)}
                 >
                   {filter.label}
