@@ -96,9 +96,7 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "addiesdive-ad2035-1.webp",
         "addiesdive-ad2035-2.webp",
@@ -132,47 +130,8 @@
               "valueId": "steel"
             }
           ],
-          "mainImage": "addiesdive-ad2035-7.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-available",
-      "state": "used",
-      "availabilityStatus": "available",
-      "images": [
-        "addiesdive-ad2035-1.webp",
-        "addiesdive-ad2035-2.webp",
-        "addiesdive-ad2035-3.webp",
-        "addiesdive-ad2035-4.webp",
-        "addiesdive-ad2035-5.webp",
-        "addiesdive-ad2035-6.webp",
-        "addiesdive-ad2035-7.webp",
-        "addiesdive-ad2035-8.webp",
-        "addiesdive-ad2035-9.webp",
-        "addiesdive-ad2035-10.webp",
-        "addiesdive-ad2035-11.webp",
-        "addiesdive-ad2035-12.webp",
-        "addiesdive-ad2035-13.webp",
-        "addiesdive-ad2035-14.webp",
-        "addiesdive-ad2035-15.webp",
-        "addiesdive-ad2035-16.webp",
-        "addiesdive-ad2035-17.webp",
-        "addiesdive-ad2035-18.webp",
-        "addiesdive-ad2035-19.webp",
-        "addiesdive-ad2035-20.webp",
-        "addiesdive-ad2035-21.webp",
-        "addiesdive-ad2035-22.webp",
-        "addiesdive-ad2035-23.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "steel"
-            }
-          ],
+          "state": "used",
+          "availabilityStatus": "available",
           "price": 499.9,
           "listPrice": 689.9,
           "offers": [
@@ -183,6 +142,17 @@
               "icon": "Gift"
             }
           ],
+          "mainImage": "addiesdive-ad2035-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "steel"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "addiesdive-ad2035-7.webp"
         }
       ]

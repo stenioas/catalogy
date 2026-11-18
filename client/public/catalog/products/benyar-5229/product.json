@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "silver-black",
@@ -29,7 +28,8 @@
           "id": "silver-white",
           "value": "Silver White"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -92,9 +92,7 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "benyar-5229-1.webp",
         "benyar-5229-2.webp",
@@ -130,6 +128,8 @@
               "valueId": "silver-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "benyar-5229-7.webp"
         },
         {
@@ -139,6 +139,8 @@
               "valueId": "silver-pink"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "benyar-5229-8.webp"
         },
         {
@@ -148,6 +150,8 @@
               "valueId": "silver-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "benyar-5229-9.webp"
         },
         {
@@ -157,6 +161,8 @@
               "valueId": "silver-green"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "benyar-5229-10.webp"
         },
         {
@@ -166,6 +172,8 @@
               "valueId": "silver-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "benyar-5229-11.webp"
         }
       ]

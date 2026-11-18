@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "blue",
@@ -21,7 +20,8 @@
           "id": "orange",
           "value": "Orange"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -104,31 +104,29 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "addiesdive-ad2554-1.webp",
         "addiesdive-ad2554-2.webp",
         "addiesdive-ad2554-3.webp",
         "addiesdive-ad2554-4.webp",
         "addiesdive-ad2554-5.webp",
-        "addiesdive-ad2554-6.webp",
         "addiesdive-ad2554-7.webp",
+        "addiesdive-ad2554-11.webp",
+        "addiesdive-ad2554-13.webp",
+        "addiesdive-ad2554-14.webp",
+        "addiesdive-ad2554-15.webp",
+        "addiesdive-ad2554-16.webp",
+        "addiesdive-ad2554-20.webp",
+        "addiesdive-ad2554-21.webp",
+        "addiesdive-ad2554-6.webp",
         "addiesdive-ad2554-8.webp",
         "addiesdive-ad2554-9.webp",
         "addiesdive-ad2554-10.webp",
-        "addiesdive-ad2554-11.webp",
         "addiesdive-ad2554-12.webp",
-        "addiesdive-ad2554-13.webp",
-        "addiesdive-ad2554-14.webp",
-        "addiesdive-ad2554-15.webp",
-        "addiesdive-ad2554-16.webp",
         "addiesdive-ad2554-17.webp",
         "addiesdive-ad2554-18.webp",
-        "addiesdive-ad2554-19.webp",
-        "addiesdive-ad2554-20.webp",
-        "addiesdive-ad2554-21.webp"
+        "addiesdive-ad2554-19.webp"
       ],
       "variants": [
         {
@@ -138,55 +136,8 @@
               "valueId": "blue"
             }
           ],
-          "mainImage": "addiesdive-ad2554-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gray"
-            }
-          ],
-          "mainImage": "addiesdive-ad2554-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "orange"
-            }
-          ],
-          "mainImage": "addiesdive-ad2554-9.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-available",
-      "state": "new",
-      "availabilityStatus": "available",
-      "images": [
-        "addiesdive-ad2554-1.webp",
-        "addiesdive-ad2554-2.webp",
-        "addiesdive-ad2554-3.webp",
-        "addiesdive-ad2554-4.webp",
-        "addiesdive-ad2554-5.webp",
-        "addiesdive-ad2554-7.webp",
-        "addiesdive-ad2554-11.webp",
-        "addiesdive-ad2554-13.webp",
-        "addiesdive-ad2554-14.webp",
-        "addiesdive-ad2554-15.webp",
-        "addiesdive-ad2554-16.webp",
-        "addiesdive-ad2554-20.webp",
-        "addiesdive-ad2554-21.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "blue"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "available",
           "price": 399.9,
           "listPrice": 539.9,
           "offers": [
@@ -198,6 +149,39 @@
             }
           ],
           "mainImage": "addiesdive-ad2554-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "addiesdive-ad2554-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gray"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "addiesdive-ad2554-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "orange"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "addiesdive-ad2554-9.webp"
         }
       ]
     }

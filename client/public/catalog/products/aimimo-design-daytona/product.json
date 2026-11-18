@@ -108,18 +108,16 @@
   ],
   "listings": [
     {
-      "id": "listing",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "aimimo-design-daytona-1.webp",
+        "aimimo-design-daytona-5.webp",
+        "aimimo-design-daytona-6.webp",
+        "aimimo-design-daytona-8.webp",
         "aimimo-design-daytona-2.webp",
         "aimimo-design-daytona-3.webp",
         "aimimo-design-daytona-4.webp",
-        "aimimo-design-daytona-5.webp",
-        "aimimo-design-daytona-6.webp",
         "aimimo-design-daytona-7.webp",
-        "aimimo-design-daytona-8.webp",
         "aimimo-design-daytona-9.webp",
         "aimimo-design-daytona-10.webp"
       ],
@@ -128,58 +126,11 @@
           "axes": [
             {
               "axisId": "cor",
-              "valueId": "black-bezel-black"
-            }
-          ],
-          "mainImage": "aimimo-design-daytona-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
               "valueId": "black-bezel-white"
             }
           ],
-          "mainImage": "aimimo-design-daytona-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "steel-bezel-white"
-            }
-          ],
-          "mainImage": "aimimo-design-daytona-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "steel-bezel-black"
-            }
-          ],
-          "mainImage": "aimimo-design-daytona-10.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "aimimo-design-daytona-1.webp",
-        "aimimo-design-daytona-5.webp",
-        "aimimo-design-daytona-6.webp",
-        "aimimo-design-daytona-8.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "cor",
-              "valueId": "black-bezel-white"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 299.9,
           "listPrice": 399.9,
           "offers": [
@@ -191,6 +142,50 @@
             }
           ],
           "mainImage": "aimimo-design-daytona-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-bezel-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "aimimo-design-daytona-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "black-bezel-white"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "aimimo-design-daytona-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "steel-bezel-white"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "aimimo-design-daytona-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "cor",
+              "valueId": "steel-bezel-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "aimimo-design-daytona-10.webp"
         }
       ]
     }

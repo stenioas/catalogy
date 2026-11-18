@@ -32,9 +32,7 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "pochete-nylon-ajustavel-1.webp",
         "pochete-nylon-ajustavel-2.webp",
@@ -65,6 +63,18 @@
               "valueId": "black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 34.9,
+          "listPrice": 49.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
           "mainImage": "pochete-nylon-ajustavel-7.webp"
         },
         {
@@ -74,6 +84,18 @@
               "valueId": "gray"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 34.9,
+          "listPrice": 49.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
           "mainImage": "pochete-nylon-ajustavel-8.webp"
         },
         {
@@ -81,39 +103,22 @@
             {
               "axisId": "color",
               "valueId": "blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 34.9,
+          "listPrice": 49.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
             }
           ],
           "mainImage": "pochete-nylon-ajustavel-9.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "pochete-nylon-ajustavel-1.webp",
-        "pochete-nylon-ajustavel-2.webp",
-        "pochete-nylon-ajustavel-3.webp",
-        "pochete-nylon-ajustavel-4.webp",
-        "pochete-nylon-ajustavel-5.webp",
-        "pochete-nylon-ajustavel-6.webp",
-        "pochete-nylon-ajustavel-7.webp",
-        "pochete-nylon-ajustavel-8.webp",
-        "pochete-nylon-ajustavel-9.webp",
-        "pochete-nylon-ajustavel-10.webp",
-        "pochete-nylon-ajustavel-11.webp",
-        "pochete-nylon-ajustavel-12.webp",
-        "pochete-nylon-ajustavel-13.webp",
-        "pochete-nylon-ajustavel-14.webp",
-        "pochete-nylon-ajustavel-15.webp",
-        "pochete-nylon-ajustavel-16.webp",
-        "pochete-nylon-ajustavel-17.webp",
-        "pochete-nylon-ajustavel-18.webp",
-        "pochete-nylon-ajustavel-19.webp",
-        "pochete-nylon-ajustavel-20.webp"
-      ],
-      "variants": [
+        },
         {
           "axes": [
             {
@@ -121,16 +126,8 @@
               "valueId": "black"
             }
           ],
-          "price": 34.9,
-          "listPrice": 49.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "pochete-nylon-ajustavel-7.webp"
         },
         {
@@ -140,16 +137,8 @@
               "valueId": "gray"
             }
           ],
-          "price": 34.9,
-          "listPrice": 49.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "pochete-nylon-ajustavel-8.webp"
         },
         {
@@ -159,16 +148,8 @@
               "valueId": "blue"
             }
           ],
-          "price": 34.9,
-          "listPrice": 49.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "pochete-nylon-ajustavel-9.webp"
         }
       ]

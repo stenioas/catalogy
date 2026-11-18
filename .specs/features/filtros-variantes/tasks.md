@@ -395,6 +395,8 @@ T11 -> T12 -> T13
 
 ### T10: Gravar o catálogo fundido
 
+**Status**: done
+
 **What**: Script que funde cada `product.json` e regenera o catálogo compilado.
 **Where**: `client/scripts/merge-variant-listings.ts`
 **Depends on**: T3, T4

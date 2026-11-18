@@ -32,9 +32,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "trisjem-porta-cartoes-ultrafino-1.webp",
         "trisjem-porta-cartoes-ultrafino-2.webp",
@@ -61,6 +59,8 @@
               "valueId": "cafe"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "trisjem-porta-cartoes-ultrafino-7.webp"
         },
         {
@@ -70,6 +70,8 @@
               "valueId": "preto"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "trisjem-porta-cartoes-ultrafino-8.webp"
         }
       ]

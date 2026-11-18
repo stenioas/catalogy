@@ -96,9 +96,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "curren-8498l-1.webp",
         "curren-8498l-2.webp",
@@ -144,6 +142,8 @@
               "valueId": "silver-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8498l-7.webp"
         },
         {
@@ -153,6 +153,8 @@
               "valueId": "silver-gold"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8498l-8.webp"
         },
         {
@@ -162,6 +164,8 @@
               "valueId": "goldn-silver"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8498l-9.webp"
         },
         {
@@ -171,6 +175,8 @@
               "valueId": "silver"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8498l-10.webp"
         },
         {
@@ -180,6 +186,8 @@
               "valueId": "black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8498l-11.webp"
         },
         {
@@ -189,6 +197,8 @@
               "valueId": "gold"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8498l-12.webp"
         },
         {
@@ -198,6 +208,8 @@
               "valueId": "silver-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8498l-13.webp"
         }
       ]

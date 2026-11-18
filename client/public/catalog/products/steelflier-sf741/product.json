@@ -115,17 +115,24 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
-        "steelflier-sf741-1.webp",
         "steelflier-sf741-2.webp",
+        "steelflier-sf741-7.webp",
+        "steelflier-sf741-20.webp",
+        "steelflier-sf741-21.webp",
+        "steelflier-sf741-22.webp",
+        "steelflier-sf741-23.webp",
+        "steelflier-sf741-24.webp",
+        "steelflier-sf741-25.webp",
+        "steelflier-sf741-26.webp",
+        "steelflier-sf741-27.webp",
+        "steelflier-sf741-36.webp",
+        "steelflier-sf741-1.webp",
         "steelflier-sf741-3.webp",
         "steelflier-sf741-4.webp",
         "steelflier-sf741-5.webp",
         "steelflier-sf741-6.webp",
-        "steelflier-sf741-7.webp",
         "steelflier-sf741-8.webp",
         "steelflier-sf741-9.webp",
         "steelflier-sf741-10.webp",
@@ -138,14 +145,6 @@
         "steelflier-sf741-17.webp",
         "steelflier-sf741-18.webp",
         "steelflier-sf741-19.webp",
-        "steelflier-sf741-20.webp",
-        "steelflier-sf741-21.webp",
-        "steelflier-sf741-22.webp",
-        "steelflier-sf741-23.webp",
-        "steelflier-sf741-24.webp",
-        "steelflier-sf741-25.webp",
-        "steelflier-sf741-26.webp",
-        "steelflier-sf741-27.webp",
         "steelflier-sf741-28.webp",
         "steelflier-sf741-29.webp",
         "steelflier-sf741-30.webp",
@@ -153,82 +152,7 @@
         "steelflier-sf741-32.webp",
         "steelflier-sf741-33.webp",
         "steelflier-sf741-34.webp",
-        "steelflier-sf741-35.webp",
-        "steelflier-sf741-36.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "variantion",
-              "valueId": "sf741-kn"
-            }
-          ],
-          "mainImage": "steelflier-sf741-3.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "variantion",
-              "valueId": "sf741-ss"
-            }
-          ],
-          "mainImage": "steelflier-sf741-1.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "variantion",
-              "valueId": "sf741-hg"
-            }
-          ],
-          "mainImage": "steelflier-sf741-4.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "variantion",
-              "valueId": "sf741-og"
-            }
-          ],
-          "mainImage": "steelflier-sf741-5.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "variantion",
-              "valueId": "sf741-zp"
-            }
-          ],
-          "mainImage": "steelflier-sf741-2.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "variantion",
-              "valueId": "sf741-hr"
-            }
-          ],
-          "mainImage": "steelflier-sf741-6.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-available",
-      "state": "openbox",
-      "availabilityStatus": "available",
-      "images": [
-        "steelflier-sf741-2.webp",
-        "steelflier-sf741-7.webp",
-        "steelflier-sf741-20.webp",
-        "steelflier-sf741-21.webp",
-        "steelflier-sf741-22.webp",
-        "steelflier-sf741-23.webp",
-        "steelflier-sf741-24.webp",
-        "steelflier-sf741-25.webp",
-        "steelflier-sf741-26.webp",
-        "steelflier-sf741-27.webp",
-        "steelflier-sf741-36.webp"
+        "steelflier-sf741-35.webp"
       ],
       "variants": [
         {
@@ -238,6 +162,8 @@
               "valueId": "sf741-zp"
             }
           ],
+          "state": "openbox",
+          "availabilityStatus": "available",
           "price": 499.9,
           "listPrice": 629.9,
           "offers": [
@@ -250,6 +176,72 @@
           ],
           "mainImage": "steelflier-sf741-2.webp",
           "observations": "Foi aberto para inspeção e teste. Não foi utilizado."
+        },
+        {
+          "axes": [
+            {
+              "axisId": "variantion",
+              "valueId": "sf741-kn"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "steelflier-sf741-3.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "variantion",
+              "valueId": "sf741-ss"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "steelflier-sf741-1.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "variantion",
+              "valueId": "sf741-hg"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "steelflier-sf741-4.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "variantion",
+              "valueId": "sf741-og"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "steelflier-sf741-5.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "variantion",
+              "valueId": "sf741-zp"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "steelflier-sf741-2.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "variantion",
+              "valueId": "sf741-hr"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "steelflier-sf741-6.webp"
         }
       ]
     }

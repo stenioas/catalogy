@@ -7,7 +7,6 @@
     {
       "id": "color",
       "label": "Cor",
-      "presentation": "image",
       "values": [
         {
           "id": "silver-white-black",
@@ -45,7 +44,8 @@
           "id": "gold-blue-white",
           "value": "Gold Blue White"
         }
-      ]
+      ],
+      "presentation": "image"
     }
   ],
   "specifications": [
@@ -108,9 +108,7 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "poedagar-970s-wh-1.webp",
         "poedagar-970s-wh-2.webp",
@@ -120,13 +118,6 @@
         "poedagar-970s-wh-6.webp",
         "poedagar-970s-wh-7.webp",
         "poedagar-970s-wh-8.webp",
-        "poedagar-970s-wh-9.webp",
-        "poedagar-970s-wh-10.webp",
-        "poedagar-970s-wh-11.webp",
-        "poedagar-970s-wh-12.webp",
-        "poedagar-970s-wh-13.webp",
-        "poedagar-970s-wh-14.webp",
-        "poedagar-970s-wh-15.webp",
         "poedagar-970s-wh-17.webp",
         "poedagar-970s-wh-18.webp",
         "poedagar-970s-wh-19.webp",
@@ -136,14 +127,21 @@
         "poedagar-970s-wh-23.webp",
         "poedagar-970s-wh-24.webp",
         "poedagar-970s-wh-25.webp",
-        "poedagar-970s-wh-26.webp",
         "poedagar-970s-wh-27.webp",
         "poedagar-970s-wh-28.webp",
         "poedagar-970s-wh-29.webp",
         "poedagar-970s-wh-30.webp",
         "poedagar-970s-wh-31.webp",
         "poedagar-970s-wh-32.webp",
-        "poedagar-970s-wh-33.webp"
+        "poedagar-970s-wh-33.webp",
+        "poedagar-970s-wh-9.webp",
+        "poedagar-970s-wh-10.webp",
+        "poedagar-970s-wh-11.webp",
+        "poedagar-970s-wh-12.webp",
+        "poedagar-970s-wh-13.webp",
+        "poedagar-970s-wh-14.webp",
+        "poedagar-970s-wh-15.webp",
+        "poedagar-970s-wh-26.webp"
       ],
       "variants": [
         {
@@ -153,6 +151,29 @@
               "valueId": "silver-white-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 124.9,
+          "listPrice": 174.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "poedagar-970s-wh-17.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-white-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-7.webp"
         },
         {
@@ -162,6 +183,8 @@
               "valueId": "silver-white-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-8.webp"
         },
         {
@@ -171,6 +194,8 @@
               "valueId": "silver-blue-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-9.webp"
         },
         {
@@ -180,6 +205,8 @@
               "valueId": "silver-black-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-10.webp"
         },
         {
@@ -189,6 +216,8 @@
               "valueId": "gold-black-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-11.webp"
         },
         {
@@ -198,6 +227,8 @@
               "valueId": "black-black-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-12.webp"
         },
         {
@@ -207,6 +238,8 @@
               "valueId": "gold-white-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-13.webp"
         },
         {
@@ -216,6 +249,8 @@
               "valueId": "gold-green-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-14.webp"
         },
         {
@@ -225,59 +260,9 @@
               "valueId": "gold-blue-white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "poedagar-970s-wh-15.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "poedagar-970s-wh-1.webp",
-        "poedagar-970s-wh-2.webp",
-        "poedagar-970s-wh-3.webp",
-        "poedagar-970s-wh-4.webp",
-        "poedagar-970s-wh-5.webp",
-        "poedagar-970s-wh-6.webp",
-        "poedagar-970s-wh-7.webp",
-        "poedagar-970s-wh-8.webp",
-        "poedagar-970s-wh-17.webp",
-        "poedagar-970s-wh-18.webp",
-        "poedagar-970s-wh-19.webp",
-        "poedagar-970s-wh-20.webp",
-        "poedagar-970s-wh-21.webp",
-        "poedagar-970s-wh-22.webp",
-        "poedagar-970s-wh-23.webp",
-        "poedagar-970s-wh-24.webp",
-        "poedagar-970s-wh-25.webp",
-        "poedagar-970s-wh-27.webp",
-        "poedagar-970s-wh-28.webp",
-        "poedagar-970s-wh-29.webp",
-        "poedagar-970s-wh-30.webp",
-        "poedagar-970s-wh-31.webp",
-        "poedagar-970s-wh-32.webp",
-        "poedagar-970s-wh-33.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-white-black"
-            }
-          ],
-          "price": 124.9,
-          "listPrice": 174.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "icon": "Gift",
-              "background": "#000000",
-              "color": "#FFFFFF"
-            }
-          ],
-          "mainImage": "poedagar-970s-wh-17.webp"
         }
       ]
     }

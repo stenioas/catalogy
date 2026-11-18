@@ -183,18 +183,36 @@ function isSectionId(value: string | null): value is SectionId {
   return SECTION_IDS.some((id) => id === value)
 }
 
-function availabilityForSection(section: StatusSectionId): Listing['availabilityStatus'] {
+type AvailabilityStatus = ReturnType<typeof effectiveAvailability>
+
+function availabilityForSection(section: StatusSectionId): AvailabilityStatus {
   if (section === 'coming-soon') return 'coming_soon'
   if (section === 'on-order') return 'on_order'
   return 'available'
 }
 
+function legacyListingAvailability(listing: Listing): AvailabilityStatus | undefined {
+  if (!Object.hasOwn(listing, 'availabilityStatus')) return undefined
+  const status = (listing as { availabilityStatus?: AvailabilityStatus }).availabilityStatus
+  if (status === 'available' || status === 'coming_soon' || status === 'on_order') return status
+  return undefined
+}
+
+function listingMatchesAvailability(listing: Listing, status: AvailabilityStatus): boolean {
+  const legacy = legacyListingAvailability(listing)
+  if (legacy !== undefined) return legacy === status
+  return listing.variants.some(
+    (variant) => canVariantRepresentCard(variant) && effectiveAvailability(variant) === status,
+  )
+}
+
 function listingInSection(listing: Listing, section: SectionId): boolean {
   if (!canGenerateCard(listing)) return false
   if (section === 'all') {
-    return listing.availabilityStatus === 'available' || listing.availabilityStatus === 'coming_soon'
+    return listingMatchesAvailability(listing, 'available')
+      || listingMatchesAvailability(listing, 'coming_soon')
   }
-  return listing.availabilityStatus === availabilityForSection(section)
+  return listingMatchesAvailability(listing, availabilityForSection(section))
 }
 
 /** Visible listing with at least one variant that can represent a card. */
@@ -440,22 +458,26 @@ export function homeCards(products: Product[], filter: string | null): CatalogCa
       if (pool.length === 0) return
       const priced = pool.filter((variant) => variant.price !== undefined)
       if (priced.length === 0) {
-        cards.push(toUnpricedCard(product, listing, pool[0]!, listingIndex))
+        const variant = pool[0]!
+        const card = toUnpricedCard(product, listing, variant, listingIndex)
+        card.path = variantPath(product, listing, variant)
+        cards.push(card)
         return
       }
       let variant = priced[0]!
       for (const candidate of priced.slice(1)) {
         if (candidate.price! < variant.price!) variant = candidate
       }
-      cards.push(
-        toPricedCard(
-          product,
-          listing,
-          variant,
-          listingIndex,
-          pricesAreUniform(priced),
-        ),
+      const card = toPricedCard(
+        product,
+        listing,
+        variant,
+        listingIndex,
+        pricesAreUniform(priced),
       )
+      if (card.availabilityStatus === 'on_order') card.offers = []
+      card.path = variantPath(product, listing, variant)
+      cards.push(card)
     })
   }
   cards.sort(compareCards)
@@ -514,7 +536,7 @@ function firstListingForSlug(product: Product): Listing | null {
   for (const section of STATUS_SECTION_IDS) {
     const status = availabilityForSection(section)
     for (const listing of product.listings) {
-      if (listing.availabilityStatus === status && canGenerateCard(listing)) return listing
+      if (listingMatchesAvailability(listing, status) && canGenerateCard(listing)) return listing
     }
   }
   return null
@@ -530,6 +552,16 @@ export type VariantQuery = {
   v: string | null
   state?: ReturnType<typeof effectiveState>
   availability?: ReturnType<typeof effectiveAvailability>
+}
+
+function variantPath(product: Product, listing: Listing, variant: Variant): string {
+  const query = variantQuery(product, variant)
+  const params = new URLSearchParams()
+  if (query.v !== null) params.set('v', query.v)
+  if (query.state !== undefined) params.set('state', query.state)
+  if (query.availability !== undefined) params.set('availability', query.availability)
+  const queryString = params.toString().replace(/%2C/gi, ',')
+  return `/product/${product.slug}/${listing.id}${queryString === '' ? '' : `?${queryString}`}`
 }
 
 export function variantQuery(product: Product, variant: Variant): VariantQuery {

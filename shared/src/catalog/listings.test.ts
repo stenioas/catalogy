@@ -1077,6 +1077,37 @@ describe('homeCards filters', () => {
       path: '/product/no-price/main-listing',
     })
   })
+
+  it('puts state and availability on the card link when the same axes match more than one variant', () => {
+    const product = filteredProduct('unisex', [
+      filteredVariant({
+        axes: [{ axisId: 'color', valueId: 'steel' }],
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 30,
+      }),
+      filteredVariant({
+        axes: [{ axisId: 'color', valueId: 'steel' }],
+        state: 'new',
+        availabilityStatus: 'on_order',
+      }),
+    ])
+    product.axes = [{ id: 'color', label: 'Cor', values: [{ id: 'steel', value: 'Steel' }] }]
+
+    const card = homeCards([product], 'new')[0]
+    expect(card?.path).toBe(
+      '/product/watch-unisex/main-listing?v=steel&state=new&availability=on_order',
+    )
+    const opened = requireOpen(
+      listingByPath([product], product.slug, 'main-listing', {
+        v: 'steel',
+        state: 'new',
+        availability: 'on_order',
+      }),
+    )
+    expect(opened.availabilityStatus).toBe('on_order')
+    expect(opened.state).toBe('new')
+  })
 })
 
 function requireOpen(view: ListingView) {

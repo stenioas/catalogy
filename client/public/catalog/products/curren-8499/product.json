@@ -108,27 +108,10 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
-        "curren-8499-1.webp",
-        "curren-8499-2.webp",
-        "curren-8499-3.webp",
-        "curren-8499-4.webp",
-        "curren-8499-5.webp",
-        "curren-8499-6.webp",
-        "curren-8499-7.webp",
-        "curren-8499-8.webp",
-        "curren-8499-9.webp",
-        "curren-8499-10.webp",
         "curren-8499-11.webp",
-        "curren-8499-12.webp",
-        "curren-8499-13.webp",
-        "curren-8499-14.webp",
-        "curren-8499-15.webp",
-        "curren-8499-16.webp",
-        "curren-8499-17.webp",
+        "curren-8499-6.webp",
         "curren-8499-18.webp",
         "curren-8499-19.webp",
         "curren-8499-20.webp",
@@ -138,11 +121,26 @@
         "curren-8499-24.webp",
         "curren-8499-25.webp",
         "curren-8499-26.webp",
+        "curren-8499-31.webp",
+        "curren-8499-1.webp",
+        "curren-8499-2.webp",
+        "curren-8499-3.webp",
+        "curren-8499-4.webp",
+        "curren-8499-5.webp",
+        "curren-8499-7.webp",
+        "curren-8499-8.webp",
+        "curren-8499-9.webp",
+        "curren-8499-10.webp",
+        "curren-8499-12.webp",
+        "curren-8499-13.webp",
+        "curren-8499-14.webp",
+        "curren-8499-15.webp",
+        "curren-8499-16.webp",
+        "curren-8499-17.webp",
         "curren-8499-27.webp",
         "curren-8499-28.webp",
         "curren-8499-29.webp",
         "curren-8499-30.webp",
-        "curren-8499-31.webp",
         "curren-8499-32.webp",
         "curren-8499-33.webp"
       ],
@@ -151,120 +149,11 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "gold-black"
-            }
-          ],
-          "mainImage": "curren-8499-7.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-red-box"
-            }
-          ],
-          "mainImage": "curren-8499-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gold-black-box"
-            }
-          ],
-          "mainImage": "curren-8499-9.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gold-green-box"
-            }
-          ],
-          "mainImage": "curren-8499-1.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
               "valueId": "gold-green"
             }
           ],
-          "mainImage": "curren-8499-11.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-blue-box"
-            }
-          ],
-          "mainImage": "curren-8499-12.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-blue"
-            }
-          ],
-          "mainImage": "curren-8499-13.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-red"
-            }
-          ],
-          "mainImage": "curren-8499-14.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black-box"
-            }
-          ],
-          "mainImage": "curren-8499-15.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "black"
-            }
-          ],
-          "mainImage": "curren-8499-16.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "curren-8499-11.webp",
-        "curren-8499-6.webp",
-        "curren-8499-18.webp",
-        "curren-8499-19.webp",
-        "curren-8499-20.webp",
-        "curren-8499-21.webp",
-        "curren-8499-22.webp",
-        "curren-8499-23.webp",
-        "curren-8499-24.webp",
-        "curren-8499-25.webp",
-        "curren-8499-26.webp",
-        "curren-8499-31.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "gold-green"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
           "price": 199.9,
           "listPrice": 299.9,
           "offers": [
@@ -276,6 +165,116 @@
             }
           ],
           "mainImage": "curren-8499-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-red-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold-black-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold-green-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-1.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gold-green"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-13.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-red"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-14.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-box"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-15.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
+          "mainImage": "curren-8499-16.webp"
         }
       ]
     }

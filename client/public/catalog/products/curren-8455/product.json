@@ -96,9 +96,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "curren-8455-1.webp",
         "curren-8455-2.webp",
@@ -137,6 +135,8 @@
               "valueId": "silver-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8455-7.webp"
         },
         {
@@ -146,6 +146,8 @@
               "valueId": "silver-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8455-8.webp"
         },
         {
@@ -155,6 +157,8 @@
               "valueId": "all-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8455-9.webp"
         },
         {
@@ -164,6 +168,8 @@
               "valueId": "black-light-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8455-10.webp"
         },
         {
@@ -173,6 +179,8 @@
               "valueId": "all-black-with-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8455-11.webp"
         },
         {
@@ -182,6 +190,8 @@
               "valueId": "silver-black-with-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8455-12.webp"
         },
         {
@@ -191,6 +201,8 @@
               "valueId": "black-light-blue-with-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8455-13.webp"
         },
         {
@@ -200,6 +212,8 @@
               "valueId": "silver-blue-with-box"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "curren-8455-14.webp"
         }
       ]

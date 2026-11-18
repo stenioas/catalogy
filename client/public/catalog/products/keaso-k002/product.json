@@ -96,9 +96,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "keaso-k002-1.webp",
         "keaso-k002-2.webp",
@@ -136,6 +134,8 @@
               "valueId": "green"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "keaso-k002-7.webp"
         },
         {
@@ -145,6 +145,8 @@
               "valueId": "orange"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "keaso-k002-8.webp"
         },
         {
@@ -154,6 +156,8 @@
               "valueId": "yellow"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "keaso-k002-9.webp"
         },
         {
@@ -163,6 +167,8 @@
               "valueId": "black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "keaso-k002-10.webp"
         },
         {
@@ -172,6 +178,8 @@
               "valueId": "blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "keaso-k002-11.webp"
         }
       ]

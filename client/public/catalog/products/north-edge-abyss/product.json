@@ -88,9 +88,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "north-edge-abyss-1.webp",
         "north-edge-abyss-2.webp",
@@ -127,6 +125,8 @@
               "valueId": "black-rubber"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "north-edge-abyss-7.webp"
         },
         {
@@ -136,6 +136,8 @@
               "valueId": "blue-rubber"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "north-edge-abyss-1.webp"
         },
         {
@@ -145,6 +147,8 @@
               "valueId": "blue-steel"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "north-edge-abyss-8.webp"
         },
         {
@@ -154,6 +158,8 @@
               "valueId": "black-steel"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "north-edge-abyss-9.webp"
         }
       ]

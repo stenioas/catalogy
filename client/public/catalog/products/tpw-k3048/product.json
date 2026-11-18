@@ -71,9 +71,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "tpw-k3048-1.webp",
         "tpw-k3048-2.webp",
@@ -117,6 +115,8 @@
               "valueId": "black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tpw-k3048-7.webp"
         },
         {
@@ -126,6 +126,8 @@
               "valueId": "silver"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tpw-k3048-8.webp"
         },
         {
@@ -135,6 +137,8 @@
               "valueId": "black-weave"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tpw-k3048-9.webp"
         },
         {
@@ -144,6 +148,8 @@
               "valueId": "stainless-steel"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tpw-k3048-10.webp"
         }
       ]

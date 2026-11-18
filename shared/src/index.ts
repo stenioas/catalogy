@@ -30,6 +30,7 @@ export type {
   SectionId,
 } from './catalog/listings.ts'
 export { mergeListings } from './catalog/merge-listings.ts'
+export { effectiveAvailability, effectiveState, variantKey } from './catalog/variant-condition.ts'
 export {
   truncateReais,
   formatBrl,

@@ -88,22 +88,26 @@
   ],
   "listings": [
     {
-      "id": "listing-on-order",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "tomi-t301-2.webp",
         "tomi-t301-1.webp",
         "tomi-t301-3.webp",
-        "tomi-t301-4.webp",
         "tomi-t301-5.webp",
         "tomi-t301-6.webp",
-        "tomi-t301-7.webp",
         "tomi-t301-8.webp",
+        "tomi-t301-12.webp",
+        "tomi-t301-26.webp",
+        "tomi-t301-27.webp",
+        "tomi-t301-28.webp",
+        "tomi-t301-29.webp",
+        "tomi-t301-36.webp",
+        "tomi-t301-37.webp",
+        "tomi-t301-4.webp",
+        "tomi-t301-7.webp",
         "tomi-t301-9.webp",
         "tomi-t301-10.webp",
         "tomi-t301-11.webp",
-        "tomi-t301-12.webp",
         "tomi-t301-13.webp",
         "tomi-t301-14.webp",
         "tomi-t301-15.webp",
@@ -116,18 +120,12 @@
         "tomi-t301-22.webp",
         "tomi-t301-23.webp",
         "tomi-t301-24.webp",
-        "tomi-t301-26.webp",
-        "tomi-t301-27.webp",
-        "tomi-t301-28.webp",
-        "tomi-t301-29.webp",
         "tomi-t301-30.webp",
         "tomi-t301-31.webp",
         "tomi-t301-32.webp",
         "tomi-t301-33.webp",
         "tomi-t301-34.webp",
         "tomi-t301-35.webp",
-        "tomi-t301-36.webp",
-        "tomi-t301-37.webp",
         "tomi-t301-38.webp",
         "tomi-t301-39.webp",
         "tomi-t301-40.webp"
@@ -137,9 +135,53 @@
           "axes": [
             {
               "axisId": "color",
+              "valueId": "silver-blue"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 104.9,
+          "listPrice": 144.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "tomi-t301-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "silver-gold"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 104.9,
+          "listPrice": 144.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "tomi-t301-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
               "valueId": "gold"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tomi-t301-7.webp"
         },
         {
@@ -149,6 +191,8 @@
               "valueId": "silver-blue"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tomi-t301-8.webp"
         },
         {
@@ -158,6 +202,8 @@
               "valueId": "all-black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tomi-t301-9.webp"
         },
         {
@@ -167,6 +213,8 @@
               "valueId": "silver"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tomi-t301-10.webp"
         },
         {
@@ -176,6 +224,8 @@
               "valueId": "black-rose-gold"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tomi-t301-11.webp"
         },
         {
@@ -185,66 +235,8 @@
               "valueId": "silver-gold"
             }
           ],
-          "mainImage": "tomi-t301-12.webp"
-        }
-      ]
-    },
-    {
-      "id": "listing-coming-soon",
-      "state": "new",
-      "availabilityStatus": "coming_soon",
-      "images": [
-        "tomi-t301-2.webp",
-        "tomi-t301-1.webp",
-        "tomi-t301-3.webp",
-        "tomi-t301-5.webp",
-        "tomi-t301-6.webp",
-        "tomi-t301-8.webp",
-        "tomi-t301-12.webp",
-        "tomi-t301-26.webp",
-        "tomi-t301-27.webp",
-        "tomi-t301-28.webp",
-        "tomi-t301-29.webp",
-        "tomi-t301-36.webp",
-        "tomi-t301-37.webp"
-      ],
-      "variants": [
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-blue"
-            }
-          ],
-          "price": 104.9,
-          "listPrice": 144.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
-          "mainImage": "tomi-t301-8.webp"
-        },
-        {
-          "axes": [
-            {
-              "axisId": "color",
-              "valueId": "silver-gold"
-            }
-          ],
-          "price": 104.9,
-          "listPrice": 144.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "tomi-t301-12.webp"
         }
       ]

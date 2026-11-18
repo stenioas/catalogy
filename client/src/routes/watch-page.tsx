@@ -24,22 +24,31 @@ import { productImageSrc } from '../components/catalog/watch-card'
 
 export const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
 
-function readSection(state: unknown): string | undefined {
-  if (state === null || typeof state !== 'object' || !('section' in state)) return undefined
-  const section = state.section
-  if (typeof section !== 'string' || section === '') return undefined
-  return section
+function readStateField(state: unknown, key: 'section' | 'filter'): string | undefined {
+  if (state === null || typeof state !== 'object' || !(key in state)) return undefined
+  const value = (state as Record<string, unknown>)[key]
+  if (typeof value !== 'string' || value === '') return undefined
+  return value
 }
 
 export function catalogReturnHref(state: unknown): string {
-  const section = readSection(state)
-  if (section === undefined) return '/'
-  return `/?section=${encodeURIComponent(section)}`
+  const params = new URLSearchParams()
+  const filter = readStateField(state, 'filter')
+  const section = readStateField(state, 'section')
+  if (filter !== undefined) params.set('filter', filter)
+  if (section !== undefined) params.set('section', section)
+  const query = params.toString()
+  return query === '' ? '/' : `/?${query}`
 }
 
-function stateAfterVariantChange(state: unknown): { section: string } | undefined {
-  const section = readSection(state)
-  return section === undefined ? undefined : { section }
+function stateAfterVariantChange(state: unknown): { section?: string; filter?: string } | undefined {
+  const section = readStateField(state, 'section')
+  const filter = readStateField(state, 'filter')
+  if (section === undefined && filter === undefined) return undefined
+  return {
+    ...(section === undefined ? {} : { section }),
+    ...(filter === undefined ? {} : { filter }),
+  }
 }
 
 export type WatchPageProps = {

@@ -100,9 +100,7 @@
   ],
   "listings": [
     {
-      "id": "sob-encomenda",
-      "state": "new",
-      "availabilityStatus": "on_order",
+      "id": "main-listing",
       "images": [
         "aimimo-design-field-1.webp",
         "aimimo-design-field-2.webp",
@@ -130,6 +128,8 @@
               "valueId": "black"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "aimimo-design-field-7.webp"
         },
         {
@@ -139,6 +139,8 @@
               "valueId": "white"
             }
           ],
+          "state": "new",
+          "availabilityStatus": "on_order",
           "mainImage": "aimimo-design-field-8.webp"
         }
       ]
