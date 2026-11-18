@@ -11,7 +11,7 @@ export type PriceBlockProps = {
 
 const currentPriceClassName = 'text-[26px] font-semibold leading-none'
 const discountBadgeClassName =
-  'h-auto rounded-[4px] bg-[#00A650] p-0.5 font-bold text-white'
+  'h-auto rounded-[4px] bg-[#00A650] px-0.5 py-0 font-bold text-white'
 const pixClassName = 'font-bold text-[#00A650]'
 
 // Temporário até a fórmula de precificação: o preço atual fica vermelho quando o desconto exibido é de 20% ou mais.

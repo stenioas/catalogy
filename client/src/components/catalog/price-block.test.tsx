@@ -156,7 +156,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(struck.className).toMatch(/\bline-through\b/)
   })
 
-  it('renders the discount seal as a green Badge with even 2px padding when discount is at least 1% (SV-41, CAT-105, CAT-108, CAT-109)', () => {
+  it('renders the discount seal as a green Badge with 2px horizontal padding and no vertical padding when discount is at least 1% (SV-41, CAT-105, CAT-108, CAT-109)', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450 })
     const badge = screen.getByTestId('price-badge')
     const pix = screen.getByTestId('price-pix')
@@ -164,7 +164,8 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(badge.className).toContain('bg-[#00A650]')
     expect(badge.className).toMatch(/\bfont-bold\b/)
     expect(badge.className).toMatch(/\btext-white\b/)
-    expect(badge.className).toContain('p-0.5')
+    expect(badge.className).toContain('px-0.5')
+    expect(badge.className).toContain('py-0')
     expect(badge.className).not.toMatch(/\bpx-2\b/)
     expect(badge.className).toContain('rounded-[4px]')
     expect(badge.className).not.toMatch(/\brounded-full\b/)
