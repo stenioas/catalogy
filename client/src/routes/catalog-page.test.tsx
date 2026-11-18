@@ -11,7 +11,6 @@ import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router-d
 import { writeProductsModule } from '../../scripts/catalog'
 import { ThemeProvider } from '../components/theme-provider'
 import { CatalogPage, eagerHomeCardCount } from './catalog-page'
-import { ON_ORDER_PRICE_NOTE } from '../components/catalog/price-block'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -51,6 +50,26 @@ vi.mock('../catalog/products.generated', () => ({
   get products() {
     return mockProductsRef.current
   },
+}))
+
+vi.mock('../components/catalog/watch-card', () => ({
+  WatchCard: ({
+    card,
+    imageLoading = 'eager',
+  }: {
+    card: { slug: string; title: string; image: string; statusLabel: string }
+    imageLoading?: 'eager' | 'lazy'
+  }) => (
+    <div data-slot="card" className="h-full">
+      <img
+        alt={card.title}
+        loading={imageLoading}
+        src={`/catalog/products/${card.slug}/img/thumbs/${card.image}`}
+      />
+      <p>{card.statusLabel}</p>
+      <h2>{card.title}</h2>
+    </div>
+  ),
 }))
 
 function lengthToPx(token: string): number {
@@ -374,14 +393,11 @@ function variant(overrides: Partial<Variant> = {}): Variant {
   }
 }
 
-function listing(id: string, overrides: Partial<Listing> = {}): Listing {
+function listing(id: string, variantOverrides: Partial<Variant> = {}): Listing {
   return {
     id,
-    state: 'new',
-    availabilityStatus: 'available',
     images: ['foto.webp'],
-    variants: [variant()],
-    ...overrides,
+    variants: [variant(variantOverrides)],
   }
 }
 
@@ -399,10 +415,6 @@ function catalogProduct(fields: {
     listings: fields.listings,
     ...(fields.audience === undefined ? {} : { audience: fields.audience }),
   }
-}
-
-function searchParamsOf(search: string): URLSearchParams {
-  return new URLSearchParams(search)
 }
 
 function renderHome(entry: string) {
@@ -436,7 +448,7 @@ function expectResultsEnter() {
   expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
 }
 
-describe('CatalogPage sections', () => {
+describe('CatalogPage filters', () => {
   afterEach(() => {
     cleanup()
     mockProductsRef.current = []
@@ -446,146 +458,135 @@ describe('CatalogPage sections', () => {
     mockProductsRef.current = []
   })
 
-  it('opens Todos with priced-section cards only and does not write section', () => {
+  it('renders the seven filters in order and includes on-order cards in Todos', () => {
     mockProductsRef.current = [
       catalogProduct({
         slug: 'encomenda',
         title: 'Encomenda',
-        listings: [listing('encomenda', { availabilityStatus: 'on_order' })],
+        listings: [listing('encomenda', { availabilityStatus: 'on_order', price: undefined })],
       }),
       catalogProduct({
-        slug: 'breve',
-        title: 'Breve',
-        listings: [listing('breve', { availabilityStatus: 'coming_soon' })],
+        slug: 'disponivel',
+        title: 'Disponível',
+        listings: [listing('disponivel', { availabilityStatus: 'available' })],
       }),
     ]
     const router = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toBeDefined()
-    expect(screen.getByRole('tab', { name: 'Pronta entrega', selected: false })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'Encomendar' })).toHaveProperty('disabled', false)
-    expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
-    expect(router.state.location.search).toBe('')
-    expect(searchParamsOf(router.state.location.search).has('section')).toBe(false)
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Encomendar' }))
+    const group = screen.getByRole('group', { name: 'Filtros' })
+    expect(within(group).getAllByRole('button').map((button) => button.textContent)).toEqual([
+      'Todos',
+      '20%+ de desconto',
+      'Feminino',
+      'Masculino',
+      'Novos',
+      'Openbox',
+      'Usados',
+    ])
+    expect(within(group).getAllByRole('button', { pressed: true })).toHaveLength(1)
+    expect(screen.getByRole('button', { name: 'Todos', pressed: true }).classList.contains('rounded-full')).toBe(true)
+    expect(screen.getByRole('heading', { name: 'Disponível' })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
-    expect(screen.getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
-    expect(screen.queryByTestId('price-block')).toBeNull()
+    expect(router.state.location.search).toBe('')
   })
 
-  it('disables an empty section and opens Todos as the first section that has a card', () => {
+  it('writes the filter token and preserves the query when the active button is pressed', () => {
     mockProductsRef.current = [
       catalogProduct({
-        slug: 'agora',
-        title: 'Agora',
-        listings: [listing('agora')],
+        slug: 'female-watch',
+        title: 'Female',
+        audience: 'female',
+        listings: [listing('female-watch')],
       }),
     ]
-    const router = renderHome('/?section=on-order')
-    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toHaveProperty('disabled', false)
-    expect(screen.getByRole('tab', { name: 'Encomendar' })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'A caminho' })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'Pronta entrega', selected: false })).toHaveProperty('disabled', false)
-    expect(screen.getByRole('heading', { name: 'Agora' })).toBeDefined()
-    expect(screen.queryByText(NO_ACTIVE_LISTING_TEXT)).toBeNull()
-    expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Encomendar' }))
-    expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
+    const router = renderHome('/?filter=female')
+    fireEvent.click(screen.getByRole('button', { name: 'Feminino', pressed: true }))
+    expect(router.state.location.search).toBe('?filter=female')
+    fireEvent.click(screen.getByRole('button', { name: 'Todos' }))
+    expect(router.state.location.search).toBe('')
+    fireEvent.click(screen.getByRole('button', { name: 'Feminino' }))
+    expect(router.state.location.search).toBe('?filter=female')
   })
 
-  it('recalculates an invalid section and leaves that key unchanged', () => {
+  it('filters discount at twenty percent and disables a filter without cards', () => {
     mockProductsRef.current = [
       catalogProduct({
-        slug: 'breve',
-        title: 'Breve',
-        listings: [listing('breve', { availabilityStatus: 'coming_soon', state: 'used' })],
+        slug: 'discount',
+        title: 'Desconto',
+        listings: [listing('discount', { price: 80, listPrice: 100, availabilityStatus: 'available' })],
+      }),
+      catalogProduct({
+        slug: 'not-discount',
+        title: 'Sem desconto',
+        listings: [listing('not-discount', { price: 80.1, listPrice: 100, availabilityStatus: 'available' })],
       }),
     ]
-    const router = renderHome('/?section=foo&state=used')
-    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toBeDefined()
-    expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    const params = searchParamsOf(router.state.location.search)
-    expect(params.get('section')).toBe('foo')
-    expect(params.get('state')).toBe('used')
+    const router = renderHome('/?filter=discount')
+    expect(screen.getByRole('heading', { name: 'Desconto' })).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Sem desconto' })).toBeNull()
+    expect(router.state.location.search).toBe('?filter=discount')
+    expect(screen.getByRole('button', { name: 'Feminino' })).toHaveProperty('disabled', true)
   })
 
-  it('shows the empty text when the catalog has no active listing', () => {
+  it('falls back to Todos for invalid or empty filters without rewriting the query', () => {
+    mockProductsRef.current = [
+      catalogProduct({
+        slug: 'watch',
+        title: 'Watch',
+        audience: 'female',
+        listings: [listing('watch', { state: 'openbox' })],
+      }),
+    ]
+    const router = renderHome('/?filter=invalid')
+    expect(screen.getByRole('button', { name: 'Todos', pressed: true })).toBeDefined()
+    expect(screen.getByRole('heading', { name: 'Watch' })).toBeDefined()
+    expect(router.state.location.search).toBe('?filter=invalid')
+    cleanup()
+    const section = renderHome('/?section=on-order')
+    expect(screen.getByRole('button', { name: 'Todos', pressed: true })).toBeDefined()
+    expect(section.state.location.search).toBe('?section=on-order')
+    cleanup()
+    const emptyFilter = renderHome('/?filter=male')
+    expect(screen.getByRole('button', { name: 'Todos', pressed: true })).toBeDefined()
+    expect(emptyFilter.state.location.search).toBe('?filter=male')
+  })
+
+  it('disables Todos and shows the empty text when there are no cards', () => {
     mockProductsRef.current = []
-    const empty = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'Pronta entrega' })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'A caminho' })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'Encomendar' })).toHaveProperty('disabled', true)
+    renderHome('/')
+    expect(screen.getByRole('button', { name: 'Todos' })).toHaveProperty('disabled', true)
     expect(screen.getByText(NO_ACTIVE_LISTING_TEXT)).toBeDefined()
     expect(screen.queryByTestId('catalog-grid')).toBeNull()
-    expect(empty.state.location.search).toBe('')
   })
 
-  it('opens Encomendar with Todos disabled when every card listing is on_order (OSC-26)', () => {
+  it('filters by audience and effective state', () => {
     mockProductsRef.current = [
       catalogProduct({
-        slug: 'encomenda-a',
-        title: 'Encomenda A',
-        listings: [listing('encomenda-a', { availabilityStatus: 'on_order' })],
+        slug: 'female',
+        title: 'Female',
+        audience: 'female',
+        listings: [listing('female')],
       }),
       catalogProduct({
-        slug: 'encomenda-b',
-        title: 'Encomenda B',
-        listings: [listing('encomenda-b', { availabilityStatus: 'on_order' })],
+        slug: 'child',
+        title: 'Child',
+        audience: 'child',
+        listings: [listing('child')],
+      }),
+      catalogProduct({
+        slug: 'used',
+        title: 'Used',
+        listings: [listing('used', { state: 'used' })],
       }),
     ]
     const router = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Encomendar', selected: true })).toBeDefined()
-    expect(screen.getByRole('tab', { name: 'Todos' })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'Pronta entrega' })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('tab', { name: 'A caminho' })).toHaveProperty('disabled', true)
-    expect(screen.getByRole('heading', { name: 'Encomenda A' })).toBeDefined()
-    expect(screen.getByRole('heading', { name: 'Encomenda B' })).toBeDefined()
-    expect(screen.queryByTestId('price-block')).toBeNull()
-    expect(router.state.location.search).toBe('')
-  })
-
-  it('writes the section token for the chosen label and keeps the card status text', () => {
-    mockProductsRef.current = [
-      catalogProduct({
-        slug: 'agora',
-        title: 'Agora',
-        listings: [listing('agora')],
-      }),
-      catalogProduct({
-        slug: 'breve',
-        title: 'Breve',
-        listings: [listing('breve', { availabilityStatus: 'coming_soon' })],
-      }),
-      catalogProduct({
-        slug: 'encomenda',
-        title: 'Encomenda',
-        listings: [listing('encomenda', { availabilityStatus: 'on_order' })],
-      }),
-    ]
-    const router = renderHome('/')
-    expect(screen.getByRole('tab', { name: 'Todos', selected: true })).toBeDefined()
-    expect(screen.getByRole('heading', { name: 'Agora' })).toBeDefined()
-    expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'A caminho' }))
-    expect(searchParamsOf(router.state.location.search).get('section')).toBe('coming-soon')
-    expect(within(screen.getByRole('heading', { name: 'Breve' }).closest('li')!).getByText('Chega em breve')).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Agora' })).toBeNull()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Encomendar' }))
-    expect(searchParamsOf(router.state.location.search).get('section')).toBe('on-order')
-    const encomendaCard = screen.getByRole('heading', { name: 'Encomenda' }).closest('li')!
-    expect(within(encomendaCard).getByText('Sob encomenda')).toBeDefined()
-    expect(within(encomendaCard).getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
-    expect(within(encomendaCard).queryByTestId('price-block')).toBeNull()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Pronta entrega' }))
-    expect(searchParamsOf(router.state.location.search).get('section')).toBe('available')
-    expect(within(screen.getByRole('heading', { name: 'Agora' }).closest('li')!).getByText('Disponível')).toBeDefined()
-    fireEvent.mouseDown(screen.getByRole('tab', { name: 'Todos' }))
-    expect(searchParamsOf(router.state.location.search).get('section')).toBe('all')
-    expect(screen.getByRole('heading', { name: 'Agora' })).toBeDefined()
-    expect(screen.getByRole('heading', { name: 'Breve' })).toBeDefined()
-    expect(screen.queryByRole('heading', { name: 'Encomenda' })).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: 'Feminino' }))
+    expect(router.state.location.search).toBe('?filter=female')
+    expect(screen.getByRole('heading', { name: 'Female' })).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Child' })).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: 'Usados' }))
+    expect(router.state.location.search).toBe('?filter=used')
+    expect(screen.getByRole('heading', { name: 'Used' })).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Female' })).toBeNull()
   })
 
 })

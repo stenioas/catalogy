@@ -229,7 +229,7 @@ O anúncio inteiro carrega um único estado e uma única disponibilidade. O mesm
 | --- | --- | --- | --- |
 | FILT-01 | P1: Variante com estado e disponibilidade | Tasks | Done in T1, T2, T4 |
 | FILT-02 | P1: Um anúncio por produto | Tasks | T3 done; T10 pending |
-| FILT-03 | P1: Filtros da home | Tasks | T5 done; T7 pending |
+| FILT-03 | P1: Filtros da home | Tasks | T5, T7 done |
 | FILT-04 | P1: Ficha da variante | Tasks | T6 done; T8, T9 pending |
 | FILT-05 | P1: Contrato e cadastro | Tasks | In Tasks |
 

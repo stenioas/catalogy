@@ -1,23 +1,20 @@
-import {
-  activeSection,
-  homeCards,
-  homeEmptyText,
-  sectionHasCards,
-  type SectionId,
-} from '@catalogo/shared'
+import { activeFilter, filterHasCards, homeCards } from '@catalogo/shared'
 import { useSearchParams } from 'react-router-dom'
 
 import { products } from '../catalog/products.generated'
 import { TopBar } from '../components/catalog/top-bar'
 import { WatchCard } from '../components/catalog/watch-card'
-import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs'
+import { Button } from '../components/ui/button'
 
-const SECTIONS: { id: SectionId; label: string }[] = [
+const FILTERS = [
   { id: 'all', label: 'Todos' },
-  { id: 'available', label: 'Pronta entrega' },
-  { id: 'coming-soon', label: 'A caminho' },
-  { id: 'on-order', label: 'Encomendar' },
-]
+  { id: 'discount', label: '20%+ de desconto' },
+  { id: 'female', label: 'Feminino' },
+  { id: 'male', label: 'Masculino' },
+  { id: 'new', label: 'Novos' },
+  { id: 'openbox', label: 'Openbox' },
+  { id: 'used', label: 'Usados' },
+] as const
 
 const resultsEnterClass =
   'motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200'
@@ -47,29 +44,22 @@ function eagerCardCount(): number {
   return eagerHomeCardCount(width, height)
 }
 
-function isSectionId(value: string | null): value is SectionId {
-  return value === 'all' || value === 'available' || value === 'coming-soon' || value === 'on-order'
-}
-
 export function CatalogPage() {
   const [params, setParams] = useSearchParams()
-  const sectionParam = params.get('section')
-  const requested = activeSection(products, sectionParam)
-  const filled = SECTIONS.filter((section) => sectionHasCards(products, section.id))
-  const resolved =
-    filled.length === 0 ? 'all' : sectionHasCards(products, requested) ? requested : filled[0].id
+  const filterParam = params.get('filter')
+  const requested = activeFilter(filterParam)
+  const resolved = requested !== 'all' && !filterHasCards(products, requested) ? 'all' : requested
   const cards = homeCards(products, resolved)
   const eagerCards = eagerCardCount()
-  const emptyText = homeEmptyText(products, resolved)
+  const emptyText = cards.length === 0 ? 'Não temos nenhum anúncio ativo.' : null
 
-  function selectSection(id: SectionId) {
-    if (!sectionHasCards(products, id)) return
-    const raw = params.get('section')
-    if (raw === id) return
-    if (!isSectionId(raw) && id === resolved && id !== 'all') return
+  function selectFilter(id: (typeof FILTERS)[number]['id']) {
+    if (id !== 'all' && !filterHasCards(products, id)) return
+    if (id === resolved) return
     setParams((prev) => {
       const next = new URLSearchParams(prev)
-      next.set('section', id)
+      if (id === 'all') next.delete('filter')
+      else next.set('filter', id)
       return next
     })
   }
@@ -80,31 +70,21 @@ export function CatalogPage() {
       <main className="max-w-full min-w-0 overflow-x-clip">
         <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-2 md:py-4">
           <div className="mb-2 md:mb-6">
-            <Tabs
-              data-testid="section-toggle"
-              className="items-center"
-              value={resolved}
-              onValueChange={(id) => {
-                if (isSectionId(id)) selectSection(id)
-              }}
-            >
-              <TabsList
-                variant="line"
-                aria-label="Seção"
-                className="h-8 w-fit gap-3 p-0 text-[14px] group-data-horizontal/tabs:h-8 md:text-[15px]"
-              >
-                {SECTIONS.map((section) => (
-                  <TabsTrigger
-                    key={section.id}
-                    value={section.id}
-                    disabled={!sectionHasCards(products, section.id)}
-                    className="w-auto flex-none px-0 text-[14px] data-active:font-bold data-active:text-primary data-active:after:bg-primary md:text-[15px] dark:data-active:text-primary"
-                  >
-                    {section.label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
+            <div role="group" aria-label="Filtros" className="flex flex-nowrap gap-2 overflow-x-auto">
+              {FILTERS.map((filter) => (
+                <Button
+                  key={filter.id}
+                  type="button"
+                  variant={resolved === filter.id ? 'default' : 'outline'}
+                  aria-pressed={resolved === filter.id}
+                  disabled={filter.id === 'all' ? cards.length === 0 : !filterHasCards(products, filter.id)}
+                  className="flex-none rounded-full"
+                  onClick={() => selectFilter(filter.id)}
+                >
+                  {filter.label}
+                </Button>
+              ))}
+            </div>
           </div>
           <div key={resolved} data-testid="catalog-results" className={resultsEnterClass}>
             {emptyText !== null ? (

@@ -294,6 +294,8 @@ T11 -> T12 -> T13
 
 ### T7: Pílulas da home
 
+**Status**: done
+
 **What**: Trocar as abas por sete botões em pílula.
 **Where**: `client/src/routes/catalog-page.tsx`
 **Depends on**: T5
