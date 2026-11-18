@@ -59,7 +59,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
 
   it('shows the current price without a reference price when listPrice is absent (CAT-99)', () => {
     renderPriceBlock({ price: 369.9 })
-    expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
+    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 369,90')
     expect(screen.queryByTestId('price-list')).toBeNull()
     expect(screen.queryByTestId('price-badge')).toBeNull()
   })
@@ -94,30 +94,53 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(badge.className).not.toMatch(/rotate/)
   })
 
-  it('shows De R$ 450,00 struck at 12px and 17% OFF for list 450 and price 369.9 (CAT-100, CAT-101)', () => {
+  it('shows De R$ 450,00 struck at 14px and 17% OFF for list 450 and price 369.9 (CAT-100, CAT-101)', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450 })
     const reference = screen.getByTestId('price-list')
     expect(reference.textContent).toBe('De R$ 450,00')
-    expect(reference.className).toMatch(/\btext-xs\b/)
-    expect(reference.className).not.toMatch(/\btext-sm\b/)
-    expect(screen.getByTestId('price-current').textContent).toBe('R$ 369,90')
+    expect(reference.className).toMatch(/\btext-sm\b/)
+    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 369,90')
     expect(screen.getByTestId('price-badge').textContent).toBe('17% OFF')
   })
 
   it('formats 1234.5 as R$ 1.234,50 in the block (CAT-96)', () => {
     renderPriceBlock({ price: 1234.5 })
-    expect(screen.getByTestId('price-current').textContent).toBe('R$ 1.234,50')
+    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 1.234,50')
   })
 
-  it('renders the cents and comma at 16px, aligned to the top of the reais', () => {
+  it('renders the product price at 26px, with a gap after R$ and cents at 12px without the comma', () => {
     renderPriceBlock({ price: 199.9 })
+    const current = screen.getByTestId('price-current')
+    const currency = screen.getByTestId('price-currency')
     const reais = screen.getByTestId('price-reais')
     const cents = screen.getByTestId('price-cents')
-    expect(reais.textContent).toBe('R$ 199')
-    expect(cents.textContent).toBe(',90')
-    expect(cents.className).toContain('text-[16px]')
+    expect(current.getAttribute('aria-label')).toBe('R$ 199,90')
+    expect(currency.textContent).toBe('R$')
+    expect(reais.textContent).toBe('199')
+    expect(cents.textContent).toBe('90')
+    expect(current.textContent).not.toContain(',')
+    expect(currency.className).toContain('text-[14px]')
+    expect(currency.className).toContain('text-ink-muted-80')
+    expect(currency.className).toContain('mt-[2px]')
+    expect(current.className).toContain('text-[26px]')
+    expect(current.className).toContain('gap-x-[2px]')
+    expect(cents.className).toContain('text-[12px]')
+    expect(cents.className).toContain('mt-px')
     expect(cents.className).toContain('leading-none')
-    expect(screen.getByTestId('price-current').className).toMatch(/\bitems-start\b/)
+    expect(current.className).toMatch(/\bitems-start\b/)
+  })
+
+  it('keeps the showcase integer at 18px and the currency and cents at 12px with a 2px gap', () => {
+    renderPriceBlock({ price: 199.9, listPrice: 250, showcase: true })
+    const current = screen.getByTestId('price-current')
+    const currency = screen.getByTestId('price-currency')
+    const cents = screen.getByTestId('price-cents')
+    expect(current.className).toContain('text-[18px]')
+    expect(current.className).toContain('gap-x-[2px]')
+    expect(currency.className).toContain('text-[12px]')
+    expect(currency.className).toContain('text-ink-muted-80')
+    expect(cents.className).toContain('text-[12px]')
+    expect(screen.getByTestId('price-list').className).toMatch(/\btext-xs\b/)
   })
 
   it('keeps the struck reference but hides the badge when discount is below 1% (CAT-102, CAT-103)', () => {
@@ -177,7 +200,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(list.className.split(/\s+/)).toEqual(expect.arrayContaining(['row-start-1', 'text-xs']))
     expect(list.className.split(/\s+/)).not.toContain('md:text-sm')
     expect(list.className.split(/\s+/)).not.toContain('col-span-3')
-    expect(current.className.split(/\s+/)).toEqual(expect.arrayContaining(['text-base', 'md:text-xl', 'row-start-2']))
+    expect(current.className.split(/\s+/)).toEqual(expect.arrayContaining(['text-[18px]', 'row-start-2']))
     expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-start-2', 'row-start-2', 'text-[11px]']))
     expect(badge.className.split(/\s+/)).not.toContain('row-start-1')
     expect(badge.className).not.toMatch(/rotate/)
@@ -270,7 +293,10 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     'paints the current price red when the displayed discount is at least 20% and showcase is %s',
     (showcase) => {
       renderPriceBlock({ price: 80, listPrice: 100, showcase })
+      const currency = screen.getByTestId('price-currency')
       expect(screen.getByTestId('price-current').className).toMatch(/\btext-destructive\b/)
+      expect(currency.className).toContain('text-ink-muted-80')
+      expect(currency.className).not.toMatch(/\btext-destructive\b/)
       expect(screen.getByTestId('price-badge').textContent).toBe('20% OFF')
     },
   )

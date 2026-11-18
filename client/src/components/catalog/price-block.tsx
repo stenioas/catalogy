@@ -9,7 +9,7 @@ export type PriceBlockProps = {
   showcase?: boolean
 }
 
-const currentPriceClassName = 'text-2xl font-semibold leading-none'
+const currentPriceClassName = 'text-[26px] font-semibold leading-none'
 const discountBadgeClassName =
   'h-auto rounded-[4px] bg-[#00A650] p-0.5 font-bold text-white'
 const pixClassName = 'font-bold text-[#00A650]'
@@ -34,16 +34,43 @@ export function OnOrderPriceNote({ showcase = false }: { showcase?: boolean }) {
   )
 }
 
-function CurrentPrice({ label, className }: { label: string; className: string }) {
-  const comma = label.lastIndexOf(',')
-  const reais = label.slice(0, comma)
-  const cents = label.slice(comma)
+function CurrentPrice({
+  label,
+  className,
+  currencyClassName,
+  centsClassName,
+}: {
+  label: string
+  className: string
+  currencyClassName: string
+  centsClassName: string
+}) {
+  const signed = label.startsWith('-')
+  const currency = signed ? '-R$' : 'R$'
+  const amount = label.slice(signed ? '-R$ '.length : 'R$ '.length)
+  const comma = amount.indexOf(',')
+  const reais = comma === -1 ? amount : amount.slice(0, comma)
+  const cents = comma === -1 ? '' : amount.slice(comma + 1)
 
   return (
-    <span data-testid="price-current" className={`inline-flex items-start ${className}`}>
-      <span data-testid="price-reais">{reais}</span>
-      <span data-testid="price-cents" className="text-[16px] leading-none">
-        {cents}
+    <span
+      data-testid="price-current"
+      aria-label={label}
+      className={`inline-flex items-start gap-x-[2px] ${className}`}
+    >
+      <span
+        data-testid="price-currency"
+        className={`leading-none text-ink-muted-80 ${currencyClassName}`}
+      >
+        {currency}
+      </span>
+      <span className="inline-flex items-start">
+        <span data-testid="price-reais">{reais}</span>
+        {cents !== '' ? (
+          <span data-testid="price-cents" className={centsClassName}>
+            {cents}
+          </span>
+        ) : null}
       </span>
     </span>
   )
@@ -82,7 +109,9 @@ export function PriceBlock({
         ) : null}
         <CurrentPrice
           label={currentLabel}
-          className={`col-start-1 text-base font-semibold leading-none md:text-xl ${priceRow} ${currentPriceTone}`}
+          className={`col-start-1 text-[18px] font-semibold leading-none ${priceRow} ${currentPriceTone}`}
+          currencyClassName="text-[12px]"
+          centsClassName="text-[12px] leading-none"
         />
         {showBadge ? (
           <Badge
@@ -120,14 +149,19 @@ export function PriceBlock({
         >
           <span
             data-testid="price-list"
-            className="text-xs text-ink-muted-48 line-through"
+            className="text-sm text-ink-muted-48 line-through"
           >
             De {formatBrl(listPrice)}
           </span>
         </div>
       ) : null}
       <div className="flex flex-wrap items-center gap-x-1.5">
-        <CurrentPrice label={currentLabel} className={`${currentPriceClassName} ${currentPriceTone}`} />
+        <CurrentPrice
+          label={currentLabel}
+          className={`${currentPriceClassName} ${currentPriceTone}`}
+          currencyClassName="text-[14px] mt-[2px]"
+          centsClassName="text-[12px] leading-none mt-px"
+        />
         {showBadge ? (
           <Badge
             data-testid="price-badge"
