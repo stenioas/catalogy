@@ -69,7 +69,7 @@ function sourceListing(
 describe('mergeListings', () => {
   it.each([
     ['addiesdive-ad2035', 'steel', 'used', 'available'],
-    ['aimimo-design-air-king', 'b-no-logo', 'openbox', 'available'],
+    ['aimimo-design-explorer', 'b-no-logo', 'openbox', 'available'],
     ['addiesdive-my-h3-2qz', 'black-steel', 'used', 'available'],
   ] as const)(
     'merges the winning catalog variant for %s',

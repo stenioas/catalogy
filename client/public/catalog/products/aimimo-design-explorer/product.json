@@ -1,7 +1,7 @@
 {
-  "slug": "aimimo-design-air-king",
-  "title": "Aimimo Design Air King",
-  "description": "O Aimimo Design Air King é uma homenagem ao Rolex Air King, é um relógiomasculino com caixa de aço inoxidável 316L, acabamento polido e fundo escovado, e pulseira de aço inoxidável. O diâmetro é de 39 mm sem a coroa, o comprimento lug to lug é de 48 mm e a espessura é de 12,5 mm. O vidro é de cristal de safira, a coroa é parafusada. O movimento é de quartzo japonês, com três ponteiros, calendário e luminosidade. A resistência à água é de 50 m (5 ATM) e a pulseira tem 20 mm de largura. O mostrador não traz logotipo.",
+  "slug": "aimimo-design-explorer",
+  "title": "Aimimo Design Explorer",
+  "description": "Uma homenagem ao Rolex Explorer. É um relógio masculino com caixa de aço inoxidável 316L, acabamento polido e fundo escovado, e pulseira de aço inoxidável. O diâmetro é de 39 mm sem a coroa, o comprimento lug to lug é de 48 mm e a espessura é de 12,5 mm. O vidro é de cristal de safira, a coroa é parafusada. O movimento é de quartzo japonês, com três ponteiros, calendário e luminosidade. A resistência à água é de 50 m (5 ATM) e a pulseira tem 20 mm de largura. O mostrador não traz logotipo.",
   "audience": "male",
   "axes": [
     {
@@ -43,11 +43,11 @@
     },
     {
       "label": "Modelo",
-      "value": "Air King"
+      "value": "Explorer"
     },
     {
       "label": "Homage de",
-      "value": "Rolex Air King"
+      "value": "Rolex Explorer"
     },
     {
       "label": "Tipo do relógio",
@@ -59,7 +59,7 @@
     },
     {
       "label": "Tipo de movimento",
-      "value": "Quartzo japonês"
+      "value": "Quartzo"
     },
     {
       "label": "Movimento",

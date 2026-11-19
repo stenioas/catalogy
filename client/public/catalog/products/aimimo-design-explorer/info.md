@@ -1,6 +1,6 @@
 # Relógio Masculino DD39MM com Vidro de Safira, Movimento de Quartzo Japonês, 50M à Prova d'Água, Relógio de Luxo para Negócios e Natação
 
-Outros candidatos de slug: aimimo-design-dd39mm (DD39MM no título); aimimo-design-quartz-men-watch (número do modelo na ficha: Quartz Men Watch). Destino mantido: aimimo-design-air-king.
+Outros candidatos de slug: aimimo-design-dd39mm (DD39MM no título); aimimo-design-quartz-men-watch (número do modelo na ficha: Quartz Men Watch); aimimo-design-air-king (nome anterior). Destino: aimimo-design-explorer.
 
 Espessura da caixa no product.json: 12,5 mm, como no cadastro verde. A ficha de origem também informa 13 mm. Coroa: parafusada. A ficha informa largura de banda de 20 a 24 mm e diâmetro de 35 a 39 mm; o product.json usa 20 mm e 39 mm da descrição.
 

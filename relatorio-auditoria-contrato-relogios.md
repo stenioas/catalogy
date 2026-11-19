@@ -76,7 +76,7 @@ São **191 ausências de rótulos** em 31 dos 41 relógios; 10 possuem os 19 ró
 | [addiesdive-ad2554](client/public/catalog/products/addiesdive-ad2554/product.json) | Addiesdive Ranger | Nenhuma |
 | [addiesdive-my-h3-2qz](client/public/catalog/products/addiesdive-my-h3-2qz/product.json) | Addiesdive Submariner Date | Nenhuma |
 | [addiesdive-my-h3-c](client/public/catalog/products/addiesdive-my-h3-c/product.json) | Addiesdive Yacht Master | Nenhuma |
-| [aimimo-design-air-king](client/public/catalog/products/aimimo-design-air-king/product.json) | Aimimo Design Air King | Nenhuma |
+| [aimimo-design-explorer](client/public/catalog/products/aimimo-design-explorer/product.json) | Aimimo Design Explorer | Nenhuma |
 | [aimimo-design-daytona](client/public/catalog/products/aimimo-design-daytona/product.json) | Aimimo Design Daytona | Nenhuma |
 | [aimimo-design-field](client/public/catalog/products/aimimo-design-field/product.json) | Aimimo Design Pilot Vintage | Nenhuma |
 | [aimimo-design-tsuyosa](client/public/catalog/products/aimimo-design-tsuyosa/product.json) | Aimimo Design Tsuyosa | Nenhuma |

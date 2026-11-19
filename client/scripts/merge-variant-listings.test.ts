@@ -115,7 +115,7 @@ describe('mergeVariantListings', () => {
     const slugs = [
       'addiesdive-ad2035',
       'steelflier-sf741',
-      'aimimo-design-air-king',
+      'aimimo-design-explorer',
       'addiesdive-my-h3-2qz',
     ]
     for (const slug of slugs) {
@@ -139,7 +139,7 @@ describe('mergeVariantListings', () => {
       .toMatchObject({ state: 'used', availabilityStatus: 'available' })
     expect(variantByValue(readProduct(catalogDir, 'steelflier-sf741'), 'sf741-zp'))
       .toMatchObject({ state: 'openbox', availabilityStatus: 'available' })
-    expect(variantByValue(readProduct(catalogDir, 'aimimo-design-air-king'), 'b-no-logo'))
+    expect(variantByValue(readProduct(catalogDir, 'aimimo-design-explorer'), 'b-no-logo'))
       .toMatchObject({ state: 'openbox', availabilityStatus: 'available' })
     expect(variantByValue(readProduct(catalogDir, 'addiesdive-my-h3-2qz'), 'black-steel'))
       .toMatchObject({ state: 'used', availabilityStatus: 'available' })
