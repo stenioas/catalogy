@@ -134,10 +134,14 @@ describe('ProductConditionLine', () => {
     const state: Listing['state'] = 'used'
     const availabilityStatus: Listing['availabilityStatus'] = 'on_order'
     render(<ProductConditionLine state={state} availabilityStatus={availabilityStatus} />)
-    expect(screen.getByTestId('state-label').textContent).toBe(STATE_LABEL[state])
-    expect(screen.getByTestId('availability-badge').textContent).toBe(
-      AVAILABILITY_LABEL[availabilityStatus],
-    )
+    const stateLabel = screen.getByTestId('state-label')
+    const availability = screen.getByTestId('availability-badge')
+    expect(stateLabel.textContent).toBe(STATE_LABEL[state])
+    expect(stateLabel.className).toMatch(/\brounded-full\b/)
+    expect(stateLabel.className).toMatch(/\bbg-orange-600\b/)
+    expect(availability.textContent).toBe(AVAILABILITY_LABEL[availabilityStatus])
+    expect(availability.className).toMatch(/\brounded-full\b/)
+    expect(availability.className).toMatch(/\bbg-orange-600\b/)
     expect(screen.queryByText('Indisponível')).toBeNull()
     expect(screen.queryByText('Em estoque')).toBeNull()
   })

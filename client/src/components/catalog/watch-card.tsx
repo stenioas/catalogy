@@ -1,5 +1,5 @@
 import type { CatalogCard, Product } from '@catalogo/shared'
-import { AVAILABILITY_LABEL, effectiveState, resolveVariant, shareMessage, STATE_LABEL } from '@catalogo/shared'
+import { AVAILABILITY_LABEL, resolveVariant, shareMessage } from '@catalogo/shared'
 import { Link, useLocation } from 'react-router-dom'
 
 import { Card } from '@/components/ui/card'
@@ -52,7 +52,6 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
   if (filter !== null && filter !== '') linkState.filter = filter
   const { listing, variant } = listingVariantForCard(product, card)
   const shareText = shareMessage(product, listing, variant, window.location.origin)
-  const condition = effectiveState(variant)
   const isOnOrder = card.availabilityStatus === 'on_order'
 
   return (
@@ -69,14 +68,6 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
               loading={imageLoading}
               className="h-full w-full object-contain"
             />
-            {condition === 'used' || condition === 'openbox' ? (
-              <span
-                data-testid="card-image-state-badge"
-                className="pointer-events-none absolute top-0 right-0 rounded-bl-[4px] bg-orange-600 px-1.5 py-0.5 text-xs font-medium leading-none text-white md:px-2.5 md:py-1 md:text-sm"
-              >
-                {STATE_LABEL[condition]}
-              </span>
-            ) : null}
             {card.availabilityStatus !== 'available' ? (
               <span
                 data-testid="availability-badge"

@@ -73,6 +73,24 @@ export function OfferRow({ offers }: { offers: OfferBadge[] }) {
   )
 }
 
+const conditionPillClassName = 'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium leading-none'
+
+/** Usado, Openbox, Com defeito e Sob encomenda na ficha. O card da home não usa esta cor. */
+export const attentionPillClassName = 'bg-orange-600 text-white'
+
+export function statePillClassName(state: Listing['state']): string {
+  return state === 'new' ? availabilityToneClassName.available : attentionPillClassName
+}
+
+export function availabilityPillClassName(
+  availabilityStatus: Listing['availabilityStatus'],
+  unavailable = false,
+): string {
+  if (unavailable) return 'bg-availability-unavailable text-availability-unavailable-foreground'
+  if (availabilityStatus === 'on_order') return attentionPillClassName
+  return availabilityToneClassName[availabilityStatus]
+}
+
 export function ProductStateBadge({
   state,
   compact = false,
@@ -82,18 +100,13 @@ export function ProductStateBadge({
   compact?: boolean
   className?: string
 }) {
-  const tone =
-    state === 'new'
-      ? 'bg-product-state-new text-product-state-new-foreground'
-      : 'bg-product-state-neutral text-product-state-neutral-foreground'
-
   return (
     <Badge
       data-testid="state-badge"
       className={cn(
-        'h-auto rounded-full font-semibold',
+        'h-auto rounded-full border-0 font-medium',
         compact ? compactBadgeClassName : 'px-2.5 py-0.5 text-sm',
-        tone,
+        statePillClassName(state),
         className,
       )}
     >
@@ -119,7 +132,7 @@ const availabilityPresentation = {
   },
   on_order: {
     label: AVAILABILITY_LABEL.on_order,
-    className: availabilityToneClassName.on_order,
+    className: attentionPillClassName,
   },
 } satisfies Record<Listing['availabilityStatus'], { label: string; className: string }>
 
@@ -138,8 +151,7 @@ export function ProductAvailabilityBadge({
     <Badge
       data-testid="availability-badge"
       className={cn(
-        'h-auto border-0 font-medium',
-        badgeRadiusClassName,
+        'h-auto rounded-full border-0 font-medium',
         compact ? compactBadgeClassName : 'px-2.5 py-0.5 text-sm',
         presentation.className,
         className,
@@ -153,14 +165,23 @@ export function ProductAvailabilityBadge({
 export function ProductConditionLine({
   state,
   availabilityStatus,
+  unavailable = false,
 }: {
   state: Listing['state']
   availabilityStatus: Listing['availabilityStatus']
+  unavailable?: boolean
 }) {
   return (
-    <p data-testid="product-condition" className="m-0 flex flex-wrap items-center gap-1.5 text-xs leading-none text-muted-foreground">
-      <span data-testid="state-label">{STATE_LABEL[state]}</span>
-      <ProductAvailabilityBadge availabilityStatus={availabilityStatus} compact />
+    <p data-testid="product-condition" className="m-0 flex flex-wrap items-center gap-1.5 leading-none">
+      <span data-testid="state-label" className={cn(conditionPillClassName, statePillClassName(state))}>
+        {STATE_LABEL[state]}
+      </span>
+      <span
+        data-testid="availability-badge"
+        className={cn(conditionPillClassName, availabilityPillClassName(availabilityStatus, unavailable))}
+      >
+        {unavailable ? 'Indisponível' : AVAILABILITY_LABEL[availabilityStatus]}
+      </span>
     </p>
   )
 }

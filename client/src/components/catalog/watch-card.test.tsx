@@ -125,47 +125,29 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(cardLink.getAttribute('href')).not.toMatch(/seller=/)
   })
 
-  it.each([
-    ['new', null],
-    ['openbox', 'Openbox'],
-    ['used', 'Usado'],
-    ['defective', null],
-  ] as const)('shows availability without state text and an image badge only for %s', (state, badgeLabel) => {
-    const product = baseProduct({
-      listings: [
-        baseListing({
-          state,
-        }),
-      ],
-    })
-    renderWatchCard(product)
-    const heading = screen.getByRole('heading', { name: 'Seculus' })
-    const image = screen.getByTestId('watch-card-image')
-    const imageBadge = within(image).queryByTestId('card-image-state-badge')
+  it.each(['new', 'openbox', 'used', 'defective'] as const)(
+    'keeps %s off the home card photo',
+    (state) => {
+      const product = baseProduct({
+        listings: [
+          baseListing({
+            state,
+          }),
+        ],
+      })
+      renderWatchCard(product)
+      const heading = screen.getByRole('heading', { name: 'Seculus' })
+      const image = screen.getByTestId('watch-card-image')
 
-    expect(screen.queryByTestId('product-condition')).toBeNull()
-    expect(screen.queryByTestId('availability-badge')).toBeNull()
-    expect(screen.queryByTestId('state-label')).toBeNull()
-    expect(screen.queryByTestId('state-badge')).toBeNull()
-    expect(screen.getByTestId('watch-card-body').textContent).not.toMatch(/Novo|Usado|Openbox|Com defeito|Disponível/)
-    expect(heading.compareDocumentPosition(screen.getByTestId('price-block')) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
-    if (badgeLabel === null) {
-      expect(imageBadge).toBeNull()
-    } else {
-      expect(imageBadge?.textContent).toBe(badgeLabel)
-      expect(imageBadge?.className).toMatch(/\bpointer-events-none\b/)
-      expect(imageBadge?.className).toMatch(/\babsolute\b/)
-      expect(imageBadge?.className).toMatch(/\btop-0\b/)
-      expect(imageBadge?.className).toMatch(/\bright-0\b/)
-      expect(imageBadge?.className).toMatch(/rounded-bl-\[4px\]/)
-      expect(imageBadge?.className).toMatch(/\bmd:text-sm\b/)
-      expect(imageBadge?.className).toMatch(/\bmd:px-2\.5\b/)
-      expect(imageBadge?.className).toMatch(/\bmd:py-1\b/)
-      expect(imageBadge?.className).toMatch(/\bbg-orange-600\b/)
-      expect(imageBadge?.className).toMatch(/\btext-white\b/)
-      expect(imageBadge?.className).toMatch(/\btext-xs\b/)
-    }
-  })
+      expect(within(image).queryByTestId('card-image-state-badge')).toBeNull()
+      expect(screen.queryByTestId('product-condition')).toBeNull()
+      expect(screen.queryByTestId('availability-badge')).toBeNull()
+      expect(screen.queryByTestId('state-label')).toBeNull()
+      expect(screen.queryByTestId('state-badge')).toBeNull()
+      expect(screen.getByTestId('watch-card-body').textContent).not.toMatch(/Novo|Usado|Openbox|Com defeito|Disponível/)
+      expect(heading.compareDocumentPosition(screen.getByTestId('price-block')) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    },
+  )
 
   it.each([
     ['available', 'Disponível'],
@@ -213,13 +195,10 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(badge.className).toMatch(/\bmd:px-2\.5\b/)
     expect(badge.className).toMatch(/\bmd:py-1\b/)
     expect(badge.className).toMatch(/\bmd:text-sm\b/)
+    expect(within(image).queryByTestId('card-image-state-badge')).toBeNull()
     if (availabilityStatus === 'coming_soon') {
       expect(badge.className).toMatch(/\bbg-availability-coming-soon\b/)
       expect(badge.className).toMatch(/\btext-availability-coming-soon-foreground\b/)
-      const stateBadge = within(image).getByTestId('card-image-state-badge')
-      expect(stateBadge.textContent).toBe('Openbox')
-      expect(stateBadge.className).toMatch(/\btop-0\b/)
-      expect(stateBadge.className).toMatch(/\bright-0\b/)
     } else {
       expect(badge.className).toMatch(/\bbg-availability-on-order\b/)
       expect(badge.className).toMatch(/\btext-availability-on-order-foreground\b/)

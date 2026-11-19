@@ -16,7 +16,7 @@ import { products } from '../catalog/products.generated'
 import { AxisSelectors } from '../components/catalog/axis-selectors'
 import { ProductMedia } from '../components/catalog/product-media'
 import { OnOrderPriceNote, PriceBlock } from '../components/catalog/price-block'
-import { OfferRow } from '../components/catalog/product-badges'
+import { OfferRow, ProductConditionLine } from '../components/catalog/product-badges'
 import { StickyBar } from '../components/catalog/sticky-bar'
 import { TopBar } from '../components/catalog/top-bar'
 import { ProductShareButton } from '../components/catalog/want-link'
@@ -99,20 +99,19 @@ function ProductTitle({ title }: { title: string }) {
 }
 
 function ProductIdentity({
-  stateLabel,
-  availabilityLabel,
+  state,
+  availabilityStatus,
+  unavailable,
   title,
 }: {
-  stateLabel: string
-  availabilityLabel: string
+  state: NonNullable<Variant['state']>
+  availabilityStatus: 'available' | 'coming_soon' | 'on_order'
+  unavailable: boolean
   title: string
 }) {
   return <div data-testid="watch-identity" className="flex w-full min-w-0 flex-col items-start gap-0.5 max-md:contents md:gap-2">
     <div data-testid="watch-metadata" className="max-md:order-3 max-md:mt-2">
-      <p data-testid="product-condition" className="m-0 flex flex-wrap items-center gap-1.5 text-xs leading-none text-muted-foreground">
-        <span data-testid="state-label">{stateLabel}</span>
-        <span data-testid="availability-badge" className="text-xs">{availabilityLabel}</span>
-      </p>
+      <ProductConditionLine state={state} availabilityStatus={availabilityStatus} unavailable={unavailable} />
     </div>
     <ProductTitle title={title} />
   </div>
@@ -216,7 +215,6 @@ function ProductDetails({
 function WatchColumn({
   slug,
   title,
-  stateLabel,
   availabilityLabel,
   activeState,
   activeAvailability,
@@ -237,7 +235,6 @@ function WatchColumn({
 }: {
   slug: string
   title: string
-  stateLabel: string
   availabilityLabel: string
   activeState: NonNullable<Variant['state']>
   activeAvailability: NonNullable<Variant['availabilityStatus']>
@@ -264,7 +261,14 @@ function WatchColumn({
     listingSpecifications={listingSpecifications}
     className="max-md:order-8 max-md:mt-8"
   />
-  const identity = <ProductIdentity stateLabel={stateLabel} availabilityLabel={availabilityLabel} title={title} />
+  const identity = (
+    <ProductIdentity
+      state={activeState}
+      availabilityStatus={availabilityStatus}
+      unavailable={availabilityLabel === 'Indisponível'}
+      title={title}
+    />
+  )
   const axes = selectors.length > 0
     ? (
       <AxisSelectors
@@ -400,7 +404,6 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
           <WatchColumn
             slug={product.slug}
             title={product.title}
-            stateLabel={view.stateLabel}
             availabilityLabel={view.availabilityLabel}
             activeState={view.state}
             activeAvailability={view.availability}

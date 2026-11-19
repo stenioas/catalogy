@@ -187,7 +187,11 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     installObserver(1)
   })
 
-  it.each(['Novo', 'Openbox', 'Usado'] as const)('shows state %s as plain text under the title on mobile', (state) => {
+  it.each([
+    ['Novo', 'bg-availability-available', 'text-availability-available-foreground'],
+    ['Openbox', 'bg-orange-600', 'text-white'],
+    ['Usado', 'bg-orange-600', 'text-white'],
+  ] as const)('shows state %s as a pill under the title on mobile', (state, background, foreground) => {
     mockProductsRef.current = [makeProduct({ state })]
     renderWatchPage()
     const heading = screen.getByRole('heading', { level: 1, name: 'Seculus' })
@@ -196,7 +200,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const identity = screen.getByTestId('watch-identity')
     expect(screen.queryByTestId('state-badge')).toBeNull()
     expect(stateLabel.textContent).toBe(state)
-    expect(stateLabel.className).not.toMatch(/rounded/)
+    expect(stateLabel.className).toMatch(/\brounded-full\b/)
+    expect(stateLabel.className).toMatch(new RegExp(`\\b${background}\\b`))
+    expect(stateLabel.className).toMatch(new RegExp(`\\b${foreground}\\b`))
     expect(line.className).toMatch(/\bgap-1\.5\b/)
     expect(screen.getByTestId('watch-metadata').contains(line)).toBe(true)
     expect(identity.className).toMatch(/\bgap-0\.5\b/)
@@ -222,6 +228,17 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const heading = screen.getByRole('heading', { level: 1, name: 'Seculus' })
     const badge = screen.getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
+    expect(badge.className).toMatch(/\brounded-full\b/)
+    if (availabilityStatus === 'available') {
+      expect(badge.className).toMatch(/\bbg-availability-available\b/)
+      expect(badge.className).toMatch(/\btext-availability-available-foreground\b/)
+    } else if (availabilityStatus === 'coming_soon') {
+      expect(badge.className).toMatch(/\bbg-availability-coming-soon\b/)
+      expect(badge.className).toMatch(/\btext-availability-coming-soon-foreground\b/)
+    } else {
+      expect(badge.className).toMatch(/\bbg-orange-600\b/)
+      expect(badge.className).toMatch(/\btext-white\b/)
+    }
     expect(screen.getByTestId('watch-metadata').contains(badge)).toBe(true)
     expect(heading.className).toMatch(/\bmax-md:order-2\b/)
     expect(screen.getByTestId('watch-metadata').className).toMatch(/\bmax-md:order-3\b/)
