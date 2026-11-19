@@ -1,5 +1,6 @@
 import { AVAILABILITY_LABEL, STATE_LABEL, type Listing } from '@catalogo/shared'
 import { cn } from 'cn'
+import { CircleCheck, PackageCheck, PackageOpen, Recycle, ShoppingBag, Van, type LucideIcon } from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
 import { lazy, Suspense, type ComponentType, type SVGProps } from 'react'
 
@@ -73,7 +74,23 @@ export function OfferRow({ offers }: { offers: OfferBadge[] }) {
   )
 }
 
-const conditionPillClassName = 'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium leading-none'
+const conditionPillClassName = `inline-flex h-5 items-center gap-1 ${badgeRadiusClassName} px-1.5 text-xs font-medium leading-none`
+
+const stateIcons: Partial<Record<Listing['state'], LucideIcon>> = {
+  new: PackageCheck,
+  used: Recycle,
+  openbox: PackageOpen,
+}
+
+const availabilityIcons: Record<Listing['availabilityStatus'], LucideIcon> = {
+  available: CircleCheck,
+  coming_soon: Van,
+  on_order: ShoppingBag,
+}
+
+function ConditionIcon({ icon: Icon }: { icon: LucideIcon }) {
+  return <Icon aria-hidden="true" className="size-3 shrink-0" />
+}
 
 /** Usado, Openbox, Com defeito e Sob encomenda na ficha. O card da home não usa esta cor. */
 export const attentionPillClassName = 'bg-orange-600 text-white'
@@ -151,7 +168,8 @@ export function ProductAvailabilityBadge({
     <Badge
       data-testid="availability-badge"
       className={cn(
-        'h-auto rounded-full border-0 font-medium',
+        'h-auto border-0 font-medium',
+        badgeRadiusClassName,
         compact ? compactBadgeClassName : 'px-2.5 py-0.5 text-sm',
         presentation.className,
         className,
@@ -174,12 +192,14 @@ export function ProductConditionLine({
   return (
     <p data-testid="product-condition" className="m-0 flex flex-wrap items-center gap-1.5 leading-none">
       <span data-testid="state-label" className={cn(conditionPillClassName, statePillClassName(state))}>
+        {stateIcons[state] ? <ConditionIcon icon={stateIcons[state]} /> : null}
         {STATE_LABEL[state]}
       </span>
       <span
         data-testid="availability-badge"
         className={cn(conditionPillClassName, availabilityPillClassName(availabilityStatus, unavailable))}
       >
+        {unavailable ? null : <ConditionIcon icon={availabilityIcons[availabilityStatus]} />}
         {unavailable ? 'Indisponível' : AVAILABILITY_LABEL[availabilityStatus]}
       </span>
     </p>
