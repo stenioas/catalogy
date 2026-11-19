@@ -139,7 +139,17 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "on_order",
+          "availabilityStatus": "available",
+          "price": 94.9,
+          "listPrice": 119.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
           "mainImage": "skmei-1988-7.webp"
         },
         {
