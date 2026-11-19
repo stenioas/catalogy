@@ -9,16 +9,16 @@
       "label": "Cor",
       "values": [
         {
+          "id": "910-gold-blue",
+          "value": "Gold Blue"
+        },
+        {
           "id": "910-silver-blue",
           "value": "Silver Blue"
         },
         {
           "id": "910-silver-white",
           "value": "Silver White"
-        },
-        {
-          "id": "910-gold-blue",
-          "value": "Gold Blue"
         },
         {
           "id": "910-gold-green",
@@ -128,8 +128,7 @@
         "poedagar-910-26.webp",
         "poedagar-910-27.webp",
         "poedagar-910-28.webp",
-        "poedagar-910-29.webp",
-        "poedagar-910-30.webp"
+        "poedagar-910-29.webp"
       ],
       "variants": [
         {
@@ -140,7 +139,17 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "on_order",
+          "availabilityStatus": "coming_soon",
+          "price": 129.9,
+          "listPrice": 169.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
           "mainImage": "poedagar-910-7.webp"
         },
         {
@@ -206,7 +215,17 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "on_order",
+          "availabilityStatus": "coming_soon",
+          "price": 144.9,
+          "listPrice": 184.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
           "mainImage": "poedagar-910-12.webp"
         },
         {
