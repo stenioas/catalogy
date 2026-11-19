@@ -200,7 +200,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const identity = screen.getByTestId('watch-identity')
     expect(screen.queryByTestId('state-badge')).toBeNull()
     expect(stateLabel.textContent).toBe(state)
-    expect(stateLabel.className).toMatch(/rounded-\[4px\]/)
+    expect(stateLabel.className).toMatch(/\brounded-full\b/)
     expect(stateLabel.className).toMatch(new RegExp(`\\b${background}\\b`))
     expect(stateLabel.className).toMatch(new RegExp(`\\b${foreground}\\b`))
     expect(line.className).toMatch(/\bgap-1\.5\b/)
@@ -228,7 +228,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const heading = screen.getByRole('heading', { level: 1, name: 'Seculus' })
     const badge = screen.getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
-    expect(badge.className).toMatch(/rounded-\[4px\]/)
+    expect(badge.className).toMatch(/\brounded-full\b/)
     if (availabilityStatus === 'available') {
       expect(badge.className).toMatch(/\bbg-availability-available\b/)
       expect(badge.className).toMatch(/\btext-availability-available-foreground\b/)

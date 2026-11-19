@@ -74,7 +74,7 @@ export function OfferRow({ offers }: { offers: OfferBadge[] }) {
   )
 }
 
-const conditionPillClassName = `inline-flex h-5 items-center gap-1 ${badgeRadiusClassName} px-1.5 text-xs font-medium leading-none`
+const conditionPillClassName = 'inline-flex h-5 items-center gap-1 rounded-full px-1.5 text-xs font-medium leading-none'
 
 const stateIcons: Partial<Record<Listing['state'], LucideIcon>> = {
   new: PackageCheck,
