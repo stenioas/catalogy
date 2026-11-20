@@ -72,9 +72,9 @@ O compartilhar abre `https://wa.me/?text=...` com a frase `Olá, tenho interesse
 
 O preço na vitrine, na ficha e na barra fixa é seguido de **no pix**. A parcela é `10x R$ … no cartão`: o total é `price / (1 - 0,1208)`, dividido em 10 e arredondado ao centavo. Sob encomenda mostra **Preço sob consulta**, em vermelho, sem parcela.
 
-`listPrice` aparece riscado como **De R$ …**. A badge `−N%` só entra quando o desconto inteiro é de pelo menos 1%. Na vitrine ela fica ao lado do preço anterior, com 11px e cantos retos. Na ficha e na barra fixa também fica ao lado do preço anterior, sem inclinação.
+`listPrice` aparece riscado como **R$ …**, sem o “De”. A badge `−N%` só entra quando o desconto inteiro é de pelo menos 1% e fica ao lado desse preço anterior, na vitrine, na ficha e na barra fixa. O preço atual fica na linha seguinte, ao lado de **no pix**.
 
-Na vitrine, o título usa 13px e, a partir de 768px, 15px. O preço anterior usa 12px e depois 14px. O preço atual usa 16px e depois 20px. Na ficha o preço atual é maior e a linha **no pix** fica ao lado dele.
+Na vitrine o card é o mesmo em qualquer largura: título em 13px, preço anterior em 12px, percentual em 11px e preço atual em 18px. Na ficha o preço atual é maior.
 
 `offers` fica em cada variante. O texto, as cores e o ícone saem do JSON. A fileira não altera `price` nem `listPrice`. Lista vazia ou campo ausente não desenha fileira. Na vitrine, sob encomenda não mostra ofertas. Um ícone que não existe no Lucide, ou que não tem import dinâmico, impede a subida.
 

@@ -101,8 +101,8 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(img.className).toMatch(/\bobject-contain\b/)
     const frame = img.parentElement
     expect(frame).not.toBeNull()
-    expect(frame?.className).toMatch(/\bmd:aspect-square\b/)
-    expect(frame?.className).toMatch(/\bsize-32\b/)
+    expect(frame?.className).toMatch(/\baspect-square\b/)
+    expect(frame?.className).toMatch(/\bw-full\b/)
     const backgroundTokens = frame?.className.match(/\bbg-\S+/g) ?? []
     expect(backgroundTokens.filter((token) => token !== 'bg-transparent')).toEqual([])
     expect(frame?.getAttribute('style') ?? '').not.toMatch(/background/i)
@@ -153,7 +153,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     ['available', 'Disponível'],
     ['coming_soon', 'Chega em breve'],
     ['on_order', 'Sob encomenda'],
-  ] as const)('places availability %s on the photo, hiding Disponível', (availabilityStatus, label) => {
+  ] as const)('places availability %s under the photo, hiding Disponível', (availabilityStatus, label) => {
     const section =
       availabilityStatus === 'available'
         ? 'available'
@@ -178,23 +178,18 @@ describe('WatchCard (SV-13, SV-14)', () => {
       return
     }
 
-    const badge = within(image).getByTestId('availability-badge')
+    const badge = within(body).getByTestId('availability-badge')
     expect(badge.textContent).toBe(label)
-    expect(body.contains(badge)).toBe(false)
-    expect(badge.className).toMatch(/\babsolute\b/)
-    expect(badge.className).toMatch(/\bbottom-0\b/)
-    expect(badge.className).toMatch(/\bleft-0\b/)
-    expect(badge.className).toMatch(/rounded-tr-\[4px\]/)
-    expect(badge.className).not.toMatch(/\btop-0\b/)
-    expect(badge.className).not.toMatch(/\bright-0\b/)
+    expect(image.contains(badge)).toBe(false)
+    expect(badge.className).not.toMatch(/\babsolute\b/)
+    expect(badge.className).toMatch(/rounded-\[4px\]/)
     expect(badge.className).toMatch(/\bpx-1\.5\b/)
     expect(badge.className).toMatch(/\bpy-0\.5\b/)
     expect(badge.className).toMatch(/\btext-xs\b/)
     expect(badge.className).toMatch(/\bfont-medium\b/)
     expect(badge.className).toMatch(/\bleading-none\b/)
-    expect(badge.className).toMatch(/\bmd:px-2\.5\b/)
-    expect(badge.className).toMatch(/\bmd:py-1\b/)
-    expect(badge.className).toMatch(/\bmd:text-sm\b/)
+    const heading = screen.getByRole('heading', { name: 'Seculus' })
+    expect(badge.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(within(image).queryByTestId('card-image-state-badge')).toBeNull()
     if (availabilityStatus === 'coming_soon') {
       expect(badge.className).toMatch(/\bbg-availability-coming-soon\b/)
@@ -390,11 +385,11 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     const card = container.querySelector('[data-slot="card"]')
     expect(card).not.toBeNull()
     const tokens = classTokens((card as HTMLElement).className)
-    expect(tokens).toContain('rounded-none')
-    expect(tokens).toContain('md:rounded-[12px]')
-    expect(tokens).not.toContain('rounded-[12px]')
-    expect(tokens).toContain('border-0')
-    expect(tokens).toContain('md:border-[1px]')
+    expect(tokens).toContain('rounded-[12px]')
+    expect(tokens).not.toContain('rounded-none')
+    expect(tokens).not.toContain('md:rounded-[12px]')
+    expect(tokens).toContain('border-[1px]')
+    expect(tokens).not.toContain('border-0')
     expect(tokens).toContain('shadow-none')
     expect(tokens.some((token) => /^shadow-(?!none$)/.test(token))).toBe(false)
     expect(tokens).not.toContain('ring-1')
@@ -404,8 +399,8 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
   it('paints the card with the canvas token in light and surface-tile-2 in dark (SV-37, SV-38)', () => {
     const { container } = renderWatchCard()
     const card = container.querySelector('[data-slot="card"]') as HTMLElement
-    expect(classTokens(card.className)).toContain('bg-background')
-    expect(classTokens(card.className)).toContain('md:bg-card')
+    expect(classTokens(card.className)).toContain('bg-card')
+    expect(classTokens(card.className)).not.toContain('bg-background')
 
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
     const root = blockBody(css, ':root')
@@ -421,9 +416,9 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     const card = container.querySelector('[data-slot="card"]') as HTMLElement
     const img = screen.getByRole('img', { name: 'Seculus' })
     const frame = img.parentElement as HTMLElement
-    expect(classTokens(frame.className)).toContain('size-32')
-    expect(classTokens(frame.className)).toContain('md:w-full')
-    expect(classTokens(frame.className)).toContain('md:aspect-square')
+    expect(classTokens(frame.className)).toContain('aspect-square')
+    expect(classTokens(frame.className)).toContain('w-full')
+    expect(classTokens(frame.className)).not.toContain('size-32')
     expect(classTokens(img.className)).toContain('w-full')
     expect(classTokens(card.className)).toContain('p-0')
 
@@ -444,8 +439,8 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     const button = within(body).getByRole('link', { name: 'Enviar no WhatsApp' })
     const img = screen.getByRole('img', { name: 'Seculus' })
 
-    expect(classTokens(body.className)).toContain('md:px-[24px]')
-    expect(classTokens(body.className)).toContain('md:pb-[24px]')
+    expect(classTokens(body.className)).toContain('px-2')
+    expect(classTokens(body.className)).toContain('pb-2')
     expect(body.contains(heading)).toBe(true)
     expect(body.contains(price)).toBe(true)
     expect(body.contains(button)).toBe(true)
@@ -467,20 +462,17 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     cleanup()
   })
 
-  it('places the fixed photo beside a flexible text column below md and restores the card stack at md', () => {
+  it('stacks the square photo above the text on every width', () => {
     renderWatchCard()
-    const link = screen.getByTestId('watch-card-row')
+    const row = screen.getByTestId('watch-card-row')
     const image = screen.getByTestId('watch-card-image')
     const body = screen.getByTestId('watch-card-body')
 
-    expect(link.className).toMatch(/\bflex\b/)
-    expect(link.className).toMatch(/\bitems-start\b/)
-    expect(link.className).not.toMatch(/\bitems-center\b/)
-    expect(link.className).toMatch(/\bgap-2\b/)
-    expect(link.className).toMatch(/\bmd:block\b/)
-    expect(image.className).toMatch(/\bsize-32\b/)
-    expect(body.className).toMatch(/\bmin-w-0\b/)
-    expect(body.className).toMatch(/\bflex-1\b/)
+    expect(row.className).toMatch(/\bflex-col\b/)
+    expect(row.className).not.toMatch(/\bmd:block\b/)
+    expect(image.className).toMatch(/\baspect-square\b/)
+    expect(image.className).toMatch(/\bw-full\b/)
+    expect(image.compareDocumentPosition(body) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
   })
 
   it('keeps a long title on one line with ellipsis and its full text available', () => {
@@ -497,8 +489,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(heading.className).toMatch(/\bwhitespace-nowrap\b/)
     expect(heading.className).toMatch(/\btext-\[13px\]/)
     expect(heading.className).toMatch(/\bfont-medium\b/)
-    expect(heading.className).toMatch(/\bmd:text-\[15px\]/)
-    expect(heading.className).toMatch(/\bmd:font-semibold\b/)
+    expect(heading.className).not.toMatch(/\bmd:text-\[15px\]/)
   })
 
   it('keeps description and specifications out of the catalog row', () => {
@@ -522,16 +513,9 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(body.contains(action)).toBe(true)
     expect(screen.getByTestId('watch-card-link').contains(action)).toBe(false)
     expect(screen.getByTestId('watch-card-image').contains(action)).toBe(false)
-    expect(action.parentElement?.className).toMatch(/\bitems-start\b/)
-    expect(action.parentElement?.className).not.toMatch(/\bitems-end\b/)
-    expect(action.parentElement?.className).not.toMatch(/\bmd:items-center\b/)
-    expect(action.className).toMatch(/\bself-stretch\b/)
+    expect(screen.getByTestId('price-block').compareDocumentPosition(action) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(action.className).toMatch(/\bjustify-end\b/)
-    expect(action.className).toMatch(/\bflex-col\b/)
-    expect(action.className).toMatch(/\bh-full\b/)
-    expect(action.className).toMatch(/\bpb-1\b/)
-    expect(action.className).toMatch(/\bpr-1\b/)
-    expect(action.className).toMatch(/\bshrink-0\b/)
+    expect(action.className).toMatch(/\bw-full\b/)
     expect(link.className).toMatch(/\bsize-8\b/)
     expect(link.className).toMatch(/\bmd:size-10\b/)
     expect(link.className).toContain('bg-[color-mix(in_srgb,var(--primary)_16%,white)]')
@@ -548,12 +532,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     const price = screen.getByTestId('price-block')
 
     expect(screen.queryByTestId('watch-card-actions')).toBeNull()
-    expect(action.parentElement?.className).toMatch(/\bitems-start\b/)
-    expect(action.parentElement?.className).not.toMatch(/\bitems-end\b/)
-    expect(action.parentElement?.className).not.toMatch(/\bmd:items-center\b/)
     expect(action.className).toMatch(/\bjustify-end\b/)
-    expect(action.className).toMatch(/\bself-stretch\b/)
-    expect(action.className).toMatch(/\bmd:h-auto\b/)
     expect(screen.getByTestId('watch-card-body').contains(action)).toBe(true)
     expect(screen.getByTestId('watch-card-body').contains(price)).toBe(true)
     expect(link.className).toMatch(/\bmd:size-10\b/)
@@ -591,7 +570,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     renderWatchCard()
     const body = screen.getByTestId('watch-card-body')
 
-    expect(within(body).getByText('De R$ 450,00')).toBeDefined()
+    expect(within(body).getByText('R$ 450,00')).toBeDefined()
     expect(within(body).getByText('17% OFF')).toBeDefined()
     expect(within(body).getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 369,90')
     expect(within(body).getByText('no pix')).toBeDefined()
@@ -607,9 +586,9 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(current.className).toMatch(/text-\[18px\]/)
     expect(screen.getByTestId('price-currency').className).toMatch(/text-\[12px\]/)
     expect(screen.getByTestId('price-cents').className).toMatch(/text-\[12px\]/)
-    expect(badge.className.split(/\s+/)).toContain('row-start-2')
-    expect(badge.className.split(/\s+/)).toContain('col-start-2')
-    expect(screen.getByTestId('price-pix').className.split(/\s+/)).toContain('col-start-3')
+    expect(badge.parentElement).toBe(list.parentElement)
+    expect(screen.getByTestId('price-pix').parentElement).toBe(current.parentElement)
+    expect(screen.getByTestId('price-pix').parentElement).not.toBe(list.parentElement)
     expect(badge.className).not.toMatch(/rotate/)
     expect(screen.getByTestId('price-installments').className).toMatch(/\btext-xs\b/)
   })
@@ -705,9 +684,8 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     const consult = screen.getByTestId('consult-label')
     expect(consult.textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(consult.className).toMatch(/\btext-xs\b/)
-    expect(consult.className).toMatch(/\bmd:text-sm\b/)
+    expect(consult.className).not.toMatch(/\bmd:text-sm\b/)
     expect(consult.className).toMatch(/\bfont-medium\b/)
-    expect(consult.className).toMatch(/\bmd:font-semibold\b/)
     expect(consult.className).toMatch(/\btext-destructive\b/)
     expect(consult.textContent).not.toMatch(/R\$/)
     expect(screen.queryByTestId('price-block')).toBeNull()
@@ -734,8 +712,8 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
 
     expect(frames).toHaveLength(2)
     expect(Array.from(frames, (frame) => frame.className)).toEqual([
-      expect.stringContaining('size-32'),
-      expect.stringContaining('size-32'),
+      expect.stringContaining('aspect-square'),
+      expect.stringContaining('aspect-square'),
     ])
   })
 })

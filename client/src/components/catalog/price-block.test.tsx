@@ -83,21 +83,24 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(pix.compareDocumentPosition(screen.getByTestId('price-installments')) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
   })
 
-  it('places the upright discount badge between the current price and no pix', () => {
+  it('places the upright discount badge beside the list price, leaving no pix next to the current price', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450 })
     const badge = screen.getByTestId('price-badge')
+    const list = screen.getByTestId('price-list')
     const current = screen.getByTestId('price-current')
     const pix = screen.getByTestId('price-pix')
-    expect(badge.parentElement).toBe(current.parentElement)
-    expect(current.compareDocumentPosition(badge) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
-    expect(badge.compareDocumentPosition(pix) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(badge.parentElement).toBe(list.parentElement)
+    expect(badge.parentElement).not.toBe(current.parentElement)
+    expect(pix.parentElement).toBe(current.parentElement)
+    expect(list.compareDocumentPosition(badge) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
+    expect(current.compareDocumentPosition(pix) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
     expect(badge.className).not.toMatch(/rotate/)
   })
 
-  it('shows De R$ 450,00 struck at 14px and 17% OFF for list 450 and price 369.9 (CAT-100, CAT-101)', () => {
+  it('shows R$ 450,00 struck at 14px and 17% OFF for list 450 and price 369.9 (CAT-100, CAT-101)', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450 })
     const reference = screen.getByTestId('price-list')
-    expect(reference.textContent).toBe('De R$ 450,00')
+    expect(reference.textContent).toBe('R$ 450,00')
     expect(reference.className).toMatch(/\btext-sm\b/)
     expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 369,90')
     expect(screen.getByTestId('price-badge').textContent).toBe('17% OFF')
@@ -145,7 +148,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
 
   it('keeps the struck reference but hides the badge when discount is below 1% (CAT-102, CAT-103)', () => {
     renderPriceBlock({ price: 446.01, listPrice: 450 })
-    expect(screen.getByTestId('price-list').textContent).toBe('De R$ 450,00')
+    expect(screen.getByTestId('price-list').textContent).toBe('R$ 450,00')
     expect(screen.queryByTestId('price-badge')).toBeNull()
   })
 
@@ -191,33 +194,32 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
     expect(row?.className).toMatch(/\bmd:whitespace-nowrap\b/)
   })
 
-  it('places a small upright discount between the current price and no pix on the showcase', () => {
+  it('places a small upright discount beside the list price on the showcase', () => {
     renderPriceBlock({ price: 369.9, listPrice: 450, showcase: true })
     const list = screen.getByTestId('price-list')
     const badge = screen.getByTestId('price-badge')
     const current = screen.getByTestId('price-current')
+    const pix = screen.getByTestId('price-pix')
     const installments = screen.getByTestId('price-installments')
 
-    expect(list.className.split(/\s+/)).toEqual(expect.arrayContaining(['row-start-1', 'text-xs']))
+    expect(list.className.split(/\s+/)).toContain('text-xs')
     expect(list.className.split(/\s+/)).not.toContain('md:text-sm')
-    expect(list.className.split(/\s+/)).not.toContain('col-span-3')
-    expect(current.className.split(/\s+/)).toEqual(expect.arrayContaining(['text-[18px]', 'row-start-2']))
-    expect(badge.className.split(/\s+/)).toEqual(expect.arrayContaining(['col-start-2', 'row-start-2', 'text-[11px]']))
-    expect(badge.className.split(/\s+/)).not.toContain('row-start-1')
+    expect(badge.parentElement).toBe(list.parentElement)
+    expect(pix.parentElement).toBe(current.parentElement)
+    expect(pix.parentElement).not.toBe(badge.parentElement)
+    expect(current.className.split(/\s+/)).toContain('text-[18px]')
+    expect(badge.className.split(/\s+/)).toContain('text-[11px]')
     expect(badge.className).not.toMatch(/rotate/)
     expect(badge.textContent).toBe('17% OFF')
     expect(installments.className).toMatch(/\btext-xs\b/)
     expect(installments.textContent).toBe(creditInstallmentLabel(369.9))
-    expect(screen.getByTestId('price-pix').className.split(/\s+/)).toEqual(
-      expect.arrayContaining(['col-start-3', 'row-start-2']),
-    )
+    expect(list.textContent).toBe('R$ 450,00')
   })
 
-  it('keeps the showcase current price on the first row when there is no reference price', () => {
+  it('keeps the showcase current price beside no pix when there is no reference price', () => {
     renderPriceBlock({ price: 369.9, showcase: true })
     expect(screen.queryByTestId('price-badge')).toBeNull()
-    expect(screen.getByTestId('price-current').className.split(/\s+/)).toContain('row-start-1')
-    expect(screen.getByTestId('price-pix').className.split(/\s+/)).toContain('col-start-2')
+    expect(screen.getByTestId('price-pix').parentElement).toBe(screen.getByTestId('price-current').parentElement)
   })
 
   it('keeps the default reference row unchanged outside the compact card', () => {
@@ -236,7 +238,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
       wrapListPriceOnMobile: true,
     })
 
-    expect(screen.getByTestId('price-list').textContent).toBe('De R$ 123.456.789,99')
+    expect(screen.getByTestId('price-list').textContent).toBe('R$ 123.456.789,99')
     expect(screen.getByTestId('price-badge').textContent).toBe('99% OFF')
   })
 
@@ -247,7 +249,7 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
       wrapListPriceOnMobile: true,
     })
 
-    expect(screen.getByTestId('price-list').textContent).toBe('De R$ 123.456.789,99')
+    expect(screen.getByTestId('price-list').textContent).toBe('R$ 123.456.789,99')
     expect(screen.queryByTestId('price-badge')).toBeNull()
   })
 
@@ -312,11 +314,11 @@ describe('PriceBlock (CAT-99–CAT-109)', () => {
   )
 
   it.each([false, true])(
-    'OSC-34: keeps the current price in the normal tone with De, discount, pix and installments when showcase is %s',
+    'OSC-34: keeps the current price in the normal tone with the list price, discount, pix and installments when showcase is %s',
     (showcase) => {
       renderPriceBlock({ price: 369.9, listPrice: 450, showcase })
       expect(screen.getByTestId('price-current').className).not.toMatch(/\btext-destructive\b/)
-      expect(screen.getByTestId('price-list').textContent).toBe('De R$ 450,00')
+      expect(screen.getByTestId('price-list').textContent).toBe('R$ 450,00')
       expect(screen.getByTestId('price-badge').textContent).toBe('17% OFF')
       expect(screen.getByTestId('price-pix').textContent).toBe('no pix')
       expect(screen.getByTestId('price-installments').textContent).toBe(creditInstallmentLabel(369.9))

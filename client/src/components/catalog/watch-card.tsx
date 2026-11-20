@@ -54,56 +54,51 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
   const shareText = shareMessage(product, listing, variant, window.location.origin)
   const isOnOrder = card.availabilityStatus === 'on_order'
 
+  const showAvailability = card.availabilityStatus !== 'available'
+
   return (
-    <Card className="h-full w-full gap-0 overflow-hidden rounded-none border-0 bg-background p-0 py-0 shadow-none ring-0 md:rounded-[12px] md:border-[1px] md:bg-card">
-      <div data-testid="watch-card-row" className="flex w-full flex-1 items-start gap-2 md:block">
+    <Card className="w-full gap-0 overflow-hidden rounded-[12px] border-[1px] bg-card p-0 py-0 shadow-none ring-0">
+      <div data-testid="watch-card-row" className="flex w-full flex-col">
         <Link to={card.path} state={linkState} className="contents">
-          <div
-            data-testid="watch-card-image"
-            className="relative size-32 shrink-0 md:aspect-square md:size-auto md:w-full"
-          >
+          <div data-testid="watch-card-image" className="relative aspect-square w-full">
             <img
               src={productThumbSrc(product.slug, card.image)}
               alt={card.title}
               loading={imageLoading}
               className="h-full w-full object-contain"
             />
-            {card.availabilityStatus !== 'available' ? (
-              <span
-                data-testid="availability-badge"
-                className={`pointer-events-none absolute bottom-0 left-0 rounded-tr-[4px] px-1.5 py-0.5 text-xs font-medium leading-none md:px-2.5 md:py-1 md:text-sm ${availabilityToneClassName[card.availabilityStatus]}`}
-              >
-                {AVAILABILITY_LABEL[card.availabilityStatus]}
-              </span>
-            ) : null}
           </div>
         </Link>
         <div
           data-testid="watch-card-body"
-          className="relative flex min-w-0 flex-1 flex-col items-start self-stretch gap-1 text-left md:mt-3 md:w-full md:flex-none md:gap-2 md:px-[24px] md:pb-[24px]"
+          className="flex w-full flex-col items-start gap-1 px-2 pt-2 pb-2 text-left"
         >
-          <div className="flex h-full w-full flex-1 items-start gap-2 md:h-auto md:flex-none md:gap-3">
-            <Link
-              to={card.path}
-              state={linkState}
-              data-testid="watch-card-link"
-              className="flex min-w-0 flex-1 flex-col items-start self-start gap-1 md:gap-2"
+          {!isOnOrder && card.offers.length > 0 ? <OfferRow offers={card.offers} /> : null}
+          {showAvailability ? (
+            <span
+              data-testid="availability-badge"
+              className={`rounded-[4px] px-1.5 py-0.5 text-xs font-medium leading-none ${availabilityToneClassName[card.availabilityStatus]}`}
             >
-              {!isOnOrder && card.offers.length > 0 ? <OfferRow offers={card.offers} /> : null}
-              <h2 className="m-0 line-clamp-1 w-full min-w-0 truncate overflow-hidden text-ellipsis whitespace-nowrap text-[13px] leading-snug font-medium text-foreground md:font-display md:text-[15px] md:leading-snug md:font-semibold">
-                {card.title}
-              </h2>
-              <div className="flex w-full flex-col items-start gap-1 md:gap-2">
-                {isOnOrder ? (
-                  <OnOrderPriceNote showcase />
-                ) : (
-                  <PriceBlock price={card.price!} listPrice={card.listPrice} showcase />
-                )}
-              </div>
-            </Link>
-            <div data-testid="watch-card-mobile-action" className="flex h-full shrink-0 flex-col justify-end self-stretch pb-1 pr-1 md:h-auto">
-              <WantIconLink slug={product.slug} title={card.title} href={`https://wa.me/?text=${encodeURIComponent(shareText)}`} />
-            </div>
+              {AVAILABILITY_LABEL[card.availabilityStatus]}
+            </span>
+          ) : null}
+          <Link
+            to={card.path}
+            state={linkState}
+            data-testid="watch-card-link"
+            className="flex w-full min-w-0 flex-col items-start gap-1"
+          >
+            <h2 className="m-0 line-clamp-1 w-full min-w-0 truncate overflow-hidden text-ellipsis whitespace-nowrap text-[13px] leading-snug font-medium text-foreground">
+              {card.title}
+            </h2>
+            {isOnOrder ? (
+              <OnOrderPriceNote showcase />
+            ) : (
+              <PriceBlock price={card.price!} listPrice={card.listPrice} showcase />
+            )}
+          </Link>
+          <div data-testid="watch-card-mobile-action" className="flex w-full justify-end">
+            <WantIconLink slug={product.slug} title={card.title} href={`https://wa.me/?text=${encodeURIComponent(shareText)}`} />
           </div>
         </div>
       </div>

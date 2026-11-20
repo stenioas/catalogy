@@ -256,10 +256,6 @@
   }
 }
 
-.catalog-grid > li {
-  position: relative;
-}
-
 @media (max-width: 767px) {
   .watch-page-column {
     padding-inline: 16px;
@@ -268,21 +264,6 @@
   .watch-carousel {
     width: calc(100% + 32px);
     margin-inline: -16px;
-  }
-
-  .catalog-grid > li:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: calc(100% + 8px);
-    height: 1px;
-    transform: translateY(-50%);
-    background: rgb(0 0 0 / 8%);
-  }
-
-  .dark .catalog-grid > li:not(:last-child)::after {
-    background: rgb(255 255 255 / 12%);
   }
 }
 

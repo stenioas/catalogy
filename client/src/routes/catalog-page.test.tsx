@@ -10,7 +10,7 @@ import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router-d
 
 import { writeProductsModule } from '../../scripts/catalog'
 import { ThemeProvider } from '../components/theme-provider'
-import { CatalogPage, eagerHomeCardCount } from './catalog-page'
+import { CatalogPage, eagerHomeCardCount, homeColumnCount, vitrineContentWidth } from './catalog-page'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -72,50 +72,26 @@ vi.mock('../components/catalog/watch-card', () => ({
   ),
 }))
 
-function lengthToPx(token: string): number {
-  const value = token.trim()
-  if (value.endsWith('px')) return Number.parseFloat(value)
-  if (value.endsWith('rem')) return Number.parseFloat(value) * 16
-  throw new Error(`unsupported length ${value}`)
-}
-
-function breakpointToken(name: 'md' | 'lg'): string {
-  const appCss = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
-  const override = appCss.match(
-    new RegExp(`--breakpoint-${name}:\\s*([^;]+)`),
-  )
-  if (override?.[1]) return override[1]
-  const theme = readFileSync(
-    join(clientRoot, 'node_modules/tailwindcss/theme.css'),
-    'utf8',
-  )
-  const fallback = theme.match(new RegExp(`--breakpoint-${name}:\\s*([^;]+)`))
-  if (!fallback?.[1]) throw new Error(`missing breakpoint ${name}`)
-  return fallback[1]
-}
-
-function columnCount(className: string, width: number): number {
-  const md = lengthToPx(breakpointToken('md'))
-  const lg = lengthToPx(breakpointToken('lg'))
-  const base = className.match(/(?:^|\s)grid-cols-(\d+)\b/)
-  let cols = base?.[1] ? Number(base[1]) : 0
-  const rules = [...className.matchAll(/\b(md|lg):grid-cols-(\d+)\b/g)]
-    .map((match) => ({
-      min: match[1] === 'md' ? md : lg,
-      cols: Number(match[2]),
-    }))
-    .sort((a, b) => a.min - b.min)
-  for (const rule of rules) {
-    if (width >= rule.min) cols = rule.cols
-  }
-  return cols
-}
-
 function productsFromModule(source: string): Product[] {
   const prefix = 'export const products: Product[] = '
   return JSON.parse(source.split(prefix)[1]) as Product[]
 }
 
+function titlesInDealOrder(): string[] {
+  const columns = screen.getAllByTestId('catalog-column-stack')
+  const perColumn = columns.map((column) =>
+    within(column).queryAllByRole('heading', { level: 2 }).map((node) => node.textContent ?? ''),
+  )
+  const longest = Math.max(0, ...perColumn.map((column) => column.length))
+  const titles: string[] = []
+  for (let row = 0; row < longest; row += 1) {
+    for (const column of perColumn) {
+      const title = column[row]
+      if (title !== undefined) titles.push(title)
+    }
+  }
+  return titles
+}
 function renderCatalogPage() {
   return render(
     <ThemeProvider>
@@ -143,12 +119,7 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
       makeProduct('curren-watch', 'CURREN'),
     ]
     renderCatalogPage()
-    const headings = screen.getAllByRole('heading', { level: 2 })
-    expect(headings.map((node) => node.textContent)).toEqual([
-      'Addiesdive',
-      'CURREN',
-      'Seculus',
-    ])
+    expect(titlesInDealOrder()).toEqual(['Addiesdive', 'CURREN', 'Seculus'])
   })
 
   it('hides a product with enabled false and keeps omitted or true', () => {
@@ -170,38 +141,41 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
       makeProduct('epico-watch', 'Épico'),
     ]
     renderCatalogPage()
-    const headings = screen.getAllByRole('heading', { level: 2 })
-    expect(headings.map((node) => node.textContent)).toEqual([
-      'addiesdive',
-      'Épico',
-      'Zeta',
-    ])
+    expect(titlesInDealOrder()).toEqual(['addiesdive', 'Épico', 'Zeta'])
   })
 
-  it('uses one, two, and three grid columns at the md and lg breakpoints (CAT-49–CAT-51, AC20–22)', () => {
-    mockProductsRef.current = [makeProduct('only-one', 'Only')]
-    renderCatalogPage()
-    const grid = screen.getByTestId('catalog-grid')
-    expect(grid.className).toMatch(/\bgrid-cols-1\b/)
-    expect(grid.className).toMatch(/\bmd:grid-cols-2\b/)
-    expect(grid.className).toMatch(/\blg:grid-cols-3\b/)
-    expect(grid.className).toMatch(/\bgap-4\b/)
-    expect(grid.className).toMatch(/\bmd:gap-6\b/)
-    expect(grid.classList.contains('catalog-grid')).toBe(true)
-    const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
-    expect(css).not.toMatch(/html\s*\{[^}]*font-size/)
-    expect(lengthToPx(breakpointToken('md'))).toBe(768)
-    expect(lengthToPx(breakpointToken('lg'))).toBe(1024)
-    expect(columnCount(grid.className, 767)).toBe(1)
-    expect(columnCount(grid.className, 768)).toBe(2)
-    expect(columnCount(grid.className, 1023)).toBe(2)
-    expect(columnCount(grid.className, 1024)).toBe(3)
-    expect(grid.className).toMatch(/\bitems-stretch\b/)
-    const item = grid.querySelector('li')
-    const card = item?.querySelector('[data-slot="card"]')
-    expect(item?.className).toMatch(/\bflex\b/)
-    expect(item?.className).toMatch(/\bh-full\b/)
-    expect(card?.className).toMatch(/\bh-full\b/)
+  it('uses two columns at 360px and six across the 1120px vitrine', () => {
+    expect(homeColumnCount(360)).toBe(2)
+    expect(homeColumnCount(331)).toBe(1)
+    expect(vitrineContentWidth(360)).toBe(360)
+    expect(vitrineContentWidth(1280)).toBe(1072)
+    expect(homeColumnCount(vitrineContentWidth(1120))).toBe(6)
+    expect(homeColumnCount(vitrineContentWidth(767))).toBe(4)
+
+    const previousWidth = window.innerWidth
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 360 })
+    mockProductsRef.current = [1, 2, 3, 4, 5, 6].map((n) => makeProduct(`p-${n}`, `P ${n}`))
+    try {
+      renderCatalogPage()
+      const columns = screen.getAllByTestId('catalog-column-stack')
+      expect(columns).toHaveLength(2)
+      expect(within(columns[0]!).getAllByRole('heading', { level: 2 }).map((node) => node.textContent)).toEqual([
+        'P 1',
+        'P 3',
+        'P 5',
+      ])
+      expect(within(columns[1]!).getAllByRole('heading', { level: 2 }).map((node) => node.textContent)).toEqual([
+        'P 2',
+        'P 4',
+        'P 6',
+      ])
+      const grid = screen.getByTestId('catalog-grid')
+      expect(grid.className).toMatch(/\bflex\b/)
+      expect(grid.className).toMatch(/\bitems-start\b/)
+      expect(grid.classList.contains('catalog-grid')).toBe(true)
+    } finally {
+      Object.defineProperty(window, 'innerWidth', { configurable: true, value: previousWidth })
+    }
   })
 
   it('paints the page background across the full viewport width (CAT-39)', () => {
@@ -224,17 +198,9 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(block).toMatch(/padding-inline:\s*24px/)
   })
 
-  it('centers a hairline in the mobile row gap and omits it after the last product', () => {
+  it('does not draw a hairline between mobile rows', () => {
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
-    const mobile = css.match(
-      /@media\s*\(max-width:\s*767px\)\s*\{([\s\S]*?)\n\}/,
-    )?.[1]
-    expect(mobile).toBeDefined()
-    expect(mobile).toMatch(/\.catalog-grid > li:not\(:last-child\)::after/)
-    expect(mobile).toMatch(/top:\s*calc\(100% \+ 8px\)/)
-    expect(mobile).toMatch(/transform:\s*translateY\(-50%\)/)
-    expect(mobile).toMatch(/height:\s*1px/)
-    expect(mobile).not.toMatch(/border-bottom/)
+    expect(css).not.toMatch(/catalog-grid > li:not\(:last-child\)::after/)
   })
 
   it('removes horizontal padding from the vitrine below md and restores 24px from 768px', () => {
@@ -253,8 +219,8 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
   })
 
   it('keeps the first screen eager and lazy-loads the card covers below it', () => {
-    expect(eagerHomeCardCount(390, 700)).toBe(5)
-    expect(eagerHomeCardCount(1280, 800)).toBe(6)
+    expect(eagerHomeCardCount(390, 700)).toBe(4)
+    expect(eagerHomeCardCount(1280, 800)).toBe(18)
     const previousWidth = window.innerWidth
     const previousHeight = window.innerHeight
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: 390 })
@@ -265,17 +231,16 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     try {
       renderCatalogPage()
       const images = within(screen.getByTestId('catalog-grid')).getAllByRole('img')
-      expect(images.map((img) => img.getAttribute('loading'))).toEqual([
-        'eager',
-        'eager',
-        'eager',
-        'eager',
-        'eager',
-        'lazy',
-        'lazy',
-        'lazy',
-      ])
-      expect(images[5].getAttribute('src')).toBe('/catalog/products/watch-5/img/thumbs/foto.webp')
+      const eager = eagerHomeCardCount(390, 700)
+      const loadingBySlug = new Map(
+        images.map((img) => {
+          const slug = img.getAttribute('src')?.split('/')[3]
+          return [slug, img.getAttribute('loading')] as const
+        }),
+      )
+      for (let index = 0; index < 8; index += 1) {
+        expect(loadingBySlug.get(`watch-${index}`)).toBe(index < eager ? 'eager' : 'lazy')
+      }
     } finally {
       Object.defineProperty(window, 'innerWidth', { configurable: true, value: previousWidth })
       Object.defineProperty(window, 'innerHeight', { configurable: true, value: previousHeight })
@@ -335,7 +300,7 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
       makeProduct('c', 'Seculus'),
     ]
     renderCatalogPage()
-    const firstPass = screen.getAllByRole('heading', { level: 2 }).map((n) => n.textContent)
+    const firstPass = titlesInDealOrder()
     cleanup()
     mockProductsRef.current = [
       makeProduct('a', 'Addiesdive'),
@@ -343,7 +308,7 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
       makeProduct('c', 'Seculus'),
     ]
     renderCatalogPage()
-    const secondPass = screen.getAllByRole('heading', { level: 2 }).map((n) => n.textContent)
+    const secondPass = titlesInDealOrder()
     expect(secondPass).toEqual(firstPass)
     expect(secondPass).toEqual(['Addiesdive', 'CURREN', 'Seculus'])
   })
@@ -363,16 +328,12 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
 
       mockProductsRef.current = productsFromModule(readFileSync(firstFile, 'utf8'))
       renderCatalogPage()
-      const firstBuild = screen
-        .getAllByRole('heading', { level: 2 })
-        .map((node) => node.textContent)
+      const firstBuild = titlesInDealOrder()
       cleanup()
 
       mockProductsRef.current = productsFromModule(readFileSync(secondFile, 'utf8'))
       renderCatalogPage()
-      const secondBuild = screen
-        .getAllByRole('heading', { level: 2 })
-        .map((node) => node.textContent)
+      const secondBuild = titlesInDealOrder()
 
       expect(firstBuild).toEqual(['Addiesdive', 'CURREN', 'Seculus'])
       expect(secondBuild).toEqual(firstBuild)

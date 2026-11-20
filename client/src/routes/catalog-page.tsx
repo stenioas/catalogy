@@ -1,4 +1,5 @@
 import { activeFilter, filterHasCards, homeCards } from '@catalogo/shared'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { products } from '../catalog/products.generated'
@@ -19,23 +20,52 @@ const FILTERS = [
 const resultsEnterClass =
   'motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200'
 
-const MOBILE_CARD_ROW_PX = 144
-const DESKTOP_CARD_BODY_PX = 160
-const DESKTOP_GRID_GAP_PX = 24
+/** Narrowest column. Two of these fit a 360px vitrine; six fit the 1120px column. */
+export const HOME_COLUMN_MIN_PX = 160
+export const HOME_COLUMN_GAP_PX = 12
+const HOME_CARD_BODY_PX = 148
+
+export function vitrineContentWidth(viewportWidth: number): number {
+  const capped = Math.min(Math.max(viewportWidth, 0), 1120)
+  return viewportWidth >= 768 ? Math.max(0, capped - 48) : capped
+}
+
+export function homeColumnCount(contentWidth: number): number {
+  if (contentWidth <= 0) return 1
+  const span = HOME_COLUMN_MIN_PX + HOME_COLUMN_GAP_PX
+  return Math.max(1, Math.floor((contentWidth + HOME_COLUMN_GAP_PX) / span))
+}
+
+/** Deal the sorted list across columns: index 0, 2, 4 go left when there are two. */
+export function dealIntoColumns<T>(items: readonly T[], columnCount: number): T[][] {
+  const count = Math.max(1, columnCount)
+  const columns: T[][] = Array.from({ length: count }, () => [])
+  items.forEach((item, index) => {
+    columns[index % count]!.push(item)
+  })
+  return columns
+}
 
 /** How many home cards fit in the first screen, including a row that is only partly visible. */
 export function eagerHomeCardCount(viewportWidth: number, viewportHeight: number): number {
-  const columns = viewportWidth >= 1024 ? 3 : viewportWidth >= 768 ? 2 : 1
-  const chrome = viewportWidth >= 768 ? 136 : 112
-  const contentWidth =
-    columns === 1 ? viewportWidth : Math.min(viewportWidth, 1120) - 48
+  const contentWidth = vitrineContentWidth(viewportWidth)
+  const columns = homeColumnCount(contentWidth)
   const image =
-    columns === 1
-      ? 128
-      : (contentWidth - DESKTOP_GRID_GAP_PX * (columns - 1)) / columns
-  const row = columns === 1 ? MOBILE_CARD_ROW_PX : image + DESKTOP_CARD_BODY_PX + DESKTOP_GRID_GAP_PX
+    (contentWidth - HOME_COLUMN_GAP_PX * (columns - 1)) / columns
+  const row = image + HOME_CARD_BODY_PX + HOME_COLUMN_GAP_PX
+  const chrome = viewportWidth >= 768 ? 136 : 112
   const rows = Math.max(1, Math.ceil(Math.max(viewportHeight - chrome, 1) / row))
   return columns * rows
+}
+
+function useViewportWidth(): number {
+  const [width, setWidth] = useState(() => window.innerWidth || 1024)
+  useEffect(() => {
+    const onResize = () => setWidth(window.innerWidth)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+  return width
 }
 
 function eagerCardCount(): number {
@@ -46,6 +76,7 @@ function eagerCardCount(): number {
 
 export function CatalogPage() {
   const [params, setParams] = useSearchParams()
+  const viewportWidth = useViewportWidth()
   const filterParam = params.get('filter')
   const requested = activeFilter(filterParam)
   const resolved = requested !== 'all' && !filterHasCards(products, requested) ? 'all' : requested
@@ -90,24 +121,37 @@ export function CatalogPage() {
             {emptyText !== null ? (
               <p className="m-0 text-[var(--ink-primary)]">{emptyText}</p>
             ) : cards.length === 0 ? null : (
-              <ul
+              <div
                 data-testid="catalog-grid"
-                className="catalog-grid m-0 grid list-none grid-cols-1 items-stretch gap-4 p-0 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+                className="catalog-grid flex items-start"
+                style={{ gap: HOME_COLUMN_GAP_PX }}
               >
-                {cards.map((card, index) => {
-                  const product = products.find((item) => item.slug === card.slug)
-                  if (product === undefined) return null
-                  return (
-                    <li key={`${card.slug}-${card.listingId}`} className="flex h-full">
-                      <WatchCard
-                        product={product}
-                        card={card}
-                        imageLoading={index < eagerCards ? 'eager' : 'lazy'}
-                      />
-                    </li>
-                  )
-                })}
-              </ul>
+                {dealIntoColumns(cards, homeColumnCount(vitrineContentWidth(viewportWidth))).map(
+                  (column, columnIndex) => (
+                    <ul
+                      key={columnIndex}
+                      data-testid="catalog-column-stack"
+                      className="m-0 flex min-w-0 flex-1 list-none flex-col p-0"
+                      style={{ gap: HOME_COLUMN_GAP_PX }}
+                    >
+                      {column.map((card) => {
+                        const product = products.find((item) => item.slug === card.slug)
+                        if (product === undefined) return null
+                        const index = cards.indexOf(card)
+                        return (
+                          <li key={`${card.slug}-${card.listingId}`} className="min-w-0">
+                            <WatchCard
+                              product={product}
+                              card={card}
+                              imageLoading={index < eagerCards ? 'eager' : 'lazy'}
+                            />
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  ),
+                )}
+              </div>
             )}
           </div>
         </div>

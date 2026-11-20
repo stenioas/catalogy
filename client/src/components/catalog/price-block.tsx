@@ -25,7 +25,7 @@ export function OnOrderPriceNote({ showcase = false }: { showcase?: boolean }) {
       data-testid="consult-label"
       className={
         showcase
-          ? 'm-0 text-xs font-medium leading-snug text-destructive md:font-display md:text-sm md:font-semibold'
+          ? 'm-0 text-xs font-medium leading-snug text-destructive'
           : 'm-0 font-display text-[15px] font-semibold leading-snug text-destructive md:text-base'
       }
     >
@@ -89,92 +89,62 @@ export function PriceBlock({
   const showBadge = percent >= 1
   const discountLabel = `${percent}% OFF`
   const currentPriceTone = percent >= HIGH_DISCOUNT_THRESHOLD ? 'text-destructive' : ''
-  const priceRow = listPrice === undefined ? 'row-start-1' : 'row-start-2'
-  const installmentRow = listPrice === undefined ? 'row-start-2' : 'row-start-3'
-  const pixColumn = showBadge ? 'col-start-3' : 'col-start-2'
-
-  if (showcase) {
-    return (
-      <div
-        data-testid="price-block"
-        className="grid w-full min-w-0 grid-cols-[auto_auto_auto] items-center justify-start gap-x-1.5 gap-y-0.5"
-      >
-        {listPrice !== undefined ? (
-          <span
-            data-testid="price-list"
-            className="row-start-1 text-xs text-ink-muted-48 line-through"
-          >
-            De {formatBrl(listPrice)}
-          </span>
-        ) : null}
-        <CurrentPrice
-          label={currentLabel}
-          className={`col-start-1 text-[18px] font-semibold leading-none ${priceRow} ${currentPriceTone}`}
-          currencyClassName="text-[12px]"
-          centsClassName="text-[12px] leading-none"
-        />
-        {showBadge ? (
-          <Badge
-            data-testid="price-badge"
-            className={`col-start-2 text-[11px] ${discountBadgeClassName} ${priceRow}`}
-          >
-            {discountLabel}
-          </Badge>
-        ) : null}
-        <span
-          data-testid="price-pix"
-          className={`${pixColumn} text-xs md:text-sm ${pixClassName} ${priceRow}`}
-        >
-          no pix
-        </span>
-        <span
-          data-testid="price-installments"
-          className={`col-span-3 min-w-0 whitespace-normal text-xs text-muted-foreground md:text-sm ${installmentRow}`}
-        >
-          {installmentLabel}
-        </span>
-      </div>
-    )
-  }
+  const listRowClassName = showcase
+    ? 'flex flex-wrap items-center gap-1.5 whitespace-normal'
+    : wrapListPriceOnMobile
+      ? 'flex flex-wrap items-center gap-2 whitespace-normal md:flex-nowrap md:whitespace-nowrap'
+      : 'flex flex-nowrap items-center gap-2 whitespace-nowrap'
 
   return (
     <div data-testid="price-block" className="flex w-full min-w-0 flex-col items-start gap-0.5">
       {listPrice !== undefined ? (
-        <div
-          className={
-            wrapListPriceOnMobile
-              ? 'flex flex-wrap items-center gap-2 whitespace-normal md:flex-nowrap md:whitespace-nowrap'
-              : 'flex flex-nowrap items-center gap-2 whitespace-nowrap'
-          }
-        >
+        <div className={listRowClassName}>
           <span
             data-testid="price-list"
-            className="text-sm text-ink-muted-48 line-through"
+            className={
+              showcase
+                ? 'text-xs text-ink-muted-48 line-through'
+                : 'text-sm text-ink-muted-48 line-through'
+            }
           >
-            De {formatBrl(listPrice)}
+            {formatBrl(listPrice)}
           </span>
+          {showBadge ? (
+            <Badge
+              data-testid="price-badge"
+              className={`${showcase ? 'text-[11px]' : 'text-xs'} ${discountBadgeClassName}`}
+            >
+              {discountLabel}
+            </Badge>
+          ) : null}
         </div>
       ) : null}
       <div className="flex flex-wrap items-center gap-x-1.5">
         <CurrentPrice
           label={currentLabel}
-          className={`${currentPriceClassName} ${currentPriceTone}`}
-          currencyClassName="text-[14px] mt-[2px]"
-          centsClassName="text-[12px] leading-none mt-px"
+          className={
+            showcase
+              ? `text-[18px] font-semibold leading-none ${currentPriceTone}`
+              : `${currentPriceClassName} ${currentPriceTone}`
+          }
+          currencyClassName={showcase ? 'text-[12px]' : 'text-[14px] mt-[2px]'}
+          centsClassName={showcase ? 'text-[12px] leading-none' : 'text-[12px] leading-none mt-px'}
         />
-        {showBadge ? (
-          <Badge
-            data-testid="price-badge"
-            className={`text-xs ${discountBadgeClassName}`}
-          >
-            {discountLabel}
-          </Badge>
-        ) : null}
-        <span data-testid="price-pix" className={`text-sm ${pixClassName}`}>
+        <span
+          data-testid="price-pix"
+          className={showcase ? `text-xs ${pixClassName}` : `text-sm ${pixClassName}`}
+        >
           no pix
         </span>
       </div>
-      <span data-testid="price-installments" className="min-w-0 whitespace-normal text-sm text-muted-foreground">
+      <span
+        data-testid="price-installments"
+        className={
+          showcase
+            ? 'min-w-0 whitespace-normal text-xs text-muted-foreground'
+            : 'min-w-0 whitespace-normal text-sm text-muted-foreground'
+        }
+      >
         {installmentLabel}
       </span>
     </div>
