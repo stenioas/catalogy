@@ -145,10 +145,10 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
   })
 
   it('uses two columns at 360px and six across the 1120px vitrine', () => {
-    expect(homeColumnCount(360)).toBe(2)
-    expect(homeColumnCount(331)).toBe(1)
-    expect(vitrineContentWidth(360)).toBe(360)
-    expect(vitrineContentWidth(1280)).toBe(1072)
+    expect(homeColumnCount(vitrineContentWidth(360))).toBe(2)
+    expect(homeColumnCount(311)).toBe(1)
+    expect(vitrineContentWidth(360)).toBe(336)
+    expect(vitrineContentWidth(1280)).toBe(1096)
     expect(homeColumnCount(vitrineContentWidth(1120))).toBe(6)
     expect(homeColumnCount(vitrineContentWidth(767))).toBe(4)
 
@@ -203,19 +203,18 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     expect(css).not.toMatch(/catalog-grid > li:not\(:last-child\)::after/)
   })
 
-  it('removes horizontal padding from the vitrine below md and restores 24px from 768px', () => {
+  it('pads only the catalog results by 12px and keeps the filter inset', () => {
     mockProductsRef.current = [makeProduct('one', 'One')]
     renderCatalogPage()
     const column = screen.getByTestId('catalog-page-column')
     expect(column.classList.contains('catalog-vitrine')).toBe(true)
 
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
-    const block = css.match(/\.catalog-vitrine\s*\{([^}]*)\}/)?.[1]
-    expect(block).toMatch(/padding-inline:\s*0/)
-    const desktop = css.match(
-      /@media\s*\(min-width:\s*768px\)\s*\{[\s\S]*?\.catalog-vitrine\s*\{([^}]*)\}/,
-    )?.[1]
-    expect(desktop).toMatch(/padding-inline:\s*24px/)
+    const vitrine = css.match(/\.catalog-vitrine\s*\{([^}]*)\}/)?.[1]
+    const results = css.match(/\.catalog-results\s*\{([^}]*)\}/)?.[1]
+    expect(vitrine).toMatch(/padding-inline:\s*0/)
+    expect(results).toMatch(/padding-inline:\s*12px/)
+    expect(screen.getByRole('group', { name: 'Filtros' }).classList.contains('px-1')).toBe(true)
   })
 
   it('keeps the first screen eager and lazy-loads the card covers below it', () => {

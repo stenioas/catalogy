@@ -57,18 +57,26 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
   const showAvailability = card.availabilityStatus !== 'available'
 
   return (
-    <Card className="w-full gap-0 overflow-hidden rounded-[12px] border-[1px] bg-card p-0 py-0 shadow-none ring-0">
+    <Card className="w-full gap-0 overflow-visible rounded-none border-0 bg-transparent p-0 py-0 shadow-none ring-0">
       <div data-testid="watch-card-row" className="flex w-full flex-col">
-        <Link to={card.path} state={linkState} className="contents">
-          <div data-testid="watch-card-image" className="relative aspect-square w-full">
+        <div data-testid="watch-card-image" className="relative aspect-square w-full overflow-hidden rounded-[12px]">
+          <Link to={card.path} state={linkState} className="contents">
             <img
               src={productThumbSrc(product.slug, card.image)}
               alt={card.title}
               loading={imageLoading}
               className="h-full w-full object-contain"
             />
+          </Link>
+          <div data-testid="watch-card-mobile-action" className="absolute top-1 right-1">
+            <WantIconLink
+              slug={product.slug}
+              title={card.title}
+              label="share"
+              href={`https://wa.me/?text=${encodeURIComponent(shareText)}`}
+            />
           </div>
-        </Link>
+        </div>
         <div
           data-testid="watch-card-body"
           className="flex w-full flex-col items-start gap-1 px-2 pt-2 pb-2 text-left"
@@ -97,9 +105,6 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
               <PriceBlock price={card.price!} listPrice={card.listPrice} showcase />
             )}
           </Link>
-          <div data-testid="watch-card-mobile-action" className="flex w-full justify-end">
-            <WantIconLink slug={product.slug} title={card.title} href={`https://wa.me/?text=${encodeURIComponent(shareText)}`} />
-          </div>
         </div>
       </div>
     </Card>

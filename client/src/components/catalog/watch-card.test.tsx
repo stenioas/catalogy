@@ -99,8 +99,8 @@ describe('WatchCard (SV-13, SV-14)', () => {
     renderWatchCard()
     const img = screen.getByRole('img', { name: 'Seculus' })
     expect(img.className).toMatch(/\bobject-contain\b/)
-    const frame = img.parentElement
-    expect(frame).not.toBeNull()
+    const frame = screen.getByTestId('watch-card-image')
+    expect(frame.contains(img)).toBe(true)
     expect(frame?.className).toMatch(/\baspect-square\b/)
     expect(frame?.className).toMatch(/\bw-full\b/)
     const backgroundTokens = frame?.className.match(/\bbg-\S+/g) ?? []
@@ -202,7 +202,7 @@ describe('WatchCard (SV-13, SV-14)', () => {
     }
   })
 
-  it('keeps Enviar no WhatsApp outside the card navigation link (SV-14)', () => {
+  it('keeps share outside the card navigation link (SV-14)', () => {
     const product = baseProduct()
     const card = cardFor(product)
     const listing = product.listings[0]!
@@ -214,9 +214,9 @@ describe('WatchCard (SV-13, SV-14)', () => {
     expect(screen.getByTestId('price-installments').textContent).toBe(creditInstallmentLabel(369.9))
     expect(screen.getByTestId('price-pix').textContent).toBe('no pix')
     const wantLink = within(screen.getByTestId('watch-card-mobile-action')).getByRole('link', {
-      name: 'Enviar no WhatsApp',
+      name: 'share',
     })
-    expect(screen.getAllByRole('link', { name: 'Enviar no WhatsApp' })).toHaveLength(1)
+    expect(screen.getAllByRole('link', { name: 'share' })).toHaveLength(1)
     expect(wantLink.getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(expectedMessage)}`)
     expect(screen.getByTestId('watch-card-link').contains(wantLink)).toBe(false)
     expect(screen.queryByTestId('watch-card-actions')).toBeNull()
@@ -343,7 +343,7 @@ describe('WatchCard listing card rules (VAR-42–VAR-50)', () => {
     const expected = shareMessage(product, listing, variant, window.location.origin)
     renderWatchCard(product)
     const href = within(screen.getByTestId('watch-card-mobile-action'))
-      .getByRole('link', { name: 'Enviar no WhatsApp' })
+      .getByRole('link', { name: 'share' })
       .getAttribute('href')!
     const text = new URL(href).searchParams.get('text')
     expect(text).toBe(expected)
@@ -380,16 +380,18 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     cleanup()
   })
 
-  it('uses a 1px border, an 18px radius and no shadow (SV-36)', () => {
+  it('drops the card elevation and rounds every corner of the photo (SV-36)', () => {
     const { container } = renderWatchCard()
     const card = container.querySelector('[data-slot="card"]')
     expect(card).not.toBeNull()
     const tokens = classTokens((card as HTMLElement).className)
-    expect(tokens).toContain('rounded-[12px]')
-    expect(tokens).not.toContain('rounded-none')
-    expect(tokens).not.toContain('md:rounded-[12px]')
-    expect(tokens).toContain('border-[1px]')
-    expect(tokens).not.toContain('border-0')
+    expect(tokens).toContain('rounded-none')
+    expect(tokens).toContain('border-0')
+    expect(tokens).toContain('bg-transparent')
+    expect(tokens).not.toContain('border-[1px]')
+    const frame = screen.getByTestId('watch-card-image')
+    expect(classTokens(frame.className)).toContain('rounded-[12px]')
+    expect(classTokens(frame.className)).toContain('overflow-hidden')
     expect(tokens).toContain('shadow-none')
     expect(tokens.some((token) => /^shadow-(?!none$)/.test(token))).toBe(false)
     expect(tokens).not.toContain('ring-1')
@@ -399,8 +401,8 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
   it('paints the card with the canvas token in light and surface-tile-2 in dark (SV-37, SV-38)', () => {
     const { container } = renderWatchCard()
     const card = container.querySelector('[data-slot="card"]') as HTMLElement
-    expect(classTokens(card.className)).toContain('bg-card')
-    expect(classTokens(card.className)).not.toContain('bg-background')
+    expect(classTokens(card.className)).toContain('bg-transparent')
+    expect(classTokens(card.className)).not.toContain('bg-card')
 
     const css = readFileSync(join(clientRoot, 'src/index.css'), 'utf8')
     const root = blockBody(css, ':root')
@@ -415,7 +417,7 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     const { container } = renderWatchCard()
     const card = container.querySelector('[data-slot="card"]') as HTMLElement
     const img = screen.getByRole('img', { name: 'Seculus' })
-    const frame = img.parentElement as HTMLElement
+    const frame = screen.getByTestId('watch-card-image')
     expect(classTokens(frame.className)).toContain('aspect-square')
     expect(classTokens(frame.className)).toContain('w-full')
     expect(classTokens(frame.className)).not.toContain('size-32')
@@ -431,19 +433,20 @@ describe('WatchCard frame (SV-36, SV-37, SV-38, SV-39, SV-40, SV-42)', () => {
     }
   })
 
-  it('pads the title, price and share icon by 24px on the sides and bottom (SV-40)', () => {
+  it('pads the title and price, and keeps share on the photo (SV-40)', () => {
     renderWatchCard()
     const body = screen.getByTestId('watch-card-body')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
     const price = screen.getByTestId('price-current')
-    const button = within(body).getByRole('link', { name: 'Enviar no WhatsApp' })
+    const button = screen.getByRole('link', { name: 'share' })
     const img = screen.getByRole('img', { name: 'Seculus' })
 
     expect(classTokens(body.className)).toContain('px-2')
     expect(classTokens(body.className)).toContain('pb-2')
     expect(body.contains(heading)).toBe(true)
     expect(body.contains(price)).toBe(true)
-    expect(body.contains(button)).toBe(true)
+    expect(body.contains(button)).toBe(false)
+    expect(screen.getByTestId('watch-card-image').contains(button)).toBe(true)
     expect(body.contains(img)).toBe(false)
     expect(screen.queryByTestId('watch-card-actions')).toBeNull()
     expect(screen.getByTestId('watch-card-link').contains(button)).toBe(false)
@@ -503,19 +506,19 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.queryByText('Valor só da ficha')).toBeNull()
   })
 
-  it('places a small share icon at the bottom-right of the price group', () => {
+  it('places a small share icon at the top-right of the photo', () => {
     renderWatchCard()
     const action = screen.getByTestId('watch-card-mobile-action')
     const body = screen.getByTestId('watch-card-body')
-    const link = within(action).getByRole('link', { name: 'Enviar no WhatsApp' })
+    const link = within(action).getByRole('link', { name: 'share' })
     const icon = link.querySelector('svg')
 
-    expect(body.contains(action)).toBe(true)
+    expect(screen.getByTestId('watch-card-image').contains(action)).toBe(true)
+    expect(body.contains(action)).toBe(false)
     expect(screen.getByTestId('watch-card-link').contains(action)).toBe(false)
-    expect(screen.getByTestId('watch-card-image').contains(action)).toBe(false)
-    expect(screen.getByTestId('price-block').compareDocumentPosition(action) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0)
-    expect(action.className).toMatch(/\bjustify-end\b/)
-    expect(action.className).toMatch(/\bw-full\b/)
+    expect(action.className).toMatch(/\babsolute\b/)
+    expect(action.className).toMatch(/\bright-1\b/)
+    expect(action.className).toMatch(/\btop-1\b/)
     expect(link.className).toMatch(/\bsize-8\b/)
     expect(link.className).toMatch(/\bmd:size-10\b/)
     expect(link.className).toContain('bg-[color-mix(in_srgb,var(--primary)_16%,white)]')
@@ -528,12 +531,14 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
   it('keeps the share icon beside the price at md, slightly larger than on mobile', () => {
     renderWatchCard()
     const action = screen.getByTestId('watch-card-mobile-action')
-    const link = within(action).getByRole('link', { name: 'Enviar no WhatsApp' })
+    const link = within(action).getByRole('link', { name: 'share' })
     const price = screen.getByTestId('price-block')
 
     expect(screen.queryByTestId('watch-card-actions')).toBeNull()
-    expect(action.className).toMatch(/\bjustify-end\b/)
-    expect(screen.getByTestId('watch-card-body').contains(action)).toBe(true)
+    expect(action.className).toMatch(/\bright-1\b/)
+    expect(action.className).toMatch(/\btop-1\b/)
+    expect(screen.getByTestId('watch-card-image').contains(action)).toBe(true)
+    expect(screen.getByTestId('watch-card-body').contains(action)).toBe(false)
     expect(screen.getByTestId('watch-card-body').contains(price)).toBe(true)
     expect(link.className).toMatch(/\bmd:size-10\b/)
     expect(link.querySelector('svg')?.getAttribute('class')).toMatch(/\bmd:size-5\b/)
@@ -555,7 +560,7 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     fireEvent.click(screen.getByTestId('watch-card-link'))
     expect(screen.getByTestId('current-path').textContent).toBe(card.path)
     const share = within(screen.getByTestId('watch-card-mobile-action')).getByRole('link', {
-      name: 'Enviar no WhatsApp',
+      name: 'share',
     })
     fireEvent.click(share)
     expect(screen.getByTestId('current-path').textContent).toBe(card.path)

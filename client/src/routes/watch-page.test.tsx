@@ -391,16 +391,18 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(share.textContent).toBe('Compartilhar')
   })
 
-  it('uses 16px horizontal padding on the product content below 768px', () => {
+  it('uses 12px horizontal padding on the product page', () => {
     const css = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../index.css'), 'utf8')
+    const column = css.match(/\.watch-page-column\s*\{([^}]*)\}/)?.[1]
+    expect(column).toMatch(/padding-inline:\s*12px/)
     const mobile = css.match(/@media\s*\(max-width:\s*767px\)\s*\{([\s\S]*?)\n\}/)?.[1]
     expect(mobile).toBeDefined()
-    expect(mobile).toMatch(/\.watch-page-column\s*\{[^}]*padding-inline:\s*16px/)
-    expect(mobile).toMatch(/\.watch-carousel\s*\{[^}]*width:\s*calc\(100% \+ 32px\)/)
-    expect(mobile).toMatch(/\.watch-carousel\s*\{[^}]*margin-inline:\s*-16px/)
-    const column = css.match(/\.catalog-column\s*\{([^}]*)\}/)?.[1]
-    expect(column).toMatch(/padding-inline:\s*24px/)
-    expect(column).toMatch(/max-width:\s*1120px/)
+    expect(mobile).not.toMatch(/\.watch-page-column\s*\{[^}]*padding-inline:\s*16px/)
+    expect(mobile).toMatch(/\.watch-carousel\s*\{[^}]*width:\s*calc\(100% \+ 24px\)/)
+    expect(mobile).toMatch(/\.watch-carousel\s*\{[^}]*margin-inline:\s*-12px/)
+    const shared = css.match(/\.catalog-column\s*\{([^}]*)\}/)?.[1]
+    expect(shared).toMatch(/padding-inline:\s*24px/)
+    expect(shared).toMatch(/max-width:\s*1120px/)
     expect(css).not.toMatch(/\.watch-page-column\s*\{[^}]*max-width/)
   })
 

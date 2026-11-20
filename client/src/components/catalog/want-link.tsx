@@ -14,6 +14,8 @@ export type WantIconLinkProps = Pick<WantLinkProps, 'slug' | 'title' | 'ref'> & 
   size?: 'md' | 'lg'
   /** When set, used instead of {@link waUrl} (e.g. listing-variant sentence from {@link shareMessage}). */
   href?: string
+  /** Accessible name. The catalog card uses "share". */
+  label?: string
 }
 
 const WHATSAPP_LABEL = 'Enviar no WhatsApp'
@@ -63,7 +65,7 @@ export function ProductShareButton({
   )
 }
 
-export function WantIconLink({ slug, title, ref, size = 'md', href }: WantIconLinkProps) {
+export function WantIconLink({ slug, title, ref, size = 'md', href, label = WHATSAPP_LABEL }: WantIconLinkProps) {
   const large = size === 'lg'
   const resolvedHref = href ?? waUrl(slug, title)
   return (
@@ -73,7 +75,7 @@ export function WantIconLink({ slug, title, ref, size = 'md', href }: WantIconLi
         href={resolvedHref}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={WHATSAPP_LABEL}
+        aria-label={label}
       >
         <Share2 aria-hidden="true" className={large ? 'size-5 md:size-6' : 'size-4 md:size-5'} />
       </a>

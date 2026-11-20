@@ -20,14 +20,14 @@ const FILTERS = [
 const resultsEnterClass =
   'motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200'
 
-/** Narrowest column. Two of these fit a 360px vitrine; six fit the 1120px column. */
-export const HOME_COLUMN_MIN_PX = 160
-export const HOME_COLUMN_GAP_PX = 12
-const HOME_CARD_BODY_PX = 148
+/** Narrowest column. Two still fit a 360px vitrine after 12px of side padding. */
+export const HOME_COLUMN_MIN_PX = 152
+export const HOME_COLUMN_GAP_PX = 8
+const HOME_CARD_BODY_PX = 120
 
 export function vitrineContentWidth(viewportWidth: number): number {
   const capped = Math.min(Math.max(viewportWidth, 0), 1120)
-  return viewportWidth >= 768 ? Math.max(0, capped - 48) : capped
+  return Math.max(0, capped - 24)
 }
 
 export function homeColumnCount(contentWidth: number): number {
@@ -117,7 +117,7 @@ export function CatalogPage() {
               ))}
             </div>
           </div>
-          <div key={resolved} data-testid="catalog-results" className={resultsEnterClass}>
+          <div key={resolved} data-testid="catalog-results" className={`catalog-results ${resultsEnterClass}`}>
             {emptyText !== null ? (
               <p className="m-0 text-[var(--ink-primary)]">{emptyText}</p>
             ) : cards.length === 0 ? null : (
