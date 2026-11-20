@@ -52,4 +52,26 @@ describe('manifest do Achavio', () => {
       180, 180,
     ])
   })
+
+  it('aponta o documento para o manifest e para o ícone da logo', () => {
+    const html = readFileSync(join(clientRoot, 'index.html'), 'utf8')
+    expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest" />')
+    expect(html).toContain(
+      '<link rel="icon" href="/icons/icon-192.png" type="image/png" />',
+    )
+    expect(html).toContain(
+      '<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />',
+    )
+    expect(html).toContain('<meta name="theme-color" content="#f5f5f7" />')
+    expect(html).toContain('<meta name="apple-mobile-web-app-capable" content="yes" />')
+    expect(html).toContain('<meta name="mobile-web-app-capable" content="yes" />')
+    expect(html).toContain(
+      '<meta name="apple-mobile-web-app-title" content="Achavio" />',
+    )
+    expect(html).toContain(
+      'name="viewport" content="width=device-width, initial-scale=1.0"',
+    )
+    expect(html).not.toContain('viewport-fit=cover')
+    expect(html).not.toContain('favicon.svg')
+  })
 })
