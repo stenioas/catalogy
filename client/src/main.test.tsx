@@ -127,3 +127,49 @@ describe('entrada da aplicação sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11
     expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
 })
+
+describe('arranque PWA (PWA-19, PWA-20, PWA-21)', () => {
+  it('captura o convite ao carregar main.tsx, fora do AppRoot', async () => {
+    const installListener = vi.fn(() => () => {})
+    vi.doMock('./pwa/install-prompt', () => ({
+      installInstallPromptListener: installListener,
+    }))
+    vi.stubGlobal('matchMedia', vi.fn((query: string) => ({
+      matches: false,
+      media: query,
+      addEventListener() {},
+      removeEventListener() {},
+    })))
+    vi.resetModules()
+    await import('./main')
+    expect(installListener).toHaveBeenCalledOnce()
+    vi.doUnmock('./pwa/install-prompt')
+  })
+
+  it('registra /sw.js quando navigator.serviceWorker existe', async () => {
+    const register = vi.fn(() => Promise.resolve({} as ServiceWorkerRegistration))
+    vi.stubGlobal('navigator', {
+      ...navigator,
+      serviceWorker: { register },
+    })
+    vi.doMock('./pwa/install-prompt', () => ({
+      installInstallPromptListener: vi.fn(() => () => {}),
+    }))
+    vi.resetModules()
+    await import('./main')
+    expect(register).toHaveBeenCalledWith('/sw.js')
+    vi.doUnmock('./pwa/install-prompt')
+  })
+
+  it('mantém a vitrine se o registro do service worker rejeita', async () => {
+    const register = vi.fn(() => Promise.reject(new Error('sw failed')))
+    vi.stubGlobal('navigator', {
+      ...navigator,
+      serviceWorker: { register },
+    })
+    const fetchMock = await renderApp('/')
+    await expect(register).toHaveBeenCalledWith('/sw.js')
+    expect(await screen.findByText(watchTitle())).toBeDefined()
+    expect(didRequestSellers(fetchMock)).toBe(false)
+  })
+})

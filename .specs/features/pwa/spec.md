@@ -155,9 +155,9 @@ No celular, a barra do navegador reduz a altura útil do catálogo. A pessoa pre
 | PWA-16 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-17 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-18 | P1: Instalar sem a barra | Tasks | Verified |
-| PWA-19 | P1: Instalar sem a barra | Tasks | In Tasks |
-| PWA-20 | P1: Instalar sem a barra | Tasks | In Tasks |
-| PWA-21 | P1: Instalar sem a barra | Tasks | In Tasks |
+| PWA-19 | P1: Instalar sem a barra | Tasks | Verified |
+| PWA-20 | P1: Instalar sem a barra | Tasks | Verified |
+| PWA-21 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-22 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-23 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-24 | P1: Instalar sem a barra | Tasks | Verified |

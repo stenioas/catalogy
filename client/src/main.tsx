@@ -4,7 +4,14 @@ import { RouterProvider } from 'react-router-dom'
 
 import { router } from './app/router'
 import { ThemeProvider } from './components/theme-provider'
+import { installInstallPromptListener } from './pwa/install-prompt'
 import './index.css'
+
+installInstallPromptListener()
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {})
+}
 
 export function AppRoot() {
   return (

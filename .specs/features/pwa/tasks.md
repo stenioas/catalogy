@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/pwa/design.md`
-**Status**: In Progress
+**Status**: Complete
 
 ---
 
@@ -311,11 +311,13 @@ T8
 
 **Done when**:
 
-- [ ] O fonte chama `installInstallPromptListener()` no escopo do módulo
-- [ ] O fonte chama `navigator.serviceWorker.register('/sw.js')` com `.catch(() => {})`
-- [ ] Um `register` que rejeita ainda deixa a vitrine no ar
-- [ ] Gate check passes: `pnpm --filter client test`
-- [ ] Test count: a suíte do client passa, sem teste apagado
+- [x] O fonte chama `installInstallPromptListener()` no escopo do módulo
+- [x] O fonte chama `navigator.serviceWorker.register('/sw.js')` com `.catch(() => {})`
+- [x] Um `register` que rejeita ainda deixa a vitrine no ar
+- [x] Gate check passes: `pnpm --filter client test`
+- [x] Test count: a suíte do client passa, sem teste apagado
+
+**Status**: Complete
 
 **Tests**: unit
 **Gate**: build
