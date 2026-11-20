@@ -244,13 +244,15 @@ T8
 
 **Done when**:
 
-- [ ] O botão `Menu` abre um único item `Adicionar à tela inicial`
-- [ ] Com evento adiado, o item chama `prompt()` e fecha o menu
-- [ ] No iPhone, o painel mostra a frase do Safari
-- [ ] Sem evento e fora do iOS, ou se `prompt()` rejeita, o painel mostra `Este navegador não permite criar o atalho.`
-- [ ] Em standalone o botão não renderiza
-- [ ] Gate check passes: `pnpm --filter client exec vitest run src/components/catalog/install-menu.test.tsx`
-- [ ] Test count: 5 testes passam
+- [x] O botão `Menu` abre um único item `Adicionar à tela inicial`
+- [x] Com evento adiado, o item chama `prompt()` e fecha o menu
+- [x] No iPhone, o painel mostra a frase do Safari
+- [x] Sem evento e fora do iOS, ou se `prompt()` rejeita, o painel mostra `Este navegador não permite criar o atalho.`
+- [x] Em standalone o botão não renderiza
+- [x] Gate check passes: `pnpm --filter client exec vitest run src/components/catalog/install-menu.test.tsx`
+- [x] Test count: 5 testes passam
+
+**Status**: Complete
 
 **Tests**: unit
 **Gate**: quick

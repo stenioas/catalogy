@@ -177,12 +177,12 @@ No celular, a barra do navegador reduz a altura útil do catálogo. A pessoa pre
 | PWA-38 | P1: Achar a instalação | Tasks | Verified |
 | PWA-39 | P1: Achar a instalação | Tasks | In Tasks |
 | PWA-40 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-41 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-42 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-43 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-44 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-45 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-46 | P1: Achar a instalação | Tasks | In Tasks |
+| PWA-41 | P1: Achar a instalação | Tasks | Verified |
+| PWA-42 | P1: Achar a instalação | Tasks | Verified |
+| PWA-43 | P1: Achar a instalação | Tasks | Verified |
+| PWA-44 | P1: Achar a instalação | Tasks | Verified |
+| PWA-45 | P1: Achar a instalação | Tasks | Verified |
+| PWA-46 | P1: Achar a instalação | Tasks | Verified |
 | PWA-47 | P1: Achar a instalação | Tasks | In Tasks |
 | PWA-48 | P1: Achar a instalação | Tasks | In Tasks |
 | PWA-49 | P1: Achar a instalação | Tasks | In Tasks |
