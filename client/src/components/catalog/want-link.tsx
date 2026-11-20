@@ -37,7 +37,7 @@ export function WantLink({ slug, title, ref }: WantLinkProps) {
 }
 
 const shareButtonClassName =
-  'size-8 rounded-full bg-[color-mix(in_srgb,var(--primary)_16%,white)] p-0 text-[var(--ink)] hover:bg-[color-mix(in_srgb,var(--primary)_24%,white)] hover:text-[var(--ink)] md:size-10'
+  'size-8 rounded-full bg-[color-mix(in_srgb,var(--primary)_16%,white)] p-0 text-[var(--ink)] hover:bg-[color-mix(in_srgb,var(--primary)_24%,white)] hover:text-[var(--ink)] md:size-9'
 
 const largeShareButtonClassName =
   'size-10 rounded-full bg-[color-mix(in_srgb,var(--primary)_16%,white)] p-0 text-[var(--ink)] hover:bg-[color-mix(in_srgb,var(--primary)_24%,white)] hover:text-[var(--ink)] md:size-12'
