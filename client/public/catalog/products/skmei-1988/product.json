@@ -5,32 +5,32 @@
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
       "values": [
         {
           "id": "army-green",
-          "value": "army green"
+          "value": "Army Green"
         },
         {
           "id": "black",
-          "value": "black"
+          "value": "Black"
         },
         {
           "id": "dark-green",
-          "value": "dark green"
+          "value": "Dark Green"
         },
         {
           "id": "red-blue",
-          "value": "red blue"
+          "value": "Red Blue"
         },
         {
           "id": "blue",
-          "value": "blue"
+          "value": "Blue"
         },
         {
           "id": "gold",
-          "value": "gold"
+          "value": "Gold"
         }
       ],
       "presentation": "image"
@@ -134,7 +134,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "army-green"
             }
           ],
@@ -155,7 +155,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "black"
             }
           ],
@@ -166,18 +166,28 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "dark-green"
             }
           ],
           "state": "new",
-          "availabilityStatus": "on_order",
+          "availabilityStatus": "coming_soon",
+          "price": 94.9,
+          "listPrice": 119.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
           "mainImage": "skmei-1988-9.webp"
         },
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "red-blue"
             }
           ],
@@ -198,7 +208,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "blue"
             }
           ],
@@ -209,7 +219,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "gold"
             }
           ],

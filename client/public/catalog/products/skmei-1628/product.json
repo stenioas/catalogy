@@ -1,24 +1,65 @@
 {
   "slug": "skmei-1628",
-  "title": "Relógio Skmei DW-5600",
-  "description": "O Skmei 1628 é um relógio digital militar, de estilo fashion e casual, com movimento digital. A caixa é de ABS, quadrada, com 44 mm de diâmetro e 14 mm de espessura, e o vidro é de resina. A pulseira é de PU, com 19 mm de largura e 24,5 cm de comprimento, e fecho de fivela. Tem dois horários, cronógrafo, alarme, calendário, dia da semana, repetidor de hora, luz LED, relógio de 12/24 horas e contagem regressiva. A resistência à água é de 5 bar (50 m) e serve para natação e banho. É à prova de choque. Está disponível em várias cores.",
-  "axes": [],
+  "title": "Skmei DW5600",
+  "description": "Uma homenagem ao G-Shock DW5600. É um relógio digital masculino de estilo militar e retrô, com caixa em ABS, visor de resina e pulseira em PU com fivela de aço inoxidável. Possui dois horários, cronógrafo, alarme, indicação de dia da semana e data, iluminação LED, formato de 12/24 horas e contagem regressiva. Pulseira com comprimento de 24,5 cm.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "black-white",
+          "value": "Black white"
+        },
+        {
+          "id": "black-black",
+          "value": "Black Black"
+        },
+        {
+          "id": "blue",
+          "value": "blue"
+        },
+        {
+          "id": "green-camo",
+          "value": "Green camo"
+        },
+        {
+          "id": "gray-camo",
+          "value": "Gray camo"
+        },
+        {
+          "id": "green-black",
+          "value": "Green Black"
+        },
+        {
+          "id": "green-white",
+          "value": "Green White"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
   "specifications": [
     {
       "label": "Marca",
-      "value": "Skmei"
+      "value": "SKMEI"
     },
     {
       "label": "Modelo",
       "value": "1628"
     },
     {
+      "label": "Homage de",
+      "value": "G-Shock DW5600"
+    },
+    {
       "label": "Tipo do relógio",
-      "value": "Digital militar, fashion e casual"
+      "value": "Digital esportivo"
     },
     {
       "label": "Funções",
-      "value": "2 horários, cronógrafo, alarme, calendário, dia da semana, repetidor de hora, luz LED, 12/24 horas, contagem regressiva"
+      "value": "Dois horários, cronógrafo, alarme, dia da semana, data, iluminação LED, formato 12/24 horas e contagem regressiva"
     },
     {
       "label": "Tipo de movimento",
@@ -71,16 +112,114 @@
         "skmei-1628-8.webp",
         "skmei-1628-9.webp",
         "skmei-1628-10.webp",
-        "skmei-1628-11.webp"
+        "skmei-1628-11.webp",
+        "skmei-1628-12.webp",
+        "skmei-1628-13.webp",
+        "skmei-1628-14.webp",
+        "skmei-1628-15.webp",
+        "skmei-1628-16.webp",
+        "skmei-1628-17.webp",
+        "skmei-1628-18.webp",
+        "skmei-1628-19.webp",
+        "skmei-1628-20.webp",
+        "skmei-1628-21.webp",
+        "skmei-1628-22.webp",
+        "skmei-1628-23.webp",
+        "skmei-1628-24.webp",
+        "skmei-1628-25.webp",
+        "skmei-1628-26.webp",
+        "skmei-1628-27.webp",
+        "skmei-1628-28.webp",
+        "skmei-1628-29.webp",
+        "skmei-1628-30.webp",
+        "skmei-1628-31.webp",
+        "skmei-1628-32.webp",
+        "skmei-1628-33.webp",
+        "skmei-1628-34.webp",
+        "skmei-1628-35.webp",
+        "skmei-1628-36.webp"
       ],
       "variants": [
         {
-          "axes": [],
-          "state": "new",
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-white"
+            }
+          ],
           "availabilityStatus": "on_order",
-          "price": 104.9,
-          "listPrice": 129.9,
-          "mainImage": "skmei-1628-1.webp"
+          "mainImage": "skmei-1628-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-black"
+            }
+          ],
+          "state": "new",
+          "availabilityStatus": "coming_soon",
+          "price": 79.9,
+          "listPrice": 109.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
+          "mainImage": "skmei-1628-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1628-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "green-camo"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1628-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "gray-camo"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1628-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "green-black"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1628-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "green-white"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1628-13.webp"
         }
       ]
     }

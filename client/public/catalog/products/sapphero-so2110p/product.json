@@ -1,11 +1,11 @@
 {
   "slug": "sapphero-so2110p",
-  "title": "Relógio SAPPHERO Clássico",
-  "description": "Relógio masculino clássico com design de negócios, caixa e pulseira em aço inoxidável, movimento de quartzo Seiko PC32, janela de data e ponteiros luminosos. Acompanha caixa, ferramenta de ajuste da pulseira e manual.",
+  "title": "Sapphero Royal Oak",
+  "description": "Uma homanagem ao Audemars Piguet Royal Oak. É um relógio masculino clássico com design de negócios, caixa e pulseira em aço inoxidável, movimento de quartzo Seiko PC32, janela de data e ponteiros luminosos. Acompanha caixa, ferramenta de ajuste da pulseira e manual.",
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
       "values": [
         {
@@ -128,7 +128,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "so2110p-02"
             }
           ],
@@ -139,7 +139,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "so2110p-08"
             }
           ],
@@ -150,7 +150,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "so2110p-03"
             }
           ],
@@ -161,7 +161,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "so2110p-01"
             }
           ],
@@ -172,7 +172,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "so2110p-04"
             }
           ],
@@ -183,7 +183,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "so2110p-06"
             }
           ],
@@ -194,7 +194,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "so2110p-07"
             }
           ],
@@ -205,7 +205,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "so2110p-05"
             }
           ],
