@@ -74,4 +74,11 @@ describe('manifest do Achavio', () => {
     expect(html).not.toContain('viewport-fit=cover')
     expect(html).not.toContain('favicon.svg')
   })
+
+  it('responde o fetch pela rede e não abre Cache Storage', () => {
+    const source = readFileSync(join(clientRoot, 'public/sw.js'), 'utf8')
+    expect(source).toContain("addEventListener('fetch'")
+    expect(source).toContain('event.respondWith(fetch(event.request))')
+    expect(source).not.toContain('caches')
+  })
 })
