@@ -1,20 +1,20 @@
 {
-  "slug": "trisjem-porta-cartoes-ultrafino",
-  "title": "Porta-cartões TRISJEM Ultrafino",
+  "slug": "porta-cartoes-ultrafino-trisjem",
+  "title": "Porta-cartões Ultrafino",
   "description": "Porta-cartões compacto em couro sintético PU, com nove espaços para cartões e documentos em formato de cartão. Sem compartimento para notas e sem zíper. Mede aproximadamente 11 × 8 × 0,7 cm. A embalagem contém uma unidade.",
   "audience": "unisex",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "cor",
       "values": [
         {
-          "id": "cafe",
-          "value": "CAFÉ"
+          "id": "coffee",
+          "value": "Coffee"
         },
         {
-          "id": "preto",
-          "value": "Preto"
+          "id": "black",
+          "value": "Black"
         }
       ],
       "presentation": "image"
@@ -55,19 +55,29 @@
         {
           "axes": [
             {
-              "axisId": "cor",
-              "valueId": "cafe"
+              "axisId": "color",
+              "valueId": "coffee"
             }
           ],
           "state": "new",
-          "availabilityStatus": "on_order",
+          "availabilityStatus": "coming_soon",
+          "price": 29.9,
+          "listPrice": 39.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
           "mainImage": "trisjem-porta-cartoes-ultrafino-7.webp"
         },
         {
           "axes": [
             {
-              "axisId": "cor",
-              "valueId": "preto"
+              "axisId": "color",
+              "valueId": "black"
             }
           ],
           "state": "new",

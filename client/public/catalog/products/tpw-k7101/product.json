@@ -183,7 +183,17 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "on_order",
+          "availabilityStatus": "coming_soon",
+          "price": 79.9,
+          "listPrice": 104.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ],
           "mainImage": "tpw-k7101-12.webp"
         }
       ]
