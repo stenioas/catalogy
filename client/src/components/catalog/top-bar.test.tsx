@@ -1,9 +1,24 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { ThemeProvider } from '../theme-provider'
 import { TopBar } from './top-bar'
+
+const NOTICE =
+  'Adicione o Achavio à tela inicial para ver o catálogo sem a barra do navegador. Use o menu.'
+
+function mockMedia(matches: (query: string) => boolean) {
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn((query: string) => ({
+      matches: matches(query),
+      media: query,
+      addEventListener() {},
+      removeEventListener() {},
+    })),
+  )
+}
 
 function renderTopBar(catalogHref?: string) {
   const bar = <TopBar catalogHref={catalogHref} />
@@ -145,5 +160,57 @@ describe('TopBar height and Voltar (SV-29, SV-33, SV-43)', () => {
     fireEvent.scroll(window)
     expect(header.className).not.toMatch(/-translate-y-full/)
     expect(header.hasAttribute('inert')).toBe(false)
+  })
+})
+
+describe('TopBar PWA vitrine e ficha (PWA-16, PWA-39, PWA-40, PWA-47, PWA-48, PWA-49, PWA-50)', () => {
+  afterEach(() => {
+    cleanup()
+    localStorage.clear()
+    vi.unstubAllGlobals()
+    Reflect.deleteProperty(navigator, 'standalone')
+  })
+
+  it('na vitrine coloca Menu no slot esquerdo, mantém a logo e deixa o direito vazio', () => {
+    mockMedia(() => false)
+    const { container } = renderTopBar()
+    expect(screen.getByRole('button', { name: 'Menu' })).toBeDefined()
+    const logo = screen.getByAltText('Achavio')
+    expect(logo.getAttribute('src')).toBe('/achavio_logo.webp')
+    const row = container.querySelector('[data-testid="top-bar-inner"]') as HTMLElement
+    expect(row.lastElementChild?.querySelector('button')).toBeNull()
+
+    cleanup()
+    mockMedia(
+      (query) =>
+        query === '(max-width: 767px)' || query === '(display-mode: standalone)',
+    )
+    renderTopBar()
+    expect(screen.queryByRole('button', { name: 'Menu' })).toBeNull()
+    expect(screen.queryByTestId('install-notice')).toBeNull()
+  })
+
+  it('na vitrine estreita mostra o aviso abaixo do espaçador', () => {
+    mockMedia((query) => query === '(max-width: 767px)')
+    const { container } = renderTopBar()
+    const spacer = screen.getByTestId('top-bar-spacer')
+    const notice = screen.getByTestId('install-notice')
+    expect(screen.getByText(NOTICE)).toBeDefined()
+    expect(
+      spacer.compareDocumentPosition(notice) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+    const header = container.querySelector('[data-testid="top-bar"]')
+    expect(
+      notice.compareDocumentPosition(header!) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+  })
+
+  it('na ficha estreita mantém só Voltar, sem Menu nem aviso', () => {
+    mockMedia((query) => query === '(max-width: 767px)')
+    renderTopBar('/')
+    expect(screen.getByRole('link', { name: 'Voltar' })).toBeDefined()
+    expect(screen.queryByRole('button', { name: 'Menu' })).toBeNull()
+    expect(screen.queryByTestId('install-notice')).toBeNull()
+    expect(screen.queryByText(NOTICE)).toBeNull()
   })
 })

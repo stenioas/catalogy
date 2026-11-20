@@ -277,12 +277,14 @@ T8
 
 **Done when**:
 
-- [ ] Na vitrine o primeiro slot é `Menu`, o direito segue sem botão e a logo continua `/achavio_logo.webp`
-- [ ] Abaixo de 768 px a vitrine mostra o aviso
-- [ ] Na ficha, mesmo abaixo de 768 px, só existe `Voltar`
-- [ ] Em standalone a vitrine não mostra menu nem aviso
-- [ ] Gate check passes: `pnpm --filter client exec vitest run src/components/catalog/top-bar.test.tsx`
-- [ ] Test count: a suíte da barra passa, com 3 testes novos
+- [x] Na vitrine o primeiro slot é `Menu`, o direito segue sem botão e a logo continua `/achavio_logo.webp`
+- [x] Abaixo de 768 px a vitrine mostra o aviso
+- [x] Na ficha, mesmo abaixo de 768 px, só existe `Voltar`
+- [x] Em standalone a vitrine não mostra menu nem aviso
+- [x] Gate check passes: `pnpm --filter client exec vitest run src/components/catalog/top-bar.test.tsx`
+- [x] Test count: a suíte da barra passa, com 3 testes novos
+
+**Status**: Complete
 
 **Tests**: unit
 **Gate**: quick

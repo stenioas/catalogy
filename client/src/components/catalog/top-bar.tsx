@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 
+import { InstallMenu } from './install-menu'
+import { InstallNotice } from './install-notice'
+
 export const TOP_BAR_LOGO_ALT = 'Achavio'
 export const TOP_BAR_LOGO_SRC = '/achavio_logo.webp'
 
@@ -58,6 +61,7 @@ export function TopBar({ catalogHref }: TopBarProps) {
   return (
     <>
       <div aria-hidden="true" className="h-16 w-full" data-testid="top-bar-spacer" />
+      {!catalogHref ? <InstallNotice /> : null}
       <header
         data-testid="top-bar"
         inert={hidden}
@@ -78,7 +82,9 @@ export function TopBar({ catalogHref }: TopBarProps) {
                   <ArrowLeft aria-hidden="true" />
                 </Link>
               </Button>
-            ) : null}
+            ) : (
+              <InstallMenu />
+            )}
           </div>
           {catalogHref ? (
             <Link to={catalogHref} className={logoSlotClassName}>

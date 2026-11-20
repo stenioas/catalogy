@@ -152,7 +152,7 @@ No celular, a barra do navegador reduz a altura útil do catálogo. A pessoa pre
 | PWA-13 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-14 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-15 | P1: Instalar sem a barra | Tasks | Verified |
-| PWA-16 | P1: Instalar sem a barra | Tasks | In Tasks |
+| PWA-16 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-17 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-18 | P1: Instalar sem a barra | Tasks | Verified |
 | PWA-19 | P1: Instalar sem a barra | Tasks | In Tasks |
@@ -175,18 +175,18 @@ No celular, a barra do navegador reduz a altura útil do catálogo. A pessoa pre
 | PWA-36 | P1: Achar a instalação | Tasks | Verified |
 | PWA-37 | P1: Achar a instalação | Tasks | Verified |
 | PWA-38 | P1: Achar a instalação | Tasks | Verified |
-| PWA-39 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-40 | P1: Achar a instalação | Tasks | In Tasks |
+| PWA-39 | P1: Achar a instalação | Tasks | Verified |
+| PWA-40 | P1: Achar a instalação | Tasks | Verified |
 | PWA-41 | P1: Achar a instalação | Tasks | Verified |
 | PWA-42 | P1: Achar a instalação | Tasks | Verified |
 | PWA-43 | P1: Achar a instalação | Tasks | Verified |
 | PWA-44 | P1: Achar a instalação | Tasks | Verified |
 | PWA-45 | P1: Achar a instalação | Tasks | Verified |
 | PWA-46 | P1: Achar a instalação | Tasks | Verified |
-| PWA-47 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-48 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-49 | P1: Achar a instalação | Tasks | In Tasks |
-| PWA-50 | P1: Achar a instalação | Tasks | In Tasks |
+| PWA-47 | P1: Achar a instalação | Tasks | Verified |
+| PWA-48 | P1: Achar a instalação | Tasks | Verified |
+| PWA-49 | P1: Achar a instalação | Tasks | Verified |
+| PWA-50 | P1: Achar a instalação | Tasks | Verified |
 
 **Coverage:** 50 total, 50 mapped to tasks, 0 unmapped
 
