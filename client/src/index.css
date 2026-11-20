@@ -231,6 +231,10 @@
   padding-inline: 24px;
 }
 
+.top-bar-column {
+  padding-inline: 12px;
+}
+
 .catalog-vitrine {
   padding-inline: 0;
 }

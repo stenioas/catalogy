@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 
 import { router } from './app/router'
+import { Toaster } from './components/ui/sonner'
 import { ThemeProvider } from './components/theme-provider'
 import { installInstallPromptListener } from './pwa/install-prompt'
 import './index.css'
@@ -22,6 +23,7 @@ export function AppRoot() {
     <StrictMode>
       <ThemeProvider>
         <RouterProvider router={router} />
+        <Toaster />
       </ThemeProvider>
     </StrictMode>
   )

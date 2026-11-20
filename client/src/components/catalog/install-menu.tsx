@@ -1,6 +1,14 @@
-import { useState } from 'react'
+import { Menu } from 'lucide-react'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { runInstallPrompt } from '@/pwa/install-prompt'
 
 import { useInstallChrome } from './install-notice'
@@ -8,58 +16,54 @@ import { useInstallChrome } from './install-notice'
 const SAFARI_HELP =
   'No Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.'
 const UNAVAILABLE_HELP = 'Este navegador não permite criar o atalho.'
+const INSTALL_TOAST_ID = 'install-help'
 
 export function InstallMenu() {
   const { standalone } = useInstallChrome()
-  const [open, setOpen] = useState(false)
-  const [help, setHelp] = useState<string | null>(null)
+
+  useEffect(() => {
+    const dismiss = (event: Event) => {
+      const target = event.target
+      if (target instanceof Element && target.closest('[data-sonner-toaster]')) return
+      toast.dismiss(INSTALL_TOAST_ID)
+    }
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') toast.dismiss(INSTALL_TOAST_ID)
+    }
+    document.addEventListener('pointerdown', dismiss)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', dismiss)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [])
 
   if (standalone) return null
 
   const onInstall = async () => {
-    setOpen(false)
     const result = await runInstallPrompt()
-    if (result === 'ios') setHelp(SAFARI_HELP)
-    else if (result === 'unavailable') setHelp(UNAVAILABLE_HELP)
-    else setHelp(null)
+    if (result === 'ios') toast(SAFARI_HELP, { id: INSTALL_TOAST_ID })
+    else if (result === 'unavailable') toast(UNAVAILABLE_HELP, { id: INSTALL_TOAST_ID })
+    else toast.dismiss(INSTALL_TOAST_ID)
   }
 
   return (
-    <div className="relative flex flex-col items-start gap-2">
-      <Button
-        type="button"
-        variant="ghost"
-        aria-label="Menu"
-        aria-expanded={open}
-        aria-haspopup="menu"
-        onClick={() => setOpen((value) => !value)}
-        className="size-11 shrink-0 rounded-full text-inherit hover:bg-[color-mix(in_srgb,var(--ink)_8%,transparent)] hover:text-inherit"
-      >
-        Menu
-      </Button>
-      {open ? (
-        <div
-          role="menu"
-          className="absolute top-full left-0 z-30 min-w-[14rem] rounded-lg border border-[rgba(0,0,0,0.08)] bg-[var(--canvas-parchment)] py-1 shadow-md"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          aria-label="Menu"
+          className="size-11 shrink-0 rounded-full text-inherit hover:bg-[color-mix(in_srgb,var(--ink)_8%,transparent)] hover:text-inherit"
         >
-          <button
-            type="button"
-            role="menuitem"
-            className="w-full px-3 py-2 text-left text-sm hover:bg-[color-mix(in_srgb,var(--ink)_8%,transparent)]"
-            onClick={() => void onInstall()}
-          >
-            Adicionar à tela inicial
-          </button>
-        </div>
-      ) : null}
-      {help ? (
-        <p
-          data-testid="install-menu-help"
-          className="absolute top-full left-0 z-30 mt-2 max-w-xs rounded-lg border border-[rgba(0,0,0,0.08)] bg-[var(--canvas-parchment)] px-3 py-2 text-sm shadow-md"
-        >
-          {help}
-        </p>
-      ) : null}
-    </div>
+          <Menu aria-hidden="true" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-56">
+        <DropdownMenuItem onSelect={() => void onInstall()}>
+          Adicionar à tela inicial
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

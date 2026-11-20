@@ -1,5 +1,8 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { toast } from 'sonner'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+
+import { Toaster } from '@/components/ui/sonner'
 
 import {
   captureInstallPrompt,
@@ -35,9 +38,35 @@ function promptEvent(
   return event
 }
 
+function openMenu() {
+  const menu = screen.getByRole('button', { name: 'Menu' })
+  fireEvent.keyDown(menu, { key: 'Enter' })
+  return menu
+}
+
+function chooseInstall() {
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+}
+
+function renderMenu() {
+  return render(
+    <>
+      <InstallMenu />
+      <Toaster />
+    </>,
+  )
+}
+
+beforeAll(() => {
+  Element.prototype.setPointerCapture ??= () => {}
+  Element.prototype.releasePointerCapture ??= () => {}
+  Element.prototype.hasPointerCapture ??= () => false
+})
+
 let uninstall = () => {}
 
 afterEach(() => {
+  toast.dismiss()
   cleanup()
   uninstall()
   uninstall = () => {}
@@ -52,9 +81,12 @@ describe('InstallMenu', () => {
   it('abre um único item Adicionar à tela inicial ao acionar Menu', () => {
     mockMedia(() => false)
     uninstall = installInstallPromptListener()
-    render(<InstallMenu />)
+    renderMenu()
+    const menu = screen.getByRole('button', { name: 'Menu' })
+    expect(menu.querySelector('svg.lucide-menu')).not.toBeNull()
+    expect(menu.textContent).toBe('')
     expect(screen.queryByRole('menuitem', { name: 'Adicionar à tela inicial' })).toBeNull()
-    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
+    openMenu()
     expect(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' })).toBeDefined()
     expect(screen.getAllByRole('menuitem')).toHaveLength(1)
   })
@@ -64,9 +96,9 @@ describe('InstallMenu', () => {
     uninstall = installInstallPromptListener()
     const event = promptEvent('dismissed')
     captureInstallPrompt(event)
-    render(<InstallMenu />)
-    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    renderMenu()
+    openMenu()
+    chooseInstall()
     await waitFor(() => expect(event.prompt).toHaveBeenCalledOnce())
     expect(screen.queryByRole('menuitem', { name: 'Adicionar à tela inicial' })).toBeNull()
   })
@@ -77,9 +109,9 @@ describe('InstallMenu', () => {
       'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)',
     )
     uninstall = installInstallPromptListener()
-    render(<InstallMenu />)
-    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    renderMenu()
+    openMenu()
+    chooseInstall()
     await waitFor(() => expect(screen.getByText(SAFARI_HELP)).toBeDefined())
   })
 
@@ -89,9 +121,9 @@ describe('InstallMenu', () => {
       'Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X)',
     )
     uninstall = installInstallPromptListener()
-    render(<InstallMenu />)
-    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    renderMenu()
+    openMenu()
+    chooseInstall()
     await waitFor(() =>
       expect(
         screen.getByText(
@@ -107,9 +139,9 @@ describe('InstallMenu', () => {
       'Mozilla/5.0 (iPod touch; CPU iPhone OS 17_0 like Mac OS X)',
     )
     uninstall = installInstallPromptListener()
-    render(<InstallMenu />)
-    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    renderMenu()
+    openMenu()
+    chooseInstall()
     await waitFor(() =>
       expect(
         screen.getByText(
@@ -130,9 +162,9 @@ describe('InstallMenu', () => {
       value: 2,
     })
     uninstall = installInstallPromptListener()
-    render(<InstallMenu />)
-    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    renderMenu()
+    openMenu()
+    chooseInstall()
     await waitFor(() =>
       expect(
         screen.getByText(
@@ -145,9 +177,9 @@ describe('InstallMenu', () => {
   it('mostra o texto sem atalho fora do iOS sem evento ou quando prompt rejeita', async () => {
     mockMedia(() => false)
     uninstall = installInstallPromptListener()
-    render(<InstallMenu />)
-    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    renderMenu()
+    openMenu()
+    chooseInstall()
     await waitFor(() => expect(screen.getByText(UNAVAILABLE_HELP)).toBeDefined())
 
     cleanup()
@@ -155,16 +187,41 @@ describe('InstallMenu', () => {
       throw new Error('prompt failed')
     })
     captureInstallPrompt(rejectEvent)
-    render(<InstallMenu />)
-    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    renderMenu()
+    openMenu()
+    chooseInstall()
     await waitFor(() => expect(screen.getByText(UNAVAILABLE_HELP)).toBeDefined())
+  })
+
+  it('some a mensagem ao clicar fora ou apertar Escape', async () => {
+    mockMedia(() => false)
+    uninstall = installInstallPromptListener()
+    renderMenu()
+    openMenu()
+    chooseInstall()
+    await waitFor(() => expect(screen.getByText(UNAVAILABLE_HELP)).toBeDefined())
+
+    const message = screen.getByText(UNAVAILABLE_HELP)
+    expect(message.closest('[data-sonner-toast]')).not.toBeNull()
+    expect(screen.getByRole('button', { name: 'Menu' }).contains(message)).toBe(false)
+
+    fireEvent.pointerDown(message)
+    expect(screen.getByText(UNAVAILABLE_HELP)).toBeDefined()
+
+    fireEvent.pointerDown(document.body)
+    await waitFor(() => expect(screen.queryByText(UNAVAILABLE_HELP)).toBeNull())
+
+    openMenu()
+    chooseInstall()
+    await waitFor(() => expect(screen.getByText(UNAVAILABLE_HELP)).toBeDefined())
+    fireEvent.keyDown(document, { key: 'Escape' })
+    await waitFor(() => expect(screen.queryByText(UNAVAILABLE_HELP)).toBeNull())
   })
 
   it('não renderiza o botão Menu em standalone', () => {
     mockMedia((query) => query === '(display-mode: standalone)')
     uninstall = installInstallPromptListener()
-    render(<InstallMenu />)
+    renderMenu()
     expect(screen.queryByRole('button', { name: 'Menu' })).toBeNull()
   })
 })

@@ -69,7 +69,7 @@ export function TopBar({ catalogHref }: TopBarProps) {
       >
         <div
           data-testid="top-bar-inner"
-          className={`catalog-column grid h-full grid-cols-[1fr_auto_1fr] items-center${catalogHref ? ' watch-page-column' : ''}`}
+          className={`catalog-column top-bar-column grid h-full grid-cols-[1fr_auto_1fr] items-center${catalogHref ? ' watch-page-column' : ''}`}
         >
           <div className="justify-self-start">
             {catalogHref ? (

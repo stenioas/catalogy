@@ -6,7 +6,7 @@ import { INSTALL_NOTICE_DISMISSED_KEY } from '@/pwa/install-prompt'
 import { InstallNotice } from './install-notice'
 
 const NOTICE =
-  'Adicione o Achavio à tela inicial para ver o catálogo sem a barra do navegador. Use o menu.'
+  'Adicione o Achavio à tela inicial para facilitar a utilização. Acesse o menu e clique em "Adicionar a tela inicial".'
 
 function mockMedia(matches: (query: string) => boolean) {
   vi.stubGlobal(

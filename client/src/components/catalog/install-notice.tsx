@@ -44,7 +44,7 @@ export function InstallNotice() {
     >
       <div className="catalog-column flex items-start gap-3 py-3 text-sm">
         <p className="m-0 min-w-0 flex-1">
-          Adicione o Achavio à tela inicial para ver o catálogo sem a barra do navegador. Use o menu.
+          Adicione o Achavio à tela inicial para facilitar a utilização. Acesse o menu e clique em &quot;Adicionar a tela inicial&quot;.
         </p>
         <button
           type="button"

@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -6,7 +10,7 @@ import { ThemeProvider } from '../theme-provider'
 import { TopBar } from './top-bar'
 
 const NOTICE =
-  'Adicione o Achavio à tela inicial para ver o catálogo sem a barra do navegador. Use o menu.'
+  'Adicione o Achavio à tela inicial para facilitar a utilização. Acesse o menu e clique em "Adicionar a tela inicial".'
 
 function mockMedia(matches: (query: string) => boolean) {
   vi.stubGlobal(
@@ -83,6 +87,12 @@ describe('TopBar (SV-01, SV-12, CAT-37, CAT-38, CAT-44, CAT-45)', () => {
     const inner = container.querySelector('[data-testid="top-bar-inner"]')
     expect(inner).not.toBeNull()
     expect((inner as HTMLElement).classList.contains('catalog-column')).toBe(true)
+    expect((inner as HTMLElement).classList.contains('top-bar-column')).toBe(true)
+    const css = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), '../../index.css'),
+      'utf8',
+    )
+    expect(css.match(/\.top-bar-column\s*\{([^}]*)\}/)?.[1]).toMatch(/padding-inline:\s*12px/)
   })
 })
 
