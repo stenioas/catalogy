@@ -172,4 +172,18 @@ describe('arranque PWA (PWA-19, PWA-20, PWA-21)', () => {
     expect(await screen.findByText(watchTitle())).toBeDefined()
     expect(didRequestSellers(fetchMock)).toBe(false)
   })
+
+  it('mantém a vitrine se o registro do service worker lança', async () => {
+    const register = vi.fn(() => {
+      throw new Error('sw threw')
+    })
+    vi.stubGlobal('navigator', {
+      ...navigator,
+      serviceWorker: { register },
+    })
+    const fetchMock = await renderApp('/')
+    expect(register).toHaveBeenCalledWith('/sw.js')
+    expect(await screen.findByText(watchTitle())).toBeDefined()
+    expect(didRequestSellers(fetchMock)).toBe(false)
+  })
 })

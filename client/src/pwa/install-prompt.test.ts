@@ -78,7 +78,23 @@ describe('install prompt', () => {
     expect(await mod.runInstallPrompt()).toBe('ios')
   })
 
-  it('trata iPadOS que se anuncia como Mac como iPhone', async () => {
+  it('pede a instrução do Safari no iPad quando não há evento', async () => {
+    vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(
+      'Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X)',
+    )
+    const mod = await load()
+    expect(await mod.runInstallPrompt()).toBe('ios')
+  })
+
+  it('pede a instrução do Safari no iPod quando não há evento', async () => {
+    vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(
+      'Mozilla/5.0 (iPod touch; CPU iPhone OS 17_0 like Mac OS X)',
+    )
+    const mod = await load()
+    expect(await mod.runInstallPrompt()).toBe('ios')
+  })
+
+  it('pede a instrução do Safari no iPadOS que se anuncia como Mac', async () => {
     vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
     )
@@ -89,6 +105,7 @@ describe('install prompt', () => {
     })
     const mod = await load()
     expect(mod.isIos()).toBe(true)
+    expect(await mod.runInstallPrompt()).toBe('ios')
   })
 
   it('informa que o navegador não cria o atalho fora do iPhone e sem evento', async () => {

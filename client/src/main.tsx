@@ -10,7 +10,11 @@ import './index.css'
 installInstallPromptListener()
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {})
+  try {
+    navigator.serviceWorker.register('/sw.js').catch(() => {})
+  } catch {
+    // lançamento síncrono não derruba a vitrine
+  }
 }
 
 export function AppRoot() {

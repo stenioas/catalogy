@@ -45,6 +45,7 @@ afterEach(() => {
   vi.restoreAllMocks()
   vi.unstubAllGlobals()
   Reflect.deleteProperty(navigator, 'standalone')
+  Reflect.deleteProperty(navigator, 'maxTouchPoints')
 })
 
 describe('InstallMenu', () => {
@@ -80,6 +81,65 @@ describe('InstallMenu', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
     fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
     await waitFor(() => expect(screen.getByText(SAFARI_HELP)).toBeDefined())
+  })
+
+  it('mostra a instrução do Safari no iPad sem evento adiado', async () => {
+    mockMedia(() => false)
+    vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(
+      'Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X)',
+    )
+    uninstall = installInstallPromptListener()
+    render(<InstallMenu />)
+    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    await waitFor(() =>
+      expect(
+        screen.getByText(
+          'No Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.',
+        ),
+      ).toBeDefined(),
+    )
+  })
+
+  it('mostra a instrução do Safari no iPod sem evento adiado', async () => {
+    mockMedia(() => false)
+    vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(
+      'Mozilla/5.0 (iPod touch; CPU iPhone OS 17_0 like Mac OS X)',
+    )
+    uninstall = installInstallPromptListener()
+    render(<InstallMenu />)
+    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    await waitFor(() =>
+      expect(
+        screen.getByText(
+          'No Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.',
+        ),
+      ).toBeDefined(),
+    )
+  })
+
+  it('mostra a instrução do Safari no iPadOS sem evento adiado', async () => {
+    mockMedia(() => false)
+    vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
+    )
+    vi.spyOn(navigator, 'platform', 'get').mockReturnValue('MacIntel')
+    Object.defineProperty(navigator, 'maxTouchPoints', {
+      configurable: true,
+      value: 2,
+    })
+    uninstall = installInstallPromptListener()
+    render(<InstallMenu />)
+    fireEvent.click(screen.getByRole('button', { name: 'Menu' }))
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Adicionar à tela inicial' }))
+    await waitFor(() =>
+      expect(
+        screen.getByText(
+          'No Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.',
+        ),
+      ).toBeDefined(),
+    )
   })
 
   it('mostra o texto sem atalho fora do iOS sem evento ou quando prompt rejeita', async () => {

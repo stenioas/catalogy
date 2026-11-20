@@ -174,10 +174,13 @@ describe('TopBar PWA vitrine e ficha (PWA-16, PWA-39, PWA-40, PWA-47, PWA-48, PW
   it('na vitrine coloca Menu no slot esquerdo, mantém a logo e deixa o direito vazio', () => {
     mockMedia(() => false)
     const { container } = renderTopBar()
-    expect(screen.getByRole('button', { name: 'Menu' })).toBeDefined()
+    const menu = screen.getByRole('button', { name: 'Menu' })
+    expect(menu).toBeDefined()
     const logo = screen.getByAltText('Achavio')
     expect(logo.getAttribute('src')).toBe('/achavio_logo.webp')
     const row = container.querySelector('[data-testid="top-bar-inner"]') as HTMLElement
+    expect(row.children[0]?.contains(menu)).toBe(true)
+    expect(logo.parentElement?.contains(menu)).toBe(false)
     expect(row.lastElementChild?.querySelector('button')).toBeNull()
 
     cleanup()
