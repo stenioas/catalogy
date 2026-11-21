@@ -1287,7 +1287,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.queryByTestId('price-block')).toBeNull()
   })
 
-  it('opens the cheaper variant from a card, that photo from a direct link, then the chosen variant photo', () => {
+  it('opens the cheaper variant from a card, that photo from a direct link, then the chosen variant photo', async () => {
     const product: Product = {
       slug: 'capa',
       title: 'Capa',
@@ -1354,11 +1354,23 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/?section=available')
 
     fireEvent.click(screen.getByRole('button', { name: 'Preto' }))
+    expect(`${router.state.location.pathname}${router.state.location.search}`).toBe('/product/capa/anuncio?v=preto')
+    expect(router.state.historyAction).toBe('REPLACE')
     expect(screen.getByRole('button', { name: 'Abrir galeria na foto 3' })).toBeDefined()
     expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/preto.png')
     expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 30,00')
     expect(router.state.location.state).toEqual({ section: 'available' })
     expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/?section=available')
+    expect(screen.getByRole('link', { name: 'Compartilhar' }).getAttribute('href')).toBe(
+      `https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Capa Preto. Novo, Disponível. ${window.location.origin}/product/capa/anuncio?v=preto`)}`,
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'Azul' }))
+    expect(`${router.state.location.pathname}${router.state.location.search}`).toBe('/product/capa/anuncio?v=azul')
+    expect(router.state.historyAction).toBe('REPLACE')
+
+    await act(async () => { await router.navigate(-1) })
+    expect(`${router.state.location.pathname}${router.state.location.search}`).toBe('/?section=available')
 
     cleanup()
     mockProductsRef.current = [product]

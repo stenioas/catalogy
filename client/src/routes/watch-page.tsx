@@ -391,6 +391,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
     }
     const query = nextParams.toString().replace(/%2C/gi, ',')
     navigate(`${path.split('?')[0]}${query === '' ? '' : `?${query}`}`, {
+      replace: true,
       flushSync: true,
       state: stateAfterVariantChange(location.state),
     })
