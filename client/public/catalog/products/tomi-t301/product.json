@@ -1,6 +1,6 @@
 {
   "slug": "tomi-t301",
-  "title": "Kit Presente Tomi",
+  "title": "Tomi Kit Presente",
   "description": "Relógio masculino de quartzo com estilo casual, caixa redonda em liga e pulseira de aço inoxidável com fecho oculto com botão de pressão. Possui calendário, vidro e espessura de caixa de 9 mm. O conjunto inclui relógio, anel, broche, ajustador de pulseira e caixa de presente.",
   "audience": "male",
   "axes": [
@@ -139,7 +139,7 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "coming_soon",
+          "availabilityStatus": "available",
           "price": 104.9,
           "listPrice": 144.9,
           "offers": [
@@ -160,7 +160,7 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "coming_soon",
+          "availabilityStatus": "available",
           "price": 104.9,
           "listPrice": 144.9,
           "offers": [

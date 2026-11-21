@@ -64,7 +64,7 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "coming_soon",
+          "availabilityStatus": "available",
           "price": 29.9,
           "listPrice": 39.9,
           "offers": [
@@ -85,7 +85,7 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "coming_soon",
+          "availabilityStatus": "available",
           "price": 29.9,
           "listPrice": 39.9,
           "offers": [
@@ -106,7 +106,7 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "coming_soon",
+          "availabilityStatus": "available",
           "price": 29.9,
           "listPrice": 39.9,
           "offers": [
