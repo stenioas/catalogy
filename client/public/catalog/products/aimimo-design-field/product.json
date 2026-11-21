@@ -1,8 +1,8 @@
 {
   "slug": "aimimo-design-field",
   "title": "Aimimo Design Pilot Vintage",
-  "description": "O Aimimo Design Pilot Vintage é um relógio masculino de estilo piloto vintage, com movimento de quartzo japonês Miyota 2035. Caixa de aço inoxidável 316L com acabamento escovado, diâmetro de 38 mm e espessura de 10,8 mm. Cristal de safira, ponteiros e indicadores luminosos e resistência à água de 50 metros. Pulseira de aço inoxidável com largura de 20 mm e comprimento de 22 cm, com fecho oculto de botão de pressão.",
-  "audience": "unisex",
+  "description": "Uma homenagem ao Hamilton Khaki Field Mechanical. É um relógio masculino de estilo piloto vintage, com movimento de quartzo japonês Miyota 2035. Caixa de aço inoxidável 316L com acabamento escovado, diâmetro de 38 mm e espessura de 10,8 mm. Cristal de safira, ponteiros e indicadores luminosos e resistência à água de 50 metros. Pulseira de aço inoxidável com largura de 20 mm e comprimento de 22 cm, com fecho oculto de botão de pressão.",
+  "audience": "male",
   "axes": [
     {
       "id": "color",
