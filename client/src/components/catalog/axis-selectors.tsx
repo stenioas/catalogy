@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
 import type { ListingSelector, ListingSelectorOption } from '@catalogo/shared'
 
 import { cn } from '@/lib/utils'
@@ -16,6 +16,8 @@ export type AxisSelectorsProps = {
     condition?: Pick<ListingSelectorOption, 'state' | 'availability'>,
   ) => void
   slug?: string
+  /** Rendered on the label row of the first axis, after the selected value. */
+  labelEnd?: ReactNode
 }
 
 function activeValueIdsFromV(selectors: ListingSelector[], v: string | null): Record<string, string> {
@@ -114,6 +116,7 @@ export function AxisSelectors({
   activeAvailability,
   onSelect,
   slug = '',
+  labelEnd,
 }: AxisSelectorsProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const initialAlign = useRef(true)
@@ -135,7 +138,7 @@ export function AxisSelectors({
 
   return (
     <div ref={rootRef} data-testid="axis-selectors" className="flex w-full min-w-0 flex-col gap-3">
-      {selectors.map((group) => {
+      {selectors.map((group, index) => {
         const image = group.presentation === 'image'
         const line = axisLine(group, activeByAxis)
         const activeValueId =
@@ -148,7 +151,10 @@ export function AxisSelectors({
             data-axis-id={group.axisId}
             className="flex flex-col gap-1.5"
           >
-            <span className="text-xs font-medium text-muted-foreground">{line}</span>
+            <div className="flex w-full min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+              <span className="text-xs font-medium text-muted-foreground">{line}</span>
+              {index === 0 && labelEnd !== undefined ? labelEnd : null}
+            </div>
             <div
               data-variant-row={image ? 'image' : undefined}
               className={image ? 'flex w-full gap-2 overflow-x-auto px-1.5 py-2' : 'flex flex-wrap gap-2 px-1.5 py-1'}

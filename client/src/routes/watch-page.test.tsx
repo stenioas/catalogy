@@ -694,9 +694,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByTestId('price-list').textContent).toBe('R$ 449,90')
     expect(screen.getByTestId('price-badge').parentElement).toBe(screen.getByTestId('price-list').parentElement)
     expect(screen.getByTestId('price-pix').parentElement).toBe(screen.getByTestId('price-current').parentElement)
-    expect(follows(heading, screen.getByTestId('offer-badge'))).toBe(true)
+    expect(follows(heading, screen.getByTestId('axis-selectors'))).toBe(true)
+    expect(follows(screen.getByTestId('axis-selectors'), screen.getByTestId('offer-badge'))).toBe(true)
     expect(follows(screen.getByTestId('offer-badge'), screen.getByTestId('price-current'))).toBe(true)
-    expect(follows(screen.getByTestId('price-current'), screen.getByTestId('axis-selectors'))).toBe(true)
     if (viewport >= 920) {
       const left = screen.getByTestId('watch-left-column')
       const right = screen.getByTestId('watch-right-column')
@@ -704,8 +704,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       expect(left.parentElement?.className).toContain('grid-cols-[fit-content(calc(476px+3.5rem+0.75rem))_minmax(220px,1fr)]')
       expect(within(left).getByRole('group', { name: 'Miniaturas do produto' })).toBeDefined()
       expect(within(right).getByRole('heading', { level: 1 })).toBe(heading)
-      expect(follows(within(right).getByTestId('watch-metadata'), heading)).toBe(true)
-      expect(follows(heading, within(right).getByTestId('watch-offer'))).toBe(true)
+      expect(follows(heading, within(right).getByTestId('axis-selectors'))).toBe(true)
+      expect(follows(within(right).getByTestId('axis-selectors'), within(right).getByTestId('watch-offer'))).toBe(true)
+      expect(within(right).getByTestId('axis-selector-group').contains(within(right).getByTestId('product-condition'))).toBe(true)
       expect(follows(within(right).getByTestId('price-current'), within(right).getByTestId('price-installments'))).toBe(true)
       const description = within(right).getByRole('heading', { name: 'Descrição' })
       const share = within(right).getByRole('link', { name: 'Compartilhar' })
@@ -732,8 +733,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       expect(screen.getByTestId('watch-offer').className).toMatch(/\bgap-3\b/)
       expect(follows(screen.getByTestId('axis-selectors'), share)).toBe(true)
       if (viewport >= 768) {
-        expect(follows(screen.getByTestId('watch-metadata'), heading)).toBe(true)
-        expect(follows(screen.getByTestId('watch-metadata'), screen.getByTestId('watch-offer'))).toBe(true)
+        expect(follows(heading, screen.getByTestId('axis-selectors'))).toBe(true)
+        expect(follows(screen.getByTestId('axis-selectors'), screen.getByTestId('watch-offer'))).toBe(true)
         expect(follows(screen.getByTestId('price-current'), share)).toBe(true)
         expect(screen.getByRole('group', { name: 'Miniaturas do produto' })).toBeDefined()
         expect(screen.queryByTestId('watch-carousel')).toBeNull()
@@ -742,9 +743,10 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       } else {
         expect(screen.getByTestId('watch-carousel').parentElement?.className).toMatch(/\bmax-md:order-1\b/)
         expect(heading.className).toMatch(/\bmax-md:order-2\b/)
-        expect(screen.getByTestId('watch-metadata').className).toMatch(/\bmax-md:order-3\b/)
+        expect(screen.getByTestId('watch-variants').className).toMatch(/\bmax-md:order-3\b/)
         expect(screen.getByTestId('watch-commerce').parentElement?.className).toMatch(/\bmax-md:order-4\b/)
-        expect(screen.getByTestId('watch-offer').contains(screen.getByTestId('axis-selectors'))).toBe(true)
+        expect(screen.getByTestId('watch-offer').contains(screen.getByTestId('axis-selectors'))).toBe(false)
+        expect(screen.getByTestId('axis-selector-group').contains(screen.getByTestId('product-condition'))).toBe(true)
         expect(follows(screen.getByTestId('axis-selectors'), share)).toBe(true)
         expect(screen.getByTestId('watch-offer').className).toMatch(/\bgap-3\b/)
         expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.className).toMatch(/\bmax-md:order-7\b/)
@@ -767,7 +769,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     renderWatchPage()
     expect(screen.queryByTestId('axis-line')).toBeNull()
     expect(screen.getByTestId('axis-selectors').textContent).toContain('Cor:   Azul  ')
-    expect(follows(screen.getByTestId('price-block'), screen.getByTestId('axis-selectors'))).toBe(true)
+    expect(follows(screen.getByTestId('axis-selectors'), screen.getByTestId('price-block'))).toBe(true)
     expect(within(screen.getByRole('table')).getAllByRole('row').map((row) => row.textContent)).toEqual(['CorPrata', 'Cor do mostradorPreto', 'Cor da pulseiraAço', 'CorPrata'])
   })
 
@@ -882,7 +884,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       renderWatchPage()
       expect(screen.queryByTestId('axis-line')).toBeNull()
       expect(screen.getByRole('group', { name: 'Cor: Azul' })).toBeDefined()
-      expect(follows(screen.getByTestId('price-block'), screen.getByTestId('axis-selectors'))).toBe(true)
+      expect(follows(screen.getByTestId('axis-selectors'), screen.getByTestId('price-block'))).toBe(true)
       expect(within(screen.getByRole('table')).queryByText('Azul')).toBeNull()
       expect(within(screen.getByRole('table')).getByText('Prata')).toBeDefined()
     })
@@ -1041,17 +1043,16 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(document.querySelector('a[href*="wa.me"]')).toBeNull()
   })
 
-  it('places the axis value after the price and drops the name line when there is no axis', () => {
+  it('places the axis value after the title and drops the name line when there is no axis', () => {
     mockProductsRef.current = [listingProduct()]
     renderWatchPage()
-    const price = screen.getByTestId('price-block')
     const selector = screen.getByTestId('axis-selectors')
     expect(screen.queryByTestId('axis-line')).toBeNull()
     expect(screen.queryByTestId('variant-name')).toBeNull()
     expect(screen.queryByTestId('variant-strip')).toBeNull()
     expect(screen.getByRole('group', { name: 'Cor: Azul marinho' })).toBeDefined()
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Seculus')
-    expect(follows(price, selector)).toBe(true)
+    expect(follows(selector, screen.getByTestId('price-block'))).toBe(true)
     expect(selector.textContent).not.toContain('Azul marinho alias')
     cleanup()
     mockProductsRef.current = [makeProduct()]
@@ -1092,7 +1093,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 20,00')
     expect(screen.getByText('Obs B')).toBeDefined()
     expect(within(right).getByTestId('offer-badge').textContent).toBe('oferta preto')
-    expect(follows(within(right).getByTestId('price-block'), within(right).getByTestId('axis-selectors'))).toBe(true)
+    expect(follows(within(right).getByTestId('axis-selectors'), within(right).getByTestId('price-block'))).toBe(true)
     expect(screen.getByRole('heading', { name: 'Descrição' }).parentElement?.querySelector('p')?.textContent).toBe('Caixa de aço.')
     expect(within(screen.getAllByRole('table')[0]!).getByText('Do produto')).toBeDefined()
     expect(within(screen.getAllByRole('table')[1]!).getByText('Do anúncio')).toBeDefined()
@@ -1160,12 +1161,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(carousel.parentElement?.className).toMatch(/\bmax-md:order-1\b/)
     expect(screen.getByRole('heading', { level: 1 }).className).toMatch(/\bmax-md:order-2\b/)
     expect(screen.getByTestId('watch-commerce').parentElement?.className).toMatch(/\bmax-md:order-4\b/)
-    expect(screen.getByTestId('watch-offer').contains(selectors)).toBe(true)
+    expect(screen.getByTestId('watch-offer').contains(selectors)).toBe(false)
     expect(screen.getByTestId('watch-offer').className).toMatch(/\bgap-3\b/)
     expect(follows(selectors, screen.getByRole('link', { name: 'Compartilhar' }))).toBe(true)
-    expect(follows(price, selectors)).toBe(true)
+    expect(follows(selectors, price)).toBe(true)
+    expect(within(selectors).getAllByTestId('axis-selector-group')[0]!.contains(screen.getByTestId('product-condition'))).toBe(true)
     expect(within(selectors).getAllByTestId('axis-selector-group').map((group) => group.textContent)).toEqual([
-      'Cor: Azul marinhoAzul marinhoPreto',
+      'Cor: Azul marinhoNovoDisponívelAzul marinhoPreto',
       'Tamanho: PequenoPequenoMédio',
     ])
     cleanup()
@@ -1177,7 +1179,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.queryByTestId('variant-strip')).toBeNull()
     expect(within(media).queryByTestId('axis-selectors')).toBeNull()
     expect(follows(media, screen.getByTestId('price-block'))).toBe(true)
-    expect(follows(screen.getByTestId('price-block'), screen.getByTestId('axis-selectors'))).toBe(true)
+    expect(follows(screen.getByTestId('axis-selectors'), screen.getByTestId('price-block'))).toBe(true)
     expect(screen.queryByTestId('carousel-dots')).toBeNull()
     expect(screen.queryByTestId('watch-carousel')).toBeNull()
     cleanup()
@@ -1189,10 +1191,10 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.queryByTestId('axis-line')).toBeNull()
     const right = screen.getByTestId('watch-right-column')
     const ordered = [
-      within(right).getByTestId('product-condition'),
       within(right).getByRole('heading', { level: 1, name: 'Seculus' }),
-      within(right).getByTestId('price-block'),
       within(right).getByTestId('axis-selectors'),
+      within(right).getByTestId('product-condition'),
+      within(right).getByTestId('price-block'),
       within(right).getByRole('heading', { name: 'Descrição' }),
       within(right).getByRole('link', { name: 'Compartilhar' }),
     ]
@@ -1236,8 +1238,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.queryByTestId('variant-strip')).toBeNull()
     expect(screen.queryByTestId('variant-name')).toBeNull()
     expect(screen.queryByTestId('axis-line')).toBeNull()
+    expect(follows(axes, offer)).toBe(true)
     expect(follows(offer, consult)).toBe(true)
-    expect(follows(consult, axes)).toBe(true)
     if (viewport < 920) {
       const media = screen.getByTestId('desktop-product-media')
       expect(screen.queryByTestId('watch-left-column')).toBeNull()
@@ -1254,9 +1256,9 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(within(right).queryByTestId('desktop-product-media')).toBeNull()
     const ordered = [
       within(right).getByTestId('watch-identity'),
+      within(right).getByTestId('axis-selectors'),
       within(right).getByTestId('offer-row'),
       within(right).getByTestId('consult-label'),
-      within(right).getByTestId('axis-selectors'),
       within(right).getByRole('heading', { name: 'Descrição' }),
       within(right).getByRole('link', { name: 'Compartilhar' }),
     ]

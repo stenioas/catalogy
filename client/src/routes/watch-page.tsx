@@ -99,21 +99,21 @@ function ProductTitle({ title }: { title: string }) {
 }
 
 function ProductIdentity({
-  state,
-  availabilityStatus,
-  unavailable,
   title,
+  condition,
+  variants,
 }: {
-  state: NonNullable<Variant['state']>
-  availabilityStatus: 'available' | 'coming_soon' | 'on_order'
-  unavailable: boolean
   title: string
+  condition: ReactNode
+  variants: ReactNode
 }) {
   return <div data-testid="watch-identity" className="flex w-full min-w-0 flex-col items-start gap-0.5 max-md:contents md:gap-2">
-    <div data-testid="watch-metadata" className="max-md:order-3 max-md:mt-2">
-      <ProductConditionLine state={state} availabilityStatus={availabilityStatus} unavailable={unavailable} />
-    </div>
     <ProductTitle title={title} />
+    {variants ?? (
+      <div data-testid="watch-metadata" className="max-md:order-3 max-md:mt-2">
+        {condition}
+      </div>
+    )}
   </div>
 }
 
@@ -134,7 +134,6 @@ function ProductCommerce({
   onOrder: boolean
   commerceRef: (element: HTMLDivElement | null) => void
   share?: ReactNode
-  beforeShare?: ReactNode
 }) {
   const priceNode = onOrder
     ? <OnOrderPriceNote />
@@ -142,14 +141,13 @@ function ProductCommerce({
   const stacked = (
     <>
       <div className="min-w-0 flex-1">{priceNode}</div>
-      {beforeShare}
       {share}
     </>
   )
   return <div ref={commerceRef} data-testid="watch-commerce" className="flex w-full min-w-0 flex-col items-start gap-1 md:gap-2">
     {offers.length > 0 ? <OfferRow offers={offers} /> : null}
     {onOrder ? (
-      share === undefined && beforeShare === undefined ? priceNode : (
+      share === undefined ? priceNode : (
         <div className={offerWithShareClassName}>{stacked}</div>
       )
     ) : (
@@ -261,26 +259,31 @@ function WatchColumn({
     listingSpecifications={listingSpecifications}
     className="max-md:order-8 max-md:mt-8"
   />
-  const identity = (
-    <ProductIdentity
+  const condition = (
+    <ProductConditionLine
       state={activeState}
       availabilityStatus={availabilityStatus}
       unavailable={availabilityLabel === 'Indisponível'}
-      title={title}
     />
   )
   const axes = selectors.length > 0
     ? (
-      <AxisSelectors
-        selectors={selectors}
-        activeV={activeV}
-        activeState={activeState}
-        activeAvailability={activeAvailability}
-        onSelect={onSelect}
-        slug={slug}
-      />
+      <div data-testid="watch-variants" className="w-full min-w-0 max-md:order-3 max-md:mt-2">
+        <AxisSelectors
+          selectors={selectors}
+          activeV={activeV}
+          activeState={activeState}
+          activeAvailability={activeAvailability}
+          onSelect={onSelect}
+          slug={slug}
+          labelEnd={condition}
+        />
+      </div>
     )
     : null
+  const identity = (
+    <ProductIdentity title={title} condition={condition} variants={axes} />
+  )
   const share = <ProductShareButton slug={slug} title={title} href={shareHref} />
 
   return <>
@@ -298,7 +301,6 @@ function WatchColumn({
           onOrder={onOrder}
           commerceRef={setCommerceTarget}
           share={isDesktop ? undefined : <div className="pt-2">{share}</div>}
-          beforeShare={isDesktop ? undefined : axes}
         />
         return isDesktop ? (
         <div className="grid w-full min-w-0 grid-cols-[fit-content(calc(476px+3.5rem+0.75rem))_minmax(220px,1fr)] items-start gap-6">
@@ -309,7 +311,6 @@ function WatchColumn({
           <div data-testid="watch-right-column" className="flex min-w-0 flex-col gap-4">
             {identity}
             {commerce}
-            {axes}
             <TextSection title="Descrição" value={description} />
             {share}
           </div>

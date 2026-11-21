@@ -263,7 +263,7 @@ describe('AxisSelectors image and text (OSC-41, OSC-42, OSC-43, OSC-44, OSC-45)'
     ] as const) {
       const group = groupByAxis(axisId)
       const label = within(group).getByText(line)
-      const control = label.nextElementSibling
+      const control = label.parentElement?.nextElementSibling ?? null
       expect(group.className).toMatch(/flex-col/)
       expect(control).not.toBeNull()
       expect(label.compareDocumentPosition(control!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
