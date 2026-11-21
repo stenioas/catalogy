@@ -1,0 +1,65 @@
+{
+  "slug": "estojo-rigido-relogio",
+  "title": "Estojo Rígido para Relógio",
+  "description": "Estojo rígido para armazenamento de relógios e joias, com almofada macia e forro de veludo para proteger as superfícies contra arranhões. Fabricado em materiais mistos. Vendido por unidade.",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "1pc-black",
+          "value": "Black 1pc"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "main-listing",
+      "images": [
+        "estojo-rigido-relogio-1.webp",
+        "estojo-rigido-relogio-2.webp",
+        "estojo-rigido-relogio-3.webp",
+        "estojo-rigido-relogio-4.webp",
+        "estojo-rigido-relogio-5.webp",
+        "estojo-rigido-relogio-6.webp",
+        "estojo-rigido-relogio-7.webp",
+        "estojo-rigido-relogio-8.webp",
+        "estojo-rigido-relogio-9.webp",
+        "estojo-rigido-relogio-10.webp",
+        "estojo-rigido-relogio-11.webp",
+        "estojo-rigido-relogio-12.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "1pc-black"
+            }
+          ],
+          "availabilityStatus": "available",
+          "mainImage": "estojo-rigido-relogio-1.webp",
+          "price": 19.9,
+          "listPrice": 34.9,
+          "offers": [
+            {
+              "text": "Black Friday",
+              "background": "#000000",
+              "color": "#FFFFFF",
+              "icon": "Gift"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
