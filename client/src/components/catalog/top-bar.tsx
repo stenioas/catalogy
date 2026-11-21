@@ -1,6 +1,6 @@
 import { ArrowLeft } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react'
+import { Link, type LinkProps } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 
@@ -12,6 +12,39 @@ export const TOP_BAR_LOGO_SRC = '/achavio_logo.webp'
 
 export type TopBarProps = {
   catalogHref?: string
+  /** When set, a plain click returns through history instead of opening a new catalog entry. */
+  onReturn?: () => void
+}
+
+function isPlainClick(event: MouseEvent<HTMLAnchorElement>): boolean {
+  return event.button === 0 && !event.metaKey && !event.altKey && !event.ctrlKey && !event.shiftKey
+}
+
+function CatalogReturnLink({
+  href,
+  onReturn,
+  onClick,
+  children,
+  ...props
+}: {
+  href: string
+  onReturn?: () => void
+  children: ReactNode
+} & Omit<LinkProps, 'to'>) {
+  return (
+    <Link
+      to={href}
+      {...props}
+      onClick={(event) => {
+        onClick?.(event)
+        if (event.defaultPrevented || onReturn === undefined || !isPlainClick(event)) return
+        event.preventDefault()
+        onReturn()
+      }}
+    >
+      {children}
+    </Link>
+  )
 }
 
 const logoSlotClassName = 'm-0 flex min-w-0 items-center justify-self-center'
@@ -55,7 +88,7 @@ function useHideOnScrollDown() {
   return hidden
 }
 
-export function TopBar({ catalogHref }: TopBarProps) {
+export function TopBar({ catalogHref, onReturn }: TopBarProps) {
   const hidden = useHideOnScrollDown()
 
   return (
@@ -78,18 +111,18 @@ export function TopBar({ catalogHref }: TopBarProps) {
                 variant="ghost"
                 className="size-11 shrink-0 rounded-full text-inherit hover:bg-[color-mix(in_srgb,var(--ink)_8%,transparent)] hover:text-inherit"
               >
-                <Link to={catalogHref} aria-label="Voltar">
+                <CatalogReturnLink href={catalogHref} onReturn={onReturn} aria-label="Voltar">
                   <ArrowLeft aria-hidden="true" />
-                </Link>
+                </CatalogReturnLink>
               </Button>
             ) : (
               <InstallMenu />
             )}
           </div>
           {catalogHref ? (
-            <Link to={catalogHref} className={logoSlotClassName}>
+            <CatalogReturnLink href={catalogHref} className={logoSlotClassName}>
               {logo}
-            </Link>
+            </CatalogReturnLink>
           ) : (
             <p className={logoSlotClassName}>{logo}</p>
           )}

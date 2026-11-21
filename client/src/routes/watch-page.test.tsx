@@ -1361,7 +1361,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByRole('button', { name: 'Abrir galeria na foto 3' })).toBeDefined()
     expect(screen.getByRole('img', { name: 'Capa' }).getAttribute('src')).toBe('/catalog/products/capa/img/preto.png')
     expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 30,00')
-    expect(router.state.location.state).toEqual({ section: 'available' })
+    expect(router.state.location.state).toEqual({ fromCatalog: true, section: 'available' })
     expect(screen.getByRole('link', { name: 'Voltar' }).getAttribute('href')).toBe('/?section=available')
     expect(screen.getByRole('link', { name: 'Compartilhar' }).getAttribute('href')).toBe(
       `https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Capa Preto. Novo, Disponível. ${window.location.origin}/product/capa/anuncio?v=preto`)}`,

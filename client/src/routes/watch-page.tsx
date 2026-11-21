@@ -41,11 +41,18 @@ export function catalogReturnHref(state: unknown): string {
   return query === '' ? '/' : `/?${query}`
 }
 
-function stateAfterVariantChange(state: unknown): { section?: string; filter?: string } | undefined {
+function cameFromCatalog(state: unknown): boolean {
+  return state !== null && typeof state === 'object' && 'fromCatalog' in state
+    && (state as { fromCatalog?: unknown }).fromCatalog === true
+}
+
+function stateAfterVariantChange(state: unknown): { fromCatalog?: true; section?: string; filter?: string } | undefined {
+  const fromCatalog = cameFromCatalog(state)
   const section = readStateField(state, 'section')
   const filter = readStateField(state, 'filter')
-  if (section === undefined && filter === undefined) return undefined
+  if (!fromCatalog && section === undefined && filter === undefined) return undefined
   return {
+    ...(fromCatalog ? { fromCatalog: true } : {}),
     ...(section === undefined ? {} : { section }),
     ...(filter === undefined ? {} : { filter }),
   }
@@ -347,6 +354,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   const navigate = useNavigate()
   const location = useLocation()
   const catalogHref = catalogReturnHref(location.state)
+  const returnInHistory = cameFromCatalog(location.state) ? () => navigate(-1) : undefined
   const requestedV = params.get('v')
   const resolutionQuery = {
     v: requestedV,
@@ -362,7 +370,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
   if (view.missing || product === undefined || listing === undefined) {
     return (
       <>
-        <TopBar catalogHref={catalogHref} />
+        <TopBar catalogHref={catalogHref} onReturn={returnInHistory} />
         <main className="max-w-full min-w-0 overflow-x-clip">
           <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pb-8 text-left md:py-8">
             <p className="m-0 text-[var(--ink-primary)]">{MISSING_WATCH_MESSAGE}</p>
@@ -400,7 +408,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
 
   return (
     <>
-      <TopBar catalogHref={catalogHref} />
+      <TopBar catalogHref={catalogHref} onReturn={returnInHistory} />
       <main className="max-w-full min-w-0 overflow-x-clip">
         <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pb-8 text-left md:py-8">
           <WatchColumn

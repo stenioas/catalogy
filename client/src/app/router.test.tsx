@@ -175,6 +175,27 @@ describe('troca entre vitrine e produto', () => {
     expectRouteEnter()
   })
 
+  it('volta pelo botão sem levar a vitrine ao topo', () => {
+    setup()
+    const scrollTo = vi.mocked(window.scrollTo)
+    fireEvent.click(screen.getAllByTestId('watch-card-link')[0])
+    expect(scrollTo).toHaveBeenCalledWith(0, 0)
+    scrollTo.mockClear()
+    fireEvent.click(screen.getByRole('link', { name: 'Voltar' }))
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+    expect(scrollTo).not.toHaveBeenCalled()
+  })
+
+  it('a logo abre a vitrine do início', () => {
+    setup()
+    const scrollTo = vi.mocked(window.scrollTo)
+    fireEvent.click(screen.getAllByTestId('watch-card-link')[0])
+    scrollTo.mockClear()
+    fireEvent.click(screen.getByRole('link', { name: 'Achavio' }))
+    expect(screen.getByTestId('catalog-page-column')).toBeDefined()
+    expect(scrollTo).toHaveBeenCalledWith(0, 0)
+  })
+
   it('mantém o filtro escolhido ao voltar do produto', () => {
     setup()
     fireEvent.click(screen.getByRole('button', { name: 'Usados' }))
