@@ -39,7 +39,7 @@ describe('manifest do Achavio', () => {
           purpose: 'any',
         },
         {
-          src: '/icons/icon-512.png',
+          src: '/icons/icon-512-maskable.png',
           sizes: '512x512',
           type: 'image/png',
           purpose: 'maskable',
@@ -48,6 +48,7 @@ describe('manifest do Achavio', () => {
     })
     expect(pngSize(join(clientRoot, 'public/icons/icon-192.png'))).toEqual([192, 192])
     expect(pngSize(join(clientRoot, 'public/icons/icon-512.png'))).toEqual([512, 512])
+    expect(pngSize(join(clientRoot, 'public/icons/icon-512-maskable.png'))).toEqual([512, 512])
     expect(pngSize(join(clientRoot, 'public/icons/apple-touch-icon.png'))).toEqual([
       180, 180,
     ])
