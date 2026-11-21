@@ -57,7 +57,7 @@ describe('manifest do Achavio', () => {
     const html = readFileSync(join(clientRoot, 'index.html'), 'utf8')
     expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest" />')
     expect(html).toContain(
-      '<link rel="icon" href="/icons/icon-192.png" type="image/png" />',
+      '<link rel="icon" href="/icons/favicon.png" type="image/png" />',
     )
     expect(html).toContain(
       '<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />',

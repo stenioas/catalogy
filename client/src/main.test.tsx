@@ -63,7 +63,7 @@ describe('entrada da aplicação sem vendedor (SV-02, SV-03, SV-04, SV-05, SV-11
       /<script[^>]+type="module"[^>]+src="\/src\/main\.tsx"/,
     )
     expect(html).toMatch(
-      /<link[^>]+rel="icon"[^>]+href="\/icons\/icon-192\.png"[^>]+type="image\/png"/,
+      /<link[^>]+rel="icon"[^>]+href="\/icons\/favicon\.png"[^>]+type="image\/png"/,
     )
   })
 
