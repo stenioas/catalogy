@@ -413,6 +413,8 @@ T12 → T13
 
 ### T12: Montar as pílulas pela etiqueta
 
+**Status**: done
+
 **What**: Trocar a pílula fixa de 20% pela ordem Todos, etiquetas filtráveis, Feminino, Masculino, Novos, Openbox e Usados.
 **Where**: `client/src/routes/catalog-page.tsx`
 **Depends on**: T8
@@ -426,11 +428,11 @@ T12 → T13
 
 **Done when**:
 
-- [ ] A fileira mostra Todos, Black Friday, acima 20% e os filtros fixos restantes
-- [ ] Pílula sem card fica desabilitada
-- [ ] `?filter=discount-20` e `?filter=black-friday` filtram
-- [ ] Filtro desconhecido deixa Todos pressionado e não muda a query
-- [ ] Gate check passes: `pnpm --filter client exec vitest run src/routes/catalog-page.test.tsx`
+- [x] A fileira mostra Todos, Black Friday, acima 20% e os filtros fixos restantes
+- [x] Pílula sem card fica desabilitada
+- [x] `?filter=discount-20` e `?filter=black-friday` filtram
+- [x] Filtro desconhecido deixa Todos pressionado e não muda a query
+- [x] Gate check passes: `pnpm --filter client exec vitest run src/routes/catalog-page.test.tsx`
 
 **Tests**: unit
 **Gate**: quick

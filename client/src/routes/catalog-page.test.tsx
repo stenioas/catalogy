@@ -437,7 +437,7 @@ describe('CatalogPage filters', () => {
     mockProductsRef.current = []
   })
 
-  it('renders the seven filters in order and includes on-order cards in Todos', () => {
+  it('LBL-35 LBL-36 LBL-37: lists Todos, filterable labels, then fixed filters with shortText and text', () => {
     mockProductsRef.current = [
       catalogProduct({
         slug: 'encomenda',
@@ -454,6 +454,7 @@ describe('CatalogPage filters', () => {
     const group = screen.getByRole('group', { name: 'Filtros' })
     expect(within(group).getAllByRole('button').map((button) => button.textContent)).toEqual([
       'Todos',
+      'Black Friday',
       'acima 20%',
       'Feminino',
       'Masculino',
@@ -495,7 +496,38 @@ describe('CatalogPage filters', () => {
     expect(router.state.location.search).toBe('?filter=female')
   })
 
-  it('filters discount at twenty percent and disables a filter without cards', () => {
+  it('LBL-38: omits the legacy fixed discount pill label', () => {
+    mockProductsRef.current = [catalogProduct({ slug: 'one', title: 'One', listings: [listing('one')] })]
+    renderHome('/')
+    expect(screen.queryByRole('button', { name: '20%+ de desconto' })).toBeNull()
+  })
+
+  it('LBL-39: ?filter=black-friday lists only cards whose resolved campaign is black-friday', () => {
+    mockProductsRef.current = [
+      catalogProduct({
+        slug: 'with-campaign',
+        title: 'Com BF',
+        listings: [listing('with-campaign', { availabilityStatus: 'available' })],
+      }),
+      catalogProduct({
+        slug: 'without-campaign',
+        title: 'Sem BF',
+        listings: [
+          {
+            ...listing('without-campaign', { availabilityStatus: 'available' }),
+            disabledLabels: ['black-friday'],
+          },
+        ],
+      }),
+    ]
+    const router = renderHome('/?filter=black-friday')
+    expect(screen.getByRole('heading', { name: 'Com BF' })).toBeDefined()
+    expect(screen.queryByRole('heading', { name: 'Sem BF' })).toBeNull()
+    expect(router.state.location.search).toBe('?filter=black-friday')
+    expect(screen.getByRole('button', { name: 'Black Friday', pressed: true })).toBeDefined()
+  })
+
+  it('LBL-40 LBL-42: filters discount at twenty percent and disables a filter without cards', () => {
     mockProductsRef.current = [
       catalogProduct({
         slug: 'discount',

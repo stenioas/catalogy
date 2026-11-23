@@ -1,3 +1,4 @@
+import type { Label } from '@catalogo/shared'
 import { activeFilter, filterHasCards, homeCards } from '@catalogo/shared'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
@@ -7,15 +8,23 @@ import { TopBar } from '../components/catalog/top-bar'
 import { WatchCard } from '../components/catalog/watch-card'
 import { Button } from '../components/ui/button'
 
-const FILTERS = [
-  { id: 'all', label: 'Todos' },
-  { id: 'discount-20', label: 'acima 20%' },
+const FIXED_FILTERS = [
   { id: 'female', label: 'Feminino' },
   { id: 'male', label: 'Masculino' },
   { id: 'new', label: 'Novos' },
   { id: 'openbox', label: 'Openbox' },
   { id: 'used', label: 'Usados' },
 ] as const
+
+export function buildFilterPills(labels: Label[]) {
+  const labelPills = labels
+    .filter((label) => label.enabled && label.filterable)
+    .map((label) => ({
+      id: label.id,
+      label: label.type === 'campaign' ? label.shortText : label.text,
+    }))
+  return [{ id: 'all', label: 'Todos' }, ...labelPills, ...FIXED_FILTERS]
+}
 
 const resultsEnterClass =
   'motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-200'
@@ -86,10 +95,11 @@ export function CatalogPage() {
       ? 'all'
       : requested
   const cards = homeCards(catalogProducts, resolved, catalogLabels)
+  const filters = buildFilterPills(catalogLabels)
   const eagerCards = eagerCardCount()
   const emptyText = cards.length === 0 ? 'Não temos nenhum anúncio ativo.' : null
 
-  function selectFilter(id: (typeof FILTERS)[number]['id']) {
+  function selectFilter(id: string) {
     if (id !== 'all' && !filterHasCards(catalogProducts, id, catalogLabels)) return
     if (id === resolved) return
     setParams((prev) => {
@@ -107,7 +117,7 @@ export function CatalogPage() {
         <div data-testid="catalog-page-column" className="catalog-column catalog-vitrine py-2 md:py-4">
           <div className="mb-2 md:mb-6">
             <div role="group" aria-label="Filtros" className="catalog-filters flex flex-nowrap gap-2 overflow-x-auto px-1">
-              {FILTERS.map((filter) => (
+              {filters.map((filter) => (
                 <Button
                   key={filter.id}
                   type="button"
