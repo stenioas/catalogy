@@ -11,7 +11,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
-import { ProductSchema } from '@catalogo/shared'
+import { parseLabels, ProductSchema } from '@catalogo/shared'
 import {
   isPublishedCatalogFile,
   normalizeProductJson,
@@ -725,6 +725,65 @@ describe('initial catalog in public/', () => {
     'public',
     'catalog',
   )
+
+  describe('published labels.json (LBL-10, LBL-11, LBL-12)', () => {
+    function publishedLabels() {
+      return parseLabels(
+        JSON.parse(readFileSync(join(catalogDir, 'labels.json'), 'utf8')),
+      )
+    }
+
+    it('LBL-10: ships black-friday and discount-20 enabled, filterable, with Gift and #000000 on #FFFFFF', () => {
+      const labels = publishedLabels()
+      expect(labels).toHaveLength(2)
+
+      const campaign = labels.find((label) => label.id === 'black-friday')
+      expect(campaign).toMatchObject({
+        type: 'campaign',
+        enabled: true,
+        filterable: true,
+        icon: 'Gift',
+        background: '#000000',
+        color: '#FFFFFF',
+      })
+
+      const offer = labels.find((label) => label.id === 'discount-20')
+      expect(offer).toMatchObject({
+        type: 'offer',
+        enabled: true,
+        filterable: true,
+        icon: 'Gift',
+        background: '#000000',
+        color: '#FFFFFF',
+      })
+    })
+
+    it('LBL-11: black-friday text and shortText are Black Friday', () => {
+      const campaign = publishedLabels().find(
+        (label) => label.id === 'black-friday',
+      )
+      expect(campaign).toMatchObject({
+        type: 'campaign',
+        text: 'Black Friday',
+        shortText: 'Black Friday',
+      })
+    })
+
+    it('LBL-12: discount-20 is discount priority 1, text acima 20%, trigger discount-at-least at 20%', () => {
+      const offer = publishedLabels().find((label) => label.id === 'discount-20')
+      expect(offer).toMatchObject({
+        type: 'offer',
+        category: 'discount',
+        priority: 1,
+        text: 'acima 20%',
+        trigger: { kind: 'discount-at-least', percent: 20 },
+      })
+    })
+
+    it('LBL-10: readLabels loads the published catalog without schema errors', () => {
+      expect(readLabels(catalogDir)).toEqual(publishedLabels())
+    })
+  })
 
   it('does not keep sellers.json in the public catalog', () => {
     expect(existsSync(join(catalogDir, 'sellers.json'))).toBe(false)

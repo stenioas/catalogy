@@ -1,0 +1,30 @@
+[
+  {
+    "id": "black-friday",
+    "enabled": true,
+    "type": "campaign",
+    "text": "Black Friday",
+    "shortText": "Black Friday",
+    "icon": "Gift",
+    "background": "#000000",
+    "color": "#FFFFFF",
+    "filterable": true
+  },
+  {
+    "id": "discount-20",
+    "enabled": true,
+    "type": "offer",
+    "category": "discount",
+    "description": "",
+    "priority": 1,
+    "text": "acima 20%",
+    "icon": "Gift",
+    "background": "#000000",
+    "color": "#FFFFFF",
+    "filterable": true,
+    "trigger": {
+      "kind": "discount-at-least",
+      "percent": 20
+    }
+  }
+]

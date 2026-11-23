@@ -203,6 +203,8 @@ T12 → T13
 
 ### T5: Publicar o cadastro inicial
 
+**Status**: done
+
 **What**: Gravar `black-friday` e `discount-20` em `labels.json` com os textos, cores e gatilho da spec.
 **Where**: `client/public/catalog/labels.json`
 **Depends on**: T4
@@ -216,10 +218,10 @@ T12 → T13
 
 **Done when**:
 
-- [ ] O arquivo tem as duas etiquetas habilitadas e filtráveis
-- [ ] `text` e `shortText` de `black-friday` são `Black Friday`
-- [ ] `discount-20` tem texto `acima 20%`, prioridade 1 e percent 20
-- [ ] Gate check passes: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
+- [x] O arquivo tem as duas etiquetas habilitadas e filtráveis
+- [x] `text` e `shortText` de `black-friday` são `Black Friday`
+- [x] `discount-20` tem texto `acima 20%`, prioridade 1 e percent 20
+- [x] Gate check passes: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
 
 **Tests**: unit
 **Gate**: quick
