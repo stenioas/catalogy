@@ -1017,9 +1017,14 @@ describe('homeCards filters', () => {
   it('treats an absent or unknown filter as Todos and reports whether a filter has cards', () => {
     const product = filteredProduct('unisex', [filteredVariant({ state: 'used' })])
 
-    expect(activeFilter(null)).toBe('all')
-    expect(activeFilter('unknown')).toBe('all')
-    expect(homeCards([product], 'unknown', [])).toEqual(homeCards([product], null, []))
+    expect(activeFilter(null, initialLabels)).toBe('all')
+    expect(activeFilter('unknown', initialLabels)).toBe('all')
+    expect(activeFilter('discount', initialLabels)).toBe('all')
+    expect(activeFilter('discount-20', initialLabels)).toBe('discount-20')
+    expect(activeFilter('black-friday', initialLabels)).toBe('black-friday')
+    expect(homeCards([product], 'unknown', initialLabels)).toEqual(
+      homeCards([product], null, initialLabels),
+    )
     expect(filterHasCards([product], 'used', [])).toBe(true)
     expect(filterHasCards([product], 'new', [])).toBe(false)
   })
@@ -1053,9 +1058,9 @@ describe('homeCards filters', () => {
       slug: 'on-order',
     }
 
-    expect(homeCards([passing, below, onOrder], 'discount', []).map((card) => card.slug)).toEqual([
-      'watch-unisex',
-    ])
+    expect(
+      homeCards([passing, below, onOrder], 'discount-20', initialLabels).map((card) => card.slug),
+    ).toEqual(['watch-unisex'])
   })
 
   it('matches female and male audiences through unisex, excluding child and missing audience', () => {
@@ -1180,9 +1185,140 @@ describe('homeCards filters', () => {
       }),
     ])
 
-    expect(homeCards([product], 'discount', [])[0]?.price).toBe(80)
+    expect(homeCards([product], 'discount-20', initialLabels)[0]?.price).toBe(80)
     expect(homeCards([product], 'openbox', [])[0]?.price).toBe(40)
     expect(homeCards([product], 'used', [])[0]?.price).toBe(60)
+  })
+
+  it('LBL-39: filter=black-friday lists only cards whose resolved campaign is black-friday', () => {
+    const withCampaign = {
+      ...filteredProduct('unisex', [
+        filteredVariant({
+          availabilityStatus: 'available',
+          price: 100,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'with-campaign',
+    }
+    const withoutCampaign = {
+      ...filteredProduct('male', [
+        filteredVariant({
+          availabilityStatus: 'available',
+          price: 100,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'without-campaign',
+      listings: [
+        {
+          id: 'main-listing',
+          images: ['cover.jpg', 'variant.jpg'],
+          disabledLabels: ['black-friday'],
+          variants: [
+            filteredVariant({
+              availabilityStatus: 'available',
+              price: 100,
+              listPrice: 100,
+            }),
+          ],
+        },
+      ],
+    }
+
+    expect(
+      homeCards([withCampaign, withoutCampaign], 'black-friday', initialLabels).map((card) => card.slug),
+    ).toEqual(['with-campaign'])
+  })
+
+  it('LBL-40: filter=discount-20 lists only cards where discount-20 is the winning offer', () => {
+    const withOffer = {
+      ...filteredProduct('unisex', [
+        filteredVariant({
+          availabilityStatus: 'available',
+          price: 80,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'with-offer',
+    }
+    const belowThreshold = {
+      ...filteredProduct('male', [
+        filteredVariant({
+          availabilityStatus: 'available',
+          price: 80.1,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'below-threshold',
+    }
+    const offerOptOut = {
+      ...filteredProduct('female', [
+        filteredVariant({
+          availabilityStatus: 'available',
+          price: 80,
+          listPrice: 100,
+          disabledLabels: ['discount-20'],
+        }),
+      ]),
+      slug: 'offer-opt-out',
+    }
+
+    expect(
+      homeCards([withOffer, belowThreshold, offerOptOut], 'discount-20', initialLabels).map(
+        (card) => card.slug,
+      ),
+    ).toEqual(['with-offer'])
+  })
+
+  it('LBL-41: picks the cheapest variant that matches a label filter', () => {
+    const product = filteredProduct('unisex', [
+      filteredVariant({
+        state: 'new',
+        availabilityStatus: 'available',
+        price: 80,
+        listPrice: 100,
+      }),
+      filteredVariant({
+        state: 'used',
+        availabilityStatus: 'available',
+        price: 70,
+        listPrice: 100,
+      }),
+      filteredVariant({
+        state: 'openbox',
+        availabilityStatus: 'available',
+        price: 50,
+        listPrice: 100,
+      }),
+    ])
+
+    expect(homeCards([product], 'discount-20', initialLabels)[0]?.price).toBe(50)
+  })
+
+  it('LBL-43: an unknown label id in the query falls back to Todos without extra filtering', () => {
+    const withOffer = filteredProduct('unisex', [
+      filteredVariant({
+        availabilityStatus: 'available',
+        price: 80,
+        listPrice: 100,
+      }),
+    ])
+    const withoutOffer = {
+      ...filteredProduct('male', [
+        filteredVariant({
+          availabilityStatus: 'available',
+          price: 100,
+          listPrice: 100,
+        }),
+      ]),
+      slug: 'full-price',
+    }
+
+    expect(activeFilter('not-a-label', initialLabels)).toBe('all')
+    expect(homeCards([withOffer, withoutOffer], 'not-a-label', initialLabels).map((card) => card.slug)).toEqual(
+      homeCards([withOffer, withoutOffer], null, initialLabels).map((card) => card.slug),
+    )
   })
 
   it('uses the cover for equal lowest prices and for a pool without price', () => {

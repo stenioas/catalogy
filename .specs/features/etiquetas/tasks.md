@@ -291,6 +291,8 @@ T12 → T13
 
 ### T8: Filtrar por id de etiqueta
 
+**Status**: done
+
 **What**: Trocar o filtro fixo `discount` por ids de etiquetas habilitadas e filtráveis, mantendo a variante mais barata.
 **Where**: `shared/src/catalog/listings.ts`
 **Depends on**: T7
@@ -304,11 +306,11 @@ T12 → T13
 
 **Done when**:
 
-- [ ] `filter=discount-20` lista só quem tem essa oferta vencedora
-- [ ] `filter=black-friday` lista só quem tem essa campanha
-- [ ] Filtro desconhecido devolve `all` sem outra regra
-- [ ] O card do filtro é a variante mais barata entre as que passam
-- [ ] Gate check passes: `pnpm --filter @catalogo/shared test`
+- [x] `filter=discount-20` lista só quem tem essa oferta vencedora
+- [x] `filter=black-friday` lista só quem tem essa campanha
+- [x] Filtro desconhecido devolve `all` sem outra regra
+- [x] O card do filtro é a variante mais barata entre as que passam
+- [x] Gate check passes: `pnpm --filter @catalogo/shared test`
 
 **Tests**: unit
 **Gate**: quick

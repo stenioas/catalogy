@@ -201,11 +201,11 @@ O dono do catálogo precisa ligar e desligar campanha e ofertas num único cadas
 | LBL-36 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
 | LBL-37 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
 | LBL-38 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
-| LBL-39 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
-| LBL-40 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
-| LBL-41 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
+| LBL-39 | P1: Filtro pelas etiquetas | Phase 3 | Done |
+| LBL-40 | P1: Filtro pelas etiquetas | Phase 3 | Done |
+| LBL-41 | P1: Filtro pelas etiquetas | Phase 3 | Done |
 | LBL-42 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
-| LBL-43 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
+| LBL-43 | P1: Filtro pelas etiquetas | Phase 3 | Done |
 | LBL-44 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
 
 **Coverage:** 44 total, 44 mapped to tasks, 0 unmapped.

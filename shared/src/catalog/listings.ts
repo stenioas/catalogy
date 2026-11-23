@@ -1,4 +1,4 @@
-import { compareTitles, truncateReais } from '../money.ts'
+import { compareTitles } from '../money.ts'
 import type { Listing, Product, Variant } from '../schemas/product.ts'
 import {
   resolveLabels,
@@ -434,32 +434,58 @@ function legacyHomeCards(
   return cards.map(({ listingIndex: _listingIndex, ...card }) => card)
 }
 
-const FILTER_IDS = ['all', 'discount', 'female', 'male', 'new', 'openbox', 'used'] as const
+const FIXED_FILTER_IDS = ['all', 'female', 'male', 'new', 'openbox', 'used'] as const
 
-export type FilterId = (typeof FILTER_IDS)[number]
+type FixedFilterId = (typeof FIXED_FILTER_IDS)[number]
 
-export function activeFilter(filter: string | null): FilterId {
-  return FILTER_IDS.some((candidate) => candidate === filter) ? (filter as FilterId) : 'all'
+export type FilterId = FixedFilterId | (string & {})
+
+function isFixedFilterId(value: string): value is FixedFilterId {
+  return FIXED_FILTER_IDS.some((candidate) => candidate === value)
 }
 
-function matchesDiscount(variant: Variant): boolean {
-  if (
-    variant.price === undefined ||
-    variant.listPrice === undefined ||
-    effectiveAvailability(variant) === 'on_order'
-  ) {
-    return false
+function isFilterableLabelId(filter: string, labels: Label[]): boolean {
+  return labels.some(
+    (label) => label.id === filter && label.enabled && label.filterable,
+  )
+}
+
+export function activeFilter(filter: string | null, labels: Label[] = []): FilterId {
+  if (filter === null || filter === 'all') return 'all'
+  if (isFixedFilterId(filter) && filter !== 'all') return filter
+  if (isFilterableLabelId(filter, labels)) return filter
+  return 'all'
+}
+
+function variantMatchesResolvedLabel(
+  listing: Listing,
+  variant: Variant,
+  filter: string,
+  labels: Label[],
+): boolean {
+  const resolved = resolveLabels(labels, listing, variant)
+  const label = labels.find((item) => item.id === filter)
+  if (label?.type === 'campaign') {
+    return resolved.campaign?.id === filter
   }
-  const price = truncateReais(variant.price)
-  const listPrice = truncateReais(variant.listPrice)
-  return (listPrice - price) / listPrice >= 0.2
+  if (label?.type === 'offer') {
+    return resolved.offers.some((offer) => offer.id === filter)
+  }
+  return false
 }
 
-function variantMatchesFilter(variant: Variant, filter: FilterId): boolean {
+function variantMatchesFilter(
+  listing: Listing,
+  variant: Variant,
+  filter: FilterId,
+  labels: Label[],
+): boolean {
   if (!canVariantRepresentCard(variant)) return false
-  if (filter === 'discount') return matchesDiscount(variant)
   if (filter === 'new' || filter === 'openbox' || filter === 'used') {
     return effectiveState(variant) === filter
+  }
+  if (isFilterableLabelId(filter, labels)) {
+    return variantMatchesResolvedLabel(listing, variant, filter, labels)
   }
   return true
 }
@@ -485,13 +511,15 @@ export function homeCards(
   ) {
     return legacyHomeCards(products, filter, labels)
   }
-  const resolved = activeFilter(filter)
+  const resolved = activeFilter(filter, labels)
   const cards: SortableCard[] = []
   for (const product of products) {
     if (!productMatchesFilter(product, resolved)) continue
     product.listings.forEach((listing, listingIndex) => {
       if (!canGenerateCard(listing)) return
-      const pool = listing.variants.filter((variant) => variantMatchesFilter(variant, resolved))
+      const pool = listing.variants.filter((variant) =>
+        variantMatchesFilter(listing, variant, resolved, labels),
+      )
       if (pool.length === 0) return
       const priced = pool.filter((variant) => variant.price !== undefined)
       if (priced.length === 0) {
