@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Listing, Product, Variant } from '../schemas/product.ts'
+import { parseLabels } from './labels.ts'
 import * as listingModule from './listings.ts'
 import * as shared from '../index.ts'
 import {
@@ -261,6 +262,35 @@ function variantOf(price: number, extras: Partial<Variant> = {}): Variant {
   }
 }
 
+const initialLabels = parseLabels([
+  {
+    id: 'black-friday',
+    enabled: true,
+    type: 'campaign',
+    text: 'Black Friday',
+    shortText: 'Black Friday',
+    icon: 'Gift',
+    background: '#000000',
+    color: '#FFFFFF',
+    filterable: true,
+  },
+  {
+    id: 'discount-20',
+    enabled: true,
+    type: 'offer',
+    category: 'discount',
+    description: 'Desconto mínimo',
+    priority: 1,
+    text: 'acima 20%',
+    icon: 'Gift',
+    background: '#000000',
+    color: '#FFFFFF',
+    filterable: true,
+    trigger: { kind: 'discount-at-least', percent: 20 },
+  },
+])
+
+
 function listingOf(id: string, extras: Partial<Listing> = {}): Listing {
   return {
     id,
@@ -348,7 +378,7 @@ describe('activeSection', () => {
       productOf('pronto', 'Pronto', [listingOf('pronto')]),
     ]
     expect(activeSection(products, 'on-order')).toBe('on-order')
-    expect(homeCards(products, 'on-order')).toEqual([])
+    expect(homeCards(products, 'on-order', [])).toEqual([])
     expect(homeEmptyText(products, 'on-order')).toBeNull()
     expect(activeSection(products, 'coming-soon')).toBe('coming-soon')
     expect(activeSection(products, 'all')).toBe('all')
@@ -395,7 +425,6 @@ describe('homeCards', () => {
             variantOf(12, {
               mainImage: 'barato.jpg',
               listPrice: 30,
-              offers: [cheapOffer],
               axes: [{ axisId: 'cor', valueId: 'azul' }],
             }),
           ],
@@ -406,7 +435,7 @@ describe('homeCards', () => {
   }
 
   it('chooses the lowest price among variants whose orderable is not false', () => {
-    const available = homeCards([pricedListing('available')], 'available')
+    const available = homeCards([pricedListing('available')], 'available', [])
     expect(available).toEqual([
       {
         slug: 'seculus',
@@ -415,7 +444,8 @@ describe('homeCards', () => {
         image: 'barato.jpg',
         price: 12,
         listPrice: 30,
-        offers: [cheapOffer],
+        campaign: null,
+        offers: [],
         availabilityStatus: 'available',
         statusLabel: 'Disponível',
         path: '/product/seculus/novo?v=azul',
@@ -424,7 +454,7 @@ describe('homeCards', () => {
     expect(available[0].title).not.toContain('Az')
     expect(available[0].title).not.toContain('Preto fosco')
 
-    expect(homeCards([pricedListing('coming_soon')], 'coming-soon')).toEqual([
+    expect(homeCards([pricedListing('coming_soon')], 'coming-soon', [])).toEqual([
       {
         slug: 'seculus',
         listingId: 'breve',
@@ -432,7 +462,8 @@ describe('homeCards', () => {
         image: 'barato.jpg',
         price: 12,
         listPrice: 30,
-        offers: [cheapOffer],
+        campaign: null,
+        offers: [],
         availabilityStatus: 'coming_soon',
         statusLabel: 'Chega em breve',
         path: '/product/seculus/breve?v=azul',
@@ -459,7 +490,6 @@ describe('homeCards', () => {
             }),
             variantOf(15, {
               mainImage: 'primeiro.jpg',
-              offers: [tiedOffer],
               axes: [{ axisId: 'cor', valueId: 'azul' }],
             }),
             variantOf(15, {
@@ -472,14 +502,15 @@ describe('homeCards', () => {
       { axes: [color] },
     )
 
-    expect(homeCards([product], 'available')).toEqual([
+    expect(homeCards([product], 'available', [])).toEqual([
       {
         slug: 'seculus',
         listingId: 'novo',
         title: 'Seculus',
         image: 'primeiro.jpg',
         price: 15,
-        offers: [tiedOffer],
+        campaign: null,
+        offers: [],
         availabilityStatus: 'available',
         statusLabel: 'Disponível',
         path: '/product/seculus/novo?v=azul',
@@ -509,13 +540,14 @@ describe('homeCards', () => {
       { axes: [color] },
     )
 
-    expect(homeCards([product], 'available')).toEqual([
+    expect(homeCards([product], 'available', [])).toEqual([
       {
         slug: 'seculus',
         listingId: 'novo',
         title: 'Seculus',
         image: 'capa.jpg',
         price: 15,
+        campaign: null,
         offers: [],
         availabilityStatus: 'available',
         statusLabel: 'Disponível',
@@ -550,19 +582,20 @@ describe('homeCards', () => {
         { axes: [color] },
       ),
     ]
-    expect(homeCards(products, 'on-order')).toEqual([
+    expect(homeCards(products, 'on-order', [])).toEqual([
       {
         slug: 'seculus',
         listingId: 'encomenda',
         title: 'Seculus',
         image: img,
+        campaign: null,
         offers: [],
         availabilityStatus: 'on_order',
         statusLabel: 'Sob encomenda',
         path: '/product/seculus/encomenda',
       },
     ])
-    expect(homeCards(products, 'all')).toEqual([])
+    expect(homeCards(products, 'all', [])).toEqual([])
   })
 
   it('uses the listing availability label, including Chega em breve', () => {
@@ -572,29 +605,31 @@ describe('homeCards', () => {
         listingOf('breve', { availabilityStatus: 'coming_soon', state: 'used' }),
       ]),
     ]
-    expect(homeCards(products, 'available')[0]).toEqual({
+    expect(homeCards(products, 'available', [])[0]).toEqual({
       slug: 'av',
       listingId: 'av',
       title: 'Av',
       image: img,
       price: 100,
+      campaign: null,
       offers: [],
       availabilityStatus: 'available',
       statusLabel: 'Disponível',
       path: '/product/av/av',
     })
-    expect(homeCards(products, 'coming-soon')[0]).toEqual({
+    expect(homeCards(products, 'coming-soon', [])[0]).toEqual({
       slug: 'breve',
       listingId: 'breve',
       title: 'Breve',
       image: img,
       price: 100,
+      campaign: null,
       offers: [],
       availabilityStatus: 'coming_soon',
       statusLabel: 'Chega em breve',
       path: '/product/breve/breve',
     })
-    expect(homeCards(products, 'available')[0].statusLabel).not.toBe('Indisponível')
+    expect(homeCards(products, 'available', [])[0].statusLabel).not.toBe('Indisponível')
   })
 
   it('orders cards by pt-BR title, then slug, then listing order', () => {
@@ -606,7 +641,7 @@ describe('homeCards', () => {
         listingOf('antes'),
       ]),
     ]
-    expect(homeCards(products, null).map((card) => card.path)).toEqual([
+    expect(homeCards(products, null, []).map((card) => card.path)).toEqual([
       '/product/alfa/a',
       '/product/meio/depois',
       '/product/meio/antes',
@@ -646,7 +681,7 @@ describe('homeCards', () => {
         },
       ),
     ]
-    expect(homeCards(products, 'available').map((card) => card.path)).toEqual([
+    expect(homeCards(products, 'available', []).map((card) => card.path)).toEqual([
       '/product/liso/unico',
       '/product/seculus/novo?v=preto,gg',
     ])
@@ -666,9 +701,9 @@ describe('homeCards', () => {
       ]),
       productOf('omisso', 'Omisso', [listingOf('omisso')]),
     ]
-    expect(homeCards(products, null).map((card) => card.listingId)).toEqual(['omisso'])
+    expect(homeCards(products, null, []).map((card) => card.listingId)).toEqual(['omisso'])
     expect(activeSection(products, null)).toBe('all')
-    expect(homeCards(products, 'on-order')).toEqual([])
+    expect(homeCards(products, 'on-order', [])).toEqual([])
   })
 
   it('lists available and coming soon together for all or null, and keeps on_order off Todos', () => {
@@ -688,6 +723,7 @@ describe('homeCards', () => {
         title: 'Águia',
         image: img,
         price: 100,
+        campaign: null,
         offers: [],
         availabilityStatus: 'available',
         statusLabel: 'Disponível',
@@ -699,23 +735,25 @@ describe('homeCards', () => {
         title: 'bola',
         image: img,
         price: 100,
+        campaign: null,
         offers: [],
         availabilityStatus: 'coming_soon',
         statusLabel: 'Chega em breve',
         path: '/product/meio/breve',
       },
     ]
-    expect(homeCards(products, null)).toEqual(expected)
-    expect(homeCards(products, 'all')).toEqual(expected)
-    expect(homeCards(products, 'all').map((card) => card.availabilityStatus)).not.toContain('on_order')
-    expect(homeCards(products, 'available').map((card) => card.listingId)).toEqual(['a'])
+    expect(homeCards(products, null, [])).toEqual(expected)
+    expect(homeCards(products, 'all', [])).toEqual(expected)
+    expect(homeCards(products, 'all', []).map((card) => card.availabilityStatus)).not.toContain('on_order')
+    expect(homeCards(products, 'available', []).map((card) => card.listingId)).toEqual(['a'])
     expect(sectionHasCards(products, 'all')).toBe(true)
-    expect(homeCards(products, 'on-order')).toEqual([
+    expect(homeCards(products, 'on-order', [])).toEqual([
       {
         slug: 'zulu',
         listingId: 'z',
         title: 'Zebra',
         image: 'capa-zebra.jpg',
+        campaign: null,
         offers: [],
         availabilityStatus: 'on_order',
         statusLabel: 'Sob encomenda',
@@ -730,8 +768,8 @@ describe('homeCards', () => {
         listingOf('enc', { availabilityStatus: 'on_order', images: ['capa.jpg'] }),
       ]),
     ]
-    expect(homeCards(products, 'all')).toEqual([])
-    expect(homeCards(products, null)).toEqual([])
+    expect(homeCards(products, 'all', [])).toEqual([])
+    expect(homeCards(products, null, [])).toEqual([])
     expect(sectionHasCards(products, 'all')).toBe(false)
     expect(sectionHasCards(products, 'on-order')).toBe(true)
     expect(homeEmptyText(products, 'all')).toBeNull()
@@ -757,7 +795,6 @@ describe('homeCards', () => {
             variants: [
               variantOf(139.9, {
                 mainImage: 'gold.jpg',
-                offers: [{ text: 'Não entra no card', background: '#111111', color: '#ffffff', icon: 'Gift' }],
                 axes: [{ axisId: 'cor', valueId: 'amarelo' }],
               }),
               variantOf(139.9, {
@@ -781,12 +818,13 @@ describe('homeCards', () => {
     ]
     const stored = structuredClone(products)
 
-    expect(homeCards(products, 'on-order')).toEqual([
+    expect(homeCards(products, 'on-order', [])).toEqual([
       {
         slug: 'curren',
         listingId: 'encomenda',
         title: 'Curren',
         image: 'capa.jpg',
+        campaign: null,
         offers: [],
         availabilityStatus: 'on_order',
         statusLabel: 'Sob encomenda',
@@ -794,11 +832,11 @@ describe('homeCards', () => {
       },
     ])
     expect(sectionHasCards(products, 'on-order')).toBe(true)
-    expect(homeCards(products, 'all').map((card) => card.listingId)).toEqual(['caminho'])
-    expect(homeCards(products, 'coming-soon')[0]?.path).toBe('/product/curren/caminho')
-    expect(homeCards(products, 'coming-soon')[0]?.image).toBe(img)
+    expect(homeCards(products, 'all', []).map((card) => card.listingId)).toEqual(['caminho'])
+    expect(homeCards(products, 'coming-soon', [])[0]?.path).toBe('/product/curren/caminho')
+    expect(homeCards(products, 'coming-soon', [])[0]?.image).toBe(img)
 
-    const orderView = requireOpen(listingByPath(products, 'curren', 'encomenda', 'verde'))
+    const orderView = requireOpen(listingByPath(products, 'curren', 'encomenda', 'verde', []))
     expect(orderView.price).toBe(139.9)
     expect(orderView.title).toBe('Curren Verde')
     expect(orderView.availabilityStatus).toBe('on_order')
@@ -807,7 +845,7 @@ describe('homeCards', () => {
     expect(orderColors?.find((option) => option.valueId === 'verde')?.disabled).toBe(false)
     expect(orderColors?.find((option) => option.valueId === 'amarelo')?.disabled).toBe(false)
 
-    const soonView = requireOpen(listingByPath(products, 'curren', 'caminho', null))
+    const soonView = requireOpen(listingByPath(products, 'curren', 'caminho', null, []))
     expect(soonView.selectors.find((selector) => selector.axisId === 'cor')?.options.map((option) => option.valueId)).toContain('verde')
     expect(products).toEqual(stored)
   })
@@ -837,12 +875,13 @@ describe('homeCards', () => {
       ),
     ]
 
-    expect(homeCards(products, 'on-order')).toEqual([
+    expect(homeCards(products, 'on-order', [])).toEqual([
       {
         slug: 'curren',
         listingId: 'encomenda',
         title: 'Curren',
         image: img,
+        campaign: null,
         offers: [],
         availabilityStatus: 'on_order',
         statusLabel: 'Sob encomenda',
@@ -850,8 +889,8 @@ describe('homeCards', () => {
       },
     ])
     expect(sectionHasCards(products, 'on-order')).toBe(true)
-    expect(homeCards(products, 'all').map((card) => card.listingId)).toEqual(['caminho'])
-    const opened = requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto'))
+    expect(homeCards(products, 'all', []).map((card) => card.listingId)).toEqual(['caminho'])
+    const opened = requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto', []))
     expect(opened.price).toBe(10)
     expect(opened.title).toBe('Curren Preto fosco')
     expect(opened.availabilityStatus).toBe('on_order')
@@ -876,11 +915,11 @@ describe('homeCards', () => {
       ),
     ]
 
-    expect(homeCards(products, 'on-order').map((card) => card.path)).toEqual([
+    expect(homeCards(products, 'on-order', []).map((card) => card.path)).toEqual([
       '/product/curren/encomenda',
     ])
-    expect(requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto')).price).toBe(10)
-    expect(requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto')).title).toBe(
+    expect(requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto', [])).price).toBe(10)
+    expect(requireOpen(listingByPath(products, 'curren', 'encomenda', 'preto', [])).title).toBe(
       'Curren Preto fosco',
     )
   })
@@ -953,7 +992,7 @@ describe('homeCards filters', () => {
       },
     ]
 
-    expect(homeCards(products, null).map((card) => card.title)).toEqual([
+    expect(homeCards(products, null, []).map((card) => card.title)).toEqual([
       'Addiesdive',
       'Zebra',
       'Bola',
@@ -966,10 +1005,10 @@ describe('homeCards filters', () => {
     const disabled = filteredProduct('unisex', [filteredVariant()], { enabled: false })
     const unavailable = filteredProduct('unisex', [filteredVariant({ orderable: false })])
 
-    expect(homeCards([onOrder, disabled, unavailable], null).map((card) => card.slug)).toEqual([
+    expect(homeCards([onOrder, disabled, unavailable], null, []).map((card) => card.slug)).toEqual([
       'watch-unisex',
     ])
-    expect(homeCards([onOrder, disabled, unavailable], null)[0]).toMatchObject({
+    expect(homeCards([onOrder, disabled, unavailable], null, [])[0]).toMatchObject({
       availabilityStatus: 'on_order',
       statusLabel: 'Sob encomenda',
     })
@@ -980,9 +1019,9 @@ describe('homeCards filters', () => {
 
     expect(activeFilter(null)).toBe('all')
     expect(activeFilter('unknown')).toBe('all')
-    expect(homeCards([product], 'unknown')).toEqual(homeCards([product], null))
-    expect(filterHasCards([product], 'used')).toBe(true)
-    expect(filterHasCards([product], 'new')).toBe(false)
+    expect(homeCards([product], 'unknown', [])).toEqual(homeCards([product], null, []))
+    expect(filterHasCards([product], 'used', [])).toBe(true)
+    expect(filterHasCards([product], 'new', [])).toBe(false)
   })
 
   it('applies the exact truncated 20 percent discount boundary and excludes on-order variants', () => {
@@ -1014,7 +1053,7 @@ describe('homeCards filters', () => {
       slug: 'on-order',
     }
 
-    expect(homeCards([passing, below, onOrder], 'discount').map((card) => card.slug)).toEqual([
+    expect(homeCards([passing, below, onOrder], 'discount', []).map((card) => card.slug)).toEqual([
       'watch-unisex',
     ])
   })
@@ -1028,11 +1067,11 @@ describe('homeCards filters', () => {
       filteredProduct(undefined, [filteredVariant()]),
     ]
 
-    expect(homeCards(products, 'female').map((card) => card.slug)).toEqual([
+    expect(homeCards(products, 'female', []).map((card) => card.slug)).toEqual([
       'watch-female',
       'watch-unisex',
     ])
-    expect(homeCards(products, 'male').map((card) => card.slug)).toEqual([
+    expect(homeCards(products, 'male', []).map((card) => card.slug)).toEqual([
       'watch-male',
       'watch-unisex',
     ])
@@ -1055,12 +1094,12 @@ describe('homeCards filters', () => {
       },
     ]
 
-    expect(homeCards(products, 'new').map((card) => card.slug)).toEqual(['watch-unisex'])
-    expect(homeCards(products, 'openbox').map((card) => card.slug)).toEqual(['openbox'])
-    expect(homeCards(products, 'used').map((card) => card.slug)).toEqual(['used'])
+    expect(homeCards(products, 'new', []).map((card) => card.slug)).toEqual(['watch-unisex'])
+    expect(homeCards(products, 'openbox', []).map((card) => card.slug)).toEqual(['openbox'])
+    expect(homeCards(products, 'used', []).map((card) => card.slug)).toEqual(['used'])
     expect(
       ['new', 'openbox', 'used'].flatMap((filter) =>
-        homeCards(products, filter).map((card) => card.slug),
+        homeCards(products, filter, []).map((card) => card.slug),
       ),
     ).not.toContain('defective')
   })
@@ -1071,7 +1110,6 @@ describe('homeCards filters', () => {
         state: 'used',
         availabilityStatus: 'available',
         price: 20,
-        offers: [offer],
       }),
       filteredVariant({
         state: 'new',
@@ -1080,14 +1118,15 @@ describe('homeCards filters', () => {
       }),
     ])
 
-    expect(homeCards([product], null)).toHaveLength(1)
-    expect(homeCards([product], null)[0]).toMatchObject({
+    expect(homeCards([product], null, [])).toHaveLength(1)
+    expect(homeCards([product], null, [])[0]).toMatchObject({
       price: 20,
       availabilityStatus: 'available',
       statusLabel: 'Disponível',
-      offers: [offer],
+      campaign: null,
+      offers: [],
     })
-    expect(homeCards([product], 'female')[0]?.price).toBe(20)
+    expect(homeCards([product], 'female', [])[0]?.price).toBe(20)
     const male = filteredProduct('male', [
       filteredVariant({
         state: 'new',
@@ -1104,11 +1143,10 @@ describe('homeCards filters', () => {
         state: 'used',
         availabilityStatus: 'available',
         price: 20,
-        offers: [offer],
       }),
     ])
-    expect(homeCards([male], 'male')[0]?.price).toBe(20)
-    expect(homeCards([product], 'new')[0]).toMatchObject({
+    expect(homeCards([male], 'male', [])[0]?.price).toBe(20)
+    expect(homeCards([product], 'new', [])[0]).toMatchObject({
       price: 50,
       availabilityStatus: 'coming_soon',
       statusLabel: 'Chega em breve',
@@ -1142,9 +1180,9 @@ describe('homeCards filters', () => {
       }),
     ])
 
-    expect(homeCards([product], 'discount')[0]?.price).toBe(80)
-    expect(homeCards([product], 'openbox')[0]?.price).toBe(40)
-    expect(homeCards([product], 'used')[0]?.price).toBe(60)
+    expect(homeCards([product], 'discount', [])[0]?.price).toBe(80)
+    expect(homeCards([product], 'openbox', [])[0]?.price).toBe(40)
+    expect(homeCards([product], 'used', [])[0]?.price).toBe(60)
   })
 
   it('uses the cover for equal lowest prices and for a pool without price', () => {
@@ -1153,28 +1191,27 @@ describe('homeCards filters', () => {
       filteredVariant({
         availabilityStatus: 'coming_soon',
         price: 40,
-        offers: [offer],
       }),
     ])
     const noPrice = {
       ...filteredProduct('unisex', [
         filteredVariant({
           availabilityStatus: 'on_order',
-          offers: [offer],
         }),
       ]),
       slug: 'no-price',
     }
 
-    expect(homeCards([tied], null)[0]).toMatchObject({
+    expect(homeCards([tied], null, [])[0]).toMatchObject({
       image: 'cover.jpg',
       price: 40,
     })
-    expect(homeCards([noPrice], null)[0]).toEqual({
+    expect(homeCards([noPrice], null, [])[0]).toEqual({
       slug: 'no-price',
       listingId: 'main-listing',
       title: 'Watch',
       image: 'cover.jpg',
+      campaign: null,
       offers: [],
       availabilityStatus: 'on_order',
       statusLabel: 'Sob encomenda',
@@ -1198,7 +1235,7 @@ describe('homeCards filters', () => {
     ])
     product.axes = [{ id: 'color', label: 'Cor', values: [{ id: 'steel', value: 'Steel' }] }]
 
-    expect(homeCards([product], 'new')[0]?.path).toBe('/product/watch-unisex/main-listing?v=steel')
+    expect(homeCards([product], 'new', [])[0]?.path).toBe('/product/watch-unisex/main-listing?v=steel')
   })
 })
 
@@ -1224,7 +1261,6 @@ function conditionProduct(): Product {
             state: 'used',
             availabilityStatus: 'available',
             price: 30,
-            offers: [{ text: 'Oferta', background: '#111111', color: '#ffffff', icon: 'Tag' }],
             mainImage: 'red.jpg',
           },
           {
@@ -1238,7 +1274,6 @@ function conditionProduct(): Product {
             axes: [{ axisId: 'color', valueId: 'red' }],
             state: 'used',
             availabilityStatus: 'on_order',
-            offers: [{ text: 'Não mostrar', background: '#111111', color: '#ffffff', icon: 'Tag' }],
             mainImage: 'red.jpg',
           },
           {
@@ -1269,11 +1304,11 @@ function conditionProduct(): Product {
 describe('variant condition selectors and query', () => {
   it('keeps selectors on the product axes when conditions share those axes', () => {
     const product = conditionProduct()
-    const view = requireOpen(listingByPath([product], 'condition', 'main-listing', 'red'))
+    const view = requireOpen(listingByPath([product], 'condition', 'main-listing', 'red', []))
     expect(view.selectors.map((selector) => selector.axisId)).toEqual(['color'])
     expect(view.state).toBe('used')
     expect(view.availability).toBe('available')
-    const unique = requireOpen(listingByPath([product], 'condition', 'main-listing', 'blue'))
+    const unique = requireOpen(listingByPath([product], 'condition', 'main-listing', 'blue', []))
     expect(unique.selectors.map((selector) => selector.axisId)).toEqual(['color'])
   })
 
@@ -1303,7 +1338,7 @@ describe('variant condition selectors and query', () => {
       listings: [{ ...listing, variants: [onOrder] }],
     }
 
-    expect(requireOpen(listingByPath([isolated], 'condition', 'main-listing', 'red')).offers).toEqual(
+    expect(requireOpen(listingByPath([isolated], 'condition', 'main-listing', 'red', [])).offers).toEqual(
       [],
     )
   })
@@ -1317,7 +1352,7 @@ describe('listingByPath', () => {
       listingOf('primeiro', { variants: [variantOf(3)] }),
     ])
 
-    expect(requireOpen(listingByPath([product], 'fila', null, null)).listingId).toBe('segundo')
+    expect(requireOpen(listingByPath([product], 'fila', null, null, [])).listingId).toBe('segundo')
   })
 
   it('skips an on_order listing whose every variant is orderable false', () => {
@@ -1332,12 +1367,12 @@ describe('listingByPath', () => {
     const stock = listingOf('stock', { variants: [variantOf(5)] })
 
     expect(
-      requireOpen(listingByPath([productOf('pula', 'Pula', [dead, live])], 'pula', null, null))
+      requireOpen(listingByPath([productOf('pula', 'Pula', [dead, live])], 'pula', null, null, []))
         .listingId,
     ).toBe('live')
     expect(
       requireOpen(
-        listingByPath([productOf('misto', 'Misto', [dead, stock])], 'misto', null, null),
+        listingByPath([productOf('misto', 'Misto', [dead, stock])], 'misto', null, null, []),
       ).listingId,
     ).toBe('stock')
     expect(
@@ -1346,6 +1381,7 @@ describe('listingByPath', () => {
         'so-morto',
         null,
         null,
+        [],
       ),
     ).toEqual({ missing: true })
   })
@@ -1363,27 +1399,27 @@ describe('listingByPath', () => {
       listingOf('b', { enabled: false }),
     ])
 
-    const deadView = requireOpen(listingByPath([product], 'relogio', 'dead', null))
+    const deadView = requireOpen(listingByPath([product], 'relogio', 'dead', null, []))
     expect(deadView.price).toBe(1)
     expect(deadView.availabilityLabel).toBe('Indisponível')
     expect(deadView.availabilityStatus).toBe('on_order')
     expect(deadView.offers).toEqual([])
-    expect(requireOpen(listingByPath([product], 'relogio', null, null)).listingId).toBe('stock')
-    expect(listingByPath([product], 'relogio', 'hidden', null)).toEqual({ missing: true })
-    expect(listingByPath([product], 'relogio', 'ausente', null)).toEqual({ missing: true })
-    expect(listingByPath([product], 'nao-existe', null, null)).toEqual({ missing: true })
-    expect(listingByPath([product], 'nao-existe', 'stock', null)).toEqual({ missing: true })
-    expect(listingByPath([allHidden], 'oculto', null, null)).toEqual({ missing: true })
-    expect(listingByPath([allHidden], 'oculto', 'a', null)).toEqual({ missing: true })
+    expect(requireOpen(listingByPath([product], 'relogio', null, null, [])).listingId).toBe('stock')
+    expect(listingByPath([product], 'relogio', 'hidden', null, [])).toEqual({ missing: true })
+    expect(listingByPath([product], 'relogio', 'ausente', null, [])).toEqual({ missing: true })
+    expect(listingByPath([product], 'nao-existe', null, null, [])).toEqual({ missing: true })
+    expect(listingByPath([product], 'nao-existe', 'stock', null, [])).toEqual({ missing: true })
+    expect(listingByPath([allHidden], 'oculto', null, null, [])).toEqual({ missing: true })
+    expect(listingByPath([allHidden], 'oculto', 'a', null, [])).toEqual({ missing: true })
     expect(MISSING_LISTING_TEXT).toBe('Este relógio não está no catálogo.')
   })
 
   it('builds the title from alias or value and shows each selector value, with impossible options disabled', () => {
     const product = vistaProduct()
-    const view = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m'))
+    const view = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m', []))
 
     expect(view.title).toBe('Pulseira Black M')
-    expect(requireOpen(listingByPath([product], 'vista', 'vista', 'azul,p')).title).toBe(
+    expect(requireOpen(listingByPath([product], 'vista', 'vista', 'azul,p', [])).title).toBe(
       'Pulseira Azul P',
     )
 
@@ -1393,7 +1429,7 @@ describe('listingByPath', () => {
         variants: [variantOf(9, { mainImage: 'b.jpg' })],
       }),
     ])
-    const plainView = requireOpen(listingByPath([plain], 'liso', null, null))
+    const plainView = requireOpen(listingByPath([plain], 'liso', null, null, []))
     expect(plainView.title).toBe('Liso')
     expect(plainView.selectors).toEqual([])
 
@@ -1417,7 +1453,7 @@ describe('listingByPath', () => {
 
   it('lands on the first queue variant that contains the new axis value and starts the carousel at mainImage', () => {
     const product = vistaProduct()
-    const current = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m'))
+    const current = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m', []))
     const azul = current.selectors
       .find((selector) => selector.axisId === 'color')
       ?.options.find((option) => option.valueId === 'azul')
@@ -1430,7 +1466,7 @@ describe('listingByPath', () => {
       v: 'azul,p',
     })
 
-    const next = requireOpen(listingByPath([product], 'vista', 'vista', azul?.v ?? null))
+    const next = requireOpen(listingByPath([product], 'vista', 'vista', azul?.v ?? null, []))
     expect(next.price).toBe(10)
     expect(next.title).toBe('Pulseira Azul P')
     expect(current.images).toEqual(['a.jpg', 'b.jpg', 'c.jpg'])
@@ -1491,20 +1527,20 @@ describe('listingByPath', () => {
         ],
       },
     )
-    const queuedView = requireOpen(listingByPath([queued], 'fila-eixo', 'item', 'preto,m'))
+    const queuedView = requireOpen(listingByPath([queued], 'fila-eixo', 'item', 'preto,m', []))
     const queuedAzul = queuedView.selectors
       .find((selector) => selector.axisId === 'color')
       ?.options.find((option) => option.valueId === 'azul')
     expect(queuedAzul?.v).toBe('azul,m')
-    expect(requireOpen(listingByPath([queued], 'fila-eixo', 'item', queuedAzul?.v ?? null)).price).toBe(
+    expect(requireOpen(listingByPath([queued], 'fila-eixo', 'item', queuedAzul?.v ?? null, [])).price).toBe(
       30,
     )
   })
 
   it('keeps description and specification sheets while price, observations, and offer follow the variant', () => {
     const product = vistaProduct()
-    const current = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m'))
-    const next = requireOpen(listingByPath([product], 'vista', 'vista', 'azul,p'))
+    const current = requireOpen(listingByPath([product], 'vista', 'vista', 'preto,m', initialLabels))
+    const next = requireOpen(listingByPath([product], 'vista', 'vista', 'azul,p', initialLabels))
 
     expect([current.productSpecifications, current.listingSpecifications]).toEqual([
       [{ label: 'Marca', value: 'Seiko' }],
@@ -1517,8 +1553,19 @@ describe('listingByPath', () => {
     expect(current.price).toBe(20)
     expect(current.listPrice).toBe(40)
     expect(current.observations).toBe('Caixa')
+    expect(current.campaign).toMatchObject({
+      id: 'black-friday',
+      shortText: 'Black Friday',
+      text: 'Black Friday',
+    })
     expect(current.offers).toEqual([
-      { text: 'Black Friday', background: '#000000', color: '#FFFFFF', icon: 'Gift' },
+      {
+        id: 'discount-20',
+        text: 'acima 20%',
+        icon: 'Gift',
+        background: '#000000',
+        color: '#FFFFFF',
+      },
     ])
     expect(current.availabilityStatus).toBe('available')
     expect(next.price).toBe(10)
@@ -1564,7 +1611,7 @@ describe('listingByPath', () => {
       },
     )
 
-    const view = requireOpen(listingByPath([product], 'encomenda', 'dead', 'b'))
+    const view = requireOpen(listingByPath([product], 'encomenda', 'dead', 'b', []))
     expect(view.price).toBe(70)
     expect(view.availabilityLabel).toBe('Indisponível')
     expect(view.availabilityStatus).toBe('on_order')
@@ -1579,10 +1626,10 @@ describe('listingByPath', () => {
     ]
     for (const [state, label] of states) {
       const labeled = productOf('estado', 'Estado', [listingOf('item', { state })])
-      expect(requireOpen(listingByPath([labeled], 'estado', 'item', null)).stateLabel).toBe(label)
+      expect(requireOpen(listingByPath([labeled], 'estado', 'item', null, [])).stateLabel).toBe(label)
     }
 
-    const available = requireOpen(listingByPath([vistaProduct()], 'vista', 'vista', 'preto,m'))
+    const available = requireOpen(listingByPath([vistaProduct()], 'vista', 'vista', 'preto,m', []))
     expect(available.availabilityLabel).toBe('Disponível')
     expect(available.stateLabel).toBe('Usado')
   })
@@ -1644,7 +1691,7 @@ describe('listingByPath', () => {
       },
     )
 
-    const view = requireOpen(listingByPath([product], 'eixos', 'item', 'preto,m'))
+    const view = requireOpen(listingByPath([product], 'eixos', 'item', 'preto,m', []))
     const color = view.selectors.find((selector) => selector.axisId === 'color')
     const size = view.selectors.find((selector) => selector.axisId === 'size')
 
@@ -1767,9 +1814,7 @@ function vistaProduct(): Product {
             variantOf(20, {
               mainImage: 'b.jpg',
               listPrice: 40,
-              offers: [
-                { text: 'Black Friday', background: '#000000', color: '#FFFFFF', icon: 'Gift' },
-              ],
+              availabilityStatus: 'available',
               observations: 'Caixa',
               axes: [
                 { axisId: 'color', valueId: 'preto' },
@@ -1817,6 +1862,79 @@ function vistaProduct(): Product {
 }
 
 
+describe('resolved labels on cards and listing views', () => {
+  it('LBL-15/LBL-27/LBL-34: on_order leaves campaign and offers empty on cards and views, including legacy listings', () => {
+    const legacy = productOf(
+      'watch',
+      'Watch',
+      [
+        listingOf('sob-encomenda', {
+          availabilityStatus: 'on_order',
+          images: ['cover.png'],
+          variants: [{ axes: [], mainImage: 'cover.png', price: 100 }],
+        }),
+      ],
+    )
+    const modern = productOf('modern', 'Modern', [
+      listingOf('item', {
+        variants: [{ axes: [], mainImage: img, availabilityStatus: 'on_order', price: 50 }],
+      }),
+    ])
+
+    expect(homeCards([legacy], 'on-order', initialLabels)[0]).toMatchObject({
+      campaign: null,
+      offers: [],
+    })
+    expect(homeCards([modern], null, initialLabels)[0]).toMatchObject({
+      campaign: null,
+      offers: [],
+    })
+
+    const legacyView = requireOpen(
+      listingByPath([legacy], 'watch', 'sob-encomenda', null, initialLabels),
+    )
+    expect(legacyView.campaign).toBeNull()
+    expect(legacyView.offers).toEqual([])
+  })
+
+  it('LBL-19/LBL-20: attaches one campaign and the winning discount offer to cards and views', () => {
+    const product = productOf('promo', 'Promo', [
+      listingOf('main', {
+        variants: [variantOf(80, { listPrice: 100, availabilityStatus: 'available' })],
+      }),
+    ])
+
+    const card = homeCards([product], null, initialLabels)[0]!
+    expect(card.campaign).toMatchObject({ id: 'black-friday', shortText: 'Black Friday' })
+    expect(card.offers).toEqual([
+      {
+        id: 'discount-20',
+        text: 'acima 20%',
+        icon: 'Gift',
+        background: '#000000',
+        color: '#FFFFFF',
+      },
+    ])
+
+    const view = requireOpen(listingByPath([product], 'promo', 'main', null, initialLabels))
+    expect(view.campaign?.id).toBe('black-friday')
+    expect(view.offers.map((item) => item.id)).toEqual(['discount-20'])
+  })
+
+  it('LBL-16: listing disabledLabels remove the campaign from every variant card', () => {
+    const product = productOf('promo', 'Promo', [
+      listingOf('main', {
+        disabledLabels: ['black-friday'],
+        variants: [variantOf(80, { listPrice: 100, availabilityStatus: 'available' })],
+      }),
+    ])
+
+    const card = homeCards([product], null, initialLabels)[0]!
+    expect(card.campaign).toBeNull()
+    expect(card.offers.map((item) => item.id)).toEqual(['discount-20'])
+  })
+})
+
 describe('on_order without a required price', () => {
   it.each([undefined, 100])('omits card prices and opens a variant with optional price %s', (price) => {
     const listing = listingOf('sob-encomenda', {
@@ -1825,11 +1943,11 @@ describe('on_order without a required price', () => {
       variants: [{ axes: [], mainImage: 'variant.png', ...(price === undefined ? {} : { price }) }],
     })
     const product = productOf('watch', 'Watch', [listing])
-    const cards = homeCards([product], 'on-order')
+    const cards = homeCards([product], 'on-order', [])
     expect(cards).toHaveLength(1)
     expect(cards[0].image).toBe('cover.png')
     expect(cards[0].price).toBeUndefined()
-    const view = listingByPath([product], 'watch', 'sob-encomenda', null)
+    const view = listingByPath([product], 'watch', 'sob-encomenda', null, [])
     expect(view.missing).toBe(false)
     if (!view.missing) {
       expect(view.price).toBe(price)
@@ -1837,7 +1955,7 @@ describe('on_order without a required price', () => {
       expect(view.images[view.imageIndex]).toBe('cover.png')
       expect(view.availabilityLabel).toBe('Sob encomenda')
     }
-    const direct = listingByPath([product], 'watch', 'sob-encomenda', 'variant')
+    const direct = listingByPath([product], 'watch', 'sob-encomenda', 'variant', [])
     expect(direct.missing).toBe(false)
     if (!direct.missing) {
       expect(direct.price).toBe(price)

@@ -262,6 +262,8 @@ T12 → T13
 
 ### T7: Levar a resolução ao card e à página
 
+**Status**: done
+
 **What**: Fazer `homeCards` e `listingByPath` gravarem campanha e ofertas resolvidas, com sob encomenda vazio inclusive no legado.
 **Where**: `shared/src/catalog/listings.ts`
 **Depends on**: T3
@@ -275,10 +277,10 @@ T12 → T13
 
 **Done when**:
 
-- [ ] Card e vista trazem `campaign` e `offers` resolvidos
-- [ ] Variante `on_order` chega com os dois vazios
-- [ ] Assinaturas recebem `labels`
-- [ ] Gate check passes: `pnpm --filter @catalogo/shared test`
+- [x] Card e vista trazem `campaign` e `offers` resolvidos
+- [x] Variante `on_order` chega com os dois vazios
+- [x] Assinaturas recebem `labels`
+- [x] Gate check passes: `pnpm --filter @catalogo/shared test`
 
 **Tests**: unit
 **Gate**: quick
