@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import type { Listing, Product, Variant } from '@catalogo/shared'
+import { parseLabels, type Label, type Listing, type Product, type Variant } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router-dom'
@@ -42,8 +42,9 @@ function makeProduct(
   }
 }
 
-const { mockProductsRef } = vi.hoisted(() => ({
+const { mockProductsRef, mockLabelsRef } = vi.hoisted(() => ({
   mockProductsRef: { current: [] as Product[] },
+  mockLabelsRef: { current: null as Label[] | null },
 }))
 
 vi.mock('../catalog/products.generated', async () => {
@@ -56,7 +57,7 @@ vi.mock('../catalog/products.generated', async () => {
       return mockProductsRef.current
     },
     get labels() {
-      return actual.labels
+      return mockLabelsRef.current ?? actual.labels
     },
   }
 })
@@ -427,14 +428,49 @@ function expectResultsEnter() {
   expect(screen.queryByRole('status', { name: 'Carregando' })).toBeNull()
 }
 
+function campaignLabel(overrides: Record<string, unknown> = {}) {
+  return {
+    id: 'black-friday',
+    enabled: true,
+    type: 'campaign' as const,
+    text: 'Black Friday',
+    shortText: 'Black Friday',
+    icon: 'Gift',
+    background: '#000000',
+    color: '#FFFFFF',
+    filterable: true,
+    ...overrides,
+  }
+}
+
+function offerLabel(overrides: Record<string, unknown> = {}) {
+  return {
+    id: 'discount-20',
+    enabled: true,
+    type: 'offer' as const,
+    category: 'discount',
+    description: '',
+    priority: 1,
+    text: 'acima 20%',
+    icon: 'Gift',
+    background: '#000000',
+    color: '#FFFFFF',
+    filterable: true,
+    trigger: { kind: 'discount-at-least' as const, percent: 20 },
+    ...overrides,
+  }
+}
+
 describe('CatalogPage filters', () => {
   afterEach(() => {
     cleanup()
     mockProductsRef.current = []
+    mockLabelsRef.current = null
   })
 
   beforeEach(() => {
     mockProductsRef.current = []
+    mockLabelsRef.current = null
   })
 
   it('LBL-35 LBL-36 LBL-37: lists Todos, filterable labels, then fixed filters with shortText and text', () => {
@@ -476,6 +512,34 @@ describe('CatalogPage filters', () => {
     expect(screen.getByRole('heading', { name: 'Disponível' })).toBeDefined()
     expect(screen.getByRole('heading', { name: 'Encomenda' })).toBeDefined()
     expect(router.state.location.search).toBe('')
+  })
+
+  it('LBL-36: campaign pill shows shortText and hides the longer stripe text', () => {
+    mockLabelsRef.current = parseLabels([
+      campaignLabel({ text: 'Tarja longa da campanha', shortText: 'Selo curto' }),
+      offerLabel(),
+    ])
+    mockProductsRef.current = [
+      catalogProduct({
+        slug: 'disponivel',
+        title: 'Disponível',
+        listings: [listing('disponivel', { availabilityStatus: 'available' })],
+      }),
+    ]
+    renderHome('/')
+    const group = screen.getByRole('group', { name: 'Filtros' })
+    expect(within(group).getAllByRole('button').map((button) => button.textContent)).toEqual([
+      'Todos',
+      'Selo curto',
+      'acima 20%',
+      'Feminino',
+      'Masculino',
+      'Novos',
+      'Openbox',
+      'Usados',
+    ])
+    expect(screen.getByRole('button', { name: 'Selo curto' })).toBeDefined()
+    expect(screen.queryByRole('button', { name: 'Tarja longa da campanha' })).toBeNull()
   })
 
   it('writes the filter token and preserves the query when the active button is pressed', () => {
@@ -545,6 +609,61 @@ describe('CatalogPage filters', () => {
     expect(screen.queryByRole('heading', { name: 'Sem desconto' })).toBeNull()
     expect(router.state.location.search).toBe('?filter=discount-20')
     expect(screen.getByRole('button', { name: 'Feminino' })).toHaveProperty('disabled', true)
+  })
+
+  it('LBL-42: disables a label pill with no card and keeps a fixed filter that has cards', () => {
+    mockLabelsRef.current = parseLabels([campaignLabel(), offerLabel()])
+    mockProductsRef.current = [
+      catalogProduct({
+        slug: 'male-watch',
+        title: 'Masculino sem campanha',
+        audience: 'male',
+        listings: [
+          {
+            ...listing('male-watch', { price: 80, listPrice: 100, availabilityStatus: 'available' }),
+            disabledLabels: ['black-friday'],
+          },
+        ],
+      }),
+    ]
+    renderHome('/')
+    expect(screen.getByRole('button', { name: 'Black Friday' })).toHaveProperty('disabled', true)
+    expect(screen.getByRole('button', { name: 'acima 20%' })).toHaveProperty('disabled', false)
+    expect(screen.getByRole('button', { name: 'Masculino' })).toHaveProperty('disabled', false)
+  })
+
+  it('keeps an enabled non-filterable label off the pill row', () => {
+    mockLabelsRef.current = parseLabels([
+      campaignLabel(),
+      offerLabel({
+        id: 'spotlight',
+        category: 'spotlight',
+        text: 'oferta fora da fileira',
+        filterable: false,
+        trigger: { kind: 'discount-at-least', percent: 1 },
+      }),
+      offerLabel(),
+    ])
+    mockProductsRef.current = [
+      catalogProduct({
+        slug: 'promo',
+        title: 'Promoção',
+        listings: [listing('promo', { price: 80, listPrice: 100, availabilityStatus: 'available' })],
+      }),
+    ]
+    renderHome('/')
+    const group = screen.getByRole('group', { name: 'Filtros' })
+    expect(within(group).getAllByRole('button').map((button) => button.textContent)).toEqual([
+      'Todos',
+      'Black Friday',
+      'acima 20%',
+      'Feminino',
+      'Masculino',
+      'Novos',
+      'Openbox',
+      'Usados',
+    ])
+    expect(screen.queryByRole('button', { name: 'oferta fora da fileira' })).toBeNull()
   })
 
   it('falls back to Todos for invalid or empty filters without rewriting the query', () => {
