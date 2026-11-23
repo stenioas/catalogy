@@ -92,23 +92,34 @@ describe('published catalog migration (OSC-11, OSC-12, OSC-15)', () => {
   })
 })
 
-describe('README offer documentation (OSC-16)', () => {
-  it('documents offers in the card body without the legacy flag or a photo badge', () => {
+describe('README label documentation (LBL-44)', () => {
+  it('documents global labels.json for campaign and offers on the card and product page', () => {
     const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
 
-    expect(readme).toContain('`offers`')
-    expect(readme).toContain('fica no corpo do card, acima da disponibilidade')
+    expect(readme).toContain('labels.json')
+    expect(readme).toContain('shortText')
+    expect(readme).toMatch(/badge.*canto inferior esquerdo da foto/i)
+    expect(readme).toMatch(/ofertas.*acima do preço/i)
     expect(readme).not.toContain('unmissableOffer')
     expect(readme).not.toMatch(/badge de oferta (?:sobre|acima d[ae]) foto/i)
   })
+
+  it('does not document variant offers as the source of the campaign badge', () => {
+    const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
+
+    expect(readme).not.toMatch(/`offers`\s+fica em cada variante/i)
+    expect(readme).not.toContain('acima da disponibilidade')
+  })
 })
 
-describe('README home filters (FILT-05, T12)', () => {
-  it('documents the seven filter pills on the home', () => {
+describe('README home filters (LBL-44, T12)', () => {
+  it('documents the filter pills with label names and fixed filters', () => {
     const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
 
     expect(readme).toContain('**Todos**')
-    expect(readme).toContain('**20%+ de desconto**')
+    expect(readme).toContain('**Black Friday**')
+    expect(readme).toContain('**acima 20%**')
+    expect(readme).not.toContain('**20%+ de desconto**')
     expect(readme).toContain('**Feminino**')
     expect(readme).toContain('**Masculino**')
     expect(readme).toContain('**Novos**')
@@ -120,7 +131,9 @@ describe('README home filters (FILT-05, T12)', () => {
     const readme = readFileSync(join(clientRoot, '..', 'README.md'), 'utf8')
 
     expect(readme).toContain('`filter`')
-    expect(readme).toContain('`discount`')
+    expect(readme).toContain('`black-friday`')
+    expect(readme).toContain('`discount-20`')
+    expect(readme).not.toMatch(/`filter`\s+aceita\s+`discount`/i)
     expect(readme).toContain('`female`')
     expect(readme).toContain('`male`')
     expect(readme).toContain('`new`')

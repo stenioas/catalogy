@@ -206,7 +206,7 @@ O dono do catálogo precisa ligar e desligar campanha e ofertas num único cadas
 | LBL-41 | P1: Filtro pelas etiquetas | Phase 3 | Done |
 | LBL-42 | P1: Filtro pelas etiquetas | Phase 5 | Done |
 | LBL-43 | P1: Filtro pelas etiquetas | Phase 3 | Done |
-| LBL-44 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
+| LBL-44 | P1: Filtro pelas etiquetas | Phase 5 | Done |
 
 **Coverage:** 44 total, 44 mapped to tasks, 0 unmapped.
 
@@ -217,4 +217,4 @@ O dono do catálogo precisa ligar e desligar campanha e ofertas num único cadas
 - [ ] Editar `labels.json` muda a campanha e a oferta de 20% em todo o catálogo, sem `offers` nas variantes
 - [ ] Card, página e barra fixa mostram `shortText` na badge, `text` na tarja e `acima 20%` na linha de ofertas
 - [ ] Sob encomenda não mostra etiqueta
-- [ ] A fileira de filtros começa com Todos, Black Friday e acima 20%
+- [x] A fileira de filtros começa com Todos, Black Friday e acima 20%

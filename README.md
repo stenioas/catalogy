@@ -34,7 +34,7 @@ A skill de cadastro não entra nessa suíte. O parser dela se verifica com `pyth
 | `/product/:slug` | Primeiro anúncio visível do produto, na ordem pronta entrega, a caminho, encomenda |
 | `/product/:slug/:listingId` | Anúncio indicado. `?v=` escolhe a variante |
 
-A query `filter` aceita `discount`, `female`, `male`, `new`, `openbox` e `used`. **Todos** omite o parâmetro. Valor fora dessa lista, ou `section` sem `filter`, abre **Todos** sem reescrever a query. O card guarda `filter` no estado da navegação; a volta da ficha restaura `/?filter=...` quando havia filtro.
+A query `filter` aceita `black-friday`, `discount-20`, `female`, `male`, `new`, `openbox` e `used`. **Todos** omite o parâmetro. Valor fora dessa lista, ou `section` sem `filter`, abre **Todos** sem reescrever a query. O card guarda `filter` no estado da navegação; a volta da ficha restaura `/?filter=...` quando havia filtro.
 
 `v` é a lista de ids de valor, na ordem dos eixos do produto, separados por vírgula. Valor ausente ou inválido abre a primeira variante encomendável. Se todas estiverem com `orderable: false`, abre a primeira do array.
 
@@ -42,11 +42,11 @@ A query `filter` aceita `discount`, `female`, `male`, `new`, `openbox` e `used`.
 
 A barra do topo mostra a logo **Achavio**, some ao rolar para baixo e volta ao rolar para cima. A interface permanece no tema claro.
 
-Os filtros são sete botões em pílula, nesta ordem: **Todos**, **20%+ de desconto**, **Feminino**, **Masculino**, **Novos**, **Openbox** e **Usados**. O grupo tem `aria-label` **Filtros**; um botão fica pressionado por vez. A fileira rola na horizontal quando não couber na tela; o ativo usa o fundo primário e cantos totalmente arredondados. Filtro sem card fica desabilitado. Se o filtro da URL não tiver card, **Todos** fica pressionado, a lista mostra os cards de **Todos** e a query não muda. Apertar o filtro já ativo não altera a query. **Todos** inclui sob encomenda. Anúncio com `enabled: false`, ou sem variante encomendável, não gera card.
+Os filtros são botões em pílula, nesta ordem: **Todos**, **Black Friday**, **acima 20%**, **Feminino**, **Masculino**, **Novos**, **Openbox** e **Usados**. As duas etiquetas vêm de `labels.json`, na ordem do arquivo, com `enabled: true` e `filterable: true`; a campanha mostra o `shortText` e a oferta mostra o `text`. O grupo tem `aria-label` **Filtros**; um botão fica pressionado por vez. A fileira rola na horizontal quando não couber na tela; o ativo usa o fundo primário e cantos totalmente arredondados. Filtro sem card fica desabilitado. Se o filtro da URL não tiver card, **Todos** fica pressionado, a lista mostra os cards de **Todos** e a query não muda. Apertar o filtro já ativo não altera a query. **Todos** inclui sob encomenda. Anúncio com `enabled: false`, ou sem variante encomendável, não gera card.
 
 Os cards saem primeiro por disponibilidade (Disponível, Chega em breve, Sob encomenda) e, dentro de cada grupo, por título (`pt-BR`), depois slug, depois a posição do anúncio no produto. No card com preço, o valor é o menor `price` entre as variantes encomendáveis. Se esses preços forem iguais, a foto é a capa (`images[0]`) e o link não leva `v`. Se diferirem, a foto é a `mainImage` da variante mais barata e o link leva `v`. Sob encomenda usa a capa, sem preço e sem ofertas.
 
-No celular a lista é uma coluna, com foto à esquerda e uma linha entre os cards. A partir de 768px a grade passa a duas colunas; a partir de 1024px, a três. Cards da mesma linha acompanham a altura do mais alto. Usado e Openbox ganham um selo laranja sobre a foto. A oferta, quando existe, fica no corpo do card, acima da disponibilidade. O ícone de compartilhar monta a mesma frase da ficha.
+No celular a lista é uma coluna, com foto à esquerda e uma linha entre os cards. A partir de 768px a grade passa a duas colunas; a partir de 1024px, a três. Cards da mesma linha acompanham a altura do mais alto. Usado e Openbox ganham um selo laranja sobre a foto. Com campanha resolvida, a badge usa o `shortText` no canto inferior esquerdo da foto. Com ofertas resolvidas, a linha fica acima do preço. O ícone de compartilhar monta a mesma frase da ficha.
 
 Com o catálogo vazio de cards, a vitrine mostra **Não temos nenhum anúncio ativo.**
 
@@ -76,7 +76,7 @@ O preço na vitrine, na ficha e na barra fixa é seguido de **no pix**. A parcel
 
 Na vitrine o card é o mesmo em qualquer largura: título em 13px, preço anterior em 12px, percentual em 11px e preço atual em 18px. Na ficha o preço atual é maior.
 
-`offers` fica em cada variante. O texto, as cores e o ícone saem do JSON. A fileira não altera `price` nem `listPrice`. Lista vazia ou campo ausente não desenha fileira. Na vitrine, sob encomenda não mostra ofertas. Um ícone que não existe no Lucide, ou que não tem import dinâmico, impede a subida.
+Campanha e ofertas vêm de `client/public/catalog/labels.json`. O build embute o cadastro no módulo gerado; card, ficha e filtro leem a resolução por variante. O texto, as cores e o ícone saem desse arquivo. Anúncio ou variante pode listar `disabledLabels` para omitir uma etiqueta sem apagá-la do cadastro. A resolução não altera `price` nem `listPrice`. Sob encomenda não mostra campanha nem ofertas. Um ícone que não existe no Lucide, ou que não tem import dinâmico, impede a subida.
 
 ## Onde ficam os produtos
 
@@ -95,7 +95,7 @@ client/public/catalog/products/curren-8455/
 
 O `slug` da pasta e o `slug` do JSON são o mesmo, em minúsculas, com hífens. Os nomes em `images` são só o arquivo, e cada um precisa existir em `img/`. Extensões aceitas: jpg, jpeg, png, webp e avif. A foto de `img/` tem lado maior de até 768 px e serve a galeria e o zoom. `img/thumbs/` repete o mesmo nome com lado maior de até 400 px, para o card e as miniaturas. `info.md` e `media/` registram a fonte do cadastro; `media/` não entra no site publicado. O site lê `product.json`, `img/` e `img/thumbs/`.
 
-O JSON descreve um produto com anúncios em `listings`. O catálogo aceita relógios e outros produtos. O formato e a lista fechada de características estão em [docs/contrato-relogio.md](docs/contrato-relogio.md). `ProductSchema`, em `shared`, aplica esse formato. O carregador do Vite não chama o schema: confere as fotos citadas e os ícones das ofertas. Um JSON antigo, ainda sem `listings`, é convertido na leitura quando tem `images` e `price`.
+O JSON descreve um produto com anúncios em `listings`. O catálogo aceita relógios e outros produtos. O formato e a lista fechada de características estão em [docs/contrato-relogio.md](docs/contrato-relogio.md). `ProductSchema`, em `shared`, aplica esse formato. O carregador do Vite não chama o schema: confere as fotos citadas e os ícones de `labels.json`. Um JSON antigo, ainda sem `listings`, é convertido na leitura quando tem `images` e `price`.
 
 Disponibilidade: `available` mostra **Disponível**; `coming_soon`, **Chega em breve**; `on_order`, **Sob encomenda**. Estado: `new` é **Novo**, `openbox` é **Openbox**, `used` é **Usado**, `defective` é **Com defeito**.
 

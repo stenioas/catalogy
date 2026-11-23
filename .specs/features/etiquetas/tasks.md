@@ -443,6 +443,8 @@ T12 → T13
 
 ### T13: Atualizar o README
 
+**Status**: done
+
 **What**: Documentar a fileira nova e deixar de tratar `offers` por variante como origem da badge.
 **Where**: `README.md`
 **Depends on**: T12
@@ -456,10 +458,10 @@ T12 → T13
 
 **Done when**:
 
-- [ ] O README descreve Todos, Black Friday, acima 20% e os filtros fixos
-- [ ] O README não documenta `offers` por variante como origem da badge
-- [ ] O teste que trava o texto do README acompanha a frase nova
-- [ ] Gate check passes: `pnpm test && pnpm --filter client build`
+- [x] O README descreve Todos, Black Friday, acima 20% e os filtros fixos
+- [x] O README não documenta `offers` por variante como origem da badge
+- [x] O teste que trava o texto do README acompanha a frase nova
+- [x] Gate check passes: `pnpm test && pnpm --filter client build`
 
 **Tests**: unit
 **Gate**: build
