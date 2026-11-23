@@ -177,16 +177,16 @@ O dono do catálogo precisa ligar e desligar campanha e ofertas num único cadas
 | LBL-12 | P1: Cadastro global | Tasks | In Tasks |
 | LBL-13 | P1: Cadastro global | Tasks | In Tasks |
 | LBL-14 | P1: Cadastro global | Tasks | In Tasks |
-| LBL-15 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-16 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-17 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-18 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-19 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-20 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-21 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-22 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-23 | P1: Resolução por variante | Tasks | In Tasks |
-| LBL-24 | P1: Resolução por variante | Tasks | In Tasks |
+| LBL-15 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-16 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-17 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-18 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-19 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-20 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-21 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-22 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-23 | P1: Resolução por variante | Phase 1 | Done |
+| LBL-24 | P1: Resolução por variante | Phase 1 | Done |
 | LBL-25 | P1: Campanha e ofertas na tela | Tasks | In Tasks |
 | LBL-26 | P1: Campanha e ofertas na tela | Tasks | In Tasks |
 | LBL-27 | P1: Campanha e ofertas na tela | Tasks | In Tasks |

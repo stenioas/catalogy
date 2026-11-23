@@ -141,6 +141,8 @@ T12 → T13
 
 ### T3: Resolver campanha e ofertas
 
+**Status**: done
+
 **What**: Implementar `resolveLabels` com sob encomenda vazio, opt-out, uma campanha e uma oferta por categoria.
 **Where**: `shared/src/catalog/labels.ts`
 **Depends on**: T1
@@ -154,12 +156,12 @@ T12 → T13
 
 **Done when**:
 
-- [ ] Preço 80 em 100 entra no gatilho de 20. Preço 80.1 em 100 fica de fora
-- [ ] Três ofertas de desconto elegíveis devolvem só a de menor prioridade
-- [ ] Opt-out do anúncio vale para toda variante. Opt-out da variante vale só para ela
-- [ ] `on_order` devolve campanha e ofertas vazias
-- [ ] Exportado em `shared/src/index.ts`
-- [ ] Gate check passes: `pnpm --filter @catalogo/shared test`
+- [x] Preço 80 em 100 entra no gatilho de 20. Preço 80.1 em 100 fica de fora
+- [x] Três ofertas de desconto elegíveis devolvem só a de menor prioridade
+- [x] Opt-out do anúncio vale para toda variante. Opt-out da variante vale só para ela
+- [x] `on_order` devolve campanha e ofertas vazias
+- [x] Exportado em `shared/src/index.ts`
+- [x] Gate check passes: `pnpm --filter @catalogo/shared test`
 
 **Tests**: unit
 **Gate**: quick

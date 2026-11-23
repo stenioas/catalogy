@@ -29,6 +29,16 @@ export type {
   ListingSelector,
   SectionId,
 } from './catalog/listings.ts'
+export {
+  parseLabels,
+  resolveLabels,
+  type Label,
+  type CampaignLabel,
+  type OfferLabel,
+  type ResolvedLabels,
+  type ResolvedCampaign,
+  type ResolvedOffer,
+} from './catalog/labels.ts'
 export { mergeListings } from './catalog/merge-listings.ts'
 export { effectiveAvailability, effectiveState, variantKey } from './catalog/variant-condition.ts'
 export {
