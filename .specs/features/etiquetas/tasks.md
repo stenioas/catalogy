@@ -351,6 +351,8 @@ T12 → T13
 
 ### T10: Mostrar etiquetas no card
 
+**Status**: done
+
 **What**: Colocar a badge no canto inferior esquerdo da foto e a linha de ofertas acima do preço.
 **Where**: `client/src/components/catalog/watch-card.tsx`
 **Depends on**: T9
@@ -364,10 +366,10 @@ T12 → T13
 
 **Done when**:
 
-- [ ] A badge fica dentro de `watch-card-image`, no canto inferior esquerdo
-- [ ] A linha fica acima do preço
-- [ ] Card sob encomenda não mostra badge nem linha
-- [ ] Gate check passes: `pnpm --filter client exec vitest run src/components/catalog/watch-card.test.tsx`
+- [x] A badge fica dentro de `watch-card-image`, no canto inferior esquerdo
+- [x] A linha fica acima do preço
+- [x] Card sob encomenda não mostra badge nem linha
+- [x] Gate check passes: `pnpm --filter client exec vitest run src/components/catalog/watch-card.test.tsx`
 
 **Tests**: unit
 **Gate**: quick

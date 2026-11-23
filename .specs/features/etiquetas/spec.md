@@ -188,8 +188,8 @@ O dono do catálogo precisa ligar e desligar campanha e ofertas num único cadas
 | LBL-23 | P1: Resolução por variante | Phase 1 | Done |
 | LBL-24 | P1: Resolução por variante | Phase 1 | Done |
 | LBL-25 | P1: Campanha e ofertas na tela | Phase 4 | Done |
-| LBL-26 | P1: Campanha e ofertas na tela | Tasks | In Tasks |
-| LBL-27 | P1: Campanha e ofertas na tela | Phase 3 | In Tasks |
+| LBL-26 | P1: Campanha e ofertas na tela | Phase 4 | Done |
+| LBL-27 | P1: Campanha e ofertas na tela | Phase 4 | Done |
 | LBL-28 | P1: Campanha e ofertas na tela | Phase 4 | Done |
 | LBL-29 | P1: Campanha e ofertas na tela | Phase 4 | Done |
 | LBL-30 | P1: Campanha e ofertas na tela | Phase 4 | Done |
