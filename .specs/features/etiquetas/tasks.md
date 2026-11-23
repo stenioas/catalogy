@@ -323,6 +323,8 @@ T12 → T13
 
 ### T9: Desenhar badge e tarja
 
+**Status**: done
+
 **What**: Criar a badge da campanha e a tarja com as medidas da spec.
 **Where**: `client/src/components/catalog/product-badges.tsx`
 **Depends on**: T7
@@ -336,9 +338,9 @@ T12 → T13
 
 **Done when**:
 
-- [ ] `campaign-badge` mostra `shortText` com `h-5` e `text-xs`
-- [ ] `campaign-stripe` mostra `text`, `h-5` abaixo de 768px e `h-6` com `text-sm` a partir de 768px
-- [ ] Gate check passes: `pnpm --filter client exec vitest run src/components/catalog/product-badges.test.tsx`
+- [x] `campaign-badge` mostra `shortText` com `h-5` e `text-xs`
+- [x] `campaign-stripe` mostra `text`, `h-5` abaixo de 768px e `h-6` com `text-sm` a partir de 768px
+- [x] Gate check passes: `pnpm --filter client exec vitest run src/components/catalog/product-badges.test.tsx`
 
 **Tests**: unit
 **Gate**: quick

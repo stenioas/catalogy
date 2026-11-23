@@ -1,4 +1,4 @@
-import { AVAILABILITY_LABEL, STATE_LABEL, type Listing } from '@catalogo/shared'
+import { AVAILABILITY_LABEL, STATE_LABEL, type Listing, type ResolvedCampaign } from '@catalogo/shared'
 import { cn } from 'cn'
 import { CircleCheck, PackageCheck, PackageOpen, Recycle, ShoppingBag, Van, type LucideIcon } from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
@@ -45,6 +45,40 @@ function OfferIcon({ name }: { name: string }) {
     <Suspense fallback={null}>
       <LucideIcon aria-hidden="true" className="size-3" />
     </Suspense>
+  )
+}
+
+export function CampaignBadge({ campaign }: { campaign: ResolvedCampaign }) {
+  return (
+    <Badge
+      data-testid="campaign-badge"
+      className={cn(
+        badgeRadiusClassName,
+        compactBadgeClassName,
+        'border-0 font-medium',
+      )}
+      style={{ backgroundColor: campaign.background, color: campaign.color }}
+    >
+      <OfferIcon name={campaign.icon} />
+      {campaign.shortText}
+    </Badge>
+  )
+}
+
+export function CampaignStripe({ campaign }: { campaign: ResolvedCampaign }) {
+  return (
+    <div
+      data-testid="campaign-stripe"
+      className={cn(
+        badgeRadiusClassName,
+        compactBadgeClassName,
+        'flex w-full items-center justify-center gap-1 border-0 font-medium md:h-6 md:text-sm',
+      )}
+      style={{ backgroundColor: campaign.background, color: campaign.color }}
+    >
+      <OfferIcon name={campaign.icon} />
+      {campaign.text}
+    </div>
   )
 }
 
