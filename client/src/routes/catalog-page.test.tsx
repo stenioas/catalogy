@@ -322,8 +322,8 @@ describe('CatalogPage (CAT-43, CAT-48, CAT-49–CAT-51, CAT-121, CAT-122)', () =
     try {
       const firstFile = join(dir, 'first.ts')
       const secondFile = join(dir, 'second.ts')
-      writeProductsModule(shuffled, firstFile)
-      writeProductsModule([...shuffled].reverse(), secondFile)
+      writeProductsModule(shuffled, [], firstFile)
+      writeProductsModule([...shuffled].reverse(), [], secondFile)
 
       mockProductsRef.current = productsFromModule(readFileSync(firstFile, 'utf8'))
       renderCatalogPage()

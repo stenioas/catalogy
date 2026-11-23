@@ -174,6 +174,8 @@ T12 → T13
 
 ### T4: Embutir etiquetas no build
 
+**Status**: done
+
 **What**: Ler `labels.json` na carga, validar ícone Lucide e `disabledLabels`, gravar `labels` no módulo gerado e parar de emitir `offers` na ponte `unmissableOffer`.
 **Where**: `client/scripts/catalog.ts`
 **Depends on**: T1, T2
@@ -187,10 +189,10 @@ T12 → T13
 
 **Done when**:
 
-- [ ] Módulo gerado exporta `products` e `labels`
-- [ ] Ícone inexistente e id de `disabledLabels` ausente falham a carga
-- [ ] `unmissableOffer: true` não grava `offers`
-- [ ] Gate check passes: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
+- [x] Módulo gerado exporta `products` e `labels`
+- [x] Ícone inexistente e id de `disabledLabels` ausente falham a carga
+- [x] `unmissableOffer: true` não grava `offers`
+- [x] Gate check passes: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
 
 **Tests**: unit
 **Gate**: quick

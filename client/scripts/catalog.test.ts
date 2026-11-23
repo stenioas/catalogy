@@ -17,6 +17,7 @@ import {
   normalizeProductJson,
   omitCatalogMedia,
   omitUncitedImages,
+  readLabels,
   validateCatalog,
   writeProductsModule,
 } from './catalog'
@@ -70,6 +71,40 @@ function productFixture(overrides: Record<string, unknown> = {}) {
   }
 }
 
+function defaultLabelCatalog() {
+  return [
+    {
+      id: 'black-friday',
+      enabled: true,
+      type: 'campaign' as const,
+      text: 'Black Friday',
+      shortText: 'Black Friday',
+      icon: 'Gift',
+      background: '#000000',
+      color: '#FFFFFF',
+      filterable: true,
+    },
+    {
+      id: 'discount-20',
+      enabled: true,
+      type: 'offer' as const,
+      category: 'discount',
+      description: '',
+      priority: 1,
+      text: 'acima 20%',
+      icon: 'Gift',
+      background: '#000000',
+      color: '#FFFFFF',
+      filterable: true,
+      trigger: { kind: 'discount-at-least' as const, percent: 20 },
+    },
+  ]
+}
+
+function writeLabels(catalogDir: string, labels = defaultLabelCatalog()): void {
+  writeFileSync(join(catalogDir, 'labels.json'), JSON.stringify(labels))
+}
+
 function writeProduct(
   catalogDir: string,
   slug: string,
@@ -90,8 +125,20 @@ function writeProduct(
   }
 }
 
+function parseGeneratedProducts(source: string): unknown {
+  const afterProducts = source.split('export const products: Product[] = ')[1]
+  const productsJson = afterProducts.split('\n\nexport const labels: Label[] = ')[0]
+  return JSON.parse(productsJson)
+}
+
+function parseGeneratedLabels(source: string): unknown {
+  const afterLabels = source.split('export const labels: Label[] = ')[1]
+  return JSON.parse(afterLabels)
+}
+
 function writeValidCatalog(): string {
   const catalogDir = tempDir()
+  writeLabels(catalogDir)
   writeProduct(
     catalogDir,
     'seculus-kit',
@@ -130,6 +177,101 @@ function writeValidCatalog(): string {
   return catalogDir
 }
 
+function catalogWithLabels(productOverrides?: Record<string, unknown>): string {
+  const catalogDir = tempDir()
+  writeLabels(catalogDir)
+  writeProduct(catalogDir, 'seculus-kit', productFixture(productOverrides), {
+    'frente.png': photoBytes,
+  })
+  return catalogDir
+}
+
+describe('catalog labels (LBL-01, LBL-08, LBL-09, LBL-14)', () => {
+  it('LBL-01: reads labels.json during validateCatalog and embeds labels in the generated module', () => {
+    const catalogDir = writeValidCatalog()
+    const labels = readLabels(catalogDir)
+    expect(labels).toEqual(defaultLabelCatalog())
+
+    const products = validateCatalog(catalogDir, labels)
+    const outFile = join(tempDir(), 'products.generated.ts')
+    writeProductsModule(products, labels, outFile)
+
+    const source = readFileSync(outFile, 'utf8')
+    expect(source).toContain('export const products: Product[] = ')
+    expect(source).toContain('export const labels: Label[] = ')
+    expect(parseGeneratedLabels(source)).toEqual(defaultLabelCatalog())
+    expect(parseGeneratedProducts(source)).toEqual(products)
+  })
+
+  it('LBL-08: rejects labels.json when an icon is not a Lucide export', () => {
+    const catalogDir = tempDir()
+    writeLabels(catalogDir, [
+      {
+        ...defaultLabelCatalog()[0],
+        icon: 'DefinitelyNotALucideExportName',
+      },
+      defaultLabelCatalog()[1],
+    ])
+    writeProduct(catalogDir, 'seculus-kit', productFixture(), { 'frente.png': photoBytes })
+
+    expect(() => readLabels(catalogDir)).toThrow(/Lucide icon/)
+    expect(() => validateCatalog(catalogDir)).toThrow(/Lucide icon/)
+  })
+
+  it('LBL-09: rejects variant disabledLabels when the id is absent from labels.json', () => {
+    const catalogDir = catalogWithLabels({
+      listings: [
+        {
+          id: 'listing',
+          state: 'new',
+          availabilityStatus: 'available',
+          images: ['frente.png'],
+          variants: [
+            {
+              axes: [],
+              price: 369.9,
+              mainImage: 'frente.png',
+              disabledLabels: ['promo-inexistente'],
+            },
+          ],
+        },
+      ],
+    })
+
+    expect(() => validateCatalog(catalogDir)).toThrow(/Unknown label id "promo-inexistente"/)
+  })
+
+  it('LBL-09: rejects listing disabledLabels when the id is absent from labels.json', () => {
+    const catalogDir = tempDir()
+    writeLabels(catalogDir)
+    writeProduct(
+      catalogDir,
+      'seculus-kit',
+      productFixture({
+        listings: [
+          {
+            id: 'listing',
+            disabledLabels: ['nao-cadastrada'],
+            state: 'new',
+            availabilityStatus: 'available',
+            images: ['frente.png'],
+            variants: [
+              {
+                axes: [],
+                price: 369.9,
+                mainImage: 'frente.png',
+              },
+            ],
+          },
+        ],
+      }),
+      { 'frente.png': photoBytes },
+    )
+
+    expect(() => validateCatalog(catalogDir)).toThrow(/Unknown label id "nao-cadastrada"/)
+  })
+})
+
 describe('validateCatalog', () => {
   it('returns the product list from a valid catalog directory', () => {
     const products = validateCatalog(writeValidCatalog())
@@ -160,6 +302,7 @@ describe('validateCatalog', () => {
 
   it('preserves axis value text through validation and generated output', () => {
     const catalogDir = tempDir()
+    writeLabels(catalogDir)
     const colorValue = '  Azul petróleo  '
     writeProduct(
       catalogDir,
@@ -191,15 +334,16 @@ describe('validateCatalog', () => {
       { 'frente.png': photoBytes },
     )
 
-    const products = validateCatalog(catalogDir)
+    const labels = readLabels(catalogDir)
+    const products = validateCatalog(catalogDir, labels)
     expect(products[0].axes[0].values[0].value).toBe(colorValue)
 
     const outFile = join(tempDir(), 'products.generated.ts')
-    writeProductsModule(products, outFile)
+    writeProductsModule(products, labels, outFile)
     const source = readFileSync(outFile, 'utf8')
-    const emittedProducts = JSON.parse(
-      source.split('export const products: Product[] = ')[1],
-    ) as Array<{ axes: { values: { value: string }[] }[] }>
+    const emittedProducts = parseGeneratedProducts(source) as Array<{
+      axes: { values: { value: string }[] }[]
+    }>
     expect(emittedProducts[0].axes[0].values[0].value).toBe(colorValue)
   })
 
@@ -211,6 +355,7 @@ describe('validateCatalog', () => {
 
   it('throws when product.json is not valid JSON', () => {
     const catalogDir = tempDir()
+    writeLabels(catalogDir)
     writeProduct(catalogDir, 'seculus-kit', '{', { 'frente.png': photoBytes })
 
     expect(() => validateCatalog(catalogDir)).toThrow()
@@ -218,6 +363,7 @@ describe('validateCatalog', () => {
 
   it('loads a product that does not follow the watch contract', () => {
     const catalogDir = tempDir()
+    writeLabels(catalogDir)
     writeProduct(
       catalogDir,
       'seculus-kit',
@@ -247,6 +393,7 @@ describe('validateCatalog', () => {
 
   it('throws when a listing image is named in images but missing from img/', () => {
     const catalogDir = tempDir()
+    writeLabels(catalogDir)
     writeProduct(
       catalogDir,
       'seculus-kit',
@@ -275,6 +422,7 @@ describe('validateCatalog', () => {
 
   it('does not throw when img/ has an image file no listing images entry names', () => {
     const catalogDir = tempDir()
+    writeLabels(catalogDir)
     writeProduct(
       catalogDir,
       'seculus-kit',
@@ -292,6 +440,7 @@ describe('validateCatalog', () => {
 
   it('OSC-09: rejects offer icon that is not a Lucide export', () => {
     const catalogDir = tempDir()
+    writeLabels(catalogDir)
     writeProduct(
       catalogDir,
       'unknown-icon',
@@ -329,6 +478,7 @@ describe('validateCatalog', () => {
 
   it('OSC-09: accepts Gift as a known Lucide export', () => {
     const catalogDir = tempDir()
+    writeLabels(catalogDir)
     writeProduct(
       catalogDir,
       'gift-offer',
@@ -367,13 +517,6 @@ describe('validateCatalog', () => {
   })
 })
 
-const LEGACY_UNMISSABLE_OFFER = {
-  text: 'Black Friday',
-  icon: 'Gift',
-  background: '#000000',
-  color: '#FFFFFF',
-} as const
-
 function flatLegacyProduct(
   unmissableOffer?: boolean,
 ): Record<string, unknown> {
@@ -398,12 +541,12 @@ function variantFromNormalized(normalized: unknown): Record<string, unknown> {
 }
 
 describe('normalizeProductJson', () => {
-  it('OSC-13: maps legacy unmissableOffer true to the Gift offer row and drops the flag', () => {
+  it('LBL-14: legacy unmissableOffer true omits offers and drops the flag', () => {
     const normalized = normalizeProductJson(flatLegacyProduct(true))
     const variant = variantFromNormalized(normalized)
 
     expect(variant).not.toHaveProperty('unmissableOffer')
-    expect(variant.offers).toEqual([LEGACY_UNMISSABLE_OFFER])
+    expect(variant).not.toHaveProperty('offers')
 
     const parsed = ProductSchema.safeParse(normalized)
     expect(parsed.success).toBe(true)
@@ -458,6 +601,7 @@ describe('normalizeProductJson', () => {
 describe('omitUncitedImages', () => {
   it('removes image files under dist img/ that no listing cites', () => {
     const catalogDir = tempDir()
+    writeLabels(catalogDir)
     writeProduct(
       catalogDir,
       'seculus-kit',
@@ -524,18 +668,17 @@ describe('omitUncitedImages', () => {
 describe('writeProductsModule', () => {
   it('writes image file names and does not embed photo bytes or base64', () => {
     const catalogDir = writeValidCatalog()
-    const products = validateCatalog(catalogDir)
+    const labels = readLabels(catalogDir)
+    const products = validateCatalog(catalogDir, labels)
     const outFile = join(tempDir(), 'products.generated.ts')
 
-    writeProductsModule(products, outFile)
+    writeProductsModule(products, labels, outFile)
 
     const written = readFileSync(outFile)
     const source = written.toString('utf8')
-    expect(source.startsWith("import type { Product } from '@catalogo/shared'")).toBe(true)
+    expect(source.startsWith("import type { Product, Label } from '@catalogo/shared'")).toBe(true)
     expect(source).toContain('export const products: Product[] = ')
-    const parsed: unknown = JSON.parse(
-      source.split('export const products: Product[] = ')[1],
-    )
+    const parsed: unknown = parseGeneratedProducts(source)
     expect(parsed).toEqual(products)
     expect(parsed).toEqual(
       expect.arrayContaining([
@@ -553,11 +696,12 @@ describe('writeProductsModule', () => {
 
   it('does not emit index.json', () => {
     const catalogDir = writeValidCatalog()
-    const products = validateCatalog(catalogDir)
+    const labels = readLabels(catalogDir)
+    const products = validateCatalog(catalogDir, labels)
     const outDir = tempDir()
     const outFile = join(outDir, 'products.generated.ts')
 
-    writeProductsModule(products, outFile)
+    writeProductsModule(products, labels, outFile)
 
     expect(existsSync(join(catalogDir, 'index.json'))).toBe(false)
     expect(existsSync(join(outDir, 'index.json'))).toBe(false)
@@ -588,6 +732,7 @@ describe('initial catalog in public/', () => {
 
   it('writes the products module for one valid watch', () => {
     const oneWatchDir = tempDir()
+    writeLabels(oneWatchDir)
     writeProduct(
       oneWatchDir,
       'seculus-kit',
@@ -595,7 +740,8 @@ describe('initial catalog in public/', () => {
       { 'frente.png': photoBytes },
     )
 
-    const products = validateCatalog(oneWatchDir)
+    const labels = readLabels(oneWatchDir)
+    const products = validateCatalog(oneWatchDir, labels)
     expect(products).toHaveLength(1)
     expect(products[0]).toMatchObject({
       slug: 'seculus-kit',
@@ -608,9 +754,10 @@ describe('initial catalog in public/', () => {
       ],
     })
     const outFile = join(tempDir(), 'products.generated.ts')
-    writeProductsModule(products, outFile)
+    writeProductsModule(products, labels, outFile)
     expect(existsSync(outFile)).toBe(true)
     expect(readFileSync(outFile, 'utf8')).toContain('export const products')
+    expect(readFileSync(outFile, 'utf8')).toContain('export const labels')
     expect(
       existsSync(join(oneWatchDir, 'products', 'seculus-kit', 'img', 'frente.png')),
     ).toBe(true)

@@ -28,13 +28,14 @@ function catalogProductsPlugin(): Plugin {
   return {
     name: 'catalog-products',
     async configureServer(server) {
-      const { validateCatalog, writeProductsModule } = await import('./scripts/catalog.ts')
+      const { readLabels, validateCatalog, writeProductsModule } = await import('./scripts/catalog.ts')
       const syncCatalogFromJson = (): void => {
         const catalogDir = join(import.meta.dirname, 'public/catalog')
-        const products = validateCatalog(catalogDir)
+        const labels = readLabels(catalogDir)
+        const products = validateCatalog(catalogDir, labels)
         const outFile = join(import.meta.dirname, 'src/catalog/products.generated.ts')
         mkdirSync(dirname(outFile), { recursive: true })
-        writeProductsModule(products, outFile)
+        writeProductsModule(products, labels, outFile)
       }
       syncCatalogFromJson()
       const refresh = (file: string) => {
