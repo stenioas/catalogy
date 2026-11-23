@@ -77,7 +77,7 @@ afterEach(() => {
 describe('AxisSelectors (VAR-68, VAR-75, VAR-76)', () => {
   it('shows each option label as the axis value text (VAR-68)', () => {
     const product = axisProduct()
-    const view = listingByPath([product], product.slug, 'item', 'preto,m')
+    const view = listingByPath([product], product.slug, 'item', 'preto,m', [])
     if (view.missing) throw new Error('expected open listing')
 
     render(
@@ -99,7 +99,7 @@ describe('AxisSelectors (VAR-68, VAR-75, VAR-76)', () => {
 
   it('omits an axis value that no variant of the listing uses (VAR-75)', () => {
     const product = axisProduct()
-    const view = listingByPath([product], product.slug, 'item', 'preto,m')
+    const view = listingByPath([product], product.slug, 'item', 'preto,m', [])
     if (view.missing) throw new Error('expected open listing')
 
     render(
@@ -111,7 +111,7 @@ describe('AxisSelectors (VAR-68, VAR-75, VAR-76)', () => {
 
   it('keeps an unavailable combination clickable, dimmed, with dashed border (VAR-76)', () => {
     const product = axisProduct()
-    const view = listingByPath([product], product.slug, 'item', 'preto,m')
+    const view = listingByPath([product], product.slug, 'item', 'preto,m', [])
     if (view.missing) throw new Error('expected open listing')
 
     const onSelect = vi.fn()
@@ -130,7 +130,7 @@ describe('AxisSelectors (VAR-68, VAR-75, VAR-76)', () => {
 })
 
 function openSelectors(product: Product, v: string) {
-  const view = listingByPath([product], product.slug, 'item', v)
+  const view = listingByPath([product], product.slug, 'item', v, [])
   if (view.missing) throw new Error('expected open listing')
   return view.selectors
 }

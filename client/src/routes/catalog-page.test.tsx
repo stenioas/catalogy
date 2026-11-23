@@ -46,11 +46,20 @@ const { mockProductsRef } = vi.hoisted(() => ({
   mockProductsRef: { current: [] as Product[] },
 }))
 
-vi.mock('../catalog/products.generated', () => ({
-  get products() {
-    return mockProductsRef.current
-  },
-}))
+vi.mock('../catalog/products.generated', async () => {
+  const actual = await vi.importActual<typeof import('../catalog/products.generated')>(
+    '../catalog/products.generated',
+  )
+  return {
+    ...actual,
+    get products() {
+      return mockProductsRef.current
+    },
+    get labels() {
+      return actual.labels
+    },
+  }
+})
 
 vi.mock('../components/catalog/watch-card', () => ({
   WatchCard: ({
@@ -74,7 +83,13 @@ vi.mock('../components/catalog/watch-card', () => ({
 
 function productsFromModule(source: string): Product[] {
   const prefix = 'export const products: Product[] = '
-  return JSON.parse(source.split(prefix)[1]) as Product[]
+  const start = source.indexOf(prefix)
+  if (start === -1) throw new Error('products export not found')
+  const jsonStart = start + prefix.length
+  const labelsMarker = '\n\nexport const labels:'
+  const end = source.indexOf(labelsMarker, jsonStart)
+  const json = end === -1 ? source.slice(jsonStart) : source.slice(jsonStart, end)
+  return JSON.parse(json) as Product[]
 }
 
 function titlesInDealOrder(): string[] {
@@ -347,6 +362,8 @@ const NO_ACTIVE_LISTING_TEXT = 'Não temos nenhum anúncio ativo.'
 function variant(overrides: Partial<Variant> = {}): Variant {
   return {
     axes: [],
+    state: 'new',
+    availabilityStatus: 'available',
     price: 100,
     mainImage: 'foto.webp',
     ...overrides,
@@ -354,10 +371,12 @@ function variant(overrides: Partial<Variant> = {}): Variant {
 }
 
 function listing(id: string, variantOverrides: Partial<Variant> = {}): Listing {
+  const variantEntry = variant(variantOverrides)
   return {
     id,
+    state: variantEntry.state ?? 'new',
     images: ['foto.webp'],
-    variants: [variant(variantOverrides)],
+    variants: [variantEntry],
   }
 }
 
@@ -435,7 +454,7 @@ describe('CatalogPage filters', () => {
     const group = screen.getByRole('group', { name: 'Filtros' })
     expect(within(group).getAllByRole('button').map((button) => button.textContent)).toEqual([
       'Todos',
-      '20%+ de desconto',
+      'acima 20%',
       'Feminino',
       'Masculino',
       'Novos',
@@ -489,10 +508,10 @@ describe('CatalogPage filters', () => {
         listings: [listing('not-discount', { price: 80.1, listPrice: 100, availabilityStatus: 'available' })],
       }),
     ]
-    const router = renderHome('/?filter=discount')
+    const router = renderHome('/?filter=discount-20')
     expect(screen.getByRole('heading', { name: 'Desconto' })).toBeDefined()
     expect(screen.queryByRole('heading', { name: 'Sem desconto' })).toBeNull()
-    expect(router.state.location.search).toBe('?filter=discount')
+    expect(router.state.location.search).toBe('?filter=discount-20')
     expect(screen.getByRole('button', { name: 'Feminino' })).toHaveProperty('disabled', true)
   })
 
@@ -551,8 +570,8 @@ describe('CatalogPage filters', () => {
       }),
     ]
     const router = renderHome('/')
-    fireEvent.click(screen.getByRole('button', { name: '20%+ de desconto' }))
-    expect(router.state.location.search).toBe('?filter=discount')
+    fireEvent.click(screen.getByRole('button', { name: 'acima 20%' }))
+    expect(router.state.location.search).toBe('?filter=discount-20')
     fireEvent.click(screen.getByRole('button', { name: 'Masculino' }))
     expect(router.state.location.search).toBe('?filter=male')
     fireEvent.click(screen.getByRole('button', { name: 'Novos' }))

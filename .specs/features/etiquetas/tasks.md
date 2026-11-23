@@ -380,6 +380,8 @@ T12 → T13
 
 ### T11: Mostrar tarja e ofertas na página
 
+**Status**: done
+
 **What**: Renderizar a tarja entre a barra e o carrossel, ajustar o padding e manter as ofertas na página e na barra fixa.
 **Where**: `client/src/routes/watch-page.tsx`
 **Depends on**: T9
@@ -393,12 +395,12 @@ T12 → T13
 
 **Done when**:
 
-- [ ] Com campanha e largura de pelo menos 768px, a coluna usa 8px acima da foto
-- [ ] Sem campanha, a coluna mantém 32px acima da foto
-- [ ] A barra fixa mostra as ofertas e não mostra a campanha
-- [ ] Sob encomenda não mostra tarja, linha nem oferta na barra
-- [ ] Os testes OSC-27 e OSC-28 passam a exigir ausência de etiqueta, sem apagar o caso
-- [ ] Gate check passes: `pnpm --filter client test`
+- [x] Com campanha e largura de pelo menos 768px, a coluna usa 8px acima da foto
+- [x] Sem campanha, a coluna mantém 32px acima da foto
+- [x] A barra fixa mostra as ofertas e não mostra a campanha
+- [x] Sob encomenda não mostra tarja, linha nem oferta na barra
+- [x] Os testes OSC-27 e OSC-28 passam a exigir ausência de etiqueta, sem apagar o caso
+- [x] Gate check passes: `pnpm --filter client test`
 
 **Tests**: unit
 **Gate**: full

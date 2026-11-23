@@ -2,14 +2,14 @@ import { activeFilter, filterHasCards, homeCards } from '@catalogo/shared'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { products } from '../catalog/products.generated'
+import * as catalogGenerated from '../catalog/products.generated'
 import { TopBar } from '../components/catalog/top-bar'
 import { WatchCard } from '../components/catalog/watch-card'
 import { Button } from '../components/ui/button'
 
 const FILTERS = [
   { id: 'all', label: 'Todos' },
-  { id: 'discount', label: '20%+ de desconto' },
+  { id: 'discount-20', label: 'acima 20%' },
   { id: 'female', label: 'Feminino' },
   { id: 'male', label: 'Masculino' },
   { id: 'new', label: 'Novos' },
@@ -78,14 +78,19 @@ export function CatalogPage() {
   const [params, setParams] = useSearchParams()
   const viewportWidth = useViewportWidth()
   const filterParam = params.get('filter')
-  const requested = activeFilter(filterParam)
-  const resolved = requested !== 'all' && !filterHasCards(products, requested) ? 'all' : requested
-  const cards = homeCards(products, resolved)
+  const catalogProducts = catalogGenerated.products
+  const catalogLabels = catalogGenerated.labels ?? []
+  const requested = activeFilter(filterParam, catalogLabels)
+  const resolved =
+    requested !== 'all' && !filterHasCards(catalogProducts, requested, catalogLabels)
+      ? 'all'
+      : requested
+  const cards = homeCards(catalogProducts, resolved, catalogLabels)
   const eagerCards = eagerCardCount()
   const emptyText = cards.length === 0 ? 'Não temos nenhum anúncio ativo.' : null
 
   function selectFilter(id: (typeof FILTERS)[number]['id']) {
-    if (id !== 'all' && !filterHasCards(products, id)) return
+    if (id !== 'all' && !filterHasCards(catalogProducts, id, catalogLabels)) return
     if (id === resolved) return
     setParams((prev) => {
       const next = new URLSearchParams(prev)
@@ -108,7 +113,11 @@ export function CatalogPage() {
                   type="button"
                   variant={resolved === filter.id ? 'default' : 'outline'}
                   aria-pressed={resolved === filter.id}
-                  disabled={filter.id === 'all' ? cards.length === 0 : !filterHasCards(products, filter.id)}
+                  disabled={
+                    filter.id === 'all'
+                      ? cards.length === 0
+                      : !filterHasCards(catalogProducts, filter.id, catalogLabels)
+                  }
                   className="flex-none cursor-pointer rounded-full"
                   onClick={() => selectFilter(filter.id)}
                 >
@@ -135,7 +144,7 @@ export function CatalogPage() {
                       style={{ gap: HOME_COLUMN_GAP_PX }}
                     >
                       {column.map((card) => {
-                        const product = products.find((item) => item.slug === card.slug)
+                        const product = catalogProducts.find((item) => item.slug === card.slug)
                         if (product === undefined) return null
                         const index = cards.indexOf(card)
                         return (

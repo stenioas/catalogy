@@ -193,10 +193,10 @@ O dono do catálogo precisa ligar e desligar campanha e ofertas num único cadas
 | LBL-28 | P1: Campanha e ofertas na tela | Phase 4 | Done |
 | LBL-29 | P1: Campanha e ofertas na tela | Phase 4 | Done |
 | LBL-30 | P1: Campanha e ofertas na tela | Phase 4 | Done |
-| LBL-31 | P1: Campanha e ofertas na tela | Tasks | In Tasks |
-| LBL-32 | P1: Campanha e ofertas na tela | Tasks | In Tasks |
-| LBL-33 | P1: Campanha e ofertas na tela | Tasks | In Tasks |
-| LBL-34 | P1: Campanha e ofertas na tela | Phase 3 | In Tasks |
+| LBL-31 | P1: Campanha e ofertas na tela | Phase 4 | Done |
+| LBL-32 | P1: Campanha e ofertas na tela | Phase 4 | Done |
+| LBL-33 | P1: Campanha e ofertas na tela | Phase 4 | Done |
+| LBL-34 | P1: Campanha e ofertas na tela | Phase 4 | Done |
 | LBL-35 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
 | LBL-36 | P1: Filtro pelas etiquetas | Tasks | In Tasks |
 | LBL-37 | P1: Filtro pelas etiquetas | Tasks | In Tasks |

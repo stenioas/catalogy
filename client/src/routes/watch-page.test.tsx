@@ -3,7 +3,15 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { creditInstallmentLabel, homeCards, type Listing, type Product, type Variant } from '@catalogo/shared'
+import {
+  creditInstallmentLabel,
+  homeCards,
+  parseLabels,
+  type Label,
+  type Listing,
+  type Product,
+  type Variant,
+} from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createMemoryRouter, MemoryRouter, RouterProvider, useParams } from 'react-router-dom'
@@ -47,7 +55,6 @@ type PageFixture = {
   listPrice?: number
   images?: string[]
   observations?: string
-  offers?: NonNullable<Variant['offers']>
   enabled?: boolean
   color?: string
   orderable?: boolean
@@ -68,17 +75,18 @@ function makeProduct(overrides: PageFixture = {}): Product {
     mainImage: images[0] ?? 'foto.webp',
   }
   if (overrides.listPrice !== undefined) variant.listPrice = overrides.listPrice
-  if (overrides.offers !== undefined) variant.offers = overrides.offers
   if (overrides.orderable !== undefined) variant.orderable = overrides.orderable
   if ('observations' in overrides) {
     if (overrides.observations !== undefined) variant.observations = overrides.observations
   } else {
     variant.observations = 'Entrega em mãos.'
   }
+  const availabilityStatus = overrides.availabilityStatus ?? 'available'
+  variant.availabilityStatus = availabilityStatus
   const listing: Listing = {
     id: 'listing',
     state: STATE_FROM_LABEL[overrides.state ?? 'new'] ?? 'new',
-    availabilityStatus: overrides.availabilityStatus ?? 'available',
+    availabilityStatus,
     images,
     variants: overrides.listings === undefined ? [variant] : [],
   }
@@ -105,15 +113,79 @@ function makeProduct(overrides: PageFixture = {}): Product {
   return product
 }
 
-const { mockProductsRef } = vi.hoisted(() => ({
+const { mockProductsRef, mockLabelsRef } = vi.hoisted(() => ({
   mockProductsRef: { current: [] as Product[] },
+  mockLabelsRef: { current: [] as Label[] },
 }))
 
-vi.mock('../catalog/products.generated', () => ({
-  get products() {
-    return mockProductsRef.current
-  },
-}))
+vi.mock('../catalog/products.generated', async () => {
+  const actual = await vi.importActual<typeof import('../catalog/products.generated')>(
+    '../catalog/products.generated',
+  )
+  return {
+    ...actual,
+    get products() {
+      return mockProductsRef.current
+    },
+    get labels() {
+      return mockLabelsRef.current
+    },
+  }
+})
+
+function discountOfferLabel(
+  text: string,
+  colors: { background: string; color: string } = { background: '#0066cc', color: '#ffffff' },
+) {
+  return {
+    id: `offer-${text.replace(/\s+/g, '-').toLowerCase()}`,
+    enabled: true,
+    type: 'offer' as const,
+    category: 'discount',
+    description: text,
+    priority: 1,
+    text,
+    icon: 'Gift',
+    background: colors.background,
+    color: colors.color,
+    filterable: false,
+    trigger: { kind: 'discount-at-least' as const, percent: 1 },
+  }
+}
+
+function catalogPromoLabels() {
+  return parseLabels([
+    {
+      id: 'black-friday',
+      enabled: true,
+      type: 'campaign',
+      text: 'Black Friday',
+      shortText: 'Black Friday',
+      icon: 'Gift',
+      background: '#000000',
+      color: '#FFFFFF',
+      filterable: true,
+    },
+    {
+      id: 'discount-20',
+      enabled: true,
+      type: 'offer',
+      category: 'discount',
+      description: '',
+      priority: 1,
+      text: 'acima 20%',
+      icon: 'Gift',
+      background: '#000000',
+      color: '#FFFFFF',
+      filterable: true,
+      trigger: { kind: 'discount-at-least', percent: 20 },
+    },
+  ])
+}
+
+function listingOfferLabels() {
+  return parseLabels([discountOfferLabel('oferta preto', { background: '#111111', color: '#ffffff' })])
+}
 
 function renderWatchPage(slug = 'seculus-kit', withSellerQuery = false, listingId?: string) {
   const params = new URLSearchParams()
@@ -165,6 +237,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     cleanup()
     vi.unstubAllGlobals()
     mockProductsRef.current = []
+    mockLabelsRef.current = []
     localStorage.removeItem(THEME_STORAGE_KEY)
     document.documentElement.classList.remove('dark')
   })
@@ -183,6 +256,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       removeEventListener: (_event: string, listener: () => void) => { if (query === '(min-width: 768px)' || query === '(min-width: 920px)') mediaListeners.delete(listener) },
     })))
     mockProductsRef.current = [makeProduct()]
+    mockLabelsRef.current = []
     // Ratio 1: watch-commerce is on screen, so the sticky bar is absent.
     installObserver(1)
   })
@@ -282,9 +356,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.queryByTestId('offer-row')).toBeNull()
     cleanup()
     const stored = 'Oferta do dia'
-    mockProductsRef.current = [makeProduct({
-      offers: [{ text: stored, background: '#0066cc', color: '#ffffff', icon: 'Gift' }],
-    })]
+    mockLabelsRef.current = parseLabels([discountOfferLabel(stored)])
+    mockProductsRef.current = [makeProduct({ listPrice: 449.9 })]
     renderWatchPage()
     const badge = screen.getByTestId('offer-badge')
     const price = screen.getByTestId('price-block')
@@ -515,9 +588,8 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   it('repeats the stored offer above the price in the footer and keeps the normal price color', () => {
     installObserver(0)
     const stored = 'Oferta do dia'
-    mockProductsRef.current = [makeProduct({
-      offers: [{ text: stored, background: '#0066cc', color: '#ffffff', icon: 'Gift' }],
-    })]
+    mockLabelsRef.current = parseLabels([discountOfferLabel(stored)])
+    mockProductsRef.current = [makeProduct({ listPrice: 449.9 })]
     renderWatchPage()
     const bar = screen.getByTestId('sticky-bar')
     const footerBadge = within(bar).getByTestId('offer-badge')
@@ -675,11 +747,11 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   })
   it.each([390, 768, 919, 920, 1440])('renders one title and primary action at %i px (CATREF-14/17)', (viewport) => {
     width = viewport
+    mockLabelsRef.current = parseLabels([discountOfferLabel('Oferta do dia')])
     mockProductsRef.current = [makeProduct({
       title: 'Título completo '.repeat(20),
       color: '  Azul  ',
       listPrice: 449.9,
-      offers: [{ text: 'Oferta do dia', background: '#0066cc', color: '#ffffff', icon: 'Gift' }],
     })]
     renderWatchPage()
     const heading = screen.getByRole('heading', { level: 1 })
@@ -944,6 +1016,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
           variants: [
             {
               axes: [{ axisId: 'color', valueId: 'azul' }],
+              availabilityStatus: 'available',
               price: 10,
               listPrice: 12,
               mainImage: 'a.webp',
@@ -951,10 +1024,11 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
             },
             {
               axes: [{ axisId: 'color', valueId: 'preto' }],
-              price: 20,
+              availabilityStatus: 'available',
+              price: 80,
+              listPrice: 100,
               mainImage: 'b.webp',
               observations: 'Obs B',
-              offers: [{ text: 'oferta preto', background: '#111111', color: '#ffffff', icon: 'Gift' }],
             },
           ],
         },
@@ -979,6 +1053,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('shows the product sheet before the listing sheet and hides the other listing', () => {
     mockProductsRef.current = [listingProduct()]
+    mockLabelsRef.current = listingOfferLabels()
     renderWatchPage()
     const productHeading = screen.getByRole('heading', { name: 'Características do produto' })
     const listingHeading = screen.getByRole('heading', { name: 'Características do anúncio' })
@@ -1045,6 +1120,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('places the axis value after the title and drops the name line when there is no axis', () => {
     mockProductsRef.current = [listingProduct()]
+    mockLabelsRef.current = listingOfferLabels()
     renderWatchPage()
     const selector = screen.getByTestId('axis-selectors')
     expect(screen.queryByTestId('axis-line')).toBeNull()
@@ -1064,12 +1140,13 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('changes price, observation and offer with the variant and keeps description and both sheets', () => {
     mockProductsRef.current = [listingProduct()]
+    mockLabelsRef.current = listingOfferLabels()
     width = 390
     renderWatchPage()
     expect(screen.queryByTestId('variant-strip')).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: 'Preto' }))
-    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 20,00')
-    expect(screen.queryByTestId('price-list')).toBeNull()
+    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 80,00')
+    expect(screen.getByTestId('price-list').textContent).toBe('R$ 100,00')
     expect(screen.getByText('Obs B')).toBeDefined()
     expect(screen.queryByText('Obs A')).toBeNull()
     expect(screen.getByTestId('offer-badge').textContent).toBe('oferta preto')
@@ -1087,10 +1164,11 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   it('changes the active variant from the axis selector at 920px', () => {
     width = 920
     mockProductsRef.current = [listingProduct()]
+    mockLabelsRef.current = listingOfferLabels()
     renderWatchPage()
     const right = screen.getByTestId('watch-right-column')
     fireEvent.click(within(right).getByRole('button', { name: 'Preto' }))
-    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 20,00')
+    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 80,00')
     expect(screen.getByText('Obs B')).toBeDefined()
     expect(within(right).getByTestId('offer-badge').textContent).toBe('oferta preto')
     expect(follows(within(right).getByTestId('axis-selectors'), within(right).getByTestId('price-block'))).toBe(true)
@@ -1148,6 +1226,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
       ],
     }
     mockProductsRef.current = [product]
+    mockLabelsRef.current = listingOfferLabels()
     width = 390
     renderWatchPage()
     const carousel = screen.getByTestId('watch-carousel')
@@ -1209,45 +1288,45 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(screen.getByRole('link', { name: 'Compartilhar' }).getAttribute('href')).toBe(`https://wa.me/?text=${encodeURIComponent(`Olá, tenho interesse no Seculus Azul P. Novo, Disponível. ${window.location.origin}/product/seculus-kit/listing?v=azul,p`)}`)
   })
 
-  const consultOffer = { text: 'leve 2', background: '#0066cc', color: '#ffffff', icon: 'Gift' }
-
-  function consultProduct(orderable: boolean, offers?: Variant['offers']): Product {
+  function consultProduct(orderable: boolean): Product {
     return makeProduct({
       availabilityStatus: 'on_order',
       orderable,
-      offers,
       color: 'Azul',
       description: 'Caixa de aço.',
       specifications: [{ label: 'Marca', value: 'Seculus' }],
     })
   }
 
-  it.each([919, 920])('OSC-27 OSC-29 OSC-35 OSC-38 OSC-39 OSC-40: on_order order at %i px shows offers above Sob consulta and no strip', (viewport) => {
+  it.each([919, 920])('OSC-27 OSC-29 OSC-35 OSC-38 OSC-39 OSC-40: on_order order at %i px omits labels and shows Sob consulta', (viewport) => {
     width = viewport
-    mockProductsRef.current = [consultProduct(true, [consultOffer])]
+    mockLabelsRef.current = catalogPromoLabels()
+    mockProductsRef.current = [consultProduct(true)]
+    installObserver(0)
     renderWatchPage()
     const identity = screen.getByTestId('watch-identity')
-    const offer = screen.getByTestId('offer-row')
-    const consult = screen.getByTestId('consult-label')
+    const consult = within(screen.getByTestId('watch-commerce')).getByTestId('consult-label')
     const axes = screen.getByTestId('axis-selectors')
     expect(consult.textContent).toBe(ON_ORDER_PRICE_NOTE)
-    expect(offer.textContent).toBe('leve 2')
+    expect(screen.queryByTestId('offer-row')).toBeNull()
+    expect(screen.queryByTestId('campaign-stripe')).toBeNull()
     expect(screen.queryByTestId('price-block')).toBeNull()
     expect(screen.queryByTestId('price-pix')).toBeNull()
     expect(screen.queryByTestId('price-installments')).toBeNull()
     expect(screen.queryByTestId('variant-strip')).toBeNull()
     expect(screen.queryByTestId('variant-name')).toBeNull()
     expect(screen.queryByTestId('axis-line')).toBeNull()
-    expect(follows(axes, offer)).toBe(true)
-    expect(follows(offer, consult)).toBe(true)
+    expect(follows(axes, consult)).toBe(true)
+    expect(within(screen.getByTestId('sticky-bar')).queryByTestId('offer-row')).toBeNull()
     if (viewport < 920) {
       const media = screen.getByTestId('desktop-product-media')
+      const share = within(screen.getByTestId('watch-commerce')).getByRole('link', { name: 'Compartilhar' })
       expect(screen.queryByTestId('watch-left-column')).toBeNull()
       expect(follows(identity, media)).toBe(true)
-      expect(follows(media, offer)).toBe(true)
+      expect(follows(media, consult)).toBe(true)
       expect(follows(axes, screen.getByRole('heading', { name: 'Descrição' }))).toBe(true)
-      expect(follows(axes, screen.getByRole('link', { name: 'Compartilhar' }))).toBe(true)
-      expect(follows(screen.getByRole('link', { name: 'Compartilhar' }), screen.getByRole('heading', { name: 'Descrição' }))).toBe(true)
+      expect(follows(axes, share)).toBe(true)
+      expect(follows(share, screen.getByRole('heading', { name: 'Descrição' }))).toBe(true)
       return
     }
     const left = screen.getByTestId('watch-left-column')
@@ -1257,7 +1336,6 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     const ordered = [
       within(right).getByTestId('watch-identity'),
       within(right).getByTestId('axis-selectors'),
-      within(right).getByTestId('offer-row'),
       within(right).getByTestId('consult-label'),
       within(right).getByRole('heading', { name: 'Descrição' }),
       within(right).getByRole('link', { name: 'Compartilhar' }),
@@ -1268,13 +1346,15 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     expect(within(left).getByRole('heading', { name: 'Características do produto' })).toBeDefined()
   })
 
-  it.each([919, 920])('OSC-28: on_order with Indisponível hides the price at %i px', (viewport) => {
+  it.each([919, 920])('OSC-28: on_order with Indisponível hides the price and labels at %i px', (viewport) => {
     width = viewport
-    mockProductsRef.current = [consultProduct(false, [consultOffer])]
+    mockLabelsRef.current = catalogPromoLabels()
+    mockProductsRef.current = [consultProduct(false)]
     renderWatchPage('seculus-kit', false, 'listing')
     expect(screen.getByTestId('availability-badge').textContent).toBe('Indisponível')
     expect(screen.getByTestId('consult-label').textContent).toBe(ON_ORDER_PRICE_NOTE)
-    expect(follows(screen.getByTestId('offer-row'), screen.getByTestId('consult-label'))).toBe(true)
+    expect(screen.queryByTestId('offer-row')).toBeNull()
+    expect(screen.queryByTestId('campaign-stripe')).toBeNull()
     expect(screen.queryByTestId('price-block')).toBeNull()
     expect(screen.queryByTestId('price-pix')).toBeNull()
     expect(screen.queryByTestId('price-installments')).toBeNull()
@@ -1476,7 +1556,6 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
               availabilityStatus: 'available',
               price: 100,
               mainImage: 'used.webp',
-              offers: [{ text: 'Oferta', background: '#0066cc', color: '#ffffff', icon: 'Gift' }],
             },
             {
               axes: [{ axisId: 'color', valueId: 'red' }],
@@ -1490,7 +1569,6 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
               state: 'new',
               availabilityStatus: 'on_order',
               mainImage: 'order.webp',
-              offers: [{ text: 'Oferta sob encomenda', background: '#0066cc', color: '#ffffff', icon: 'Gift' }],
             },
           ],
         },
@@ -1500,6 +1578,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('reads state and availability from the query and shares the same variant', () => {
     mockProductsRef.current = [conditionProduct()]
+    mockLabelsRef.current = catalogPromoLabels()
     render(
       <ThemeProvider>
         <MemoryRouter initialEntries={['/product/condition/main-listing?v=red&state=new&availability=on_order']}>
@@ -1525,6 +1604,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
 
   it('shows the condition on one line and does not offer condition selectors', () => {
     mockProductsRef.current = [conditionProduct()]
+    mockLabelsRef.current = []
     render(
       <ThemeProvider>
         <MemoryRouter initialEntries={['/product/condition/main-listing?v=red&state=used']}>
@@ -1550,6 +1630,7 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
     if (condition === 'defective') variant.state = condition
     else variant.availabilityStatus = condition
     mockProductsRef.current = [product]
+    mockLabelsRef.current = []
     renderWatchPage('condition', false, 'main-listing')
     expect(screen.getByTestId(condition === 'defective' ? 'state-label' : 'availability-badge').textContent).toBe(label)
   })
@@ -1557,12 +1638,93 @@ describe('WatchPage (CAT-57–CAT-69, CAT-87, CAT-88)', () => {
   it.each([919, 920])('OSC-46: choosing another enabled option selects that variant at %i px', (viewport) => {
     width = viewport
     mockProductsRef.current = [listingProduct()]
+    mockLabelsRef.current = listingOfferLabels()
     renderWatchPage()
     fireEvent.click(screen.getByRole('button', { name: 'Preto' }))
-    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 20,00')
+    expect(screen.getByTestId('price-current').getAttribute('aria-label')).toBe('R$ 80,00')
     expect(screen.getByRole('group', { name: 'Cor: Preto' })).toBeDefined()
     expect(screen.getByTestId('offer-badge').textContent).toBe('oferta preto')
     expect(screen.queryByTestId('variant-strip')).toBeNull()
+  })
+
+  describe('campaign stripe and resolved offers on the watch page (LBL-28–LBL-34)', () => {
+    it('LBL-28: shows the campaign text in a stripe between the top bar and the gallery', () => {
+      width = 920
+      mockLabelsRef.current = catalogPromoLabels()
+      mockProductsRef.current = [makeProduct({ listPrice: 500, price: 400 })]
+      renderWatchPage()
+      const stripe = screen.getByTestId('campaign-stripe')
+      expect(stripe.textContent).toBe('Black Friday')
+      expect(follows(screen.getByTestId('top-bar-spacer'), stripe)).toBe(true)
+      expect(follows(stripe, screen.getByRole('main'))).toBe(true)
+    })
+
+    it('LBL-29: keeps badge height and font on the stripe below 768px', () => {
+      width = 390
+      mockLabelsRef.current = catalogPromoLabels()
+      mockProductsRef.current = [makeProduct({ listPrice: 500, price: 400 })]
+      renderWatchPage()
+      const stripe = screen.getByTestId('campaign-stripe')
+      expect(stripe.className).toMatch(/\bh-5\b/)
+      expect(stripe.className).toMatch(/\btext-xs\b/)
+    })
+
+    it('LBL-31: uses 8px top padding on desktop when the campaign stripe is visible', () => {
+      width = 920
+      mockLabelsRef.current = catalogPromoLabels()
+      mockProductsRef.current = [makeProduct({ listPrice: 500, price: 400 })]
+      renderWatchPage()
+      const column = screen.getByTestId('watch-page-column')
+      expect(column.className).toMatch(/\bmd:pt-2\b/)
+      expect(column.className).toMatch(/\bmd:pb-8\b/)
+      expect(column.className).not.toMatch(/\bmd:py-8\b/)
+    })
+
+    it('LBL-31: keeps 32px vertical padding on desktop when there is no campaign', () => {
+      width = 920
+      mockLabelsRef.current = []
+      renderWatchPage()
+      expect(screen.getByTestId('watch-page-column').className).toMatch(/\bmd:py-8\b/)
+      expect(screen.queryByTestId('campaign-stripe')).toBeNull()
+    })
+
+    it('LBL-32: shows resolved offers above the price and in the sticky bar', () => {
+      width = 920
+      installObserver(0)
+      mockLabelsRef.current = catalogPromoLabels()
+      mockProductsRef.current = [makeProduct({ listPrice: 500, price: 400 })]
+      renderWatchPage()
+      const commerce = screen.getByTestId('watch-commerce')
+      expect(within(commerce).getByTestId('offer-badge').textContent).toBe('acima 20%')
+      const bar = screen.getByTestId('sticky-bar')
+      expect(within(bar).getByTestId('offer-badge').textContent).toBe('acima 20%')
+    })
+
+    it('LBL-33: omits the campaign from the sticky bar', () => {
+      width = 920
+      installObserver(0)
+      mockLabelsRef.current = catalogPromoLabels()
+      mockProductsRef.current = [makeProduct({ listPrice: 500, price: 400 })]
+      renderWatchPage()
+      const bar = screen.getByTestId('sticky-bar')
+      expect(within(bar).queryByTestId('campaign-stripe')).toBeNull()
+      expect(within(bar).queryByText('Black Friday')).toBeNull()
+    })
+
+    it('LBL-34: on_order omits the stripe, the offer row and sticky offers', () => {
+      width = 920
+      installObserver(0)
+      mockLabelsRef.current = catalogPromoLabels()
+      mockProductsRef.current = [makeProduct({
+        availabilityStatus: 'on_order',
+        listPrice: 500,
+        price: 400,
+      })]
+      renderWatchPage()
+      expect(screen.queryByTestId('campaign-stripe')).toBeNull()
+      expect(screen.queryByTestId('offer-row')).toBeNull()
+      expect(within(screen.getByTestId('sticky-bar')).queryByTestId('offer-row')).toBeNull()
+    })
   })
 
 })

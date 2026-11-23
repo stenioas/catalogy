@@ -24,8 +24,12 @@ vi.mock('../catalog/products.generated', async () => {
     '../catalog/products.generated',
   )
   return {
+    ...actual,
     get products() {
       return mockProductsRef.current ?? actual.products
+    },
+    get labels() {
+      return actual.labels
     },
   }
 })

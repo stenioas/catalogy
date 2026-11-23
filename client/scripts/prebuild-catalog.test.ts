@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import {
   normalizeProductJson,
+  readLabels,
   validateCatalog,
   writeProductsModule,
 } from './catalog'
@@ -42,10 +43,13 @@ describe('catalog prebuild (before vite build)', () => {
     const outFile = join(clientRoot, 'src/catalog/products.generated.ts')
     expect(() => validateCatalog(catalogDir)).not.toThrow()
     const products = validateCatalog(catalogDir)
+    const labels = readLabels(catalogDir)
     expect(Array.isArray(products)).toBe(true)
-    writeProductsModule(products, outFile)
+    writeProductsModule(products, labels, outFile)
     expect(existsSync(outFile)).toBe(true)
-    expect(readFileSync(outFile, 'utf8')).toContain('export const products')
+    const generated = readFileSync(outFile, 'utf8')
+    expect(generated).toContain('export const products')
+    expect(generated).toContain('export const labels')
   })
 })
 
@@ -83,7 +87,7 @@ describe('published catalog migration (OSC-11, OSC-12, OSC-15)', () => {
       process.env.CATALOG_DIR ?? join(clientRoot, 'public/catalog')
     const outFile = join(clientRoot, 'src/catalog/products.generated.ts')
     const products = validateCatalog(catalogDirResolved)
-    writeProductsModule(products, outFile)
+    writeProductsModule(products, readLabels(catalogDirResolved), outFile)
     expect(readFileSync(outFile, 'utf8')).not.toContain('unmissableOffer')
   })
 })
