@@ -86,7 +86,7 @@ const VariantSchema = z
     availabilityStatus: z.enum(['available', 'coming_soon', 'on_order']).optional(),
     price: positiveReais.optional(),
     listPrice: positiveReais.optional(),
-    offers: z.array(OfferSchema).optional(),
+    disabledLabels: z.array(z.string().regex(idPattern)).optional(),
     mainImage: z.string(),
     observations: z.string().optional(),
     orderable: z.boolean().optional(),

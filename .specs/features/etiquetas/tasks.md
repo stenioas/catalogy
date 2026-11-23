@@ -111,6 +111,8 @@ T12 → T13
 
 ### T2: Tirar offers da variante
 
+**Status**: done
+
 **What**: Remover `offers` do schema da variante e aceitar `disabledLabels` como lista de ids.
 **Where**: `shared/src/schemas/product.ts`
 **Depends on**: None
@@ -124,11 +126,11 @@ T12 → T13
 
 **Done when**:
 
-- [ ] Variante sem `offers` valida
-- [ ] `disabledLabels` com id fora do padrão `idPattern` falha
-- [ ] `disabledLabels` omitido valida
-- [ ] Gate check passes: `pnpm --filter @catalogo/shared test`
-- [ ] Test count: os testes de offers OSC que deixam de existir são substituídos por asserções da spec, não apagados para a suíte ficar verde
+- [x] Variante sem `offers` valida
+- [x] `disabledLabels` com id fora do padrão `idPattern` falha
+- [x] `disabledLabels` omitido valida
+- [x] Gate check passes: `pnpm --filter @catalogo/shared test`
+- [x] Test count: os testes de offers OSC que deixam de existir são substituídos por asserções da spec, não apagados para a suíte ficar verde
 
 **Tests**: unit
 **Gate**: quick

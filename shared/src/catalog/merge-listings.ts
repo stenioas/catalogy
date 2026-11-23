@@ -21,8 +21,11 @@ function sourceAvailability(listing: SourceListing): NonNullable<Variant['availa
 }
 
 function mergedVariant(listing: SourceListing, variant: Variant): Variant {
+  const { offers: _legacyOffers, ...variantWithoutOffers } = variant as Variant & {
+    offers?: unknown
+  }
   return {
-    ...variant,
+    ...variantWithoutOffers,
     state: variant.state ?? listing.state ?? effectiveState(variant),
     availabilityStatus:
       variant.availabilityStatus ?? listing.availabilityStatus ?? effectiveAvailability(variant),
