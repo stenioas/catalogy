@@ -175,7 +175,7 @@ O dono do catálogo precisa ligar e desligar campanha e ofertas num único cadas
 | LBL-10 | P1: Cadastro global | Phase 2 | Done |
 | LBL-11 | P1: Cadastro global | Phase 2 | Done |
 | LBL-12 | P1: Cadastro global | Phase 2 | Done |
-| LBL-13 | P1: Cadastro global | Tasks | In Tasks |
+| LBL-13 | P1: Cadastro global | Phase 2 | Done |
 | LBL-14 | P1: Cadastro global | Phase 2 | Done |
 | LBL-15 | P1: Resolução por variante | Phase 1 | Done |
 | LBL-16 | P1: Resolução por variante | Phase 1 | Done |

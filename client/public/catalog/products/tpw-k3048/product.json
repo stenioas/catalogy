@@ -130,14 +130,6 @@
           "availabilityStatus": "available",
           "price": 69.9,
           "listPrice": 99.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "tpw-k3048-8.webp"
         },
         {
@@ -151,14 +143,6 @@
           "availabilityStatus": "available",
           "price": 79.9,
           "listPrice": 104.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "tpw-k3048-9.webp"
         },
         {

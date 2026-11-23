@@ -166,14 +166,6 @@
           "availabilityStatus": "available",
           "price": 129.9,
           "listPrice": 184.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "poedagar-682-8.webp"
         },
         {

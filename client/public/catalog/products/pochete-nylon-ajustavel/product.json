@@ -67,14 +67,6 @@
           "availabilityStatus": "available",
           "price": 29.9,
           "listPrice": 39.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "pochete-nylon-ajustavel-7.webp"
         },
         {
@@ -88,14 +80,6 @@
           "availabilityStatus": "available",
           "price": 29.9,
           "listPrice": 39.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "pochete-nylon-ajustavel-8.webp"
         },
         {
@@ -109,14 +93,6 @@
           "availabilityStatus": "available",
           "price": 29.9,
           "listPrice": 39.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "pochete-nylon-ajustavel-9.webp"
         }
       ]

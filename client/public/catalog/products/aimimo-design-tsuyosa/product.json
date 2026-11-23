@@ -133,14 +133,6 @@
           "availabilityStatus": "available",
           "price": 399.9,
           "listPrice": 499.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "aimimo-design-tsuyosa-1.webp"
         },
         {

@@ -156,14 +156,6 @@
           "availabilityStatus": "available",
           "price": 199.9,
           "listPrice": 299.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "curren-8499-11.webp"
         },
         {

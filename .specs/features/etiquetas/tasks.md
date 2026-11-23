@@ -232,6 +232,8 @@ T12 → T13
 
 ### T6: Apagar offers dos produtos
 
+**Status**: done
+
 **What**: Remover a chave `offers` de todas as variantes publicadas.
 **Where**: `client/public/catalog/products`
 **Depends on**: T5
@@ -245,9 +247,9 @@ T12 → T13
 
 **Done when**:
 
-- [ ] Nenhum `product.json` publicado contém `offers`
-- [ ] A carga do catálogo real passa
-- [ ] Gate check passes: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
+- [x] Nenhum `product.json` publicado contém `offers`
+- [x] A carga do catálogo real passa
+- [x] Gate check passes: `pnpm --filter client exec vitest run scripts/catalog.test.ts`
 
 **Tests**: unit
 **Gate**: quick

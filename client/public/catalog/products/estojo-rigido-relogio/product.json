@@ -49,15 +49,7 @@
           "availabilityStatus": "available",
           "mainImage": "estojo-rigido-relogio-1.webp",
           "price": 19.9,
-          "listPrice": 34.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ]
+          "listPrice": 34.9
         }
       ]
     }

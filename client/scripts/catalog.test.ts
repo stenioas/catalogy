@@ -3,6 +3,7 @@ import {
   existsSync,
   mkdtempSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   rmSync,
   writeFileSync,
@@ -782,6 +783,45 @@ describe('initial catalog in public/', () => {
 
     it('LBL-10: readLabels loads the published catalog without schema errors', () => {
       expect(readLabels(catalogDir)).toEqual(publishedLabels())
+    })
+  })
+
+  describe('published products (LBL-13)', () => {
+    function publishedProductJsonPaths(): string[] {
+      const productsDir = join(catalogDir, 'products')
+      return readdirSync(productsDir, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .map((entry) => join(productsDir, entry.name, 'product.json'))
+    }
+
+    it('LBL-13: no published variant keeps the offers key', () => {
+      const slugsWithOffers: string[] = []
+      for (const filePath of publishedProductJsonPaths()) {
+        const raw = JSON.parse(readFileSync(filePath, 'utf8')) as {
+          slug?: string
+          listings?: Array<{ variants?: unknown[] }>
+        }
+        const slug = raw.slug ?? filePath
+        for (const listing of raw.listings ?? []) {
+          for (const variant of listing.variants ?? []) {
+            if (
+              variant !== null &&
+              typeof variant === 'object' &&
+              !Array.isArray(variant) &&
+              Object.prototype.hasOwnProperty.call(variant, 'offers')
+            ) {
+              slugsWithOffers.push(slug)
+            }
+          }
+        }
+      }
+      expect(slugsWithOffers).toEqual([])
+    })
+
+    it('LBL-13: validateCatalog loads the published tree without errors', () => {
+      const labels = readLabels(catalogDir)
+      const products = validateCatalog(catalogDir, labels)
+      expect(products.length).toBeGreaterThan(0)
     })
   })
 

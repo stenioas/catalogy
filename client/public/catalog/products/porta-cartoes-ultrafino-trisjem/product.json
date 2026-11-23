@@ -63,14 +63,6 @@
           "availabilityStatus": "coming_soon",
           "price": 29.9,
           "listPrice": 39.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "trisjem-porta-cartoes-ultrafino-7.webp"
         },
         {

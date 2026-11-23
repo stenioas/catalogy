@@ -140,14 +140,6 @@
           "availabilityStatus": "available",
           "price": 399.9,
           "listPrice": 539.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "addiesdive-ad2554-7.webp"
         },
         {
