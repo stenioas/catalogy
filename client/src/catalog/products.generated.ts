@@ -6154,7 +6154,7 @@ export const products: Product[] = [
               }
             ],
             "state": "new",
-            "availabilityStatus": "coming_soon",
+            "availabilityStatus": "available",
             "price": 149.9,
             "listPrice": 199.9,
             "mainImage": "qingxiya-7706-17.webp"
@@ -7675,6 +7675,7 @@ export const products: Product[] = [
     "slug": "tpw-k3048",
     "title": "Relógio TPW Piloto Vintage",
     "description": "Relógio de inspiração aeronáutica vintage, com números grandes para facilitar a leitura, exibição de 24 horas e ponteiros luminosos. Movimento de quartzo. Não é resistente à água. O pacote inclui um relógio de pulso, sem caixa.",
+    "audience": "male",
     "axes": [
       {
         "id": "color",
@@ -7837,6 +7838,7 @@ export const products: Product[] = [
     "slug": "tpw-k7101",
     "title": "Relógio TPW de Campo",
     "description": "Relógio de campo com movimento de quartzo, algarismos arábicos e escala de 24 horas. Possui pulseira de nylon ajustável com fecho de fivela, caixa redonda em liga metálica, vidro Hardlex e ponteiros luminosos.",
+    "audience": "male",
     "axes": [
       {
         "id": "cor",

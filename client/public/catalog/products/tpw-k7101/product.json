@@ -2,6 +2,7 @@
   "slug": "tpw-k7101",
   "title": "Relógio TPW de Campo",
   "description": "Relógio de campo com movimento de quartzo, algarismos arábicos e escala de 24 horas. Possui pulseira de nylon ajustável com fecho de fivela, caixa redonda em liga metálica, vidro Hardlex e ponteiros luminosos.",
+  "audience": "male",
   "axes": [
     {
       "id": "cor",
