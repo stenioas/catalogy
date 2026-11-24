@@ -39,6 +39,10 @@ describe('CampaignBadge (LBL-25)', () => {
     expect(badge.textContent).not.toContain('Black Friday')
     expect(badge.className).toMatch(/\bh-5\b/)
     expect(badge.className).toMatch(/\btext-xs\b/)
+    expect(badge.className).toMatch(/rounded-tr-\[4px\]!/)
+    expect(badge.className).toMatch(/rounded-tl-none!/)
+    expect(badge.className).toMatch(/rounded-bl-none!/)
+    expect(badge.className).toMatch(/rounded-br-none!/)
   })
 
   it('LBL-25: applies campaign colors and loads the Lucide icon', async () => {
@@ -71,17 +75,28 @@ describe('CampaignStripe (LBL-28, LBL-29, LBL-30)', () => {
     expect(stripe.className).toMatch(/\btext-xs\b/)
   })
 
-  it('LBL-30: uses h-6 and text-sm from 768px', () => {
+  it('LBL-30: uses h-6 and text-sm from 768px', async () => {
     render(<CampaignStripe campaign={sampleCampaign} />)
     const stripe = screen.getByTestId('campaign-stripe')
     expect(stripe.className).toMatch(/\bmd:h-6\b/)
     expect(stripe.className).toMatch(/\bmd:text-sm\b/)
+    await waitFor(() => {
+      expect(stripe.querySelector('svg')).not.toBeNull()
+    })
+    const iconClass = stripe.querySelector('svg')?.getAttribute('class') ?? ''
+    expect(iconClass).toMatch(/\bsize-3\b/)
+    expect(iconClass).toMatch(/\bmd:size-3\.5\b/)
   })
 
   it('LBL-28: spans the viewport width', () => {
     render(<CampaignStripe campaign={sampleCampaign} />)
     const stripe = screen.getByTestId('campaign-stripe')
     expect(stripe.className).toMatch(/\bw-full\b/)
+    expect(stripe.className).toMatch(/\brounded-none\b/)
+    expect(stripe.className).not.toMatch(/rounded-\[4px\]/)
+    expect(stripe.className).toMatch(/\bsticky\b/)
+    expect(stripe.className).toMatch(/\btop-16\b/)
+    expect(stripe.className).toContain('group-has-[header[inert]]/route:top-0')
   })
 })
 

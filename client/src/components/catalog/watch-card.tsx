@@ -77,7 +77,7 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
             />
           </div>
           {!isOnOrder && card.campaign ? (
-            <div data-testid="watch-card-campaign" className="pointer-events-none absolute bottom-1 left-1 z-10">
+            <div data-testid="watch-card-campaign" className="pointer-events-none absolute bottom-0 left-0 z-10 flex">
               <CampaignBadge campaign={card.campaign} />
             </div>
           ) : null}

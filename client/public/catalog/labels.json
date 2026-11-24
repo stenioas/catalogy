@@ -3,12 +3,29 @@
     "id": "black-friday",
     "enabled": true,
     "type": "campaign",
-    "text": "Black Friday",
+    "text": "Aproveite a Black Friday até 27/11 às 23:59",
     "shortText": "Black Friday",
-    "icon": "Gift",
+    "icon": "TicketPercent",
     "background": "#000000",
     "color": "#FFFFFF",
     "filterable": true
+  },
+  {
+    "id": "discount-30",
+    "enabled": true,
+    "type": "offer",
+    "category": "discount",
+    "description": "",
+    "priority": 1,
+    "text": "Oferta Imperdível!",
+    "icon": "BadgePercent",
+    "background": "#0066CC",
+    "color": "#FFFFFF",
+    "filterable": true,
+    "trigger": {
+      "kind": "discount-at-least",
+      "percent": 30
+    }
   },
   {
     "id": "discount-20",
@@ -16,15 +33,32 @@
     "type": "offer",
     "category": "discount",
     "description": "",
-    "priority": 1,
-    "text": "acima 20%",
-    "icon": "Gift",
-    "background": "#000000",
-    "color": "#FFFFFF",
+    "priority": 2,
+    "text": "Super Oferta",
+    "icon": "BadgePercent",
+    "background": "#FFEDE0",
+    "color": "#ff6a00",
     "filterable": true,
     "trigger": {
       "kind": "discount-at-least",
       "percent": 20
+    }
+  },
+  {
+    "id": "discount-10",
+    "enabled": false,
+    "type": "offer",
+    "category": "discount",
+    "description": "",
+    "priority": 3,
+    "text": "Oferta",
+    "icon": "BadgePercent",
+    "background": "#E0EDF9",
+    "color": "#0066CC",
+    "filterable": true,
+    "trigger": {
+      "kind": "discount-at-least",
+      "percent": 10
     }
   }
 ]
