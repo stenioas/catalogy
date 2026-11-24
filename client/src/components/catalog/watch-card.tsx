@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { Card } from '@/components/ui/card'
 
-import { availabilityToneClassName, OfferRow } from './product-badges'
+import { availabilityToneClassName, CampaignBadge, OfferRow } from './product-badges'
 import { OnOrderPriceNote, PriceBlock } from './price-block'
 import { WantIconLink } from './want-link'
 
@@ -76,6 +76,11 @@ export function WatchCard({ product, card, imageLoading = 'eager' }: WatchCardPr
               href={`https://wa.me/?text=${encodeURIComponent(shareText)}`}
             />
           </div>
+          {!isOnOrder && card.campaign ? (
+            <div data-testid="watch-card-campaign" className="pointer-events-none absolute bottom-0 left-0 z-10 flex">
+              <CampaignBadge campaign={card.campaign} />
+            </div>
+          ) : null}
         </div>
         <div
           data-testid="watch-card-body"

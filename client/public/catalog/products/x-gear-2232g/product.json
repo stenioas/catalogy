@@ -127,14 +127,6 @@
           "availabilityStatus": "available",
           "price": 199.9,
           "listPrice": 249.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "x-gear-2232g-7.webp"
         },
         {

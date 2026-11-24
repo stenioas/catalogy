@@ -221,9 +221,6 @@ describe('mergeListings', () => {
   })
 
   it('keeps the first axes key and drops another condition on the same axes', () => {
-    const firstOffers = [
-      { text: 'Oferta', background: '#000000', color: '#FFFFFF', icon: 'Gift' },
-    ]
     const merged = mergeListings(
       sourceProduct([
         sourceListing('first', 'available', {
@@ -236,7 +233,9 @@ describe('mergeListings', () => {
               availabilityStatus: 'available',
               price: 80,
               listPrice: 100,
-              offers: firstOffers,
+              offers: [
+                { text: 'Oferta', background: '#000000', color: '#FFFFFF', icon: 'Gift' },
+              ],
               mainImage: 'first.webp',
               observations: 'Primeira',
               orderable: true,
@@ -271,11 +270,11 @@ describe('mergeListings', () => {
       availabilityStatus: 'available',
       price: 80,
       listPrice: 100,
-      offers: firstOffers,
       mainImage: 'first.webp',
       observations: 'Primeira',
       orderable: true,
     })
+    expect(merged.listings[0]?.variants[0]).not.toHaveProperty('offers')
   })
 
   it('uses listing specifications from the first prioritized source without changing the product', () => {

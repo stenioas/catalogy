@@ -154,6 +154,10 @@ describe('pnpm build emitindo dist estático', () => {
       }),
     )
     writeFileSync(join(productDir, 'img', 'frente.png'), 'not-a-real-png')
+    writeFileSync(
+      join(catalogDir, 'labels.json'),
+      readFileSync(join(clientRoot, 'public/catalog/labels.json'), 'utf8'),
+    )
     try {
       expect(validateCatalog(catalogDir)).toHaveLength(1)
     } finally {

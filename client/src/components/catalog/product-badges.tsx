@@ -1,4 +1,4 @@
-import { AVAILABILITY_LABEL, STATE_LABEL, type Listing } from '@catalogo/shared'
+import { AVAILABILITY_LABEL, STATE_LABEL, type Listing, type ResolvedCampaign } from '@catalogo/shared'
 import { cn } from 'cn'
 import { CircleCheck, PackageCheck, PackageOpen, Recycle, ShoppingBag, Van, type LucideIcon } from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
@@ -38,13 +38,47 @@ function offerIcon(name: string): ComponentType<SVGProps<SVGSVGElement>> | null 
   return LucideIcon
 }
 
-function OfferIcon({ name }: { name: string }) {
+function OfferIcon({ name, className = 'size-3' }: { name: string; className?: string }) {
   const LucideIcon = offerIcon(name)
   if (LucideIcon === null) return null
   return (
     <Suspense fallback={null}>
-      <LucideIcon aria-hidden="true" className="size-3" />
+      <LucideIcon aria-hidden="true" className={className} />
     </Suspense>
+  )
+}
+
+export function CampaignBadge({ campaign }: { campaign: ResolvedCampaign }) {
+  return (
+    <Badge
+      data-testid="campaign-badge"
+      className={cn(
+        'rounded-tl-none! rounded-tr-[4px]! rounded-br-none! rounded-bl-none!',
+        compactBadgeClassName,
+        'border-0 font-medium',
+      )}
+      style={{ backgroundColor: campaign.background, color: campaign.color }}
+    >
+      <OfferIcon name={campaign.icon} />
+      {campaign.shortText}
+    </Badge>
+  )
+}
+
+export function CampaignStripe({ campaign }: { campaign: ResolvedCampaign }) {
+  return (
+    <div
+      data-testid="campaign-stripe"
+      className={cn(
+        'rounded-none',
+        compactBadgeClassName,
+        'sticky top-16 z-[15] flex w-full items-center justify-center gap-1 border-0 font-medium motion-safe:transition-[top] motion-safe:duration-300 motion-safe:ease-out group-has-[header[inert]]/route:top-0 md:h-6 md:text-sm',
+      )}
+      style={{ backgroundColor: campaign.background, color: campaign.color }}
+    >
+      <OfferIcon name={campaign.icon} className="size-3 md:size-3.5" />
+      {campaign.text}
+    </div>
   )
 }
 

@@ -142,14 +142,6 @@
           "availabilityStatus": "available",
           "price": 104.9,
           "listPrice": 144.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "tomi-t301-8.webp"
         },
         {
@@ -163,14 +155,6 @@
           "availabilityStatus": "available",
           "price": 104.9,
           "listPrice": 144.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "tomi-t301-12.webp"
         },
         {

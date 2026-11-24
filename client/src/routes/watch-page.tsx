@@ -12,17 +12,26 @@ import {
 
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
-import { products } from '../catalog/products.generated'
+import * as catalogGenerated from '../catalog/products.generated'
 import { AxisSelectors } from '../components/catalog/axis-selectors'
 import { ProductMedia } from '../components/catalog/product-media'
 import { OnOrderPriceNote, PriceBlock } from '../components/catalog/price-block'
-import { OfferRow, ProductConditionLine } from '../components/catalog/product-badges'
+import { CampaignStripe, OfferRow, ProductConditionLine, type OfferBadge } from '../components/catalog/product-badges'
 import { StickyBar } from '../components/catalog/sticky-bar'
 import { TopBar } from '../components/catalog/top-bar'
 import { ProductShareButton } from '../components/catalog/want-link'
 import { productImageSrc } from '../components/catalog/watch-card'
 
 export const MISSING_WATCH_MESSAGE = 'Este relógio não está no catálogo.'
+
+const watchPageColumnBaseClassName =
+  'catalog-column watch-page-column flex flex-col gap-8 pb-8 text-left'
+
+function watchPageColumnClassName(hasCampaign: boolean): string {
+  return hasCampaign
+    ? `${watchPageColumnBaseClassName} md:pt-2 md:pb-8`
+    : `${watchPageColumnBaseClassName} md:py-8`
+}
 
 function readStateField(state: unknown, key: 'section' | 'filter'): string | undefined {
   if (state === null || typeof state !== 'object' || !(key in state)) return undefined
@@ -137,7 +146,7 @@ function ProductCommerce({
 }: {
   price?: number
   listPrice?: number
-  offers: NonNullable<Variant['offers']>
+  offers: OfferBadge[]
   onOrder: boolean
   commerceRef: (element: HTMLDivElement | null) => void
   share?: ReactNode
@@ -246,7 +255,7 @@ function WatchColumn({
   availabilityStatus: 'available' | 'coming_soon' | 'on_order'
   price?: number
   listPrice?: number
-  offers: NonNullable<Variant['offers']>
+  offers: OfferBadge[]
   observations?: string
   description?: string
   productSpecifications: { label: string; value: string }[]
@@ -362,8 +371,14 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
     availability: params.get('availability'),
   }
   const resolvedListingId = listingId === undefined || listingId === '' ? null : listingId
-  const view = listingByPath(products, slug, resolvedListingId, resolutionQuery)
-  const product = products.find((item) => item.slug === slug)
+  const view = listingByPath(
+    catalogGenerated.products,
+    slug,
+    resolvedListingId,
+    resolutionQuery,
+    catalogGenerated.labels,
+  )
+  const product = catalogGenerated.products.find((item) => item.slug === slug)
   const listing = view.missing || product === undefined
     ? undefined
     : product.listings.find((item) => item.id === view.listingId)
@@ -372,7 +387,7 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
       <>
         <TopBar catalogHref={catalogHref} onReturn={returnInHistory} />
         <main className="max-w-full min-w-0 overflow-x-clip">
-          <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pb-8 text-left md:py-8">
+          <div data-testid="watch-page-column" className={watchPageColumnClassName(false)}>
             <p className="m-0 text-[var(--ink-primary)]">{MISSING_WATCH_MESSAGE}</p>
           </div>
         </main>
@@ -406,11 +421,14 @@ export function WatchPage({ slug, listingId }: WatchPageProps) {
     })
   }
 
+  const hasCampaign = view.campaign !== null
+
   return (
     <>
       <TopBar catalogHref={catalogHref} onReturn={returnInHistory} />
+      {hasCampaign ? <CampaignStripe campaign={view.campaign} /> : null}
       <main className="max-w-full min-w-0 overflow-x-clip">
-        <div data-testid="watch-page-column" className="catalog-column watch-page-column flex flex-col gap-8 pb-8 text-left md:py-8">
+        <div data-testid="watch-page-column" className={watchPageColumnClassName(hasCampaign)}>
           <WatchColumn
             slug={product.slug}
             title={product.title}

@@ -5,9 +5,11 @@ import { fileURLToPath } from 'node:url'
 import {
   creditInstallmentLabel,
   homeCards,
+  parseLabels,
   ProductSchema,
   shareMessage,
   type CatalogCard,
+  type Label,
   type Product,
 } from '@catalogo/shared'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
@@ -18,6 +20,34 @@ import { WatchCard } from './watch-card'
 import { ON_ORDER_PRICE_NOTE } from './price-block'
 
 const clientRoot = join(dirname(fileURLToPath(import.meta.url)), '../../..')
+
+const initialLabels = parseLabels([
+  {
+    id: 'black-friday',
+    enabled: true,
+    type: 'campaign',
+    text: 'Black Friday',
+    shortText: 'Black Friday',
+    icon: 'Gift',
+    background: '#000000',
+    color: '#FFFFFF',
+    filterable: true,
+  },
+  {
+    id: 'discount-20',
+    enabled: true,
+    type: 'offer',
+    category: 'discount',
+    description: 'Desconto mínimo',
+    priority: 1,
+    text: 'acima 20%',
+    icon: 'Gift',
+    background: '#000000',
+    color: '#FFFFFF',
+    filterable: true,
+    trigger: { kind: 'discount-at-least', percent: 20 },
+  },
+])
 
 function baseListing(
   listingOverrides: Record<string, unknown> = {},
@@ -52,14 +82,22 @@ function baseProduct(overrides: Record<string, unknown> = {}): Product {
   return ProductSchema.parse(raw)
 }
 
-function cardFor(product: Product, section: string | null = 'available'): CatalogCard {
-  const [card] = homeCards([product], section)
+function cardFor(
+  product: Product,
+  section: string | null = 'available',
+  labels: Label[] = [],
+): CatalogCard {
+  const [card] = homeCards([product], section, labels)
   if (card === undefined) throw new Error('homeCards returned no card')
   return card
 }
 
-function renderWatchCard(product: Product = baseProduct(), section: string | null = 'available') {
-  const card = cardFor(product, section)
+function renderWatchCard(
+  product: Product = baseProduct(),
+  section: string | null = 'available',
+  labels: Label[] = [],
+) {
+  const card = cardFor(product, section, labels)
   return render(
     <MemoryRouter>
       <WatchCard product={product} card={card} />
@@ -606,53 +644,26 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
 
     cleanup()
     const product = baseProduct({
-      listings: [
-        baseListing(
-          {},
-          {
-            offers: [
-              {
-                text: 'Black Friday',
-                icon: 'Gift',
-                background: '#000000',
-                color: '#FFFFFF',
-              },
-            ],
-          },
-        ),
-      ],
+      listings: [baseListing({}, { price: 80, listPrice: 100 })],
     })
-    renderWatchCard(product)
+    renderWatchCard(product, 'available', initialLabels)
     const offerRow = screen.getByTestId('offer-row')
     const body = screen.getByTestId('watch-card-body')
     expect(body.contains(offerRow)).toBe(true)
     expect(frame.contains(offerRow)).toBe(false)
-    expect(screen.getByTestId('price-current').className).not.toMatch(/\btext-destructive\b/)
+    expect(within(offerRow).getByTestId('offer-badge').textContent).toContain('acima 20%')
+    expect(screen.getByTestId('price-current').className).toMatch(/\btext-destructive\b/)
   })
 
   it('OSC-33: places the offer row in the card body above the title and the price', () => {
     const product = baseProduct({
-      listings: [
-        baseListing(
-          {},
-          {
-            offers: [
-              {
-                text: 'Promo crua',
-                icon: 'Gift',
-                background: '#111111',
-                color: '#eeeeee',
-              },
-            ],
-          },
-        ),
-      ],
+      listings: [baseListing({}, { price: 80, listPrice: 100 })],
     })
-    renderWatchCard(product)
+    renderWatchCard(product, 'available', initialLabels)
     const offerRow = screen.getByTestId('offer-row')
     const priceBlock = screen.getByTestId('price-block')
     const heading = screen.getByRole('heading', { name: 'Seculus' })
-    expect(offerRow.textContent).toContain('Promo crua')
+    expect(offerRow.textContent).toContain('acima 20%')
     expect(
       offerRow.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).not.toBe(0)
@@ -670,22 +681,15 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
             {
               axes: [],
               price: 999,
+              listPrice: 1200,
               mainImage: 'foto-principal.webp',
-              offers: [
-                {
-                  text: 'Black Friday',
-                  icon: 'Gift',
-                  background: '#000000',
-                  color: '#FFFFFF',
-                },
-              ],
             },
           ],
         }),
       ],
     })
-    const card = cardFor(product, 'on-order')
-    renderWatchCard(product, 'on-order')
+    const card = cardFor(product, 'on-order', initialLabels)
+    renderWatchCard(product, 'on-order', initialLabels)
     const consult = screen.getByTestId('consult-label')
     expect(consult.textContent).toBe(ON_ORDER_PRICE_NOTE)
     expect(consult.className).toMatch(/\btext-xs\b/)
@@ -697,8 +701,68 @@ describe('WatchCard compact catalog row (CATREF-01–CATREF-12, CATREF-62, CATRE
     expect(screen.queryByTestId('price-pix')).toBeNull()
     expect(screen.queryByTestId('price-installments')).toBeNull()
     expect(screen.queryByTestId('offer-row')).toBeNull()
+    expect(screen.queryByTestId('campaign-badge')).toBeNull()
+    expect(screen.queryByTestId('watch-card-campaign')).toBeNull()
     expect(card.path).not.toMatch(/\?v=/)
     expect(card.offers).toEqual([])
+    expect(card.campaign).toBeNull()
+  })
+
+  it('LBL-25: shows campaign shortText in a badge at the bottom-left of the photo', () => {
+    const product = baseProduct({
+      listings: [baseListing({}, { price: 100 })],
+    })
+    renderWatchCard(product, 'available', initialLabels)
+    const frame = screen.getByTestId('watch-card-image')
+    const anchor = within(frame).getByTestId('watch-card-campaign')
+    const badge = within(anchor).getByTestId('campaign-badge')
+    expect(anchor.className).toMatch(/\bbottom-0\b/)
+    expect(anchor.className).toMatch(/\bleft-0\b/)
+    expect(anchor.className).not.toMatch(/\bbottom-1\b/)
+    expect(anchor.className).not.toMatch(/\bleft-1\b/)
+    expect(anchor.className).toMatch(/\babsolute\b/)
+    expect(badge.className).toMatch(/rounded-tr-\[4px\]!/)
+    expect(badge.className).toMatch(/rounded-tl-none!/)
+    expect(badge.className).toMatch(/rounded-bl-none!/)
+    expect(badge.className).toMatch(/rounded-br-none!/)
+    expect(badge.textContent).toContain('Black Friday')
+    expect(badge.className).toMatch(/\bh-5\b/)
+    expect(badge.className).toMatch(/\btext-xs\b/)
+  })
+
+  it('LBL-26: shows each resolved offer text above the price when not on order', () => {
+    const product = baseProduct({
+      listings: [baseListing({}, { price: 80, listPrice: 100 })],
+    })
+    renderWatchCard(product, 'available', initialLabels)
+    const offerBadge = screen.getByTestId('offer-badge')
+    expect(offerBadge.textContent).toContain('acima 20%')
+    expect(
+      offerBadge.compareDocumentPosition(screen.getByTestId('price-block')) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).not.toBe(0)
+  })
+
+  it('LBL-27: omits campaign badge and offer row while the card variant is on order', () => {
+    const product = baseProduct({
+      listings: [
+        baseListing({
+          availabilityStatus: 'on_order',
+          variants: [
+            {
+              axes: [],
+              price: 80,
+              listPrice: 100,
+              mainImage: 'foto-principal.webp',
+            },
+          ],
+        }),
+      ],
+    })
+    renderWatchCard(product, 'on-order', initialLabels)
+    expect(screen.queryByTestId('watch-card-campaign')).toBeNull()
+    expect(screen.queryByTestId('campaign-badge')).toBeNull()
+    expect(screen.queryByTestId('offer-row')).toBeNull()
   })
 
   it('renders the same 128px image frame with short and long product titles', () => {

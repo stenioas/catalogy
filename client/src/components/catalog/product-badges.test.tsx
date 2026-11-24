@@ -3,11 +3,22 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import {
+  CampaignBadge,
+  CampaignStripe,
   OfferRow,
   ProductAvailabilityBadge,
   ProductConditionLine,
   ProductStateBadge,
 } from './product-badges'
+
+const sampleCampaign = {
+  id: 'black-friday',
+  text: 'Black Friday',
+  shortText: 'BF',
+  icon: 'Gift',
+  background: '#000000',
+  color: '#FFFFFF',
+} as const
 
 const sampleOffer = {
   text: 'Black Friday',
@@ -15,6 +26,79 @@ const sampleOffer = {
   color: '#FFFFFF',
   icon: 'Gift',
 } as const
+
+describe('CampaignBadge (LBL-25)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('LBL-25: shows shortText with h-5 and text-xs', async () => {
+    render(<CampaignBadge campaign={sampleCampaign} />)
+    const badge = screen.getByTestId('campaign-badge')
+    expect(badge.textContent).toContain('BF')
+    expect(badge.textContent).not.toContain('Black Friday')
+    expect(badge.className).toMatch(/\bh-5\b/)
+    expect(badge.className).toMatch(/\btext-xs\b/)
+    expect(badge.className).toMatch(/rounded-tr-\[4px\]!/)
+    expect(badge.className).toMatch(/rounded-tl-none!/)
+    expect(badge.className).toMatch(/rounded-bl-none!/)
+    expect(badge.className).toMatch(/rounded-br-none!/)
+  })
+
+  it('LBL-25: applies campaign colors and loads the Lucide icon', async () => {
+    render(<CampaignBadge campaign={sampleCampaign} />)
+    const badge = screen.getByTestId('campaign-badge') as HTMLElement
+    expect(badge.style.backgroundColor).toBe('rgb(0, 0, 0)')
+    expect(badge.style.color).toBe('rgb(255, 255, 255)')
+    await waitFor(() => {
+      expect(badge.querySelector('svg')).not.toBeNull()
+    })
+  })
+})
+
+describe('CampaignStripe (LBL-28, LBL-29, LBL-30)', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('LBL-28: shows the campaign text on the stripe', async () => {
+    render(<CampaignStripe campaign={sampleCampaign} />)
+    const stripe = screen.getByTestId('campaign-stripe')
+    expect(stripe.textContent).toContain('Black Friday')
+    expect(stripe.textContent).not.toContain('BF')
+  })
+
+  it('LBL-29: uses h-5 and text-xs for viewports below 768px', () => {
+    render(<CampaignStripe campaign={sampleCampaign} />)
+    const stripe = screen.getByTestId('campaign-stripe')
+    expect(stripe.className).toMatch(/\bh-5\b/)
+    expect(stripe.className).toMatch(/\btext-xs\b/)
+  })
+
+  it('LBL-30: uses h-6 and text-sm from 768px', async () => {
+    render(<CampaignStripe campaign={sampleCampaign} />)
+    const stripe = screen.getByTestId('campaign-stripe')
+    expect(stripe.className).toMatch(/\bmd:h-6\b/)
+    expect(stripe.className).toMatch(/\bmd:text-sm\b/)
+    await waitFor(() => {
+      expect(stripe.querySelector('svg')).not.toBeNull()
+    })
+    const iconClass = stripe.querySelector('svg')?.getAttribute('class') ?? ''
+    expect(iconClass).toMatch(/\bsize-3\b/)
+    expect(iconClass).toMatch(/\bmd:size-3\.5\b/)
+  })
+
+  it('LBL-28: spans the viewport width', () => {
+    render(<CampaignStripe campaign={sampleCampaign} />)
+    const stripe = screen.getByTestId('campaign-stripe')
+    expect(stripe.className).toMatch(/\bw-full\b/)
+    expect(stripe.className).toMatch(/\brounded-none\b/)
+    expect(stripe.className).not.toMatch(/rounded-\[4px\]/)
+    expect(stripe.className).toMatch(/\bsticky\b/)
+    expect(stripe.className).toMatch(/\btop-16\b/)
+    expect(stripe.className).toContain('group-has-[header[inert]]/route:top-0')
+  })
+})
 
 describe('OfferRow (OSC-30, OSC-31, OSC-32)', () => {
   afterEach(() => {

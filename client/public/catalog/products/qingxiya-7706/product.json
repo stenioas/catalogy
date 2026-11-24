@@ -112,14 +112,6 @@
           "availabilityStatus": "coming_soon",
           "price": 149.9,
           "listPrice": 199.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "qingxiya-7706-17.webp"
         },
         {

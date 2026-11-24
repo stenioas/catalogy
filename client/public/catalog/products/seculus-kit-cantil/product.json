@@ -83,14 +83,6 @@
           "availabilityStatus": "available",
           "price": 279.9,
           "listPrice": 369.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "seculus-1.webp",
           "observations": "Acompanha caixa de metal e cantil"
         }

@@ -10,7 +10,7 @@ import {
 import { dirname, join } from 'node:path'
 import * as lucideIcons from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
-import type { Product } from '@catalogo/shared'
+import { parseLabels, type Label, type Product } from '@catalogo/shared'
 
 const imageExtensions = new Set(['jpg', 'jpeg', 'png', 'webp', 'avif'])
 
@@ -32,17 +32,15 @@ function isLucideIconExport(exported: unknown): boolean {
   return false
 }
 
-function assertOfferIconIsValid(iconName: string, slug: string): void {
+function assertOfferIconIsValid(iconName: string, context: string): void {
   const exported = (lucideIcons as Record<string, unknown>)[iconName]
   if (!isLucideIconExport(exported)) {
-    throw new Error(
-      `Unknown Lucide icon "${iconName}" in ${slug}/product.json`,
-    )
+    throw new Error(`Unknown Lucide icon "${iconName}" in ${context}`)
   }
   const kebab = lucideExportNameToKebab(iconName)
   if (!(kebab in dynamicIconImports)) {
     throw new Error(
-      `Lucide icon "${iconName}" has no dynamic import for "${kebab}" in ${slug}/product.json`,
+      `Lucide icon "${iconName}" has no dynamic import for "${kebab}" in ${context}`,
     )
   }
 }
@@ -187,16 +185,6 @@ export function normalizeProductJson(raw: unknown): unknown {
   if (typeof o.listPrice === 'number') {
     v0.listPrice = o.listPrice
   }
-  if (o.unmissableOffer === true) {
-    v0.offers = [
-      {
-        text: 'Black Friday',
-        icon: 'Gift',
-        background: '#000000',
-        color: '#FFFFFF',
-      },
-    ]
-  }
   if (typeof o.observations === 'string') {
     v0.observations = o.observations
   }
@@ -271,7 +259,58 @@ export function citedImageNames(product: Product): string[] {
   return [...names]
 }
 
-export function validateCatalog(catalogDir: string): Product[] {
+function assertDisabledLabelIds(
+  ids: string[] | undefined,
+  context: string,
+  labelIds: ReadonlySet<string>,
+): void {
+  for (const id of ids ?? []) {
+    if (!labelIds.has(id)) {
+      throw new Error(`Unknown label id "${id}" in ${context}`)
+    }
+  }
+}
+
+function validateDisabledLabels(
+  product: Product,
+  slug: string,
+  labelIds: ReadonlySet<string>,
+): void {
+  const root = product as Product & { disabledLabels?: string[] }
+  assertDisabledLabelIds(root.disabledLabels, `${slug}/product.json`, labelIds)
+  for (const listing of product.listings ?? []) {
+    const listingRecord = listing as typeof listing & { disabledLabels?: string[] }
+    assertDisabledLabelIds(
+      listingRecord.disabledLabels,
+      `${slug}/product.json listing "${listing.id}"`,
+      labelIds,
+    )
+    for (const variant of listing.variants ?? []) {
+      assertDisabledLabelIds(
+        variant.disabledLabels,
+        `${slug}/product.json listing "${listing.id}" variant`,
+        labelIds,
+      )
+    }
+  }
+}
+
+export function readLabels(catalogDir: string): Label[] {
+  const labelsPath = join(catalogDir, 'labels.json')
+  if (!existsSync(labelsPath)) {
+    throw new Error(`Missing ${labelsPath}`)
+  }
+  const labels = parseLabels(readJson(labelsPath))
+  for (const label of labels) {
+    assertOfferIconIsValid(label.icon, `labels.json (id "${label.id}")`)
+  }
+  return labels
+}
+
+export function validateCatalog(catalogDir: string, labels?: Label[]): Product[] {
+  const resolvedLabels = labels ?? readLabels(catalogDir)
+  const labelIds = new Set(resolvedLabels.map((label) => label.id))
+
   const productsDir = join(catalogDir, 'products')
   if (!existsSync(productsDir)) {
     return []
@@ -290,6 +329,7 @@ export function validateCatalog(catalogDir: string): Product[] {
     const product = normalized as Product
 
     validateOfferIcons(product, entry.name)
+    validateDisabledLabels(product, entry.name, labelIds)
 
     const imgDir = join(productDir, 'img')
     const imageFilesOnDisk = existsSync(imgDir)
@@ -370,10 +410,14 @@ export function omitCatalogMedia(distCatalogProductsDir: string): void {
   }
 }
 
-export function writeProductsModule(products: Product[], outFile: string): void {
+export function writeProductsModule(
+  products: Product[],
+  labels: Label[],
+  outFile: string,
+): void {
   mkdirSync(dirname(outFile), { recursive: true })
   writeFileSync(
     outFile,
-    `import type { Product } from '@catalogo/shared'\n\nexport const products: Product[] = ${JSON.stringify(products, null, 2)}\n`,
+    `import type { Product, Label } from '@catalogo/shared'\n\nexport const products: Product[] = ${JSON.stringify(products, null, 2)}\n\nexport const labels: Label[] = ${JSON.stringify(labels, null, 2)}\n`,
   )
 }

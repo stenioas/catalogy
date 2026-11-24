@@ -166,14 +166,6 @@
           "availabilityStatus": "available",
           "price": 499.9,
           "listPrice": 629.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "steelflier-sf741-2.webp",
           "observations": "Foi aberto para inspeção e teste. Não foi utilizado."
         },

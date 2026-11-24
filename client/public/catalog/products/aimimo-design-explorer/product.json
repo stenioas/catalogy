@@ -147,14 +147,6 @@
           "availabilityStatus": "available",
           "price": 259.9,
           "listPrice": 359.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "aimimo-design-air-king-2.webp",
           "observations": "Produto não foi usado. A embalagem foi aberta e o plástico foi removido."
         },

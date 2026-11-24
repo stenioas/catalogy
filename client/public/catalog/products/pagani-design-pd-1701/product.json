@@ -214,14 +214,6 @@
           "availabilityStatus": "coming_soon",
           "price": 999.9,
           "listPrice": 1399.9,
-          "offers": [
-            {
-              "text": "Black Friday",
-              "background": "#000000",
-              "color": "#FFFFFF",
-              "icon": "Gift"
-            }
-          ],
           "mainImage": "pagani-design-pd-1701-6.webp"
         },
         {
