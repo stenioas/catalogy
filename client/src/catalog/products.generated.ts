@@ -1316,7 +1316,7 @@ export const products: Product[] = [
             ],
             "state": "new",
             "availabilityStatus": "available",
-            "price": 399.9,
+            "price": 349.9,
             "listPrice": 499.9,
             "mainImage": "aimimo-design-tsuyosa-1.webp"
           },
@@ -4816,7 +4816,7 @@ export const products: Product[] = [
               }
             ],
             "state": "new",
-            "availabilityStatus": "available",
+            "availabilityStatus": "coming_soon",
             "price": 129.9,
             "listPrice": 184.9,
             "mainImage": "poedagar-682-8.webp"
@@ -6154,7 +6154,7 @@ export const products: Product[] = [
               }
             ],
             "state": "new",
-            "availabilityStatus": "available",
+            "availabilityStatus": "on_order",
             "price": 149.9,
             "listPrice": 199.9,
             "mainImage": "qingxiya-7706-17.webp"

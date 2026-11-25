@@ -109,7 +109,7 @@
             }
           ],
           "state": "new",
-          "availabilityStatus": "available",
+          "availabilityStatus": "on_order",
           "price": 149.9,
           "listPrice": 199.9,
           "mainImage": "qingxiya-7706-17.webp"
