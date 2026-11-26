@@ -7079,9 +7079,7 @@ export const products: Product[] = [
               }
             ],
             "state": "new",
-            "availabilityStatus": "available",
-            "price": 94.9,
-            "listPrice": 119.9,
+            "availabilityStatus": "on_order",
             "mainImage": "skmei-1988-7.webp"
           },
           {
