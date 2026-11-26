@@ -7729,6 +7729,10 @@ export const products: Product[] = [
         "value": "Vidro"
       },
       {
+        "label": "Resistência à água",
+        "value": "Sem resistência à água"
+      },
+      {
         "label": "Largura da pulseira",
         "value": "22mm"
       },
