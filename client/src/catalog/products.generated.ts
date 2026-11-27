@@ -3547,7 +3547,7 @@ export const products: Product[] = [
       },
       {
         "label": "Movimento",
-        "value": "Miyota 2035"
+        "value": "Miyota 2105"
       },
       {
         "label": "Material da caixa",
@@ -4153,8 +4153,346 @@ export const products: Product[] = [
     ]
   },
   {
+    "slug": "pagani-design-pd-1667",
+    "title": "Pagani Seamaster 007",
+    "description": "Relógio masculino mecânico automático de estilo retrô, com caixa em aço inoxidável, cristal de safira sintético em cúpula e luneta giratória de cerâmica com marcação de 60 minutos. Mostrador e ponteiros luminosos, calendário e opções de pulseira em aço inoxidável ou silicone.",
+    "audience": "male",
+    "axes": [
+      {
+        "id": "color",
+        "label": "Cor",
+        "values": [
+          {
+            "id": "blue-silicone",
+            "value": "Blue Silicone"
+          },
+          {
+            "id": "black-mesh-belt",
+            "value": "Black Mesh belt"
+          },
+          {
+            "id": "green-mesh-belt",
+            "value": "Green Mesh belt"
+          },
+          {
+            "id": "blue-mesh-belt",
+            "value": "Blue Mesh belt"
+          },
+          {
+            "id": "black-silicone",
+            "value": "Black Silicone"
+          },
+          {
+            "id": "orange-silicone",
+            "value": "Orange Silicone"
+          },
+          {
+            "id": "blue-steel",
+            "value": "Blue Steel"
+          },
+          {
+            "id": "black-steel",
+            "value": "Black Steel"
+          },
+          {
+            "id": "goold-green-steel",
+            "value": "Goold Green Steel"
+          },
+          {
+            "id": "white-silicone",
+            "value": "White Silicone"
+          },
+          {
+            "id": "white-steel",
+            "value": "White Steel"
+          },
+          {
+            "id": "orange-steel",
+            "value": "Orange Steel"
+          }
+        ],
+        "presentation": "image"
+      },
+      {
+        "id": "tamanho",
+        "label": "Tamanho",
+        "values": [
+          {
+            "id": "miyota-8215",
+            "value": "MIYOTA 8215"
+          }
+        ]
+      }
+    ],
+    "specifications": [
+      {
+        "label": "Marca",
+        "value": "PAGANI DESIGN"
+      },
+      {
+        "label": "Modelo",
+        "value": "PD-1667"
+      },
+      {
+        "label": "Tipo do relógio",
+        "value": "Mecânico automático"
+      },
+      {
+        "label": "Funções",
+        "value": "Calendário, luminosidade e luneta giratória com marcação de 60 minutos"
+      },
+      {
+        "label": "Tipo de movimento",
+        "value": "Automático com corda manual"
+      },
+      {
+        "label": "Material da caixa",
+        "value": "Aço inoxidável"
+      },
+      {
+        "label": "Material da pulseira",
+        "value": "Aço inoxidável ou silicone, conforme a variante"
+      },
+      {
+        "label": "Material do vidro",
+        "value": "Cristal de safira sintético em cúpula"
+      },
+      {
+        "label": "Material do bisel",
+        "value": "Cerâmica"
+      },
+      {
+        "label": "Resistência à água",
+        "value": "100m (10 ATM)"
+      },
+      {
+        "label": "Largura da pulseira",
+        "value": "20 a 24 mm"
+      },
+      {
+        "label": "Diâmetro do mostrador",
+        "value": "40 a 44 mm"
+      },
+      {
+        "label": "Espessura da caixa",
+        "value": "13 mm"
+      },
+      {
+        "label": "Garantia",
+        "value": "90 dias"
+      }
+    ],
+    "listings": [
+      {
+        "id": "main-listing",
+        "images": [
+          "pagani-design-pd-1667-1.webp",
+          "pagani-design-pd-1667-2.webp",
+          "pagani-design-pd-1667-3.webp",
+          "pagani-design-pd-1667-4.webp",
+          "pagani-design-pd-1667-5.webp",
+          "pagani-design-pd-1667-6.webp",
+          "pagani-design-pd-1667-7.webp",
+          "pagani-design-pd-1667-8.webp",
+          "pagani-design-pd-1667-9.webp",
+          "pagani-design-pd-1667-10.webp",
+          "pagani-design-pd-1667-11.webp",
+          "pagani-design-pd-1667-12.webp",
+          "pagani-design-pd-1667-13.webp",
+          "pagani-design-pd-1667-14.webp",
+          "pagani-design-pd-1667-15.webp",
+          "pagani-design-pd-1667-16.webp",
+          "pagani-design-pd-1667-17.webp",
+          "pagani-design-pd-1667-18.webp",
+          "pagani-design-pd-1667-19.webp",
+          "pagani-design-pd-1667-20.webp",
+          "pagani-design-pd-1667-21.webp",
+          "pagani-design-pd-1667-22.webp",
+          "pagani-design-pd-1667-23.webp",
+          "pagani-design-pd-1667-24.webp",
+          "pagani-design-pd-1667-25.webp",
+          "pagani-design-pd-1667-26.webp",
+          "pagani-design-pd-1667-27.webp",
+          "pagani-design-pd-1667-28.webp",
+          "pagani-design-pd-1667-29.webp",
+          "pagani-design-pd-1667-30.webp"
+        ],
+        "variants": [
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "blue-silicone"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-7.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "black-mesh-belt"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-1.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "green-mesh-belt"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-8.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "blue-mesh-belt"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-9.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "black-silicone"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-10.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "orange-silicone"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-11.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "blue-steel"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-12.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "black-steel"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-13.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "goold-green-steel"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-14.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "white-silicone"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-15.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "white-steel"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-16.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "orange-steel"
+              },
+              {
+                "axisId": "tamanho",
+                "valueId": "miyota-8215"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "pagani-design-pd-1667-17.webp"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "slug": "pagani-design-pd-1701",
-    "title": "Pagani Design Moonwatch",
+    "title": "Pagani Speedmaster Moonwatch",
     "description": "Uma homenagem ao Omega Speedmaster Moonwatch. É um relógio esportivo com cronógrafo e movimento de quartzo japonês Siko TMI VK63. Caixa e pulseira em aço inoxidável 316L, vidro de safira com revestimento antirreflexo, bisel de cerâmica e ponteiros luminosos.",
     "audience": "male",
     "axes": [
@@ -6190,8 +6528,8 @@ export const products: Product[] = [
             "value": "Blue"
           },
           {
-            "id": "white",
-            "value": "White"
+            "id": "silver",
+            "value": "Silver"
           }
         ],
         "presentation": "image"
@@ -6290,11 +6628,13 @@ export const products: Product[] = [
             "axes": [
               {
                 "axisId": "color",
-                "valueId": "white"
+                "valueId": "silver"
               }
             ],
-            "state": "new",
-            "availabilityStatus": "on_order",
+            "state": "used",
+            "availabilityStatus": "available",
+            "price": 349.9,
+            "listPrice": 549.9,
             "mainImage": "rollstimi-rt-128-8.webp"
           }
         ]
@@ -6933,6 +7273,185 @@ export const products: Product[] = [
             ],
             "availabilityStatus": "on_order",
             "mainImage": "skmei-1628-13.webp"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "skmei-1879",
+    "title": "Skmei Retangle Feminino",
+    "description": "Relógio digital com pulseira em aço inoxidável e caixa em ABS. Conta com dois horários, cronômetro, alarme, data, dia da semana, iluminação EL e exibição de horas no formato 12/24.",
+    "audience": "female",
+    "axes": [
+      {
+        "id": "color",
+        "label": "Cor",
+        "values": [
+          {
+            "id": "color-1",
+            "value": "color 1"
+          },
+          {
+            "id": "color-2",
+            "value": "color 2"
+          },
+          {
+            "id": "color-3",
+            "value": "color 3"
+          },
+          {
+            "id": "color-4",
+            "value": "color 4"
+          },
+          {
+            "id": "color-5",
+            "value": "color 5"
+          }
+        ],
+        "presentation": "image"
+      }
+    ],
+    "specifications": [
+      {
+        "label": "Marca",
+        "value": "Skmei"
+      },
+      {
+        "label": "Modelo",
+        "value": "1879"
+      },
+      {
+        "label": "Tipo do relógio",
+        "value": "Digital esportivo"
+      },
+      {
+        "label": "Funções",
+        "value": "Dois horários, cronômetro, alarme, data, dia da semana, luz de fundo EL e formato 12/24 horas"
+      },
+      {
+        "label": "Tipo de movimento",
+        "value": "Digital"
+      },
+      {
+        "label": "Material da caixa",
+        "value": "ABS (plástico)"
+      },
+      {
+        "label": "Material da pulseira",
+        "value": "Aço inoxidável"
+      },
+      {
+        "label": "Resistência à água",
+        "value": "50m (5 ATM)"
+      },
+      {
+        "label": "Largura da pulseira",
+        "value": "20 mm"
+      },
+      {
+        "label": "Diâmetro do mostrador",
+        "value": "36 mm"
+      },
+      {
+        "label": "Espessura da caixa",
+        "value": "12 mm"
+      },
+      {
+        "label": "Garantia",
+        "value": "90 dias"
+      }
+    ],
+    "listings": [
+      {
+        "id": "main-listing",
+        "images": [
+          "skmei-1879-1.webp",
+          "skmei-1879-2.webp",
+          "skmei-1879-3.webp",
+          "skmei-1879-4.webp",
+          "skmei-1879-5.webp",
+          "skmei-1879-6.webp",
+          "skmei-1879-7.webp",
+          "skmei-1879-8.webp",
+          "skmei-1879-9.webp",
+          "skmei-1879-10.webp",
+          "skmei-1879-11.webp",
+          "skmei-1879-12.webp",
+          "skmei-1879-13.webp",
+          "skmei-1879-14.webp",
+          "skmei-1879-15.webp",
+          "skmei-1879-16.webp",
+          "skmei-1879-17.webp",
+          "skmei-1879-18.webp",
+          "skmei-1879-19.webp",
+          "skmei-1879-20.webp",
+          "skmei-1879-21.webp",
+          "skmei-1879-22.webp",
+          "skmei-1879-23.webp",
+          "skmei-1879-24.webp",
+          "skmei-1879-25.webp",
+          "skmei-1879-26.webp",
+          "skmei-1879-27.webp",
+          "skmei-1879-28.webp",
+          "skmei-1879-29.webp",
+          "skmei-1879-30.webp",
+          "skmei-1879-31.webp",
+          "skmei-1879-32.webp",
+          "skmei-1879-33.webp",
+          "skmei-1879-34.webp",
+          "skmei-1879-35.webp"
+        ],
+        "variants": [
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "color-1"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "skmei-1879-7.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "color-2"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "skmei-1879-8.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "color-3"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "skmei-1879-9.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "color-4"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "skmei-1879-10.webp"
+          },
+          {
+            "axes": [
+              {
+                "axisId": "color",
+                "valueId": "color-5"
+              }
+            ],
+            "availabilityStatus": "on_order",
+            "mainImage": "skmei-1879-11.webp"
           }
         ]
       }
@@ -7671,7 +8190,7 @@ export const products: Product[] = [
   },
   {
     "slug": "tpw-k3048",
-    "title": "Relógio TPW Piloto Vintage",
+    "title": "TPW Pilot Vintage",
     "description": "Relógio de inspiração aeronáutica vintage, com números grandes para facilitar a leitura, exibição de 24 horas e ponteiros luminosos. Movimento de quartzo. Não é resistente à água. O pacote inclui um relógio de pulso, sem caixa.",
     "audience": "male",
     "axes": [
@@ -7838,12 +8357,12 @@ export const products: Product[] = [
   },
   {
     "slug": "tpw-k7101",
-    "title": "Relógio TPW de Campo",
+    "title": "TPW Field",
     "description": "Relógio de campo com movimento de quartzo, algarismos arábicos e escala de 24 horas. Possui pulseira de nylon ajustável com fecho de fivela, caixa redonda em liga metálica, vidro Hardlex e ponteiros luminosos.",
     "audience": "male",
     "axes": [
       {
-        "id": "cor",
+        "id": "color",
         "label": "Cor",
         "values": [
           {
@@ -7962,7 +8481,7 @@ export const products: Product[] = [
           {
             "axes": [
               {
-                "axisId": "cor",
+                "axisId": "color",
                 "valueId": "green-luminous-2"
               }
             ],
@@ -7973,7 +8492,7 @@ export const products: Product[] = [
           {
             "axes": [
               {
-                "axisId": "cor",
+                "axisId": "color",
                 "valueId": "green-black-2"
               }
             ],
@@ -7984,7 +8503,7 @@ export const products: Product[] = [
           {
             "axes": [
               {
-                "axisId": "cor",
+                "axisId": "color",
                 "valueId": "black-white-num"
               }
             ],
@@ -7995,7 +8514,7 @@ export const products: Product[] = [
           {
             "axes": [
               {
-                "axisId": "cor",
+                "axisId": "color",
                 "valueId": "green-white-num"
               }
             ],
@@ -8006,7 +8525,7 @@ export const products: Product[] = [
           {
             "axes": [
               {
-                "axisId": "cor",
+                "axisId": "color",
                 "valueId": "dark-blue"
               }
             ],
@@ -8017,7 +8536,7 @@ export const products: Product[] = [
           {
             "axes": [
               {
-                "axisId": "cor",
+                "axisId": "color",
                 "valueId": "green-luminous-1"
               }
             ],

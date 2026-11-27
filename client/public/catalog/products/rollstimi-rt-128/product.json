@@ -13,8 +13,8 @@
           "value": "Blue"
         },
         {
-          "id": "white",
-          "value": "White"
+          "id": "silver",
+          "value": "Silver"
         }
       ],
       "presentation": "image"
@@ -113,11 +113,13 @@
           "axes": [
             {
               "axisId": "color",
-              "valueId": "white"
+              "valueId": "silver"
             }
           ],
-          "state": "new",
-          "availabilityStatus": "on_order",
+          "state": "used",
+          "availabilityStatus": "available",
+          "price": 349.9,
+          "listPrice": 549.9,
           "mainImage": "rollstimi-rt-128-8.webp"
         }
       ]

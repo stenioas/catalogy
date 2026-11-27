@@ -1,11 +1,11 @@
 {
   "slug": "tpw-k7101",
-  "title": "Relógio TPW de Campo",
+  "title": "TPW Field",
   "description": "Relógio de campo com movimento de quartzo, algarismos arábicos e escala de 24 horas. Possui pulseira de nylon ajustável com fecho de fivela, caixa redonda em liga metálica, vidro Hardlex e ponteiros luminosos.",
   "audience": "male",
   "axes": [
     {
-      "id": "cor",
+      "id": "color",
       "label": "Cor",
       "values": [
         {
@@ -124,7 +124,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "green-luminous-2"
             }
           ],
@@ -135,7 +135,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "green-black-2"
             }
           ],
@@ -146,7 +146,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "black-white-num"
             }
           ],
@@ -157,7 +157,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "green-white-num"
             }
           ],
@@ -168,7 +168,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "dark-blue"
             }
           ],
@@ -179,7 +179,7 @@
         {
           "axes": [
             {
-              "axisId": "cor",
+              "axisId": "color",
               "valueId": "green-luminous-1"
             }
           ],
