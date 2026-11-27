@@ -1,0 +1,338 @@
+{
+  "slug": "pagani-design-pd-1667",
+  "title": "Pagani Seamaster 007",
+  "description": "Relógio masculino mecânico automático de estilo retrô, com caixa em aço inoxidável, cristal de safira sintético em cúpula e luneta giratória de cerâmica com marcação de 60 minutos. Mostrador e ponteiros luminosos, calendário e opções de pulseira em aço inoxidável ou silicone.",
+  "audience": "male",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "blue-silicone",
+          "value": "Blue Silicone"
+        },
+        {
+          "id": "black-mesh-belt",
+          "value": "Black Mesh belt"
+        },
+        {
+          "id": "green-mesh-belt",
+          "value": "Green Mesh belt"
+        },
+        {
+          "id": "blue-mesh-belt",
+          "value": "Blue Mesh belt"
+        },
+        {
+          "id": "black-silicone",
+          "value": "Black Silicone"
+        },
+        {
+          "id": "orange-silicone",
+          "value": "Orange Silicone"
+        },
+        {
+          "id": "blue-steel",
+          "value": "Blue Steel"
+        },
+        {
+          "id": "black-steel",
+          "value": "Black Steel"
+        },
+        {
+          "id": "goold-green-steel",
+          "value": "Goold Green Steel"
+        },
+        {
+          "id": "white-silicone",
+          "value": "White Silicone"
+        },
+        {
+          "id": "white-steel",
+          "value": "White Steel"
+        },
+        {
+          "id": "orange-steel",
+          "value": "Orange Steel"
+        }
+      ],
+      "presentation": "image"
+    },
+    {
+      "id": "tamanho",
+      "label": "Tamanho",
+      "values": [
+        {
+          "id": "miyota-8215",
+          "value": "MIYOTA 8215"
+        }
+      ]
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "PAGANI DESIGN"
+    },
+    {
+      "label": "Modelo",
+      "value": "PD-1667"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Mecânico automático"
+    },
+    {
+      "label": "Funções",
+      "value": "Calendário, luminosidade e luneta giratória com marcação de 60 minutos"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Automático com corda manual"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável ou silicone, conforme a variante"
+    },
+    {
+      "label": "Material do vidro",
+      "value": "Cristal de safira sintético em cúpula"
+    },
+    {
+      "label": "Material do bisel",
+      "value": "Cerâmica"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "100m (10 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 a 24 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "40 a 44 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "13 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "main-listing",
+      "images": [
+        "pagani-design-pd-1667-1.webp",
+        "pagani-design-pd-1667-2.webp",
+        "pagani-design-pd-1667-3.webp",
+        "pagani-design-pd-1667-4.webp",
+        "pagani-design-pd-1667-5.webp",
+        "pagani-design-pd-1667-6.webp",
+        "pagani-design-pd-1667-7.webp",
+        "pagani-design-pd-1667-8.webp",
+        "pagani-design-pd-1667-9.webp",
+        "pagani-design-pd-1667-10.webp",
+        "pagani-design-pd-1667-11.webp",
+        "pagani-design-pd-1667-12.webp",
+        "pagani-design-pd-1667-13.webp",
+        "pagani-design-pd-1667-14.webp",
+        "pagani-design-pd-1667-15.webp",
+        "pagani-design-pd-1667-16.webp",
+        "pagani-design-pd-1667-17.webp",
+        "pagani-design-pd-1667-18.webp",
+        "pagani-design-pd-1667-19.webp",
+        "pagani-design-pd-1667-20.webp",
+        "pagani-design-pd-1667-21.webp",
+        "pagani-design-pd-1667-22.webp",
+        "pagani-design-pd-1667-23.webp",
+        "pagani-design-pd-1667-24.webp",
+        "pagani-design-pd-1667-25.webp",
+        "pagani-design-pd-1667-26.webp",
+        "pagani-design-pd-1667-27.webp",
+        "pagani-design-pd-1667-28.webp",
+        "pagani-design-pd-1667-29.webp",
+        "pagani-design-pd-1667-30.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue-silicone"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-mesh-belt"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-1.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "green-mesh-belt"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue-mesh-belt"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-silicone"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "orange-silicone"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-11.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "blue-steel"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-12.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "black-steel"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-13.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "goold-green-steel"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-14.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "white-silicone"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-15.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "white-steel"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-16.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "orange-steel"
+            },
+            {
+              "axisId": "tamanho",
+              "valueId": "miyota-8215"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "pagani-design-pd-1667-17.webp"
+        }
+      ]
+    }
+  ]
+}

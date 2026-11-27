@@ -1,0 +1,179 @@
+{
+  "slug": "skmei-1879",
+  "title": "Skmei Retangle Feminino",
+  "description": "Relógio digital com pulseira em aço inoxidável e caixa em ABS. Conta com dois horários, cronômetro, alarme, data, dia da semana, iluminação EL e exibição de horas no formato 12/24.",
+  "audience": "female",
+  "axes": [
+    {
+      "id": "color",
+      "label": "Cor",
+      "values": [
+        {
+          "id": "color-1",
+          "value": "color 1"
+        },
+        {
+          "id": "color-2",
+          "value": "color 2"
+        },
+        {
+          "id": "color-3",
+          "value": "color 3"
+        },
+        {
+          "id": "color-4",
+          "value": "color 4"
+        },
+        {
+          "id": "color-5",
+          "value": "color 5"
+        }
+      ],
+      "presentation": "image"
+    }
+  ],
+  "specifications": [
+    {
+      "label": "Marca",
+      "value": "Skmei"
+    },
+    {
+      "label": "Modelo",
+      "value": "1879"
+    },
+    {
+      "label": "Tipo do relógio",
+      "value": "Digital esportivo"
+    },
+    {
+      "label": "Funções",
+      "value": "Dois horários, cronômetro, alarme, data, dia da semana, luz de fundo EL e formato 12/24 horas"
+    },
+    {
+      "label": "Tipo de movimento",
+      "value": "Digital"
+    },
+    {
+      "label": "Material da caixa",
+      "value": "ABS (plástico)"
+    },
+    {
+      "label": "Material da pulseira",
+      "value": "Aço inoxidável"
+    },
+    {
+      "label": "Resistência à água",
+      "value": "50m (5 ATM)"
+    },
+    {
+      "label": "Largura da pulseira",
+      "value": "20 mm"
+    },
+    {
+      "label": "Diâmetro do mostrador",
+      "value": "36 mm"
+    },
+    {
+      "label": "Espessura da caixa",
+      "value": "12 mm"
+    },
+    {
+      "label": "Garantia",
+      "value": "90 dias"
+    }
+  ],
+  "listings": [
+    {
+      "id": "main-listing",
+      "images": [
+        "skmei-1879-1.webp",
+        "skmei-1879-2.webp",
+        "skmei-1879-3.webp",
+        "skmei-1879-4.webp",
+        "skmei-1879-5.webp",
+        "skmei-1879-6.webp",
+        "skmei-1879-7.webp",
+        "skmei-1879-8.webp",
+        "skmei-1879-9.webp",
+        "skmei-1879-10.webp",
+        "skmei-1879-11.webp",
+        "skmei-1879-12.webp",
+        "skmei-1879-13.webp",
+        "skmei-1879-14.webp",
+        "skmei-1879-15.webp",
+        "skmei-1879-16.webp",
+        "skmei-1879-17.webp",
+        "skmei-1879-18.webp",
+        "skmei-1879-19.webp",
+        "skmei-1879-20.webp",
+        "skmei-1879-21.webp",
+        "skmei-1879-22.webp",
+        "skmei-1879-23.webp",
+        "skmei-1879-24.webp",
+        "skmei-1879-25.webp",
+        "skmei-1879-26.webp",
+        "skmei-1879-27.webp",
+        "skmei-1879-28.webp",
+        "skmei-1879-29.webp",
+        "skmei-1879-30.webp",
+        "skmei-1879-31.webp",
+        "skmei-1879-32.webp",
+        "skmei-1879-33.webp",
+        "skmei-1879-34.webp",
+        "skmei-1879-35.webp"
+      ],
+      "variants": [
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "color-1"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1879-7.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "color-2"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1879-8.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "color-3"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1879-9.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "color-4"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1879-10.webp"
+        },
+        {
+          "axes": [
+            {
+              "axisId": "color",
+              "valueId": "color-5"
+            }
+          ],
+          "availabilityStatus": "on_order",
+          "mainImage": "skmei-1879-11.webp"
+        }
+      ]
+    }
+  ]
+}
