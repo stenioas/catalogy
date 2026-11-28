@@ -2072,6 +2072,59 @@ describe('resolved labels on cards and listing views', () => {
 })
 
 describe('on_order without a required price', () => {
+  it('opens the cover and the first variant when every variant is on_order, even if one has a price', () => {
+    const listing: Listing = {
+      id: 'anuncio',
+      images: ['cover.jpg', 'azul.jpg', 'preto.jpg'],
+      variants: [
+        {
+          axes: [{ axisId: 'color', valueId: 'azul' }],
+          state: 'new',
+          availabilityStatus: 'on_order',
+          mainImage: 'azul.jpg',
+        },
+        {
+          axes: [{ axisId: 'color', valueId: 'preto' }],
+          state: 'new',
+          availabilityStatus: 'on_order',
+          price: 80,
+          mainImage: 'preto.jpg',
+        },
+      ],
+    }
+    const product = productOf('relogio', 'Relógio', [listing], {
+      axes: [
+        {
+          id: 'color',
+          label: 'Cor',
+          values: [
+            { id: 'azul', value: 'Azul' },
+            { id: 'preto', value: 'Preto' },
+          ],
+        },
+      ],
+    })
+
+    const card = homeCards([product], null, [])[0]!
+    expect(card).toMatchObject({
+      image: 'cover.jpg',
+      availabilityStatus: 'on_order',
+      path: '/product/relogio/anuncio',
+    })
+    expect(card.price).toBeUndefined()
+
+    const view = requireOpen(listingByPath([product], 'relogio', 'anuncio', null, []))
+    expect(view.imageIndex).toBe(0)
+    expect(view.images[view.imageIndex]).toBe('cover.jpg')
+    expect(view.title).toBe('Relógio Azul')
+    expect(view.price).toBeUndefined()
+
+    const direct = requireOpen(listingByPath([product], 'relogio', 'anuncio', 'preto', []))
+    expect(direct.title).toBe('Relógio Preto')
+    expect(direct.price).toBe(80)
+    expect(direct.images[direct.imageIndex]).toBe('preto.jpg')
+  })
+
   it.each([undefined, 100])('omits card prices and opens a variant with optional price %s', (price) => {
     const listing = listingOf('sob-encomenda', {
       availabilityStatus: 'on_order',

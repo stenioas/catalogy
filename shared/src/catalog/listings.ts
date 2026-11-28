@@ -490,6 +490,15 @@ function variantMatchesFilter(
   return true
 }
 
+/** Every card-capable variant is on order, so a leftover price must not choose the landing variant. */
+function onOrderCoverListing(listing: Listing, pool: Variant[]): boolean {
+  const representable = listing.variants.filter(canVariantRepresentCard)
+  return (
+    pool.length === representable.length &&
+    representable.every((variant) => effectiveAvailability(variant) === 'on_order')
+  )
+}
+
 function productMatchesFilter(product: Product, filter: FilterId): boolean {
   if (filter === 'female') {
     return product.audience === 'female' || product.audience === 'unisex'
@@ -521,6 +530,10 @@ export function homeCards(
         variantMatchesFilter(listing, variant, resolved, labels),
       )
       if (pool.length === 0) return
+      if (onOrderCoverListing(listing, pool)) {
+        cards.push(toUnpricedCard(product, listing, pool[0]!, listingIndex, labels))
+        return
+      }
       const priced = pool.filter((variant) => variant.price !== undefined)
       if (priced.length === 0) {
         const variant = pool[0]!
